@@ -1,0 +1,480 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="R5" params="name">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <link name="${prefix}base_link">
+      <inertial>
+        <origin
+            xyz="-0.00013359 6.672E-05 0.031672"
+            rpy="0 0 0"/>
+        <mass
+            value="0.42272"/>
+        <inertia
+            ixx="0.00019"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00019"
+            iyz="0.00000"
+            izz="0.00020"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/base_link.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/base_link.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <link
+        name="${prefix}link1">
+      <inertial>
+        <origin
+            xyz="0.0050395 -0.0077407 0.020897"
+            rpy="0 0 0"/>
+        <mass
+            value="0.096804"/>
+        <inertia
+            ixx="0.00011"
+            ixy="-0.00001"
+            ixz="0.00001"
+            iyy="0.00005"
+            iyz="-0.00001"
+            izz="0.00010"/>
+      </inertial>
+      <visual>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link1.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link1.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint
+        name="${prefix}joint1"
+        type="revolute">
+      <origin
+          xyz="0 0 0.0565"
+          rpy="0 0 0"/>
+      <parent
+          link="${prefix}base_link"/>
+      <child
+          link="${prefix}link1"/>
+      <axis
+          xyz="0 0 1"/>
+      <limit
+          lower="-2.618"
+          upper="2.168"
+          effort="100"
+          velocity="5"/>
+    </joint>
+    <link
+        name="${prefix}link2">
+      <inertial>
+        <origin
+            xyz="-0.12992 -0.0011822 -2.6366E-05"
+            rpy="0 0 0"/>
+        <mass
+            value="1.1988"/>
+        <inertia
+            ixx="0.00065"
+            ixy="0.00008"
+            ixz="0.00000"
+            iyy="0.01647"
+            iyz="0.00000"
+            izz="0.01646"/>
+      </inertial>
+      <visual>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link2.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link2.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint
+        name="${prefix}joint2"
+        type="revolute">
+      <origin
+          xyz="0.02 0 0.047"
+          rpy="0 0 0"/>
+      <parent
+          link="${prefix}link1"/>
+      <child
+          link="${prefix}link2"/>
+      <axis
+          xyz="0 1 0"/>
+      <limit
+          lower="0"
+          upper="3.66"
+          effort="100"
+          velocity="5"/>
+    </joint>
+    <link
+        name="${prefix}link3">
+      <inertial>
+        <origin
+            xyz="0.16181 0.0011723 -0.05455"
+            rpy="0 0 0"/>
+        <mass
+            value="0.84082"/>
+        <inertia
+            ixx="0.00082"
+            ixy="0.00008"
+            ixz="-0.00074"
+            iyy="0.00849"
+            iyz="0.00001"
+            izz="0.00834"/>
+      </inertial>
+      <visual>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link3.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link3.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint
+        name="${prefix}joint3"
+        type="revolute">
+      <origin
+          xyz="-0.264 0 0"
+          rpy="-3.1416 0 0"/>
+      <parent
+          link="${prefix}link2"/>
+      <child
+          link="${prefix}link3"/>
+      <axis
+          xyz="0 1 0"/>
+      <limit
+          lower="0"
+          upper="3.14"
+          effort="100"
+          velocity="5"/>
+    </joint>
+    <link
+        name="${prefix}link4">
+      <inertial>
+        <origin
+            xyz="0.041751 0.0054236 -0.03337"
+            rpy="0 0 0"/>
+        <mass
+            value="0.12432"/>
+        <inertia
+            ixx="0.00022"
+            ixy="-0.00002"
+            ixz="-0.00009"
+            iyy="0.00025"
+            iyz="0.00002"
+            izz="0.00017"/>
+      </inertial>
+      <visual>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link4.obj"/>
+        </geometry>
+
+      </visual>
+      <collision>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link4.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint
+        name="${prefix}joint4"
+        type="revolute">
+      <origin
+          xyz="0.245 -5E-05 -0.06"
+          rpy="0 0 0"/>
+      <parent
+          link="${prefix}link3"/>
+      <child
+          link="${prefix}link4"/>
+      <axis
+          xyz="0 1 0"/>
+      <limit
+          lower="-1.57"
+          upper="1.57"
+          effort="100"
+          velocity="5"/>
+    </joint>
+    <link
+        name="${prefix}link5">
+      <inertial>
+        <origin
+            xyz="-8.3435E-05 -1.5428E-05 0.052216"
+            rpy="0 0 0"/>
+        <mass
+            value="0.63601"/>
+        <inertia
+            ixx="0.00084"
+            ixy="0.00000"
+            ixz="0.00007"
+            iyy="0.00082"
+            iyz="0.00000"
+            izz="0.00026"/>
+      </inertial>
+      <visual>
+        <origin
+            xyz="0.0037 0 0"
+            rpy="0 0 0"/>
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link5.obj"/>
+        </geometry>
+
+      </visual>
+      <collision>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link5.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint
+        name="${prefix}joint5"
+        type="revolute">
+      <origin
+          xyz="0.0702 5E-05 -0.083391"
+          rpy="0 0 0"/>
+      <parent
+          link="${prefix}link4"/>
+      <child
+          link="${prefix}link5"/>
+      <axis
+          xyz="0 0 1"/>
+      <limit
+          lower="-1.57"
+          upper="1.57"
+          effort="100"
+          velocity="5"/>
+    </joint>
+    <link
+        name="${prefix}link6">
+      <inertial>
+        <origin
+            xyz="0.041697 2.4368E-05 0.00014464"
+            rpy="0 0 0"/>
+        <mass
+            value="0.44089"/>
+        <inertia
+            ixx="0.00038"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00028"
+            iyz="0.00000"
+            izz="0.00050"/>
+      </inertial>
+      <visual>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link6.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link6.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint
+        name="${prefix}joint6"
+        type="revolute">
+      <origin
+          xyz="0.025286 0 0.083391"
+          rpy="3.1416 0 0"/>
+      <parent
+          link="${prefix}link5"/>
+      <child
+          link="${prefix}link6"/>
+      <axis
+          xyz="1 0 0"/>
+      <limit
+          lower="-1.57"
+          upper="1.57"
+          effort="100"
+          velocity="5"/>
+    </joint>
+    <link
+        name="${prefix}link7">
+      <inertial>
+        <origin
+            xyz="-0.00035522 -0.007827 -0.0029883"
+            rpy="0 0 0"/>
+        <mass
+            value="0.064798"/>
+        <inertia
+            ixx="0.00002"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00003"
+            iyz="0.00000"
+            izz="0.00003"/>
+      </inertial>
+      <visual>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link7.obj"/>
+        </geometry>
+
+      </visual>
+      <collision>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link7.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint
+        name="${prefix}joint7"
+        type="prismatic">
+      <origin
+          xyz="0.08657 0.024896 -0.0002436"
+          rpy="0 0 0"/>
+      <parent
+          link="${prefix}link6"/>
+      <child
+          link="${prefix}link7"/>
+      <axis
+          xyz="0 1 0"/>
+      <limit
+          lower="0"
+          upper="0.044"
+          effort="100"
+          velocity="5"/>
+    </joint>
+    <link
+        name="${prefix}link8">
+      <inertial>
+        <origin
+            xyz="-0.000355223470270755 0.00782768751820277 0.00242005642879778"
+            rpy="0 0 0"/>
+        <mass
+            value="0.0647981725781684"/>
+        <inertia
+            ixx="0.00002"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00003"
+            iyz="0.00000"
+            izz="0.00003"/>
+      </inertial>
+      <visual>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link8.obj"/>
+        </geometry>
+
+      </visual>
+      <collision>
+
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/link8.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint
+        name="${prefix}joint8"
+        type="prismatic">
+      <origin
+          xyz="0.08657 -0.0249 -0.00024366"
+          rpy="0 0 0"/>
+      <parent
+          link="${prefix}link6"/>
+      <child
+          link="${prefix}link8"/>
+      <axis
+          xyz="0 -1 0"/>
+      <limit
+          lower="0"
+          upper="0.044"
+          effort="100"
+          velocity="5"/>
+    </joint>
+    <link name="${prefix}gripper_center"/>
+    <joint name="${prefix}gripper_center_fixed" type="fixed">
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}gripper_center"/>
+      <origin xyz="0.08657 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="${prefix}left_pad"/>
+    <joint name="${prefix}left_pad_joint" type="fixed">
+      <parent link="${prefix}link7"/>
+      <child link="${prefix}left_pad"/>
+      <origin xyz="0.05843 -0.0249 0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="${prefix}right_pad"/>
+    <joint name="${prefix}right_pad_joint" type="fixed">
+      <parent link="${prefix}link8"/>
+      <child link="${prefix}right_pad"/>
+      <origin xyz="0.05843 0.0249 0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="${prefix}camera_support">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find r5_description)/meshes/camera_support.obj"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${prefix}camera_support_fixed" type="fixed">
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}camera_support"/>
+      <origin xyz="0.045 0 0.021"/>
+    </joint>
+
+    <link name="${prefix}camera">
+      <visual>
+        <geometry>
+          <mesh
+              filename="file://$(find r5_description)/meshes/d405.obj"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${prefix}camera_fixed" type="fixed">
+      <origin xyz="0.0385 0 0.0475" rpy="0 0.523 0"/>
+      <parent link="${prefix}camera_support"/>
+      <child link="${prefix}camera"/>
+    </joint>
+  </xacro:macro>
+</robot>

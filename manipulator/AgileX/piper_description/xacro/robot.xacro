@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<robot name="Piper single" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find piper_description)/xacro/Piper.xacro"/>
+  <xacro:Piper name=""/>
+</robot>

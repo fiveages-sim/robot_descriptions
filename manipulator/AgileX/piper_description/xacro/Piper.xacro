@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find piper_description)/xacro/master.xacro"/>
+
+  <xacro:macro name="Piper" params="name is_master:=false">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <xacro:if value="${is_master}">
+      <xacro:include filename="$(find piper_description)/xacro/master.xacro"/>
+    </xacro:if>
+    <xacro:unless value="${is_master}">
+      <xacro:include filename="$(find piper_description)/xacro/slave.xacro"/>
+    </xacro:unless>
+    
+    <link name="${prefix}base_link">
+      <inertial>
+        <origin xyz="-0.00473641164191482 2.56829134630247E-05 0.041451518036016"/>
+        <mass value="1.02"/>
+        <inertia ixx="0.00267433" ixy="-0.00000073" ixz="-0.00017389" iyy="0.00282612" iyz="0.0000004"
+                 izz="0.00089624"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/base_link.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/base_link.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${prefix}link1">
+      <inertial>
+        <origin xyz="0.000121504734057468 0.000104632162460536 -0.00438597309559853"/>
+        <mass value="0.71"/>
+        <inertia ixx="0.00048916" ixy="-0.00000036" ixz="-0.00000224" iyy="0.00040472" iyz="-0.00000242"
+                 izz="0.00043982"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link1.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link1.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}joint1" type="revolute">
+      <origin xyz="0 0 0.123" rpy="0 0 0"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}link1"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.618" upper="2.618" effort="100" velocity="5"/>
+    </joint>
+    <link name="${prefix}link2">
+      <inertial>
+        <origin xyz="0.198666145229743 -0.010926924140076 0.00142121714502687" rpy="0 0 0"/>
+        <mass value="1.17"/>
+        <inertia ixx="0.00116918" ixy="-0.00180037" ixz="0.00025146" iyy="0.06785384" iyz="-0.00000455"
+                 izz="0.06774489"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link2.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link2.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}joint2" type="revolute">
+      <origin xyz="0 0 0" rpy="1.5708 -0.1359 -3.1416"/>
+      <parent link="${prefix}link1"/>
+      <child link="${prefix}link2"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="3.14" effort="100" velocity="5"/>
+    </joint>
+    <link name="${prefix}link3">
+      <inertial>
+        <origin xyz="-0.0202737662122021 -0.133914995944595 -0.000458682652737356" rpy="0 0 0"/>
+        <mass value="0.5"/>
+        <inertia ixx="0.01361711" ixy="0.00165794" ixz="-0.00000048" iyy="0.00045024" iyz="-0.00000045"
+                 izz="0.01380322"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link3.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link3.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}joint3" type="revolute">
+      <origin xyz="0.28503 0 0" rpy="0 0 -1.7939"/>
+      <parent link="${prefix}link2"/>
+      <child link="${prefix}link3"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.967" upper="0" effort="100" velocity="5"/>
+    </joint>
+    <link name="${prefix}link4">
+      <inertial>
+        <origin xyz="-9.66635791618542E-05 0.000876064475651083 -0.00496880904640868" rpy="0 0 0"/>
+        <mass value="0.38"/>
+        <inertia ixx="0.00018501" ixy="0.00000054" ixz="0.00000120" iyy="0.00018965" iyz="-0.00000841"
+                 izz="0.00015484"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link4.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link4.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}joint4" type="revolute">
+      <origin xyz="-0.021984 -0.25075 0" rpy="1.5708 0 0"/>
+      <parent link="${prefix}link3"/>
+      <child link="${prefix}link4"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.745" upper="1.745" effort="100" velocity="5"/>
+    </joint>
+    <link name="${prefix}link5">
+      <inertial>
+        <origin xyz="-4.10554118924211E-05 -0.0566486692356075 -0.0037205791677906" rpy="0 0 0"/>
+        <mass value="0.383"/>
+        <inertia ixx="0.00166169" ixy="0.00000006" ixz="-0.00000007" iyy="0.00018510" iyz="0.00001026"
+                 izz="0.00164321"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link5.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link5.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}joint5" type="revolute">
+      <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+      <parent link="${prefix}link4"/>
+      <child link="${prefix}link5"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.22" upper="1.22" effort="100" velocity="5"/>
+    </joint>
+    <joint name="${prefix}joint6" type="revolute">
+      <origin xyz="0 -0.091 0" rpy="1.5708 0 0"/>
+      <parent link="${prefix}link5"/>
+      <child link="${prefix}link6"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.0944" upper="2.0944" effort="100" velocity="3"/>
+    </joint>
+
+    <xacro:Gripper name="${prefix}"/>
+  </xacro:macro>
+</robot>

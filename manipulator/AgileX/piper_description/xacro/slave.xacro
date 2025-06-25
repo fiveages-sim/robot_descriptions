@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="Gripper" params="name">
+    <link name="${prefix}link6">
+      <inertial>
+        <origin xyz="-0.000183807162235591 8.05033155577911E-05 0.0321436689908876"/>
+        <mass value="0.657"/>
+        <inertia ixx="0.00092934" ixy="0.00000034" ixz="-0.00000738" iyy="0.00071447" iyz="0.00000005"
+                 izz="0.00039442"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link6.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link6.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${prefix}link7">
+      <inertial>
+        <origin xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025" rpy="0 0 0"/>
+        <mass value="0.025"/>
+        <inertia ixx="0.00007371" ixy="-0.00000113" ixz="0.00000021" iyy="0.00000781" iyz="-0.00001372"
+                 izz="0.0000747"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link7.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link7.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}joint7" type="prismatic">
+      <origin xyz="0 0 0.1358"/>
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}link7"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="0" upper="0.035" effort="10" velocity="1"/>
+    </joint>
+    <link name="${prefix}link8">
+      <inertial>
+        <origin xyz="0.000651231850419722 -0.0491929869131991 0.00972258769184024"/>
+        <mass value="0.025"/>
+        <inertia ixx="0.00007371" ixy="-0.00000113" ixz="0.00000021" iyy="0.00000781" iyz="-0.00001372"
+                 izz="0.0000747"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link8.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://piper_description/meshes/link8.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}joint8" type="prismatic">
+      <origin xyz="0 0 0.1358"/>
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}link8"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0" upper="0.035" effort="10" velocity="1"/>
+    </joint>
+    <link name="${prefix}gripper_center"/>
+    <joint name="${prefix}gripper_center_fixed" type="fixed">
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}gripper_center"/>
+      <origin xyz="0 0 0.1358"/>
+    </joint>
+
+    <link name="${prefix}camera"/>
+    <joint name="${prefix}camera_fixed" type="fixed">
+      <origin xyz="-0.073 0 0.041" rpy="0 -1.22 0"/>
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}camera"/>
+    </joint>
+  </xacro:macro>
+</robot>
