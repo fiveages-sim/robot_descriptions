@@ -2,7 +2,7 @@
 
 This repository contains the urdf model of go2.
 
-![go2](../../.images/go2.png)
+![go2](../../.images/unitree_go2.png)
 
 Tested environment:
 
