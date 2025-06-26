@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="a1y" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find a1xy_description)/xacro/xy_base.xacro"/>
+  <xacro:Base name=""/>
+
+  <xacro:include filename="$(find a1xy_description)/xacro/gripper.xacro"/>
+  <xacro:Gripper/>
+
+  <xacro:arg name="type" default="x"/>
+
+  <xacro:if value="${'$(arg type)' == 'x'}">
+    <xacro:include filename="$(find a1xy_description)/xacro/x_link.xacro"/>
+  </xacro:if>
+  <xacro:unless value="${'$(arg type)' == 'x'}">
+    <xacro:include filename="$(find a1xy_description)/xacro/y_link.xacro"/>
+  </xacro:unless>
+
+  <xacro:Arm/>
+</robot>
