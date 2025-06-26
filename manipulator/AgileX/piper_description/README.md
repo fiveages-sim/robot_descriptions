@@ -8,23 +8,18 @@ colcon build --packages-up-to piper_description --symlink-install
 
 ## 2. Visualize the robot
 
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py
-```
-
 * Launch Slave Arm with camera
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch piper_description visualize.launch.py
-```
-![piper](../../.images/agilex_piper.png)
+    ```bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 launch robot_visualize_config manipulator.launch.py
+    ```
+    ![piper](../../.images/agilex_piper.png)
 * Launch Master Arm
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch piper_description master.launch.py
-```
-![piper master](../../../../arm_ros2_control/.images/agilex_piper_master.png)
+    ```bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 launch robot_visualize_config manipulator.launch.py arm_type:="master"
+    ```
+    ![piper master](../../.images/agilex_piper_master.png)
 
 ## 3. OCS2 Demo
 ```bash

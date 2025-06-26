@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="R5" params="name">
+  <xacro:macro name="X5" params="name">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
     <link name="${prefix}base_link">

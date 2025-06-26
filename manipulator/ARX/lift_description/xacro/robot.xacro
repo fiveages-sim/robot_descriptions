@@ -1,160 +1,27 @@
 <?xml version="1.0" ?>
 <robot name="lift" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find r5_description)/xacro/R5.xacro"/>
+  <xacro:arg name="type" default="r5"/>
 
-  <link name="base_link">
-    <inertial>
-      <origin xyz="0.015300075250394498 -0.0039712791148939055 0.21685783167580347"/>
-      <mass value="67.7696558151508"/>
-      <inertia ixx="7.900786" ixy="-0.021075" ixz="0.25289" iyy="8.068966" iyz="0.12408" izz="2.254894"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/base_link.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/base_link.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="wheel_1">
-    <inertial>
-      <origin xyz="-0.0013052205916280202 0.0022598671755268973 1.318970376112949e-07"/>
-      <mass value="4.24803000494366"/>
-      <inertia ixx="0.008031" ixy="-0.002428" ixz="0.0" iyy="0.010834" iyz="0.0" izz="0.006629"/>
-    </inertial>
-  </link>
-  <link name="wheel_2">
-    <inertial>
-      <origin xyz="-0.0013052205916208315 -0.0022598671755325594 -1.318970357273852e-07"/>
-      <mass value="4.24803000494366"/>
-      <inertia ixx="0.008031" ixy="0.002428" ixz="-0.0" iyy="0.010834" iyz="0.0" izz="0.006629"/>
-    </inertial>
-  </link>
-  <link name="wheel_3">
-    <inertial>
-      <origin xyz="0.0026089441594678298 -1.3189703553351252e-07 2.8695680726054107e-07"/>
-      <mass value="4.24803000494366"/>
-      <inertia ixx="0.012235" ixy="-0.0" ixz="0.0" iyy="0.006629" iyz="0.0" izz="0.006629"/>
-    </inertial>
-  </link>
-  <link name="lift_1">
-    <inertial>
-      <origin xyz="-0.13956899916103924 0 0.07323798891482189"/>
-      <mass value="17.38744536890084"/>
-      <inertia ixx="0.187458" ixy="-0.000206" ixz="0.023942" iyy="0.178157" iyz="-0.000153" izz="0.29708"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/lift.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/lift.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="joint_wheel1" type="fixed">
-    <origin xyz="-0.182349 0.315838 0.03"/>
-    <parent link="base_link"/>
-    <child link="wheel_1"/>
-  </joint>
-  <joint name="joint_wheel2" type="fixed">
-    <origin xyz="-0.182349 -0.315838 0.03"/>
-    <parent link="base_link"/>
-    <child link="wheel_2"/>
-    <axis xyz="-0.5 -0.866025 0.0"/>
-  </joint>
-  <joint name="joint_wheel3" type="fixed">
-    <origin xyz="0.364699 0.0 0.03"/>
-    <parent link="base_link"/>
-    <child link="wheel_3"/>
-    <axis xyz="1.0 0.0 -0.0"/>
-  </joint>
-  <joint name="joint_lift" type="prismatic">
-    <origin xyz="0.022199 0 0.233"/>
-    <parent link="base_link"/>
-    <child link="lift_1"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="100" lower="0.0" upper="0.86" velocity="100"/>
-  </joint>
-  <link name="h_base_link">
-    <inertial>
-      <origin xyz="-0.0020743076738515215 -1.5307881645835308e-08 -0.024619861716967787"/>
-      <mass value="0.9930933606993821"/>
-      <inertia ixx="0.000391" ixy="-0.0" ixz="1.7e-05" iyy="0.000452" iyz="0.0" izz="0.000532"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/h_base.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/h_base.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="h_link1_1">
-    <inertial>
-      <origin xyz="-1.3121512495483172e-08 -0.0017956601536253606 -0.0404485568834118"/>
-      <mass value="1.1585686692835446"/>
-      <inertia ixx="0.000714" ixy="-0.0" ixz="0.0" iyy="0.000677" iyz="3.4e-05" izz="0.000524"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/h_link1.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/h_link1.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="h_link2_1">
-    <inertial>
-      <origin xyz="0.03081593597576142 -0.022504711493597663 -0.0659240377971316"/>
-      <mass value="1.5752562353484625"/>
-      <inertia ixx="0.004555" ixy="0.000214" ixz="0.000252" iyy="0.004541" iyz="-0.000299" izz="0.00636"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/h_link2.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="file://$(find lift_description)/meshes/h_link2.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="joint_h_1" type="continuous">
-    <origin xyz="0.0 0.0 -0.046"/>
-    <parent link="h_base_link"/>
-    <child link="h_link1_1"/>
-    <axis xyz="0.0 -0.0 1.0"/>
-    <limit effort="100" lower="-1.570796" upper="1.570796" velocity="100"/>
-  </joint>
-  <joint name="joint_h_2" type="continuous">
-    <origin xyz="0.0 0.025 -0.047"/>
-    <parent link="h_link1_1"/>
-    <child link="h_link2_1"/>
-    <axis xyz="-0.0 -1.0 0.0"/>
-    <limit effort="100" lower="-0.785398" upper="0.785398" velocity="100"/>
-  </joint>
-  <joint name="h_fixed" type="fixed">
-    <parent link="lift_1"/>
-    <child link="h_base_link"/>
-    <origin rpy="0 3.1415926 0" xyz="-0.258786 0 0.220008"/>
-  </joint>
+  <!-- 根据type参数包含不同的机械臂描述文件 -->
+  <xacro:if value="${'$(arg type)' == 'x5'}">
+    <xacro:include filename="$(find x5_description)/xacro/X5.xacro"/>
+    <!-- 使用R5宏来创建两个机械臂 -->
+    <xacro:X5 name="left_arm"/>
+    <xacro:X5 name="right_arm"/>
+  </xacro:if>
+  <xacro:unless value="${'$(arg type)' == 'x5'}">
+    <xacro:include filename="$(find r5_description)/xacro/R5.xacro"/>
+    <!-- 使用R5宏来创建两个机械臂 -->
+    <xacro:R5 name="left_arm"/>
+    <xacro:R5 name="right_arm"/>
+  </xacro:unless>
 
-  <xacro:R5 name="left_arm"/>
-  <xacro:R5 name="right_arm"/>
+  <xacro:include filename="$(find lift_description)/xacro/mobile_base.xacro"/>
+  <xacro:include filename="$(find lift_description)/xacro/body.xacro"/>
+
+  <xacro:MobileBase/>
+  <xacro:Body/>
 
   <joint name="arm_left_fixed" type="fixed">
     <parent link="lift_1"/>

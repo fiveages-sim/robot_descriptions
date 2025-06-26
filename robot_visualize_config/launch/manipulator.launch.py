@@ -10,11 +10,18 @@ from launch.actions import DeclareLaunchArgument, OpaqueFunction
 import xacro
 
 
-def process_xacro(robot):
+def process_xacro(robot, arm_type=None):
     package_description = robot + "_description"
     pkg_path = os.path.join(get_package_share_directory(package_description))
     xacro_file = os.path.join(pkg_path, 'xacro', 'robot.xacro')
-    robot_description_config = xacro.process_file(xacro_file)
+    
+    # 如果指定了arm_type，则传递给xacro，否则不传递
+    if arm_type and arm_type.strip():
+        mappings = {'type': arm_type}
+        robot_description_config = xacro.process_file(xacro_file, mappings=mappings)
+    else:
+        robot_description_config = xacro.process_file(xacro_file)
+    
     return robot_description_config.toxml()
 
 
@@ -24,7 +31,8 @@ def generate_launch_description():
 
     def launch_setup(context, *args, **kwargs):
         robot_value = context.launch_configurations['robot']
-        robot_description = process_xacro(robot_value)
+        arm_type_value = context.launch_configurations.get('arm_type', '')
+        robot_description = process_xacro(robot_value, arm_type_value)
         return [
             Node(
                 package='rviz2',
@@ -59,6 +67,11 @@ def generate_launch_description():
             'robot',
             default_value='piper',
             description='Robot name to visualize'
+        ),
+        DeclareLaunchArgument(
+            'arm_type',
+            default_value='',
+            description='Type of the manipulator arm (empty means no type parameter passed to xacro)'
         ),
         OpaqueFunction(function=launch_setup)
     ])

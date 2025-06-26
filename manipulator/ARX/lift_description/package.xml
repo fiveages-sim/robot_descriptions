@@ -5,7 +5,7 @@
     <description>
         <p>URDF Description package for ARX Lift</p>
         <p>This package contains configuration data, 3D models and launch files
-            for R5a robot
+            for ARX Lift robot, can choose between X5 and R5 manipulator arms.
         </p>
     </description>
     <author>TODO</author>
@@ -14,6 +14,8 @@
     <license>BSD</license>
 
     <exec_depend>robot_visualize_config</exec_depend>
+    <exec_depend>x5_description</exec_depend>
+    <exec_depend>r5_description</exec_depend>
 
     <export>
         <build_type>ament_cmake</build_type>

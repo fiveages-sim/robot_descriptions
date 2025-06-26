@@ -1,6 +1,16 @@
 <?xml version="1.0"?>
 
 <robot name="Piper single" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="type" default="slave"/>
+
   <xacro:include filename="$(find piper_description)/xacro/Piper.xacro"/>
-  <xacro:Piper name=""/>
+  
+  <!-- 根据type参数决定is_master的值 -->
+  <xacro:if value="${'$(arg type)' == 'master'}">
+    <xacro:Piper name="" is_master="true"/>
+  </xacro:if>
+  <xacro:unless value="${'$(arg type)' == 'master'}">
+    <xacro:Piper name="" is_master="false"/>
+  </xacro:unless>
 </robot>

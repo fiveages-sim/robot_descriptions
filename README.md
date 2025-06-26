@@ -8,21 +8,21 @@ I collect them from internet and repaint some of them, better visualization can 
 
 | Brand    | Model                                      | Repaint | Images                                                     |
 |----------|--------------------------------------------|---------|------------------------------------------------------------|
-| Booster  | [T1](humanoid/Booster/t1_description/)     | Yes     | <img src="humanoid/.images/booster_t1.png" width="200">    |
+| Booster  | [T1](humanoid/Booster/t1_description/)     | Yes     | <img src="humanoid/.images/booster_t1.png" width="200" style="object-fit: cover; object-position: center;">    |
 | RobotEra | [xbot](humanoid/RobotEra/xbot_description) | Yes     | <img src="humanoid/.images/robotera_xbot.png" width="200"> |
 
 
 ## Manipulator Robots
 
-| Brand  | Model                                                         | Repaint | Images                                                        |
-|--------|---------------------------------------------------------------|---------|---------------------------------------------------------------|
-| Dobot  | [CR5](manipulator/Dobot/cr5_description)                      | Yes     | <img src="manipulator/.images/dobot_cr5.png" width="200">     |
-| ARX    | [R5](manipulator/ARX/r5_description)                          | Yes     | <img src="manipulator/.images/arx_r5.png" width="200">        |
-| ARX    | [X5](manipulator/ARX/x5_description)                          | Yes     | <img src="manipulator/.images/arx_x5.png" width="200">        |
-| ARX    | [LIFT](manipulator/ARX/lift_description)                      | Yes     | <img src="manipulator/.images/arx_lift.png" width="200">      |
-| ARX    | [X7S](manipulator/ARX/x7s_description)                        | Yes     | <img src="manipulator/.images/arx_x7s.png" width="200">       |
-| AgileX | [Piper](manipulator/AgileX/piper_description)                 | Yes     | <img src="manipulator/.images/agilex_piper.png" width="200">  |
-| AgileX | [Mobile ALoha2](manipulator/AgileX/mobile_aloha2_description) | Yes     | <img src="manipulator/.images/agilex_aloha2.png" width="200"> |
+| Brand  | Model                                                         | Repaint | Images                                                                                                                                           |
+|--------|---------------------------------------------------------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dobot  | [CR5](manipulator/Dobot/cr5_description)                      | Yes     | <img src="manipulator/.images/dobot_cr5.png" width="200">                                                                                        |
+| ARX    | [R5](manipulator/ARX/r5_description)                          | Yes     | <img src="manipulator/.images/arx_r5.png" width="200">                                                                                           |
+| ARX    | [X5](manipulator/ARX/x5_description)                          | Yes     | <img src="manipulator/.images/arx_x5.png" width="200">                                                                                           |
+| ARX    | [LIFT](manipulator/ARX/lift_description)                      | Yes     | <img src="manipulator/.images/arx_lift.png" width="200" height="150" style="object-fit: cover; object-position: center;">     <img src="manipulator/.images/arx_lift2.png" width="200" height="150" style="object-fit: cover; object-position: center;"> |
+| ARX    | [X7S](manipulator/ARX/x7s_description)                        | Yes     | <img src="manipulator/.images/arx_x7s.png" width="200">                                                                                          |
+| AgileX | [Piper](manipulator/AgileX/piper_description)                 | Yes     | <img src="manipulator/.images/agilex_piper.png" width="200" height="120" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/agilex_piper_master.png" width="200" height="120" style="object-fit: cover; object-position: center;">                 |
+| AgileX | [Mobile ALoha2](manipulator/AgileX/mobile_aloha2_description) | Yes     | <img src="manipulator/.images/agilex_aloha2.png" width="200">                                                                                    |
 
 ## Quadruped Robots
 

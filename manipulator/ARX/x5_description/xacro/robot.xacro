@@ -2,5 +2,5 @@
 
 <robot name="X5 single" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:include filename="$(find x5_description)/xacro/X5.xacro"/>
-  <xacro:R5 name=""/>
+  <xacro:X5 name=""/>
 </robot>
