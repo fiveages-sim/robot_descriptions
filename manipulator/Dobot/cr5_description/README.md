@@ -22,11 +22,12 @@ colcon build --packages-up-to cr5_description --symlink-install
     source ~/ros2_ws/install/setup.bash
     ros2 launch robot_visualize_config manipulator.launch.py robot:=cr5 arm_type:="robotiq85"
     ```
-  ![cr5](../../.images/dobot_cr5_robotiq85.png)
-
+  ![cr5 robotiq85](../../.images/dobot_cr5_robotiq85.png)
 
 ## 3. OCS2 Demo
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch cr5_description ocs2.launch.py
+ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5
 ```
+
+![cr5 ocs2](../../.images/dobot_cr5_ocs2.gif)

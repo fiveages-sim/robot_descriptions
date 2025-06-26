@@ -18,3 +18,9 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=x5
 ```
 
 ![arx x5](../../.images/arx_x5.png)
+
+## 3. OCS2 Demo
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=x5
+```

@@ -24,6 +24,11 @@ I collect them from internet and repaint some of them, better visualization can 
 | AgileX | [Piper](manipulator/AgileX/piper_description)                 | Yes     | <img src="manipulator/.images/agilex_piper.png" width="200" height="120" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/agilex_piper_master.png" width="200" height="120" style="object-fit: cover; object-position: center;">  |
 | AgileX | [Mobile ALoha2](manipulator/AgileX/mobile_aloha2_description) | Yes     | <img src="manipulator/.images/agilex_aloha2.png" width="200">                                                                                                                                                                                                       |
 
+### Manipulator Robots with OCS2
+I add mobile manipulator OCS2 config for some of the manipulator robots, you can use them with the `manipulator_ocs2.launch.py` launch file. More details can be found in the [OCS2 documentation](docs/OCS2.md).
+
+![cr5 ocs2](manipulator/.images/dobot_cr5_ocs2.gif)
+
 ## Grippers
 | Brand     | Model | Mimic | Images                                                 | Collision |
 |-----------|-------|-------|--------------------------------------------------------| ------|

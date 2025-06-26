@@ -73,7 +73,7 @@
     <joint name="${prefix}gripper_center_fixed" type="fixed">
       <parent link="${prefix}link6"/>
       <child link="${prefix}gripper_center"/>
-      <origin xyz="0 0 0.1358"/>
+      <origin xyz="0 0 0.1358" rpy="0 -1.57 0"/>
     </joint>
 
     <link name="${prefix}camera"/>

@@ -22,5 +22,5 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=r5
 ## 3. OCS2 Demo
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch r5_description ocs2.launch.py
+ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=r5
 ```
