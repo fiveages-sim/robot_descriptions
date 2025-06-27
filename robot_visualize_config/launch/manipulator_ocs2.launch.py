@@ -13,6 +13,8 @@ def generate_launch_description():
     使用方法:
     ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5
     ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=franka
+    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5 type:=red
+    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=piper type:=long_arm
     """
     
     # 机器人名称参数
@@ -20,6 +22,13 @@ def generate_launch_description():
         name='robot_name',
         default_value='cr5',
         description='Name of the robot (e.g., cr5, piper, x5, etc.)'
+    )
+
+    # 机器人类型参数
+    robot_type = launch.actions.DeclareLaunchArgument(
+        name='type',
+        default_value='',
+        description='Robot type/variant (e.g., red, blue, long_arm, short_arm, etc.). If empty, uses default configuration.'
     )
 
     debug = launch.actions.DeclareLaunchArgument(
@@ -30,15 +39,28 @@ def generate_launch_description():
 
     def launch_setup(context, *args, **kwargs):
         robot_name_value = context.launch_configurations['robot_name']
+        type_value = context.launch_configurations['type']
         debug_value = context.launch_configurations['debug']
         
-        print(f"🚀 Launching OCS2 for robot: {robot_name_value}")
+        # 生成带类型的机器人标识符
+        robot_identifier = robot_name_value
+        if type_value and type_value.strip():
+            robot_identifier = f"{robot_name_value}_{type_value}"
+            print(f"🚀 Launching OCS2 for robot: {robot_name_value} (type: {type_value})")
+        else:
+            print(f"🚀 Launching OCS2 for robot: {robot_name_value} (default type)")
         
         # 自动生成所有路径
         try:
+            # URDF文件路径 - 如果有类型则使用类型版本，否则使用默认版本
+            if type_value and type_value.strip():
+                urdf_filename = f'{robot_identifier}.urdf'
+            else:
+                urdf_filename = f'{robot_name_value}.urdf'
+                
             urdf_file_value = os.path.join(
                 get_package_share_directory(f'{robot_name_value}_description'),
-                'urdf', f'{robot_name_value}.urdf'
+                'urdf', urdf_filename
             )
             print(f"📁 URDF: {urdf_file_value}")
         except Exception as e:
@@ -56,9 +78,10 @@ def generate_launch_description():
             return []
         
         try:
+            # lib folder路径 - 包含类型信息
             lib_folder_value = os.path.join(
                 get_package_share_directory('ocs2_mobile_manipulator'),
-                'auto_generated', robot_name_value
+                'auto_generated', robot_identifier
             )
             print(f"📁 Lib folder: {lib_folder_value}")
         except Exception as e:
@@ -88,6 +111,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         robot_name,
+        robot_type,
         debug,
         OpaqueFunction(function=launch_setup)
     ]) 

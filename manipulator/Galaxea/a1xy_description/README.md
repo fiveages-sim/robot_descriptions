@@ -25,3 +25,16 @@ colcon build --packages-up-to a1xy_description --symlink-install
     ```
 
   ![A1X](../../.images/galaxea_a1y.png)
+
+## 3. OCS2 Demo
+* A1 X
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=a1xy
+  ```
+
+* A1 Y
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=a1xy type:=y
+  ```
