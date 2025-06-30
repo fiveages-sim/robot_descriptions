@@ -360,6 +360,41 @@
       <parent link="${prefix}gripper"/>
       <child link="${prefix}motor6"/>
     </joint>
+    <link name="${prefix}camera_support">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find so_arm_description)/meshes/so101/camera_support.stl"/>
+        </geometry>
+        <material name="3d_printed"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find so_arm_description)/meshes/so101/camera_support.stl"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}camera_support_joint" type="fixed">
+      <origin xyz="-0.001 0.025 -0.023" rpy="-1.5708 1.5708 0"/>
+      <parent link="${prefix}gripper"/>
+      <child link="${prefix}camera_support"/>
+    </joint>
+    <link name="${prefix}camera">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find so_arm_description)/meshes/so101/camera.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find so_arm_description)/meshes/so101/camera.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}camera_joint" type="fixed">
+      <origin xyz="0.024 0 0.0375" rpy="0 0.611 0"/>
+      <parent link="${prefix}camera_support"/>
+      <child link="${prefix}camera"/>
+    </joint>
 
     <!-- Joint from wrist to gripper -->
     <joint name="${prefix}wrist_roll" type="revolute">

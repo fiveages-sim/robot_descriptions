@@ -1,5 +1,8 @@
 # SO Arm Description
 
+* camera support: [WowRobot](https://wowrobo.com/home)
+* camera model: [3dwhere](https://www.3dwhere.com/models/606v9dvz913o54jn)
+
 ## 1. Build
 ```bash
 cd ~/ros2_ws
