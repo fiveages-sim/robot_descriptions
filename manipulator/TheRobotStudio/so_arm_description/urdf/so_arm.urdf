@@ -15,7 +15,7 @@
   <!-- Frame baseframe (dummy link + fixed joint) -->
   <link name="base_link"/>
   <joint name="base_joint" type="fixed">
-    <origin rpy="0 0 1.5708" xyz="-0.020791 -0.0157608 -0.0324817"/>
+    <origin xyz="-0.020791 -0.0157608 -0.0324817"/>
     <parent link="base_link"/>
     <child link="base"/>
   </joint>
@@ -352,6 +352,41 @@
     <origin rpy="-1.5708 -5.55112e-17 -1.38213e-14" xyz="0.0077 0.0001 -0.0234"/>
     <parent link="gripper"/>
     <child link="motor6"/>
+  </joint>
+  <link name="camera_support">
+    <visual>
+      <geometry>
+        <mesh filename="package://so_arm_description/meshes/so101/camera_support.stl"/>
+      </geometry>
+      <material name="3d_printed"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://so_arm_description/meshes/so101/camera_support.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="camera_support_joint" type="fixed">
+    <origin rpy="-1.5708 1.5708 0" xyz="-0.001 0.025 -0.023"/>
+    <parent link="gripper"/>
+    <child link="camera_support"/>
+  </joint>
+  <link name="camera">
+    <visual>
+      <geometry>
+        <mesh filename="package://so_arm_description/meshes/so101/camera.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://so_arm_description/meshes/so101/camera.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="camera_joint" type="fixed">
+    <origin rpy="0 0.611 0" xyz="0.024 0 0.0375"/>
+    <parent link="camera_support"/>
+    <child link="camera"/>
   </joint>
   <!-- Joint from wrist to gripper -->
   <joint name="wrist_roll" type="revolute">
