@@ -12,11 +12,14 @@
   </material>
 
   <xacro:arg name="type" default="so101"/>
-
-  <xacro:include filename="$(find so_arm_description)/xacro/so101.xacro"/>
   
   <!-- 根据type参数决定is_master的值 -->
   <xacro:if value="${'$(arg type)' == 'so101'}">
-    <xacro:Arm name=""/>
+    <xacro:include filename="$(find so_arm_description)/xacro/so101.xacro"/>
   </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'so100'}">
+    <xacro:include filename="$(find so_arm_description)/xacro/so100.xacro"/>
+  </xacro:if>
+
+  <xacro:Arm name=""/>
 </robot>

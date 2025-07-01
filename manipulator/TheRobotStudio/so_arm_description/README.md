@@ -11,15 +11,24 @@ colcon build --packages-up-to so_arm_description --symlink-install
 
 ## 2. Visualize the robot
 
+* SO100
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_visualize_config manipulator.launch.py robot:=so_arm arm_type:=so100
+  ```
+    ![so100](../../.images/so100.png)
+
+* SO101
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_visualize_config manipulator.launch.py robot:=so_arm
   ```
-
-![so101](../../.images/so101.png)
+    ![so101](../../.images/so101.png)
 
 ## 3. OCS2 Demo
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=so_arm
-```
+
+* SO101
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=so_arm
+  ```
