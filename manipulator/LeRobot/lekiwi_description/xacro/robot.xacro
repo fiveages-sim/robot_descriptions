@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+
+<robot name="Lekiwi" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="type" default="so100"/>
+
+  <xacro:include filename="$(find lekiwi_description)/xacro/base.xacro"/>
+  <xacro:mobile_base name=""/>
+  
+  <!-- 根据type参数决定is_master的值 -->
+  <xacro:if value="${'$(arg type)' == 'so101'}">
+    <xacro:include filename="$(find so_arm_description)/xacro/so101.xacro"/>
+
+    <joint name="arm_mount_joint" type="fixed">
+      <origin xyz="0 0.04 0.007" rpy="0 0 1.5708"/>
+      <parent link="base_plate_layer2" />
+      <child link="arm_base_link" />
+    </joint>
+
+    <xacro:Arm name="arm"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'so100'}">
+    <xacro:include filename="$(find so_arm_description)/xacro/so100.xacro"/>
+
+    <joint name="arm_mount_joint" type="fixed">
+      <origin xyz="0 0.04 0.007" rpy="0 0 1.5708"/>
+      <parent link="base_plate_layer2" />
+      <child link="arm_base_link" />
+    </joint>
+
+    <joint name="arm_camera_mount_joint" type="fixed">
+      <origin xyz="0 -0.016 -0.024" rpy="3.1416 0 -1.5708"/>
+      <parent link="arm_Fixed_Jaw" />
+      <child link="arm_camera_mount" />
+    </joint>
+    <joint name="arm_camera_joint" type="fixed">
+      <origin xyz="0.02556 0 0.04370" rpy="0 0.61086 0" />
+      <parent link="arm_camera_mount" />
+      <child link="arm_camera" />
+    </joint>
+    <link name="arm_camera_mount">
+      <inertial>
+        <origin xyz="-0.012386670399303806 -0.0001931819643147037 0.033744611486572575" rpy="0.0 -0.0 0.0" />
+        <mass value="0.14254654385043797" />
+        <inertia ixx="6.637825885912572e-05" iyy="9.286021404085985e-05" izz="2.9364578730897446e-05" ixy="-1.9686261197744952e-08" iyz="5.578936388252534e-07" ixz="-2.8501487566848823e-07" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find lekiwi_description)/meshes/base/wrist_camera_mount.stl"/>
+        </geometry>
+        <material name="3d_printed"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find lekiwi_description)/meshes/base/wrist_camera_mount.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="arm_camera">
+      <inertial>
+        <origin xyz="-0.01552129548236823 0.006733132771749837 -0.011599583774026805"/>
+        <mass value="0.039920058315088616"/>
+        <inertia ixx="5.3846132096854386e-06" iyy="7.612080863465678e-06" izz="5.20250984027362e-06"
+                 ixy="3.6969144888008537e-07" iyz="-9.014266851093004e-08" ixz="3.317962541199677e-08"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find so_arm_description)/meshes/so101/camera.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find so_arm_description)/meshes/so101/camera.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <xacro:Arm name="arm"/>
+  </xacro:if>
+</robot>

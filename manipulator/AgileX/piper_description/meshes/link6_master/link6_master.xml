@@ -1,0 +1,25 @@
+<mujoco model="link6_master">
+  <default>
+    <default class="visual">
+      <geom group="2" type="mesh" contype="0" conaffinity="0"/>
+    </default>
+    <default class="collision">
+      <geom group="3" type="mesh"/>
+    </default>
+  </default>
+  <asset>
+    <material name="grey_metal.001" specular="0.5" shininess="0.09604875199999999" rgba="0.191349 0.191349 0.191349 1.000000"/>
+    <mesh file="link6_master.obj"/>
+    <mesh file="link6_master_collision_0.obj"/>
+    <mesh file="link6_master_collision_1.obj"/>
+    <mesh file="link6_master_collision_2.obj"/>
+  </asset>
+  <worldbody>
+    <body name="link6_master">
+      <geom material="grey_metal.001" mesh="link6_master" class="visual"/>
+      <geom mesh="link6_master_collision_0" rgba="0.8265183860389108 0.46796048381429456 0.4760043514843293 1" class="collision"/>
+      <geom mesh="link6_master_collision_1" rgba="0.2516411853008568 0.9134559847950654 0.14117825796051642 1" class="collision"/>
+      <geom mesh="link6_master_collision_2" rgba="0.49592506027684224 0.6665077840804111 0.49125667966772624 1" class="collision"/>
+    </body>
+  </worldbody>
+</mujoco>
