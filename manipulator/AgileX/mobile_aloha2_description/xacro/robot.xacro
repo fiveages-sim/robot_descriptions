@@ -312,16 +312,13 @@
     <visual>
       <origin xyz="0 0 0.168" rpy="0 0 3.14"/>
       <geometry>
-        <mesh filename="package://mobile_aloha2_description/meshes/body.dae"/>
+        <mesh filename="package://mobile_aloha2_description/meshes/body.obj"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
-      </material>
     </visual>
     <collision>
       <origin xyz="0 0 0.168" rpy="0 0 3.14"/>
       <geometry>
-        <mesh filename="package://mobile_aloha2_description/meshes/body.dae"/>
+        <mesh filename="package://mobile_aloha2_description/meshes/body.obj"/>
       </geometry>
     </collision>
   </link>
