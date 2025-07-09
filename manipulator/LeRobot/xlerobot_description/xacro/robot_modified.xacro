@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+<robot name="XLerobot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="type" default="so101"/>
+
+  <material name="white">
+    <color rgba="0.1 0.1 0.1 1"/>
+  </material>
+
+  <material name="grey">
+    <color rgba="0.6 0.6 0.6 1"/>
+  </material>
+
+  <material name="blue">
+    <color rgba="0.2 0.3 0.6 1"/>
+  </material>
+
+  <material name="green">
+    <color rgba="0.6 0.5 0.1 1"/>
+  </material>
+
+  <material name="motor">
+    <color rgba="0.02 0.02 0.02 1"/>
+  </material>
+
+  <link name="root"/>
+  <link name="root_arm_1_link_1"/>
+
+  <link name="root_arm_1_link_2"/>
+
+  <joint name="root_x_axis_joint" type="prismatic">
+    <parent link="root"/>
+    <child link="root_arm_1_link_1"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="100" lower="-20" upper="20" velocity="0.50"/>
+    <dynamics damping="10.0" friction="10"/>
+  </joint>
+
+  <joint name="root_y_axis_joint" type="prismatic">
+    <parent link="root_arm_1_link_1"/>
+    <child link="root_arm_1_link_2"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" lower="-20" upper="20" velocity="0.50"/>
+    <dynamics damping="10.0" friction="10"/>
+  </joint>
+
+  <joint name="root_z_rotation_joint" type="continuous">
+    <parent link="root_arm_1_link_2"/>
+    <child link="base_link"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="10.0" friction="1"/>
+  </joint>
+
+  <link name="base_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0.0 0.38"/>
+      <mass value="70.1294"/>
+      <inertia ixx="1.225" ixy="0.0099" ixz="0.0062" iyy="1.2853" iyz="-0.0034" izz="0.987"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0.22 0.73"/>
+      <geometry>
+        <box size="0.35 0.01 0.09"/>
+      </geometry>
+      <material name="green">
+      </material>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 -0.22 0.73"/>
+      <geometry>
+        <box size="0.35 0.01 0.09"/>
+      </geometry>
+      <material name="green">
+      </material>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.17 0 0.73"/>
+      <geometry>
+        <box size="0.01 0.45 0.09"/>
+      </geometry>
+      <material name="green">
+      </material>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.17 0 0.73"/>
+      <geometry>
+        <box size="0.01 0.45 0.09"/>
+      </geometry>
+      <material name="green">
+      </material>
+    </collision>
+    <visual name="raskog">
+      <geometry>
+        <mesh filename="file://$(find xlerobot_description)/meshes/raskogbody.stl"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <visual name="raskogwheel1">
+      <geometry>
+        <mesh filename="file://$(find xlerobot_description)/meshes/raskogwheel1.stl"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+    <visual name="raskogwheel2">
+      <geometry>
+        <mesh filename="file://$(find xlerobot_description)/meshes/raskogwheel2.stl"/>
+      </geometry>
+      <material name="motor"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.05"/>
+      <geometry>
+        <box size="0.4348 0.51 0.1"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.395"/>
+      <geometry>
+        <box size="0.35 0.45 0.59"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 -0.24 0.44"/>
+      <geometry>
+        <box size="0.1 0.04 0.68"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0.24 0.44"/>
+      <geometry>
+        <box size="0.1 0.04 0.68"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <xacro:include filename="$(find lekiwi_description)/xacro/base.xacro"/>
+  <xacro:mobile_base name="mobile"/>
+
+  <joint name="root_to_mobile" type="fixed">
+    <origin xyz="0 0 0.03"/>
+    <parent link="base_link"/>
+    <child link="mobile_base_link"/>
+  </joint>
+
+  <xacro:if value="${'$(arg type)' == 'so101'}">
+    <xacro:include filename="$(find so_arm_description)/xacro/so101.xacro"/>
+
+    <joint name="right_arm_mount_joint" type="fixed">
+      <origin xyz="0.09 -0.15 0.77"/>
+      <parent link="base_link"/>
+      <child link="right_base_link"/>
+    </joint>
+    <xacro:Arm name="right"/>
+
+    <joint name="left_arm_mount_joint" type="fixed">
+      <origin xyz="0.09 0.15 0.77"/>
+      <parent link="base_link"/>
+      <child link="left_base_link"/>
+    </joint>
+    <xacro:Arm name="left"/>
+  </xacro:if>
+
+
+  <link name="top_base_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="4.3542"/>
+      <inertia ixx="0.0045" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.0045"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.11 0 0"/>
+      <geometry>
+        <box size="0.08 0.44 0.08"/>
+      </geometry>
+      <material name="white">
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.11 0 0"/>
+      <geometry>
+        <box size="0.08 0.44 0.08"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="top_base_joint" type="fixed">
+    <origin rpy="-6.123E-17 0 0" xyz="0 0 0.73"/>
+    <parent link="base_link"/>
+    <child link="top_base_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="8.85" velocity="17.4"/>
+  </joint>
+  <link name="head_pan_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="2.2556"/>
+      <inertia ixx="0.0129" ixy="0.0002" ixz="0.0007" iyy="0.0095" iyz="-0.0" izz="0.0184"/>
+    </inertial>
+    <!-- <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.06 0.36"/>
+      </geometry>
+      <material name="green">
+      </material>
+    </visual> -->
+    <!-- <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.06 0.36"/>
+      </geometry>
+    </collision> -->
+  </link>
+
+  <joint name="head_pan_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.125 0 0.18"/>
+    <parent link="top_base_link"/>
+    <child link="head_pan_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="0.32" lower="-1.57" upper="1.57" velocity="1.57"/>
+  </joint>
+
+  <link name="head_tilt_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0081 0.0025 0.0113"/>
+      <mass value="0.9087"/>
+      <inertia ixx="0.0061" ixy="-0.0" ixz="0.0002" iyy="0.0014" iyz="-0.0001" izz="0.0061"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.2 0.08"/>
+      </geometry>
+      <material name="green">
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.2 0.08"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_tilt_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="0.05 0 0.18"/>
+    <parent link="head_pan_link"/>
+    <child link="head_tilt_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="0.68" lower="-0.76" upper="1.45" velocity="1.57"/>
+  </joint>
+
+
+  <link name="head_camera_link"/>
+  <joint name="head_camera_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.055 0 0.0225"/>
+    <parent link="head_tilt_link"/>
+    <child link="head_camera_link"/>
+  </joint>
+  <link name="head_camera_rgb_frame"/>
+  <joint name="head_camera_rgb_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0.02 0"/>
+    <parent link="head_camera_link"/>
+    <child link="head_camera_rgb_frame"/>
+  </joint>
+  <link name="head_camera_rgb_optical_frame"/>
+  <joint name="head_camera_rgb_optical_joint" type="fixed">
+    <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
+    <parent link="head_camera_rgb_frame"/>
+    <child link="head_camera_rgb_optical_frame"/>
+  </joint>
+  <link name="head_camera_depth_frame"/>
+  <joint name="head_camera_depth_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0.045 0"/>
+    <parent link="head_camera_link"/>
+    <child link="head_camera_depth_frame"/>
+  </joint>
+  <link name="head_camera_depth_optical_frame"/>
+  <joint name="head_camera_depth_optical_joint" type="fixed">
+    <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
+    <parent link="head_camera_depth_frame"/>
+    <child link="head_camera_depth_optical_frame"/>
+  </joint>
+
+
+</robot>

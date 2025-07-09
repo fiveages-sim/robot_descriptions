@@ -19,10 +19,10 @@
       <color rgba="0.4 0.8196 0.945 1.0"/>
     </material>
 
-    <link name="base_link"/>
-    <joint name="base_joint" type="fixed">
+    <link name="${prefix}base_link"/>
+    <joint name="${prefix}base_joint" type="fixed">
       <origin rpy="0 0 -1.5708"/>
-      <parent link="base_link"/>
+      <parent link="${prefix}base_link"/>
       <child link="base_plate_layer1-v5"/>
     </joint>
 

@@ -6,8 +6,7 @@
 
   <xacro:include filename="$(find lekiwi_description)/xacro/base.xacro"/>
   <xacro:mobile_base name=""/>
-  
-  <!-- 根据type参数决定is_master的值 -->
+
   <xacro:if value="${'$(arg type)' == 'so101'}">
     <xacro:include filename="$(find so_arm_description)/xacro/so101.xacro"/>
 

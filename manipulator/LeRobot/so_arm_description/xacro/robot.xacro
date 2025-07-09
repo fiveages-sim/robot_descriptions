@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 
-<robot name="Piper single" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="SO-Arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Materials -->
   <material name="3d_printed">
-<!--    <color rgba="1.0 0.82 0.12 1.0"/>-->
     <color rgba="0.4 0.8196 0.945 1.0"/>
   </material>
   <material name="sts3215">
