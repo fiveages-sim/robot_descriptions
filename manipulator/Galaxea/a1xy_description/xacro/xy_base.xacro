@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="Base" params="name">
-    <link name="base_link">
+    <link name="${prefix}base_link">
       <inertial>
         <origin
             xyz="0.00303246421307354 -0.000695340443194854 0.0297996781638517"
@@ -28,7 +28,7 @@
       </collision>
     </link>
     <link
-        name="arm_link1">
+        name="${prefix}link1">
       <inertial>
         <origin
             xyz="4.1065175135883E-07 -0.00198628171247454 0.0468863413356551"
@@ -68,7 +68,7 @@
       </collision>
     </link>
     <joint
-        name="arm_joint1"
+        name="${prefix}joint1"
         type="revolute">
       <origin
           xyz="0 0 0.08605"
@@ -76,7 +76,7 @@
       <parent
           link="base_link"/>
       <child
-          link="arm_link1"/>
+          link="${prefix}link1"/>
       <axis
           xyz="0 0 1"/>
       <limit
@@ -86,7 +86,7 @@
           velocity="10.4720"/>
     </joint>
     <link
-        name="arm_link2">
+        name="${prefix}link2">
       <inertial>
         <origin
             xyz="-0.122673818397923 -0.0295401461831619 0.00364838977156251"
@@ -126,15 +126,15 @@
       </collision>
     </link>
     <joint
-        name="arm_joint2"
+        name="${prefix}joint2"
         type="revolute">
       <origin
           xyz="0 0.03075 0.04925"
           rpy="0 0 0"/>
       <parent
-          link="arm_link1"/>
+          link="${prefix}link1"/>
       <child
-          link="arm_link2"/>
+          link="${prefix}link2"/>
       <axis
           xyz="0 1 0"/>
       <limit

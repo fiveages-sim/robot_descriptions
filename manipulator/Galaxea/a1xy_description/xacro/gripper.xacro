@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="Gripper">
-    <link name="gripper_link">
+  <xacro:macro name="Gripper" params="name">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <link name="${prefix}gripper_link">
       <inertial>
         <origin xyz="-0.0311072323899603 1.17979991887118E-08 7.93394685505433E-08"/>
         <mass value="0.604"/>
@@ -24,20 +25,10 @@
         </geometry>
       </collision>
     </link>
-    <joint name="gripper_joint" type="fixed">
-      <origin xyz="0.08165 0 0"/>
-      <parent link="arm_link6"/>
-      <child link="gripper_link"/>
-      <axis xyz="0 0 0"/>
-    </joint>
-    <link
-        name="gripper_finger_link1">
+    <link name="${prefix}gripper_finger_link1">
       <inertial>
-        <origin
-            xyz="-0.0195895895552112 -0.0151136845490034 0.00542254359093075"
-        />
-        <mass
-            value="0.027"/>
+        <origin xyz="-0.0195895895552112 -0.0151136845490034 0.00542254359093075"/>
+        <mass value="0.027"/>
         <inertia
             ixx="2.40569358477209E-06"
             ixy="3.9898459609048E-07"
@@ -57,14 +48,14 @@
         </geometry>
       </collision>
     </link>
-    <joint name="gripper_finger_joint1" type="prismatic">
+    <joint name="${prefix}gripper_finger_joint1" type="prismatic">
       <origin xyz="0.03689 0.013453 0.00012059"/>
-      <parent link="gripper_link"/>
-      <child link="gripper_finger_link1"/>
+      <parent link="${prefix}gripper_link"/>
+      <child link="${prefix}gripper_finger_link1"/>
       <axis xyz="0 1 0"/>
       <limit lower="0" upper="0.05" effort="100" velocity="0.25"/>
     </joint>
-    <link name="gripper_finger_link2">
+    <link name="${prefix}gripper_finger_link2">
       <inertial>
         <origin xyz="-0.0195895857999098 0.0151136893508115 -0.00542254357246619"/>
         <mass value="0.027"/>
@@ -87,10 +78,10 @@
         </geometry>
       </collision>
     </link>
-    <joint name="gripper_finger_joint2" type="prismatic">
+    <joint name="${prefix}gripper_finger_joint2" type="prismatic">
       <origin xyz="0.03689 -0.013453 -0.00012059"/>
-      <parent link="gripper_link"/>
-      <child link="gripper_finger_link2"/>
+      <parent link="${prefix}gripper_link"/>
+      <child link="${prefix}gripper_finger_link2"/>
       <axis xyz="0 -1 0"/>
       <limit lower="0" upper="0.05" effort="100" velocity="0.25"/>
       <mimic joint="gripper_finger_joint1" multiplier="1" offset="0"/>
