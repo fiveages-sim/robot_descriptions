@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<robot name="rm65" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="rm65" params="name">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <!-- Define constants -->
+    <xacro:property name="mesh_path" value="file://$(find rm65_description)/meshes/"/>
+    <!-- Macro for visual and collision elements -->
+    <xacro:macro name="visual_collision" params="mesh">
+      <visual>
+        <geometry>
+          <mesh filename="${mesh_path}${mesh}"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.79216 0.81961 0.93333 1"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${mesh_path}${mesh}"/>
+        </geometry>
+      </collision>
+    </xacro:macro>
+
+    <link name="${prefix}base_link">
+      <inertial>
+        <origin xyz="-0.00049840293879996 -5.19350047653785E-05 0.0600202841321701"/>
+        <mass value="0.838885281114303"/>
+        <inertia
+            ixx="0.00172321229549441"
+            ixy="3.09076898315635E-06"
+            ixz="-3.7922126488402E-05"
+            iyy="0.00170514762495823"
+            iyz="1.38793642017112E-06"
+            izz="0.000901589030906685"/>
+      </inertial>
+      <xacro:visual_collision mesh="base_link.obj"/>
+    </link>
+    <link name="${prefix}link1">
+      <inertial>
+        <origin xyz="-2.9675E-07 0.021107 -0.025188"/>
+        <mass value="0.59353"/>
+        <inertia
+            ixx="0.0012661"
+            ixy="-5.363E-09"
+            ixz="-2.109E-09"
+            iyy="0.0011816"
+            iyz="-0.00021118"
+            izz="0.00056131"/>
+      </inertial>
+      <xacro:visual_collision mesh="link1.obj"/>
+    </link>
+    <link name="${prefix}link2">
+      <inertial>
+        <origin xyz="0.15226 2.3916E-07 -0.0062027"/>
+        <mass value="0.86416"/>
+        <inertia
+            ixx="0.00063253"
+            ixy="2.0103E-09"
+            ixz="0.00042162"
+            iyy="0.0020527"
+            iyz="3.5857E-09"
+            izz="0.0019528"/>
+      </inertial>
+      <xacro:visual_collision mesh="link2.obj"/>
+    </link>
+    <link name="${prefix}link3">
+      <inertial>
+        <origin xyz="4.7194E-06 -0.059592 0.010268"/>
+        <mass value="0.28963"/>
+        <inertia
+            ixx="0.00063737"
+            ixy="-6.2601E-08"
+            ixz="-3.5046E-08"
+            iyy="0.00015649"
+            iyz="-0.00014461"
+            izz="0.00061418"/>
+      </inertial>
+      <xacro:visual_collision mesh="link3.obj"/>
+    </link>
+    <link name="${prefix}link4">
+      <inertial>
+        <origin xyz="2.9186E-07 -0.018042 -0.02154"/>
+        <mass value="0.23942"/>
+        <inertia
+            ixx="0.00028595"
+            ixy="-2.3562E-09"
+            ixz="1.3938E-09"
+            iyy="0.00026273"
+            iyz="4.424E-05"
+            izz="0.0001199"/>
+      </inertial>
+      <xacro:visual_collision mesh="link4.obj"/>
+    </link>
+    <link name="${prefix}link5">
+      <inertial>
+        <origin xyz="4.2301E-06 -0.059381 0.0070671"/>
+        <mass value="0.21879"/>
+        <inertia
+            ixx="0.00035053"
+            ixy="-2.8554E-08"
+            ixz="-1.67E-08"
+            iyy="0.00010492"
+            iyz="-7.824E-05"
+            izz="0.00033447"/>
+      </inertial>
+      <xacro:visual_collision mesh="link5.obj"/>
+    </link>
+    <link name="${prefix}link6">
+      <inertial>
+        <origin xyz="0.028764 -5.1529E-06 0.025085"/>
+        <mass value="0.22147"/>
+        <inertia
+            ixx="0.0001376"
+            ixy="-5.7488E-08"
+            ixz="-1.6634E-05"
+            iyy="0.00026855"
+            iyz="1.7799E-08"
+            izz="0.00035277"/>
+      </inertial>
+      <xacro:visual_collision mesh="link6.obj"/>
+    </link>
+
+    <joint name="${prefix}joint1" type="revolute">
+      <origin xyz="0 0 0.2405"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}link1"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-3.11" upper="3.11" effort="60" velocity="3.14"/>
+    </joint>
+    <joint name="${prefix}joint2" type="revolute">
+      <origin xyz="0 0 0" rpy="1.5708 -1.5708 0"/>
+      <parent link="${prefix}link1"/>
+      <child link="${prefix}link2"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.27" upper="2.27" effort="60" velocity="3.14"/>
+    </joint>
+    <joint name="${prefix}joint3" type="revolute">
+      <origin xyz="0.256 0 0" rpy="0 0 1.5708"/>
+      <parent link="${prefix}link2"/>
+      <child link="${prefix}link3"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.36" upper="2.36" effort="30" velocity="3.925"/>
+    </joint>
+    <joint name="${prefix}joint4" type="revolute">
+      <origin xyz="0 -0.21 -0.00030007" rpy="1.5708 0 0"/>
+      <parent link="${prefix}link3"/>
+      <child link="${prefix}link4"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-3.11" upper="3.11" effort="10" velocity="3.925"/>
+    </joint>
+    <joint name="${prefix}joint5" type="revolute">
+      <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+      <parent link="${prefix}link4"/>
+      <child link="${prefix}link5"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.23" upper="2.23" effort="10" velocity="3.925"/>
+    </joint>
+    <joint name="${prefix}joint6" type="revolute">
+      <origin xyz="0 -0.115 -0.00029971" rpy="-1.5708 0 0"/>
+      <parent link="${prefix}link5"/>
+      <child link="${prefix}link6"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="-6.28" upper="6.28" effort="10" velocity="3.925"/>
+    </joint>
+  </xacro:macro>
+</robot>
