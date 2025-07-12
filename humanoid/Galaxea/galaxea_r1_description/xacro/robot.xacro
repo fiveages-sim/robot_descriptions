@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="R1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.0024126 -8.9626E-05 0.13736"
+        rpy="0 0 0" />
+      <mass
+        value="47.63" />
+      <inertia
+        ixx="1.578"
+        ixy="-1.2021E-05"
+        ixz="0.053642"
+        iyy="1.462"
+        iyz="7.297E-06"
+        izz="2.8318" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/base_link.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh
+          filename="file://$(find galaxea_r1_description)/meshes/base_link.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="steer_motor_link1">
+    <inertial>
+      <origin xyz="0.00098921 -0.034312 -0.034597"/>
+      <mass value="1.2" />
+      <inertia
+        ixx="8.8522E-05"
+        ixy="-3.7755E-06"
+        ixz="4.5456E-09"
+        iyy="7.5352E-05"
+        iyz="-7.0316E-07"
+        izz="0.00010165" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="steer_motor_joint1" type="revolute">
+    <origin xyz="0.21516 0.28 0.12375"/>
+    <parent link="base_link" />
+    <child link="steer_motor_link1" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="44" velocity="3.1416" />
+  </joint>
+  <link name="wheel_motor_link1">
+    <inertial>
+      <origin xyz="-2.6184E-06 0.0015607 1.6575E-07" />
+      <mass value="5" />
+      <inertia
+        ixx="0.00089952"
+        ixy="6.916E-08"
+        ixz="7.5501E-10"
+        iyy="0.0015854"
+        iyz="7.6011E-12"
+        izz="0.00089958" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh
+          filename="file://$(find galaxea_r1_description)/meshes/wheel_motor.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel_motor.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wheel_motor_joint1" type="continuous">
+    <origin xyz="0 0 -0.09525" rpy="0 0 3.14159" />
+    <parent link="steer_motor_link1" />
+    <child link="wheel_motor_link1" />
+    <axis xyz="0 1 0" />
+  </joint>
+  <link name="steer_motor_link2">
+    <inertial>
+      <origin xyz="0.00098879 0.034317 -0.034601"/>
+      <mass value="1.2" />
+      <inertia
+        ixx="8.8509E-05"
+        ixy="3.7728E-06"
+        ixz="4.584E-09"
+        iyy="7.5337E-05"
+        iyz="7.0145E-07"
+        izz="0.00010162" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 3.14159" />
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 3.14159" />
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="steer_motor_joint2" type="revolute">
+    <origin xyz="0.21516 -0.28 0.12375" />
+    <parent link="base_link" />
+    <child link="steer_motor_link2" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="44" velocity="3.1416" />
+  </joint>
+  <link name="wheel_motor_link2">
+    <inertial>
+      <origin xyz="2.6199E-06 -0.0015607 1.6573E-07"/>
+      <mass value="5" />
+      <inertia
+        ixx="0.00089952"
+        ixy="6.9163E-08"
+        ixz="-7.5368E-10"
+        iyy="0.0015854"
+        iyz="-7.6749E-12"
+        izz="0.00089958" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel_motor.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel_motor.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wheel_motor_joint2" type="continuous">
+    <origin xyz="0 0 -0.09525" rpy="0 0 0" />
+    <parent link="steer_motor_link2" />
+    <child link="wheel_motor_link2" />
+    <axis xyz="0 1 0" />
+  </joint>
+  <link name="steer_motor_link3">
+    <inertial>
+      <origin xyz="-0.00098879 -0.034317 -0.034601"/>
+      <mass value="1.2" />
+      <inertia
+        ixx="8.8509E-05"
+        ixy="3.7728E-06"
+        ixz="-4.584E-09"
+        iyy="7.5337E-05"
+        iyz="-7.0145E-07"
+        izz="0.00010162" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="steer_motor_joint3" type="revolute">
+    <origin xyz="-0.28084 0 0.12375" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="steer_motor_link3" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="44" velocity="3.1416" />
+  </joint>
+  <link name="wheel_motor_link3">
+    <inertial>
+      <origin xyz="2.6203E-06 0.0015607 -1.6564E-07"/>
+      <mass value="5" />
+      <inertia
+        ixx="0.00089952"
+        ixy="-6.9072E-08"
+        ixz="7.5036E-10"
+        iyy="0.0015854"
+        iyz="-7.845E-12"
+        izz="0.00089958" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel_motor.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel_motor.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wheel_motor_joint3" type="continuous">
+    <origin xyz="0 0 -0.09525" rpy="0 0 3.14159" />
+    <parent link="steer_motor_link3" />
+    <child link="wheel_motor_link3" />
+    <axis xyz="0 1 0" />
+  </joint>
+  <link name="torso_link1">
+    <inertial>
+      <origin xyz="0.00065636 0.0032247 0.23142"/>
+      <mass value="5.72" />
+      <inertia
+        ixx="0.10931"
+        ixy="7.7893E-06"
+        ixz="-0.00017473"
+        iyy="0.10736"
+        iyz="0.00013763"
+        izz="0.0081222" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link1.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link1.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="torso_joint1" type="revolute">
+    <origin xyz="-0.032845 0 0.301"/>
+    <parent link="base_link" />
+    <child link="torso_link1" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.1345" upper="1.8326" effort="100" velocity="2.5" />
+  </joint>
+  <link name="torso_link2">
+    <inertial>
+      <origin xyz="0.0052517 0.014412 0.15711"/>
+      <mass value="3.5" />
+      <inertia
+        ixx="0.026081"
+        ixy="-3.3406E-07"
+        ixz="0.00024541"
+        iyy="0.027574"
+        iyz="3.8474E-07"
+        izz="0.0018515" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link2.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link2.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="torso_joint2"
+    type="revolute">
+    <origin
+      xyz="0 0 0.4"
+      rpy="0 0 0" />
+    <parent
+      link="torso_link1" />
+    <child
+      link="torso_link2" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-2.7925"
+      upper="2.5307"
+      effort="100"
+      velocity="2.5" />
+  </joint>
+  <link name="torso_link3">
+    <inertial>
+      <origin xyz="-7.551E-06 -0.0092667 0.0042124"/>
+      <mass value="3.4" />
+      <inertia
+        ixx="0.0014058"
+        ixy="3.5487E-07"
+        ixz="9.0955E-08"
+        iyy="0.0021992"
+        iyz="1.6338E-05"
+        izz="0.0013332" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link3.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link3.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="torso_joint3" type="revolute">
+    <origin xyz="0 0 0.3"/>
+    <parent link="torso_link2" />
+    <child link="torso_link3" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-1.8326" upper="1.5708" effort="100" velocity="2.5" />
+  </joint>
+  <link name="torso_link4">
+    <inertial>
+      <origin xyz="-3.7511E-08 5.2756E-07 0.018688"/>
+      <mass value="7.4" />
+      <inertia
+        ixx="0.0014989"
+        ixy="2.9183E-08"
+        ixz="-7.7884E-10"
+        iyy="0.001499"
+        iyz="-1.2513E-10"
+        izz="0.0019043" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link4.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link4.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="torso_joint4" type="revolute">
+    <origin
+      xyz="0 0 0.09962"
+      rpy="0 0 0" />
+    <parent
+      link="torso_link3" />
+    <child
+      link="torso_link4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.0543"
+      upper="3.0543"
+      effort="100"
+      velocity="2.5" />
+  </joint>
+  <link name="zed_link">
+    <inertial>
+      <origin xyz="0.060004 0.015906 -0.068413"/>
+      <mass value="2.05" />
+      <inertia
+        ixx="0.010375"
+        ixy="1.9044E-07"
+        ixz="1.5997E-08"
+        iyy="0.014618"
+        iyz="0.00028961"
+        izz="0.012229" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/zed_link.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/zed_link.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="zed_joint"
+    type="fixed">
+    <origin
+      xyz="0.065512 0.060005 0.47598"
+      rpy="-1.9199 0 -1.5708" />
+    <parent
+      link="torso_link4" />
+    <child
+      link="zed_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <xacro:include filename="$(find galaxea_a1_description)/xacro/a1.xacro"/>
+  <xacro:Arm name="left_arm" direction="left"/>
+
+  <joint name="left_arm_base_joint" type="fixed">
+    <origin xyz="0.00077694 0.097234 0.30285" rpy="-1.5708 0 0" />
+    <parent link="torso_link4" />
+    <child link="left_arm_base_link" />
+  </joint>
+  <link name="left_realsense_link">
+    <inertial>
+      <origin xyz="0.022169 0.0060171 -0.017353"/>
+      <mass value="0.175" />
+      <inertia
+        ixx="6.965E-06"
+        ixy="2.6612E-06"
+        ixz="1.2797E-06"
+        iyy="2.3281E-05"
+        iyz="-1.4268E-06"
+        izz="2.5513E-05" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/camera_link.obj" />
+      </geometry>
+      <material name="">
+        <color rgba="0.8 0.8 0.8 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/camera_link.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_realsense_joint" type="fixed">
+    <origin xyz="0.098768 0.0021071 0.05055" rpy="-2.0071 0.0077831 -1.5708" />
+    <parent link="left_arm_link6" />
+    <child link="left_realsense_link" />
+  </joint>
+
+
+  <xacro:Arm name="right_arm" direction="right"/>
+  <joint name="right_arm_base_joint" type="fixed">
+    <origin xyz="0.00077778 -0.097235 0.30285" rpy="1.5708 0 0" />
+    <parent link="torso_link4" />
+    <child link="right_arm_base_link" />
+  </joint>
+  <link name="right_realsense_link">
+    <inertial>
+      <origin xyz="0.022169 0.0060171 -0.017353" rpy="0 0 0" />
+      <mass value="0.175" />
+      <inertia
+        ixx="6.965E-06"
+        ixy="2.6612E-06"
+        ixz="1.2797E-06"
+        iyy="2.3281E-05"
+        iyz="-1.4268E-06"
+        izz="2.5513E-05" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/camera_link.obj" />
+      </geometry>
+      <material name="">
+        <color rgba="0.8 0.8 0.8 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1_description)/meshes/camera_link.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_realsense_joint" type="fixed">
+    <origin xyz="0.098762 0.0021071 -0.05055" rpy="1.1344 -0.0077831 1.5708" />
+    <parent link="right_arm_link6" />
+    <child link="right_realsense_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+</robot>
