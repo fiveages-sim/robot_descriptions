@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot name="overseas_65_b_v_description" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- 引入各个模块的 xacro 文件，分别定义底盘、夹爪、升降平台、机械臂及关节 -->
+  <xacro:include filename="$(find aidal_description)/xacro/woosh_agv.xacro"/>
+  <xacro:include filename="$(find aidal_description)/xacro/body.xacro"/>
+<!--  <xacro:include filename="$(find aidal_description)/xacro/left_arm.xacro"/>-->
+<!--  <xacro:include filename="$(find aidal_description)/xacro/right_arm.xacro"/>-->
+
+  <xacro:include filename="$(find rm65_description)/xacro/arm.xacro"/>
+  <xacro:rm65 name="l" direction="l"/>
+  <xacro:rm65 name="r" direction="r"/>
+
+  <joint name="body_base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_base_link"/>
+  </joint>
+  <joint name="l_base_joint1" type="fixed">
+    <origin xyz="0.1 -0.1103 0.031645" rpy="0 -0.7854 3.14159"/>
+    <parent link="platform_base_link"/>
+    <child link="l_base_link"/>
+  </joint>
+
+  <joint name="r_base_joint1" type="fixed">
+    <origin xyz="-0.1 -0.1103 0.031645" rpy="0 -0.7854 0" />
+    <parent link="platform_base_link" />
+    <child link="r_base_link" />
+  </joint>
+  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/left_hand.urdf.xacro"/>-->
+  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/right_hand.urdf.xacro"/>-->
+  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/rm65_b_v_right.urdf.xacro"/>-->
+  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/joint.urdf.xacro"/>-->
+  <!--  &lt;!&ndash; 在 Gazebo 仿真环境中添加控制传动配置及 Gazebo 专用插件 &ndash;&gt;-->
+  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/rm65_b_v_left_transmission.xacro"/>-->
+  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/rm65_b_v_right_transmission.xacro"/>-->
+  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/body_head_platform_transmission.xacro"/>-->
+  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/common_gazebo.xacro"/>-->
+</robot>

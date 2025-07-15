@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="Arm" params="name">
-    <xacro:include filename="(find galaxea_a1_description)/xacro/a1xy_base.xacro"/>
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/a1xy_base.xacro"/>
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
     <xacro:Base name=""/>
     <link
@@ -187,14 +187,13 @@
           velocity="32.9867"/>
     </joint>
 
-    <xacro:include filename="(find galaxea_a1_description)/xacro/gripper.xacro"/>
-    <xacro:Gripper name="${name}"/>
+    <xacro:include filename="$(find galaxea_g1_description)/xacro/gripper.xacro"/>
+    <xacro:Gripper name="${prefix}gripper"/>
 
     <joint name="${prefix}gripper_joint" type="fixed">
       <origin xyz="0.08165 0 0"/>
       <parent link="${prefix}link6"/>
-      <child link="${prefix}gripper_link"/>
-      <axis xyz="0 0 0"/>
+      <child link="${prefix}gripper_base_link"/>
     </joint>
   </xacro:macro>
 </robot>

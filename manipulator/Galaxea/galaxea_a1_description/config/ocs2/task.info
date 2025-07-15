@@ -11,7 +11,7 @@ model_information {
   ; base frame of the robot (from URDF)
   baseFrame                       "base_link"
   ; end-effector frame of the robot (from URDF)
-  eeFrame                         "gripper_link" // gripper_base
+  eeFrame                         "gripper_base_link" // gripper_base
 }
 
 model_settings

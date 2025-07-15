@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<robot name="woosh_agv" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Define constants -->
+  <xacro:property name="mesh_path" value="file://$(find aidal_description)/meshes/woosh_agv/"/>
+  <!-- Macro for visual and collision elements -->
+  <xacro:macro name="visual_collision" params="mesh">
+    <visual>
+      <geometry>
+        <mesh filename="${mesh_path}${mesh}"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="${mesh_path}${mesh}"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.012628 -0.016092 -0.060646"/>
+      <mass value="2.5521"/>
+      <inertia
+          ixx="0.066197"
+          ixy="7.0297E-05"
+          ixz="0.00017628"
+          iyy="0.034903"
+          iyz="-0.00059595"
+          izz="0.097938"/>
+    </inertial>
+    <xacro:visual_collision mesh="base_link.obj"/>
+  </link>
+  <link name="link_right_wheel">
+    <inertial>
+      <origin xyz="-0.024898 2.5665E-18 0"/>
+      <mass value="1.0523"/>
+      <inertia
+          ixx="0.0033125"
+          ixy="1.5953E-19"
+          ixz="1.2287E-20"
+          iyy="0.0018066"
+          iyz="2.5666E-19"
+          izz="0.0018066"/>
+    </inertial>
+    <xacro:visual_collision mesh="right_wheel.obj"/>
+  </link>
+  <link name="link_left_wheel">
+    <inertial>
+      <origin xyz="0.025224 -8.8034E-15 0"/>
+      <mass value="1.0734"/>
+      <inertia
+          ixx="0.0033996"
+          ixy="-5.0277E-16"
+          ixz="9.2981E-21"
+          iyy="0.0019593"
+          iyz="3.7534E-19"
+          izz="0.0019593"/>
+    </inertial>
+    <xacro:visual_collision mesh="left_wheel.obj"/>
+  </link>
+  <link name="link_swivel_wheel_1_1">
+    <inertial>
+      <origin xyz="0.00067987 -0.0050012 -0.013414"/>
+      <mass value="0.088835"/>
+      <inertia
+          ixx="3.1679E-05"
+          ixy="2.0129E-08"
+          ixz="2.7021E-08"
+          iyy="3.9438E-05"
+          iyz="-3.2776E-06"
+          izz="4.6143E-05"/>
+    </inertial>
+    <xacro:visual_collision mesh="swivel_wheel_1.obj"/>
+  </link>
+  <link name="link_swivel_wheel_1_2">
+    <inertial>
+      <origin xyz="0.0010651 2.2204E-16 9.4369E-16"/>
+      <mass value="0.12664"/>
+      <inertia
+          ixx="0.00011169"
+          ixy="1.1345E-14"
+          ixz="2.2064E-14"
+          iyy="6.0838E-05"
+          iyz="1.7051E-09"
+          izz="6.084E-05"/>
+    </inertial>
+    <xacro:visual_collision mesh="swivel_wheel_2.obj"/>
+  </link>
+  <link name="link_swivel_wheel_2_1">
+    <inertial>
+      <origin xyz="0.00067987 -0.0050012 -0.013414"/>
+      <mass value="0.088835"/>
+      <inertia
+          ixx="3.1679E-05"
+          ixy="2.0129E-08"
+          ixz="2.7021E-08"
+          iyy="3.9438E-05"
+          iyz="-3.2776E-06"
+          izz="4.6143E-05"/>
+    </inertial>
+    <xacro:visual_collision mesh="swivel_wheel_1.obj"/>
+  </link>
+  <link name="link_swivel_wheel_2_2">
+    <inertial>
+      <origin xyz="0.0010651 6.1062E-16 7.7716E-16"/>
+      <mass value="0.12664"/>
+      <inertia
+          ixx="0.00011169"
+          ixy="1.9869E-14"
+          ixz="1.4856E-14"
+          iyy="6.084E-05"
+          iyz="2.0109E-09"
+          izz="6.0838E-05"/>
+    </inertial>
+    <xacro:visual_collision mesh="swivel_wheel_2.obj"/>
+  </link>
+  <link name="link_swivel_wheel_3_1">
+    <inertial>
+      <origin xyz="0.00067987 -0.0050012 -0.013414"/>
+      <mass value="0.088835"/>
+      <inertia
+          ixx="3.1679E-05"
+          ixy="2.0129E-08"
+          ixz="2.7021E-08"
+          iyy="3.9438E-05"
+          iyz="-3.2776E-06"
+          izz="4.6143E-05"/>
+    </inertial>
+    <xacro:visual_collision mesh="swivel_wheel_1.obj"/>
+  </link>
+  <link name="link_swivel_wheel_3_2">
+    <inertial>
+      <origin xyz="0.0010651 -3.3307E-16 8.8818E-16"/>
+      <mass value="0.12664"/>
+      <inertia
+          ixx="0.00011169"
+          ixy="-1.8513E-15"
+          ixz="2.474E-14"
+          iyy="6.0837E-05"
+          iyz="-3.1204E-10"
+          izz="6.0841E-05"/>
+    </inertial>
+    <xacro:visual_collision mesh="swivel_wheel_2.obj"/>
+  </link>
+  <link name="link_swivel_wheel_4_1">
+    <inertial>
+      <origin xyz="0.00067987 -0.0050012 -0.0094542"/>
+      <mass value="0.088835"/>
+      <inertia
+          ixx="3.1679E-05"
+          ixy="2.0129E-08"
+          ixz="2.7021E-08"
+          iyy="3.9438E-05"
+          iyz="-3.2776E-06"
+          izz="4.6143E-05"/>
+    </inertial>
+    <xacro:visual_collision mesh="swivel_wheel_1.obj"/>
+  </link>
+  <link name="link_swivel_wheel_4_2">
+    <inertial>
+      <origin xyz="0.0010651 -4.996E-16 7.494E-16"/>
+      <mass value="0.12664"/>
+      <inertia
+          ixx="0.00011169"
+          ixy="-7.4776E-15"
+          ixz="2.3656E-14"
+          iyy="6.0837E-05"
+          iyz="-1.205E-09"
+          izz="6.0841E-05"/>
+    </inertial>
+    <xacro:visual_collision mesh="swivel_wheel_2.obj"/>
+  </link>
+
+  <joint name="joint_right_wheel" type="continuous">
+    <origin xyz="-0.148 0.015574 -0.153"/>
+    <parent link="base_link"/>
+    <child link="link_right_wheel"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="100" velocity="10"/>
+  </joint>
+  <joint name="joint_left_wheel" type="continuous">
+    <origin xyz="0.148 0.015574 -0.153"/>
+    <parent link="base_link"/>
+    <child link="link_left_wheel"/>
+    <axis xyz="-1 0 0"/>
+    <limit effort="100" velocity="10"/>
+  </joint>
+  <joint name="joint_swivel_wheel_1_1" type="continuous">
+    <origin xyz="0.124 -0.17843 -0.16254"/>
+    <parent link="base_link"/>
+    <child link="link_swivel_wheel_1_1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="joint_swivel_wheel_1_2" type="continuous">
+    <origin xyz="-0.0035 -0.022 -0.04516"/>
+    <parent link="link_swivel_wheel_1_1"/>
+    <child link="link_swivel_wheel_1_2"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="joint_swivel_wheel_2_1" type="continuous">
+    <origin xyz="-0.126 0.22157 -0.16254"/>
+    <parent link="base_link"/>
+    <child link="link_swivel_wheel_2_1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="joint_swivel_wheel_2_2" type="continuous">
+    <origin xyz="-0.0035 -0.022 -0.04516"/>
+    <parent link="link_swivel_wheel_2_1"/>
+    <child link="link_swivel_wheel_2_2"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="joint_swivel_wheel_3_1" type="continuous">
+    <origin xyz="0.124 0.22157 -0.16254"/>
+    <parent link="base_link"/>
+    <child link="link_swivel_wheel_3_1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="joint_swivel_wheel_3_2" type="continuous">
+    <origin xyz="-0.0035 -0.022 -0.04516"/>
+    <parent link="link_swivel_wheel_3_1"/>
+    <child link="link_swivel_wheel_3_2"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="joint_swivel_wheel_4_1" type="continuous">
+    <origin xyz="-0.126 -0.17843 -0.1665"/>
+    <parent link="base_link"/>
+    <child link="link_swivel_wheel_4_1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="joint_swivel_wheel_4_2" type="continuous">
+    <origin xyz="-0.0035 -0.022 -0.0412"/>
+    <parent link="link_swivel_wheel_4_1"/>
+    <child link="link_swivel_wheel_4_2"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+</robot>
+
+
+
+
+

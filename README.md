@@ -12,9 +12,10 @@ I collect them from internet and repaint some of them, better visualization can 
 | Booster  | [T1](humanoid/Booster/t1_description/)        | Yes     | <img src="humanoid/.images/booster_t1.png" width="200" style="object-fit: cover; object-position: center;">                                                                                                              |
 | RobotEra | [xbot](humanoid/RobotEra/xbot_description)    | Yes     | <img src="humanoid/.images/robotera_xbot.png" width="200">                                                                                                                                                               |
 | Agibot   | [G1](humanoid/Agibot/agibot_g1_description)   | No      | <img src="humanoid/.images/agibot_g1.png" width="200">                                                                                                                                                                   |
-| Galaxea  | [R1](humanoid/Galaxea/galaxea_r1_description) | Yes     | <img src="humanoid/.images/galaxea_r1_down.png" width="200">     <img src="humanoid/.images/galaxea_r1.png" width="200">                                                                                                                                                        |
+| Galaxea  | [R1](humanoid/Galaxea/galaxea_r1_description) | Yes     | <img src="humanoid/.images/galaxea_r1_down.png" width="200">     <img src="humanoid/.images/galaxea_r1.png" width="200">                                                                                                 |
 | ARX      | [LIFT](humanoid/ARX/lift_description)         | Yes     | <img src="humanoid/.images/arx_lift.png" width="200" style="object-fit: cover; object-position: center;">     <img src="humanoid/.images/arx_lift2.png" width="200" style="object-fit: cover; object-position: center;"> |
 | ARX      | [X7S](humanoid/ARX/x7s_description)           | Yes     | <img src="humanoid/.images/arx_x7s.png" width="200">                                                                                                                                                                     |
+| Realman  | [AIDAL](humanoid/Realman/aidal_description)   | Yes     | <img src="humanoid/.images/realman_aidal.png" width="200">                                                                                                                                                               |
 
 ## Manipulator Robots
 
@@ -40,9 +41,11 @@ I add mobile manipulator OCS2 config for some of the manipulator robots, you can
 
 ## Grippers
 
-| Brand                                  | Model | Mimic | Images                                                                                                                 | Collision                                                                                                                        |
-|----------------------------------------|-------|-------|------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| [Robotiq](gripper/robotiq_description) | 85    | Yes   | <img src="gripper/.images/robotiq85.png" width="200" height="150" style="object-fit: cover; object-position: center;"> | <img src="gripper/.images/robotiq85_collision.png" width="200" height="150" style="object-fit: cover; object-position: center;"> |
+| Brand                                          | Model | Mimic | Images                                                                                                                   | Collision                                                                                                                        |
+|------------------------------------------------|-------|-------|--------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| [Robotiq](gripper/robotiq_description)         | 85    | Yes   | <img src="gripper/.images/robotiq85.png" width="200" height="150" style="object-fit: cover; object-position: center;">   | <img src="gripper/.images/robotiq85_collision.png" width="200" height="150" style="object-fit: cover; object-position: center;"> |
+| [Inspire EG2](gripper/inspire_eg2_description) | 85    | Yes   | <img src="gripper/.images/inspire_eg2.png" width="200" height="150" style="object-fit: cover; object-position: center;"> |  |
+| [Galaxea G1](gripper/galaxea_g1_description)   | 85    | Yes   | <img src="gripper/.images/galaxea_g1.png" width="200" height="150" style="object-fit: cover; object-position: center;">  |  |
 
 ## Quadruped Robots
 

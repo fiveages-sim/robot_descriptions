@@ -324,8 +324,8 @@
       <limit lower="-2.8798" upper="2.8798" effort="7" velocity="25.133" />
     </joint>
 
-    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper.xacro"/>
-    <xacro:Gripper name="${name}"/>
+    <xacro:include filename="$(find galaxea_g1_description)/xacro/gripper.xacro"/>
+    <xacro:Gripper name="${prefix}gripper"/>
 
     <xacro:property name="gripper_origin_xyz" value="${'0.1039 0 0'}"/>
     <xacro:property name="gripper_origin_rpy" value="${'-1.5708 0 0' if direction == 'normal' else '3.14159 0 0' if direction == 'right' else '0 0 0'}"/>
@@ -334,7 +334,7 @@
     <joint name="${prefix}gripper_joint" type="fixed">
       <origin xyz="${gripper_origin_xyz}" rpy="${gripper_origin_rpy}"/>
       <parent link="${prefix}link6" />
-      <child link="${prefix}gripper_link" />
+      <child link="${prefix}gripper_base_link"/>
     </joint>
   </xacro:macro>
 </robot>

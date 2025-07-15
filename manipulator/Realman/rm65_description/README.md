@@ -1,6 +1,6 @@
 # Realman RM65 Description
 
-This package contains the description files for Galaxea A1X and A1Y manipulator. I got the origin URDF files from the [Galaxea URDF](https://github.com/userguide-galaxea/URDF).
+This package contains the description files for Realman RM65 manipulator. I got the origin URDF files from the [RM_Models](https://github.com/RealManRobot/rm_models).
 
 ## 1. Build
 ```bash
@@ -16,3 +16,9 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=rm65
 ```
 
 ![RM65](../../.images/realman_rm65.png)
+
+## 3. OCS2 Demo
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=rm65
+```

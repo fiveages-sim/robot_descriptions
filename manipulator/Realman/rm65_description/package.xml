@@ -2,16 +2,17 @@
   <name>rm65_description</name>
   <version>1.0.0</version>
   <description>
-    <p>URDF Description package for A1_URDF_0607_0028</p>
+    <p>URDF Description package for Realman RM65 Manipulator</p>
     <p>This package contains configuration data, 3D models and launch files
-      for A1_URDF_0607_0028 robot
+      for RM65 Manipulator
     </p>
   </description>
   <author>TODO</author>
   <maintainer email="TODO@email.com"/>
-  <license>BSD</license>
+  <license>Apache-2.0</license>
 
   <exec_depend>robot_visualize_config</exec_depend>
+  <exec_depend>inspire_eg2_description</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

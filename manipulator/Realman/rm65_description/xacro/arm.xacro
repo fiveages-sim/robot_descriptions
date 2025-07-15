@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <robot name="rm65" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="rm65" params="name">
+  <xacro:macro name="rm65" params="name direction:=''" >
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
     <!-- Define constants -->
     <xacro:property name="mesh_path" value="file://$(find rm65_description)/meshes/"/>
+    
     <!-- Macro for visual and collision elements -->
     <xacro:macro name="visual_collision" params="mesh">
       <visual>
@@ -23,17 +24,52 @@
 
     <link name="${prefix}base_link">
       <inertial>
-        <origin xyz="-0.00049840293879996 -5.19350047653785E-05 0.0600202841321701"/>
-        <mass value="0.838885281114303"/>
-        <inertia
-            ixx="0.00172321229549441"
-            ixy="3.09076898315635E-06"
-            ixz="-3.7922126488402E-05"
-            iyy="0.00170514762495823"
-            iyz="1.38793642017112E-06"
-            izz="0.000901589030906685"/>
+        <!-- Default configuration -->
+        <xacro:if value="${direction != 'l' and direction != 'r'}">
+          <origin xyz="-0.00049840293879996 -5.19350047653785E-05 0.0600202841321701"/>
+          <mass value="0.838885281114303"/>
+          <inertia
+              ixx="0.00172321229549441"
+              ixy="3.09076898315635E-06"
+              ixz="-3.7922126488402E-05"
+              iyy="0.00170514762495823"
+              iyz="1.38793642017112E-06"
+              izz="0.000901589030906685"/>
+        </xacro:if>
+        <!-- Left arm configuration -->
+        <xacro:if value="${direction == 'l'}">
+          <origin xyz="-3.58E-05 -0.0056915 0.024464"/>
+          <mass value="0.23441"/>
+          <inertia
+              ixx="0.00027369"
+              ixy="6.5702E-08"
+              ixz="2.7812E-09"
+              iyy="0.000264"
+              iyz="-1.6355E-06"
+              izz="0.00036679"/>
+        </xacro:if>
+        <!-- Right arm configuration -->
+        <xacro:if value="${direction == 'r'}">
+          <origin xyz="-4.8022E-05 0.0056915 0.024715"/>
+          <mass value="0.23441"/>
+          <inertia
+              ixx="0.00027369"
+              ixy="6.5702E-08"
+              ixz="-3.2599E-09"
+              iyy="0.000264"
+              iyz="1.6355E-06"
+              izz="0.00036679"/>
+        </xacro:if>
       </inertial>
-      <xacro:visual_collision mesh="base_link.obj"/>
+      <xacro:if value="${direction == 'l'}">
+        <xacro:visual_collision mesh="base_link_aidal.obj"/>
+      </xacro:if>
+      <xacro:if value="${direction == 'r'}">
+        <xacro:visual_collision mesh="base_link_aidal.obj"/>
+      </xacro:if>
+      <xacro:if value="${direction != 'l' and direction != 'r'}">
+        <xacro:visual_collision mesh="base_link.obj"/>
+      </xacro:if>
     </link>
     <link name="${prefix}link1">
       <inertial>
@@ -121,7 +157,18 @@
     </link>
 
     <joint name="${prefix}joint1" type="revolute">
-      <origin xyz="0 0 0.2405"/>
+      <!-- Default configuration -->
+      <xacro:if value="${direction != 'l' and direction != 'r'}">
+        <origin xyz="0 0 0.2405"/>
+      </xacro:if>
+      <!-- Left arm configuration -->
+      <xacro:if value="${direction == 'l'}">
+        <origin xyz="0 0 0.187" rpy="0 0 3.1415"/>
+      </xacro:if>
+      <!-- Right arm configuration -->
+      <xacro:if value="${direction == 'r'}">
+        <origin xyz="0 0 0.187" rpy="0 0 0"/>
+      </xacro:if>
       <parent link="${prefix}base_link"/>
       <child link="${prefix}link1"/>
       <axis xyz="0 0 1"/>
@@ -156,11 +203,34 @@
       <limit lower="-2.23" upper="2.23" effort="10" velocity="3.925"/>
     </joint>
     <joint name="${prefix}joint6" type="revolute">
-      <origin xyz="0 -0.115 -0.00029971" rpy="-1.5708 0 0"/>
+      <xacro:if value="${direction == 'r'}">
+        <origin xyz="0 -0.115 0" rpy="-1.5708 3.14159 0"/>
+      </xacro:if>
+      <xacro:unless value="${direction == 'r'}">
+        <origin xyz="0 -0.115 0" rpy="-1.5708 0 0"/>
+      </xacro:unless>
       <parent link="${prefix}link5"/>
       <child link="${prefix}link6"/>
       <axis xyz="0 0 -1"/>
       <limit lower="-6.28" upper="6.28" effort="10" velocity="3.925"/>
+    </joint>
+
+    <link name="${prefix}gripper_plate">
+      <xacro:visual_collision mesh="gripper_plate.obj"/>
+    </link>
+    <joint name="${prefix}ee_joint" type="fixed">
+      <origin xyz="0 0 -0.043" rpy="3.14159 0 1.5708"/>
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}gripper_plate"/>
+    </joint>
+
+    <xacro:include filename="$(find inspire_eg2_description)/xacro/eg2_4c2.xacro"/>
+    <xacro:Gripper name="${prefix}gripper"/>
+
+    <joint name="${prefix}gripper_joint" type="fixed">
+      <origin xyz="0 0 0.0043" rpy="0 0 0"/>
+      <parent link="${prefix}gripper_plate" />
+      <child link="${prefix}gripper_base_link" />
     </joint>
   </xacro:macro>
 </robot>
