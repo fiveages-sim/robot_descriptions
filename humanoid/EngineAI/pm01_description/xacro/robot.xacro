@@ -1,0 +1,671 @@
+<?xml version="1.0"?>
+<robot name="pm_v2">
+  <material name="ball">
+    <color rgba="0.75294 0.75294 0.75294 0.01"/>
+  </material>
+  
+  <link name="base">
+    <inertial>
+      <origin xyz="0.01525750 -0.00001621 -0.02333111" />
+      <mass value="4.08640035"/>
+      <inertia ixx="0.02021593" ixy="-0.00000120" ixz="-0.00037784" iyy="0.01531282" iyz="-0.00000295"
+               izz="0.01216285"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/base.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/base.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LINK_HIP_PITCH_L">
+    <inertial>
+      <origin xyz="0.01010860 0.04524604 -0.01196488" />
+      <mass value="1.68628239"/>
+      <inertia ixx="0.00230276" ixy="0.00006587" ixz="-0.00002062" iyy="0.00202247" iyz="-0.00003966" izz="0.00220299"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_pitch.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_pitch.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J00_HIP_PITCH_L" type="revolute">
+    <origin xyz="0.01541 0.076141 -0.061208" />
+    <parent link="base"/>
+    <child link="LINK_HIP_PITCH_L"/>
+    <axis xyz="0 0.96593 -0.25882"/>
+    <limit lower="-3.141" upper="2.443" effort="164" velocity="26.3"/>
+  </joint>
+  <link name="LINK_HIP_ROLL_L">
+    <inertial>
+      <origin xyz="-0.01861361 0.00234772 -0.04601977" />
+      <mass value="0.63274283"/>
+      <inertia ixx="0.00133858" ixy="-0.00004643" ixz="0.00032023" iyy="0.00144745" iyz="0.00003062" izz="0.00125215"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_roll.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_roll.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J01_HIP_ROLL_L" type="revolute">
+    <origin xyz="0.048 0.049359 -0.013226" />
+    <parent link="LINK_HIP_PITCH_L"/>
+    <child link="LINK_HIP_ROLL_L"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.436" upper="2.094" effort="164" velocity="26.3"/>
+  </joint>
+  <link name="LINK_HIP_YAW_L">
+    <inertial>
+      <origin xyz="-0.00361155 0.00117239 -0.09310066" />
+      <mass value="1.85800304"/>
+      <inertia ixx="0.01637894" ixy="-0.00006202" ixz="0.00110380" iyy="0.01626744" iyz="-0.00041393" izz="0.00343388"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_yaw.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_yaw.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J02_HIP_YAW_L" type="revolute">
+    <origin xyz="-0.03139 -0.0015951 -0.086016" />
+    <parent link="LINK_HIP_ROLL_L"/>
+    <child link="LINK_HIP_YAW_L"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="4.014" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_KNEE_PITCH_L">
+    <inertial>
+      <origin xyz="-0.00978702 0.00212191 -0.11930917" />
+      <mass value="4.29474062"/>
+      <inertia ixx="0.05314257" ixy="0.00007471" ixz="0.00581909" iyy="0.05480624" iyz="0.00057095" izz="0.00561043"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/knee_pitch.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/knee_pitch.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J03_KNEE_PITCH_L" type="revolute">
+    <origin xyz="-0.02602 -2.8566E-05 -0.23655" />
+    <parent link="LINK_HIP_YAW_L"/>
+    <child link="LINK_KNEE_PITCH_L"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.3491" upper="2.3911" effort="164" velocity="26.3"/>
+  </joint>
+  <link name="LINK_ANKLE_PITCH_L">
+    <inertial>
+      <origin xyz="0.00126412 0 -0.00661445" />
+      <mass value="0.11534469"/>
+      <inertia ixx="0.00001346" ixy="0" ixz="0.00000113" iyy="0.00001511" iyz="0" izz="0.00001253"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/ankle_pitch.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/ankle_pitch.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J04_ANKLE_PITCH_L" type="revolute">
+    <origin xyz="-0.026756 0.00041994 -0.36305" />
+    <parent link="LINK_KNEE_PITCH_L"/>
+    <child link="LINK_ANKLE_PITCH_L"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.6807" upper="0.7243" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_ANKLE_ROLL_L">
+    <inertial>
+      <origin xyz="0.01456057 0.00000119 -0.02219893" />
+      <mass value="0.71786765"/>
+      <inertia ixx="0.00057796" ixy="-0.00002888" ixz="-0.00014638" iyy="0.00276500" iyz="-0.00000205"
+               izz="0.00292373"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/ankle_roll.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/ankle_roll.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J05_ANKLE_ROLL_L" type="revolute">
+    <origin xyz="0 0 -0.015" />
+    <parent link="LINK_ANKLE_PITCH_L"/>
+    <child link="LINK_ANKLE_ROLL_L"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.2618" upper="0.2618" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_FOOT_L">
+    <inertial>
+      <mass value="1e-3"/>
+      <inertia ixx="1e-12" ixy="0" ixz="0" iyy="1e-12" iyz="0" izz="1e-12"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+      <material name="ball"/>
+    </visual>
+  </link>
+  <joint name="J_FIXED_FOOT_L" type="fixed">
+    <origin xyz="0.0170 0.00166 -0.04631" />
+    <parent link="LINK_ANKLE_ROLL_L"/>
+    <child link="LINK_FOOT_L"/>
+  </joint>
+  <link name="LINK_HIP_PITCH_R">
+    <inertial>
+      <origin xyz="0.01021848 -0.04516729 -0.01221388" />
+      <mass value="1.68024369"/>
+      <inertia ixx="0.00229703" ixy="-0.00006759" ixz="-0.00001661" iyy="0.00202245" iyz="0.00005508" izz="0.00218388"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_pitch.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_pitch.obj" scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J06_HIP_PITCH_R" type="revolute">
+    <origin xyz="0.01541 -0.076141 -0.061208" />
+    <parent link="base"/>
+    <child link="LINK_HIP_PITCH_R"/>
+    <axis xyz="0 0.96593 0.25882"/>
+    <limit lower="-3.141" upper="2.443" effort="164" velocity="26.3"/>
+  </joint>
+  <link name="LINK_HIP_ROLL_R">
+    <inertial>
+      <origin xyz="-0.01847775 -0.00232999 -0.04573211" />
+      <mass value="0.63673573"/>
+      <inertia ixx="0.00134870" ixy="0.00004656" ixz="0.00032421" iyy="0.00145899" iyz="-0.00003020" izz="0.00125531"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_roll.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_roll.obj" scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J07_HIP_ROLL_R" type="revolute">
+    <origin xyz="0.048 -0.04936 -0.013226" />
+    <parent link="LINK_HIP_PITCH_R"/>
+    <child link="LINK_HIP_ROLL_R"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-2.094" upper="0.436" effort="164" velocity="26.3"/>
+  </joint>
+  <link name="LINK_HIP_YAW_R">
+    <inertial>
+      <origin xyz="-0.00365713 -0.00305643 -0.09626805" />
+      <mass value="1.83146024"/>
+      <inertia ixx="0.01612343" ixy="0.00005892" ixz="0.00108663" iyy="0.01601231" iyz="0.00037741" izz="0.00336783"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_yaw.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/hip_yaw.obj" scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J08_HIP_YAW_R" type="revolute">
+    <origin xyz="-0.03139 0.0015966 -0.086016" />
+    <parent link="LINK_HIP_ROLL_R"/>
+    <child link="LINK_HIP_YAW_R"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-4.014" upper="1.57" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_KNEE_PITCH_R">
+    <inertial>
+      <origin xyz="-0.00985503 -0.00214867 -0.11898555" />
+      <mass value="4.29186385"/>
+      <inertia ixx="0.05277030" ixy="-0.00007617" ixz="0.00582343" iyy="0.05446054" iyz="-0.00054823" izz="0.00563558"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/knee_pitch.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/knee_pitch.obj" scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J09_KNEE_PITCH_R" type="revolute">
+    <origin xyz="-0.02602 2.8566E-05 -0.23655" />
+    <parent link="LINK_HIP_YAW_R"/>
+    <child link="LINK_KNEE_PITCH_R"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.3491" upper="2.3911" effort="164" velocity="26.3"/>
+  </joint>
+  <link name="LINK_ANKLE_PITCH_R">
+    <inertial>
+      <origin xyz="0.00073183 0 -0.00669428" />
+      <mass value="0.11534469"/>
+      <inertia ixx="0.00001327" ixy="0" ixz="0.00000119" iyy="0.00001511" iyz="0" izz="0.00001272"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/ankle_pitch.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/ankle_pitch.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J10_ANKLE_PITCH_R" type="revolute">
+    <origin xyz="-0.026756 -0.00041994 -0.36305" />
+    <parent link="LINK_KNEE_PITCH_R"/>
+    <child link="LINK_ANKLE_PITCH_R"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.6807" upper="0.7243" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_ANKLE_ROLL_R">
+    <inertial>
+      <origin xyz="0.01470675 0.00001452 -0.02226584" />
+      <mass value="0.71559163"/>
+      <inertia ixx="0.00057544" ixy="0.00003022" ixz="-0.00014346" iyy="0.00275723" iyz="0.00000194" izz="0.00291607"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/ankle_roll.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/ankle_roll.obj"  scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J11_ANKLE_ROLL_R" type="revolute">
+    <origin xyz="0 0 -0.015" />
+    <parent link="LINK_ANKLE_PITCH_R"/>
+    <child link="LINK_ANKLE_ROLL_R"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.2618" upper="0.2618" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_TORSO_YAW">
+    <inertial>
+      <origin xyz="-0.01140718 -0.00348592 0.16283761" />
+      <mass value="9.01442210"/>
+      <inertia ixx="0.08499169" ixy="-0.00035130" ixz="-0.00487771" iyy="0.06564210" iyz="-0.00043579"
+               izz="0.05757680"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/torso.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/torso.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J12_WAIST_YAW" type="revolute">
+    <origin xyz="0.01216 0 0.0809" />
+    <parent link="base"/>
+    <child link="LINK_TORSO_YAW"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-4.014" upper="1.57" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_FOOT_R">
+    <inertial>
+      <mass value="1e-3"/>
+      <inertia ixx="1e-12" ixy="0" ixz="0" iyy="1e-12" iyz="0" izz="1e-12"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+      <material name="ball"/>
+    </visual>
+  </link>
+  <joint name="J_FIXED_FOOT_R" type="fixed">
+    <origin xyz="0.0170 -0.00166 -0.04631" />
+    <parent link="LINK_ANKLE_ROLL_R"/>
+    <child link="LINK_FOOT_R"/>
+  </joint>
+  <link name="LINK_SHOULDER_PITCH_L">
+    <inertial>
+      <origin xyz="-0.00687390 0.05624677 -0.01564153" />
+      <mass value="0.93215458"/>
+      <inertia ixx="0.00123482" ixy="-0.00005768" ixz="0.00002372" iyy="0.00072034" iyz="-0.00018994" izz="0.00100386"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_pitch.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_pitch.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J13_SHOULDER_PITCH_L" type="revolute">
+    <origin xyz="-0.027105 0.12916 0.21549" />
+    <parent link="LINK_TORSO_YAW"/>
+    <child link="LINK_SHOULDER_PITCH_L"/>
+    <axis xyz="0 0.99803 0.062791"/>
+    <limit lower="-2.9671" upper="2.7925" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_SHOULDER_ROLL_L">
+    <inertial>
+      <origin xyz="0.03741198 0.00677175 -0.02678007" />
+      <mass value="0.51081280"/>
+      <inertia ixx="0.00099276" ixy="-0.00000156" ixz="0.00000333" iyy="0.00129412" iyz="-0.00012129" izz="0.00093889"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_roll.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_roll.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J14_SHOULDER_ROLL_L" type="revolute">
+    <origin xyz="-0.0371 0.066941 -0.020838" />
+    <parent link="LINK_SHOULDER_PITCH_L"/>
+    <child link="LINK_SHOULDER_ROLL_L"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.6108" upper="2.3562" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_SHOULDER_YAW_L">
+    <inertial>
+      <origin xyz="-0.00084545 0.00219391 -0.04566495" />
+      <mass value="0.90913792"/>
+      <inertia ixx="0.00162163" ixy="0.00000177" ixz="0.00000997" iyy="0.00150870" iyz="-0.00001196" izz="0.00078740"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_yaw.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_yaw.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J15_SHOULDER_YAW_L" type="revolute">
+    <origin xyz="0.0371 0.017645 -0.070132" />
+    <parent link="LINK_SHOULDER_ROLL_L"/>
+    <child link="LINK_SHOULDER_YAW_L"/>
+    <axis xyz="0 -0.062803 0.99803"/>
+    <limit lower="-2.618" upper="2.618" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_ELBOW_PITCH_L">
+    <inertial>
+      <origin xyz="0.00298237 0.00186711 -0.06518459" />
+      <mass value="1.38061447"/>
+      <inertia ixx="0.00588024" ixy="0.00002816" ixz="-0.00030012" iyy="0.00593736" iyz="-0.00046397" izz="0.00083553"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/elbow_pitch.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/elbow_pitch.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J16_ELBOW_PITCH_L" type="revolute">
+    <origin xyz="0 0.0065994 -0.10487" />
+    <parent link="LINK_SHOULDER_YAW_L"/>
+    <child link="LINK_ELBOW_PITCH_L"/>
+    <axis xyz="0.0027243 0.99802 0.062803"/>
+    <limit lower="-2.1948" upper="0.7374" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_ELBOW_YAW_L">
+    <inertial>
+      <origin xyz="0.02016404 0.00026082 -0.08990721" />
+      <mass value="0.46651916"/>
+      <inertia ixx="0.00167348" ixy="0.00000913" ixz="0.00030658" iyy="0.00173094" iyz="-0.00004087" izz="0.00039325"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/elbow_yaw.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/elbow_yaw.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J17_ELBOW_YAW_L" type="revolute">
+    <origin xyz="0.013817 0.0097723 -0.1547" />
+    <parent link="LINK_ELBOW_PITCH_L"/>
+    <child link="LINK_ELBOW_YAW_L"/>
+    <axis xyz="-0.21479 -0.061921 0.9747"/>
+    <limit lower="-2.618" upper="2.618" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_ELBOW_END_L">
+    <inertial>
+      <mass value="1e-3"/>
+      <inertia ixx="1e-12" ixy="0" ixz="0" iyy="1e-12" iyz="0" izz="1e-12"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+<material name="ball"/>
+    </visual>
+  </link>
+  <joint name="J_FIXED_ELBOW_END_L" type="fixed">
+    <origin xyz="0.03 -0.02 -0.14" />
+    <parent link="LINK_ELBOW_YAW_L"/>
+    <child link="LINK_ELBOW_END_L"/>
+  </joint>
+  <link name="LINK_SHOULDER_PITCH_R">
+    <inertial>
+      <origin xyz="-0.00682535 -0.05628532 -0.01567159" />
+      <mass value="0.92914080"/>
+      <inertia ixx="0.00123547" ixy="0.00005830" ixz="0.00002503" iyy="0.00071785" iyz="0.00018920" izz="0.00100508"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_pitch.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_pitch.obj" scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J18_SHOULDER_PITCH_R" type="revolute">
+    <origin xyz="-0.027105 -0.12916 0.21549" />
+    <parent link="LINK_TORSO_YAW"/>
+    <child link="LINK_SHOULDER_PITCH_R"/>
+    <axis xyz="0 0.99803 -0.062791"/>
+    <limit lower="-2.9671" upper="2.7925" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_SHOULDER_ROLL_R">
+    <inertial>
+      <origin xyz="0.03745836 -0.00675724 -0.02671114" />
+      <mass value="0.50967809"/>
+      <inertia ixx="0.00099158" ixy="0.00000134" ixz="0.00000304" iyy="0.00129182" iyz="0.00012106" izz="0.00093761"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_roll.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_roll.obj" scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J19_SHOULDER_ROLL_R" type="revolute">
+    <origin xyz="-0.0371 -0.066941 -0.020838" />
+    <parent link="LINK_SHOULDER_PITCH_R"/>
+    <child link="LINK_SHOULDER_ROLL_R"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-2.3562" upper="0.6108" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_SHOULDER_YAW_R">
+    <inertial>
+      <origin xyz="-0.00081742 -0.00217677 -0.04566906" />
+      <mass value="0.90851688"/>
+      <inertia ixx="0.00162102" ixy="-0.00000094" ixz="0.00001055" iyy="0.00150799" iyz="0.00001216" izz="0.00078668"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_yaw.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/shoulder_yaw.obj" scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J20_SHOULDER_YAW_R" type="revolute">
+    <origin xyz="0.0371 -0.017644 -0.070132" />
+    <parent link="LINK_SHOULDER_ROLL_R"/>
+    <child link="LINK_SHOULDER_YAW_R"/>
+    <axis xyz="0 0.062791 0.99803"/>
+    <limit lower="-2.618" upper="2.618" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_ELBOW_PITCH_R">
+    <inertial>
+      <origin xyz="0.00302244 -0.00191447 -0.06521149" />
+      <mass value="1.38162913"/>
+      <inertia ixx="0.00587907" ixy="-0.00002756" ixz="-0.00029909" iyy="0.00593696" iyz="0.00046493" izz="0.00083539"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/elbow_pitch.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/elbow_pitch.obj" scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J21_ELBOW_PITCH_R" type="revolute">
+    <origin xyz="0 -0.006598 -0.10487" />
+    <parent link="LINK_SHOULDER_YAW_R"/>
+    <child link="LINK_ELBOW_PITCH_R"/>
+    <axis xyz="0.0027243 0.99802 -0.06279"/>
+    <limit lower="-2.1948" upper="0.7374" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_ELBOW_YAW_R">
+    <inertial>
+      <origin xyz="0.02021657 -0.00026434 -0.08993096" />
+      <mass value="0.46648073"/>
+      <inertia ixx="0.00167086" ixy="-0.00000942" ixz="0.00030396" iyy="0.00172726" iyz="0.00004086" izz="0.00039220"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/elbow_yaw.obj" scale="1 -1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/elbow_yaw.obj"  scale="1 -1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J22_ELBOW_YAW_R" type="revolute">
+    <origin xyz="0.013817 -0.0097704 -0.1547" />
+    <parent link="LINK_ELBOW_PITCH_R"/>
+    <child link="LINK_ELBOW_YAW_R"/>
+    <axis xyz="-0.21479 0.061909 0.9747"/>
+    <limit lower="-2.618" upper="2.618" effort="61" velocity="35.2"/>
+  </joint>
+  <link name="LINK_ELBOW_END_R">
+    <inertial>
+      <mass value="1e-3"/>
+      <inertia ixx="1e-12" ixy="0" ixz="0" iyy="1e-12" iyz="0" izz="1e-12"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+<material name="ball"/>
+    </visual>
+  </link>
+  <joint name="J_FIXED_ELBOW_END_R" type="fixed">
+    <origin xyz="0.03 0.02 -0.14" />
+    <parent link="LINK_ELBOW_YAW_R"/>
+    <child link="LINK_ELBOW_END_R"/>
+  </joint>
+  <link name="LINK_HEAD_YAW">
+    <inertial>
+      <origin xyz="0.00358213 0.00030109 0.08822633" />
+      <mass value="0.84510036"/>
+      <inertia ixx="0.00428261" ixy="0.00000647" ixz="-0.00048256" iyy="0.00500542" iyz="-0.00000033" izz="0.00313801"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/head.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find pm01_description)/meshes/head.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="J23_HEAD_YAW" type="revolute">
+    <origin xyz="-0.017638 0 0.2961" />
+    <parent link="LINK_TORSO_YAW"/>
+    <child link="LINK_HEAD_YAW"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.6109" upper="0.6109" effort="61" velocity="35.2"/>
+  </joint>
+</robot>
