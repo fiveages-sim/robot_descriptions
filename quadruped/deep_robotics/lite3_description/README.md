@@ -1,6 +1,6 @@
 # DeepRobotics Lite3 Description
 
-This repository contains the urdf model of lite3.
+This repository contains the urdf model of lite3. The origin models could be found at [DeepRobotics](https://github.com/DeepRoboticsLab/URDF_model)
 
 ![lite3](../../.images/deep_lite3.png)
 

@@ -1,6 +1,6 @@
 # Realman RM65 Description
 
-This package contains the description files for Realman RM65 manipulator. I got the origin URDF files from the [RM_Models](https://github.com/RealManRobot/rm_models).
+This package contains the description files for Realman RM65 manipulator. The origin models could be found at [RM_Models](https://github.com/RealManRobot/rm_models).
 
 ## 1. Build
 ```bash

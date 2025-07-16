@@ -1,7 +1,8 @@
 # SO Arm Description
+This package contains the description files for SO100/SO101 Manipulator. The origin models could be found at [SO-ARM100](https://github.com/TheRobotStudio/SO-ARM100)
 
-* camera support: [WowRobot](https://wowrobo.com/home)
-* camera model: [3dwhere](https://www.3dwhere.com/models/606v9dvz913o54jn)
+* camera support from: [WowRobot](https://wowrobo.com/home)
+* camera model from: [3dwhere](https://www.3dwhere.com/models/606v9dvz913o54jn)
 
 ## 1. Build
 ```bash
@@ -31,4 +32,10 @@ colcon build --packages-up-to so_arm_description --symlink-install
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=so_arm
+  ```
+
+* SO100
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=so_arm type:=100
   ```

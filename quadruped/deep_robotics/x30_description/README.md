@@ -1,5 +1,5 @@
 # DeepRobotics X30 Description
-This repository contains the urdf model of x30.
+This repository contains the urdf model of x30. The origin models could be found at [DeepRobotics](https://github.com/DeepRoboticsLab/URDF_model)
 
 ![x30](../../.images/deep_x30.png)
 

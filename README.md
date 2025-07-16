@@ -1,9 +1,6 @@
 # Robot Descriptions
 
-This Repository contains the URDF and SRDF files for the quadruped, humanoid and manipulator robot. All sorted as ros2
-packages.
-
-I collect them from internet and repaint some of them, better visualization can make me coding happier. ☺️
+This repository contains the URDF files for quadruped, humanoid, and manipulator robots, all organized as ROS2 packages. Most of them have been repainted in Blender for better visualization. ☺️
 
 ## Humanoid Robots
 

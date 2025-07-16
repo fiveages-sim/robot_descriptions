@@ -1,6 +1,6 @@
 # Realman AIDAL Description
 
-This package contains the description files for Realman Aidal(**AI Dual Arm Lift**). I got the origin URDF files from the [Galaxea URDF](https://github.com/userguide-galaxea/URDF).
+This package contains the description files for Realman Aidal(**AI Dual Arm Lift**).
 
 ## 1. Build
 ```bash

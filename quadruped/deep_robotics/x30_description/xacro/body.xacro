@@ -6,7 +6,6 @@
 
   <link name="base">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.001 0.001 0.001"/>
       </geometry>
@@ -14,7 +13,6 @@
   </link>
 
   <joint name="floating_base" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="base"/>
     <child link="TORSO"/>
   </joint>
@@ -31,7 +29,6 @@
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <box size="0.44 0.26 0.15"/>
       </geometry>
@@ -70,7 +67,6 @@
       <geometry>
         <mesh filename="file://$(find x30_description)/meshes/l_thigh.obj"/>
       </geometry>
-
     </visual>
     <collision>
       <origin xyz="-0.02 0 -0.13"/>

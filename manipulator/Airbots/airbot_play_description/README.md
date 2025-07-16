@@ -1,6 +1,6 @@
 # Airbot Play Description
 
-This package contains the description files for Discover Robotics's Airbot Play manipulator. I got the origin URDF files from the [DISCOVERSE](https://github.com/TATP-233/DISCOVERSE).
+This package contains the description files for Discover Robotics's Airbot Play manipulator. The origin models could be cound at [DISCOVERSE](https://github.com/TATP-233/DISCOVERSE).
 
 ## 1. Build
 ```bash

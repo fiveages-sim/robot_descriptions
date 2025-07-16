@@ -1,6 +1,5 @@
 # ARX R5 Description
-
-* Origin Repo: [ARX_Models](https://github.com/ARXroboticsX/ARX_Model)
+This package contains the description files for ARX R5 Manipulator. The origin models could be found at [ARX_Models](https://github.com/ARXroboticsX/ARX_Model)
 
 ## 1. Build
 ```bash

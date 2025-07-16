@@ -1,6 +1,6 @@
 # Unitree Go1 Description
 
-This repository contains the urdf model of go1.
+This repository contains the urdf model of go1. The origin models could be found at [Unitree ROS](https://github.com/unitreerobotics/unitree_ros).
 
 ![go1](../../.images/unitree_go1.png)
 

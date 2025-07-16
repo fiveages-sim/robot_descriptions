@@ -1,5 +1,7 @@
 # AgileX Piper Description
 
+This package contains the URDF and related files for the AgileX Piper robot manipulator. The origin models can be found at [mobile aloha sim](https://github.com/agilexrobotics/mobile_aloha_sim/tree/v2.0.0)
+
 ## 1. Build
 ```bash
 cd ~/ros2_ws

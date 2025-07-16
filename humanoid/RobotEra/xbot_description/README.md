@@ -1,5 +1,5 @@
 # RobotEra Xbot-L Description
-This repository contains the urdf model of RobotEra Xbot L. I get this urdf from [humanoid_gym](https://github.com/roboterax/humanoid-gym).
+This repository contains the urdf model of RobotEra Xbot L. The origin models could be found at [humanoid_gym](https://github.com/roboterax/humanoid-gym).
 
 ![xbot](../../.images/robotera_xbot.png)
 

@@ -3,8 +3,14 @@
   <xacro:macro name="Arm" params="name ">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
-    <!-- Frame baseframe (dummy link + fixed joint) -->
-    <link name="${prefix}base_link">
+    <joint name="${prefix}base_joint" type="fixed">
+      <origin  xyz="0 0 0.0025"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}base"/>
+    </joint>
+    <link name="${prefix}base_link"/>
+
+    <link name="${prefix}base">
       <inertial>
         <origin xyz="-0.01371 0 0.03348"/>
         <mass value="0.147"/>
@@ -56,7 +62,7 @@
     </link>
     <joint name="${prefix}motor1_joint" type="fixed">
       <origin xyz="0.0263345 0 0.0437"/>
-      <parent link="${prefix}base_link"/>
+      <parent link="${prefix}base"/>
       <child link="${prefix}motor1"/>
     </joint>
 
@@ -110,7 +116,7 @@
     <!-- Joint from base to shoulder -->
     <joint name="${prefix}shoulder_pan" type="revolute">
       <origin xyz="0.0388353 0 0.0624" rpy="-3.14159 0 3.14159"/>
-      <parent link="${prefix}base_link"/>
+      <parent link="${prefix}base"/>
       <child link="${prefix}shoulder"/>
       <axis xyz="0 0 1"/>
       <limit effort="10" velocity="10" lower="-1.91986" upper="1.91986"/>

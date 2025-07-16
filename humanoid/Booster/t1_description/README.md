@@ -1,7 +1,6 @@
 # Booster T1 Description
 
-This repository contains the urdf model of Booster Robotics T1. I get this urdf
-from [booster_gym](https://github.com/BoosterRobotics/booster_gym).
+This package contains the URDF and configuration files for the Booster T1 humanoid. The origin models could be found at [booster_gym](https://github.com/BoosterRobotics/booster_gym).
 
 ![T1](../../.images/booster_t1.png)
 

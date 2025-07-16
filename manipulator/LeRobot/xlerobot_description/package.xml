@@ -5,13 +5,13 @@
   <description>
     <p>URDF Description package for XLeRobot Project</p>
     <p>This package contains configuration data, 3D models and launch files
-      for Piper robot
+      for XLeRobot
     </p>
   </description>
   <author>TODO</author>
   <maintainer email="TODO@email.com"/>
 
-  <license>BSD</license>
+  <license>Apache-2.0</license>
 
   <exec_depend>robot_visualize_config</exec_depend>
 

@@ -1,4 +1,5 @@
 # XLeRobot Description
+This package contains the description files for Lekiwi Mobile Manipulator. The origin models could be found at [Lekiwi](https://github.com/SIGRobotics-UIUC/LeKiwi)
 
 ## 1. Build
 ```bash
@@ -23,8 +24,7 @@ colcon build --packages-up-to lekiwi_description --symlink-install
   ![lekiwi_101](../../.images/lekiwi_101.png)
 
 ## 3. OCS2 Demo
-
-* SO100
+* With SO101 Arm
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=lekiwi

@@ -1,6 +1,6 @@
 # AgileX Mobile Aloha2 Description
 
-* Origin Repo: [mobile aloha sim](https://github.com/agilexrobotics/mobile_aloha_sim/tree/v2.0.0)
+This package contains the description files for AgileX's Mobile Aloha2 manipulator. The origin models can be found at [mobile aloha sim](https://github.com/agilexrobotics/mobile_aloha_sim/tree/v2.0.0)
 
 ## 1. Build
 ```bash

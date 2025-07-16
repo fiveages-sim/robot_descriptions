@@ -1,6 +1,6 @@
 # Galaxea R1 Description
 
-This package contains the description files for Galaxea R1 Humanoid Robot. I got the origin URDF files from the [Galaxea URDF](https://github.com/userguide-galaxea/URDF).
+This package contains the description files for Galaxea R1 Humanoid Robot. The origin models could be found at [Galaxea URDF](https://github.com/userguide-galaxea/URDF).
 
 ## 1. Build
 ```bash

@@ -1,6 +1,6 @@
 # Unitree A1 Description
 
-This repository contains the urdf model of A1.
+This repository contains the urdf model of A1. The origin models could be found at [Unitree ROS](https://github.com/unitreerobotics/unitree_ros).
 
 ![A1](../../.images/unitree_a1.png)
 

@@ -1,6 +1,6 @@
 # Dobot CR5 Description
 
-This package contains the description files for Dobot CR5 Manipulator.
+This package contains the description files for Dobot CR5 Manipulator. The origin models could be found at [DOBOT_6Axis_ROS2_V4](https://github.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4).
 
 ## 1. Build
 ```bash

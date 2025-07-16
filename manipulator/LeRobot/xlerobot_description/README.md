@@ -1,7 +1,6 @@
 # XLeRobot Description
 
-* camera support: [WowRobot](https://wowrobo.com/home)
-* camera model: [3dwhere](https://www.3dwhere.com/models/606v9dvz913o54jn)
+This package contains the description files for XLeRobot Project. The origin models could be found at [XLeRobot](https://github.com/Vector-Wangel/XLeRobot)
 
 ## 1. Build
 ```bash
@@ -15,4 +14,3 @@ colcon build --packages-up-to xlerobot_description --symlink-install
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_visualize_config manipulator.launch.py robot:=xlerobot
 ```
-  ![so100](../../.images/so100.png)

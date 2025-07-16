@@ -1,6 +1,6 @@
 # Unitree Go2 Description
 
-This repository contains the urdf model of go2.
+This repository contains the urdf model of go2. The origin models could be found at [Unitree ROS](https://github.com/unitreerobotics/unitree_ros).
 
 ![go2](../../.images/unitree_go2.png)
 

@@ -1,7 +1,7 @@
 # Unitree AlienGo Description
 
-This repository contains the urdf model of Aliengo.
-
+This repository contains the urdf model of Aliengo. The origin models could be found at [Unitree ROS](https://github.com/unitreerobotics/unitree_ros).
+ 
 ![Aliengo](../../.images/unitree_aliengo.png)
 
 ## Build

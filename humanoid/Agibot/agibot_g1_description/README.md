@@ -1,6 +1,6 @@
 # Agibot G1 Description
 
-This package contains the description files for Agibot Genie G1 humanoid. I got the origin URDF files from the [GenieSim](https://huggingface.co/datasets/agibot-world/GenieSimAssets).
+This package contains the description files for Agibot Genie G1 humanoid. The origin models could be found at [GenieSim](https://huggingface.co/datasets/agibot-world/GenieSimAssets).
 
 ## 1. Build
 ```bash
