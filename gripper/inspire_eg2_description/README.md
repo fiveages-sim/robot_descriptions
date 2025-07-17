@@ -1,5 +1,7 @@
 # Inspire EG2 Gripper Description
 
+This package contains the URDF and related files for the Inspire EG2 Gripper.
+
 ## Build
 
 ```bash

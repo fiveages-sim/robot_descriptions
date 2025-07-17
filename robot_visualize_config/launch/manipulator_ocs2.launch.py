@@ -37,10 +37,17 @@ def generate_launch_description():
         description='Whether to enable debug mode'
     )
 
+    dual_arm = launch.actions.DeclareLaunchArgument(
+        name='dual_arm',
+        default_value='false',
+        description='Whether to enable dual arm mode'
+    )
+
     def launch_setup(context, *args, **kwargs):
         robot_name_value = context.launch_configurations['robot_name']
         type_value = context.launch_configurations['type']
         debug_value = context.launch_configurations['debug']
+        dual_arm_value = context.launch_configurations['dual_arm']
         
         # 生成带类型的机器人标识符
         robot_identifier = robot_name_value
@@ -100,7 +107,8 @@ def generate_launch_description():
                     'debug': debug_value,
                     'urdfFile': urdf_file_value,
                     'taskFile': task_file_value,
-                    'libFolder': lib_folder_value
+                    'libFolder': lib_folder_value,
+                    'dual_arm_mode': dual_arm_value,
                 }.items()
             )
             print("✅ Mobile manipulator configured successfully (RViz will auto-start)")
@@ -113,5 +121,6 @@ def generate_launch_description():
         robot_name,
         robot_type,
         debug,
+        dual_arm,
         OpaqueFunction(function=launch_setup)
     ]) 
