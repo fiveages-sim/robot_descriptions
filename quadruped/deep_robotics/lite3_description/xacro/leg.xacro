@@ -2,19 +2,19 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:include filename="$(find lite3_description)/xacro/transmission.xacro"/>
 
-  <xacro:macro name="leg" params="name mirror mirror_dae front_hind front_hind_dae">
+  <xacro:macro name="leg" params="name mirror mirror_dae front_hind">
 
     <joint name="${name}_HipX" type="revolute">
-      <xacro:if value="${(mirror_dae == False) and (front_hind_dae == True)}">
+      <xacro:if value="${(mirror_dae == False) and (front_hind == 1)}">
         <origin rpy="0 0 0" xyz="${leg_offset_x} ${-leg_offset_y} 0"/>
       </xacro:if>
-      <xacro:if value="${(mirror_dae == True) and (front_hind_dae == True)}">
+      <xacro:if value="${(mirror_dae == True) and (front_hind == 1)}">
         <origin rpy="0 0 0" xyz="${leg_offset_x} ${leg_offset_y} 0"/>
       </xacro:if>
-      <xacro:if value="${(mirror_dae == False) and (front_hind_dae == False)}">
+      <xacro:if value="${(mirror_dae == False) and (front_hind == -1)}">
         <origin rpy="0 0 0" xyz="${-leg_offset_x} ${-leg_offset_y} 0"/>
       </xacro:if>
-      <xacro:if value="${(mirror_dae == True) and (front_hind_dae == False)}">
+      <xacro:if value="${(mirror_dae == True) and (front_hind == -1)}">
         <origin rpy="0 0 0" xyz="${-leg_offset_x} ${leg_offset_y} 0"/>
       </xacro:if>
       <parent link="TORSO"/>
@@ -36,9 +36,8 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find lite3_description)/meshes/${name}_hip.STL"/>
+          <mesh filename="file://$(find lite3_description)/meshes/hip.obj" scale="${front_hind} ${mirror} 1"/>
         </geometry>
-        <material name="silver"/>
       </visual>
     </link>
 
@@ -63,12 +62,7 @@
       </inertial>
       <visual>
         <geometry>
-          <xacro:if value="${mirror_dae == True}">
-            <mesh filename="file://$(find lite3_description)/meshes/l_thigh.obj"/>
-          </xacro:if>
-          <xacro:if value="${mirror_dae == False}">
-            <mesh filename="file://$(find lite3_description)/meshes/r_thigh.obj"/>
-          </xacro:if>
+          <mesh filename="file://$(find lite3_description)/meshes/thigh.obj" scale="1 ${mirror} 1"/>
         </geometry>
       </visual>
       <collision>
@@ -155,7 +149,5 @@
     </gazebo>
 
     <xacro:leg_transmission name="${name}"/>
-
   </xacro:macro>
-
 </robot>

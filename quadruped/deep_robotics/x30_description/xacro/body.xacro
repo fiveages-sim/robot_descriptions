@@ -43,9 +43,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file://$(find x30_description)/meshes/fl_hip.STL"/>
+        <mesh filename="file://$(find x30_description)/meshes/hip.obj"/>
       </geometry>
-      <material name="silver"/>
     </visual>
   </link>
 
@@ -65,7 +64,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file://$(find x30_description)/meshes/l_thigh.obj"/>
+        <mesh filename="file://$(find x30_description)/meshes/thigh.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -149,9 +148,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file://$(find x30_description)/meshes/fr_hip.STL"/>
+        <mesh filename="file://$(find x30_description)/meshes/hip.obj" scale="1 -1 1"/>
       </geometry>
-      <material name="silver"/>
     </visual>
   </link>
 
@@ -171,9 +169,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file://$(find x30_description)/meshes/r_thigh.obj"/>
+        <mesh filename="file://$(find x30_description)/meshes/thigh.obj" scale="1 -1 1"/>
       </geometry>
-
     </visual>
     <collision>
       <origin xyz="-0.02 0 -0.13" />
@@ -256,9 +253,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file://$(find x30_description)/meshes/hl_hip.STL"/>
+        <mesh filename="file://$(find x30_description)/meshes/hip.obj" scale="-1 1 1"/>
       </geometry>
-      <material name="silver"/>
     </visual>
   </link>
 
@@ -278,9 +274,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file://$(find x30_description)/meshes/l_thigh.obj"/>
+        <mesh filename="file://$(find x30_description)/meshes/thigh.obj"/>
       </geometry>
-
     </visual>
     <collision>
       <origin xyz="-0.02 0 -0.13" />
@@ -363,9 +358,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file://$(find x30_description)/meshes/hr_hip.STL"/>
+        <mesh filename="file://$(find x30_description)/meshes/hip.obj" scale="-1 -1 1"/>
       </geometry>
-      <material name="silver"/>
     </visual>
   </link>
 
@@ -385,9 +379,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file://$(find x30_description)/meshes/r_thigh.obj"/>
+        <mesh filename="file://$(find x30_description)/meshes/thigh.obj" scale="1 -1 1"/>
       </geometry>
-
     </visual>
     <collision>
       <origin xyz="-0.02 0 -0.13" />

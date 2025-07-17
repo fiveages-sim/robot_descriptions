@@ -23,7 +23,6 @@
 
   <link name="base">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.001 0.001 0.001"/>
       </geometry>
@@ -64,26 +63,23 @@
   <link name="imu_link">
     <inertial>
       <mass value="0.001"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
     </inertial>
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.001 0.001 0.001"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size=".001 .001 .001"/>
       </geometry>
     </collision>
   </link>
 
-  <xacro:leg name="FR" mirror="-1" mirror_dae="False" front_hind="1" front_hind_dae="True"/>
-  <xacro:leg name="FL" mirror="1" mirror_dae="True" front_hind="1" front_hind_dae="True"/>
-  <xacro:leg name="HR" mirror="-1" mirror_dae="False" front_hind="-1" front_hind_dae="False"/>
-  <xacro:leg name="HL" mirror="1" mirror_dae="True" front_hind="-1" front_hind_dae="False"/>
+  <xacro:leg name="FR" mirror="-1" mirror_dae="False" front_hind="1"/>
+  <xacro:leg name="FL" mirror="1" mirror_dae="True" front_hind="1"/>
+  <xacro:leg name="HR" mirror="-1" mirror_dae="False" front_hind="-1"/>
+  <xacro:leg name="HL" mirror="1" mirror_dae="True" front_hind="-1"/>
 
 </robot>

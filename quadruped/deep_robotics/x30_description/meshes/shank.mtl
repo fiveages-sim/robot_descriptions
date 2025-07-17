@@ -1,4 +1,4 @@
-# Blender 4.4.3 MTL File: 'None'
+# Blender 4.5.0 MTL File: 'None'
 # www.blender.org
 
 newmtl rubber
@@ -11,7 +11,7 @@ Ni 1.500000
 d 1.000000
 illum 2
 
-newmtl 材质.005
+newmtl silver
 Ns 250.000000
 Ka 0.500000 0.500000 0.500000
 Kd 0.700000 0.700000 0.700000

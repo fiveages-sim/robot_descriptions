@@ -4,12 +4,8 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="lite3">
-  <material name="silver">
-    <color rgba="0.9137254901960784 0.9137254901960784 0.9137254901960784 1.0"/>
-  </material>
   <link name="base">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.001 0.001 0.001"/>
       </geometry>
@@ -45,17 +41,14 @@
   <link name="imu_link">
     <inertial>
       <mass value="0.001"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
     </inertial>
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.001 0.001 0.001"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size=".001 .001 .001"/>
       </geometry>
@@ -78,9 +71,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://lite3_description/meshes/FR_hip.STL"/>
+        <mesh filename="package://lite3_description/meshes/hip.obj" scale="1 -1 1"/>
       </geometry>
-      <material name="silver"/>
     </visual>
   </link>
   <joint name="FR_HipY" type="revolute">
@@ -100,7 +92,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://lite3_description/meshes/r_thigh.obj"/>
+        <mesh filename="package://lite3_description/meshes/thigh.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -152,56 +144,6 @@
       </geometry>
     </collision>
   </link>
-  <gazebo reference="FR_HIP">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-  </gazebo>
-  <gazebo reference="FR_THIGH">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <self_collide>0</self_collide>
-    <kp value="1000000.0"/>
-    <kd value="100.0"/>
-  </gazebo>
-  <gazebo reference="FR_SHANK">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-  </gazebo>
-  <gazebo reference="FR_FOOT">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-    <kp value="1000000.0"/>
-    <kd value="100.0"/>
-  </gazebo>
-  <transmission name="FR_HipX_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="FR_HipX">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="FR_HipX_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="{name}_HipY_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="{name}_HipY">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="{name}_HipY_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="{name}_Knee_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="{name}_Knee">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="{name}_Knee_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
   <joint name="FL_HipX" type="revolute">
     <origin rpy="0 0 0" xyz="0.1745 0.062 0"/>
     <parent link="TORSO"/>
@@ -219,9 +161,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://lite3_description/meshes/FL_hip.STL"/>
+        <mesh filename="package://lite3_description/meshes/hip.obj" scale="1 1 1"/>
       </geometry>
-      <material name="silver"/>
     </visual>
   </link>
   <joint name="FL_HipY" type="revolute">
@@ -241,7 +182,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://lite3_description/meshes/l_thigh.obj"/>
+        <mesh filename="package://lite3_description/meshes/thigh.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -293,56 +234,6 @@
       </geometry>
     </collision>
   </link>
-  <gazebo reference="FL_HIP">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-  </gazebo>
-  <gazebo reference="FL_THIGH">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <self_collide>0</self_collide>
-    <kp value="1000000.0"/>
-    <kd value="100.0"/>
-  </gazebo>
-  <gazebo reference="FL_SHANK">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-  </gazebo>
-  <gazebo reference="FL_FOOT">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-    <kp value="1000000.0"/>
-    <kd value="100.0"/>
-  </gazebo>
-  <transmission name="FL_HipX_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="FL_HipX">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="FL_HipX_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="{name}_HipY_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="{name}_HipY">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="{name}_HipY_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="{name}_Knee_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="{name}_Knee">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="{name}_Knee_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
   <joint name="HR_HipX" type="revolute">
     <origin rpy="0 0 0" xyz="-0.1745 -0.062 0"/>
     <parent link="TORSO"/>
@@ -360,9 +251,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://lite3_description/meshes/HR_hip.STL"/>
+        <mesh filename="package://lite3_description/meshes/hip.obj" scale="-1 -1 1"/>
       </geometry>
-      <material name="silver"/>
     </visual>
   </link>
   <joint name="HR_HipY" type="revolute">
@@ -382,7 +272,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://lite3_description/meshes/r_thigh.obj"/>
+        <mesh filename="package://lite3_description/meshes/thigh.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -434,56 +324,6 @@
       </geometry>
     </collision>
   </link>
-  <gazebo reference="HR_HIP">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-  </gazebo>
-  <gazebo reference="HR_THIGH">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <self_collide>0</self_collide>
-    <kp value="1000000.0"/>
-    <kd value="100.0"/>
-  </gazebo>
-  <gazebo reference="HR_SHANK">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-  </gazebo>
-  <gazebo reference="HR_FOOT">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-    <kp value="1000000.0"/>
-    <kd value="100.0"/>
-  </gazebo>
-  <transmission name="HR_HipX_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="HR_HipX">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="HR_HipX_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="{name}_HipY_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="{name}_HipY">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="{name}_HipY_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="{name}_Knee_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="{name}_Knee">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="{name}_Knee_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
   <joint name="HL_HipX" type="revolute">
     <origin rpy="0 0 0" xyz="-0.1745 0.062 0"/>
     <parent link="TORSO"/>
@@ -501,9 +341,8 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://lite3_description/meshes/HL_hip.STL"/>
+        <mesh filename="package://lite3_description/meshes/hip.obj" scale="-1 1 1"/>
       </geometry>
-      <material name="silver"/>
     </visual>
   </link>
   <joint name="HL_HipY" type="revolute">
@@ -523,7 +362,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://lite3_description/meshes/l_thigh.obj"/>
+        <mesh filename="package://lite3_description/meshes/thigh.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -575,54 +414,4 @@
       </geometry>
     </collision>
   </link>
-  <gazebo reference="HL_HIP">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-  </gazebo>
-  <gazebo reference="HL_THIGH">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <self_collide>0</self_collide>
-    <kp value="1000000.0"/>
-    <kd value="100.0"/>
-  </gazebo>
-  <gazebo reference="HL_SHANK">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-  </gazebo>
-  <gazebo reference="HL_FOOT">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-    <kp value="1000000.0"/>
-    <kd value="100.0"/>
-  </gazebo>
-  <transmission name="HL_HipX_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="HL_HipX">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="HL_HipX_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="{name}_HipY_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="{name}_HipY">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="{name}_HipY_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="{name}_Knee_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="{name}_Knee">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="{name}_Knee_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
 </robot>
