@@ -20,7 +20,7 @@ colcon build --packages-up-to cr5_description --symlink-install
 * With Robotiq 85 Gripper
     ```bash
     source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_visualize_config manipulator.launch.py robot:=cr5 arm_type:="robotiq85"
+    ros2 launch robot_visualize_config manipulator.launch.py robot:=cr5 type:="robotiq85"
     ```
   ![cr5 robotiq85](../../.images/dobot_cr5_robotiq85.png)
 

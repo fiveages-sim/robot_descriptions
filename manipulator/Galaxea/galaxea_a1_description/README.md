@@ -21,7 +21,7 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 * A1 X
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_a1 arm_type:=a1x
+  ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_a1 type:=a1x
   ```
 
   ![A1X](../../.images/galaxea_a1x.png)
@@ -29,7 +29,7 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 * A1 Y
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_a1 arm_type:=a1y
+  ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_a1 type:=a1y
   ```
 
   ![A1Y](../../.images/galaxea_a1y.png)

@@ -12,7 +12,9 @@ model_information {
     [5]  "wheel_motor_joint3"
 
     [6]  "left_arm_gripper_joint1"
-    [7]  "right_arm_gripper_joint2"
+    [7]  "left_arm_gripper_joint2"
+    [8]  "right_arm_gripper_joint1"
+    [9]  "right_arm_gripper_joint2"
   }
 
   ; base frame of the robot (from URDF)
@@ -101,7 +103,7 @@ initialState
   {
     wheelBasedMobileManipulator
     {
-      (0,0)  -.0  ; position x
+      (0,0)  -1.0  ; position x
       (1,0)  0.0  ; position y
       (2,0)  0.0  ; heading
     }
@@ -169,22 +171,22 @@ inputCost
     {
       scaling 1e-2
 
-         (0,0)   10.0      ; torso_joint1
-         (1,0)   10.0      ; torso_joint2
-         (2,0)   10.0      ; torso_joint3
-         (3,0)   10.0      ; torso_joint4
-         (4,0)   1.0     ; left_arm_joint1
-         (5,0)   1.0     ; left_arm_joint2
-         (6,0)   1.0     ; left_arm_joint3
-         (7,0)   1.0     ; left_arm_joint4
-         (8,0)   1.0     ; left_arm_joint5
-         (9,0)   1.0     ; left_arm_joint6
-         (10,0)   1.0     ; right_arm_joint1
-         (11,0)   1.0     ; right_arm_joint2
-         (12,0)   1.0     ; right_arm_joint3
-         (13,0)   1.0     ; right_arm_joint4
-         (14,0)   1.0     ; right_arm_joint5
-         (15,0)   1.0     ; right_arm_joint6
+         (0,0)   10.0       ; torso_joint1
+         (1,0)   10.0       ; torso_joint2
+         (2,0)   10.0       ; torso_joint3
+         (3,0)   10.0       ; torso_joint4
+         (4,0)   1.0        ; left_arm_joint1
+         (5,0)   1.0        ; left_arm_joint2
+         (6,0)   1.0        ; left_arm_joint3
+         (7,0)   1.0        ; left_arm_joint4
+         (8,0)   1.0        ; left_arm_joint5
+         (9,0)   1.0        ; left_arm_joint6
+         (10,0)   1.0       ; right_arm_joint1
+         (11,0)   1.0       ; right_arm_joint2
+         (12,0)   1.0       ; right_arm_joint3
+         (13,0)   1.0       ; right_arm_joint4
+         (14,0)   1.0       ; right_arm_joint5
+         (15,0)   1.0       ; right_arm_joint6
     }
   }
 }
@@ -286,22 +288,22 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-      (0,0)  -0.013    ; torso_joint1 [m/s]
-      (1,0)  -2.088    ; torso_joint2 [rad/s]
-      (2,0)  -2.082	   ; torso_joint3 [rad/s]
-      (3,0)  -3.270	   ; torso_joint4 [rad/s]
-    (4,0)  -3.300	   ; left_arm_joint1 [rad/s]
-    (5,0)  -3.599	   ; left_arm_joint2 [rad/s]
-    (6,0)  -3.078	   ; left_arm_joint3 [rad/s]
-    (7,0)  -3.599	   ; left_arm_joint4 [rad/s]
-    (8,0)  -3.078	   ; left_arm_joint5 [rad/s]
-    (9,0)  -3.599	   ; left_arm_joint6 [rad/s]
-    (10,0)  -3.300	   ; right_arm_joint1 [rad/s]
-          (11,0)  -3.599	   ; right_arm_joint2 [rad/s]
-          (12,0)  -3.078	   ; right_arm_joint3 [rad/s]
-          (13,0)  -3.599	   ; right_arm_joint4 [rad/s]
-          (14,0)  -3.078	   ; right_arm_joint5 [rad/s]
-          (15,0)  -3.599	   ; right_arm_joint6 [rad/s]
+        (0,0)  -0.013       ; torso_joint1 [rad/s]
+        (1,0)  -2.088       ; torso_joint2 [rad/s]
+        (2,0)  -2.082	    ; torso_joint3 [rad/s]
+        (3,0)  -3.270	    ; torso_joint4 [rad/s]
+        (4,0)  -3.300	    ; left_arm_joint1 [rad/s]
+        (5,0)  -3.599	    ; left_arm_joint2 [rad/s]
+        (6,0)  -3.078	    ; left_arm_joint3 [rad/s]
+        (7,0)  -3.599	    ; left_arm_joint4 [rad/s]
+        (8,0)  -3.078	    ; left_arm_joint5 [rad/s]
+        (9,0)  -3.599	    ; left_arm_joint6 [rad/s]
+        (10,0)  -3.300	    ; right_arm_joint1 [rad/s]
+        (11,0)  -3.599	    ; right_arm_joint2 [rad/s]
+        (12,0)  -3.078	    ; right_arm_joint3 [rad/s]
+        (13,0)  -3.599	    ; right_arm_joint4 [rad/s]
+        (14,0)  -3.078	    ; right_arm_joint5 [rad/s]
+        (15,0)  -3.599	    ; right_arm_joint6 [rad/s]
     }
   }
 
@@ -338,22 +340,22 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-      (0,0)  0.013     ; torso_joint1 [m/s]
-      (1,0)  2.088     ; torso_joint2 [rad/s]
-      (2,0)  2.082	   ; torso_joint3 [rad/s]
-      (3,0)  3.270	   ; torso_joint4 [rad/s]
-      (4,0)  3.300	   ; left_arm_joint1 [rad/s]
-      (5,0)  3.599	   ; left_arm_joint2 [rad/s]
-      (6,0)  3.078	   ; left_arm_joint3 [rad/s]
-      (7,0)  3.599	   ; left_arm_joint4 [rad/s]
-      (8,0)  3.078	   ; left_arm_joint5 [rad/s]
-      (9,0)  3.599	   ; left_arm_joint6 [rad/s]
-      (10,0)  3.300	   ; right_arm_joint1 [rad/s]
-            (11,0)  3.599	   ; right_arm_joint2 [rad/s]
-            (12,0)  3.078	   ; right_arm_joint3 [rad/s]
-            (13,0)  3.599	   ; right_arm_joint4 [rad/s]
-            (14,0)  3.078	   ; right_arm_joint5 [rad/s]
-            (15,0)  3.599	   ; right_arm_joint6 [rad/s]
+        (0,0)  0.013        ; torso_joint1 [m/s]
+        (1,0)  2.088        ; torso_joint2 [rad/s]
+        (2,0)  2.082	    ; torso_joint3 [rad/s]
+        (3,0)  3.270	    ; torso_joint4 [rad/s]
+        (4,0)  3.300	    ; left_arm_joint1 [rad/s]
+        (5,0)  3.599	    ; left_arm_joint2 [rad/s]
+        (6,0)  3.078	    ; left_arm_joint3 [rad/s]
+        (7,0)  3.599	    ; left_arm_joint4 [rad/s]
+        (8,0)  3.078	    ; left_arm_joint5 [rad/s]
+        (9,0)  3.599	    ; left_arm_joint6 [rad/s]
+        (10,0)  3.300	    ; right_arm_joint1 [rad/s]
+        (11,0)  3.599	    ; right_arm_joint2 [rad/s]
+        (12,0)  3.078	    ; right_arm_joint3 [rad/s]
+        (13,0)  3.599	    ; right_arm_joint4 [rad/s]
+        (14,0)  3.078	    ; right_arm_joint5 [rad/s]
+        (15,0)  3.599	    ; right_arm_joint6 [rad/s]
     }
   }
 }

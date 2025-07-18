@@ -21,5 +21,5 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_r1
 ## 3. OCS2 Demo
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=galaxea_r1 dual_arm:=true
+ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=galaxea_r1
 ```

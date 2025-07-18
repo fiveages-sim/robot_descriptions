@@ -19,7 +19,7 @@ colcon build --packages-up-to piper_description --symlink-install
 * Launch Master Arm
     ```bash
     source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_visualize_config manipulator.launch.py arm_type:="master"
+    ros2 launch robot_visualize_config manipulator.launch.py type:="master"
     ```
     ![piper master](../../.images/agilex_piper_master.png)
 

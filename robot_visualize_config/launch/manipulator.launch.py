@@ -31,7 +31,7 @@ def generate_launch_description():
 
     def launch_setup(context, *args, **kwargs):
         robot_value = context.launch_configurations['robot']
-        arm_type_value = context.launch_configurations.get('arm_type', '')
+        arm_type_value = context.launch_configurations.get('type', '')
         robot_description = process_xacro(robot_value, arm_type_value)
         return [
             Node(
@@ -69,7 +69,7 @@ def generate_launch_description():
             description='Robot name to visualize'
         ),
         DeclareLaunchArgument(
-            'arm_type',
+            'type',
             default_value='',
             description='Type of the manipulator arm (empty means no type parameter passed to xacro)'
         ),

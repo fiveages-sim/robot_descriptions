@@ -21,6 +21,6 @@ colcon build --packages-up-to lift_description --symlink-install
 * Lift with X5 Arm
     ```bash
     source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_visualize_config manipulator.launch.py robot:=lift arm_type:="x5"
+    ros2 launch robot_visualize_config manipulator.launch.py robot:=lift type:="x5"
     ```
     ![arx lift x5](../../.images/arx_lift2.png)
