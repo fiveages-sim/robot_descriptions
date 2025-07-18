@@ -20,7 +20,7 @@
     </link>
     <joint name="joint_lift" type="prismatic">
       <origin xyz="0.022199 0 0.233"/>
-      <parent link="base_link"/>
+      <parent link="base"/>
       <child link="lift_1"/>
       <axis xyz="0.0 0.0 1.0"/>
       <limit effort="100" lower="0.0" upper="0.86" velocity="100"/>

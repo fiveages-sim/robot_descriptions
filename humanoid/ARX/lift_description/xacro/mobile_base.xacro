@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="MobileBase">
-    <link name="base_link">
+    <link name="base_link"/>
+    <joint name="base_joint" type="fixed">
+      <origin rpy="0 0 3.14159"/>
+      <parent link="base_link"/>
+      <child link="base"/>
+    </joint>
+
+    <link name="base">
       <inertial>
         <origin xyz="0.015300075250394498 -0.0039712791148939055 0.21685783167580347"/>
         <mass value="67.7696558151508"/>
@@ -42,18 +49,18 @@
 
     <joint name="joint_wheel1" type="fixed">
       <origin xyz="-0.182349 0.315838 0.03"/>
-      <parent link="base_link"/>
+      <parent link="base"/>
       <child link="wheel_1"/>
     </joint>
     <joint name="joint_wheel2" type="fixed">
       <origin xyz="-0.182349 -0.315838 0.03"/>
-      <parent link="base_link"/>
+      <parent link="base"/>
       <child link="wheel_2"/>
       <axis xyz="-0.5 -0.866025 0.0"/>
     </joint>
     <joint name="joint_wheel3" type="fixed">
       <origin xyz="0.364699 0.0 0.03"/>
-      <parent link="base_link"/>
+      <parent link="base"/>
       <child link="wheel_3"/>
       <axis xyz="1.0 0.0 -0.0"/>
     </joint>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(x7s_description)
+project(arx5_description)
 
 find_package(ament_cmake REQUIRED)
 

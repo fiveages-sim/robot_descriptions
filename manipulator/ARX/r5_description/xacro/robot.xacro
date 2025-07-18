@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-
-<robot name="R5 single" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:include filename="$(find r5_description)/xacro/R5.xacro"/>
-  <xacro:R5 name=""/>
-</robot>
