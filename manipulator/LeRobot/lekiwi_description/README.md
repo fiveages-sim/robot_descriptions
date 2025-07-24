@@ -19,7 +19,7 @@ colcon build --packages-up-to lekiwi_description --symlink-install
 * Lekiwi with SO101 Arm
     ```bash
     source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_visualize_config manipulator.launch.py robot:=lekiwi  arm_type:=so101
+    ros2 launch robot_visualize_config manipulator.launch.py robot:=lekiwi  type:=so101
     ```
   ![lekiwi_101](../../.images/lekiwi_101.png)
 

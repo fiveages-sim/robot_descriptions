@@ -4,7 +4,7 @@ project(galaxea_r1_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-		DIRECTORY meshes xacro
+		DIRECTORY config urdf meshes xacro
 		DESTINATION share/${PROJECT_NAME}/
 )
 

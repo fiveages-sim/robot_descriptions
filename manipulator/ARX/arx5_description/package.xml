@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>arx5_description</name>
+  <version>1.0.0</version>
+  <description>
+    <p>URDF Description package for ARX X5/R5</p>
+  </description>
+  <author>TODO</author>
+  <maintainer email="TODO@email.com"/>
+
+  <license>BSD</license>
+
+  <exec_depend>robot_visualize_config</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

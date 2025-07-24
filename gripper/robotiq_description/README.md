@@ -1,5 +1,7 @@
 # Robotiq Gripper Description
 
+This package contains the URDF and related files for the Robotiq 85 Gripper.
+
 ## Build
 
 ```bash
@@ -14,5 +16,5 @@ colcon build --packages-up-to robotiq_description --symlink-install
     source ~/ros2_ws/install/setup.bash
     ros2 launch robot_visualize_config manipulator.launch.py robot:=robotiq
     ```
-    
+
     <img src="../.images/robotiq85.png" width="300" height="300" style="object-fit: cover; object-position: center;"> <img src="../.images/robotiq85_collision.png" width="300" height="300" style="object-fit: cover; object-position: center;">
