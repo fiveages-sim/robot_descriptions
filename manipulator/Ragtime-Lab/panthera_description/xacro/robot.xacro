@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<robot name="Panthera" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="type" default="empty"/>
+
+  <xacro:include filename="$(find panthera_description)/xacro/panthera.xacro"/>
+  <xacro:panthera name=""/>
+
+  <xacro:if value="${'$(arg type)' == 'd405'}">
+    <xacro:include filename="$(find panthera_description)/xacro/d405.xacro"/>
+    <xacro:d405 name=""/>
+  </xacro:if>
+
+</robot>

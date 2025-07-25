@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="d405" params="name">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <link name="${prefix}camera_support">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find arx5_description)/meshes/camera_support.obj"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${prefix}camera_support_fixed" type="fixed">
+      <parent link="${prefix}gripper_center"/>
+      <child link="${prefix}camera_support"/>
+      <origin xyz="-0.13 0 0.018"/>
+    </joint>
+
+    <link name="${prefix}camera">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find arx5_description)/meshes/d405.obj"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${prefix}camera_fixed" type="fixed">
+      <origin xyz="0.0385 0 0.0475" rpy="0 0.523 0"/>
+      <parent link="${prefix}camera_support"/>
+      <child link="${prefix}camera"/>
+    </joint>
+  </xacro:macro>
+
+</robot>

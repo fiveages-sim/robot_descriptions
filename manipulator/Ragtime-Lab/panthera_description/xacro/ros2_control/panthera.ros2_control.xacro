@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="cr5_system" params="name ros2_control_hardware_type">
+  <xacro:macro name="panthera_system" params="name ros2_control_hardware_type">
 
     <ros2_control name="${name}" type="system">
       <hardware>
@@ -20,9 +20,7 @@
       <!-- 关节接口定义 -->
       <joint name="joint1">
         <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0</param>
-        </state_interface>
+        <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
       </joint>
@@ -30,7 +28,7 @@
       <joint name="joint2">
         <command_interface name="position"/>
         <state_interface name="position">
-          <param name="initial_value">0</param>
+          <param name="initial_value">0.526</param>
         </state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
@@ -39,7 +37,7 @@
       <joint name="joint3">
         <command_interface name="position"/>
         <state_interface name="position">
-          <param name="initial_value">-1.5708</param>
+          <param name="initial_value">0.119</param>
         </state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
@@ -48,7 +46,7 @@
       <joint name="joint4">
         <command_interface name="position"/>
         <state_interface name="position">
-          <param name="initial_value">0</param>
+          <param name="initial_value">-0.391</param>
         </state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
@@ -56,9 +54,7 @@
 
       <joint name="joint5">
         <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">1.5708</param>
-        </state_interface>
+        <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
       </joint>
@@ -68,6 +64,16 @@
         <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
+      </joint>
+
+      <joint name="gripper_joint">
+        <command_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity">
+          <param name="initial_value">0.0</param>
+        </state_interface>
       </joint>
 
     </ros2_control>

@@ -208,7 +208,7 @@
     </link>
 
     <!-- Main actuated joint - left outer knuckle -->
-    <joint name="left_outer_knuckle_joint" type="revolute">
+    <joint name="finger_joint" type="revolute">
       <origin rpy="0 0 3.14159265359" xyz="0 -0.0306011 0.054904"/>
       <parent link="${prefix}base_link"/>
       <child link="left_outer_knuckle"/>
@@ -230,7 +230,7 @@
       <child link="left_inner_knuckle"/>
       <axis xyz="1 0 0"/>
       <limit effort="1000" lower="0" upper="0.8757" velocity="2.0"/>
-      <mimic joint="left_outer_knuckle_joint" multiplier="1" offset="0"/>
+      <mimic joint="finger_joint" multiplier="1" offset="0"/>
     </joint>
 
     <!-- Left inner finger has opposite motion to simulate the mechanical linkage -->
@@ -240,7 +240,7 @@
       <child link="left_inner_finger"/>
       <axis xyz="1 0 0"/>
       <limit effort="1000" lower="-0.8757" upper="0" velocity="2.0"/>
-      <mimic joint="left_outer_knuckle_joint" multiplier="-1" offset="0"/>
+      <mimic joint="finger_joint" multiplier="-1" offset="0"/>
     </joint>
 
     <joint name="left_inner_finger_pad_joint" type="fixed">
@@ -257,7 +257,7 @@
       <child link="right_outer_knuckle"/>
       <axis xyz="1 0 0"/>
       <limit effort="1000" lower="0" upper="0.81" velocity="2.0"/>
-      <mimic joint="left_outer_knuckle_joint" multiplier="1" offset="0"/>
+      <mimic joint="finger_joint" multiplier="1" offset="0"/>
     </joint>
 
     <joint name="right_outer_finger_joint" type="fixed">
@@ -273,7 +273,7 @@
       <child link="right_inner_knuckle"/>
       <axis xyz="1 0 0"/>
       <limit effort="1000" lower="0" upper="0.8757" velocity="2.0"/>
-      <mimic joint="left_outer_knuckle_joint" multiplier="1" offset="0"/>
+      <mimic joint="finger_joint" multiplier="1" offset="0"/>
     </joint>
 
     <joint name="right_inner_finger_joint" type="revolute">
@@ -282,7 +282,7 @@
       <child link="right_inner_finger"/>
       <axis xyz="1 0 0"/>
       <limit effort="1000" lower="-0.8757" upper="0" velocity="2.0"/>
-      <mimic joint="left_outer_knuckle_joint" multiplier="-1" offset="0"/>
+      <mimic joint="finger_joint" multiplier="-1" offset="0"/>
     </joint>
 
     <joint name="right_inner_finger_pad_joint" type="fixed">

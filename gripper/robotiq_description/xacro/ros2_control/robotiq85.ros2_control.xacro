@@ -18,38 +18,13 @@
       </hardware>
 
       <!-- 关节接口定义 -->
-      <joint name="left_outer_knuckle_joint">
+      <joint name="finger_joint">
         <command_interface name="position"/>
         <state_interface name="position">
           <param name="initial_value">0.0</param>
         </state_interface>
         <state_interface name="velocity"/>
       </joint>
-
-<!--      <joint name="left_inner_knuckle_joint">-->
-<!--        <state_interface name="position"/>-->
-<!--        <state_interface name="velocity"/>-->
-<!--      </joint>-->
-
-<!--      <joint name="left_inner_finger_joint">-->
-<!--        <state_interface name="position"/>-->
-<!--        <state_interface name="velocity"/>-->
-<!--      </joint>-->
-
-<!--      <joint name="right_outer_knuckle_joint">-->
-<!--        <state_interface name="position"/>-->
-<!--        <state_interface name="velocity"/>-->
-<!--      </joint>-->
-
-<!--      <joint name="right_inner_knuckle_joint">-->
-<!--        <state_interface name="position"/>-->
-<!--        <state_interface name="velocity"/>-->
-<!--      </joint>-->
-
-<!--      <joint name="right_inner_finger_joint">-->
-<!--        <state_interface name="position"/>-->
-<!--        <state_interface name="velocity"/>-->
-<!--      </joint>-->
 
     </ros2_control>
   </xacro:macro>
