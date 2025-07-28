@@ -17,12 +17,17 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/base_link.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/base_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/base_link.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/base_link_0.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/base_link_1.obj"/>
         </geometry>
       </collision>
     </link>
@@ -41,12 +46,22 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link1.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/link1.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link1.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link1_0.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link1_1.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link1_2.obj"/>
         </geometry>
       </collision>
     </link>
@@ -73,12 +88,17 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link2.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/link2.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link2.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link2_0.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link2_1.obj"/>
         </geometry>
       </collision>
     </link>
@@ -105,12 +125,22 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link3.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/link3.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link3.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link3_0.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link3_1.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link3_2.obj"/>
         </geometry>
       </collision>
     </link>
@@ -137,12 +167,27 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link4.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/link4.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link4.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link4_0.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link4_1.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link4_2.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link4_3.obj"/>
         </geometry>
       </collision>
     </link>
@@ -169,12 +214,22 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link5.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/link5.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link5.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link5_0.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link5_1.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/link5_2.obj"/>
         </geometry>
       </collision>
     </link>
@@ -201,14 +256,9 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link6.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/link6.obj"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/link6.obj"/>
-        </geometry>
-      </collision>
     </link>
     
     <joint name="${prefix}joint6" type="revolute">
@@ -233,12 +283,22 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/gripper_center_link.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/gripper_center_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/gripper_center_link.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/gripper_center_0.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/gripper_center_1.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/gripper_center_2.obj"/>
         </geometry>
       </collision>
     </link>
@@ -264,12 +324,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/gripper_pad.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/gripper_pad.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/gripper_pad.obj"/>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/gripper_pad.obj"/>
         </geometry>
       </collision>
     </link>
@@ -295,12 +355,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/gripper_pad.obj" scale="1 -1 1"/>
+          <mesh filename="file://$(find panthera_description)/meshes/visual/gripper_pad.obj" scale="1 -1 1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_description)/meshes/gripper_pad.obj" scale="1 -1 1"/>
+          <mesh filename="file://$(find panthera_description)/meshes/collision/gripper_pad.obj" scale="1 -1 1"/>
         </geometry>
       </collision>
     </link>
