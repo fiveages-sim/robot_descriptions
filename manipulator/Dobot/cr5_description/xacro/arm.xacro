@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <robot name="cr5_robot" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="CR5" params="name">
+  <xacro:macro name="CR5" params="name collider:=convex">
+
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
     <link name="base_link">
       <inertial>
         <origin xyz="-8.0961E-06 0.0019103 0.028995"/>
@@ -18,11 +21,26 @@
           <mesh filename="file://$(find cr5_description)/meshes/visual/base_link.obj"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/base_link.obj"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/base_link.obj"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${collider == 'simple'}">
+        <collision>
+          <origin xyz="0 0 0.05"/>
+          <geometry>
+            <cylinder length="0.1" radius="0.1"/>
+          </geometry>
+        </collision>
+        <collision>
+          <geometry>
+            <box size="1.5 1.5 0.05"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
 
     <link name="Link1">
@@ -42,16 +60,25 @@
           <mesh filename="file://$(find cr5_description)/meshes/visual/Link1.obj"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link1_0.obj"/>
-        </geometry>
-      </collision>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link1_1.obj"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link1_0.obj"/>
+          </geometry>
+        </collision>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link1_1.obj"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${collider == 'simple'}">
+        <collision>
+          <geometry>
+            <cylinder length="0.17" radius="0.08"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
 
     <joint name="joint1" type="revolute">
@@ -79,21 +106,43 @@
           <mesh filename="file://$(find cr5_description)/meshes/visual/Link2.obj"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link2_0.obj"/>
-        </geometry>
-      </collision>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link2_1.obj"/>
-        </geometry>
-      </collision>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link2_2.obj"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link2_0.obj"/>
+          </geometry>
+        </collision>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link2_1.obj"/>
+          </geometry>
+        </collision>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link2_2.obj"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${collider == 'simple'}">
+        <collision>
+          <origin rpy="0 0 0" xyz="0 0 0.145"/>
+          <geometry>
+            <cylinder length="0.18" radius="0.07"/>
+          </geometry>
+        </collision>
+        <collision>
+          <origin rpy="0 1.5708 0" xyz="-0.2 0 0.15"/>
+          <geometry>
+            <cylinder length="0.43" radius="0.065"/>
+          </geometry>
+        </collision>
+        <collision>
+          <origin xyz="-0.43 0 0.145"/>
+          <geometry>
+            <cylinder length="0.18" radius="0.07"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
 
     <joint name="joint2" type="revolute">
@@ -121,21 +170,43 @@
           <mesh filename="file://$(find cr5_description)/meshes/visual/Link3.obj"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link3_0.obj"/>
-        </geometry>
-      </collision>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link3_1.obj"/>
-        </geometry>
-      </collision>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link3_2.obj"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link3_0.obj"/>
+          </geometry>
+        </collision>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link3_1.obj"/>
+          </geometry>
+        </collision>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link3_2.obj"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${collider == 'simple'}">
+        <collision>
+          <origin xyz="0 0 0.02"/>
+          <geometry>
+            <cylinder length="0.15" radius="0.07"/>
+          </geometry>
+        </collision>
+        <collision>
+          <origin rpy="0 1.5708 0" xyz="-0.2 0 0.03"/>
+          <geometry>
+            <cylinder length="0.35" radius="0.05"/>
+          </geometry>
+        </collision>
+        <collision>
+          <origin xyz="-0.355 0 0.02"/>
+          <geometry>
+            <cylinder length="0.15" radius="0.05"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
 
     <joint name="joint3" type="revolute">
@@ -163,16 +234,26 @@
           <mesh filename="file://$(find cr5_description)/meshes/visual/Link4.obj"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link4_0.obj"/>
-        </geometry>
-      </collision>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link4_1.obj"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link4_0.obj"/>
+          </geometry>
+        </collision>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link4_1.obj"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${collider == 'simple'}">
+        <collision>
+          <origin rpy="1.5708 0 0" />
+          <geometry>
+            <cylinder length="0.155" radius="0.055"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
 
     <joint name="joint4" type="revolute">
@@ -199,11 +280,21 @@
           <mesh filename="file://$(find cr5_description)/meshes/visual/Link5.obj"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link5.obj"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link5.obj"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${collider == 'simple'}">
+        <collision>
+          <origin rpy="1.5708 0 0" />
+          <geometry>
+            <cylinder length="0.18" radius="0.055"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
 
     <joint name="joint5" type="revolute">
@@ -231,11 +322,21 @@
           <mesh filename="file://$(find cr5_description)/meshes/visual/Link6.obj"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find cr5_description)/meshes/collision/Link6.obj"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find cr5_description)/meshes/collision/Link6.obj"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${collider == 'simple'}">
+        <collision>
+          <origin xyz="0 0 0.1" />
+          <geometry>
+            <box size="0.05 0.15 0.2"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
 
     <joint name="joint6" type="revolute">

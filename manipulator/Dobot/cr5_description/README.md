@@ -15,6 +15,10 @@ colcon build --packages-up-to cr5_description --symlink-install
     source ~/ros2_ws/install/setup.bash
     ros2 launch robot_visualize_config manipulator.launch.py robot:=cr5
     ```
+    ```bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 launch robot_visualize_config manipulator.launch.py robot:=cr5 collider:=simple
+    ```
     ![cr5](../../.images/dobot_cr5.png)
 
 * With Robotiq 85 Gripper

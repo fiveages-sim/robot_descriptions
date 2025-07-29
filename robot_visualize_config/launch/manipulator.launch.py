@@ -10,14 +10,24 @@ from launch.actions import DeclareLaunchArgument, OpaqueFunction
 import xacro
 
 
-def process_xacro(robot, arm_type=None):
+def process_xacro(robot, arm_type=None, collider=None):
     package_description = robot + "_description"
     pkg_path = os.path.join(get_package_share_directory(package_description))
     xacro_file = os.path.join(pkg_path, 'xacro', 'robot.xacro')
     
-    # 如果指定了arm_type，则传递给xacro，否则不传递
+    # 构建mappings字典
+    mappings = {}
+    
+    # 如果指定了arm_type，则传递给xacro
     if arm_type and arm_type.strip():
-        mappings = {'type': arm_type}
+        mappings['type'] = arm_type
+    
+    # 如果指定了collider，则传递给xacro
+    if collider and collider.strip():
+        mappings['collider'] = collider
+    
+    # 根据mappings是否为空来决定如何处理xacro文件
+    if mappings:
         robot_description_config = xacro.process_file(xacro_file, mappings=mappings)
     else:
         robot_description_config = xacro.process_file(xacro_file)
@@ -32,7 +42,8 @@ def generate_launch_description():
     def launch_setup(context, *args, **kwargs):
         robot_value = context.launch_configurations['robot']
         arm_type_value = context.launch_configurations.get('type', '')
-        robot_description = process_xacro(robot_value, arm_type_value)
+        collider_value = context.launch_configurations.get('collider', '')
+        robot_description = process_xacro(robot_value, arm_type_value, collider_value)
         return [
             Node(
                 package='rviz2',
@@ -72,6 +83,11 @@ def generate_launch_description():
             'type',
             default_value='',
             description='Type of the manipulator arm (empty means no type parameter passed to xacro)'
+        ),
+        DeclareLaunchArgument(
+            'collider',
+            default_value='',
+            description='Collider type of the manipulator arm (empty means no collider parameter passed to xacro)'
         ),
         OpaqueFunction(function=launch_setup)
     ])
