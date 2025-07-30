@@ -21,5 +21,10 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=x7s
 ## 3. OCS2 Demo
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=x7s
+ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=x7s 
+```
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=x7s enable_joystick:=true
 ```
