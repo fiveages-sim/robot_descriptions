@@ -37,10 +37,25 @@ def generate_launch_description():
         description='Whether to enable debug mode'
     )
 
+    # 手柄控制参数
+    enable_joystick = launch.actions.DeclareLaunchArgument(
+        name='enable_joystick',
+        default_value='false',
+        description='Whether to enable joystick control for single arm mode'
+    )
+
+    joystick_device = launch.actions.DeclareLaunchArgument(
+        name='joystick_device',
+        default_value='/dev/input/js0',
+        description='Joystick device path (e.g., /dev/input/js0)'
+    )
+
     def launch_setup(context, *args, **kwargs):
         robot_name_value = context.launch_configurations['robot_name']
         type_value = context.launch_configurations['type']
         debug_value = context.launch_configurations['debug']
+        enable_joystick_value = context.launch_configurations['enable_joystick']
+        joystick_device_value = context.launch_configurations['joystick_device']
         
         # 生成带类型的机器人标识符
         robot_identifier = robot_name_value
@@ -49,6 +64,13 @@ def generate_launch_description():
             print(f"🚀 Launching OCS2 for robot: {robot_name_value} (type: {type_value})")
         else:
             print(f"🚀 Launching OCS2 for robot: {robot_name_value} (default type)")
+        
+        # 手柄配置信息
+        if enable_joystick_value == 'true':
+            print(f"🎮 Joystick control enabled:")
+            print(f"   - Device: {joystick_device_value}")
+        else:
+            print(f"🎮 Joystick control disabled")
         
         # 自动生成所有路径
         try:
@@ -104,7 +126,26 @@ def generate_launch_description():
                 }.items()
             )
             print("✅ Mobile manipulator configured successfully (RViz will auto-start)")
-            return [mobile_manipulator]
+            
+            # 如果启用手柄，添加joy_node
+            nodes_to_return = [mobile_manipulator]
+            if enable_joystick_value == 'true':
+                from launch_ros.actions import Node
+                joy_node = Node(
+                    package='joy',
+                    executable='joy_node',
+                    name='joy_node',
+                    parameters=[{
+                        'dev': joystick_device_value,
+                        'deadzone': 0.05,
+                        'autorepeat_rate': 20.0
+                    }],
+                    output='screen'
+                )
+                nodes_to_return.append(joy_node)
+                print("✅ Joy node added for joystick control")
+            
+            return nodes_to_return
         except Exception as e:
             print(f"❌ Error launching mobile_manipulator: {e}")
             return []
@@ -113,5 +154,7 @@ def generate_launch_description():
         robot_name,
         robot_type,
         debug,
+        enable_joystick,
+        joystick_device,
         OpaqueFunction(function=launch_setup)
     ]) 
