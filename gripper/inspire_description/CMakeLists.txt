@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(inspire_eg2_description)
+project(inspire_description)
 
 find_package(ament_cmake REQUIRED)
 

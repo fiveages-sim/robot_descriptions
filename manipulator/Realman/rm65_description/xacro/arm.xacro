@@ -224,13 +224,13 @@
       <child link="${prefix}gripper_plate"/>
     </joint>
 
-    <xacro:include filename="$(find inspire_eg2_description)/xacro/eg2_4c2.xacro"/>
-    <xacro:Gripper name="${prefix}gripper"/>
+    <xacro:include filename="$(find inspire_description)/xacro/EG2-4C2.xacro"/>
+    <xacro:Gripper name="${name}"/>
 
-    <joint name="${prefix}gripper_joint" type="fixed">
-      <origin xyz="0 0 0.0043" rpy="0 0 0"/>
+    <joint name="${prefix}gripper_base_joint" type="fixed">
+      <origin xyz="0 0 0.0043"/>
       <parent link="${prefix}gripper_plate" />
-      <child link="${prefix}gripper_base_link" />
+      <child link="${prefix}gripper_base" />
     </joint>
   </xacro:macro>
 </robot>

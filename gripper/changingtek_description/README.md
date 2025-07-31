@@ -1,6 +1,6 @@
 # ChangingTek Gripper Description
 
-This package contains the URDF and related files for the ChangingTek Grippers.
+This package contains the URDF and related files for the ChangingTek Grippers. Origin files could be found at [ChangingTek](https://gitee.com/Ice_Panda/changingtek).
 
 ## Build
 
