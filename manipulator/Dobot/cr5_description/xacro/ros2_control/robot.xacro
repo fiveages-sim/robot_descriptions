@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="CR5">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
+
+  <link name="world"/>
+
+  <joint name="world_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <xacro:include filename="$(find cr5_description)/xacro/arm.xacro"/>
+  <xacro:CR5 name=""/>
+
+  <!-- Import R5 ros2_control description -->
+  <xacro:include filename="$(find cr5_description)/xacro/ros2_control/cr5.ros2_control.xacro"/>
+  <xacro:cr5_system name="cr5System" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <xacro:arg name="type" default="robotiq85"/>
+
+  <xacro:if value="${'$(arg type)' != 'empty'}">
+    <joint name="gripper_fix" type="fixed">
+      <parent link="Link6"/>
+      <child link="gripper_base"/>
+    </joint>
+  </xacro:if>
+
+  <!-- 根据type参数决定使用哪种夹爪 -->
+  <xacro:if value="${'$(arg type)' == 'robotiq85'}">
+    <xacro:include filename="$(find robotiq_description)/xacro/ros2_control/gripper.xacro"/>
+    <xacro:RobotiqSystem hardware="$(arg ros2_control_hardware_type)"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'AG2F90-C'}">
+    <xacro:include filename="$(find changingtek_description)/xacro/ros2_control/gripper.xacro"/>
+    <xacro:ChangingTekSystem hardware="$(arg ros2_control_hardware_type)"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'AG2F120S'}">
+    <xacro:include filename="$(find changingtek_description)/xacro/ros2_control/gripper.xacro"/>
+    <xacro:ChangingTekSystem hardware="$(arg ros2_control_hardware_type)" type="AG2F120S"/>
+  </xacro:if>
+
+  <xacro:arg name="gazebo" default="false"/>
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find cr5_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

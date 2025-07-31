@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="RobotiqSystem" params="hardware type:=2F85">
+
+    <!-- 根据type参数决定使用哪种夹爪 -->
+    <xacro:if value="${type == '2F85'}">
+      <xacro:include filename="$(find robotiq_description)/xacro/2F85.xacro"/>
+      <xacro:Robotiq85 name=""/>
+
+      <xacro:include filename="$(find robotiq_description)/xacro/ros2_control/2f.ros2_control.xacro"/>
+      <xacro:robotiq_2f_system name="robotiq85System" hardware="${hardware}"/>
+    </xacro:if>
+
+  </xacro:macro>
+</robot>

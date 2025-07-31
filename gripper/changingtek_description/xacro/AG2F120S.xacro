@@ -1,0 +1,290 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="AG2F120S" params="name">
+
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <link name="${prefix}gripper_base">
+      <inertial>
+        <origin xyz="1.23989288637867E-06 3.27564415436087E-07 0.0536186975993762"/>
+        <mass value="0.443105756928829"/>
+        <inertia
+            ixx="0.00064200574020552"
+            ixy="-1.51180224931458E-07"
+            ixz="7.24174172220287E-09"
+            iyy="0.00066998312004943"
+            iyz="2.73584170951165E-09"
+            izz="0.000278949393571484"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/gripper_base.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/gripper_base.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}left_1_link">
+      <inertial>
+        <origin xyz="0.00656387870913618 0.024850259757102 -9.40817030196858E-10"/>
+        <mass value="0.0112899386472626"/>
+        <inertia
+            ixx="1.96944973967669E-06"
+            ixy="6.42395813223716E-07"
+            ixz="-1.07950451056367E-14"
+            iyy="1.39704780795747E-06"
+            iyz="-1.48209813327181E-14"
+            izz="2.47457179553145E-06"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_1.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_1.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint name="${prefix}gripper_joint" type="revolute">
+      <origin xyz="-0.032553 0 0.10644" rpy="1.5708 0 3.1416"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}left_1_link"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="0" upper="1" effort="2" velocity="1000"/>
+    </joint>
+
+    <link name="${prefix}left_support_link">
+      <inertial>
+        <origin xyz="-0.011970095332009 0.0238338043684485 -1.36624428992904E-06"/>
+        <mass value="0.0140092102116716"/>
+        <inertia
+            ixx="4.13674978137002E-06"
+            ixy="9.81573398608352E-07"
+            ixz="-2.87921970465553E-11"
+            iyy="1.1362453186293E-06"
+            iyz="2.94726072168702E-11"
+            izz="4.10226218364235E-06"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/support_link.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/support_link.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}left_support_joint" type="revolute">
+      <origin xyz="-0.0093594 0.056229 0"/>
+      <parent link="${prefix}left_1_link"/>
+      <child link="${prefix}left_support_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+    </joint>
+
+    <link name="${prefix}left_pad_link">
+      <inertial>
+        <origin xyz="1.46688816627348E-09 0.00209017783344978 -8.17280129359337E-17"/>
+        <mass value="0.00332411394949541"/>
+        <inertia
+            ixx="5.5867126170785E-07"
+            ixy="2.9966962370347E-20"
+            ixz="1.44978830317617E-23"
+            iyy="1.45407135182096E-07"
+            iyz="-1.60867378777053E-21"
+            izz="4.18250297449997E-07"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/pad_link.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/pad_link.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}left_pad_joint" type="fixed">
+      <origin xyz="-0.022056 0.044306 0"/>
+      <parent link="${prefix}left_support_link"/>
+      <child link="${prefix}left_pad_link"/>
+    </joint>
+
+    <link name="${prefix}left_2_link">
+      <inertial>
+        <origin xyz="-0.00438952959966343 0.0248815722409523 -2.55135883071891E-05"/>
+        <mass value="0.00803955821311802"/>
+        <inertia
+            ixx="1.15079028835042E-06"
+            ixy="1.13853775681911E-07"
+            ixz="-1.79492796413463E-10"
+            iyy="4.68655200337902E-07"
+            iyz="-4.49903912976825E-10"
+            izz="8.47367915692972E-07"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_2.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_2.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}left_2_joint" type="revolute">
+      <origin xyz="-0.017 0 0.122" rpy="1.5708 0 3.1416"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}left_2_link"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+    </joint>
+
+    <link name="${prefix}right_2_link">
+      <inertial>
+        <origin xyz="-0.00438952959968201 0.0248815722409522 -2.5513588307359E-05"/>
+        <mass value="0.00803955821311803"/>
+        <inertia
+            ixx="1.15079028835042E-06"
+            ixy="1.13853775681912E-07"
+            ixz="-1.79492796413511E-10"
+            iyy="4.68655200337903E-07"
+            iyz="-4.49903912976901E-10"
+            izz="8.47367915692974E-07"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_2.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_2.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}right_2_joint" type="revolute">
+      <origin xyz="0.017 0 0.122" rpy="1.5708 0 0"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}right_2_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <mimic joint="${prefix}left_2_joint" multiplier="-1" offset="0"/>
+    </joint>
+
+    <link name="${prefix}right_1_link">
+      <inertial>
+        <origin xyz="0.00656387870564603 0.0248502597572661 -9.40812230336897E-10"/>
+        <mass value="0.0112899386472626"/>
+        <inertia
+            ixx="1.96944973967663E-06"
+            ixy="6.42395813223747E-07"
+            ixz="-1.07950449101923E-14"
+            iyy="1.39704780795753E-06"
+            iyz="-1.48209815851649E-14"
+            izz="2.47457179553146E-06"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_1.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_1.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}right_1_joint" type="revolute">
+      <origin xyz="0.032553 0 0.10644" rpy="1.5708 0 0"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}right_1_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="-1" offset="0"/>
+    </joint>
+
+    <link name="${prefix}right_support_link">
+      <inertial>
+        <origin xyz="-0.011970095112324 0.0238338043682057 -1.36624428997256E-06"/>
+        <mass value="0.0140092102116716"/>
+        <inertia
+            ixx="4.13674978136988E-06"
+            ixy="9.81573398608576E-07"
+            ixz="-2.87921970465403E-11"
+            iyy="1.13624531862944E-06"
+            iyz="2.94726072165632E-11"
+            izz="4.10226218364236E-06"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/support_link.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/support_link.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}right_support_joint" type="revolute">
+      <origin xyz="-0.0093594 0.056229 0"/>
+      <parent link="${prefix}right_1_link"/>
+      <child link="${prefix}right_support_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <mimic joint="${prefix}right_1_joint" multiplier="-1" offset="0"/>
+    </joint>
+
+    <link name="${prefix}right_pad_link">
+      <inertial>
+        <origin xyz="5.43457184440897E-09 0.00209017783344967 -1.21646039264426E-16"/>
+        <mass value="0.00332411394949542"/>
+        <inertia
+            ixx="5.58671261707851E-07"
+            ixy="3.06066210315894E-20"
+            ixz="1.70379713307979E-23"
+            iyy="1.45407135182096E-07"
+            iyz="-1.65096420438087E-21"
+            izz="4.18250297449998E-07"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/pad_link.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/pad_link.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}right_pad_joint" type="fixed">
+      <origin xyz="-0.022056 0.044306 0"/>
+      <parent link="${prefix}right_support_link"/>
+      <child link="${prefix}right_pad_link"/>
+    </joint>
+
+  </xacro:macro>
+</robot>

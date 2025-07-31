@@ -28,6 +28,13 @@ colcon build --packages-up-to cr5_description --symlink-install
     ```
   ![cr5 robotiq85](../../.images/dobot_cr5_robotiq85.png)
 
+* With ChangingTek AG2F90-C Gripper
+    ```bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 launch robot_visualize_config manipulator.launch.py robot:=cr5 type:="AG2F90-C"
+    ```
+  ![cr5 ag2f90-c](../../.images/dobot_cr5_ag2f90-c.png)
+
 ## 3. OCS2 Demo
 ```bash
 source ~/ros2_ws/install/setup.bash

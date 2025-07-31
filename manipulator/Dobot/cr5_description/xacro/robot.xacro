@@ -9,13 +9,21 @@
 
   <xacro:CR5 name="" collider="$(arg collider)"/>
 
-  <!-- 根据type参数决定使用哪种夹爪 -->
-  <xacro:if value="${'$(arg type)' == 'robotiq85'}">
+  <xacro:if value="${'$(arg type)' != 'empty'}">
     <joint name="gripper_fix" type="fixed">
       <parent link="Link6"/>
-      <child link="eef_base_link"/>
+      <child link="gripper_base"/>
     </joint>
+  </xacro:if>
+
+  <!-- 根据type参数决定使用哪种夹爪 -->
+  <xacro:if value="${'$(arg type)' == 'robotiq85'}">
     <xacro:include filename="$(find robotiq_description)/xacro/robotiq85.xacro"/>
-    <xacro:Robotiq85 name="eef"/>
+    <xacro:Robotiq85 name=""/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'AG2F90-C'}">
+    <xacro:include filename="$(find changingtek_description)/xacro/AG2F90-C.xacro"/>
+    <xacro:AG2F90-C name=""/>
   </xacro:if>
 </robot>
