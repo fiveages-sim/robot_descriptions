@@ -122,7 +122,8 @@ def generate_launch_description():
                     'debug': debug_value,
                     'urdfFile': urdf_file_value,
                     'taskFile': task_file_value,
-                    'libFolder': lib_folder_value
+                    'libFolder': lib_folder_value,
+                    'enableJoystick': enable_joystick_value
                 }.items()
             )
             print("✅ Mobile manipulator configured successfully (RViz will auto-start)")

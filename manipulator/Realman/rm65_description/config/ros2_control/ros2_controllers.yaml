@@ -53,7 +53,7 @@ ocs2_arm_controller:
     state_interfaces:
       - position
 
-    robot_name: cr5
+    robot_name: rm65
 
     # Control parameters
     home_pos: [0.0, 0.0, -1.5708, 0.0, 1.5708, 0.0]

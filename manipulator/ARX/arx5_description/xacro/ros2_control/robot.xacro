@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="R5a">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
+
+  <link name="world"/>
+
+  <joint name="world_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+  <xacro:arg name="type" default="x5"/>
+
+  <xacro:if value="${'$(arg type)' == 'r5'}">
+    <xacro:include filename="$(find arx5_description)/xacro/R5.xacro"/>
+    <xacro:R5 name=""/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'x5'}">
+    <xacro:include filename="$(find arx5_description)/xacro/X5.xacro"/>
+    <xacro:X5 name=""/>
+  </xacro:if>
+
+  <!-- Import R5 ros2_control description -->
+  <xacro:include filename="$(find arx5_description)/xacro/ros2_control/arx5.ros2_control.xacro" />
+  <xacro:arx5_system name="ARX5System" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <xacro:arg name="gazebo" default="false" />
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find arx5_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

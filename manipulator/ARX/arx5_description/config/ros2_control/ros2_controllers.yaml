@@ -33,8 +33,7 @@ arm_controller:
 
 hand_controller:
   ros__parameters:
-    joint: finger_joint
-
+    joint: joint7
 
 ocs2_arm_controller:
   ros__parameters:
@@ -53,8 +52,8 @@ ocs2_arm_controller:
     state_interfaces:
       - position
 
-    robot_name: cr5
+    robot_name: arx5
 
     # Control parameters
-    home_pos: [0.0, 0.0, -1.5708, 0.0, 1.5708, 0.0]
+    home_pos: [0.0, 0.594, 0.306, 0.331, 0.0, 0.0]
     zero_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

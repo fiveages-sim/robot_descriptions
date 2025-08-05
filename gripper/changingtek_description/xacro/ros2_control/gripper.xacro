@@ -9,7 +9,7 @@
       <xacro:include filename="$(find changingtek_description)/xacro/AG2F90-C.xacro"/>
       <xacro:AG2F90-C name=""/>
       <xacro:include filename="$(find changingtek_description)/xacro/ros2_control/2f.ros2_control.xacro"/>
-      <xacro:changingtek_2f_system name="AG2F90-C_System" hardware="${hardware}"/>
+      <xacro:changingtek_2f_system name="AG2F90_C_System" hardware="${hardware}"/>
     </xacro:if>
 
     <xacro:if value="${type == 'AG2F120S'}">

@@ -80,7 +80,7 @@ mpc
   debugPrint                      false
 
   mpcDesiredFrequency             100   ; [Hz]
-  mrtDesiredFrequency             400   ; [Hz]
+  mrtDesiredFrequency             500   ; [Hz]
 }
 
 ; initial state
