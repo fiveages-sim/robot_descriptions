@@ -15,6 +15,14 @@
           <param name="joint_commands_topic">/isaac/joint_command</param>
           <param name="joint_states_topic">/isaac/joint_states</param>
           <param name="sum_wrapped_joint_states">true</param>
+          <param name="initialize_commands_from_state">true</param>
+        </xacro:if>
+        <xacro:if value="${ros2_control_hardware_type == 'real'}">
+          <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+          <param name="joint_commands_topic">/joint_command_robot</param>
+          <param name="joint_states_topic">/joint_states_robot</param>
+          <param name="sum_wrapped_joint_states">true</param>
+          <param name="initialize_commands_from_state">true</param>
         </xacro:if>
       </hardware>
 
