@@ -33,7 +33,7 @@ arm_controller:
 
 hand_controller:
   ros__parameters:
-    joint: finger_joint
+    joint: gripper_joint
 
 
 ocs2_arm_controller:

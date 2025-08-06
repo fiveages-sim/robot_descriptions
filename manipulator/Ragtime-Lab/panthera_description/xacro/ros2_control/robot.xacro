@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Panthera">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
+
+  <link name="world"/>
+
+  <joint name="world_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+  <xacro:arg name="type" default="empty"/>
+
+  <xacro:include filename="$(find panthera_description)/xacro/panthera.xacro"/>
+  <xacro:panthera name=""/>
+
+  <xacro:if value="${'$(arg type)' == 'd405'}">
+    <xacro:include filename="$(find panthera_description)/xacro/d405.xacro"/>
+    <xacro:d405 name=""/>
+  </xacro:if>
+
+  <!-- Import Panthera ros2_control description -->
+  <xacro:include filename="$(find panthera_description)/xacro/ros2_control/panthera.ros2_control.xacro" />
+
+  <xacro:panthera_system name="PantheraSystem" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <xacro:arg name="gazebo" default="false" />
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find panthera_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

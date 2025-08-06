@@ -14,6 +14,8 @@
     <license>BSD</license>
 
     <exec_depend>robot_visualize_config</exec_depend>
+    <exec_depend>changingtek_description</exec_depend>
+    <exec_depend>robotiq_description</exec_depend>
 
     <export>
         <build_type>ament_cmake</build_type>
