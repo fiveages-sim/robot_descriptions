@@ -47,12 +47,15 @@ I add mobile manipulator OCS2 config for some of the manipulator robots, you can
 
 ## Quadruped Robots
 
-| Brand         | Model                                              | Repaint | Images                                                        |
-|---------------|----------------------------------------------------|---------|---------------------------------------------------------------|
-| Unitree       | [A1](quadruped/unitree/a1_description)             | No      | <img src="quadruped/.images/unitree_a1.png" width="200">      |
-| Unitree       | [Aliengo](quadruped/unitree/aliengo_description)   | No      | <img src="quadruped/.images/unitree_aliengo.png" width="200"> |
-| Unitree       | [Go1](quadruped/unitree/go1_description)           | Yes     | <img src="quadruped/.images/unitree_go1.png" width="200">     |
-| Unitree       | [Go2](quadruped/unitree/go2_description)           | No      | <img src="quadruped/.images/unitree_go2.png" width="200">     |
-| Unitree       | [B2](quadruped/unitree/b2_description)             | No      | <img src="quadruped/.images/unitree_b2.png" width="200">      |
-| Deep Robotics | [Lite3](quadruped/deep_robotics/lite3_description) | Yes     | <img src="quadruped/.images/deep_lite3.png" width="200">      |
-| Deep Robotics | [X30](quadruped/deep_robotics/x30_description)     | Yes     | <img src="quadruped/.images/deep_x30.png" width="200">        |
+| Brand         | Model                                               | Repaint | Images                                                        |
+|---------------|-----------------------------------------------------|---------|---------------------------------------------------------------|
+| Unitree       | [A1](quadruped/unitree/a1_description)              | No      | <img src="quadruped/.images/unitree_a1.png" width="200">      |
+| Unitree       | [Aliengo](quadruped/unitree/aliengo_description)    | No      | <img src="quadruped/.images/unitree_aliengo.png" width="200"> |
+| Unitree       | [Go1](quadruped/unitree/go1_description)            | Yes     | <img src="quadruped/.images/unitree_go1.png" width="200">     |
+| Unitree       | [Go2](quadruped/unitree/go2_description)            | No      | <img src="quadruped/.images/unitree_go2.png" width="200">     |
+| Unitree       | [B2](quadruped/unitree/b2_description)              | No      | <img src="quadruped/.images/unitree_b2.png" width="200">      |
+| Deep Robotics | [Lite3](quadruped/deep_robotics/lite3_description)  | Yes     | <img src="quadruped/.images/deep_lite3.png" width="200">      |
+| Deep Robotics | [X30](quadruped/deep_robotics/x30_description)      | Yes     | <img src="quadruped/.images/deep_x30.png" width="200">        |
+| Xiaomi        | [CyberDog](quadruped/magiclab/cyberdog_description) | Yes     | <img src="quadruped/.images/cyberdog.png" width="200">        |
+| MagicLab      | [MagicDog](quadruped/magiclab/magicdog_description) | Yes     | <img src="quadruped/.images/magicdog.png" width="200">        |
+| ZsiBot        | [ZSL-1](quadruped/zsibot/zsl1_description)          | Yes     | <img src="quadruped/.images/zsl1.png" width="200">            |
