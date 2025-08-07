@@ -23,7 +23,7 @@
 
   <!-- Import R5 ros2_control description -->
   <xacro:include filename="$(find arx5_description)/xacro/ros2_control/arx5.ros2_control.xacro" />
-  <xacro:arx5_system name="ARX5System" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+  <xacro:arx5_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
 
   <xacro:arg name="gazebo" default="false" />
   <xacro:if value="$(arg gazebo)">

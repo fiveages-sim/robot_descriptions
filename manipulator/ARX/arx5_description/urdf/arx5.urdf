@@ -183,7 +183,7 @@
       </geometry>
     </collision>
   </link>
-  <joint name="joint7" type="prismatic">
+  <joint name="gripper_joint" type="prismatic">
     <origin xyz="0.08657 0.024896 -0.0002436"/>
     <parent link="link6"/>
     <child link="link7"/>
@@ -213,7 +213,7 @@
     <child link="link8"/>
     <axis xyz="0 -1 0"/>
     <limit effort="100" lower="0" upper="0.044" velocity="5"/>
-    <mimic joint="joint7" multiplier="1" offset="0"/>
+    <mimic joint="gripper_joint" multiplier="1" offset="0"/>
   </joint>
   <link name="gripper_center"/>
   <joint name="gripper_center_fixed" type="fixed">

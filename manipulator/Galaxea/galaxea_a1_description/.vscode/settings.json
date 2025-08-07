@@ -1,0 +1,16 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/biao/ros2_ws/install/ocs2_msgs/lib/python3.12/site-packages",
+        "/home/biao/ros2_ws/install/convex_plane_decomposition_msgs/lib/python3.12/site-packages",
+        "/home/biao/ros2_ws/install/control_input_msgs/lib/python3.12/site-packages",
+        "/opt/openrobots/lib/python3.10/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/biao/ros2_ws/install/ocs2_msgs/lib/python3.12/site-packages",
+        "/home/biao/ros2_ws/install/convex_plane_decomposition_msgs/lib/python3.12/site-packages",
+        "/home/biao/ros2_ws/install/control_input_msgs/lib/python3.12/site-packages",
+        "/opt/openrobots/lib/python3.10/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}

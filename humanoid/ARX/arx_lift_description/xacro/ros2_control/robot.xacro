@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arx_lift">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
+
+  <link name="world"/>
+
+  <joint name="world_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.05"/>
+  </joint>
+
+  <xacro:arg name="type" default="x5"/>
+
+  <!-- 根据type参数包含不同的机械臂描述文件 -->
+  <xacro:if value="${'$(arg type)' == 'x5'}">
+    <xacro:include filename="$(find arx5_description)/xacro/X5.xacro"/>
+    <!-- 使用X5宏来创建两个机械臂 -->
+    <xacro:X5 name="left"/>
+    <xacro:X5 name="right"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'r5'}">
+    <xacro:include filename="$(find arx5_description)/xacro/R5.xacro"/>
+    <!-- 使用R5宏来创建两个机械臂 -->
+    <xacro:R5 name="left"/>
+    <xacro:R5 name="right"/>
+  </xacro:if>
+
+  <!-- 包含arx_lift身体部分的描述 -->
+  <xacro:include filename="$(find arx_lift_description)/xacro/mobile_base.xacro"/>
+  <xacro:include filename="$(find arx_lift_description)/xacro/body.xacro"/>
+
+  <xacro:MobileBase/>
+  <xacro:Body/>
+
+  <!-- 机械臂与arx_lift身体的连接 -->
+  <joint name="arm_left_fixed" type="fixed">
+    <parent link="lift_link"/>
+    <child link="left_base_link"/>
+    <origin rpy="0 0 3.1415926" xyz="-0.208 -0.25000 0.092"/>
+  </joint>
+  <joint name="arm_right_fixed" type="fixed">
+    <parent link="lift_link"/>
+    <child link="right_base_link"/>
+    <origin rpy="0 0 3.1415926" xyz="-0.208 0.25000 0.092"/>
+  </joint>
+
+  <!-- 引入arx_lift身体的ros2_control配置 -->
+  <xacro:include filename="$(find arx_lift_description)/xacro/ros2_control/arx_lift.ros2_control.xacro" />
+  <xacro:arx_lift_system ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <!-- 引入左臂的ros2_control配置 -->
+  <xacro:include filename="$(find arx5_description)/xacro/ros2_control/arx5.ros2_control.xacro" />
+  <xacro:arx5_system name="left" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <!-- 引入右臂的ros2_control配置 -->
+  <xacro:arx5_system name="right" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <!-- Gazebo插件配置 -->
+  <xacro:arg name="gazebo" default="false" />
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find arx_lift_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot> 

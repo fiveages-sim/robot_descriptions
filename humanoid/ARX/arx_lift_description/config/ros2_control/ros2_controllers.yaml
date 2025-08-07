@@ -1,0 +1,41 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+ocs2_arm_controller:
+  ros__parameters:
+    # Joint configuration
+    update_rate: 50  # Hz
+    joints:
+      - joint_lift
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: arx_lift
+
+    # Control parameters
+    home_pos: [ 0.0,
+                0.0, 0.594, 0.306, 0.331, 0.0, 0.0,
+                0.0, 0.594, 0.306, 0.331, 0.0, 0.0 ]
