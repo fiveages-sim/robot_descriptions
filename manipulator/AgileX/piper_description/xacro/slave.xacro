@@ -10,12 +10,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://piper_description/meshes/link6.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/link6.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://piper_description/meshes/link6.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/link6.obj"/>
         </geometry>
       </collision>
     </link>
@@ -28,16 +28,16 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://piper_description/meshes/link7.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/link7.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://piper_description/meshes/link7.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/link7.obj"/>
         </geometry>
       </collision>
     </link>
-    <joint name="${prefix}joint7" type="prismatic">
+    <joint name="${prefix}gripper_joint" type="prismatic">
       <origin xyz="0 0 0.1358"/>
       <parent link="${prefix}link6"/>
       <child link="${prefix}link7"/>
@@ -53,12 +53,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://piper_description/meshes/link8.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/link8.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://piper_description/meshes/link8.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/link8.obj"/>
         </geometry>
       </collision>
     </link>
@@ -66,7 +66,7 @@
       <origin xyz="0 0 0.1358"/>
       <parent link="${prefix}link6"/>
       <child link="${prefix}link8"/>
-      <mimic joint="${prefix}joint7" multiplier="1" offset="0"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
       <axis xyz="0 1 0"/>
       <limit lower="0" upper="0.035" effort="10" velocity="1"/>
     </joint>

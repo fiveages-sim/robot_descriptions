@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="R5a">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
+
+  <link name="world"/>
+
+  <joint name="world_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+  <xacro:arg name="type" default="slave"/>
+
+  <xacro:include filename="$(find piper_description)/xacro/Piper.xacro"/>
+
+  <!-- 根据type参数决定is_master的值 -->
+  <xacro:Piper name="" is_master="false"/>
+
+  <!-- Import Piper ros2_control description -->
+  <xacro:include filename="$(find piper_description)/xacro/ros2_control/piper.ros2_control.xacro" />
+  <xacro:piper_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <xacro:arg name="gazebo" default="false" />
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find piper_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

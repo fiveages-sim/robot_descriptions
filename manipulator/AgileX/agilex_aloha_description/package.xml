@@ -12,7 +12,7 @@
   <maintainer email="TODO@email.com"/>
 
   <license>BSD</license>
-
+  <depend>piper_description</depend>
   <exec_depend>robot_visualize_config</exec_depend>
 
   <export>
