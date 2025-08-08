@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="aloha_split_system" params="ros2_control_hardware_type">
+
+    <ros2_control name="aloha_split_system" type="system">
+      <hardware>
+        <xacro:if value="${ros2_control_hardware_type == 'gz'}">
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </xacro:if>
+        <xacro:if value="${ros2_control_hardware_type == 'mock_components'}">
+          <plugin>mock_components/GenericSystem</plugin>
+        </xacro:if>
+        <xacro:if value="${ros2_control_hardware_type == 'isaac'}">
+          <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+          <param name="joint_commands_topic">/isaac/joint_commands</param>
+          <param name="joint_states_topic">/isaac/joint_states</param>
+        </xacro:if>
+      </hardware>
+
+      <!-- 移动平台轮子关节 -->
+      <joint name="left_wheel">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="right_wheel">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="fl_wheel">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="fr_wheel">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="rl_wheel">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="rr_wheel">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <!-- 升降机构关节 -->
+      <joint name="lifting_joint">
+        <command_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+    </ros2_control>
+  </xacro:macro>
+</robot>

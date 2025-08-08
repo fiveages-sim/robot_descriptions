@@ -1,19 +1,26 @@
 ; robot model meta-information
 model_information {
-  manipulatorModelType     1      // 0: Default-arm, 1: Wheel-based manipulator, 2: Floating-arm manipulator, 3: Fully actuated floating-arm manipulator
+  manipulatorModelType     0      // 0: Default-arm, 1: Wheel-based manipulator, 2: Floating-arm manipulator, 3: Fully actuated floating-arm manipulator
   
   ; motion joints in the URDF to consider fixed
   removeJoints {
-    [0]  "joint_h_1"
-    [1]  "joint_h_2"
-    [2]  "left_gripper_joint"
-    [3]  "right_gripper_joint"
-    [4]  "left_joint8"
-    [5]  "right_joint8"
+    [0]  "fr_steering_joint"
+    [1]  "fl_steering_joint"
+    [2]  "rr_steering_joint"
+    [3]  "rl_steering_joint"
+    [4]  "fr_wheel"
+    [5]  "fl_wheel"
+    [6]  "rr_wheel"
+    [7]  "rl_wheel"
+
+    [8]  "left_joint7"
+    [9]  "left_joint8"
+    [10]  "right_joint7"
+    [11]  "right_joint8"
   }
 
   ; base frame of the robot (from URDF)
-  baseFrame                       "base_link"
+  baseFrame                       "base_footprint"
   ; end-effector frame of the robot (from URDF)
   eeFrame                         "left_gripper_center"
   eeFrame1                        "right_gripper_center"
@@ -98,7 +105,7 @@ initialState
   {
     wheelBasedMobileManipulator
     {
-      (0,0)  -1.0  ; position x
+      (0,0)  -3.0  ; position x
       (1,0)  0.0  ; position y
       (2,0)  0.0  ; heading
     }
@@ -107,19 +114,19 @@ initialState
   ; initial state for the arm DOFs
   arm
   {
-    (0,0)   0.3     ; lifting_joint
+    (0,0)   -0.6     ; lifting_joint
 
     (1,0)   0.0      ; left_joint1
-    (2,0)   0.594    ; left_joint2
-    (3,0)   0.306    ; left_joint3
-    (4,0)   0.331    ; left_joint4
+    (2,0)   1.57     ; left_joint2
+    (3,0)   -1.57    ; left_joint3
+    (4,0)   0.0      ; left_joint4
     (5,0)   0.0      ; left_joint5
     (6,0)   0.0      ; left_joint6
 
     (7,0)   0.0      ; right_joint1
-    (8,0)   0.594    ; right_joint2
-    (9,0)   0.306    ; right_joint3
-    (10,0)   0.331   ; right_joint4
+    (8,0)   1.57     ; right_joint2
+    (9,0)   -1.57    ; right_joint3
+    (10,0)   0.0     ; right_joint4
     (11,0)   0.0     ; right_joint5
     (12,0)   0.0     ; right_joint6
   }
@@ -164,7 +171,7 @@ inputCost
     arm
     {
       scaling 1e-2
-        (0,0)   0.001      ; joint_lift
+        (0,0)   0.1      ; lifting_joint
         (1,0)   1.0      ; left_joint1
         (2,0)   1.0      ; left_joint2
         (3,0)   1.0      ; left_joint3
@@ -278,7 +285,7 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-        (0,0)  -0.1       ; joint_lift [m/s]
+        (0,0)  -0.1       ; lifting_joint [m/s]
 
         (1,0)  -3.300	    ; left_joint1 [rad/s]
         (2,0)  -3.599	    ; left_joint2 [rad/s]
@@ -329,7 +336,7 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-        (0,0)  0.1       ; joint_lift [m/s]
+        (0,0)  0.1       ; lifting_joint [m/s]
 
         (1,0)  3.300	    ; left_joint1 [rad/s]
         (2,0)  3.599	    ; left_joint2 [rad/s]

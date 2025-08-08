@@ -2,6 +2,16 @@
 
 This repository contains the URDF files for quadruped, humanoid, and manipulator robots, all organized as ROS2 packages. Most of them have been repainted in Blender for better visualization. ☺️
 
+## Quick Start
+
+To clone this repository with only the latest commit (shallow clone):
+
+```bash
+git clone --depth 1 https://github.com/fiveages-sim/robot_descriptions
+```
+
+This will significantly reduce download time and disk space usage.
+
 ## Humanoid Robots
 
 | Brand    | Model                                         | Repaint | Images                                                                                                                                                                                                                   |

@@ -2,7 +2,7 @@
 
 This repository contains the urdf model of b2. The origin models could be found at [Unitree ROS](https://github.com/unitreerobotics/unitree_ros).
 
-![B2](../../../../quadruped_ros2_control/.images/b2.png)
+![B2](../../.images/unitree_b2.png)
 
 ## Build
 

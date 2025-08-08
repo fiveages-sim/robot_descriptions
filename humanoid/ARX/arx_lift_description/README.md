@@ -9,7 +9,7 @@ at [ARX_Models](https://github.com/ARXroboticsX/ARX_Model)
 cd ~/ros2_ws
 colcon build --packages-up-to arx_lift_description --symlink-install
 ```
-
+  
 ## 2. Visualize the robot
 
 * Lift with X5 Arm
