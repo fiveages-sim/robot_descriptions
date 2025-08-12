@@ -18,7 +18,7 @@
 
   <!-- 根据type参数决定使用哪种夹爪 -->
   <xacro:if value="${'$(arg type)' == 'robotiq85'}">
-    <xacro:include filename="$(find robotiq_description)/xacro/robotiq85.xacro"/>
+    <xacro:include filename="$(find robotiq_description)/xacro/2F85.xacro"/>
     <xacro:Robotiq85 name=""/>
   </xacro:if>
 

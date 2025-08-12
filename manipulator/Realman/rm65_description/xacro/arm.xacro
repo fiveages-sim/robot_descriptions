@@ -68,7 +68,7 @@
         <xacro:visual_collision mesh="base_link_aidal.obj"/>
       </xacro:if>
       <xacro:if value="${direction != 'l' and direction != 'r'}">
-        <xacro:visual_collision mesh="base_link.obj"/>
+        <xacro:visual_collision mesh="base_link.dae"/>
       </xacro:if>
     </link>
     <link name="${prefix}link1">
@@ -83,7 +83,7 @@
             iyz="-0.00021118"
             izz="0.00056131"/>
       </inertial>
-      <xacro:visual_collision mesh="link1.obj"/>
+      <xacro:visual_collision mesh="link1.dae"/>
     </link>
     <link name="${prefix}link2">
       <inertial>
@@ -97,7 +97,7 @@
             iyz="3.5857E-09"
             izz="0.0019528"/>
       </inertial>
-      <xacro:visual_collision mesh="link2.obj"/>
+      <xacro:visual_collision mesh="link2.dae"/>
     </link>
     <link name="${prefix}link3">
       <inertial>
@@ -111,7 +111,7 @@
             iyz="-0.00014461"
             izz="0.00061418"/>
       </inertial>
-      <xacro:visual_collision mesh="link3.obj"/>
+      <xacro:visual_collision mesh="link3.dae"/>
     </link>
     <link name="${prefix}link4">
       <inertial>
@@ -125,7 +125,7 @@
             iyz="4.424E-05"
             izz="0.0001199"/>
       </inertial>
-      <xacro:visual_collision mesh="link4.obj"/>
+      <xacro:visual_collision mesh="link4.dae"/>
     </link>
     <link name="${prefix}link5">
       <inertial>
@@ -139,7 +139,7 @@
             iyz="-7.824E-05"
             izz="0.00033447"/>
       </inertial>
-      <xacro:visual_collision mesh="link5.obj"/>
+      <xacro:visual_collision mesh="link5.dae"/>
     </link>
     <link name="${prefix}link6">
       <inertial>
