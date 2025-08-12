@@ -12,15 +12,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/base_link.obj"/>
+        <mesh filename="package://rm65_description/meshes/base_link.dae"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
-      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/base_link.obj"/>
+        <mesh filename="package://rm65_description/meshes/base_link.dae"/>
       </geometry>
     </collision>
   </link>
@@ -32,15 +29,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link1.obj"/>
+        <mesh filename="package://rm65_description/meshes/link1.dae"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
-      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link1.obj"/>
+        <mesh filename="package://rm65_description/meshes/link1.dae"/>
       </geometry>
     </collision>
   </link>
@@ -52,15 +46,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link2.obj"/>
+        <mesh filename="package://rm65_description/meshes/link2.dae"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
-      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link2.obj"/>
+        <mesh filename="package://rm65_description/meshes/link2.dae"/>
       </geometry>
     </collision>
   </link>
@@ -72,15 +63,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link3.obj"/>
+        <mesh filename="package://rm65_description/meshes/link3.dae"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
-      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link3.obj"/>
+        <mesh filename="package://rm65_description/meshes/link3.dae"/>
       </geometry>
     </collision>
   </link>
@@ -92,15 +80,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link4.obj"/>
+        <mesh filename="package://rm65_description/meshes/link4.dae"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
-      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link4.obj"/>
+        <mesh filename="package://rm65_description/meshes/link4.dae"/>
       </geometry>
     </collision>
   </link>
@@ -112,15 +97,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link5.obj"/>
+        <mesh filename="package://rm65_description/meshes/link5.dae"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
-      </material>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://rm65_description/meshes/link5.obj"/>
+        <mesh filename="package://rm65_description/meshes/link5.dae"/>
       </geometry>
     </collision>
   </link>
@@ -134,9 +116,6 @@
       <geometry>
         <mesh filename="package://rm65_description/meshes/link6.obj"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
-      </material>
     </visual>
     <collision>
       <geometry>
@@ -191,9 +170,6 @@
       <geometry>
         <mesh filename="package://rm65_description/meshes/gripper_plate.obj"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
-      </material>
     </visual>
     <collision>
       <geometry>
@@ -206,7 +182,7 @@
     <parent link="link6"/>
     <child link="gripper_plate"/>
   </joint>
-  <link name="gripper_base_link">
+  <link name="gripper_base">
     <inertial>
       <origin xyz="1.5645E-05 -4.1838E-06 0.038"/>
       <mass value="0.072633"/>
@@ -214,167 +190,167 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/baselink.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/baselink.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/baselink.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/baselink.obj"/>
       </geometry>
     </collision>
   </link>
-  <link name="gripper_Link1">
+  <link name="left_outer_link">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.0087669 0.009 0.013992"/>
+      <origin xyz="0.0087669 0.009 0.013992"/>
       <mass value="0.0024292"/>
       <inertia ixx="5.1061E-07" ixy="-8.6739E-19" ixz="-2.508E-07" iyy="5.7398E-07" iyz="-1.3667E-18" izz="2.6747E-07"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link1.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/outer_link.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link1.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/outer_link.obj"/>
       </geometry>
     </collision>
   </link>
-  <joint name="gripper_Joint1" type="revolute">
+  <joint name="gripper_joint" type="revolute">
     <origin xyz="-0.04 -0.009 0.079"/>
-    <parent link="gripper_base_link"/>
-    <child link="gripper_Link1"/>
+    <parent link="gripper_base"/>
+    <child link="left_outer_link"/>
     <axis xyz="0 -1 0"/>
     <limit effort="1" lower="0" upper="0.82" velocity="1"/>
   </joint>
-  <link name="gripper_Link2">
+  <link name="left_inner_link">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.0087435 0.009 0.013955"/>
+      <origin xyz="0.0087435 0.009 0.013955"/>
       <mass value="0.0038971"/>
       <inertia ixx="5.6941E-07" ixy="-1.0711E-18" ixz="-2.6891E-07" iyy="6.2305E-07" iyz="-1.6845E-18" izz="3.0871E-07"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link2.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/inner_link.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link2.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/inner_link.obj"/>
       </geometry>
     </collision>
   </link>
-  <joint name="gripper_Joint2" type="revolute">
-    <origin rpy="0 0 0" xyz="-0.03 -0.009 0.081"/>
-    <parent link="gripper_base_link"/>
-    <child link="gripper_Link2"/>
+  <joint name="left_inner_joint" type="revolute">
+    <origin xyz="-0.03 -0.009 0.081"/>
+    <parent link="gripper_base"/>
+    <child link="left_inner_link"/>
     <axis xyz="0 -1 0"/>
     <limit effort="1" lower="0" upper="0.82" velocity="1"/>
-    <mimic joint="gripper_Joint1"/>
+    <mimic joint="gripper_joint"/>
   </joint>
-  <link name="gripper_Link3">
+  <link name="right_inner_link">
     <inertial>
-      <origin rpy="0 0 0" xyz="-0.0087435 0.009 0.013955"/>
+      <origin xyz="-0.0087435 0.009 0.013955"/>
       <mass value="0.0038971"/>
       <inertia ixx="5.6941E-07" ixy="1.0666E-18" ixz="2.6891E-07" iyy="6.2305E-07" iyz="-1.8084E-18" izz="3.0871E-07"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link3.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/inner_link.obj" scale="-1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link3.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/inner_link.obj" scale="-1 1 1"/>
       </geometry>
     </collision>
   </link>
-  <joint name="gripper_Joint3" type="revolute">
-    <origin rpy="0 0 0" xyz="0.03 -0.009 0.081"/>
-    <parent link="gripper_base_link"/>
-    <child link="gripper_Link3"/>
+  <joint name="right_inner_joint" type="revolute">
+    <origin xyz="0.03 -0.009 0.081"/>
+    <parent link="gripper_base"/>
+    <child link="right_inner_link"/>
     <axis xyz="0 -1 0"/>
     <limit effort="1" lower="-0.82" upper="0" velocity="1"/>
-    <mimic joint="gripper_Joint1" multiplier="-1" offset="0"/>
+    <mimic joint="gripper_joint" multiplier="-1" offset="0"/>
   </joint>
-  <link name="gripper_Link4">
+  <link name="right_outer_link">
     <inertial>
-      <origin rpy="0 0 0" xyz="-0.0087669 0.009 0.013992"/>
+      <origin xyz="-0.0087669 0.009 0.013992"/>
       <mass value="0.0024292"/>
       <inertia ixx="5.1061E-07" ixy="-9.5279E-19" ixz="2.508E-07" iyy="5.7398E-07" iyz="7.6863E-19" izz="2.6747E-07"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link4.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/outer_link.obj" scale="-1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link4.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/outer_link.obj" scale="-1 1 1"/>
       </geometry>
     </collision>
   </link>
-  <joint name="gripper_Joint4" type="revolute">
-    <origin rpy="0 0 0" xyz="0.04 -0.009 0.079"/>
-    <parent link="gripper_base_link"/>
-    <child link="gripper_Link4"/>
+  <joint name="right_outer_joint" type="revolute">
+    <origin xyz="0.04 -0.009 0.079"/>
+    <parent link="gripper_base"/>
+    <child link="right_outer_link"/>
     <axis xyz="0 -1 0"/>
     <limit effort="1" lower="-0.82" upper="0" velocity="1"/>
-    <mimic joint="gripper_Joint1" multiplier="-1" offset="0"/>
+    <mimic joint="gripper_joint" multiplier="-1" offset="0"/>
   </joint>
-  <link name="gripper_Link5">
+  <link name="left_pad">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.011864 0.006 0.011367"/>
+      <origin xyz="0.011864 0.006 0.011367"/>
       <mass value="0.0045068"/>
       <inertia ixx="5.1288E-07" ixy="-9.8137E-14" ixz="-9.4703E-08" iyy="5.3203E-07" iyz="-6.212E-14" izz="2.009E-07"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link5.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/pad.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link5.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/pad.obj"/>
       </geometry>
     </collision>
   </link>
-  <joint name="gripper_Joint5" type="revolute">
-    <origin rpy="0 0 0" xyz="0.0223 0.003 0.035591"/>
-    <parent link="gripper_Link1"/>
-    <child link="gripper_Link5"/>
+  <joint name="left_pad_joint" type="revolute">
+    <origin xyz="0.0223 0.003 0.035591"/>
+    <parent link="left_outer_link"/>
+    <child link="left_pad"/>
     <axis xyz="0 1 0"/>
     <limit effort="1" lower="0" upper="0.82" velocity="1"/>
-    <mimic joint="gripper_Joint1"/>
+    <mimic joint="gripper_joint"/>
   </joint>
-  <link name="gripper_Link6">
+  <link name="right_pad">
     <inertial>
-      <origin rpy="0 0 0" xyz="-0.011864 0.006 0.011367"/>
+      <origin xyz="-0.011864 0.006 0.011367"/>
       <mass value="0.0045068"/>
       <inertia ixx="5.1288E-07" ixy="-9.8137E-14" ixz="9.4703E-08" iyy="5.3203E-07" iyz="6.2119E-14" izz="2.009E-07"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link6.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/pad.obj" scale="-1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://inspire_eg2_description/meshes/Link6.obj"/>
+        <mesh filename="package://inspire_description/meshes/EG2-4C2/pad.obj" scale="-1 1 1"/>
       </geometry>
     </collision>
   </link>
-  <joint name="gripper_Joint6" type="revolute">
+  <joint name="right_pad_joint" type="revolute">
     <origin xyz="-0.0223 0.003 0.035591"/>
-    <parent link="gripper_Link4"/>
-    <child link="gripper_Link6"/>
+    <parent link="right_outer_link"/>
+    <child link="right_pad"/>
     <axis xyz="0 -1 0"/>
     <limit effort="1" lower="0" upper="0.82" velocity="1"/>
-    <mimic joint="gripper_Joint1"/>
+    <mimic joint="gripper_joint"/>
   </joint>
-  <joint name="gripper_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0.0043"/>
+  <joint name="gripper_base_joint" type="fixed">
+    <origin xyz="0 0 0.0043"/>
     <parent link="gripper_plate"/>
-    <child link="gripper_base_link"/>
+    <child link="gripper_base"/>
   </joint>
 </robot>

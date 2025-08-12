@@ -26,9 +26,9 @@
       </collision>
     </link>
     
-    <link name="${prefix}Link1">
+    <link name="${prefix}left_outer_link">
       <inertial>
-        <origin xyz="0.0087669 0.009 0.013992" rpy="0 0 0"/>
+        <origin xyz="0.0087669 0.009 0.013992" />
         <mass value="0.0024292"/>
         <inertia
             ixx="5.1061E-07"
@@ -40,12 +40,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link1.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/outer_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link1.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/outer_link.obj"/>
         </geometry>
       </collision>
     </link>
@@ -53,14 +53,14 @@
     <joint name="${prefix}gripper_joint" type="revolute">
       <origin xyz="-0.04 -0.009 0.079"/>
       <parent link="${prefix}gripper_base"/>
-      <child link="${prefix}Link1"/>
+      <child link="${prefix}left_outer_link"/>
       <axis xyz="0 -1 0"/>
       <limit lower="0" upper="0.82" effort="1" velocity="1"/>
     </joint>
     
-    <link name="${prefix}Link2">
+    <link name="${prefix}left_inner_link">
       <inertial>
-        <origin xyz="0.0087435 0.009 0.013955" rpy="0 0 0"/>
+        <origin xyz="0.0087435 0.009 0.013955" />
         <mass value="0.0038971"/>
         <inertia
             ixx="5.6941E-07"
@@ -72,28 +72,28 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link2.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/inner_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link2.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/inner_link.obj"/>
         </geometry>
       </collision>
     </link>
     
-    <joint name="${prefix}gripper_joint2" type="revolute">
-      <origin xyz="-0.03 -0.009 0.081" rpy="0 0 0"/>
+    <joint name="${prefix}left_inner_joint" type="revolute">
+      <origin xyz="-0.03 -0.009 0.081" />
       <parent link="${prefix}gripper_base"/>
-      <child link="${prefix}Link2"/>
+      <child link="${prefix}left_inner_link"/>
       <axis xyz="0 -1 0"/>
       <limit lower="0" upper="0.82" effort="1" velocity="1"/>
       <mimic joint="${prefix}gripper_joint"/>
     </joint>
     
-    <link name="${prefix}Link3">
+    <link name="${prefix}right_inner_link">
       <inertial>
-        <origin xyz="-0.0087435 0.009 0.013955" rpy="0 0 0"/>
+        <origin xyz="-0.0087435 0.009 0.013955" />
         <mass value="0.0038971"/>
         <inertia
             ixx="5.6941E-07"
@@ -105,28 +105,28 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link3.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/inner_link.obj" scale="-1 1 1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link3.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/inner_link.obj" scale="-1 1 1"/>
         </geometry>
       </collision>
     </link>
     
-    <joint name="${prefix}gripper_joint3" type="revolute">
-      <origin xyz="0.03 -0.009 0.081" rpy="0 0 0"/>
+    <joint name="${prefix}right_inner_joint" type="revolute">
+      <origin xyz="0.03 -0.009 0.081" />
       <parent link="${prefix}gripper_base"/>
-      <child link="${prefix}Link3"/>
-      <axis xyz="0 -1 0"/>
-      <limit lower="-0.82" upper="0" effort="1" velocity="1"/>
-      <mimic joint="${prefix}gripper_joint" multiplier="-1" offset="0"/>
+      <child link="${prefix}right_inner_link"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0.82" upper="0" effort="1" velocity="1"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
     
-    <link name="${prefix}Link4">
+    <link name="${prefix}right_outer_link">
       <inertial>
-        <origin xyz="-0.0087669 0.009 0.013992" rpy="0 0 0"/>
+        <origin xyz="-0.0087669 0.009 0.013992" />
         <mass value="0.0024292"/>
         <inertia
             ixx="5.1061E-07"
@@ -138,28 +138,28 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link4.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/outer_link.obj" scale="-1 1 1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link4.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/outer_link.obj" scale="-1 1 1"/>
         </geometry>
       </collision>
     </link>
     
-    <joint name="${prefix}gripper_joint4" type="revolute">
-      <origin xyz="0.04 -0.009 0.079" rpy="0 0 0"/>
+    <joint name="${prefix}right_outer_joint" type="revolute">
+      <origin xyz="0.04 -0.009 0.079" />
       <parent link="${prefix}gripper_base"/>
-      <child link="${prefix}Link4"/>
-      <axis xyz="0 -1 0"/>
-      <limit lower="-0.82" upper="0" effort="1" velocity="1"/>
-      <mimic joint="${prefix}gripper_joint" multiplier="-1" offset="0"/>
+      <child link="${prefix}right_outer_link"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0" upper="0.82" effort="1" velocity="1"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
     
-    <link name="${prefix}Link5">
+    <link name="${prefix}left_pad">
       <inertial>
-        <origin xyz="0.011864 0.006 0.011367" rpy="0 0 0"/>
+        <origin xyz="0.011864 0.006 0.011367" />
         <mass value="0.0045068"/>
         <inertia
             ixx="5.1288E-07"
@@ -171,28 +171,28 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link5.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/pad.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link5.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/pad.obj"/>
         </geometry>
       </collision>
     </link>
     
-    <joint name="${prefix}gripper_joint5" type="revolute">
-      <origin xyz="0.0223 0.003 0.035591" rpy="0 0 0"/>
-      <parent link="${prefix}Link1"/>
-      <child link="${prefix}Link5"/>
+    <joint name="${prefix}left_pad_joint" type="revolute">
+      <origin xyz="0.0223 0.003 0.035591" />
+      <parent link="${prefix}left_outer_link"/>
+      <child link="${prefix}left_pad"/>
       <axis xyz="0 1 0"/>
       <limit lower="0" upper="0.82" effort="1" velocity="1"/>
-      <mimic joint="${prefix}gripper_joint"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
     
-    <link name="${prefix}Link6">
+    <link name="${prefix}right_pad">
       <inertial>
-        <origin xyz="-0.011864 0.006 0.011367" rpy="0 0 0"/>
+        <origin xyz="-0.011864 0.006 0.011367" />
         <mass value="0.0045068"/>
         <inertia
             ixx="5.1288E-07"
@@ -204,23 +204,23 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link6.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/pad.obj" scale="-1 1 1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/Link6.obj"/>
+          <mesh filename="file://$(find inspire_description)/meshes/EG2-4C2/pad.obj"  scale="-1 1 1"/>
         </geometry>
       </collision>
     </link>
     
-    <joint name="${prefix}gripper_joint6" type="revolute">
+    <joint name="${prefix}right_pad_joint" type="revolute">
       <origin xyz="-0.0223 0.003 0.035591"/>
-      <parent link="${prefix}Link4"/>
-      <child link="${prefix}Link6"/>
+      <parent link="${prefix}right_outer_link"/>
+      <child link="${prefix}right_pad"/>
       <axis xyz="0 -1 0"/>
       <limit lower="0" upper="0.82" effort="1" velocity="1"/>
-      <mimic joint="${prefix}gripper_joint"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
     
   </xacro:macro>
