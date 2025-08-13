@@ -35,7 +35,6 @@ hand_controller:
   ros__parameters:
     joint: gripper_joint
 
-
 ocs2_arm_controller:
   ros__parameters:
     # Joint configuration
@@ -52,11 +51,9 @@ ocs2_arm_controller:
       - position
     state_interfaces:
       - position
+    future_time_offset: 2.0
 
-    robot_name: cr5
-
-    # Future time offset for trajectory prediction (in seconds)
-    future_time_offset: 1.0
+    robot_name: airbot_play
 
     # Control parameters
-    home_pos: [0.0, 0.0, -1.5708, 0.0, 1.5708, 0.0]
+    home_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

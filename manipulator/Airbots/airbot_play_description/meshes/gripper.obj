@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib gripper_right.mtl
+mtllib material.mtl
 o right
 v -0.056169 -0.020251 0.000968
 v -0.056663 -0.019910 0.000491

@@ -18,7 +18,17 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=airbot_play
 ![airbot play](../../.images/airbot_play.png)
 
 ## 3. OCS2 Demo
+
+### 3.1 Official OCS2 Mobile Manipulator Demo
+
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=airbot_play
+```
+
+### 3.2 OCS2 Arm Controller Demo
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch ocs2_arm_controller demo.launch.py robot:=airbot_play hardware:=gz
 ```

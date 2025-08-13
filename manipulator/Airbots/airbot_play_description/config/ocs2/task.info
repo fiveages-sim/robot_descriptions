@@ -4,7 +4,7 @@ model_information {
   
   ; motion joints in the URDF to consider fixed
   removeJoints {
-    endleft,
+    gripper_joint,
     endright
   }
 

@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib arm_base.mtl
+mtllib material.mtl
 o arm_base_0
 v -0.077736 0.030577 0.048230
 v -0.078561 0.030577 0.048229
@@ -15549,7 +15549,7 @@ vn 0.9552 -0.2494 -0.1595
 vn 0.9514 0.2706 -0.1467
 vn 0.0084 -0.8515 -0.5243
 s 1
-usemtl Paint_Matte_Black.002
+usemtl Paint_Matte_Black
 f 702//611 1319//611 703//611
 f 709//612 705//613 706//614
 f 707//615 706//615 705//615

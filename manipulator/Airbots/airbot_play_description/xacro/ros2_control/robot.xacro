@@ -1,0 +1,24 @@
+<robot name="Airbot Play" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<link name="world"/>
+
+	<joint name="world_fixed" type="fixed">
+		<parent link="world"/>
+		<child link="base_link"/>
+	</joint>
+
+	<xacro:include filename="$(find airbot_play_description)/xacro/airbot_play.xacro"/>
+	<xacro:airbot_play name=""/>
+
+	<xacro:include filename="$(find airbot_play_description)/xacro/ros2_control/airbot_play.ros2_control.xacro" />
+	<xacro:airbot_play_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+	<xacro:arg name="gazebo" default="false" />
+	<xacro:if value="$(arg gazebo)">
+		<gazebo>
+			<plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+				<parameters>$(find airbot_play_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+			</plugin>
+		</gazebo>
+	</xacro:if>
+</robot>

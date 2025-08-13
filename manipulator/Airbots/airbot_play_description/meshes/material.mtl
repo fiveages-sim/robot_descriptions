@@ -1,7 +1,7 @@
 # Blender 4.4.3 MTL File: 'None'
 # www.blender.org
 
-newmtl Paint_Matte_Black.002
+newmtl Paint_Matte_Black
 Ns 250.000000
 Ka 0.500000 0.500000 0.500000
 Kd 0.001113 0.001113 0.001113
@@ -21,12 +21,12 @@ Ni 1.500000
 d 1.000000
 illum 3
 
-newmtl material_0.002
-Ns 0.000000
+newmtl black
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.000000 0.764441 0.820107
-Ks 0.000000 0.000000 0.000000
+Kd 0.050000 0.050000 0.050000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
-illum 1
+illum 2
