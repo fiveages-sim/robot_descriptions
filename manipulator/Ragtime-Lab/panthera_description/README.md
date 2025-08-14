@@ -24,3 +24,19 @@ To visualize and check the configuration of the robot in rviz, simply launch:
   ```
 
   ![panthera](../../.images/panthera.png)
+
+## 3. OCS2 Demo
+
+### 3.1 Official OCS2 Mobile Manipulator Demo
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=panthera
+```
+
+### 3.2 OCS2 Arm Controller Demo
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera hardware:=gz
+```

@@ -38,7 +38,7 @@ hand_controller:
 ocs2_arm_controller:
   ros__parameters:
     # Joint configuration
-    update_rate: 50  # Hz
+    update_rate: 100  # Hz
     joints:
       - joint1
       - joint2
@@ -51,9 +51,8 @@ ocs2_arm_controller:
       - position
     state_interfaces:
       - position
-
+    future_time_offset: 2.0
     robot_name: panthera
 
     # Control parameters
     home_pos: [0.0, 0.594, 0.306, 0.331, 0.0, 0.0]
-    zero_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
