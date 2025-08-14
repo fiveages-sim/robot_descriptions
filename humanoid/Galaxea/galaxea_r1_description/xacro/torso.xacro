@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="Torso">
+
+    <!-- Torso Link 1 -->
+    <link name="torso_link1">
+      <inertial>
+        <origin xyz="0.00065636 0.0032247 0.23142"/>
+        <mass value="5.72"/>
+        <inertia
+          ixx="0.10931"
+          ixy="7.7893E-06"
+          ixz="-0.00017473"
+          iyy="0.10736"
+          iyz="0.00013763"
+          izz="0.0081222"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link1.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link1.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Torso Joint 1: Base to Torso 1 -->
+    <joint name="torso_joint1" type="revolute">
+      <origin xyz="-0.032845 0 0.301"/>
+      <parent link="base_link"/>
+      <child link="torso_link1"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-1.1345" upper="1.8326" effort="500" velocity="2.5"/>
+    </joint>
+
+    <!-- Torso Link 2 -->
+    <link name="torso_link2">
+      <inertial>
+        <origin xyz="0.0052517 0.014412 0.15711"/>
+        <mass value="3.5"/>
+        <inertia
+          ixx="0.026081"
+          ixy="-3.3406E-07"
+          ixz="0.00024541"
+          iyy="0.027574"
+          iyz="3.8474E-07"
+          izz="0.0018515"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link2.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link2.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Torso Joint 2: Torso 1 to Torso 2 -->
+    <joint name="torso_joint2" type="revolute">
+      <origin xyz="0 0 0.4"/>
+      <parent link="torso_link1"/>
+      <child link="torso_link2"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-2.7925" upper="2.5307" effort="500" velocity="2.5"/>
+    </joint>
+
+    <!-- Torso Link 3 -->
+    <link name="torso_link3">
+      <inertial>
+        <origin xyz="-7.551E-06 -0.0092667 0.0042124"/>
+        <mass value="3.4"/>
+        <inertia
+          ixx="0.0014058"
+          ixy="3.5487E-07"
+          ixz="9.0955E-08"
+          iyy="0.0021992"
+          iyz="1.6338E-05"
+          izz="0.0013332"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link3.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link3.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Torso Joint 3: Torso 2 to Torso 3 -->
+    <joint name="torso_joint3" type="revolute">
+      <origin xyz="0 0 0.3"/>
+      <parent link="torso_link2"/>
+      <child link="torso_link3"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-1.8326" upper="1.5708" effort="500" velocity="2.5"/>
+    </joint>
+
+    <!-- Torso Link 4 -->
+    <link name="torso_link4">
+      <inertial>
+        <origin xyz="-3.7511E-08 5.2756E-07 0.018688"/>
+        <mass value="7.4"/>
+        <inertia
+          ixx="0.0014989"
+          ixy="2.9183E-08"
+          ixz="-7.7884E-10"
+          iyy="0.001499"
+          iyz="-1.2513E-10"
+          izz="0.0019043"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link4.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link4.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Torso Joint 4: Torso 3 to Torso 4 -->
+    <joint name="torso_joint4" type="revolute">
+      <origin xyz="0 0 0.09962"/>
+      <parent link="torso_link3"/>
+      <child link="torso_link4"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-3.0543" upper="3.0543" effort="500" velocity="2.5"/>
+    </joint>
+
+    <!-- ZED Camera Link -->
+    <link name="zed_link">
+      <inertial>
+        <origin xyz="0.060004 0.015906 -0.068413"/>
+        <mass value="2.05"/>
+        <inertia
+          ixx="0.010375"
+          ixy="1.9044E-07"
+          ixz="1.5997E-08"
+          iyy="0.014618"
+          iyz="0.00028961"
+          izz="0.012229"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/zed_link.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/zed_link.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- ZED Joint: Torso 4 to ZED -->
+    <joint name="zed_joint" type="fixed">
+      <origin xyz="0.065512 0.060005 0.47598" rpy="-1.9199 0 -1.5708"/>
+      <parent link="torso_link4"/>
+      <child link="zed_link"/>
+      <axis xyz="0 0 0"/>
+    </joint>
+  </xacro:macro>
+</robot>

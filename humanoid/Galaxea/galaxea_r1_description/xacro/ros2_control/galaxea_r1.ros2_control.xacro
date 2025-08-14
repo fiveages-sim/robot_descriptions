@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="galaxea_a1_system" params="name ros2_control_hardware_type">
+  <xacro:macro name="galaxea_r1_system" params="ros2_control_hardware_type">
 
-    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
-
-    <ros2_control name="${prefix}galaxea_a1_system" type="system">
+    <ros2_control name="galaxea_r1_system" type="system">
       <hardware>
         <xacro:if value="${ros2_control_hardware_type == 'gz'}">
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
@@ -19,55 +17,34 @@
         </xacro:if>
       </hardware>
 
-      <!-- 关节接口定义 -->
-      <joint name="${prefix}joint1">
+      <joint name="torso_joint1">
         <command_interface name="position"/>
         <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="${prefix}joint2">
+      <joint name="torso_joint2">
         <command_interface name="position"/>
         <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="${prefix}joint3">
+      <joint name="torso_joint3">
         <command_interface name="position"/>
         <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="${prefix}joint4">
+      <joint name="torso_joint4">
         <command_interface name="position"/>
         <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint5">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint6">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}gripper_joint">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
       </joint>
 
     </ros2_control>
   </xacro:macro>
-</robot>
+</robot> 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="RealSense" params="side">
+    <xacro:property name="side_prefix" value="${side + '_' if side else ''}"/>
+
+    <!-- RealSense Camera Link -->
+    <link name="${side_prefix}realsense_link">
+      <inertial>
+        <origin xyz="0.022169 0.0060171 -0.017353"/>
+        <mass value="0.175"/>
+        <inertia
+          ixx="6.965E-06"
+          ixy="2.6612E-06"
+          ixz="1.2797E-06"
+          iyy="2.3281E-05"
+          iyz="-1.4268E-06"
+          izz="2.5513E-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/camera_link.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/camera_link.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- RealSense Joint: Arm 6 to Camera -->
+    <joint name="${side_prefix}realsense_joint" type="fixed">
+      <xacro:if value="${side == 'left'}">
+        <origin xyz="0.098768 0.0021071 0.05055" rpy="-2.0071 0.0077831 -1.5708"/>
+        <parent link="left_link6"/>
+      </xacro:if>
+      <xacro:if value="${side == 'right'}">
+        <origin xyz="0.098762 0.0021071 -0.05055" rpy="1.1344 -0.0077831 1.5708"/>
+        <parent link="right_link6"/>
+      </xacro:if>
+      <child link="${side_prefix}realsense_link"/>
+    </joint>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="x7s">
+    <link name="base_link">
+      <inertial>
+        <origin xyz="-0.061403 0.00062999 0.18169"/>
+        <mass value="27.286"/>
+        <inertia
+            ixx="1.61101"
+            ixy="0.00464"
+            ixz="-0.16195"
+            iyy="1.99174"
+            iyz="0.00823"
+            izz="1.07279"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/base_link.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/base_link.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="lift">
+      <inertial>
+        <origin xyz="-0.010805 -0.00069779 -0.059694"/>
+        <mass value="6.205"/>
+        <inertia
+            ixx="0.01994"
+            ixy="-0.00008"
+            ixz="-0.00198"
+            iyy="0.06039"
+            iyz="-0.00016"
+            izz="0.06721"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/lift.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/lift.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="lift_joint" type="prismatic">
+      <origin xyz="0.096 0 0.31"/>
+      <parent link="base_link"/>
+      <child link="lift"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="0.54" effort="100" velocity="5"/>
+    </joint>
+    <link name="body">
+      <inertial>
+        <origin xyz="-0.000779578835400224 0.053760645280584 0.220464314501233"/>
+        <mass value="3.01262653552798"/>
+        <inertia
+            ixx="0.03987"
+            ixy="0.00000"
+            ixz="-0.00003"
+            iyy="0.03461"
+            iyz="0.00039"
+            izz="0.00967"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh
+              filename="file://$(find x7s_description)/meshes/body.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/body.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="waist_joint" type="revolute">
+      <origin xyz="0.066 -0.0546 -0.06"/>
+      <parent link="lift"/>
+      <child link="body"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0" upper="1.57" effort="100" velocity="5"/>
+    </joint>
+    <link name="neck">
+      <inertial>
+        <origin xyz="-1.2166451790474E-08 0.000155101086835956 0.0414775143344981"/>
+        <mass value="0.429406588376073"/>
+        <inertia
+            ixx="0.00027"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00026"
+            iyz="-0.00001"
+            izz="0.00018"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/neck.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/neck.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="neck_joint" type="revolute">
+      <origin xyz="0 0.0544 0.356"/>
+      <parent link="body"/>
+      <child link="neck"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="100" lower="-1.570796" upper="1.570796" velocity="100"/>
+    </joint>
+    <link name="head">
+      <inertial>
+        <origin xyz="0.0145474612596931 0.0229595215513494 0.0787914285814235"/>
+        <mass value="1.54420437039843"/>
+        <inertia
+            ixx="0.00576"
+            ixy="-0.00007"
+            ixz="0.00018"
+            iyy="0.00477"
+            iyz="0.00015"
+            izz="0.00768"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/head.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/head.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="head_joint" type="revolute">
+      <origin xyz="0 -0.025 0.049"/>
+      <parent link="neck"/>
+      <child link="head"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-0.785398" upper="0.785398" effort="100" velocity="5"/>
+    </joint>
+
+    <link name="head_camera">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find arx5_description)/meshes/d405.obj"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="head_camera_joint" type="fixed">
+      <origin xyz="0.095 0.025 0.06"/>
+      <parent link="head"/>
+      <child link="head_camera"/>
+    </joint>
+
+    <link name="left_mount">
+      <inertial>
+        <origin xyz="0.0203118776657915 0.0282074621926044 -0.000172803675324795"/>
+        <mass value="0.131891884746085"/>
+        <inertia
+            ixx="0.00012"
+            ixy="0.00004"
+            ixz="0.00000"
+            iyy="0.00009"
+            iyz="0.00000"
+            izz="0.00014"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/mount.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/mount.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="left_shoulder_pitch" type="revolute">
+      <origin xyz="0 0.1424 0.28"/>
+      <parent link="body"/>
+      <child link="left_mount"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-0.523599" upper="3.141593" effort="100" velocity="5"/>
+    </joint>
+    <link name="left_shoulder">
+      <inertial>
+        <origin xyz="-0.0244518842072319 0.00440119803297737 -0.0251861647177716"/>
+        <mass value="1.03161675931573"/>
+        <inertia
+            ixx="0.00167"
+            ixy="0.00003"
+            ixz="0.00007"
+            iyy="0.00166"
+            iyz="0.00005"
+            izz="0.00088"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/shoulder.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/shoulder.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="left_shoulder_roll" type="revolute">
+      <origin xyz="0.02725 0.063 0"/>
+      <parent link="left_mount"/>
+      <child link="left_shoulder"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-0.436332" upper="1.570796" effort="100" velocity="5"/>
+    </joint>
+    <link name="left_upper_arm">
+      <inertial>
+        <origin xyz="0.000827778295739684 -0.00148365067233044 -0.105295191761956"/>
+        <mass value="0.736099125577072"/>
+        <inertia
+            ixx="0.00229"
+            ixy="0.00000"
+            ixz="0.00009"
+            iyy="0.00230"
+            iyz="0.00004"
+            izz="0.00060"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/upper_arm.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/upper_arm.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="left_arm_yaw" type="revolute">
+      <origin xyz="-0.02725 0 -0.0865"/>
+      <parent link="left_shoulder"/>
+      <child link="left_upper_arm"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="-1.570796" upper="1.570796" effort="100" velocity="5"/>
+    </joint>
+    <link name="left_elbow">
+      <inertial>
+        <origin xyz="0.0593724453089232 0.0253235620813382 -0.0125969681001941"/>
+        <mass value="0.487506795308259"/>
+        <inertia
+            ixx="0.00040"
+            ixy="0.00003"
+            ixz="-0.00007"
+            iyy="0.00055"
+            iyz="-0.00001"
+            izz="0.00069"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/elbow.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/elbow.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="left_elbow_pitch" type="revolute">
+      <origin xyz="0 -0.02725 -0.1435"/>
+      <parent link="left_upper_arm"/>
+      <child link="left_elbow"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.785398" upper="1.570796" effort="100" velocity="5"/>
+    </joint>
+    <link name="left_forearm">
+      <inertial>
+        <origin xyz="0.0458969495196738 -0.000535552755431795 -9.66305755581987E-05"/>
+        <mass value="0.487431771518004"/>
+        <inertia
+            ixx="0.00024"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00027"
+            iyz="0.00000"
+            izz="0.00029"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/forearm.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/forearm.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="left_elbow_roll" type="revolute">
+      <origin xyz="0.0945 0.02725 -0.015"/>
+      <parent link="left_elbow"/>
+      <child link="left_forearm"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-2.792527" upper="2.792527" effort="100" velocity="5"/>
+    </joint>
+    <link name="left_wrist">
+      <inertial>
+        <origin xyz="0.0575036493913677 0.0264951119112793 0.00135889493052876"/>
+        <mass value="0.432944265521347"/>
+        <inertia
+            ixx="0.00025"
+            ixy="0.00002"
+            ixz="-0.00002"
+            iyy="0.00033"
+            iyz="0.00000"
+            izz="0.00041"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/wrist.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/wrist.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="left_wrist_pitch" type="revolute">
+      <origin xyz="0.05 -0.02725 0"/>
+      <parent link="left_forearm"/>
+      <child link="left_wrist"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-0.785398" upper="1.570796" effort="100" velocity="5"/>
+    </joint>
+    <link name="left_gripper_base">
+      <inertial>
+        <origin xyz="0.0782374674886107 2.27688611500743E-05 0.0203907673011059"/>
+        <mass value="0.471847835335863"/>
+        <inertia
+            ixx="0.00040"
+            ixy="0.00000"
+            ixz="0.00006"
+            iyy="0.00043"
+            iyz="0.00000"
+            izz="0.00064"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_base.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_base.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="left_wrist_yaw" type="revolute">
+      <origin xyz="0.066 0.02725 -0.022"/>
+      <parent link="left_wrist"/>
+      <child link="left_gripper_base"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="-1.570796" upper="1.570796" effort="100" velocity="100"/>
+    </joint>
+
+    <link name="left_gripper_left">
+      <inertial>
+        <origin xyz="-0.000355222592141713 -0.00782703850949387 -0.00298831676915334"/>
+        <mass value="0.0647981743053201"/>
+        <inertia
+            ixx="0.00002"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00003"
+            iyz="0.00000"
+            izz="0.00003"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_left.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_left.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="left_gripper_0" type="prismatic">
+      <origin xyz="0.12737 0.024896 0.021756"/>
+      <parent link="left_gripper_base"/>
+      <child link="left_gripper_left"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0" upper="0.044" effort="100" velocity="100"/>
+    </joint>
+
+    <link name="left_gripper_right">
+      <inertial>
+        <origin xyz="-0.000355223470276722 0.00782768741060949 0.00242005652832489"/>
+        <mass value="0.0647981725781686"/>
+        <inertia
+            ixx="0.00002"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00003"
+            iyz="0.00000"
+            izz="0.00003"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_right.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_right.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="left_gripper_1" type="prismatic">
+      <origin xyz="0.12737 -0.0249 0.021756"/>
+      <parent link="left_gripper_base"/>
+      <child link="left_gripper_right"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="0" upper="0.044" effort="100" velocity="100"/>
+      <mimic joint="left_gripper_0" multiplier="1" offset="0"/>
+    </joint>
+
+    <link name="left_gripper_center"/>
+    <joint name="left_gripper_center_joint" type="fixed">
+      <origin xyz="0.18737 0 0.021756"/>
+      <parent link="left_gripper_base"/>
+      <child link="left_gripper_center"/>
+    </joint>
+
+
+    <link name="right_mount">
+      <inertial>
+        <origin xyz="0.0203118776657806 -0.0282074621926024 -0.000172803675324684"/>
+        <mass value="0.131891884746085"/>
+        <inertia
+            ixx="0.00012"
+            ixy="-0.00004"
+            ixz="0.00000"
+            iyy="0.00009"
+            iyz="0.00000"
+            izz="0.00014"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/mount.obj" scale="1 -1 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/mount.obj" scale="1 -1 1"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_shoulder_pitch" type="revolute">
+      <origin xyz="0 -0.0336 0.28"/>
+      <parent link="body"/>
+      <child link="right_mount"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-0.523599" upper="3.141593" effort="100" velocity="5"/>
+    </joint>
+    <link name="right_shoulder">
+      <inertial>
+        <origin xyz="-0.0244518746422262 -0.00440118072836032 -0.0251861194488474"/>
+        <mass value="1.03161748745213"/>
+        <inertia
+            ixx="0.00167"
+            ixy="-0.00003"
+            ixz="0.00007"
+            iyy="0.00166"
+            iyz="-0.00005"
+            izz="0.00088"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/shoulder.obj" scale="1 -1 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/shoulder.obj" scale="1 -1 1"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_shoulder_roll" type="revolute">
+      <origin xyz="0.02725 -0.063 0"/>
+      <parent link="right_mount"/>
+      <child link="right_shoulder"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-0.436332" upper="1.570796" effort="100" velocity="5"/>
+    </joint>
+
+    <link name="right_upper_arm">
+      <inertial>
+        <origin xyz="0.000827779970195369 0.0014843542246373 -0.105295189564578"/>
+        <mass value="0.73609919110615"/>
+        <inertia
+            ixx="0.00229"
+            ixy="0.00000"
+            ixz="0.00009"
+            iyy="0.00230"
+            iyz="-0.00004"
+            izz="0.00060"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/upper_arm.obj" scale="1 -1 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/upper_arm.obj" scale="1 -1 1"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_arm_yaw" type="revolute">
+      <origin xyz="-0.02725 0 -0.0865"/>
+      <parent link="right_shoulder"/>
+      <child link="right_upper_arm"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.570796" upper="1.570796" effort="100" velocity="5"/>
+    </joint>
+
+    <link name="right_elbow">
+      <inertial>
+        <origin xyz="0.0593724456215453 -0.025323327171846 -0.0127286630831199"/>
+        <mass value="0.48750674832378"/>
+        <inertia
+            ixx="0.00040"
+            ixy="-0.00003"
+            ixz="-0.00007"
+            iyy="0.00055"
+            iyz="0.00001"
+            izz="0.00069"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/elbow.obj" scale="1 -1 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/elbow.obj" scale="1 -1 1"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_elbow_pitch" type="revolute">
+      <origin xyz="0 0.02725 -0.1435"/>
+      <parent link="right_upper_arm"/>
+      <child link="right_elbow"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.785398" upper="1.570796" effort="100" velocity="5"/>
+    </joint>
+    <link name="right_forearm">
+      <inertial>
+        <origin xyz="0.0458969709559334 0.000535552755438318 -2.35788959310756E-05"/>
+        <mass value="0.487431771518004"/>
+        <inertia
+            ixx="0.00024"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00027"
+            iyz="0.00000"
+            izz="0.00029"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/forearm.obj" scale="1 -1 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/forearm.obj" scale="1 -1 1"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_elbow_roll" type="revolute">
+      <origin xyz="0.0945 -0.02725 -0.015"/>
+      <parent link="right_elbow"/>
+      <child link="right_forearm"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-2.792527" upper="2.792527" effort="100" velocity="5"/>
+    </joint>
+
+    <link name="right_wrist">
+      <inertial>
+        <origin xyz="0.0575036493913393 -0.0265307053304072 0.00135892274814464"/>
+        <mass value="0.432944265521347"/>
+        <inertia
+            ixx="0.00025"
+            ixy="-0.00002"
+            ixz="-0.00002"
+            iyy="0.00033"
+            iyz="0.00000"
+            izz="0.00041"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/wrist.obj" scale="1 -1 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/wrist.obj" scale="1 -1 1"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_wrist_pitch" type="revolute">
+      <origin xyz="0.05 0.02725 0"/>
+      <parent link="right_forearm"/>
+      <child link="right_wrist"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-0.785398" upper="1.570796" effort="100" velocity="5"/>
+    </joint>
+    <link name="right_gripper_base">
+      <inertial>
+        <origin xyz="0.0782374674886106 2.27688611456334E-05 0.0203907673011835"/>
+        <mass value="0.471847835335862"/>
+        <inertia
+            ixx="0.00040"
+            ixy="0.00000"
+            ixz="0.00006"
+            iyy="0.00043"
+            iyz="0.00000"
+            izz="0.00064"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_base.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_base.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_wrist_yaw" type="revolute">
+      <origin xyz="0.066 -0.02725 -0.022"/>
+      <parent link="right_wrist"/>
+      <child link="right_gripper_base"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.570796" upper="1.570796" effort="100" velocity="5"/>
+    </joint>
+
+    <link name="right_gripper_left">
+      <inertial>
+        <origin xyz="-0.000355222592142046 -0.0078270385094939 -0.00298831676915345"/>
+        <mass value="0.0647981743053201"/>
+        <inertia
+            ixx="0.00002"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00003"
+            iyz="0.00000"
+            izz="0.00003"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_left.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_left.obj"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="right_gripper_0" type="prismatic">
+      <origin xyz="0.12737 0.024896 0.021756"/>
+      <parent link="right_gripper_base"/>
+      <child link="right_gripper_left"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0" upper="0.044" effort="100" velocity="5"/>
+    </joint>
+
+    <link name="right_gripper_right">
+      <inertial>
+        <origin xyz="-0.000355223470277055 0.00782768741060944 0.00242005652832467"/>
+        <mass value="0.0647981725781687"/>
+        <inertia
+            ixx="0.00002"
+            ixy="0.00000"
+            ixz="0.00000"
+            iyy="0.00003"
+            iyz="0.00000"
+            izz="0.00003"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_right.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find x7s_description)/meshes/gripper_right.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_gripper_1" type="prismatic">
+      <origin xyz="0.12737 -0.0249 0.021756"/>
+      <parent link="right_gripper_base"/>
+      <child link="right_gripper_right"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="0" upper="0.044" effort="100" velocity="5"/>
+      <mimic joint="right_gripper_0" multiplier="1" offset="0"/>
+    </joint>
+
+    <link name="right_gripper_center"/>
+    <joint name="right_gripper_center_joint" type="fixed">
+      <origin xyz="0.18737 0 0.021756"/>
+      <parent link="right_gripper_base"/>
+      <child link="right_gripper_center"/>
+    </joint>
+  </xacro:macro>
+</robot>
