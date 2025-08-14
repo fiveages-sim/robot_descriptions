@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib gripper_finger1.mtl
+mtllib material.mtl
 o gripper_finger_link1
 v -0.033695 -0.022608 0.018041
 v -0.033695 -0.022439 0.017326
@@ -5694,7 +5694,7 @@ vn -0.0034 -0.9679 0.2513
 vn -0.0000 -0.9783 0.2070
 vn 0.6948 0.5046 0.5125
 s 0
-usemtl black
+usemtl grey
 f 1//1 2//1 3//1
 f 4//1 5//1 6//1
 f 6//1 5//1 1//1

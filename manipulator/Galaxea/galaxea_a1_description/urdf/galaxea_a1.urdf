@@ -185,7 +185,7 @@
     <axis xyz="1 0 0"/>
     <limit effort="7" lower="-2.8798" upper="2.8798" velocity="25.133"/>
   </joint>
-  <link name="gripper_base_link">
+  <link name="gripper_base">
     <inertial>
       <origin xyz="-0.0311072323899603 1.17979991887118E-08 7.93394685505433E-08"/>
       <mass value="0.604"/>
@@ -193,16 +193,16 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_g1_description/meshes/gripper_link.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/gripper/gripper_link.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_g1_description/meshes/gripper_link.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/gripper/gripper_link.obj"/>
       </geometry>
     </collision>
   </link>
-  <link name="gripper_link1">
+  <link name="finger1">
     <inertial>
       <origin xyz="-0.0195895895552112 -0.0151136845490034 0.00542254359093075"/>
       <mass value="0.027"/>
@@ -210,23 +210,23 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_g1_description/meshes/gripper_finger1.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/gripper/finger.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_g1_description/meshes/gripper_finger1.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/gripper/finger.obj"/>
       </geometry>
     </collision>
   </link>
-  <joint name="gripper_joint1" type="prismatic">
+  <joint name="gripper_joint" type="prismatic">
     <origin xyz="0.03689 0.013453 0.00012059"/>
-    <parent link="gripper_base_link"/>
-    <child link="gripper_link1"/>
+    <parent link="gripper_base"/>
+    <child link="finger1"/>
     <axis xyz="0 1 0"/>
     <limit effort="100" lower="0" upper="0.05" velocity="0.25"/>
   </joint>
-  <link name="gripper_link2">
+  <link name="finger2">
     <inertial>
       <origin xyz="-0.0195895857999098 0.0151136893508115 -0.00542254357246619"/>
       <mass value="0.027"/>
@@ -234,27 +234,33 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_g1_description/meshes/gripper_finger2.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/gripper/finger.obj" scale="1 -1 -1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_g1_description/meshes/gripper_finger2.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/gripper/finger.obj" scale="1 -1 -1"/>
       </geometry>
     </collision>
   </link>
   <joint name="gripper_joint2" type="prismatic">
     <origin xyz="0.03689 -0.013453 -0.00012059"/>
-    <parent link="gripper_base_link"/>
-    <child link="gripper_link2"/>
+    <parent link="gripper_base"/>
+    <child link="finger2"/>
     <axis xyz="0 -1 0"/>
     <limit effort="100" lower="0" upper="0.05" velocity="0.25"/>
-    <mimic joint="gripper_joint1" multiplier="1" offset="0"/>
+    <mimic joint="gripper_joint" multiplier="1" offset="0"/>
+  </joint>
+  <link name="gripper_center"/>
+  <joint name="gripper_center_joint" type="fixed">
+    <origin xyz="0.03689 0 -0.00012059"/>
+    <parent link="gripper_base"/>
+    <child link="gripper_center"/>
   </joint>
   <origin rpy="-1.5708 0 0" xyz="0.1039 0 0"/>
-  <joint name="gripper_joint" type="fixed">
+  <joint name="gripper_base_joint" type="fixed">
     <origin rpy="-1.5708 0 0" xyz="0.1039 0 0"/>
     <parent link="link6"/>
-    <child link="gripper_base_link"/>
+    <child link="gripper_base"/>
   </joint>
 </robot>

@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib link6.mtl
+mtllib material.mtl
 o left_arm_link6
 v 0.029250 0.014918 -0.001568
 v 0.029250 0.014918 0.001568
@@ -249,7 +249,7 @@ vn -0.0000 0.3271 0.9450
 vn -0.0000 0.5801 0.8146
 vn -0.0000 0.7860 0.6182
 s 0
-usemtl black.005
+usemtl black
 f 1//1 2//1 3//1
 f 4//1 5//1 6//1
 f 6//1 5//1 7//1

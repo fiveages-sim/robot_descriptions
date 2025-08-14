@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="airbot_play_system" params="name ros2_control_hardware_type">
+  <xacro:macro name="galaxea_a1_system" params="name ros2_control_hardware_type">
 
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 

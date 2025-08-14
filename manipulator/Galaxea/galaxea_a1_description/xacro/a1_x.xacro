@@ -3,15 +3,13 @@
   <xacro:macro name="Arm" params="name">
     <xacro:include filename="$(find galaxea_a1_description)/xacro/a1xy_base.xacro"/>
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
-    <xacro:Base name=""/>
-    <link
-        name="${prefix}link3">
+
+    <xacro:Base name="${name}"/>
+
+    <link name="${prefix}link3">
       <inertial>
-        <origin
-            xyz="0.0566624793223791 -0.0291316466078999 0.0568018844686509"
-        />
-        <mass
-            value="0.739"/>
+        <origin xyz="0.0566624793223791 -0.0291316466078999 0.0568018844686509"/>
+        <mass value="0.739"/>
         <inertia
             ixx="0.000257907545256439"
             ixy="1.02695451350475E-05"
@@ -21,7 +19,6 @@
             izz="0.000550051611056369"/>
       </inertial>
       <visual>
-
         <geometry>
           <mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_x/link3.obj"/>
         </geometry>
@@ -32,32 +29,19 @@
         </geometry>
       </collision>
     </link>
-    <joint
-        name="${prefix}joint3"
-        type="revolute">
-      <origin
-          xyz="-0.3 0.00025004 0"
-          rpy="0 0 0"/>
-      <parent
-          link="${prefix}link2"/>
-      <child
-          link="${prefix}link3"/>
-      <axis
-          xyz="0 1 0"/>
-      <limit
-          lower="-3.3161"
-          upper="0"
-          effort="27"
-          velocity="10.472"/>
+
+    <joint name="${prefix}joint3" type="revolute">
+      <origin xyz="-0.3 0.00025004 0"/>
+      <parent link="${prefix}link2"/>
+      <child link="${prefix}link3"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.3161" upper="0" effort="27" velocity="10.472"/>
     </joint>
-    <link
-        name="${prefix}link4">
+
+    <link name="${prefix}link4">
       <inertial>
-        <origin
-            xyz="0.0699840030193581 -0.0287504697364447 0.0541968318197228"
-        />
-        <mass
-            value="0.419"/>
+        <origin xyz="0.0699840030193581 -0.0287504697364447 0.0541968318197228"/>
+        <mass value="0.419"/>
         <inertia
             ixx="6.62006896114572E-05"
             ixy="-9.3635648969069E-09"
@@ -77,32 +61,19 @@
         </geometry>
       </collision>
     </link>
-    <joint
-        name="${prefix}joint4"
-        type="revolute">
-      <origin
-          xyz="0.1747 0.00049739 0.075485"
-          rpy="0 0 0"/>
-      <parent
-          link="${prefix}link3"/>
-      <child
-          link="${prefix}link4"/>
-      <axis
-          xyz="0 1 0"/>
-      <limit
-          lower="-1.5708"
-          upper="1.5708"
-          effort="14"
-          velocity="32.9867"/>
+
+    <joint name="${prefix}joint4" type="revolute">
+      <origin xyz="0.1747 0.00049739 0.075485"/>
+      <parent link="${prefix}link3"/>
+      <child link="${prefix}link4"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-1.5708" upper="1.5708" effort="14" velocity="32.9867"/>
     </joint>
-    <link
-        name="${prefix}link5">
+
+    <link name="${prefix}link5">
       <inertial>
-        <origin
-            xyz="-0.000803198983898074 -2.29028914278118E-07 -0.0402656141956459"
-        />
-        <mass
-            value="0.054"/>
+        <origin xyz="-0.000803198983898074 -2.29028914278118E-07 -0.0402656141956459"/>
+        <mass value="0.054"/>
         <inertia
             ixx="5.80420988761095E-05"
             ixy="-1.94657864482709E-13"
@@ -117,38 +88,24 @@
         </geometry>
       </visual>
       <collision>
-
         <geometry>
           <mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_x/link5.obj"/>
         </geometry>
       </collision>
     </link>
-    <joint
-        name="${prefix}joint5"
-        type="revolute">
-      <origin
-          xyz="0.08 -0.031498 0.0405"
-          rpy="0 0 0"/>
-      <parent
-          link="${prefix}link4"/>
-      <child
-          link="${prefix}link5"/>
-      <axis
-          xyz="0 0 1"/>
-      <limit
-          lower="-1.5708"
-          upper="1.5708"
-          effort="14"
-          velocity="32.9867"/>
+
+    <joint name="${prefix}joint5" type="revolute">
+      <origin xyz="0.08 -0.031498 0.0405"/>
+      <parent link="${prefix}link4"/>
+      <child link="${prefix}link5"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.5708" upper="1.5708" effort="14" velocity="32.9867"/>
     </joint>
-    <link
-        name="${prefix}link6">
+
+    <link name="${prefix}link6">
       <inertial>
-        <origin
-            xyz="0.00709944426961403 -8.90673146347609E-10 -3.82632235882419E-05"
-        />
-        <mass
-            value="0.031"/>
+        <origin xyz="0.00709944426961403 -8.90673146347609E-10 -3.82632235882419E-05"/>
+        <mass value="0.031"/>
         <inertia
             ixx="3.44527427683917E-06"
             ixy="-2.00656296989553E-13"
@@ -168,32 +125,22 @@
         </geometry>
       </collision>
     </link>
-    <joint
-        name="${prefix}joint6"
-        type="revolute">
-      <origin
-          xyz="0.022503 0 -0.0405"
-          rpy="0 0 0"/>
-      <parent
-          link="${prefix}link5"/>
-      <child
-          link="${prefix}link6"/>
-      <axis
-          xyz="1 0 0"/>
-      <limit
-          lower="-2.8798"
-          upper="2.8798"
-          effort="14"
-          velocity="32.9867"/>
+
+    <joint name="${prefix}joint6" type="revolute">
+      <origin xyz="0.022503 0 -0.0405"/>
+      <parent link="${prefix}link5"/>
+      <child link="${prefix}link6"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-2.8798" upper="2.8798" effort="14" velocity="32.9867"/>
     </joint>
 
-    <xacro:include filename="$(find galaxea_g1_description)/xacro/gripper.xacro"/>
-    <xacro:Gripper name="${prefix}gripper"/>
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper.xacro"/>
+    <xacro:Gripper name="${name}"/>
 
-    <joint name="${prefix}gripper_joint" type="fixed">
+    <joint name="${prefix}gripper_base_joint" type="fixed">
       <origin xyz="0.08165 0 0"/>
       <parent link="${prefix}link6"/>
-      <child link="${prefix}gripper_base_link"/>
+      <child link="${prefix}gripper_base"/>
     </joint>
   </xacro:macro>
 </robot>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<robot name="A1 Single" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="world"/>
+
+  <joint name="world_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+  
+  <xacro:arg name="type" default="a1"/>
+  
+  <!-- 根据type参数决定is_master的值 -->
+  <xacro:if value="${'$(arg type)' == 'a1'}">
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/a1.xacro"/>
+    <xacro:Arm name=""/>
+  </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'x'}">
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/a1_x.xacro"/>
+    <xacro:Arm name=""/>
+  </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'y'}">
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/a1_y.xacro"/>
+    <xacro:Arm name=""/>
+  </xacro:if>
+
+  <xacro:include filename="$(find galaxea_a1_description)/xacro/ros2_control/galaxea_a1.ros2_control.xacro" />
+  <xacro:galaxea_a1_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <xacro:arg name="gazebo" default="false" />
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <xacro:if value="${'$(arg type)' == 'a1'}">
+          <parameters>$(find galaxea_a1_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+        </xacro:if>
+        <xacro:if value="${'$(arg type)' == 'x'}">
+          <parameters>$(find galaxea_a1_description)/config/ros2_control/a1_x.yaml</parameters>
+        </xacro:if>
+        <xacro:if value="${'$(arg type)' == 'y'}">
+          <parameters>$(find galaxea_a1_description)/config/ros2_control/a1_y.yaml</parameters>
+        </xacro:if>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

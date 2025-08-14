@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib link4.mtl
+mtllib material.mtl
 o arm_link4
 v 0.075051 -0.059565 0.040500
 v 0.070252 -0.058279 0.040500

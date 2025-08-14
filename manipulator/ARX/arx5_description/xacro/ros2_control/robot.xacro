@@ -29,7 +29,14 @@
   <xacro:if value="$(arg gazebo)">
     <gazebo>
       <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-        <parameters>$(find arx5_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+
+        <xacro:if value="${'$(arg type)' == 'r5'}">
+          <parameters>$(find arx5_description)/config/ros2_control/arx_r5.yaml</parameters>
+        </xacro:if>
+
+        <xacro:if value="${'$(arg type)' == 'x5'}">
+          <parameters>$(find arx5_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+        </xacro:if>
       </plugin>
     </gazebo>
   </xacro:if>

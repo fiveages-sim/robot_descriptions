@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<robot name="G1 Gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
-  <xacro:include filename="$(find galaxea_g1_description)/xacro/gripper.xacro"/>
-  <xacro:Gripper name=""/>
-</robot>

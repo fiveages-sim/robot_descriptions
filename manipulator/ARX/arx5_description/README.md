@@ -53,7 +53,7 @@ To visualize and check the configuration of the robot in rviz, simply launch:
   ros2 launch ocs2_arm_controller demo.launch.py robot:=arx5
   ```
 
-* ARX X5
+* ARX R5
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=arx5 type:=r5 hardware:=gz

@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib gripper_link.mtl
+mtllib material.mtl
 o gripper_link
 v -0.015650 -0.054158 0.020079
 v -0.015650 0.053839 0.020920

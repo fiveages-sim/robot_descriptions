@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib base_link.mtl
+mtllib material.mtl
 o base_link
 v -0.037780 0.028200 0.007986
 v -0.037780 0.028200 -0.000000

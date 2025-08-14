@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="Gripper" params="name">
+
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
-    <link name="${prefix}base_link">
+
+    <link name="${prefix}gripper_base">
       <inertial>
         <origin xyz="-0.0311072323899603 1.17979991887118E-08 7.93394685505433E-08"/>
         <mass value="0.604"/>
@@ -16,16 +18,17 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_g1_description)/meshes/gripper_link.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/gripper_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_g1_description)/meshes/gripper_link.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/gripper_link.obj"/>
         </geometry>
       </collision>
     </link>
-    <link name="${prefix}link1">
+
+    <link name="${prefix}finger1">
       <inertial>
         <origin xyz="-0.0195895895552112 -0.0151136845490034 0.00542254359093075"/>
         <mass value="0.027"/>
@@ -39,23 +42,25 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_g1_description)/meshes/gripper_finger1.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_g1_description)/meshes/gripper_finger1.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.obj"/>
         </geometry>
       </collision>
     </link>
-    <joint name="${prefix}joint1" type="prismatic">
+
+    <joint name="${prefix}gripper_joint" type="prismatic">
       <origin xyz="0.03689 0.013453 0.00012059"/>
-      <parent link="${prefix}base_link"/>
-      <child link="${prefix}link1"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}finger1"/>
       <axis xyz="0 1 0"/>
       <limit lower="0" upper="0.05" effort="100" velocity="0.25"/>
     </joint>
-    <link name="${prefix}link2">
+
+    <link name="${prefix}finger2">
       <inertial>
         <origin xyz="-0.0195895857999098 0.0151136893508115 -0.00542254357246619"/>
         <mass value="0.027"/>
@@ -69,22 +74,32 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_g1_description)/meshes/gripper_finger2.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.obj" scale="1 -1 -1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_g1_description)/meshes/gripper_finger2.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.obj" scale="1 -1 -1"/>
         </geometry>
       </collision>
     </link>
-    <joint name="${prefix}joint2" type="prismatic">
+
+    <joint name="${prefix}gripper_joint2" type="prismatic">
       <origin xyz="0.03689 -0.013453 -0.00012059"/>
-      <parent link="${prefix}base_link"/>
-      <child link="${prefix}link2"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}finger2"/>
       <axis xyz="0 -1 0"/>
       <limit lower="0" upper="0.05" effort="100" velocity="0.25"/>
-      <mimic joint="${prefix}joint1" multiplier="1" offset="0"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
+
+    <link name="${prefix}gripper_center"/>
+
+    <joint name="${prefix}gripper_center_joint" type="fixed">
+      <origin xyz="0.03689 0 -0.00012059"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}gripper_center"/>
+    </joint>
+
   </xacro:macro>
 </robot>
