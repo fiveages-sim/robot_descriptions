@@ -59,7 +59,7 @@
       <parent link="${prefix}base_link"/>
       <child link="${prefix}link1"/>
       <axis xyz="0 0 1"/>
-      <limit lower="-2.8798" upper="2.8798" effort="40" velocity="20.944"/>
+      <limit lower="-2.8798" upper="2.8798" effort="100" velocity="20.944"/>
     </joint>
 
     <!-- Link 2 -->
@@ -93,7 +93,7 @@
       <parent link="${prefix}link1"/>
       <child link="${prefix}link2"/>
       <axis xyz="0 0 -1"/>
-      <limit lower="0" upper="3.2289" effort="40" velocity="20.944"/>
+      <limit lower="0" upper="3.2289" effort="100" velocity="20.944"/>
     </joint>
 
     <!-- Link 3 -->
@@ -127,7 +127,7 @@
       <parent link="${prefix}link2"/>
       <child link="${prefix}link3"/>
       <axis xyz="0 0 -1"/>
-      <limit lower="-3.3161" upper="0" effort="27" velocity="7.5398"/>
+      <limit lower="-3.3161" upper="0" effort="100" velocity="7.5398"/>
     </joint>
 
     <!-- Link 4 -->
@@ -161,7 +161,7 @@
       <parent link="${prefix}link3"/>
       <child link="${prefix}link4"/>
       <axis xyz="1 0 0"/>
-      <limit lower="-2.8798" upper="2.8798" effort="7" velocity="25.133"/>
+      <limit lower="-2.8798" upper="2.8798" effort="100" velocity="25.133"/>
     </joint>
 
     <!-- Link 5 -->
@@ -195,7 +195,7 @@
       <parent link="${prefix}link4"/>
       <child link="${prefix}link5"/>
       <axis xyz="0 1 0"/>
-      <limit lower="-1.6581" upper="1.6581" effort="7" velocity="25.133"/>
+      <limit lower="-1.6581" upper="1.6581" effort="100" velocity="25.133"/>
     </joint>
 
     <!-- Link 6 -->
@@ -229,7 +229,7 @@
       <parent link="${prefix}link5"/>
       <child link="${prefix}link6"/>
       <axis xyz="1 0 0"/>
-      <limit lower="-2.8798" upper="2.8798" effort="7" velocity="25.133"/>
+      <limit lower="-2.8798" upper="2.8798" effort="100" velocity="25.133"/>
     </joint>
 
     <!-- Include Gripper -->

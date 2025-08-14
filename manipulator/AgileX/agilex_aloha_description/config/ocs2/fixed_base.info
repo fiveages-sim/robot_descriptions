@@ -13,14 +13,14 @@ model_information {
     [6]  "rr_wheel"
     [7]  "rl_wheel"
 
-    [8]  "left_joint7"
+    [8]  "left_gripper_joint"
     [9]  "left_joint8"
-    [10]  "right_joint7"
+    [10]  "right_gripper_joint"
     [11]  "right_joint8"
   }
 
   ; base frame of the robot (from URDF)
-  baseFrame                       "base_footprint"
+  baseFrame                       "base_link"
   ; end-effector frame of the robot (from URDF)
   eeFrame                         "left_gripper_center"
   eeFrame1                        "right_gripper_center"

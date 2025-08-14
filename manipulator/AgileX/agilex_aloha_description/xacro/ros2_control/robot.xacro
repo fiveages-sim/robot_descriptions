@@ -2,13 +2,6 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="AgileX Aloha">
   <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
 
-  <link name="world"/>
-
-  <joint name="world_fixed" type="fixed">
-    <parent link="world"/>
-    <child link="base_footprint"/>
-  </joint>
-
   <!-- Import Piper ros2_control description -->
   <xacro:include filename="$(find piper_description)/xacro/ros2_control/piper.ros2_control.xacro" />
 

@@ -36,13 +36,6 @@
   <!-- Include Right RealSense Camera -->
   <xacro:RealSense side="right"/>
 
-  <link name="world"/>
-
-  <joint name="world_fixed" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
-  </joint>
-
   <!-- Import Piper ros2_control description -->
   <xacro:include filename="$(find galaxea_a1_description)/xacro/ros2_control/galaxea_a1.ros2_control.xacro" />
   <xacro:galaxea_a1_system name="left" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>

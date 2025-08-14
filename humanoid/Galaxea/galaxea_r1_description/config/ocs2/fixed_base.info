@@ -171,10 +171,10 @@ inputCost
     {
       scaling 1e-2
 
-         (0,0)   0.1       ; torso_joint1
-         (1,0)   0.1       ; torso_joint2
-         (2,0)   0.1       ; torso_joint3
-         (3,0)   0.1       ; torso_joint4
+         (0,0)   10.0       ; torso_joint1
+         (1,0)   10.0       ; torso_joint2
+         (2,0)   10.0       ; torso_joint3
+         (3,0)   10.0       ; torso_joint4
          (4,0)   1.0        ; left_arm_joint1
          (5,0)   1.0        ; left_arm_joint2
          (6,0)   1.0        ; left_arm_joint3
@@ -288,10 +288,10 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-        (0,0)  -0.013       ; torso_joint1 [rad/s]
-        (1,0)  -2.088       ; torso_joint2 [rad/s]
-        (2,0)  -2.082	    ; torso_joint3 [rad/s]
-        (3,0)  -3.270	    ; torso_joint4 [rad/s]
+        (0,0)  -0.1       ; torso_joint1 [rad/s]
+        (1,0)  -0.1       ; torso_joint2 [rad/s]
+        (2,0)  -0.1	    ; torso_joint3 [rad/s]
+        (3,0)  -0.1	    ; torso_joint4 [rad/s]
         (4,0)  -3.300	    ; left_arm_joint1 [rad/s]
         (5,0)  -3.599	    ; left_arm_joint2 [rad/s]
         (6,0)  -3.078	    ; left_arm_joint3 [rad/s]
@@ -340,10 +340,10 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-        (0,0)  0.013        ; torso_joint1 [m/s]
-        (1,0)  2.088        ; torso_joint2 [rad/s]
-        (2,0)  2.082	    ; torso_joint3 [rad/s]
-        (3,0)  3.270	    ; torso_joint4 [rad/s]
+        (0,0)  0.1          ; torso_joint1 [m/s]
+        (1,0)  0.1          ; torso_joint2 [rad/s]
+        (2,0)  0.1	        ; torso_joint3 [rad/s]
+        (3,0)  0.1	        ; torso_joint4 [rad/s]
         (4,0)  3.300	    ; left_arm_joint1 [rad/s]
         (5,0)  3.599	    ; left_arm_joint2 [rad/s]
         (6,0)  3.078	    ; left_arm_joint3 [rad/s]

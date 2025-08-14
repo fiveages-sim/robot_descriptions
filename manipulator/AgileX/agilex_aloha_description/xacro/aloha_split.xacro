@@ -29,7 +29,7 @@
   </link>
 
   <joint name="box_joint" type="fixed">
-    <parent link="base_link"/>
+    <parent link="base"/>
     <child link="box_link"/>
   </joint>
 

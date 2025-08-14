@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="ranger_mini_v3" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <link name="base_footprint"/>
-  <joint name="base_footprint_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="base_link"/>
+  <link name="base_link"/>
+  <joint name="base_link_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base"/>
     <origin xyz="0 0 0.33"/>
   </joint>
 
-  <link name="base_link">
+  <link name="base">
     <inertial>
       <origin xyz="-0.0242698272228022 -0.0030308024613212 0.0544267444673498"/>
       <mass value="10"/>
@@ -48,7 +48,7 @@
 
   <joint name="fr_steering_joint" type="revolute">
     <origin xyz="0.241 -0.185 -0.115"/>
-    <parent link="base_link"/>
+    <parent link="base"/>
     <child link="fr_steering_wheel_link"/>
     <axis xyz="0 0 -1"/>
     <limit effort="5" velocity="6.28" lower="-2.1" upper="2.1"/>
@@ -102,7 +102,7 @@
 
   <joint name="fl_steering_joint" type="revolute">
     <origin xyz="0.241 0.185 -0.115"/>
-    <parent link="base_link"/>
+    <parent link="base"/>
     <child link="fl_steering_wheel_link"/>
     <axis xyz="0 0 -1"/>
     <limit effort="5" velocity="6.28" lower="-2.1" upper="2.1"/>
@@ -155,7 +155,7 @@
 
   <joint name="rl_steering_joint" type="revolute">
     <origin xyz="-0.253 0.185 -0.115"/>
-    <parent link="base_link"/>
+    <parent link="base"/>
     <child link="rl_steering_wheel_link"/>
     <axis xyz="0 0 -1"/>
     <limit effort="5" velocity="6.28" lower="-2.1" upper="2.1"/>
@@ -200,7 +200,7 @@
 
   <joint name="rr_steering_joint" type="revolute">
     <origin xyz="-0.253 -0.185 -0.115"/>
-    <parent link="base_link"/>
+    <parent link="base"/>
     <child link="rr_steering_wheel_link"/>
     <axis xyz="0 0 -1"/>
     <limit effort="5" velocity="6.28" lower="-2.1" upper="2.1"/>
