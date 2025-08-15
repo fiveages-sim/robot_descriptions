@@ -228,14 +228,14 @@ finalEndEffector
 
 bodyRelative
 {
-  activate                    true
+  activate                   true
   bodyLinkName               "torso_link4"
   rollTolerance              0.1
   pitchTolerance             0.1
   muRoll                     10.0
   muPitch                    10.0
-  muPositionX                10.0
-  muPositionY                10.0
+  muPositionX                5.0
+  muPositionY                5.0
 }
 
 selfCollision
