@@ -19,12 +19,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/base_link.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/base_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/base_link.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/base_link.obj"/>
         </geometry>
       </collision>
     </link>
@@ -37,12 +37,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link1.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/link1.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link1.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link1.obj"/>
         </geometry>
       </collision>
     </link>
@@ -62,12 +62,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link2.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/link2.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link2.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link2.obj"/>
         </geometry>
       </collision>
     </link>
@@ -87,12 +87,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link3.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/link3.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link3.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link3.obj"/>
         </geometry>
       </collision>
     </link>
@@ -112,12 +112,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link4.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/link4.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link4.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link4.obj"/>
         </geometry>
       </collision>
     </link>
@@ -137,12 +137,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link5.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/link5.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link5.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link5.obj"/>
         </geometry>
       </collision>
     </link>

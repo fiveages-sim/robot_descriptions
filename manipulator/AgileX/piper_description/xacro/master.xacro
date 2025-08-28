@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="Gripper" params="name">
+
     <link name="${prefix}link6">
       <inertial>
         <origin xyz="-0.000183807162235591 8.05033155577911E-05 0.0321436689908876"/>
@@ -10,33 +11,45 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link6_master.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/link6_master.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link6_master.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link6_master_collision_0.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link6_master_collision_1.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link6_master_collision_2.obj"/>
         </geometry>
       </collision>
     </link>
+
     <link name="${prefix}link7">
       <inertial>
-        <origin xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025" rpy="0 0 0"/>
+        <origin xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025"/>
         <mass value="0.025"/>
         <inertia ixx="0.00007371" ixy="-0.00000113" ixz="0.00000021" iyy="0.00000781" iyz="-0.00001372"
                  izz="0.0000747"/>
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link7_master.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/gripper_master.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link7_master.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/gripper_master.obj"/>
         </geometry>
       </collision>
     </link>
+
     <joint name="${prefix}gripper_joint" type="prismatic">
       <origin xyz="0.043177 0 0.0685"/>
       <parent link="${prefix}link6"/>
@@ -44,6 +57,7 @@
       <axis xyz="0 -1 0"/>
       <limit lower="0" upper="0.035" effort="10" velocity="1"/>
     </joint>
+
     <link name="${prefix}link8">
       <inertial>
         <origin xyz="0.000651231850419722 -0.0491929869131991 0.00972258769184024"/>
@@ -53,15 +67,16 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link8_master.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/gripper_master.obj" scale="1 -1 1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link8_master.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/gripper_master.obj" scale="1 -1 1"/>
         </geometry>
       </collision>
     </link>
+
     <joint name="${prefix}joint8" type="prismatic">
       <origin xyz="0.043177 0 0.0685"/>
       <parent link="${prefix}link6"/>
@@ -70,11 +85,13 @@
       <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
       <limit lower="0" upper="0.035" effort="10" velocity="1"/>
     </joint>
+
     <link name="${prefix}gripper_center"/>
     <joint name="${prefix}gripper_center_fixed" type="fixed">
       <parent link="${prefix}link6"/>
       <child link="${prefix}gripper_center"/>
       <origin xyz="0.043177 0 0.0685"/>
     </joint>
+
   </xacro:macro>
 </robot>

@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib link6_master.mtl
+mtllib materials.mtl
 o link6
 v 0.007500 -0.030079 0.048000
 v 0.007500 -0.028013 0.048000
@@ -25406,7 +25406,7 @@ vn 0.9451 0.3266 0.0111
 vn 0.9846 0.1706 0.0392
 vn 0.9654 0.2609 0.0005
 s 1
-usemtl grey_metal.001
+usemtl grey_metal
 f 1//1 2//2 3//3
 f 3//3 2//2 4//3
 s 0
