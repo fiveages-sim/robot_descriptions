@@ -89,7 +89,7 @@
 
     <link name="${prefix}camera"/>
     <joint name="${prefix}camera_fixed" type="fixed">
-      <origin xyz="-0.073 0 0.041" rpy="0 -1.22 0"/>
+      <origin xyz="-0.073 0 0.041" rpy="-0.3463 0 -1.5708"/>
       <parent link="${prefix}link6"/>
       <child link="${prefix}camera"/>
     </joint>

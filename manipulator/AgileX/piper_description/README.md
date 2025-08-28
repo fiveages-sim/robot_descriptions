@@ -35,8 +35,13 @@ ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=piper
 ```
 
 ### 3.2 OCS2 Arm Controller Demo
-
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=piper hardware:=gz
-```
+* Gazebo
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=piper hardware:=gz
+  ```
+* Isaac Sim
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=piper hardware:=isaac
+  ```
