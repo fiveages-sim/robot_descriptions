@@ -134,7 +134,7 @@
       <limit lower="-2.879795" upper="2.879795" effort="14" velocity="32.9867"/>
     </joint>
 
-    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper.xacro"/>
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper_g1.xacro"/>
     <xacro:Gripper name="${name}"/>
 
     <joint name="${prefix}gripper_base_joint" type="fixed">

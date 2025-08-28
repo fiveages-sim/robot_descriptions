@@ -1,6 +1,6 @@
 # Blender 4.5.1 LTS
 # www.blender.org
-mtllib pad_link.mtl
+mtllib materials.mtl
 o pad_link
 v 0.003208 0.022250 0.006250
 v 0.003208 0.022250 0.001250

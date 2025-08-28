@@ -233,7 +233,7 @@
     </joint>
 
     <!-- Include Gripper -->
-    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper.xacro"/>
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper_g1.xacro"/>
     <xacro:Gripper name="${name}"/>
 
     <!-- Gripper Properties -->

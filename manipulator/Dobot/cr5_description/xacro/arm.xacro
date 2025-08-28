@@ -36,6 +36,7 @@
 					</geometry>
 				</collision>
 				<collision>
+					<origin xyz="0 0 -0.025"/>
 					<geometry>
 						<box size="1.5 1.5 0.05"/>
 					</geometry>

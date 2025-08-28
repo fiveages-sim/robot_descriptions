@@ -1,6 +1,6 @@
 # Blender 4.5.1 LTS
 # www.blender.org
-mtllib in_link.mtl
+mtllib materials.mtl
 o Left_in_Link
 v 0.003800 -0.032188 -0.017303
 v 0.001250 -0.032188 -0.017303

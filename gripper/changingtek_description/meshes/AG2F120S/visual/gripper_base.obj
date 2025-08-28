@@ -1,6 +1,6 @@
 # Blender 4.5.1 LTS
 # www.blender.org
-mtllib gripper_base.mtl
+mtllib materials.mtl
 o base_link.001
 v 0.012458 0.021390 0.086603
 v 0.012445 0.021383 0.086714

@@ -19,12 +19,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/gripper_base.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/visual/gripper_base.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/gripper_base.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/collision/gripper_base.obj"/>
         </geometry>
       </collision>
     </link>
@@ -43,12 +43,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_1.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/visual/link_1.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_1.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/collision/link_1.obj"/>
         </geometry>
       </collision>
     </link>
@@ -58,7 +58,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}left_1_link"/>
       <axis xyz="0 0 -1"/>
-      <limit lower="0" upper="1" effort="2" velocity="1000"/>
+      <limit lower="0" upper="1" effort="40" velocity="4.1887902047863905"/>
     </joint>
 
     <link name="${prefix}left_support_link">
@@ -75,12 +75,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/support_link.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/visual/support_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/support_link.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/collision/support_link.obj"/>
         </geometry>
       </collision>
     </link>
@@ -90,7 +90,7 @@
       <parent link="${prefix}left_1_link"/>
       <child link="${prefix}left_support_link"/>
       <axis xyz="0 0 1"/>
-      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <limit lower="0" upper="1" effort="40"  velocity="4.1887902047863905"/>
       <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
 
@@ -108,12 +108,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/pad_link.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/visual/pad_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/pad_link.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/collision/pad_link.obj"/>
         </geometry>
       </collision>
     </link>
@@ -138,12 +138,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_2.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/visual/link_2.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_2.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/collision/link_2.obj"/>
         </geometry>
       </collision>
     </link>
@@ -153,7 +153,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}left_2_link"/>
       <axis xyz="0 0 -1"/>
-      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <limit lower="0" upper="1" effort="40"  velocity="4.1887902047863905"/>
       <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
 
@@ -171,12 +171,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_2.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/visual/link_2.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_2.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/collision/link_2.obj"/>
         </geometry>
       </collision>
     </link>
@@ -186,7 +186,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}right_2_link"/>
       <axis xyz="0 0 1"/>
-      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <limit lower="0" upper="1" effort="40"  velocity="4.1887902047863905"/>
       <mimic joint="${prefix}left_2_joint" multiplier="-1" offset="0"/>
     </joint>
 
@@ -204,12 +204,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_1.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/visual/link_1.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/link_1.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/collision/link_1.obj"/>
         </geometry>
       </collision>
     </link>
@@ -219,7 +219,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}right_1_link"/>
       <axis xyz="0 0 1"/>
-      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <limit lower="0" upper="1" effort="40"  velocity="4.1887902047863905"/>
       <mimic joint="${prefix}gripper_joint" multiplier="-1" offset="0"/>
     </joint>
 
@@ -237,12 +237,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/support_link.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/visual/support_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/support_link.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/collision/support_link.obj"/>
         </geometry>
       </collision>
     </link>
@@ -252,7 +252,7 @@
       <parent link="${prefix}right_1_link"/>
       <child link="${prefix}right_support_link"/>
       <axis xyz="0 0 1"/>
-      <limit lower="0" upper="0" effort="0" velocity="0"/>
+      <limit lower="0" upper="1" effort="40"  velocity="4.1887902047863905"/>
       <mimic joint="${prefix}right_1_joint" multiplier="-1" offset="0"/>
     </joint>
 
@@ -270,12 +270,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/pad_link.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/visual/pad_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/pad_link.obj"/>
+          <mesh filename="file://$(find changingtek_description)/meshes/AG2F120S/collision/pad_link.obj"/>
         </geometry>
       </collision>
     </link>

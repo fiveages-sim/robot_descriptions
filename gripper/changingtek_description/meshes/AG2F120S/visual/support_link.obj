@@ -1,6 +1,6 @@
 # Blender 4.5.1 LTS
 # www.blender.org
-mtllib support_link.mtl
+mtllib materials.mtl
 o Left_Support_Link
 v -0.000403 -0.001959 -0.009500
 v -0.000443 -0.001950 -0.009232

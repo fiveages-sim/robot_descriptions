@@ -1,6 +1,6 @@
 # Blender 4.5.1 LTS
 # www.blender.org
-mtllib up_link.mtl
+mtllib materials.mtl
 o Left_up_Link
 v 0.009000 0.000371 -0.001965
 v 0.009000 0.000042 -0.002000

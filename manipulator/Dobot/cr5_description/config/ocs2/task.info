@@ -208,17 +208,11 @@ selfCollision
       [1] "1, 8",
       [2] "4, 11",
       [3] "7, 11"
-      [4] "1, 11"
   }
 
   ; Self Collision pairs
   collisionLinkPairs
   {
-    ;[0] "Link2, Link6",
-    ;[1] "Link3, Link6",
-    ;[2] "base_link, Link6",
-    ;[3] "base_link, Link2",
-    ;[4] "base_link, Link5",
   }
 
   ; minimum distance allowed between the pairs
