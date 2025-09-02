@@ -27,6 +27,7 @@ This will significantly reduce download time and disk space usage.
 | ARX      | [LIFT](humanoid/ARX/arx_lift_description)            | Yes     | <img src="humanoid/.images/arx_lift.png" width="200" style="object-fit: cover; object-position: center;">     <img src="humanoid/.images/arx_lift2.png" width="200" style="object-fit: cover; object-position: center;"> |
 | ARX      | [X7S](humanoid/ARX/x7s_description)                  | Yes     | <img src="humanoid/.images/arx_x7s.png" width="200">                                                                                                                                                                     |
 | Realman  | [AIDAL](humanoid/Realman/aidal_description)          | Yes     | <img src="humanoid/.images/realman_aidal.png" width="200">                                                                                                                                                               |
+| Unitree  | [G1](humanoid/Unitree/unitree_g1_description)        | Yes     | <img src="humanoid/.images/unitree_g1.png" width="200">                                                                                                                                                                  |
 
 ## Manipulator Robots
 

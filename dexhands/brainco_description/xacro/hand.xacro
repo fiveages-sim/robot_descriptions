@@ -7,6 +7,6 @@
 	<xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
 
 	<!-- 创建左手 (direction=1) -->
-	<xacro:BraincoGripper name="" direction="$(arg direction)"/>
+	<xacro:BrainCoHand name="" direction="$(arg direction)"/>
 
 </robot>
