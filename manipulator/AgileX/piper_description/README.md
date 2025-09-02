@@ -40,7 +40,7 @@ ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=piper
 * Gazebo
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=piper hardware:=gz
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=piper hardware:=gz world:=warehouse
   ```
   
 

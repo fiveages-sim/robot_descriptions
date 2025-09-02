@@ -24,3 +24,15 @@ ros2 launch robot_visualize_config visualize.launch.py robot:=x30
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_visualize_config manipulator.launch.py
 ```
+
+# Gripper
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_visualize_config gripper.launch.py
+```
+
+# DexHand
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_visualize_config hand.launch.py
+```
