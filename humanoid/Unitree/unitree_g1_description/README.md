@@ -1,6 +1,6 @@
 # Unitree G1 Description
 
-This package contains the URDF and configuration files for the Unitree G1 humanoid. The origin models could be found at [booster_gym](https://github.com/BoosterRobotics/booster_gym).
+This package contains the URDF and configuration files for the Unitree G1 humanoid. The origin models could be found at [unitree ros](https://github.com/unitreerobotics/unitree_ros).
 
 ## Build
 
