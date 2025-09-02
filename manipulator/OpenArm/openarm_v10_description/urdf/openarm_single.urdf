@@ -6,14 +6,14 @@
 <robot name="openarm">
   <!-- Is the robot being simulated in gazebo? -->
   <!-- <xacro:arg name="gazebo" default="false" /> -->
-  <link name="openarm_link0">
-    <visual name="openarm_link0_visual">
+  <link name="link0">
+    <visual name="link0_visual">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/visual/link0.dae" scale="0.001 -0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_link0_collision">
+    <collision name="link0_collision">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/collision/link0_symp.stl" scale="0.001 -0.001 0.001"/>
@@ -26,14 +26,14 @@
       <inertia ixx="0.001128" ixy="-4e-06" ixz="-3.3e-05" iyy="0.000962" iyz="-7e-06" izz="0.00147"/>
     </inertial>
   </link>
-  <link name="openarm_link1">
-    <visual name="openarm_link1_visual">
+  <link name="link1">
+    <visual name="link1_visual">
       <origin rpy="0.0 0.0 0.0" xyz="-0.0 0.0 -0.0625"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/visual/link1.dae" scale="0.001 -0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_link1_collision">
+    <collision name="link1_collision">
       <origin rpy="0.0 0.0 0.0" xyz="-0.0 0.0 -0.0625"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/collision/link1_symp.stl" scale="0.001 -0.001 0.001"/>
@@ -46,21 +46,21 @@
       <inertia ixx="0.001567" ixy="-1e-06" ixz="-2.9e-05" iyy="0.001273" iyz="1e-06" izz="0.001016"/>
     </inertial>
   </link>
-  <joint name="openarm_joint1" type="revolute">
+  <joint name="joint1" type="revolute">
     <origin rpy="0 0 0" xyz="0.0 0.0 0.0625"/>
-    <parent link="openarm_link0"/>
-    <child link="openarm_link1"/>
+    <parent link="link0"/>
+    <child link="link1"/>
     <axis xyz="0 0 1"/>
     <limit effort="40" lower="-1.396263" upper="3.490659" velocity="16.754666"/>
   </joint>
-  <link name="openarm_link2">
-    <visual name="openarm_link2_visual">
+  <link name="link2">
+    <visual name="link2_visual">
       <origin rpy="0.0 0.0 0.0" xyz="0.0301 0.0 -0.1225"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/visual/link2.dae" scale="0.001 -0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_link2_collision">
+    <collision name="link2_collision">
       <origin rpy="0.0 0.0 0.0" xyz="0.0301 0.0 -0.1225"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/collision/link2_symp.stl" scale="0.001 -0.001 0.001"/>
@@ -73,21 +73,21 @@
       <inertia ixx="0.000359" ixy="1e-06" ixz="-0.000109" iyy="0.000376" iyz="1e-06" izz="0.000232"/>
     </inertial>
   </link>
-  <joint name="openarm_joint2" type="revolute">
+  <joint name="joint2" type="revolute">
     <origin rpy="0 0 0" xyz="-0.0301 0.0 0.06"/>
-    <parent link="openarm_link1"/>
-    <child link="openarm_link2"/>
+    <parent link="link1"/>
+    <child link="link2"/>
     <axis xyz="-1 0 0"/>
     <limit effort="40" lower="-1.745329" upper="1.745329" velocity="16.754666"/>
   </joint>
-  <link name="openarm_link3">
-    <visual name="openarm_link3_visual">
+  <link name="link3">
+    <visual name="link3_visual">
       <origin rpy="0.0 0.0 0.0" xyz="-0.0 -0.0 -0.18875"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/visual/link3.dae" scale="0.001 -0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_link3_collision">
+    <collision name="link3_collision">
       <origin rpy="0.0 0.0 0.0" xyz="-0.0 -0.0 -0.18875"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/collision/link3_symp.stl" scale="0.001 -0.001 0.001"/>
@@ -100,21 +100,21 @@
       <inertia ixx="0.004372" ixy="1e-06" ixz="1.1e-05" iyy="0.004319" iyz="-3.6e-05" izz="0.000661"/>
     </inertial>
   </link>
-  <joint name="openarm_joint3" type="revolute">
+  <joint name="joint3" type="revolute">
     <origin rpy="0 0 0" xyz="0.0301 0.0 0.06625"/>
-    <parent link="openarm_link2"/>
-    <child link="openarm_link3"/>
+    <parent link="link2"/>
+    <child link="link3"/>
     <axis xyz="0 0 1"/>
     <limit effort="27" lower="-1.570796" upper="1.570796" velocity="5.445426"/>
   </joint>
-  <link name="openarm_link4">
-    <visual name="openarm_link4_visual">
+  <link name="link4">
+    <visual name="link4_visual">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.0315 -0.3425"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/visual/link4.dae" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_link4_collision">
+    <collision name="link4_collision">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.0315 -0.3425"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/collision/link4_symp.stl" scale="0.001 0.001 0.001"/>
@@ -127,21 +127,21 @@
       <inertia ixx="0.000623" ixy="-1e-06" ixz="-1.9e-05" iyy="0.000511" iyz="3.8e-05" izz="0.000334"/>
     </inertial>
   </link>
-  <joint name="openarm_joint4" type="revolute">
+  <joint name="joint4" type="revolute">
     <origin rpy="0 0 0" xyz="-0.0 0.0315 0.15375"/>
-    <parent link="openarm_link3"/>
-    <child link="openarm_link4"/>
+    <parent link="link3"/>
+    <child link="link4"/>
     <axis xyz="0 1 0"/>
     <limit effort="27" lower="0.0" upper="2.443461" velocity="5.445426"/>
   </joint>
-  <link name="openarm_link5">
-    <visual name="openarm_link5_visual">
+  <link name="link5">
+    <visual name="link5_visual">
       <origin rpy="0.0 0.0 0.0" xyz="-0.0 -0.0 -0.438"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/visual/link5.dae" scale="0.001 -0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_link5_collision">
+    <collision name="link5_collision">
       <origin rpy="0.0 0.0 0.0" xyz="-0.0 -0.0 -0.438"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/collision/link5_symp.stl" scale="0.001 -0.001 0.001"/>
@@ -154,21 +154,21 @@
       <inertia ixx="0.000423" ixy="-8e-06" ixz="6e-06" iyy="0.000445" iyz="-6e-06" izz="0.000324"/>
     </inertial>
   </link>
-  <joint name="openarm_joint5" type="revolute">
+  <joint name="joint5" type="revolute">
     <origin rpy="0 0 0" xyz="0.0 -0.0315 0.0955"/>
-    <parent link="openarm_link4"/>
-    <child link="openarm_link5"/>
+    <parent link="link4"/>
+    <child link="link5"/>
     <axis xyz="0 0 1"/>
     <limit effort="7" lower="-1.570796" upper="1.570796" velocity="20.943946"/>
   </joint>
-  <link name="openarm_link6">
-    <visual name="openarm_link6_visual">
+  <link name="link6">
+    <visual name="link6_visual">
       <origin rpy="0.0 0.0 0.0" xyz="-0.0375 -0.0 -0.5585"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/visual/link6.dae" scale="0.001 -0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_link6_collision">
+    <collision name="link6_collision">
       <origin rpy="0.0 0.0 0.0" xyz="-0.0375 -0.0 -0.5585"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/collision/link6_symp.stl" scale="0.001 -0.001 0.001"/>
@@ -181,21 +181,21 @@
       <inertia ixx="0.000143" ixy="1e-06" ixz="1e-06" iyy="0.000157" iyz="1e-06" izz="0.000159"/>
     </inertial>
   </link>
-  <joint name="openarm_joint6" type="revolute">
+  <joint name="joint6" type="revolute">
     <origin rpy="0 0 0" xyz="0.0375 0.0 0.1205"/>
-    <parent link="openarm_link5"/>
-    <child link="openarm_link6"/>
+    <parent link="link5"/>
+    <child link="link6"/>
     <axis xyz="1 0 0"/>
     <limit effort="7" lower="-0.785398" upper="0.785398" velocity="20.943946"/>
   </joint>
-  <link name="openarm_link7">
-    <visual name="openarm_link7_visual">
+  <link name="link7">
+    <visual name="link7_visual">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.0 -0.5585"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/visual/link7.dae" scale="0.001 -0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_link7_collision">
+    <collision name="link7_collision">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.0 -0.5585"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/arm/v10/collision/link7_symp.stl" scale="0.001 -0.001 0.001"/>
@@ -208,10 +208,10 @@
       <inertia ixx="0.000639" ixy="1e-06" ixz="1e-06" iyy="0.000497" iyz="8.9e-05" izz="0.000342"/>
     </inertial>
   </link>
-  <joint name="openarm_joint7" type="revolute">
+  <joint name="joint7" type="revolute">
     <origin rpy="0 0 0" xyz="-0.0375 0.0 0.0"/>
-    <parent link="openarm_link6"/>
-    <child link="openarm_link7"/>
+    <parent link="link6"/>
+    <child link="link7"/>
     <axis xyz="0 -1 0"/>
     <limit effort="7" lower="-1.570796" upper="1.570796" velocity="20.943946"/>
   </joint>
@@ -222,14 +222,14 @@
       <parent link="${prefix}link7" />
       <child link="${prefix}link8" />
     </joint> -->
-  <link name="openarm_hand">
-    <visual name="openarm_hand_visual">
+  <link name="hand">
+    <visual name="hand_visual">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.6585"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/ee/openarm_hand/visual/hand.dae" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_hand_collision">
+    <collision name="hand_collision">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.6585"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/ee/openarm_hand/collision/hand.stl" scale="0.001 0.001 0.001"/>
@@ -243,26 +243,26 @@
   </link>
   <!-- <link name="${ee_prefix}hand"/> -->
   <!-- <joint name="${ee_prefix}hand_joint" type="fixed"> -->
-  <joint name="openarm_hand_joint" type="fixed">
-    <parent link="openarm_link7"/>
-    <child link="openarm_hand"/>
+  <joint name="hand_joint" type="fixed">
+    <parent link="link7"/>
+    <child link="hand"/>
     <origin rpy="0 0 0" xyz="0 -0.0 0.1001"/>
   </joint>
   <!-- Define the hand_tcp frame -->
-  <link name="openarm_hand_tcp"/>
-  <joint name="openarm_hand_tcp_joint" type="fixed">
+  <link name="hand_tcp"/>
+  <joint name="hand_tcp_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 -0.0 0.08"/>
-    <parent link="openarm_hand"/>
-    <child link="openarm_hand_tcp"/>
+    <parent link="hand"/>
+    <child link="hand_tcp"/>
   </joint>
-  <link name="openarm_left_finger">
-    <visual name="openarm_left_finger_visual">
+  <link name="left_finger">
+    <visual name="left_finger_visual">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.05 -0.673001"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/ee/openarm_hand/visual/finger.dae" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_left_finger_collision">
+    <collision name="left_finger_collision">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.05 -0.673001"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/ee/openarm_hand/collision/finger.stl" scale="0.001 0.001 0.001"/>
@@ -274,14 +274,14 @@
       <inertia ixx="2.3749999999999997e-06" ixy="1e-06" ixz="1e-06" iyy="2.3749999999999997e-06" iyz="1e-06" izz="7.5e-07"/>
     </inertial>
   </link>
-  <link name="openarm_right_finger">
-    <visual name="openarm_right_finger_visual">
+  <link name="right_finger">
+    <visual name="right_finger_visual">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.05 -0.673001"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/ee/openarm_hand/visual/finger.dae" scale="0.001 -0.001 0.001"/>
       </geometry>
     </visual>
-    <collision name="openarm_right_finger_collision">
+    <collision name="right_finger_collision">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.05 -0.673001"/>
       <geometry>
         <mesh filename="package://openarm_v10_description/meshes/ee/openarm_hand/collision/finger.stl" scale="0.001 -0.001 0.001"/>
@@ -293,19 +293,19 @@
       <inertia ixx="2.3749999999999997e-06" ixy="1e-06" ixz="1e-06" iyy="2.3749999999999997e-06" iyz="1e-06" izz="7.5e-07"/>
     </inertial>
   </link>
-  <joint name="openarm_finger_joint1" type="prismatic">
-    <parent link="openarm_hand"/>
-    <child link="openarm_right_finger"/>
+  <joint name="finger_joint1" type="prismatic">
+    <parent link="hand"/>
+    <child link="right_finger"/>
     <origin rpy="0 0 0" xyz="0 -0.006 0.015"/>
     <axis xyz="0 -1 0"/>
     <limit effort="333" lower="0.0" upper="0.044" velocity="10.0"/>
   </joint>
-  <joint name="openarm_finger_joint2" type="prismatic">
-    <parent link="openarm_hand"/>
-    <child link="openarm_left_finger"/>
+  <joint name="finger_joint2" type="prismatic">
+    <parent link="hand"/>
+    <child link="left_finger"/>
     <origin rpy="0 0 0" xyz="0 0.006 0.015"/>
     <axis xyz="0 1 0"/>
     <limit effort="333" lower="0.0" upper="0.044" velocity="10.0"/>
-    <mimic joint="openarm_finger_joint1"/>
+    <mimic joint="finger_joint1"/>
   </joint>
 </robot>
