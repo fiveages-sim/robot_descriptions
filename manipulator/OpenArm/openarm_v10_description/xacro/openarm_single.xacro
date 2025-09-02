@@ -8,14 +8,14 @@
       <visual name="${prefix}link0_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/visual/link0.dae" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link0.stl" scale="0.001 -0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}link0_collision">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/collision/link0_symp.stl" scale="0.001 -0.001 0.001"/>
-          <!-- <mesh filename="file://$(find openarm_v10_description/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/collision/link0_symp.stl" scale="0.001 -0.001 0.001"/>
+          <!-- <mesh filename="file://$(find openarm_v10_description)/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
       </collision>
       <inertial>
@@ -28,14 +28,14 @@
       <visual name="${prefix}link1_visual">
         <origin rpy="0.0 0.0 0.0" xyz="-0.0 0.0 -0.0625"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/visual/link1.dae" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link1.dae" scale="0.001 -0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}link1_collision">
         <origin rpy="0.0 0.0 0.0" xyz="-0.0 0.0 -0.0625"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/collision/link1_symp.stl" scale="0.001 -0.001 0.001"/>
-          <!-- <mesh filename="file://$(find openarm_v10_description/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/collision/link1_symp.stl" scale="0.001 -0.001 0.001"/>
+          <!-- <mesh filename="file://$(find openarm_v10_description)/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
       </collision>
       <inertial>
@@ -55,14 +55,14 @@
       <visual name="${prefix}link2_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0301 0.0 -0.1225"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/visual/link2.dae" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link2.dae" scale="0.001 -0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}link2_collision">
         <origin rpy="0.0 0.0 0.0" xyz="0.0301 0.0 -0.1225"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/collision/link2_symp.stl" scale="0.001 -0.001 0.001"/>
-          <!-- <mesh filename="file://$(find openarm_v10_description/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/collision/link2_symp.stl" scale="0.001 -0.001 0.001"/>
+          <!-- <mesh filename="file://$(find openarm_v10_description)/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
       </collision>
       <inertial>
@@ -82,14 +82,14 @@
       <visual name="${prefix}link3_visual">
         <origin rpy="0.0 0.0 0.0" xyz="-0.0 -0.0 -0.18875"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/visual/link3.dae" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link3.dae" scale="0.001 -0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}link3_collision">
         <origin rpy="0.0 0.0 0.0" xyz="-0.0 -0.0 -0.18875"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/collision/link3_symp.stl" scale="0.001 -0.001 0.001"/>
-          <!-- <mesh filename="file://$(find openarm_v10_description/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/collision/link3_symp.stl" scale="0.001 -0.001 0.001"/>
+          <!-- <mesh filename="file://$(find openarm_v10_description)/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
       </collision>
       <inertial>
@@ -109,14 +109,14 @@
       <visual name="${prefix}link4_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.0315 -0.3425"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/visual/link4.dae" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link4.dae" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}link4_collision">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.0315 -0.3425"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/collision/link4_symp.stl" scale="0.001 0.001 0.001"/>
-          <!-- <mesh filename="file://$(find openarm_v10_description/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/collision/link4_symp.stl" scale="0.001 0.001 0.001"/>
+          <!-- <mesh filename="file://$(find openarm_v10_description)/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
       </collision>
       <inertial>
@@ -136,14 +136,14 @@
       <visual name="${prefix}link5_visual">
         <origin rpy="0.0 0.0 0.0" xyz="-0.0 -0.0 -0.438"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/visual/link5.dae" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link5.dae" scale="0.001 -0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}link5_collision">
         <origin rpy="0.0 0.0 0.0" xyz="-0.0 -0.0 -0.438"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/collision/link5_symp.stl" scale="0.001 -0.001 0.001"/>
-          <!-- <mesh filename="file://$(find openarm_v10_description/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/collision/link5_symp.stl" scale="0.001 -0.001 0.001"/>
+          <!-- <mesh filename="file://$(find openarm_v10_description)/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
       </collision>
       <inertial>
@@ -163,14 +163,14 @@
       <visual name="${prefix}link6_visual">
         <origin rpy="0.0 0.0 0.0" xyz="-0.0375 -0.0 -0.5585"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/visual/link6.dae" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link6.dae" scale="0.001 -0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}link6_collision">
         <origin rpy="0.0 0.0 0.0" xyz="-0.0375 -0.0 -0.5585"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/collision/link6_symp.stl" scale="0.001 -0.001 0.001"/>
-          <!-- <mesh filename="file://$(find openarm_v10_description/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/collision/link6_symp.stl" scale="0.001 -0.001 0.001"/>
+          <!-- <mesh filename="file://$(find openarm_v10_description)/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
       </collision>
       <inertial>
@@ -190,14 +190,14 @@
       <visual name="${prefix}link7_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.0 -0.5585"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/visual/link7.dae" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link7.dae" scale="0.001 -0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}link7_collision">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.0 -0.5585"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/arm/v10/collision/link7_symp.stl" scale="0.001 -0.001 0.001"/>
-          <!-- <mesh filename="file://$(find openarm_v10_description/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/collision/link7_symp.stl" scale="0.001 -0.001 0.001"/>
+          <!-- <mesh filename="file://$(find openarm_v10_description)/meshes/arm/${arm_type}/collision/${name}.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
       </collision>
       <inertial>
@@ -224,13 +224,13 @@
       <visual name="${prefix}hand_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.6585"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/ee/openarm_hand/visual/hand.dae" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/ee/openarm_hand/visual/hand.dae" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}hand_collision">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.6585"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/ee/openarm_hand/collision/hand.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/ee/openarm_hand/collision/hand.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
@@ -257,13 +257,13 @@
       <visual name="${prefix}left_finger_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.05 -0.673001"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/ee/openarm_hand/visual/finger.dae" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/ee/openarm_hand/visual/finger.dae" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}left_finger_collision">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.05 -0.673001"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/ee/openarm_hand/collision/finger.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/ee/openarm_hand/collision/finger.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
@@ -276,13 +276,13 @@
       <visual name="${prefix}right_finger_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.05 -0.673001"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/ee/openarm_hand/visual/finger.dae" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/ee/openarm_hand/visual/finger.dae" scale="0.001 -0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}right_finger_collision">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.05 -0.673001"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description/meshes/ee/openarm_hand/collision/finger.stl" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/ee/openarm_hand/collision/finger.stl" scale="0.001 -0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
