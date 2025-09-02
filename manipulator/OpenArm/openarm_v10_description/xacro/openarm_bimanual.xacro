@@ -4,9 +4,9 @@
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
     <!-- Is the robot being simulated in gazebo? -->
     <!-- <xacro:arg name="gazebo" default="false" /> -->
-    <link name="${prefix}world"/>
-    <joint name="${prefix}body_world_joint" type="fixed">
-      <parent link="${prefix}world"/>
+    <link name="${prefix}base_link"/>
+    <joint name="${prefix}base_link_joint" type="fixed">
+      <parent link="${prefix}base_link"/>
       <child link="${prefix}body_link0"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>

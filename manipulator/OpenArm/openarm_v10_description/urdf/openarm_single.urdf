@@ -6,6 +6,12 @@
 <robot name="openarm">
   <!-- Is the robot being simulated in gazebo? -->
   <!-- <xacro:arg name="gazebo" default="false" /> -->
+  <link name="base_link"/>
+  <joint name="base_link_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="link0"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
   <link name="link0">
     <visual name="link0_visual">
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
