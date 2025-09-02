@@ -30,7 +30,6 @@ arm_controller:
       - joint6
       - joint7
 
-
 hand_controller:
   ros__parameters:
     joint: finger_joint1
