@@ -523,7 +523,7 @@
     <inertial>
       <origin rpy="0 0 0" xyz="0.0064528 0.01702 0.0219685"/>
       <mass value="0.03602545343277134"/>
-      <inertia ixx="2.3749999999999997e-06" ixy="1e-06" ixz="1e-06" iyy="2.3749999999999997e-06" iyz="1e-06" izz="7.5e-07"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/> <!-- Adjust inertial for finger -->
     </inertial>
   </link>
   <link name="left_right_finger">
@@ -542,7 +542,7 @@
     <inertial>
       <origin rpy="0 0 0" xyz="0.0064528 -0.01702 0.0219685"/>
       <mass value="0.03602545343277134"/>
-      <inertia ixx="2.3749999999999997e-06" ixy="1e-06" ixz="1e-06" iyy="2.3749999999999997e-06" iyz="1e-06" izz="7.5e-07"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/> <!-- Adjust inertial for finger -->
     </inertial>
   </link>
   <joint name="left_finger_joint1" type="prismatic">
@@ -609,7 +609,7 @@
     <inertial>
       <origin rpy="0 0 0" xyz="0.0064528 0.01702 0.0219685"/>
       <mass value="0.03602545343277134"/>
-      <inertia ixx="2.3749999999999997e-06" ixy="1e-06" ixz="1e-06" iyy="2.3749999999999997e-06" iyz="1e-06" izz="7.5e-07"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/> <!-- Adjust inertial for finger -->
     </inertial>
   </link>
   <link name="right_right_finger">
@@ -628,7 +628,7 @@
     <inertial>
       <origin rpy="0 0 0" xyz="0.0064528 -0.01702 0.0219685"/>
       <mass value="0.03602545343277134"/>
-      <inertia ixx="2.3749999999999997e-06" ixy="1e-06" ixz="1e-06" iyy="2.3749999999999997e-06" iyz="1e-06" izz="7.5e-07"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/> <!-- Adjust inertial for finger -->
     </inertial>
   </link>
   <joint name="right_finger_joint1" type="prismatic">
