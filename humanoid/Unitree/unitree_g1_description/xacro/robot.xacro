@@ -7,15 +7,15 @@
 	<xacro:include filename="$(find unitree_g1_description)/xacro/leg.xacro"/>
 	<xacro:include filename="$(find unitree_g1_description)/xacro/body.xacro"/>
 
-	<!-- Body using modular macro -->
-	<xacro:UnitreeG1Body/>
-
 	<!-- Legs using modular macro -->
 	<!-- Left leg (direction = 1) -->
 	<xacro:UnitreeG1Leg name="left" direction="1"/>
 
 	<!-- Right leg (direction = -1 for mirroring) -->
 	<xacro:UnitreeG1Leg name="right" direction="-1"/>
+
+	<!-- Body using modular macro -->
+	<xacro:UnitreeG1Body/>
 
 	<!-- Arms using modular macro -->
 	<xacro:UnitreeG1Arm name="left" direction="1"/>

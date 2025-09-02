@@ -24,3 +24,12 @@ colcon build --packages-up-to unitree_g1_description --symlink-install
   ros2 launch robot_visualize_config humanoid.launch.py end_effector:=revo2
   ```
   ![Unitree G1](../../.images/unitree_g1_revo2.png)
+
+## 3. OCS2 Demo
+
+### 3.1 Official OCS2 Mobile Manipulator Demo
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=unitree_g1
+```
