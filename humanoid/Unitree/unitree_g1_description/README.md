@@ -33,3 +33,4 @@ colcon build --packages-up-to unitree_g1_description --symlink-install
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=unitree_g1
 ```
+[Screencast from 2025-09-02 17-39-02.webm](https://github.com/user-attachments/assets/034081ec-9e49-46a3-9a85-3c422ed5e40c)
