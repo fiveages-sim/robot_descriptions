@@ -39,7 +39,7 @@
       <visual name="${prefix}left_link0_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link0.stl" scale="0.001 -0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/arm/v10/visual/link0.obj" scale="0.001 -0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}left_link0_collision">
