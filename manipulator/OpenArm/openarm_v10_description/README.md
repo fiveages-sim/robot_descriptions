@@ -3,6 +3,8 @@
 This package contains the description files for OpenArm single and bimanual manipulator. I got the origin XACRO files from
 the [OpenArm XACRO](https://github.com/enactic/openarm_description).
 
+Note: The /meshes/arm/v10/visual/link0.dae file may cause the model not shown due error of `Not enough data for accessor`. You can change it to .stl file with same suffix name. Howere, the stl file will have render issue in both rviz and gazebo. So does 
+
 ## 1. Build
 
 ```bash
@@ -51,11 +53,13 @@ colcon build --packages-up-to openarm_v10_description --symlink-install
 ### 3.2 OCS2 Arm Controller Demo
 * OpenArm Bimanual
   ```bash
+  # Need to copy and replace openarm_bimanual.yaml content into ros2_contorllers.yaml
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm_v10 type:=bimanual
   ```
-* OpenArm Single
+* OpenArm Single (hardware:=gz is optional)
   ```bash
+  # Need to copy and replace openarm_single.yaml content into ros2_contorllers.yaml
   source ~/ros2_ws/install/setup.bash
-    ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm_v10 hardware:=gz type:=single
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm_v10 hardware:=gz type:=single
   ```

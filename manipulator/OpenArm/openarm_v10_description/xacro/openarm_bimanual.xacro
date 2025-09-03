@@ -14,7 +14,7 @@
       <visual name="${prefix}body_link0_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
         <geometry>
-          <mesh filename="file://$(find openarm_v10_description)/meshes/body/v10/visual/body_link0.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find openarm_v10_description)/meshes/body/v10/visual/body_link0.dae" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="${prefix}body_link0_collision">
