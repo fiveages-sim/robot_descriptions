@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot name="A1Lite" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find galaxea_r1lite_description)/xacro/chassis.xacro"/>
+
+
+  <xacro:arg name="type" default="x"/>
+
+  <xacro:if value="${'$(arg type)' == 'x'}">
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/a1_x.xacro"/>
+  </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'y'}">
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/a1_y.xacro"/>
+  </xacro:if>
+
+
+  <xacro:Arm name="left"/>
+
+  <link name="left_D405_link">
+    <inertial>
+      <origin xyz="0.00904707172595565 0.0155186578135894 -0.00819594831599657"/>
+      <mass value="0.1" />
+      <inertia
+        ixx="2.7808294491585E-05"
+        ixy="-4.06196123763752E-10"
+        ixz="1.50543456146707E-08"
+        iyy="2.1895142505718E-05"
+        iyz="-3.73269688232892E-06"
+        izz="2.07706210421564E-05" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1lite_description)/meshes/visual/camera.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1lite_description)/meshes/collision/camera.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_D405_joint" type="fixed">
+    <origin xyz="-0.019206 0.009 0.074757" rpy="-2.268 0 -1.5708" />
+    <parent link="left_gripper_base" />
+    <child link="left_D405_link" />
+  </joint>
+
+  <xacro:Arm name="right"/>
+
+  <link name="right_D405_link">
+    <inertial>
+      <origin xyz="0.00904707172594749 0.0155186578138565 -0.00819594831521042"/>
+      <mass value="0.1" />
+      <inertia
+        ixx="2.78082944930657E-05"
+        ixy="-4.06196131154851E-10"
+        ixz="1.50543456329152E-08"
+        iyy="2.18951425070333E-05"
+        iyz="-3.73269688187078E-06"
+        izz="2.07706210423581E-05" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1lite_description)/meshes/visual/camera.obj" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find galaxea_r1lite_description)/meshes/collision/camera.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_D405_joint" type="fixed">
+    <origin xyz="-0.019206 0.009 0.074757" rpy="-2.268 0 -1.5708" />
+    <parent link="right_gripper_base" />
+    <child link="right_D405_link" />
+  </joint>
+</robot>
