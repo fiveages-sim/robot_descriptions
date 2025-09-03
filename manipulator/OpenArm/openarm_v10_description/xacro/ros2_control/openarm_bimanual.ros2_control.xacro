@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="openarm_system" params="name ros2_control_hardware_type">
+  <xacro:macro name="openarm_v10_system" params="name ros2_control_hardware_type">
 
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
     <!-- Left Arm Hardware Interface -->
-    <ros2_control name="${prefix}openarm_left_system" type="system">
+    <ros2_control name="${prefix}openarm_v10_system" type="system">
       <hardware>
         <xacro:if value="${ros2_control_hardware_type == 'gz'}">
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
@@ -77,10 +77,10 @@
         <state_interface name="effort"/>
       </joint>
 
-    </ros2_control>
+    <!-- </ros2_control> -->
 
     <!-- Right Arm Hardware Interface -->
-    <ros2_control name="${prefix}openarm_right_system" type="system">
+    <!-- <ros2_control name="${prefix}openarm_right_system" type="system">
       <hardware>
         <xacro:if value="${ros2_control_hardware_type == 'gz'}">
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
@@ -93,7 +93,7 @@
           <param name="joint_commands_topic">/isaac/joint_commands</param>
           <param name="joint_states_topic">/isaac/joint_states</param>
         </xacro:if>
-      </hardware>
+      </hardware> -->
 
       <!-- Right Arm Joints -->
       <joint name="${prefix}right_joint1">

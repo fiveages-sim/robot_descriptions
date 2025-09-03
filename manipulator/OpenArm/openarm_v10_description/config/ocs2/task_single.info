@@ -1,4 +1,4 @@
-; robot model meta-information
+; robot model meta-information OpenArm v1.0 Single
 model_information {
   manipulatorModelType     0      // 0: Default-arm, 1: Wheel-based manipulator, 2: Floating-arm manipulator, 3: Fully actuated floating-arm manipulator
   

@@ -4,7 +4,7 @@
   <description>
     <p>URDF Description package for OpenArm v1.0</p>
     <p>This package contains configuration data, 3D models and launch files
-      for OpenArm series manipulator
+      for OpenArm v1.0 manipulator
     </p>
   </description>
   <author>TODO</author>

@@ -35,12 +35,14 @@ colcon build --packages-up-to openarm_v10_description --symlink-install
 
 * OpenArm Bimanual
   ```bash
+  # Need to copy and replace task_bimanual.info content into task.info
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=openarm_v10 type:=bimanual
   ```
 
 * OpenArm Single
   ```bash
+  # Need to copy replace task_single.info content into task.info
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=openarm_v10 type:=single
   ```

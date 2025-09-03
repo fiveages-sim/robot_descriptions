@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="openarm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="openarm_v10" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
 	
   <link name="world"/>
@@ -13,12 +13,12 @@
 
 
   <!-- 根据type参数决定机器人类型 -->
-  <xacro:if value="${'$(arg type)' == 'single'}">
+  <xacro:if value="${'$(arg type)' == 'bimanual'}">
     <xacro:include filename="$(find openarm_v10_description)/xacro/openarm_bimanual.xacro"/>
     <xacro:OpenArm name=""/>
   </xacro:if>
 
-  <xacro:if value="${'$(arg type)' == 'bimanual'}">
+  <xacro:if value="${'$(arg type)' == 'single'}">
     <xacro:include filename="$(find openarm_v10_description)/xacro/openarm_single.xacro"/>
     <xacro:OpenArm name=""/>
   </xacro:if>
@@ -26,32 +26,40 @@
 
 
   <!-- 根据type参数决定ros2_control类型 -->
-  <xacro:if value="${'$(arg type)' == 'single'}">
-    <xacro:include filename="$(find openarm_v10_description)/xacro/ros2_control/openarm_single.ros2_control.xacro"/>
-    <xacro:openarm_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
-  </xacro:if>
-
   <xacro:if value="${'$(arg type)' == 'bimanual'}">
     <xacro:include filename="$(find openarm_v10_description)/xacro/ros2_control/openarm_bimanual.ros2_control.xacro"/>
-    <xacro:openarm_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+    <xacro:openarm_v10_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'single'}">
+    <xacro:include filename="$(find openarm_v10_description)/xacro/ros2_control/openarm_single.ros2_control.xacro"/>
+    <xacro:openarm_v10_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
   </xacro:if>
 
 
+  <!-- Dynamically choose the correct YAML file -->
+  <!-- <ros2_control>
+    <xacro:if value="${'$(arg type)' == 'bimanual'}">
+      <parameters>$(find openarm_v10_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+    </xacro:if>
+    <xacro:if value="${'$(arg type)' == 'single'}">
+      <parameters>$(find openarm_v10_description)/config/ros2_control/openarm_single.yaml</parameters>
+    </xacro:if>
+  </ros2_control> -->
+
+
+  <!-- Gazebo plugin configuration -->
   <xacro:arg name="gazebo" default="false" />
   <xacro:if value="$(arg gazebo)">
     <gazebo>
       <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-        <xacro:if value="${'$(arg type)' == 'single'}">
+        <xacro:if value="${'$(arg type)' == 'bimanual'}">
           <parameters>$(find openarm_v10_description)/config/ros2_control/ros2_controllers.yaml</parameters>
         </xacro:if>
-        <xacro:if value="${'$(arg type)' == 'bimanual'}">
+        <xacro:if value="${'$(arg type)' == 'single'}">
           <parameters>$(find openarm_v10_description)/config/ros2_control/openarm_single.yaml</parameters>
         </xacro:if>
       </plugin>
     </gazebo>
   </xacro:if>
 </robot>
-
-
-
-</robot> 

@@ -14,6 +14,7 @@ controller_manager:
 
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
+
 arm_controller:
   ros__parameters:
     command_interfaces:
@@ -38,7 +39,7 @@ ocs2_arm_controller:
   ros__parameters:
     # Joint configuration
     update_rate: 100  # Hz
-    info_file_name: fixed_base
+    info_file_name: task_single
     joints:
       - joint1
       - joint2
@@ -52,8 +53,10 @@ ocs2_arm_controller:
       - position
     state_interfaces:
       - position
+      
     future_time_offset: 2.0
     robot_name: openarm_v10
+    robot_type: "single"
 
     # Control parameters
     home_pos: [0.0, 0.594, 0.306, 0.331, 0.0, 0.0, 0.0]
