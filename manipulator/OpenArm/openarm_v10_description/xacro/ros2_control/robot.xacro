@@ -37,24 +37,13 @@
   </xacro:if>
 
 
-  <!-- Dynamically choose the correct YAML file -->
-  <!-- <ros2_control>
-    <xacro:if value="${'$(arg type)' == 'bimanual'}">
-      <parameters>$(find openarm_v10_description)/config/ros2_control/ros2_controllers.yaml</parameters>
-    </xacro:if>
-    <xacro:if value="${'$(arg type)' == 'single'}">
-      <parameters>$(find openarm_v10_description)/config/ros2_control/openarm_single.yaml</parameters>
-    </xacro:if>
-  </ros2_control> -->
-
-
   <!-- Gazebo plugin configuration -->
   <xacro:arg name="gazebo" default="false" />
   <xacro:if value="$(arg gazebo)">
     <gazebo>
       <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
         <xacro:if value="${'$(arg type)' == 'bimanual'}">
-          <parameters>$(find openarm_v10_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+          <parameters>$(find openarm_v10_description)/config/ros2_control/openarm_bimanual.yaml</parameters>
         </xacro:if>
         <xacro:if value="${'$(arg type)' == 'single'}">
           <parameters>$(find openarm_v10_description)/config/ros2_control/openarm_single.yaml</parameters>

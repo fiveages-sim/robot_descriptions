@@ -86,23 +86,6 @@
         <state_interface name="effort"/>
       </joint>
 
-    <!-- </ros2_control> -->
-
-    <!-- Right Arm Hardware Interface -->
-    <!-- <ros2_control name="${prefix}openarm_right_system" type="system">
-      <hardware>
-        <xacro:if value="${ros2_control_hardware_type == 'gz'}">
-          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-        </xacro:if>
-        <xacro:if value="${ros2_control_hardware_type == 'mock_components'}">
-          <plugin>mock_components/GenericSystem</plugin>
-        </xacro:if>
-        <xacro:if value="${ros2_control_hardware_type == 'isaac'}">
-          <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
-          <param name="joint_commands_topic">/isaac/joint_command</param>
-          <param name="joint_states_topic">/isaac/joint_states</param>
-        </xacro:if>
-      </hardware> -->
 
       <!-- Right Arm Joints -->
       <joint name="${prefix}right_joint1">
