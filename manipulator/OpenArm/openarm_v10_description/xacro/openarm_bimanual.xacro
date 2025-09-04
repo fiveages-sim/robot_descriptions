@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="OpenArm" params="name direction:=normal">
+  <xacro:macro name="openarm_bimanual" params="name direction:=normal">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
     <!-- Is the robot being simulated in gazebo? -->
     <!-- <xacro:arg name="gazebo" default="false" /> -->
-    <link name="${prefix}base_link"/>
+    <!-- <link name="${prefix}base_link"/>
     <joint name="${prefix}base_link_joint" type="fixed">
       <parent link="${prefix}base_link"/>
       <child link="${prefix}body_link0"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-    </joint>
-    <link name="${prefix}body_link0">
+    </joint> -->
+    <link name="${prefix}base_link">
       <visual name="${prefix}body_link0_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
         <geometry>
@@ -31,7 +31,7 @@
       </inertial>
     </link>
     <joint name="${prefix}left_opnarm_body_link0_joint" type="fixed">
-      <parent link="${prefix}body_link0"/>
+      <parent link="${prefix}base_link"/>
       <child link="${prefix}left_link0"/>
       <origin rpy="-1.5708 0 0" xyz="0.0 0.031 0.698"/>
     </joint>
@@ -252,7 +252,7 @@
         <child link="${prefix}link8" />
       </joint> -->
     <joint name="${prefix}right_body_link0_joint" type="fixed">
-      <parent link="${prefix}body_link0"/>
+      <parent link="${prefix}base_link"/>
       <child link="${prefix}right_link0"/>
       <origin rpy="1.5708 0 0" xyz="0.0 -0.031 0.698"/>
     </joint>

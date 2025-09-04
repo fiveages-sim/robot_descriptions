@@ -7,6 +7,7 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
 
     hand_controller:
+      # type: adaptive_gripper_controller/AdaptiveGripperController
       type: position_controllers/GripperActionController
 
     joint_state_broadcaster:
@@ -40,14 +41,24 @@ arm_controller:
   
 hand_controller:
   ros__parameters:
+    # 基本夹爪参数
     joints: 
       - left_finger_joint1
       - right_finger_joint1
+    # 力反馈阈值参数
+    # force_threshold: 0.1  # 力阈值（牛顿），超过此值将停止夹取
+
+# 关节状态广播器配置
+# joint_state_broadcaster:
+#   ros__parameters:
+#     joints:
+#       - left_finger_joint1
+#       - right_finger_joint1
 
 ocs2_arm_controller:
   ros__parameters:
     # Joint configuration
-    update_rate: 100  # Hz
+    update_rate: 50  # Hz
     info_file_name: task_bimanual
     joints:
       - left_joint1

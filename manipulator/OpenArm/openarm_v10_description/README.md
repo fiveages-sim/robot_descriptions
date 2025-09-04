@@ -51,6 +51,8 @@ colcon build --packages-up-to openarm_v10_description --symlink-install
 
 
 ### 3.2 OCS2 Arm Controller Demo
+Note: need to check the .xacro file under ros2_control, make sure when ros2_control_hardware_type == isaac, the joint_command is not joint_command's'!!!
+
 * OpenArm Bimanual
   ```bash
   # Need to copy and replace openarm_bimanual.yaml content into ros2_contorllers.yaml

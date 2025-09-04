@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="OpenArm" params="name direction:=normal">
+  <xacro:macro name="openarm_single" params="name direction:=normal">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
     <!-- Is the robot being simulated in gazebo? -->
     <!-- <xacro:arg name="gazebo" default="false" /> -->
-    <link name="${prefix}base_link"/>
+    <!-- <link name="${prefix}base_link"/>
     <joint name="${prefix}base_link_joint" type="fixed">
       <parent link="${prefix}base_link"/>
       <child link="${prefix}link0"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-    </joint>
-    <link name="${prefix}link0">
+    </joint> -->
+    <link name="${prefix}base_link">
       <visual name="${prefix}link0_visual">
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
         <geometry>
@@ -52,7 +52,7 @@
     </link>
     <joint name="${prefix}joint1" type="revolute">
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0625"/>
-      <parent link="${prefix}link0"/>
+      <parent link="${prefix}base_link"/>
       <child link="${prefix}link1"/>
       <axis xyz="0 0 1"/>
       <limit effort="40" lower="-1.396263" upper="3.490659" velocity="16.754666"/>
