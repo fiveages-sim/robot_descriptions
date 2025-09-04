@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="Unitree G1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Include Chassis -->
+  <xacro:include filename="$(find unitree_g1_description)/xacro/robot.xacro"/>
+
+  <!-- Import Piper ros2_control description -->
+  <xacro:include filename="$(find unitree_g1_description)/xacro/ros2_control/ros2_control.xacro" />
+  <xacro:unitree_g1_system ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <xacro:arg name="gazebo" default="false" />
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find unitree_g1_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>
