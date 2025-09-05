@@ -1,7 +1,7 @@
 # Blender 4.5.2 LTS MTL File: 'None'
 # www.blender.org
 
-newmtl mat_0.002
+newmtl metal_white
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.984310 0.976470 0.956860
@@ -11,8 +11,8 @@ Ni 1.450000
 d 1.000000
 illum 1
 
-newmtl mat_1.002
-Ns 250.000000
+newmtl plastic_black
+Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.000000 0.000000 0.000000
 Ks 0.000000 0.000000 0.000000

@@ -15,6 +15,8 @@ def generate_launch_description():
     ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=franka
     ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5 type:=red
     ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=piper type:=long_arm
+    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5 task_file:=task_custom
+    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5 type:=red task_file:=task_red
     """
     
     # 机器人名称参数
@@ -50,12 +52,20 @@ def generate_launch_description():
         description='Joystick device path (e.g., /dev/input/js0)'
     )
 
+    # OCS2任务文件参数
+    task_file = launch.actions.DeclareLaunchArgument(
+        name='task_file',
+        default_value='task',
+        description='OCS2 task file name (without .info extension, e.g., task, task_custom, etc.)'
+    )
+
     def launch_setup(context, *args, **kwargs):
         robot_name_value = context.launch_configurations['robot_name']
         type_value = context.launch_configurations['type']
         debug_value = context.launch_configurations['debug']
         enable_joystick_value = context.launch_configurations['enable_joystick']
         joystick_device_value = context.launch_configurations['joystick_device']
+        task_file_value = context.launch_configurations['task_file']
         
         # 生成带类型的机器人标识符
         robot_identifier = robot_name_value
@@ -90,11 +100,11 @@ def generate_launch_description():
             return []
         
         try:
-            task_file_value = os.path.join(
+            task_file_path = os.path.join(
                 get_package_share_directory(f'{robot_name_value}_description'),
-                'config', 'ocs2', 'task.info'
+                'config', 'ocs2', f'{task_file_value}.info'
             )
-            print(f"📁 Task file: {task_file_value}")
+            print(f"📁 Task file: {task_file_path}")
         except Exception as e:
             print(f"❌ Error: Could not find task config for {robot_name_value}: {e}")
             return []
@@ -121,7 +131,7 @@ def generate_launch_description():
                     'rviz': 'true',  # 自动启动RViz
                     'debug': debug_value,
                     'urdfFile': urdf_file_value,
-                    'taskFile': task_file_value,
+                    'taskFile': task_file_path,
                     'libFolder': lib_folder_value,
                     'enableJoystick': enable_joystick_value
                 }.items()
@@ -157,5 +167,6 @@ def generate_launch_description():
         debug,
         enable_joystick,
         joystick_device,
+        task_file,
         OpaqueFunction(function=launch_setup)
     ]) 

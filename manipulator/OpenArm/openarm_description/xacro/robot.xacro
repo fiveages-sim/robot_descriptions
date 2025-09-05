@@ -2,17 +2,82 @@
 
 <robot name="OpenArm" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:arg name="type" default="single"/>
+	<xacro:include filename="$(find openarm_description)/xacro/arm.xacro"/>
+	<xacro:include filename="$(find openarm_description)/xacro/gripper.xacro"/>
 
-  <!-- 根据type参数决定机器人类型 -->
-  <xacro:if value="${'$(arg type)' == 'bimanual'}">
-    <xacro:include filename="$(find openarm_description)/xacro/openarm_bimanual.xacro"/>
-    <xacro:openarm_bimanual name=""/>
-  </xacro:if>
+	<xacro:arg name="type" default="bimanual"/>
 
-  <xacro:if value="${'$(arg type)' == 'single'}">
-    <xacro:include filename="$(find openarm_description)/xacro/openarm_single.xacro"/>
-    <xacro:openarm_single name=""/>
-  </xacro:if>
+	<!-- 根据type参数决定机器人类型 -->
+	<xacro:if value="${'$(arg type)' == 'bimanual'}">
+		<!-- Base link -->
+		<link name="base_link">
+			<inertial>
+				<mass value="13.89"/>
+				<inertia ixx="1.653" ixy="0.0" ixz="0.0" iyy="1.653" iyz="0.0" izz="0.051"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/body/body.obj"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/body/body.stl"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- Left Arm -->
+		<joint name="left_arm_base_joint" type="fixed">
+			<parent link="base_link"/>
+			<child link="left_base_link"/>
+			<origin rpy="-1.5708 0 0" xyz="0.0 0.031 0.698"/>
+		</joint>
+		<xacro:OpenArm name="left" direction="-1"/>
+
+		<!-- Right Arm -->
+		<joint name="right_arm_base_joint" type="fixed">
+			<parent link="base_link"/>
+			<child link="right_base_link"/>
+			<origin rpy="1.5708 0 0" xyz="0.0 -0.031 0.698"/>
+		</joint>
+		<xacro:OpenArm name="right" direction="1"/>
+
+		<!-- Left Gripper -->
+		<joint name="left_hand_joint" type="fixed">
+			<parent link="left_link7"/>
+			<child link="left_hand"/>
+			<origin xyz="0 -0.0 0.1001"/>
+		</joint>
+		<xacro:OpenArmGripper name="left"/>
+
+		<!-- Right Gripper -->
+		<joint name="right_hand_joint" type="fixed">
+			<parent link="right_link7"/>
+			<child link="right_hand"/>
+			<origin xyz="0 -0.0 0.1001"/>
+		</joint>
+		<xacro:OpenArmGripper name="right"/>
+	</xacro:if>
+
+	<xacro:if value="${'$(arg type)' == 'right'}">
+		<xacro:OpenArm name=""/>
+		<joint name="hand_joint" type="fixed">
+			<parent link="link7"/>
+			<child link="hand"/>
+			<origin xyz="0 -0.0 0.1001"/>
+		</joint>
+		<xacro:OpenArmGripper name=""/>
+	</xacro:if>
+
+	<xacro:if value="${'$(arg type)' == 'left'}">
+		<xacro:OpenArm name="" direction="-1"/>
+		<joint name="hand_joint" type="fixed">
+			<parent link="link7"/>
+			<child link="hand"/>
+			<origin xyz="0 -0.0 0.1001"/>
+		</joint>
+		<xacro:OpenArmGripper name=""/>
+	</xacro:if>
 
 </robot> 

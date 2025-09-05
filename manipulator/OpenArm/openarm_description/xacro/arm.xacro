@@ -14,8 +14,7 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find openarm_description)/meshes/arm/v10/collision/link0_symp.stl"
-								scale="0.001 ${direction*0.001} 0.001"/>
+					<mesh filename="file://$(find openarm_description)/meshes/arm/collision/base.stl"/>
 				</geometry>
 			</collision>
 			<inertial>
@@ -34,10 +33,9 @@
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="-0.0 0.0 -0.0625"/>
 				<geometry>
-					<mesh filename="file://$(find openarm_description)/meshes/arm/v10/collision/link1_symp.stl"
-								scale="0.001 ${direction*0.001} 0.001"/>
+					<mesh filename="file://$(find openarm_description)/meshes/arm/collision/link1.stl"
+								scale="1 ${direction*1} 1"/>
 				</geometry>
 			</collision>
 			<inertial>
@@ -70,8 +68,8 @@
 			<collision>
 				<origin xyz="0.0301 0.0 -0.1225"/>
 				<geometry>
-					<mesh filename="file://$(find openarm_description)/meshes/arm/v10/collision/link2_symp.stl"
-								scale="0.001 ${direction*0.001} 0.001"/>
+					<mesh filename="file://$(find openarm_description)/meshes/arm/collision/link2.stl"
+								scale="1 ${direction} 1"/>
 				</geometry>
 			</collision>
 			<inertial>
@@ -82,12 +80,12 @@
 		</link>
 
 		<joint name="${prefix}joint2" type="revolute">
-			<xacro:if value="${direction == -1}">
-				<origin rpy="-1.57079632679 0 0" xyz="-0.0301 0.0 0.06"/>
+			<xacro:if value="${prefix == ''}">
+				<origin xyz="-0.0301 0.0 0.06"/>
 			</xacro:if>
-			<xacro:if value="${direction == 1}">
-				<origin rpy="1.57079632679 0 0" xyz="-0.0301 0.0 0.06"/>
-			</xacro:if>
+			<xacro:unless value="${prefix == ''}">
+				<origin rpy="${direction*1.57079632679} 0 0" xyz="-0.0301 0.0 0.06"/>
+			</xacro:unless>
 			<parent link="${prefix}link1"/>
 			<child link="${prefix}link2"/>
 			<axis xyz="-1 0 0"/>
@@ -107,10 +105,9 @@
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="-0.0 -0.0 -0.18875"/>
 				<geometry>
-					<mesh filename="file://$(find openarm_description)/meshes/arm/v10/collision/link3_symp.stl"
-								scale="0.001 ${direction*0.001} 0.001"/>
+					<mesh filename="file://$(find openarm_description)/meshes/arm/collision/link3.stl"
+								scale="1 ${direction} 1"/>
 				</geometry>
 			</collision>
 			<inertial>
@@ -136,10 +133,8 @@
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="0.0 -0.0315 -0.3425"/>
 				<geometry>
-					<mesh filename="file://$(find openarm_description)/meshes/arm/v10/collision/link4_symp.stl"
-								scale="0.001 0.001 0.001"/>
+					<mesh filename="file://$(find openarm_description)/meshes/arm/collision/link4.stl"/>
 				</geometry>
 			</collision>
 			<inertial>
@@ -165,10 +160,9 @@
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="-0.0 -0.0 -0.438"/>
 				<geometry>
-					<mesh filename="file://$(find openarm_description)/meshes/arm/v10/collision/link5_symp.stl"
-								scale="0.001 ${direction*0.001} 0.001"/>
+					<mesh filename="file://$(find openarm_description)/meshes/arm/collision/link5.stl"
+								scale="1 ${direction} 1"/>
 				</geometry>
 			</collision>
 			<inertial>
@@ -195,10 +189,9 @@
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="-0.0375 -0.0 -0.5585"/>
 				<geometry>
-					<mesh filename="file://$(find openarm_description)/meshes/arm/v10/collision/link6_symp.stl"
-								scale="0.001 ${direction*0.001} 0.001"/>
+					<mesh filename="file://$(find openarm_description)/meshes/arm/collision/link6.stl"
+								scale="1 ${direction*1} 1"/>
 				</geometry>
 			</collision>
 			<inertial>
@@ -225,10 +218,9 @@
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="0.0 -0.0 -0.5585"/>
 				<geometry>
-					<mesh filename="file://$(find openarm_description)/meshes/arm/v10/collision/link7_symp.stl"
-								scale="0.001 ${direction*0.001} 0.001"/>
+					<mesh filename="file://$(find openarm_description)/meshes/arm/collision/link7.stl"
+								scale="1 ${direction*1} 1"/>
 				</geometry>
 			</collision>
 			<inertial>
