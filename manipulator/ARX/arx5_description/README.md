@@ -33,7 +33,7 @@ To visualize and check the configuration of the robot in rviz, simply launch:
 ## 3. OCS2 Demo
 
 ### 3.1 Official OCS2 Mobile Manipulator Demo
-
+[Screencast from 2025-09-05 14-00-28.webm](https://github.com/user-attachments/assets/c62e35c4-a50d-4ae0-81d4-d1a0a6c65dd0)
 * ARX X5
   ```bash
   source ~/ros2_ws/install/setup.bash
@@ -58,3 +58,4 @@ To visualize and check the configuration of the robot in rviz, simply launch:
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=arx5 type:=r5 hardware:=gz
   ```
+  [Screencast from 2025-09-05 14-08-31.webm](https://github.com/user-attachments/assets/d9c1c5a0-de26-4416-9cb8-125a0ff27f8f)
