@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<robot name="OpenArm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="type" default="single"/>
+
+  <!-- 根据type参数决定机器人类型 -->
+  <xacro:if value="${'$(arg type)' == 'bimanual'}">
+    <xacro:include filename="$(find openarm_description)/xacro/openarm_bimanual.xacro"/>
+    <xacro:openarm_bimanual name=""/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'single'}">
+    <xacro:include filename="$(find openarm_description)/xacro/openarm_single.xacro"/>
+    <xacro:openarm_single name=""/>
+  </xacro:if>
+
+</robot> 

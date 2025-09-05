@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:include filename="$(find openarm_description)/xacro/arm.xacro"/>
+	<xacro:include filename="$(find openarm_description)/xacro/gripper.xacro"/>
+
+	<xacro:macro name="openarm_bimanual" params="name direction:=normal">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+		<!-- Base link -->
+		<link name="${prefix}base_link">
+			<inertial>
+				<mass value="13.89"/>
+				<inertia ixx="1.653" ixy="0.0" ixz="0.0" iyy="1.653" iyz="0.0" izz="0.051"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/body/body.obj"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/body/body.stl"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- Left Arm -->
+		<joint name="${prefix}left_arm_base_joint" type="fixed">
+			<parent link="${prefix}base_link"/>
+			<child link="${prefix}left_base_link"/>
+			<origin rpy="-1.5708 0 0" xyz="0.0 0.031 0.698"/>
+		</joint>
+		<xacro:OpenArm name="left" direction="-1"/>
+
+		<!-- Right Arm -->
+		<joint name="${prefix}right_arm_base_joint" type="fixed">
+			<parent link="${prefix}base_link"/>
+			<child link="${prefix}right_base_link"/>
+			<origin rpy="1.5708 0 0" xyz="0.0 -0.031 0.698"/>
+		</joint>
+		<xacro:OpenArm name="right" direction="1"/>
+
+		<!-- Left Gripper -->
+		<joint name="${prefix}left_hand_joint" type="fixed">
+			<parent link="${prefix}left_link7"/>
+			<child link="${prefix}left_hand"/>
+			<origin rpy="0 0 0" xyz="0 -0.0 0.1001"/>
+		</joint>
+		<xacro:OpenArmGripper name="left"/>
+
+		<!-- Right Gripper -->
+		<joint name="${prefix}right_hand_joint" type="fixed">
+			<parent link="${prefix}right_link7"/>
+			<child link="${prefix}right_hand"/>
+			<origin rpy="0 0 0" xyz="0 -0.0 0.1001"/>
+		</joint>
+		<xacro:OpenArmGripper name="right"/>
+
+	</xacro:macro>
+</robot>

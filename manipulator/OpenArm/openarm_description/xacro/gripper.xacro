@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="OpenArmGripper" params="name">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+		<!-- Hand base link -->
+		<link name="${prefix}hand">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/gripper/visual/hand.obj"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/gripper/collision/hand.stl"/>
+				</geometry>
+			</collision>
+			<inertial>
+				<origin xyz="0.0 0.002 0.03"/>
+				<mass value="0.35"/>
+				<inertia ixx="0.0002473" ixy="1e-06" ixz="1e-06" iyy="1.763e-05" iyz="1e-06" izz="0.0002521"/>
+			</inertial>
+		</link>
+
+		<!-- Hand TCP frame -->
+		<link name="${prefix}hand_tcp"/>
+		<joint name="${prefix}hand_tcp_joint" type="fixed">
+			<origin xyz="0 -0.0 0.08"/>
+			<parent link="${prefix}hand"/>
+			<child link="${prefix}hand_tcp"/>
+		</joint>
+
+		<!-- Left finger (from gripper perspective) -->
+		<link name="${prefix}left_finger">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/gripper/visual/finger.obj"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/gripper/collision/finger.stl"/>
+				</geometry>
+			</collision>
+			<inertial>
+				<origin xyz="0.0064528 0.01702 0.0219685"/>
+				<mass value="0.03602545343277134"/>
+				<inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+			</inertial>
+		</link>
+
+		<!-- Right finger (from gripper perspective) -->
+		<link name="${prefix}right_finger">
+			<inertial>
+				<origin xyz="0.0064528 -0.01702 0.0219685"/>
+				<mass value="0.03602545343277134"/>
+				<inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/gripper/visual/finger.obj" scale="1 -1 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find openarm_description)/meshes/gripper/collision/finger.stl" scale="1 -1 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- Finger joints -->
+		<joint name="${prefix}gripper_joint" type="prismatic">
+			<parent link="${prefix}hand"/>
+			<child link="${prefix}right_finger"/>
+			<origin xyz="0 -0.006 0.015"/>
+			<axis xyz="0 -1 0"/>
+			<limit effort="333" lower="0.0" upper="0.044" velocity="10.0"/>
+		</joint>
+
+		<joint name="${prefix}finger_joint2" type="prismatic">
+			<parent link="${prefix}hand"/>
+			<child link="${prefix}left_finger"/>
+			<origin xyz="0 0.006 0.015"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="333" lower="0.0" upper="0.044" velocity="10.0"/>
+			<mimic joint="${prefix}gripper_joint"/>
+		</joint>
+
+	</xacro:macro>
+
+</robot>

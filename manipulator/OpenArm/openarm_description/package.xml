@@ -1,0 +1,20 @@
+<package format="2">
+  <name>openarm_description</name>
+  <version>1.0.0</version>
+  <description>
+    <p>URDF Description package for OpenArm v1.0</p>
+    <p>This package contains configuration data, 3D models and launch files
+      for OpenArm v1.0 manipulator
+    </p>
+  </description>
+  <author>TODO</author>
+  <maintainer email="chenhzhu@stanford.edu"/>
+  <license>BSD</license>
+
+  <exec_depend>robot_visualize_config</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>
