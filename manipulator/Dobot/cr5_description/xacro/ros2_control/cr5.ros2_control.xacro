@@ -3,6 +3,7 @@
   <xacro:macro name="cr5_system" params="name ros2_control_hardware_type">
 
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:arg name="type" default="empty"/>
 
     <ros2_control name="${prefix}cr5System" type="system">
       <hardware>
@@ -80,6 +81,17 @@
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
       </joint>
+
+      <xacro:if value="${'$(arg type)' != 'empty'}">
+        <joint name="${prefix}gripper_joint">
+          <command_interface name="position"/>
+          <state_interface name="position">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="velocity"/>
+          <state_interface name="effort"/>
+        </joint>
+      </xacro:if>
 
     </ros2_control>
   </xacro:macro>

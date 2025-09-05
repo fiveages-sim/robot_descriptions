@@ -18,12 +18,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/base_link.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/base_link.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/base_link.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/base_link.obj"/>
         </geometry>
       </collision>
     </link>
@@ -43,12 +43,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link1.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link1.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link1.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link1.obj"/>
         </geometry>
       </collision>
     </link>
@@ -77,12 +77,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link2.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link2.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link2.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link2.obj"/>
         </geometry>
       </collision>
     </link>
@@ -111,12 +111,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link3.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link3.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link3.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link3.obj"/>
         </geometry>
       </collision>
     </link>
@@ -145,12 +145,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link4.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link4.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link4.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link4.obj"/>
         </geometry>
       </collision>
     </link>
@@ -179,12 +179,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link5.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link5.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link5.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link5.obj"/>
         </geometry>
       </collision>
     </link>
@@ -213,12 +213,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link6.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link6.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link6.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link6.obj"/>
         </geometry>
       </collision>
     </link>
@@ -233,7 +233,7 @@
     </joint>
 
     <!-- Include Gripper -->
-    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper.xacro"/>
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper_g1.xacro"/>
     <xacro:Gripper name="${name}"/>
 
     <!-- Gripper Properties -->

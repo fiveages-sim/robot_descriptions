@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>unitree_g1_description</name>
+    <version>0.0.0</version>
+    <description>The Booster t1_description package</description>
+
+    <maintainer email="biao876990970@hotmail.com">Huang Zhenbiao</maintainer>
+    <license>TODO</license>
+
+    <exec_depend>robot_visualize_config</exec_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+
+</package>

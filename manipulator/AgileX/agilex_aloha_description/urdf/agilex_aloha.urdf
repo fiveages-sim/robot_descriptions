@@ -330,12 +330,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/base_link.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/base_link.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/base_link.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/base_link.obj"/>
       </geometry>
     </collision>
   </link>
@@ -347,12 +347,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link1.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link1.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link1.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link1.obj"/>
       </geometry>
     </collision>
   </link>
@@ -371,12 +371,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link2.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link2.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link2.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link2.obj"/>
       </geometry>
     </collision>
   </link>
@@ -395,12 +395,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link3.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link3.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link3.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link3.obj"/>
       </geometry>
     </collision>
   </link>
@@ -419,12 +419,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link4.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link4.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link4.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link4.obj"/>
       </geometry>
     </collision>
   </link>
@@ -443,12 +443,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link5.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link5.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link5.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link5.obj"/>
       </geometry>
     </collision>
   </link>
@@ -474,29 +474,39 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link6.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link6.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link6.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link6_collision_0.obj"/>
+      </geometry>
+    </collision>
+    <collision>
+      <geometry>
+        <mesh filename="package://piper_description/meshes/collision/link6_collision_1.obj"/>
+      </geometry>
+    </collision>
+    <collision>
+      <geometry>
+        <mesh filename="package://piper_description/meshes/collision/link6_collision_2.obj"/>
       </geometry>
     </collision>
   </link>
   <link name="left_link7">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025"/>
+      <origin xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025"/>
       <mass value="0.025"/>
       <inertia ixx="0.00007371" ixy="-0.00000113" ixz="0.00000021" iyy="0.00000781" iyz="-0.00001372" izz="0.0000747"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link7.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/gripper.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link7.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/gripper.obj"/>
       </geometry>
     </collision>
   </link>
@@ -515,12 +525,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link8.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/gripper.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link8.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/gripper.obj" scale="1 -1 1"/>
       </geometry>
     </collision>
   </link>
@@ -540,7 +550,7 @@
   </joint>
   <link name="left_camera"/>
   <joint name="left_camera_fixed" type="fixed">
-    <origin rpy="0 -1.22 0" xyz="-0.073 0 0.041"/>
+    <origin rpy="-0.3463 0 -1.5708" xyz="-0.073 0 0.041"/>
     <parent link="left_link6"/>
     <child link="left_camera"/>
   </joint>
@@ -559,12 +569,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/base_link.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/base_link.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/base_link.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/base_link.obj"/>
       </geometry>
     </collision>
   </link>
@@ -576,12 +586,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link1.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link1.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link1.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link1.obj"/>
       </geometry>
     </collision>
   </link>
@@ -600,12 +610,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link2.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link2.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link2.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link2.obj"/>
       </geometry>
     </collision>
   </link>
@@ -624,12 +634,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link3.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link3.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link3.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link3.obj"/>
       </geometry>
     </collision>
   </link>
@@ -648,12 +658,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link4.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link4.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link4.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link4.obj"/>
       </geometry>
     </collision>
   </link>
@@ -672,12 +682,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link5.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link5.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link5.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link5.obj"/>
       </geometry>
     </collision>
   </link>
@@ -703,29 +713,39 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link6.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/link6.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link6.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/link6_collision_0.obj"/>
+      </geometry>
+    </collision>
+    <collision>
+      <geometry>
+        <mesh filename="package://piper_description/meshes/collision/link6_collision_1.obj"/>
+      </geometry>
+    </collision>
+    <collision>
+      <geometry>
+        <mesh filename="package://piper_description/meshes/collision/link6_collision_2.obj"/>
       </geometry>
     </collision>
   </link>
   <link name="right_link7">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025"/>
+      <origin xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025"/>
       <mass value="0.025"/>
       <inertia ixx="0.00007371" ixy="-0.00000113" ixz="0.00000021" iyy="0.00000781" iyz="-0.00001372" izz="0.0000747"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link7.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/gripper.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link7.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/gripper.obj"/>
       </geometry>
     </collision>
   </link>
@@ -744,12 +764,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link8.obj"/>
+        <mesh filename="package://piper_description/meshes/visual/gripper.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://piper_description/meshes/link8.obj"/>
+        <mesh filename="package://piper_description/meshes/collision/gripper.obj" scale="1 -1 1"/>
       </geometry>
     </collision>
   </link>
@@ -769,7 +789,7 @@
   </joint>
   <link name="right_camera"/>
   <joint name="right_camera_fixed" type="fixed">
-    <origin rpy="0 -1.22 0" xyz="-0.073 0 0.041"/>
+    <origin rpy="-0.3463 0 -1.5708" xyz="-0.073 0 0.041"/>
     <parent link="right_link6"/>
     <child link="right_camera"/>
   </joint>

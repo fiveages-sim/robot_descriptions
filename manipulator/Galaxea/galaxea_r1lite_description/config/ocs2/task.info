@@ -1,0 +1,361 @@
+; robot model meta-information
+model_information {
+  manipulatorModelType     1      // 0: Default-arm, 1: Wheel-based manipulator, 2: Floating-arm manipulator, 3: Fully actuated floating-arm manipulator
+  
+  ; motion joints in the URDF to consider fixed
+  removeJoints {
+    [0]  "steer_motor_joint1"
+    [1]  "steer_motor_joint2"
+    [2]  "steer_motor_joint3"
+    [3]  "wheel_motor_joint1"
+    [4]  "wheel_motor_joint2"
+    [5]  "wheel_motor_joint3"
+
+    [6]  "left_gripper_joint"
+    [7]  "left_gripper_joint2"
+    [8]  "right_gripper_joint"
+    [9]  "right_gripper_joint2"
+  }
+
+  ; base frame of the robot (from URDF)
+  baseFrame                       "base_link"
+  ; end-effector frame of the robot (from URDF)
+  eeFrame                         "left_gripper_center"
+  eeFrame1                        "right_gripper_center"
+}
+
+model_settings
+{
+  usePreComputation               true
+  recompileLibraries              true
+}
+
+; DDP settings
+ddp
+{
+  algorithm                       SLQ
+
+  nThreads                        3
+  threadPriority                  50
+
+  maxNumIterations                1
+  minRelCost                      0.1
+  constraintTolerance             1e-3
+
+  displayInfo                     false
+  displayShortSummary             false
+  checkNumericalStability         false
+  debugPrintRollout               false
+  debugCaching                    false
+
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  maxNumStepsPerSecond            100000
+  timeStep                        1e-3
+  backwardPassIntegratorType      ODE45
+
+  constraintPenaltyInitialValue   20.0
+  constraintPenaltyIncreaseRate   2.0
+
+  preComputeRiccatiTerms          true
+
+  useFeedbackPolicy               false
+
+  strategy                        LINE_SEARCH
+  lineSearch
+  {
+    minStepLength                 1e-2
+    maxStepLength                 1.0
+    hessianCorrectionStrategy     DIAGONAL_SHIFT
+    hessianCorrectionMultiple     1e-3
+  }
+}
+
+; Rollout settings
+rollout
+{
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  timeStep                        1e-2
+  integratorType                  ODE45
+  maxNumStepsPerSecond            100000
+  checkNumericalStability         false
+}
+
+; MPC settings
+mpc
+{
+  timeHorizon                     1.0   ; [s]
+  solutionTimeWindow              0.2   ; [s]
+  coldStart                       false
+  
+  debugPrint                      false
+
+  mpcDesiredFrequency             100   ; [Hz]
+  mrtDesiredFrequency             400   ; [Hz]
+}
+
+; initial state
+initialState
+{
+  ; initial state for the different types of arm base DOFs
+  base
+  {
+    wheelBasedMobileManipulator
+    {
+      (0,0)  -1.0  ; position x
+      (1,0)  0.0  ; position y
+      (2,0)  0.0  ; heading
+    }
+  }
+
+  ; initial state for the arm DOFs
+  arm
+  {
+    (0,0)   0.0      ; torso_joint1
+    (1,0)   0.0      ; torso_joint2
+    (2,0)   0.0      ; torso_joint3
+    (3,0)   0.0      ; torso_joint4
+    (4,0)   0.0     ; left_arm_joint1
+    (5,0)   0.0     ; left_arm_joint2
+    (6,0)   0.0     ; left_arm_joint3
+    (7,0)   0.0     ; left_arm_joint4
+    (8,0)   0.0     ; left_arm_joint5
+    (9,0)   0.0     ; left_arm_joint6
+    (10,0)   0.0     ; right_arm_joint1
+    (11,0)   0.0     ; right_arm_joint2
+    (12,0)   0.0     ; right_arm_joint3
+    (13,0)   0.0     ; right_arm_joint4
+    (14,0)   0.0     ; right_arm_joint5
+    (15,0)   0.0     ; right_arm_joint6
+  }
+}
+
+inputCost
+{
+  ; control weight matrix
+  R
+  {
+    ; input costs for the different types of arm base DOFs
+    base
+    {
+      defaultManipulator
+      {
+      }
+
+      floatingArmManipulator
+      {
+      }
+
+      fullyActuatedFloatingArmManipulator
+      {
+        scaling 1e-2
+        (0,0)  5.0  ; position x
+        (1,1)  5.0  ; position y
+        (2,2)  5.0  ; position z
+        (3,3)  5.0  ; euler angle z
+        (4,4)  5.0  ; euler angle y
+        (5,5)  5.0  ; euler angle x
+      }
+
+      wheelBasedMobileManipulator
+      {
+        scaling 1e-2
+        (0,0)  1.5  ; forward velocity
+        (1,1)  1.5  ; turning velocity
+      }
+    }
+    
+    ; input costs for the arm DOFs
+    arm
+    {
+      scaling 1e-2
+
+         (0,0)   0.1       ; torso_joint1
+         (1,0)   0.1       ; torso_joint2
+         (2,0)   0.1       ; torso_joint3
+         (3,0)   0.1       ; torso_joint4
+         (4,0)   1.0        ; left_arm_joint1
+         (5,0)   1.0        ; left_arm_joint2
+         (6,0)   1.0        ; left_arm_joint3
+         (7,0)   1.0        ; left_arm_joint4
+         (8,0)   1.0        ; left_arm_joint5
+         (9,0)   1.0        ; left_arm_joint6
+         (10,0)   1.0       ; right_arm_joint1
+         (11,0)   1.0       ; right_arm_joint2
+         (12,0)   1.0       ; right_arm_joint3
+         (13,0)   1.0       ; right_arm_joint4
+         (14,0)   1.0       ; right_arm_joint5
+         (15,0)   1.0       ; right_arm_joint6
+    }
+  }
+}
+
+endEffector
+{
+  ; end effector quadratic penalty scaling
+  dualArmMode      true
+  leftArm
+    {
+      muPosition      10.0
+      muOrientation    5.0
+    }
+
+    ; 右臂特定配置
+  rightArm
+    {
+      muPosition      10.0
+      muOrientation    5.0
+    }
+}
+
+finalEndEffector
+{
+  dualArmMode      true
+  leftArm
+    {
+      muPosition      10.0
+      muOrientation    5.0
+    }
+
+    ; 右臂特定配置
+  rightArm
+    {
+      muPosition      10.0
+      muOrientation    5.0
+    }
+}
+
+selfCollision
+{ 
+  ; activate self-collision constraint
+  activate  false
+
+  ; TODO: Replace the collision meshes of the arm with primitive shapes.
+}
+
+; Only applied for arm joints: limits parsed from URDF
+jointPositionLimits
+{
+  ; activate constraint
+  activate  true
+
+  ; relaxed log barrier mu
+  mu      0.01
+
+  ; relaxed log barrier delta
+  delta   1e-3
+}
+
+jointVelocityLimits
+{
+  ; relaxed log barrier mu
+  mu      0.01
+
+  ; relaxed log barrier delta
+  delta   1e-3
+
+  lowerBound
+  {
+    ; velocity limits for the different types of arm base DOFs
+    base
+    {
+      defaultManipulator
+      {
+      }
+
+      floatingArmManipulator
+      {
+      }
+
+      fullyActuatedFloatingArmManipulator
+      {
+        (0,0)  -0.1  ; linear velocity x
+        (1,0)  -0.1  ; linear velocity y
+        (2,0)  -0.1  ; linear velocity z
+        (3,0)  -0.3  ; euler angle velocity z
+        (4,0)  -0.3  ; euler angle velocity y
+        (5,0)  -0.3  ; euler angle velocity x
+      }
+
+      wheelBasedMobileManipulator
+      {
+        (0,0)  -2.0 ; forward velocity
+        (1,0)  -2.0 ; turning velocity
+      }
+    }
+
+    ; velocity limits for the arm DOFs
+    arm
+    {
+        (0,0)  -0.013       ; torso_joint1 [rad/s]
+        (1,0)  -2.088       ; torso_joint2 [rad/s]
+        (2,0)  -2.082	    ; torso_joint3 [rad/s]
+        (3,0)  -3.270	    ; torso_joint4 [rad/s]
+        (4,0)  -3.300	    ; left_arm_joint1 [rad/s]
+        (5,0)  -3.599	    ; left_arm_joint2 [rad/s]
+        (6,0)  -3.078	    ; left_arm_joint3 [rad/s]
+        (7,0)  -3.599	    ; left_arm_joint4 [rad/s]
+        (8,0)  -3.078	    ; left_arm_joint5 [rad/s]
+        (9,0)  -3.599	    ; left_arm_joint6 [rad/s]
+        (10,0)  -3.300	    ; right_arm_joint1 [rad/s]
+        (11,0)  -3.599	    ; right_arm_joint2 [rad/s]
+        (12,0)  -3.078	    ; right_arm_joint3 [rad/s]
+        (13,0)  -3.599	    ; right_arm_joint4 [rad/s]
+        (14,0)  -3.078	    ; right_arm_joint5 [rad/s]
+        (15,0)  -3.599	    ; right_arm_joint6 [rad/s]
+    }
+  }
+
+  upperBound
+  {
+    ; velocity limits for the different types of arm base DOFs
+    base
+    {
+      defaultManipulator
+      {
+      }
+
+      floatingArmManipulator
+      {
+      }
+
+      fullyActuatedFloatingArmManipulator
+      {
+        (0,0)  0.1  ; linear velocity x
+        (1,0)  0.1  ; linear velocity y
+        (2,0)  0.1  ; linear velocity z
+        (3,0)  0.3  ; euler angle velocity z
+        (4,0)  0.3  ; euler angle velocity y
+        (5,0)  0.3  ; euler angle velocity x
+      }
+
+      wheelBasedMobileManipulator
+      {
+        (0,0)  2.0 ; forward velocity
+        (1,0)  2.0 ; turning velocity
+      }
+    }
+
+    ; velocity limits for the arm DOFs
+    arm
+    {
+        (0,0)  0.013        ; torso_joint1 [m/s]
+        (1,0)  2.088        ; torso_joint2 [rad/s]
+        (2,0)  2.082	    ; torso_joint3 [rad/s]
+        (3,0)  3.270	    ; torso_joint4 [rad/s]
+        (4,0)  3.300	    ; left_arm_joint1 [rad/s]
+        (5,0)  3.599	    ; left_arm_joint2 [rad/s]
+        (6,0)  3.078	    ; left_arm_joint3 [rad/s]
+        (7,0)  3.599	    ; left_arm_joint4 [rad/s]
+        (8,0)  3.078	    ; left_arm_joint5 [rad/s]
+        (9,0)  3.599	    ; left_arm_joint6 [rad/s]
+        (10,0)  3.300	    ; right_arm_joint1 [rad/s]
+        (11,0)  3.599	    ; right_arm_joint2 [rad/s]
+        (12,0)  3.078	    ; right_arm_joint3 [rad/s]
+        (13,0)  3.599	    ; right_arm_joint4 [rad/s]
+        (14,0)  3.078	    ; right_arm_joint5 [rad/s]
+        (15,0)  3.599	    ; right_arm_joint6 [rad/s]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="R1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Include Chassis -->
+  <xacro:include filename="$(find galaxea_r1lite_description)/xacro/robot.xacro"/>
+
+  <!-- Import Piper ros2_control description -->
+  <xacro:include filename="$(find galaxea_a1_description)/xacro/ros2_control/galaxea_a1.ros2_control.xacro" />
+  <xacro:galaxea_a1_system name="left" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+  <xacro:galaxea_a1_system name="right" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <xacro:include filename="$(find galaxea_r1lite_description)/xacro/ros2_control/galaxea_r1.ros2_control.xacro" />
+  <xacro:galaxea_r1_system ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+  <xacro:arg name="gazebo" default="false" />
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find galaxea_r1lite_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

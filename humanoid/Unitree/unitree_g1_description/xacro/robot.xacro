@@ -1,0 +1,60 @@
+<robot name="g1_29dof" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:arg name="end_effector" default="rubber_hand"/>
+
+	<!-- Include the modular macros -->
+	<xacro:include filename="$(find unitree_g1_description)/xacro/arm.xacro"/>
+	<xacro:include filename="$(find unitree_g1_description)/xacro/leg.xacro"/>
+	<xacro:include filename="$(find unitree_g1_description)/xacro/body.xacro"/>
+
+	<!-- Legs using modular macro -->
+	<!-- Left leg (direction = 1) -->
+	<xacro:UnitreeG1Leg name="left" direction="1"/>
+
+	<!-- Right leg (direction = -1 for mirroring) -->
+	<xacro:UnitreeG1Leg name="right" direction="-1"/>
+
+	<!-- Body using modular macro -->
+	<xacro:UnitreeG1Body/>
+
+	<!-- Arms using modular macro -->
+	<xacro:UnitreeG1Arm name="left" direction="1"/>
+
+	<xacro:UnitreeG1Arm name="right" direction="-1"/>
+
+	<!-- Hands using modular macro (only when end_effector is rubber_hand) -->
+	<xacro:if value="${'$(arg end_effector)' == 'rubber_hand'}">
+		<xacro:include filename="$(find unitree_g1_description)/xacro/hand.xacro"/>
+		<xacro:UnitreeG1Hand name="left" direction="1"/>
+		<xacro:UnitreeG1Hand name="right" direction="-1"/>
+
+		<joint name="left_hand_palm_joint" type="fixed" dont_collapse="true">
+			<origin xyz="0.0415 0.003 0"/>
+			<parent link="left_wrist_yaw_link"/>
+			<child link="left_hand_base"/>
+		</joint>
+		<joint name="right_hand_palm_joint" type="fixed" dont_collapse="true">
+			<origin xyz="0.0415 -0.003 0"/>
+			<parent link="right_wrist_yaw_link"/>
+			<child link="right_hand_base"/>
+		</joint>
+	</xacro:if>
+
+	<xacro:if value="${'$(arg end_effector)' == 'revo2'}">
+		<xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
+		<xacro:BrainCoHand name="left" direction="1"/>
+		<xacro:BrainCoHand name="right" direction="-1"/>
+
+		<joint name="left_hand_palm_joint" type="fixed" dont_collapse="true">
+			<origin xyz="0.0415 0.003 0" rpy="-1.5708 0 -1.5708"/>
+			<parent link="left_wrist_yaw_link"/>
+			<child link="left_hand_base"/>
+		</joint>
+		<joint name="right_hand_palm_joint" type="fixed" dont_collapse="true">
+			<origin xyz="0.0415 -0.003 0" rpy="1.5708 0 1.5708"/>
+			<parent link="right_wrist_yaw_link"/>
+			<child link="right_hand_base"/>
+		</joint>
+	</xacro:if>
+
+</robot>

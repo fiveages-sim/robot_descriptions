@@ -36,6 +36,12 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 
   ![A1Y](../../.images/galaxea_a1y.png)
 
+* G1 Gripper
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_visualize_config gripper.launch.py gripper:=galaxea_a1
+  ```
+
 ## 3. OCS2 Demo
 
 ### 3.1 Official OCS2 Mobile Manipulator Demo
@@ -63,6 +69,10 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1
+  ```
+   ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=isaac
   ```
 * A1 X
   ```bash

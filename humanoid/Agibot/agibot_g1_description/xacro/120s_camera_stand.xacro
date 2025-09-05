@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="Camera" params="name">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+		<joint name="${prefix}camera_stand_joint" type="fixed">
+			<parent link="${prefix}end_link"/>
+			<child link="${prefix}camera_stand"/>
+		</joint>
+
+		<link name="${prefix}camera_stand">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/camera/120s_camera_stand.obj"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${prefix}camera_joint" type="fixed">
+			<origin xyz="0 -0.079320 0.108617" rpy="0 -1.117 1.5708"/>
+			<parent link="${prefix}camera_stand"/>
+			<child link="${prefix}camera"/>
+		</joint>
+
+
+		<link name="${prefix}camera">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find camera_models)/meshes/d405/d405.obj"/>
+				</geometry>
+			</visual>
+		</link>
+
+	</xacro:macro>
+</robot>

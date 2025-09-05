@@ -1,0 +1,48 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+ocs2_arm_controller:
+  ros__parameters:
+    # Joint configuration
+    update_rate: 100  # Hz
+    info_file_name: fixed_base
+    joints:
+      - torso_joint1
+      - torso_joint2
+      - torso_joint3
+      - torso_joint4
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: galaxea_r1
+
+    # Control parameters
+    home_pos: [ 0.0, 0.0, 0.0, 0.0,
+                1.635, 2.635, -2.2, 0.0, 0.0, 0.0,
+                -1.635, 2.635, -2.2, 0.0, 0.0, 0.0 ]
+    rest_pos: [ 1.833, -2.792, -0.913, 0.0,
+                -1.5708, 0.0, 0.0, 0.0, 0.0, 0.0,
+                1.5708, 0.0, 0.0, 0.0, 0.0, 0.0 ]

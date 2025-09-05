@@ -26,6 +26,9 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=agibot_g1
 ```
 
+[Screencast from 2025-09-05 11-16-59.webm](https://github.com/user-attachments/assets/efc29041-42ae-4062-95d0-0024767ddca1)
+
+
 ### 3.2 OCS2 Arm Controller Demo
 
 ```bash
@@ -35,5 +38,5 @@ ros2 launch ocs2_arm_controller demo.launch.py robot:=agibot_g1
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=agibot_g1 hardware:=gz
+ros2 launch ocs2_arm_controller demo.launch.py robot:=agibot_g1 hardware:=gz world:=warehouse
 ```

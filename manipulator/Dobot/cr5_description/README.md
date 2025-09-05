@@ -51,6 +51,10 @@ ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py hardware:=gz type:=AG2F90-C
   ```
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py hardware:=gz
+  ```
 * Isaac Sim
   ```bash
   source ~/ros2_ws/install/setup.bash

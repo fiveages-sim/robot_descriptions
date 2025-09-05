@@ -1,6 +1,6 @@
 # 通用机器人 OCS2 Launch 系统
 
-[这个文件夹](../robot_visualize_config)包含了一个通用的机器人 OCS2 launch 系统，允许你通过传入机器人名称来自动配置所有相关路径。ROS2版本的OCS2控制框架可以在这里找到：[OCS2 ROS2](https://github.com/legubiao/ocs2_ros2)
+[这个文件夹](../common/robot_visualize_config)包含了一个通用的机器人 OCS2 launch 系统，允许你通过传入机器人名称来自动配置所有相关路径。ROS2版本的OCS2控制框架可以在这里找到：[OCS2 ROS2](https://github.com/legubiao/ocs2_ros2)
 
 ## 🚀 功能特点
 

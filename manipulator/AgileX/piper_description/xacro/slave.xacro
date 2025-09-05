@@ -10,30 +10,40 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link6.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/link6.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link6.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link6_collision_0.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link6_collision_1.obj"/>
+        </geometry>
+      </collision>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find piper_description)/meshes/collision/link6_collision_2.obj"/>
         </geometry>
       </collision>
     </link>
     <link name="${prefix}link7">
       <inertial>
-        <origin xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025" rpy="0 0 0"/>
+        <origin xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025"/>
         <mass value="0.025"/>
         <inertia ixx="0.00007371" ixy="-0.00000113" ixz="0.00000021" iyy="0.00000781" iyz="-0.00001372"
                  izz="0.0000747"/>
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link7.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/gripper.obj"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link7.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/gripper.obj"/>
         </geometry>
       </collision>
     </link>
@@ -53,12 +63,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link8.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/gripper.obj" scale="1 -1 1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/link8.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/collision/gripper.obj" scale="1 -1 1"/>
         </geometry>
       </collision>
     </link>
@@ -79,7 +89,7 @@
 
     <link name="${prefix}camera"/>
     <joint name="${prefix}camera_fixed" type="fixed">
-      <origin xyz="-0.073 0 0.041" rpy="0 -1.22 0"/>
+      <origin xyz="-0.073 0 0.041" rpy="-0.3463 0 -1.5708"/>
       <parent link="${prefix}link6"/>
       <child link="${prefix}camera"/>
     </joint>

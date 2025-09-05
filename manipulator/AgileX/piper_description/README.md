@@ -33,10 +33,26 @@ colcon build --packages-up-to piper_description --symlink-install
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=piper
 ```
+[Screencast from 2025-08-29 18-43-41.webm](https://github.com/user-attachments/assets/1818286f-fb3d-4e65-a7d7-69a66623713f)
+
 
 ### 3.2 OCS2 Arm Controller Demo
+* Gazebo
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=piper hardware:=gz world:=warehouse
+  ```
+  
 
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=piper hardware:=gz
-```
+  https://github.com/user-attachments/assets/80146909-8668-486f-9baa-343274c5f109
+
+
+* Isaac Sim
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=piper hardware:=isaac
+  ```
+  
+
+  https://github.com/user-attachments/assets/6b0494c8-0f7f-47d1-b13e-15c886780035
+

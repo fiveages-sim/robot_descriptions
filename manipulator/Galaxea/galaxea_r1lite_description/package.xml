@@ -1,0 +1,21 @@
+<package format="2">
+  <name>galaxea_r1lite_description</name>
+  <version>1.0.0</version>
+  <description>
+    <p>URDF Description package for Galaxea R1 Lite Robot</p>
+    <p>This package contains configuration data, 3D models and launch files
+      for Galaxea R1 robot
+    </p>
+  </description>
+  <author>TODO</author>
+  <maintainer email="TODO@email.com"/>
+  <license>BSD</license>
+
+  <exec_depend>robot_visualize_config</exec_depend>
+  <exec_depend>galaxea_a1_description</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

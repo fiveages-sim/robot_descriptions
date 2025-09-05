@@ -1,13 +1,13 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Hz
+    update_rate: 300  # Hz
 
     arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
     hand_controller:
-      type: position_controllers/GripperActionController
+      type: adaptive_gripper_controller/AdaptiveGripperController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -34,12 +34,13 @@ arm_controller:
 hand_controller:
   ros__parameters:
     joint: gripper_joint
-
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
 
 ocs2_arm_controller:
   ros__parameters:
     # Joint configuration
-    update_rate: 50  # Hz
+    update_rate: 60  # Hz
     joints:
       - joint1
       - joint2
@@ -56,7 +57,7 @@ ocs2_arm_controller:
     robot_name: cr5
 
     # Future time offset for trajectory prediction (in seconds)
-    future_time_offset: 1.0
+    future_time_offset: 2.0
 
     # Control parameters
     home_pos: [0.0, 0.0, -1.5708, 0.0, 1.5708, 0.0]

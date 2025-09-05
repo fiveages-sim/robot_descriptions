@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="BrainCo_$(arg type)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:arg name="type" default="Revo2"/>
+	<xacro:arg name="direction" default="1"/>
+
+	<xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
+
+	<!-- 创建左手 (direction=1) -->
+	<xacro:BrainCoHand name="" direction="$(arg direction)"/>
+
+</robot>

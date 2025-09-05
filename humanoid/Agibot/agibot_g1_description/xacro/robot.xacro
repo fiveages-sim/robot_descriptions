@@ -44,13 +44,18 @@
 
 	<!-- Gripper joints -->
 	<joint name="ee_left_joint" type="fixed">
+		<origin xyz="0 0 0.027727" rpy="0 0 3.1415"/>
 		<parent link="left_end_link"/>
 		<child link="left_gripper_base"/>
 	</joint>
 
 	<joint name="ee_right_joint" type="fixed">
+		<origin xyz="0 0 0.027727" rpy="0 0 3.1415"/>
 		<parent link="right_end_link"/>
 		<child link="right_gripper_base"/>
 	</joint>
 
+	<xacro:include filename="$(find agibot_g1_description)/xacro/120s_camera_stand.xacro"/>
+	<xacro:Camera name="left"/>
+	<xacro:Camera name="right"/>
 </robot>
