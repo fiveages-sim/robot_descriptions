@@ -248,7 +248,7 @@
   <link name="camera">
     <visual>
       <geometry>
-        <mesh filename="package://arx5_description/meshes/d405.obj"/>
+        <mesh filename="package://camera_models/meshes/d405/d405.obj"/>
       </geometry>
     </visual>
   </link>
