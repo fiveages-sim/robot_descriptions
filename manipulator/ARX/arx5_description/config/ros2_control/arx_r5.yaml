@@ -7,7 +7,7 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
 
     hand_controller:
-      type: position_controllers/GripperActionController
+      type: adaptive_gripper_controller/AdaptiveGripperController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
