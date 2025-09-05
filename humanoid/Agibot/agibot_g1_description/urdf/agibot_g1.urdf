@@ -8,996 +8,1073 @@
 <!-- |    This file includes the base robot structure and both arms                    | -->
 <!-- =================================================================================== -->
 <robot name="genie">
-  <!-- Base links -->
-  <link name="base_link"/>
-  <joint name="base_link_joint" type="fixed">
-    <origin xyz="0 0 0.211"/>
-    <parent link="base_link"/>
-    <child link="base"/>
-  </joint>
-  <link name="base">
-    <inertial>
-      <origin xyz="-0.0134486971267798 0.00152103941353612 -0.0320076754329413"/>
-      <mass value="23.2085382238952"/>
-      <inertia ixx="0.386955641760608" ixy="0.000135417314593726" ixz="0.00669301645720665" iyy="0.366800407621218" iyz="0.000105713634260505" izz="0.546852919828475"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/base/base.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="-0.10913086 0.0 0.5971875"/>
-      <geometry>
-        <box size="0.29833984 0.3376392 1.0"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0 0.0 -0.061"/>
-      <geometry>
-        <box size="0.5996094 0.449 0.30273438"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="body_link1">
-    <inertial>
-      <origin xyz="0.0338351537064605 -0.00248044044451858 0.000838431095422365"/>
-      <mass value="3.26275452360108"/>
-      <inertia ixx="0.0128301877197417" ixy="8.24967996575627e-06" ixz="1.38254543337324e-05" iyy="0.006104110250297" iyz="-7.99392548994692e-06" izz="0.0111721084996867"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/base/body_link1.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0.10278320000000002 0.1 -0.013671875"/>
-      <geometry>
-        <box size="0.16064453 0.05555534399999999 0.1328125"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.10180664 -0.1 0.0"/>
-      <geometry>
-        <box size="0.16259765999999998 0.04375648500000001 0.16015625"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="body_link2">
-    <inertial>
-      <origin xyz="0.193733558855111 -0.000484180179482319 -0.00124011422952511"/>
-      <mass value="7.53199207979272"/>
-      <inertia ixx="0.016546682835947" ixy="0.000274441382484697" ixz="0.00102757387076422" iyy="0.0445441227006132" iyz="-0.000236858278708531" izz="0.0402036337794082"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/base/body_link2.obj"/>
-      </geometry>
-      <origin rpy="0.0 0.0 -1.5707963267948966"/>
-    </visual>
-    <collision>
-      <origin xyz="0.0068359375 -0.00034356117 0.0"/>
-      <geometry>
-        <cylinder length="0.08697056999999997" radius="0.09662318"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0068359375 -0.00034356117 0.043485284999999985"/>
-      <geometry>
-        <sphere radius="0.09662318"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.0068359375 -0.00034356117 -0.043485284999999985"/>
-      <geometry>
-        <sphere radius="0.09662318"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin rpy="0.0 0.0 -1.5708" xyz="0.008 -0.248 0.0"/>
-      <geometry>
-        <box size="0.34570312 0.18107724 0.3125"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="head_link1">
-    <inertial>
-      <origin xyz="0.0446068140025754 0.00241753143645124 0.0528373754603559"/>
-      <mass value="0.414342871921048"/>
-      <inertia ixx="0.000158695728344024" ixy="-1.04590928109554e-06" ixz="-6.58530903139189e-06" iyy="0.000117742864399469" iyz="-2.65011299996072e-06" izz="0.000170947040827065"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/base/head_link1.obj"/>
-      </geometry>
-    </visual>
-  </link>
-  <link name="head_link2">
-    <inertial>
-      <origin xyz="0.0257009265816389 0.0316254080188787 -3.77390122592164e-05"/>
-      <mass value="0.707063977171202"/>
-      <inertia ixx="0.00205409595373573" ixy="0.000347730118005016" ixz="-2.13857752451204e-06" iyy="0.00200357281313449" iyz="5.16150600423908e-08" izz="0.00184999028444405"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/base/head_link2.obj"/>
-      </geometry>
-      <origin rpy="-3.141592653589793 0.0 0.0"/>
-    </visual>
-    <collision>
-      <geometry>
-        <sphere radius="0.11257068650657154"/>
-      </geometry>
-      <origin xyz="0.011500973396434619 -0.0252600143348118 0.0008537154007319386"/>
-    </collision>
-  </link>
-  <!-- Base joints -->
-  <joint name="body_joint1" type="prismatic">
-    <parent link="base"/>
-    <child link="body_link1"/>
-    <origin xyz="0.0 0.0 0.4285"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="100.0" lower="0.0" upper="0.5" velocity="0.1"/>
-  </joint>
-  <joint name="body_joint2" type="revolute">
-    <parent link="body_link1"/>
-    <child link="body_link2"/>
-    <origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.131 0.0 0.0"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="100.0" lower="0.0" upper="1.5707963267948966" velocity="0.5"/>
-  </joint>
-  <!-- Head joints -->
-  <joint name="head_joint1" type="revolute">
-    <parent link="body_link2"/>
-    <child link="head_link1"/>
-    <origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 -0.441 0.0"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="50.0" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="1.0"/>
-  </joint>
-  <joint name="head_joint2" type="revolute">
-    <parent link="head_link1"/>
-    <child link="head_link2"/>
-    <origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.050238 0.0 0.060065"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="50.0" lower="-0.3490658503988659" upper="0.5235987755982988" velocity="1.0"/>
-  </joint>
-  <!-- Arm base link -->
-  <link name="left_base_link">
-    <inertial>
-      <origin xyz="0.00020641 -0.00057488 0.032296"/>
-      <mass value="0.37595"/>
-      <inertia ixx="0.00024335" ixy="1.2188e-06" ixz="2.4281e-06" iyy="0.00024039" iyz="-6.6932e-06" izz="0.00032195"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/base_link.obj"/>
-      </geometry>
-    </visual>
-  </link>
-  <!-- Arm links -->
-  <link name="left_link1">
-    <inertial>
-      <origin xyz="0.0012655 -0.00043778 -0.018388"/>
-      <mass value="0.4936"/>
-      <inertia ixx="0.00075396" ixy="-2.4144e-06" ixz="-1.8364e-06" iyy="0.00065755" iyz="1.2174e-06" izz="0.00031848"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link1.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="0.16642063483595848" radius="0.05579268228774888"/>
-      </geometry>
-      <origin rpy="0.0 0.0 -1.2566370614359172" xyz="0.0026814433577366636 0.0006133775157398935 -0.04071124829351902"/>
-    </collision>
-  </link>
-  <link name="left_link2">
-    <inertial>
-      <origin xyz="-0.00044207 -0.082298 0.00019486"/>
-      <mass value="0.46245"/>
-      <inertia ixx="0.00065719" ixy="3.7112e-07" ixz="-3.6668e-06" iyy="0.00043459" iyz="-2.517e-05" izz="0.00072571"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link2.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.0 -0.044062052 0.0009765625"/>
-      <geometry>
-        <cylinder length="0.18085919" radius="0.06302423"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="left_link3">
-    <inertial>
-      <origin xyz="0.0010558 4.4416e-05 -0.056128"/>
-      <mass value="0.50026"/>
-      <inertia ixx="0.0013016" ixy="3.1401e-06" ixz="1.4255e-05" iyy="0.001427" iyz="2.4361e-05" izz="0.00033587"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link3.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0.0006559932284637068 -2.2628975236450855e-05 -0.07219303026795387"/>
-      <geometry>
-        <cylinder length="0.22061403840780258" radius="0.05216156143823925"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="left_link4">
-    <inertial>
-      <origin xyz="2.4212e-05 -0.06248 0.002536"/>
-      <mass value="0.27473"/>
-      <inertia ixx="0.00029283" ixy="4.5586e-07" ixz="5.8042e-08" iyy="0.00018852" iyz="-1.116e-06" izz="0.00031238"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link4.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.0 -0.03817895 -0.0043945312"/>
-      <geometry>
-        <cylinder length="0.154955404" radius="0.057891708"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="left_link5">
-    <inertial>
-      <origin xyz="2.6223e-06 -0.00023041 -0.024141"/>
-      <mass value="0.25139"/>
-      <inertia ixx="0.00023516" ixy="-6.5868e-09" ixz="-1.9428e-08" iyy="0.00028807" iyz="-1.2108e-05" izz="0.00013068"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link5.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="-0.00022255510134868567 -4.227476414728204e-05 -0.03344946540892124"/>
-      <geometry>
-        <cylinder length="0.13423806056380272" radius="0.04562028545392604"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="left_link6">
-    <inertial>
-      <origin xyz="5.0382e-06 -0.086696 0.002556"/>
-      <mass value="0.26634"/>
-      <inertia ixx="0.00031434" ixy="-1.2113e-09" ixz="1.0011e-07" iyy="0.00014464" iyz="-2.033e-05" izz="0.00032449"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link6.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0.0 -1.4835107730827122 -1.56897465223053" xyz="-1.7782549414354032e-05 -0.05507596972928094 -0.0017447156928267265"/>
-      <geometry>
-        <cylinder length="0.18272488500982115" radius="0.04857149291994264"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="left_end_link">
-    <inertial>
-      <origin xyz="-7.5134e-05 -0.00024521 -0.016705"/>
-      <mass value="0.06158"/>
-      <inertia ixx="1.8407e-05" ixy="3.4818e-08" ixz="-3.2902e-09" iyy="1.818e-05" iyz="1.1326e-07" izz="2.8547e-05"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link7.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="3.141592653589793 -1.2246467991473532e-16 3.141592653589793" xyz="-4.552953707661759e-05 -0.002300474691790042 -0.02249999972991645"/>
-      <geometry>
-        <cylinder length="0.045999998692423105" radius="0.030799950382754494"/>
-      </geometry>
-    </collision>
-  </link>
-  <!-- Arm joints -->
-  <joint name="left_joint1" type="revolute">
-    <parent link="left_base_link"/>
-    <child link="left_link1"/>
-    <origin xyz="0.0 0.0 0.1859"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="60.0" lower="-3.14" upper="3.14" velocity="3.14"/>
-  </joint>
-  <joint name="left_joint2" type="revolute">
-    <parent link="left_link1"/>
-    <child link="left_link2"/>
-    <origin rpy="-1.5707963267948966 0.0 1.5707963267948966" xyz="0.0 0.0 0.0"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="60.0" lower="-2.09" upper="1.48" velocity="3.14"/>
-  </joint>
-  <joint name="left_joint3" type="revolute">
-    <parent link="left_link2"/>
-    <child link="left_link3"/>
-    <origin rpy="-1.5707963267948966 1.5707963267948966 3.141592653589793" xyz="0.0 -0.305 0.0"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="60.0" lower="-3.10" upper="3.10" velocity="3.14"/>
-  </joint>
-  <joint name="left_joint4" type="revolute">
-    <parent link="left_link3"/>
-    <child link="left_link4"/>
-    <origin rpy="-1.5707963267948966 0.0 3.141592653589793" xyz="0.0 0.0 0.0"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="60.0" lower="-1.48" upper="1.48" velocity="3.14"/>
-  </joint>
-  <joint name="left_joint5" type="revolute">
-    <parent link="left_link4"/>
-    <child link="left_link5"/>
-    <origin rpy="-1.5707963267948966 0.0 -3.141592653589793" xyz="0.0 -0.1975 0.0"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="30.0" lower="-3.10" upper="3.10" velocity="3.14"/>
-  </joint>
-  <joint name="left_joint6" type="revolute">
-    <parent link="left_link5"/>
-    <child link="left_link6"/>
-    <origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.0 0.0 0.0"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="30.0" lower="-1.74" upper="1.74" velocity="3.14"/>
-  </joint>
-  <joint name="left_joint7" type="revolute">
-    <origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 -0.1805 0.0"/>
-    <parent link="left_link6"/>
-    <child link="left_end_link"/>
-    <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="30.0" lower="-3.10" upper="3.10" velocity="3.14"/>
-  </joint>
-  <!-- Arm base link -->
-  <link name="right_base_link">
-    <inertial>
-      <origin xyz="-0.00020641 0.00057488 0.032296"/>
-      <mass value="0.37595"/>
-      <inertia ixx="0.00024335" ixy="1.2188e-06" ixz="-2.4281e-06" iyy="0.00024039" iyz="6.6932e-06" izz="0.00032195"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/base_link.obj"/>
-      </geometry>
-    </visual>
-  </link>
-  <!-- Arm links -->
-  <link name="right_link1">
-    <inertial>
-      <origin xyz="-0.0012655 -0.00043778 -0.018388"/>
-      <mass value="0.4936"/>
-      <inertia ixx="0.00075396" ixy="2.4144e-06" ixz="1.8364e-06" iyy="0.00065755" iyz="1.2174e-06" izz="0.00031848"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link1.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="0.16642063483595848" radius="0.05579268228774888"/>
-      </geometry>
-      <origin rpy="0.0 0.0 1.2566370614359172" xyz="-0.0026814433577366636 0.0006133775157398935 -0.04071124829351902"/>
-    </collision>
-  </link>
-  <link name="right_link2">
-    <inertial>
-      <origin xyz="0.00044207 -0.082298 0.00019486"/>
-      <mass value="0.46245"/>
-      <inertia ixx="0.00065719" ixy="3.7112e-07" ixz="-3.6668e-06" iyy="0.00043459" iyz="-2.517e-05" izz="0.00072571"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link2.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.0 -0.044062052 0.0009765625"/>
-      <geometry>
-        <cylinder length="0.18085919" radius="0.06302423"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="right_link3">
-    <inertial>
-      <origin xyz="-0.0010558 4.4416e-05 -0.056128"/>
-      <mass value="0.50026"/>
-      <inertia ixx="0.0013016" ixy="3.1401e-06" ixz="1.4255e-05" iyy="0.001427" iyz="2.4361e-05" izz="0.00033587"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link3.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="-0.0006559932284637068 -2.2628975236450855e-05 -0.07219303026795387"/>
-      <geometry>
-        <cylinder length="0.22061403840780258" radius="0.05216156143823925"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="right_link4">
-    <inertial>
-      <origin xyz="2.4212e-05 -0.06248 0.002536"/>
-      <mass value="0.27473"/>
-      <inertia ixx="0.00029283" ixy="4.5586e-07" ixz="5.8042e-08" iyy="0.00018852" iyz="-1.116e-06" izz="0.00031238"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link4.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.0 -0.03817895 -0.0043945312"/>
-      <geometry>
-        <cylinder length="0.154955404" radius="0.057891708"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="right_link5">
-    <inertial>
-      <origin xyz="2.6223e-06 -0.00023041 -0.024141"/>
-      <mass value="0.25139"/>
-      <inertia ixx="0.00023516" ixy="-6.5868e-09" ixz="-1.9428e-08" iyy="0.00028807" iyz="-1.2108e-05" izz="0.00013068"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link5.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0.00022255510134868567 -4.227476414728204e-05 -0.03344946540892124"/>
-      <geometry>
-        <cylinder length="0.13423806056380272" radius="0.04562028545392604"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="right_link6">
-    <inertial>
-      <origin xyz="5.0382e-06 -0.086696 0.002556"/>
-      <mass value="0.26634"/>
-      <inertia ixx="0.00031434" ixy="-1.2113e-09" ixz="1.0011e-07" iyy="0.00014464" iyz="-2.033e-05" izz="0.00032449"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link6.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0.0 -1.4835107730827122 -1.56897465223053" xyz="1.7782549414354032e-05 -0.05507596972928094 -0.0017447156928267265"/>
-      <geometry>
-        <cylinder length="0.18272488500982115" radius="0.04857149291994264"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="right_end_link">
-    <inertial>
-      <origin xyz="-7.5134e-05 -0.00024521 -0.016705"/>
-      <mass value="0.06158"/>
-      <inertia ixx="1.8407e-05" ixy="3.4818e-08" ixz="-3.2902e-09" iyy="1.818e-05" iyz="1.1326e-07" izz="2.8547e-05"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://agibot_g1_description/meshes/arm/link7.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="3.141592653589793 -1.2246467991473532e-16 3.141592653589793" xyz="-4.552953707661759e-05 -0.002300474691790042 -0.02249999972991645"/>
-      <geometry>
-        <cylinder length="0.045999998692423105" radius="0.030799950382754494"/>
-      </geometry>
-    </collision>
-  </link>
-  <!-- Arm joints -->
-  <joint name="right_joint1" type="revolute">
-    <parent link="right_base_link"/>
-    <child link="right_link1"/>
-    <origin xyz="0.0 0.0 0.1859"/>
-    <axis xyz="0.0 0.0 -1.0"/>
-    <limit effort="60.0" lower="-3.14" upper="3.14" velocity="3.14"/>
-  </joint>
-  <joint name="right_joint2" type="revolute">
-    <parent link="right_link1"/>
-    <child link="right_link2"/>
-    <origin rpy="-1.5707963267948966 0.0 -1.5707963267948966" xyz="0.0 0.0 0.0"/>
-    <axis xyz="0.0 0.0 -1.0"/>
-    <limit effort="60.0" lower="-2.09" upper="1.48" velocity="3.14"/>
-  </joint>
-  <joint name="right_joint3" type="revolute">
-    <parent link="right_link2"/>
-    <child link="right_link3"/>
-    <origin rpy="-1.5707963267948966 -1.5707963267948966 3.141592653589793" xyz="0.0 -0.305 0.0"/>
-    <axis xyz="0.0 0.0 -1.0"/>
-    <limit effort="60.0" lower="-3.10" upper="3.10" velocity="3.14"/>
-  </joint>
-  <joint name="right_joint4" type="revolute">
-    <parent link="right_link3"/>
-    <child link="right_link4"/>
-    <origin rpy="-1.5707963267948966 0.0 3.141592653589793" xyz="0.0 0.0 0.0"/>
-    <axis xyz="0.0 0.0 -1.0"/>
-    <limit effort="60.0" lower="-1.48" upper="1.48" velocity="3.14"/>
-  </joint>
-  <joint name="right_joint5" type="revolute">
-    <parent link="right_link4"/>
-    <child link="right_link5"/>
-    <origin rpy="-1.5707963267948966 0.0 3.141592653589793" xyz="0.0 -0.1975 0.0"/>
-    <axis xyz="0.0 0.0 -1.0"/>
-    <limit effort="30.0" lower="-3.10" upper="3.10" velocity="3.14"/>
-  </joint>
-  <joint name="right_joint6" type="revolute">
-    <parent link="right_link5"/>
-    <child link="right_link6"/>
-    <origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.0 0.0 0.0"/>
-    <axis xyz="0.0 0.0 -1.0"/>
-    <limit effort="30.0" lower="-1.74" upper="1.74" velocity="3.14"/>
-  </joint>
-  <joint name="right_joint7" type="revolute">
-    <origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 -0.1805 0.0"/>
-    <parent link="right_link6"/>
-    <child link="right_end_link"/>
-    <axis xyz="0.0 0.0 -1.0"/>
-    <limit effort="30.0" lower="-3.10" upper="3.10" velocity="3.14"/>
-  </joint>
-  <link name="left_gripper_base">
-    <inertial>
-      <origin xyz="1.23989288637867E-06 3.27564415436087E-07 0.0536186975993762"/>
-      <mass value="0.443105756928829"/>
-      <inertia ixx="0.00064200574020552" ixy="-1.51180224931458E-07" ixz="7.24174172220287E-09" iyy="0.00066998312004943" iyz="2.73584170951165E-09" izz="0.000278949393571484"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/gripper_base.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/gripper_base.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="left_left_1_link">
-    <inertial>
-      <origin xyz="0.00656387870913618 0.024850259757102 -9.40817030196858E-10"/>
-      <mass value="0.0112899386472626"/>
-      <inertia ixx="1.96944973967669E-06" ixy="6.42395813223716E-07" ixz="-1.07950451056367E-14" iyy="1.39704780795747E-06" iyz="-1.48209813327181E-14" izz="2.47457179553145E-06"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_1.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_1.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_gripper_joint" type="revolute">
-    <origin rpy="1.5708 0 3.1416" xyz="-0.032553 0 0.10644"/>
-    <parent link="left_gripper_base"/>
-    <child link="left_left_1_link"/>
-    <axis xyz="0 0 -1"/>
-    <limit effort="2" lower="0" upper="1" velocity="1000"/>
-  </joint>
-  <link name="left_left_support_link">
-    <inertial>
-      <origin xyz="-0.011970095332009 0.0238338043684485 -1.36624428992904E-06"/>
-      <mass value="0.0140092102116716"/>
-      <inertia ixx="4.13674978137002E-06" ixy="9.81573398608352E-07" ixz="-2.87921970465553E-11" iyy="1.1362453186293E-06" iyz="2.94726072168702E-11" izz="4.10226218364235E-06"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/support_link.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/support_link.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_left_support_joint" type="revolute">
-    <origin xyz="-0.0093594 0.056229 0"/>
-    <parent link="left_left_1_link"/>
-    <child link="left_left_support_link"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="left_gripper_joint" multiplier="1" offset="0"/>
-  </joint>
-  <link name="left_left_pad_link">
-    <inertial>
-      <origin xyz="1.46688816627348E-09 0.00209017783344978 -8.17280129359337E-17"/>
-      <mass value="0.00332411394949541"/>
-      <inertia ixx="5.5867126170785E-07" ixy="2.9966962370347E-20" ixz="1.44978830317617E-23" iyy="1.45407135182096E-07" iyz="-1.60867378777053E-21" izz="4.18250297449997E-07"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/pad_link.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/pad_link.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_left_pad_joint" type="fixed">
-    <origin xyz="-0.022056 0.044306 0"/>
-    <parent link="left_left_support_link"/>
-    <child link="left_left_pad_link"/>
-  </joint>
-  <link name="left_left_2_link">
-    <inertial>
-      <origin xyz="-0.00438952959966343 0.0248815722409523 -2.55135883071891E-05"/>
-      <mass value="0.00803955821311802"/>
-      <inertia ixx="1.15079028835042E-06" ixy="1.13853775681911E-07" ixz="-1.79492796413463E-10" iyy="4.68655200337902E-07" iyz="-4.49903912976825E-10" izz="8.47367915692972E-07"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_2.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_2.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_left_2_joint" type="revolute">
-    <origin rpy="1.5708 0 3.1416" xyz="-0.017 0 0.122"/>
-    <parent link="left_gripper_base"/>
-    <child link="left_left_2_link"/>
-    <axis xyz="0 0 -1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="left_gripper_joint" multiplier="1" offset="0"/>
-  </joint>
-  <link name="left_right_2_link">
-    <inertial>
-      <origin xyz="-0.00438952959968201 0.0248815722409522 -2.5513588307359E-05"/>
-      <mass value="0.00803955821311803"/>
-      <inertia ixx="1.15079028835042E-06" ixy="1.13853775681912E-07" ixz="-1.79492796413511E-10" iyy="4.68655200337903E-07" iyz="-4.49903912976901E-10" izz="8.47367915692974E-07"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_2.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_2.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_right_2_joint" type="revolute">
-    <origin rpy="1.5708 0 0" xyz="0.017 0 0.122"/>
-    <parent link="left_gripper_base"/>
-    <child link="left_right_2_link"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="left_left_2_joint" multiplier="-1" offset="0"/>
-  </joint>
-  <link name="left_right_1_link">
-    <inertial>
-      <origin xyz="0.00656387870564603 0.0248502597572661 -9.40812230336897E-10"/>
-      <mass value="0.0112899386472626"/>
-      <inertia ixx="1.96944973967663E-06" ixy="6.42395813223747E-07" ixz="-1.07950449101923E-14" iyy="1.39704780795753E-06" iyz="-1.48209815851649E-14" izz="2.47457179553146E-06"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_1.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_1.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_right_1_joint" type="revolute">
-    <origin rpy="1.5708 0 0" xyz="0.032553 0 0.10644"/>
-    <parent link="left_gripper_base"/>
-    <child link="left_right_1_link"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="left_gripper_joint" multiplier="-1" offset="0"/>
-  </joint>
-  <link name="left_right_support_link">
-    <inertial>
-      <origin xyz="-0.011970095112324 0.0238338043682057 -1.36624428997256E-06"/>
-      <mass value="0.0140092102116716"/>
-      <inertia ixx="4.13674978136988E-06" ixy="9.81573398608576E-07" ixz="-2.87921970465403E-11" iyy="1.13624531862944E-06" iyz="2.94726072165632E-11" izz="4.10226218364236E-06"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/support_link.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/support_link.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_right_support_joint" type="revolute">
-    <origin xyz="-0.0093594 0.056229 0"/>
-    <parent link="left_right_1_link"/>
-    <child link="left_right_support_link"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="left_right_1_joint" multiplier="-1" offset="0"/>
-  </joint>
-  <link name="left_right_pad_link">
-    <inertial>
-      <origin xyz="5.43457184440897E-09 0.00209017783344967 -1.21646039264426E-16"/>
-      <mass value="0.00332411394949542"/>
-      <inertia ixx="5.58671261707851E-07" ixy="3.06066210315894E-20" ixz="1.70379713307979E-23" iyy="1.45407135182096E-07" iyz="-1.65096420438087E-21" izz="4.18250297449998E-07"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/pad_link.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/pad_link.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_right_pad_joint" type="fixed">
-    <origin xyz="-0.022056 0.044306 0"/>
-    <parent link="left_right_support_link"/>
-    <child link="left_right_pad_link"/>
-  </joint>
-  <joint name="left_gripper_center_joint" type="fixed">
-    <origin rpy="-1.5708 -1.5708 0" xyz="0 0 0.2"/>
-    <parent link="left_gripper_base"/>
-    <child link="left_gripper_center"/>
-  </joint>
-  <link name="left_gripper_center"/>
-  <link name="right_gripper_base">
-    <inertial>
-      <origin xyz="1.23989288637867E-06 3.27564415436087E-07 0.0536186975993762"/>
-      <mass value="0.443105756928829"/>
-      <inertia ixx="0.00064200574020552" ixy="-1.51180224931458E-07" ixz="7.24174172220287E-09" iyy="0.00066998312004943" iyz="2.73584170951165E-09" izz="0.000278949393571484"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/gripper_base.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/gripper_base.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="right_left_1_link">
-    <inertial>
-      <origin xyz="0.00656387870913618 0.024850259757102 -9.40817030196858E-10"/>
-      <mass value="0.0112899386472626"/>
-      <inertia ixx="1.96944973967669E-06" ixy="6.42395813223716E-07" ixz="-1.07950451056367E-14" iyy="1.39704780795747E-06" iyz="-1.48209813327181E-14" izz="2.47457179553145E-06"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_1.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_1.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_gripper_joint" type="revolute">
-    <origin rpy="1.5708 0 3.1416" xyz="-0.032553 0 0.10644"/>
-    <parent link="right_gripper_base"/>
-    <child link="right_left_1_link"/>
-    <axis xyz="0 0 -1"/>
-    <limit effort="2" lower="0" upper="1" velocity="1000"/>
-  </joint>
-  <link name="right_left_support_link">
-    <inertial>
-      <origin xyz="-0.011970095332009 0.0238338043684485 -1.36624428992904E-06"/>
-      <mass value="0.0140092102116716"/>
-      <inertia ixx="4.13674978137002E-06" ixy="9.81573398608352E-07" ixz="-2.87921970465553E-11" iyy="1.1362453186293E-06" iyz="2.94726072168702E-11" izz="4.10226218364235E-06"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/support_link.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/support_link.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_left_support_joint" type="revolute">
-    <origin xyz="-0.0093594 0.056229 0"/>
-    <parent link="right_left_1_link"/>
-    <child link="right_left_support_link"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="right_gripper_joint" multiplier="1" offset="0"/>
-  </joint>
-  <link name="right_left_pad_link">
-    <inertial>
-      <origin xyz="1.46688816627348E-09 0.00209017783344978 -8.17280129359337E-17"/>
-      <mass value="0.00332411394949541"/>
-      <inertia ixx="5.5867126170785E-07" ixy="2.9966962370347E-20" ixz="1.44978830317617E-23" iyy="1.45407135182096E-07" iyz="-1.60867378777053E-21" izz="4.18250297449997E-07"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/pad_link.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/pad_link.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_left_pad_joint" type="fixed">
-    <origin xyz="-0.022056 0.044306 0"/>
-    <parent link="right_left_support_link"/>
-    <child link="right_left_pad_link"/>
-  </joint>
-  <link name="right_left_2_link">
-    <inertial>
-      <origin xyz="-0.00438952959966343 0.0248815722409523 -2.55135883071891E-05"/>
-      <mass value="0.00803955821311802"/>
-      <inertia ixx="1.15079028835042E-06" ixy="1.13853775681911E-07" ixz="-1.79492796413463E-10" iyy="4.68655200337902E-07" iyz="-4.49903912976825E-10" izz="8.47367915692972E-07"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_2.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_2.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_left_2_joint" type="revolute">
-    <origin rpy="1.5708 0 3.1416" xyz="-0.017 0 0.122"/>
-    <parent link="right_gripper_base"/>
-    <child link="right_left_2_link"/>
-    <axis xyz="0 0 -1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="right_gripper_joint" multiplier="1" offset="0"/>
-  </joint>
-  <link name="right_right_2_link">
-    <inertial>
-      <origin xyz="-0.00438952959968201 0.0248815722409522 -2.5513588307359E-05"/>
-      <mass value="0.00803955821311803"/>
-      <inertia ixx="1.15079028835042E-06" ixy="1.13853775681912E-07" ixz="-1.79492796413511E-10" iyy="4.68655200337903E-07" iyz="-4.49903912976901E-10" izz="8.47367915692974E-07"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_2.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_2.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_right_2_joint" type="revolute">
-    <origin rpy="1.5708 0 0" xyz="0.017 0 0.122"/>
-    <parent link="right_gripper_base"/>
-    <child link="right_right_2_link"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="right_left_2_joint" multiplier="-1" offset="0"/>
-  </joint>
-  <link name="right_right_1_link">
-    <inertial>
-      <origin xyz="0.00656387870564603 0.0248502597572661 -9.40812230336897E-10"/>
-      <mass value="0.0112899386472626"/>
-      <inertia ixx="1.96944973967663E-06" ixy="6.42395813223747E-07" ixz="-1.07950449101923E-14" iyy="1.39704780795753E-06" iyz="-1.48209815851649E-14" izz="2.47457179553146E-06"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_1.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/link_1.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_right_1_joint" type="revolute">
-    <origin rpy="1.5708 0 0" xyz="0.032553 0 0.10644"/>
-    <parent link="right_gripper_base"/>
-    <child link="right_right_1_link"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="right_gripper_joint" multiplier="-1" offset="0"/>
-  </joint>
-  <link name="right_right_support_link">
-    <inertial>
-      <origin xyz="-0.011970095112324 0.0238338043682057 -1.36624428997256E-06"/>
-      <mass value="0.0140092102116716"/>
-      <inertia ixx="4.13674978136988E-06" ixy="9.81573398608576E-07" ixz="-2.87921970465403E-11" iyy="1.13624531862944E-06" iyz="2.94726072165632E-11" izz="4.10226218364236E-06"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/support_link.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/support_link.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_right_support_joint" type="revolute">
-    <origin xyz="-0.0093594 0.056229 0"/>
-    <parent link="right_right_1_link"/>
-    <child link="right_right_support_link"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="0" lower="0" upper="0" velocity="0"/>
-    <mimic joint="right_right_1_joint" multiplier="-1" offset="0"/>
-  </joint>
-  <link name="right_right_pad_link">
-    <inertial>
-      <origin xyz="5.43457184440897E-09 0.00209017783344967 -1.21646039264426E-16"/>
-      <mass value="0.00332411394949542"/>
-      <inertia ixx="5.58671261707851E-07" ixy="3.06066210315894E-20" ixz="1.70379713307979E-23" iyy="1.45407135182096E-07" iyz="-1.65096420438087E-21" izz="4.18250297449998E-07"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/pad_link.obj"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://changingtek_description/meshes/AG2F120S/pad_link.obj"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_right_pad_joint" type="fixed">
-    <origin xyz="-0.022056 0.044306 0"/>
-    <parent link="right_right_support_link"/>
-    <child link="right_right_pad_link"/>
-  </joint>
-  <joint name="right_gripper_center_joint" type="fixed">
-    <origin rpy="-1.5708 -1.5708 0" xyz="0 0 0.2"/>
-    <parent link="right_gripper_base"/>
-    <child link="right_gripper_center"/>
-  </joint>
-  <link name="right_gripper_center"/>
-  <!-- Arm base links -->
-  <link name="arm_base"/>
-  <!-- Arm base joints -->
-  <joint name="arm_base_joint" type="fixed">
-    <parent link="body_link2"/>
-    <child link="arm_base"/>
-    <origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 -0.305 0.0"/>
-  </joint>
-  <joint name="left_base_joint" type="fixed">
-    <parent link="arm_base"/>
-    <child link="left_base_link"/>
-    <origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.0 0.025 0.0"/>
-  </joint>
-  <joint name="right_base_joint" type="fixed">
-    <parent link="arm_base"/>
-    <child link="right_base_link"/>
-    <origin rpy="-1.5707963267948966 0.0 3.141592653589793" xyz="0.0 -0.025 0.0"/>
-  </joint>
-  <!-- Gripper joints -->
-  <joint name="ee_left_joint" type="fixed">
-    <parent link="left_end_link"/>
-    <child link="left_gripper_base"/>
-  </joint>
-  <joint name="ee_right_joint" type="fixed">
-    <parent link="right_end_link"/>
-    <child link="right_gripper_base"/>
-  </joint>
+	<!-- Base links -->
+	<link name="base_link"/>
+	<joint name="base_link_joint" type="fixed">
+		<origin xyz="0 0 0.211"/>
+		<parent link="base_link"/>
+		<child link="base"/>
+	</joint>
+	<link name="base">
+		<inertial>
+			<origin xyz="-0.0134486971267798 0.00152103941353612 -0.0320076754329413"/>
+			<mass value="23.2085382238952"/>
+			<inertia ixx="0.386955641760608" ixy="0.000135417314593726" ixz="0.00669301645720665" iyy="0.366800407621218"
+							 iyz="0.000105713634260505" izz="0.546852919828475"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/base/base.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz="-0.10913086 0.0 0.5971875"/>
+			<geometry>
+				<box size="0.29833984 0.3376392 1.0"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="0.0 0.0 -0.061"/>
+			<geometry>
+				<box size="0.5996094 0.449 0.30273438"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="body_link1">
+		<inertial>
+			<origin xyz="0.0338351537064605 -0.00248044044451858 0.000838431095422365"/>
+			<mass value="3.26275452360108"/>
+			<inertia ixx="0.0128301877197417" ixy="8.24967996575627e-06" ixz="1.38254543337324e-05" iyy="0.006104110250297"
+							 iyz="-7.99392548994692e-06" izz="0.0111721084996867"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/base/body_link1.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz="0.10278320000000002 0.1 -0.013671875"/>
+			<geometry>
+				<box size="0.16064453 0.05555534399999999 0.1328125"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="0.10180664 -0.1 0.0"/>
+			<geometry>
+				<box size="0.16259765999999998 0.04375648500000001 0.16015625"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="body_link2">
+		<inertial>
+			<origin xyz="0.193733558855111 -0.000484180179482319 -0.00124011422952511"/>
+			<mass value="7.53199207979272"/>
+			<inertia ixx="0.016546682835947" ixy="0.000274441382484697" ixz="0.00102757387076422" iyy="0.0445441227006132"
+							 iyz="-0.000236858278708531" izz="0.0402036337794082"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/base/body_link2.obj"/>
+			</geometry>
+			<origin rpy="0.0 0.0 -1.5707963267948966"/>
+		</visual>
+		<collision>
+			<origin xyz="0.0068359375 -0.00034356117 0.0"/>
+			<geometry>
+				<cylinder length="0.08697056999999997" radius="0.09662318"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="0.0068359375 -0.00034356117 0.043485284999999985"/>
+			<geometry>
+				<sphere radius="0.09662318"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="0.0068359375 -0.00034356117 -0.043485284999999985"/>
+			<geometry>
+				<sphere radius="0.09662318"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin rpy="0.0 0.0 -1.5708" xyz="0.008 -0.248 0.0"/>
+			<geometry>
+				<box size="0.34570312 0.18107724 0.3125"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="head_link1">
+		<inertial>
+			<origin xyz="0.0446068140025754 0.00241753143645124 0.0528373754603559"/>
+			<mass value="0.414342871921048"/>
+			<inertia ixx="0.000158695728344024" ixy="-1.04590928109554e-06" ixz="-6.58530903139189e-06"
+							 iyy="0.000117742864399469" iyz="-2.65011299996072e-06" izz="0.000170947040827065"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/base/head_link1.obj"/>
+			</geometry>
+		</visual>
+	</link>
+	<link name="head_link2">
+		<inertial>
+			<origin xyz="0.0257009265816389 0.0316254080188787 -3.77390122592164e-05"/>
+			<mass value="0.707063977171202"/>
+			<inertia ixx="0.00205409595373573" ixy="0.000347730118005016" ixz="-2.13857752451204e-06"
+							 iyy="0.00200357281313449" iyz="5.16150600423908e-08" izz="0.00184999028444405"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/base/head_link2.obj"/>
+			</geometry>
+			<origin rpy="-3.141592653589793 0.0 0.0"/>
+		</visual>
+		<collision>
+			<geometry>
+				<sphere radius="0.11257068650657154"/>
+			</geometry>
+			<origin xyz="0.011500973396434619 -0.0252600143348118 0.0008537154007319386"/>
+		</collision>
+	</link>
+	<!-- Base joints -->
+	<joint name="body_joint1" type="prismatic">
+		<parent link="base"/>
+		<child link="body_link1"/>
+		<origin xyz="0.0 0.0 0.4285"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="1000.0" lower="0.0" upper="0.5" velocity="0.1"/>
+	</joint>
+	<joint name="body_joint2" type="revolute">
+		<parent link="body_link1"/>
+		<child link="body_link2"/>
+		<origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.131 0.0 0.0"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="100.0" lower="0.0" upper="1.5707963267948966" velocity="0.5"/>
+	</joint>
+	<!-- Head joints -->
+	<joint name="head_joint1" type="revolute">
+		<parent link="body_link2"/>
+		<child link="head_link1"/>
+		<origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 -0.441 0.0"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="50.0" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="1.0"/>
+	</joint>
+	<joint name="head_joint2" type="revolute">
+		<parent link="head_link1"/>
+		<child link="head_link2"/>
+		<origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.050238 0.0 0.060065"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="50.0" lower="-0.3490658503988659" upper="0.5235987755982988" velocity="1.0"/>
+	</joint>
+	<!-- Arm base link -->
+	<link name="left_base_link">
+		<inertial>
+			<origin xyz="0.00020641 -0.00057488 0.032296"/>
+			<mass value="0.37595"/>
+			<inertia ixx="0.00024335" ixy="1.2188e-06" ixz="2.4281e-06" iyy="0.00024039" iyz="-6.6932e-06" izz="0.00032195"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/base_link.obj"/>
+			</geometry>
+		</visual>
+	</link>
+	<!-- Arm links -->
+	<link name="left_link1">
+		<inertial>
+			<origin xyz="0.0012655 -0.00043778 -0.018388"/>
+			<mass value="0.4936"/>
+			<inertia ixx="0.00075396" ixy="-2.4144e-06" ixz="-1.8364e-06" iyy="0.00065755" iyz="1.2174e-06" izz="0.00031848"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link1.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="0.16642063483595848" radius="0.05579268228774888"/>
+			</geometry>
+			<origin rpy="0.0 0.0 -1.2566370614359172" xyz="0.0026814433577366636 0.0006133775157398935 -0.04071124829351902"/>
+		</collision>
+	</link>
+	<link name="left_link2">
+		<inertial>
+			<origin xyz="-0.00044207 -0.082298 0.00019486"/>
+			<mass value="0.46245"/>
+			<inertia ixx="0.00065719" ixy="3.7112e-07" ixz="-3.6668e-06" iyy="0.00043459" iyz="-2.517e-05" izz="0.00072571"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link2.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="1.5707963267948966 0 0" xyz="0.0 -0.044062052 0.0009765625"/>
+			<geometry>
+				<cylinder length="0.18085919" radius="0.06302423"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="left_link3">
+		<inertial>
+			<origin xyz="0.0010558 4.4416e-05 -0.056128"/>
+			<mass value="0.50026"/>
+			<inertia ixx="0.0013016" ixy="3.1401e-06" ixz="1.4255e-05" iyy="0.001427" iyz="2.4361e-05" izz="0.00033587"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link3.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz="0.0006559932284637068 -2.2628975236450855e-05 -0.07219303026795387"/>
+			<geometry>
+				<cylinder length="0.22061403840780258" radius="0.05216156143823925"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="left_link4">
+		<inertial>
+			<origin xyz="2.4212e-05 -0.06248 0.002536"/>
+			<mass value="0.27473"/>
+			<inertia ixx="0.00029283" ixy="4.5586e-07" ixz="5.8042e-08" iyy="0.00018852" iyz="-1.116e-06" izz="0.00031238"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link4.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="1.5707963267948966 0 0" xyz="0.0 -0.03817895 -0.0043945312"/>
+			<geometry>
+				<cylinder length="0.154955404" radius="0.057891708"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="left_link5">
+		<inertial>
+			<origin xyz="2.6223e-06 -0.00023041 -0.024141"/>
+			<mass value="0.25139"/>
+			<inertia ixx="0.00023516" ixy="-6.5868e-09" ixz="-1.9428e-08" iyy="0.00028807" iyz="-1.2108e-05"
+							 izz="0.00013068"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link5.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz="-0.00022255510134868567 -4.227476414728204e-05 -0.03344946540892124"/>
+			<geometry>
+				<cylinder length="0.13423806056380272" radius="0.04562028545392604"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="left_link6">
+		<inertial>
+			<origin xyz="5.0382e-06 -0.086696 0.002556"/>
+			<mass value="0.26634"/>
+			<inertia ixx="0.00031434" ixy="-1.2113e-09" ixz="1.0011e-07" iyy="0.00014464" iyz="-2.033e-05" izz="0.00032449"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link6.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0.0 -1.4835107730827122 -1.56897465223053"
+							xyz="-1.7782549414354032e-05 -0.05507596972928094 -0.0017447156928267265"/>
+			<geometry>
+				<cylinder length="0.18272488500982115" radius="0.04857149291994264"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="left_end_link">
+		<inertial>
+			<origin xyz="-7.5134e-05 -0.00024521 -0.016705"/>
+			<mass value="0.06158"/>
+			<inertia ixx="1.8407e-05" ixy="3.4818e-08" ixz="-3.2902e-09" iyy="1.818e-05" iyz="1.1326e-07" izz="2.8547e-05"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link7.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="3.141592653589793 -1.2246467991473532e-16 3.141592653589793"
+							xyz="-4.552953707661759e-05 -0.002300474691790042 -0.02249999972991645"/>
+			<geometry>
+				<cylinder length="0.045999998692423105" radius="0.030799950382754494"/>
+			</geometry>
+		</collision>
+	</link>
+	<!-- Arm joints -->
+	<joint name="left_joint1" type="revolute">
+		<parent link="left_base_link"/>
+		<child link="left_link1"/>
+		<origin xyz="0.0 0.0 0.1859"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="60.0" lower="-3.14" upper="3.14" velocity="3.14"/>
+	</joint>
+	<joint name="left_joint2" type="revolute">
+		<parent link="left_link1"/>
+		<child link="left_link2"/>
+		<origin rpy="-1.5707963267948966 0.0 1.5707963267948966" xyz="0.0 0.0 0.0"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="60.0" lower="-2.09" upper="1.48" velocity="3.14"/>
+	</joint>
+	<joint name="left_joint3" type="revolute">
+		<parent link="left_link2"/>
+		<child link="left_link3"/>
+		<origin rpy="-1.5707963267948966 1.5707963267948966 3.141592653589793" xyz="0.0 -0.305 0.0"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="60.0" lower="-3.10" upper="3.10" velocity="3.14"/>
+	</joint>
+	<joint name="left_joint4" type="revolute">
+		<parent link="left_link3"/>
+		<child link="left_link4"/>
+		<origin rpy="-1.5707963267948966 0.0 3.141592653589793" xyz="0.0 0.0 0.0"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="60.0" lower="-1.48" upper="1.48" velocity="3.14"/>
+	</joint>
+	<joint name="left_joint5" type="revolute">
+		<parent link="left_link4"/>
+		<child link="left_link5"/>
+		<origin rpy="-1.5707963267948966 0.0 -3.141592653589793" xyz="0.0 -0.1975 0.0"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="30.0" lower="-3.10" upper="3.10" velocity="3.14"/>
+	</joint>
+	<joint name="left_joint6" type="revolute">
+		<parent link="left_link5"/>
+		<child link="left_link6"/>
+		<origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.0 0.0 0.0"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="30.0" lower="-1.74" upper="1.74" velocity="3.14"/>
+	</joint>
+	<joint name="left_joint7" type="revolute">
+		<origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 -0.1805 0.0"/>
+		<parent link="left_link6"/>
+		<child link="left_end_link"/>
+		<axis xyz="0.0 0.0 1.0"/>
+		<limit effort="30.0" lower="-3.10" upper="3.10" velocity="3.14"/>
+	</joint>
+	<!-- Arm base link -->
+	<link name="right_base_link">
+		<inertial>
+			<origin xyz="-0.00020641 0.00057488 0.032296"/>
+			<mass value="0.37595"/>
+			<inertia ixx="0.00024335" ixy="1.2188e-06" ixz="-2.4281e-06" iyy="0.00024039" iyz="6.6932e-06" izz="0.00032195"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/base_link.obj"/>
+			</geometry>
+		</visual>
+	</link>
+	<!-- Arm links -->
+	<link name="right_link1">
+		<inertial>
+			<origin xyz="-0.0012655 -0.00043778 -0.018388"/>
+			<mass value="0.4936"/>
+			<inertia ixx="0.00075396" ixy="2.4144e-06" ixz="1.8364e-06" iyy="0.00065755" iyz="1.2174e-06" izz="0.00031848"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link1.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="0.16642063483595848" radius="0.05579268228774888"/>
+			</geometry>
+			<origin rpy="0.0 0.0 1.2566370614359172" xyz="-0.0026814433577366636 0.0006133775157398935 -0.04071124829351902"/>
+		</collision>
+	</link>
+	<link name="right_link2">
+		<inertial>
+			<origin xyz="0.00044207 -0.082298 0.00019486"/>
+			<mass value="0.46245"/>
+			<inertia ixx="0.00065719" ixy="3.7112e-07" ixz="-3.6668e-06" iyy="0.00043459" iyz="-2.517e-05" izz="0.00072571"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link2.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="1.5707963267948966 0 0" xyz="0.0 -0.044062052 0.0009765625"/>
+			<geometry>
+				<cylinder length="0.18085919" radius="0.06302423"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="right_link3">
+		<inertial>
+			<origin xyz="-0.0010558 4.4416e-05 -0.056128"/>
+			<mass value="0.50026"/>
+			<inertia ixx="0.0013016" ixy="3.1401e-06" ixz="1.4255e-05" iyy="0.001427" iyz="2.4361e-05" izz="0.00033587"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link3.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz="-0.0006559932284637068 -2.2628975236450855e-05 -0.07219303026795387"/>
+			<geometry>
+				<cylinder length="0.22061403840780258" radius="0.05216156143823925"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="right_link4">
+		<inertial>
+			<origin xyz="2.4212e-05 -0.06248 0.002536"/>
+			<mass value="0.27473"/>
+			<inertia ixx="0.00029283" ixy="4.5586e-07" ixz="5.8042e-08" iyy="0.00018852" iyz="-1.116e-06" izz="0.00031238"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link4.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="1.5707963267948966 0 0" xyz="0.0 -0.03817895 -0.0043945312"/>
+			<geometry>
+				<cylinder length="0.154955404" radius="0.057891708"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="right_link5">
+		<inertial>
+			<origin xyz="2.6223e-06 -0.00023041 -0.024141"/>
+			<mass value="0.25139"/>
+			<inertia ixx="0.00023516" ixy="-6.5868e-09" ixz="-1.9428e-08" iyy="0.00028807" iyz="-1.2108e-05"
+							 izz="0.00013068"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link5.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz="0.00022255510134868567 -4.227476414728204e-05 -0.03344946540892124"/>
+			<geometry>
+				<cylinder length="0.13423806056380272" radius="0.04562028545392604"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="right_link6">
+		<inertial>
+			<origin xyz="5.0382e-06 -0.086696 0.002556"/>
+			<mass value="0.26634"/>
+			<inertia ixx="0.00031434" ixy="-1.2113e-09" ixz="1.0011e-07" iyy="0.00014464" iyz="-2.033e-05" izz="0.00032449"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link6.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0.0 -1.4835107730827122 -1.56897465223053"
+							xyz="1.7782549414354032e-05 -0.05507596972928094 -0.0017447156928267265"/>
+			<geometry>
+				<cylinder length="0.18272488500982115" radius="0.04857149291994264"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="right_end_link">
+		<inertial>
+			<origin xyz="-7.5134e-05 -0.00024521 -0.016705"/>
+			<mass value="0.06158"/>
+			<inertia ixx="1.8407e-05" ixy="3.4818e-08" ixz="-3.2902e-09" iyy="1.818e-05" iyz="1.1326e-07" izz="2.8547e-05"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/arm/link7.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="3.141592653589793 -1.2246467991473532e-16 3.141592653589793"
+							xyz="-4.552953707661759e-05 -0.002300474691790042 -0.02249999972991645"/>
+			<geometry>
+				<cylinder length="0.045999998692423105" radius="0.030799950382754494"/>
+			</geometry>
+		</collision>
+	</link>
+	<!-- Arm joints -->
+	<joint name="right_joint1" type="revolute">
+		<parent link="right_base_link"/>
+		<child link="right_link1"/>
+		<origin xyz="0.0 0.0 0.1859"/>
+		<axis xyz="0.0 0.0 -1.0"/>
+		<limit effort="60.0" lower="-3.14" upper="3.14" velocity="3.14"/>
+	</joint>
+	<joint name="right_joint2" type="revolute">
+		<parent link="right_link1"/>
+		<child link="right_link2"/>
+		<origin rpy="-1.5707963267948966 0.0 -1.5707963267948966" xyz="0.0 0.0 0.0"/>
+		<axis xyz="0.0 0.0 -1.0"/>
+		<limit effort="60.0" lower="-2.09" upper="1.48" velocity="3.14"/>
+	</joint>
+	<joint name="right_joint3" type="revolute">
+		<parent link="right_link2"/>
+		<child link="right_link3"/>
+		<origin rpy="-1.5707963267948966 -1.5707963267948966 3.141592653589793" xyz="0.0 -0.305 0.0"/>
+		<axis xyz="0.0 0.0 -1.0"/>
+		<limit effort="60.0" lower="-3.10" upper="3.10" velocity="3.14"/>
+	</joint>
+	<joint name="right_joint4" type="revolute">
+		<parent link="right_link3"/>
+		<child link="right_link4"/>
+		<origin rpy="-1.5707963267948966 0.0 3.141592653589793" xyz="0.0 0.0 0.0"/>
+		<axis xyz="0.0 0.0 -1.0"/>
+		<limit effort="60.0" lower="-1.48" upper="1.48" velocity="3.14"/>
+	</joint>
+	<joint name="right_joint5" type="revolute">
+		<parent link="right_link4"/>
+		<child link="right_link5"/>
+		<origin rpy="-1.5707963267948966 0.0 3.141592653589793" xyz="0.0 -0.1975 0.0"/>
+		<axis xyz="0.0 0.0 -1.0"/>
+		<limit effort="30.0" lower="-3.10" upper="3.10" velocity="3.14"/>
+	</joint>
+	<joint name="right_joint6" type="revolute">
+		<parent link="right_link5"/>
+		<child link="right_link6"/>
+		<origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.0 0.0 0.0"/>
+		<axis xyz="0.0 0.0 -1.0"/>
+		<limit effort="30.0" lower="-1.74" upper="1.74" velocity="3.14"/>
+	</joint>
+	<joint name="right_joint7" type="revolute">
+		<origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 -0.1805 0.0"/>
+		<parent link="right_link6"/>
+		<child link="right_end_link"/>
+		<axis xyz="0.0 0.0 -1.0"/>
+		<limit effort="30.0" lower="-3.10" upper="3.10" velocity="3.14"/>
+	</joint>
+	<link name="left_gripper_base">
+		<inertial>
+			<origin xyz="1.23989288637867E-06 3.27564415436087E-07 0.0536186975993762"/>
+			<mass value="0.443105756928829"/>
+			<inertia ixx="0.00064200574020552" ixy="-1.51180224931458E-07" ixz="7.24174172220287E-09"
+							 iyy="0.00066998312004943" iyz="2.73584170951165E-09" izz="0.000278949393571484"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/gripper_base.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/gripper_base.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="left_left_1_link">
+		<inertial>
+			<origin xyz="0.00656387870913618 0.024850259757102 -9.40817030196858E-10"/>
+			<mass value="0.0112899386472626"/>
+			<inertia ixx="1.96944973967669E-06" ixy="6.42395813223716E-07" ixz="-1.07950451056367E-14"
+							 iyy="1.39704780795747E-06" iyz="-1.48209813327181E-14" izz="2.47457179553145E-06"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/link_1.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="left_gripper_joint" type="revolute">
+		<origin rpy="1.5708 0 3.1416" xyz="-0.032553 0 0.10644"/>
+		<parent link="left_gripper_base"/>
+		<child link="left_left_1_link"/>
+		<axis xyz="0 0 -1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+	</joint>
+	<link name="left_left_support_link">
+		<inertial>
+			<origin xyz="-0.011970095332009 0.0238338043684485 -1.36624428992904E-06"/>
+			<mass value="0.0140092102116716"/>
+			<inertia ixx="4.13674978137002E-06" ixy="9.81573398608352E-07" ixz="-2.87921970465553E-11"
+							 iyy="1.1362453186293E-06" iyz="2.94726072168702E-11" izz="4.10226218364235E-06"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/support_link.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="left_left_support_joint" type="revolute">
+		<origin xyz="-0.0093594 0.056229 0"/>
+		<parent link="left_left_1_link"/>
+		<child link="left_left_support_link"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="left_gripper_joint" multiplier="1" offset="0"/>
+	</joint>
+	<link name="left_left_pad_link">
+		<inertial>
+			<origin xyz="1.46688816627348E-09 0.00209017783344978 -8.17280129359337E-17"/>
+			<mass value="0.00332411394949541"/>
+			<inertia ixx="5.5867126170785E-07" ixy="2.9966962370347E-20" ixz="1.44978830317617E-23" iyy="1.45407135182096E-07"
+							 iyz="-1.60867378777053E-21" izz="4.18250297449997E-07"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/pad_link.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="left_left_pad_joint" type="fixed">
+		<origin xyz="-0.022056 0.044306 0"/>
+		<parent link="left_left_support_link"/>
+		<child link="left_left_pad_link"/>
+	</joint>
+	<link name="left_left_2_link">
+		<inertial>
+			<origin xyz="-0.00438952959966343 0.0248815722409523 -2.55135883071891E-05"/>
+			<mass value="0.00803955821311802"/>
+			<inertia ixx="1.15079028835042E-06" ixy="1.13853775681911E-07" ixz="-1.79492796413463E-10"
+							 iyy="4.68655200337902E-07" iyz="-4.49903912976825E-10" izz="8.47367915692972E-07"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/link_2.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="left_left_2_joint" type="revolute">
+		<origin rpy="1.5708 0 3.1416" xyz="-0.017 0 0.122"/>
+		<parent link="left_gripper_base"/>
+		<child link="left_left_2_link"/>
+		<axis xyz="0 0 -1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="left_gripper_joint" multiplier="1" offset="0"/>
+	</joint>
+	<link name="left_right_2_link">
+		<inertial>
+			<origin xyz="-0.00438952959968201 0.0248815722409522 -2.5513588307359E-05"/>
+			<mass value="0.00803955821311803"/>
+			<inertia ixx="1.15079028835042E-06" ixy="1.13853775681912E-07" ixz="-1.79492796413511E-10"
+							 iyy="4.68655200337903E-07" iyz="-4.49903912976901E-10" izz="8.47367915692974E-07"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/link_2.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="left_right_2_joint" type="revolute">
+		<origin rpy="1.5708 0 0" xyz="0.017 0 0.122"/>
+		<parent link="left_gripper_base"/>
+		<child link="left_right_2_link"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="left_left_2_joint" multiplier="-1" offset="0"/>
+	</joint>
+	<link name="left_right_1_link">
+		<inertial>
+			<origin xyz="0.00656387870564603 0.0248502597572661 -9.40812230336897E-10"/>
+			<mass value="0.0112899386472626"/>
+			<inertia ixx="1.96944973967663E-06" ixy="6.42395813223747E-07" ixz="-1.07950449101923E-14"
+							 iyy="1.39704780795753E-06" iyz="-1.48209815851649E-14" izz="2.47457179553146E-06"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/link_1.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="left_right_1_joint" type="revolute">
+		<origin rpy="1.5708 0 0" xyz="0.032553 0 0.10644"/>
+		<parent link="left_gripper_base"/>
+		<child link="left_right_1_link"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="left_gripper_joint" multiplier="-1" offset="0"/>
+	</joint>
+	<link name="left_right_support_link">
+		<inertial>
+			<origin xyz="-0.011970095112324 0.0238338043682057 -1.36624428997256E-06"/>
+			<mass value="0.0140092102116716"/>
+			<inertia ixx="4.13674978136988E-06" ixy="9.81573398608576E-07" ixz="-2.87921970465403E-11"
+							 iyy="1.13624531862944E-06" iyz="2.94726072165632E-11" izz="4.10226218364236E-06"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/support_link.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="left_right_support_joint" type="revolute">
+		<origin xyz="-0.0093594 0.056229 0"/>
+		<parent link="left_right_1_link"/>
+		<child link="left_right_support_link"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="left_right_1_joint" multiplier="-1" offset="0"/>
+	</joint>
+	<link name="left_right_pad_link">
+		<inertial>
+			<origin xyz="5.43457184440897E-09 0.00209017783344967 -1.21646039264426E-16"/>
+			<mass value="0.00332411394949542"/>
+			<inertia ixx="5.58671261707851E-07" ixy="3.06066210315894E-20" ixz="1.70379713307979E-23"
+							 iyy="1.45407135182096E-07" iyz="-1.65096420438087E-21" izz="4.18250297449998E-07"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/pad_link.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="left_right_pad_joint" type="fixed">
+		<origin xyz="-0.022056 0.044306 0"/>
+		<parent link="left_right_support_link"/>
+		<child link="left_right_pad_link"/>
+	</joint>
+	<joint name="left_gripper_center_joint" type="fixed">
+		<origin rpy="-1.5708 -1.5708 0" xyz="0 0 0.2"/>
+		<parent link="left_gripper_base"/>
+		<child link="left_gripper_center"/>
+	</joint>
+	<link name="left_gripper_center"/>
+	<link name="right_gripper_base">
+		<inertial>
+			<origin xyz="1.23989288637867E-06 3.27564415436087E-07 0.0536186975993762"/>
+			<mass value="0.443105756928829"/>
+			<inertia ixx="0.00064200574020552" ixy="-1.51180224931458E-07" ixz="7.24174172220287E-09"
+							 iyy="0.00066998312004943" iyz="2.73584170951165E-09" izz="0.000278949393571484"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/gripper_base.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/gripper_base.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<link name="right_left_1_link">
+		<inertial>
+			<origin xyz="0.00656387870913618 0.024850259757102 -9.40817030196858E-10"/>
+			<mass value="0.0112899386472626"/>
+			<inertia ixx="1.96944973967669E-06" ixy="6.42395813223716E-07" ixz="-1.07950451056367E-14"
+							 iyy="1.39704780795747E-06" iyz="-1.48209813327181E-14" izz="2.47457179553145E-06"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/link_1.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="right_gripper_joint" type="revolute">
+		<origin rpy="1.5708 0 3.1416" xyz="-0.032553 0 0.10644"/>
+		<parent link="right_gripper_base"/>
+		<child link="right_left_1_link"/>
+		<axis xyz="0 0 -1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+	</joint>
+	<link name="right_left_support_link">
+		<inertial>
+			<origin xyz="-0.011970095332009 0.0238338043684485 -1.36624428992904E-06"/>
+			<mass value="0.0140092102116716"/>
+			<inertia ixx="4.13674978137002E-06" ixy="9.81573398608352E-07" ixz="-2.87921970465553E-11"
+							 iyy="1.1362453186293E-06" iyz="2.94726072168702E-11" izz="4.10226218364235E-06"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/support_link.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="right_left_support_joint" type="revolute">
+		<origin xyz="-0.0093594 0.056229 0"/>
+		<parent link="right_left_1_link"/>
+		<child link="right_left_support_link"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="right_gripper_joint" multiplier="1" offset="0"/>
+	</joint>
+	<link name="right_left_pad_link">
+		<inertial>
+			<origin xyz="1.46688816627348E-09 0.00209017783344978 -8.17280129359337E-17"/>
+			<mass value="0.00332411394949541"/>
+			<inertia ixx="5.5867126170785E-07" ixy="2.9966962370347E-20" ixz="1.44978830317617E-23" iyy="1.45407135182096E-07"
+							 iyz="-1.60867378777053E-21" izz="4.18250297449997E-07"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/pad_link.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="right_left_pad_joint" type="fixed">
+		<origin xyz="-0.022056 0.044306 0"/>
+		<parent link="right_left_support_link"/>
+		<child link="right_left_pad_link"/>
+	</joint>
+	<link name="right_left_2_link">
+		<inertial>
+			<origin xyz="-0.00438952959966343 0.0248815722409523 -2.55135883071891E-05"/>
+			<mass value="0.00803955821311802"/>
+			<inertia ixx="1.15079028835042E-06" ixy="1.13853775681911E-07" ixz="-1.79492796413463E-10"
+							 iyy="4.68655200337902E-07" iyz="-4.49903912976825E-10" izz="8.47367915692972E-07"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/link_2.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="right_left_2_joint" type="revolute">
+		<origin rpy="1.5708 0 3.1416" xyz="-0.017 0 0.122"/>
+		<parent link="right_gripper_base"/>
+		<child link="right_left_2_link"/>
+		<axis xyz="0 0 -1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="right_gripper_joint" multiplier="1" offset="0"/>
+	</joint>
+	<link name="right_right_2_link">
+		<inertial>
+			<origin xyz="-0.00438952959968201 0.0248815722409522 -2.5513588307359E-05"/>
+			<mass value="0.00803955821311803"/>
+			<inertia ixx="1.15079028835042E-06" ixy="1.13853775681912E-07" ixz="-1.79492796413511E-10"
+							 iyy="4.68655200337903E-07" iyz="-4.49903912976901E-10" izz="8.47367915692974E-07"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/link_2.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="right_right_2_joint" type="revolute">
+		<origin rpy="1.5708 0 0" xyz="0.017 0 0.122"/>
+		<parent link="right_gripper_base"/>
+		<child link="right_right_2_link"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="right_left_2_joint" multiplier="-1" offset="0"/>
+	</joint>
+	<link name="right_right_1_link">
+		<inertial>
+			<origin xyz="0.00656387870564603 0.0248502597572661 -9.40812230336897E-10"/>
+			<mass value="0.0112899386472626"/>
+			<inertia ixx="1.96944973967663E-06" ixy="6.42395813223747E-07" ixz="-1.07950449101923E-14"
+							 iyy="1.39704780795753E-06" iyz="-1.48209815851649E-14" izz="2.47457179553146E-06"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/link_1.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="right_right_1_joint" type="revolute">
+		<origin rpy="1.5708 0 0" xyz="0.032553 0 0.10644"/>
+		<parent link="right_gripper_base"/>
+		<child link="right_right_1_link"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="right_gripper_joint" multiplier="-1" offset="0"/>
+	</joint>
+	<link name="right_right_support_link">
+		<inertial>
+			<origin xyz="-0.011970095112324 0.0238338043682057 -1.36624428997256E-06"/>
+			<mass value="0.0140092102116716"/>
+			<inertia ixx="4.13674978136988E-06" ixy="9.81573398608576E-07" ixz="-2.87921970465403E-11"
+							 iyy="1.13624531862944E-06" iyz="2.94726072165632E-11" izz="4.10226218364236E-06"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/support_link.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="right_right_support_joint" type="revolute">
+		<origin xyz="-0.0093594 0.056229 0"/>
+		<parent link="right_right_1_link"/>
+		<child link="right_right_support_link"/>
+		<axis xyz="0 0 1"/>
+		<limit effort="40" lower="0" upper="1" velocity="4.1887902047863905"/>
+		<mimic joint="right_right_1_joint" multiplier="-1" offset="0"/>
+	</joint>
+	<link name="right_right_pad_link">
+		<inertial>
+			<origin xyz="5.43457184440897E-09 0.00209017783344967 -1.21646039264426E-16"/>
+			<mass value="0.00332411394949542"/>
+			<inertia ixx="5.58671261707851E-07" ixy="3.06066210315894E-20" ixz="1.70379713307979E-23"
+							 iyy="1.45407135182096E-07" iyz="-1.65096420438087E-21" izz="4.18250297449998E-07"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/visual/pad_link.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.obj"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="right_right_pad_joint" type="fixed">
+		<origin xyz="-0.022056 0.044306 0"/>
+		<parent link="right_right_support_link"/>
+		<child link="right_right_pad_link"/>
+	</joint>
+	<joint name="right_gripper_center_joint" type="fixed">
+		<origin rpy="-1.5708 -1.5708 0" xyz="0 0 0.2"/>
+		<parent link="right_gripper_base"/>
+		<child link="right_gripper_center"/>
+	</joint>
+	<link name="right_gripper_center"/>
+	<!-- Arm base links -->
+	<link name="arm_base"/>
+	<!-- Arm base joints -->
+	<joint name="arm_base_joint" type="fixed">
+		<parent link="body_link2"/>
+		<child link="arm_base"/>
+		<origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 -0.305 0.0"/>
+	</joint>
+	<joint name="left_base_joint" type="fixed">
+		<parent link="arm_base"/>
+		<child link="left_base_link"/>
+		<origin rpy="-1.5707963267948966 0.0 0.0" xyz="0.0 0.025 0.0"/>
+	</joint>
+	<joint name="right_base_joint" type="fixed">
+		<parent link="arm_base"/>
+		<child link="right_base_link"/>
+		<origin rpy="-1.5707963267948966 0.0 3.141592653589793" xyz="0.0 -0.025 0.0"/>
+	</joint>
+	<!-- Gripper joints -->
+	<joint name="ee_left_joint" type="fixed">
+		<origin xyz="0 0 0.027727" rpy="0 0 3.1415"/>
+		<parent link="left_end_link"/>
+		<child link="left_gripper_base"/>
+	</joint>
+	<joint name="ee_right_joint" type="fixed">
+		<origin xyz="0 0 0.027727" rpy="0 0 3.1415"/>
+		<parent link="right_end_link"/>
+		<child link="right_gripper_base"/>
+	</joint>
+	<joint name="left_camera_stand" type="fixed">
+		<parent link="left_end_link"/>
+		<child link="left_camera_stand"/>
+	</joint>
+	<link name="left_camera_stand">
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/camera/120s_camera_stand.obj"/>
+			</geometry>
+		</visual>
+	</link>
+	<joint name="left_camera" type="fixed">
+		<origin rpy="0 -1.117 1.5708" xyz="0 -0.079320 0.108617"/>
+		<parent link="left_camera_stand"/>
+		<child link="left_camera"/>
+	</joint>
+	<link name="left_camera">
+		<visual>
+			<geometry>
+				<mesh filename="package://camera_models/meshes/d405/d405.obj"/>
+			</geometry>
+		</visual>
+	</link>
+	<joint name="right_camera_stand" type="fixed">
+		<parent link="right_end_link"/>
+		<child link="right_camera_stand"/>
+	</joint>
+	<link name="right_camera_stand">
+		<visual>
+			<geometry>
+				<mesh filename="package://agibot_g1_description/meshes/camera/120s_camera_stand.obj"/>
+			</geometry>
+		</visual>
+	</link>
+	<joint name="right_camera" type="fixed">
+		<origin rpy="0 -1.117 1.5708" xyz="0 -0.079320 0.108617"/>
+		<parent link="right_camera_stand"/>
+		<child link="right_camera"/>
+	</joint>
+	<link name="right_camera">
+		<visual>
+			<geometry>
+				<mesh filename="package://camera_models/meshes/d405/d405.obj"/>
+			</geometry>
+		</visual>
+	</link>
 </robot>
