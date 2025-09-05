@@ -27,8 +27,6 @@ colcon build --packages-up-to openarm_description --symlink-install
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_visualize_config manipulator.launch.py robot:=openarm type:=left
   ```
-
-  ![Single](../../.images/openarm_single.png)
 * Right arm only
   ```bash
   source ~/ros2_ws/install/setup.bash
