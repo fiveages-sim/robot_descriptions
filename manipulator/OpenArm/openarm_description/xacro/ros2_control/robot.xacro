@@ -12,16 +12,8 @@
   <xacro:arg name="type" default="bimanual"/>
 
 
-  <!-- 根据type参数决定机器人类型 -->
-  <xacro:if value="${'$(arg type)' == 'bimanual'}">
-    <xacro:include filename="$(find openarm_description)/xacro/openarm_bimanual.xacro"/>
-    <xacro:openarm_bimanual name=""/>
-  </xacro:if>
-
-  <xacro:if value="${'$(arg type)' == 'single'}">
-    <xacro:include filename="$(find openarm_description)/xacro/openarm_single.xacro"/>
-    <xacro:openarm_single name=""/>
-  </xacro:if>
+  <!-- 直接include robot.xacro并根据type参数传递 -->
+  <xacro:include filename="$(find openarm_description)/xacro/robot.xacro" type="$(arg type)"/>
 
 
 
@@ -31,11 +23,15 @@
     <xacro:openarm_v10_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
   </xacro:if>
 
-  <xacro:if value="${'$(arg type)' == 'single'}">
+  <xacro:if value="${'$(arg type)' == 'left'}">
     <xacro:include filename="$(find openarm_description)/xacro/ros2_control/openarm_single.ros2_control.xacro"/>
     <xacro:openarm_v10_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
   </xacro:if>
 
+  <xacro:if value="${'$(arg type)' == 'right'}">
+    <xacro:include filename="$(find openarm_description)/xacro/ros2_control/openarm_single.ros2_control.xacro"/>
+    <xacro:openarm_v10_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+  </xacro:if>
 
   <!-- Gazebo plugin configuration -->
   <xacro:arg name="gazebo" default="false" />
@@ -45,7 +41,10 @@
         <xacro:if value="${'$(arg type)' == 'bimanual'}">
           <parameters>$(find openarm_description)/config/ros2_control/openarm_bimanual.yaml</parameters>
         </xacro:if>
-        <xacro:if value="${'$(arg type)' == 'single'}">
+        <xacro:if value="${'$(arg type)' == 'left'}">
+          <parameters>$(find openarm_description)/config/ros2_control/openarm_single.yaml</parameters>
+        </xacro:if>
+        <xacro:if value="${'$(arg type)' == 'right'}">
           <parameters>$(find openarm_description)/config/ros2_control/openarm_single.yaml</parameters>
         </xacro:if>
       </plugin>

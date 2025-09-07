@@ -78,7 +78,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="${prefix}finger_joint1">
+      <joint name="${prefix}gripper_joint">
         <command_interface name="position"/>
         <state_interface name="position"/>
         <state_interface name="velocity"/>

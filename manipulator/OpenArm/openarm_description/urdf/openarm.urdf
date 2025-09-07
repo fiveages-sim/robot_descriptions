@@ -78,7 +78,7 @@
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0.0301 0.0 -0.1225"/>
+      <!-- <origin xyz="0.0301 0.0 -0.1225"/> -->
       <geometry>
         <mesh filename="package://openarm_description/meshes/arm/collision/link2.stl" scale="1 -1 1"/>
       </geometry>
@@ -278,7 +278,7 @@
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0.0301 0.0 -0.1225"/>
+      <!-- <origin xyz="0.0301 0.0 -0.1225"/> -->
       <geometry>
         <mesh filename="package://openarm_description/meshes/arm/collision/link2.stl" scale="1 1 1"/>
       </geometry>

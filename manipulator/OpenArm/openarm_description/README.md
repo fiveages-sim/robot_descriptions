@@ -44,7 +44,7 @@ colcon build --packages-up-to openarm_description --symlink-install
   ```bash
   # Need to copy and replace task_bimanual.info content into task.info
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=openarm
+  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=openarm 
   ```
   [Screencast from 2025-09-05 18-23-31.webm](https://github.com/user-attachments/assets/a681d0cc-a2a0-4f05-a3d0-64778d28941a)
 
@@ -63,11 +63,13 @@ Note: need to check the .xacro file under ros2_control, make sure when ros2_cont
   ```bash
   # Need to copy and replace openarm_bimanual.yaml content into ros2_contorllers.yaml
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm_v10 type:=bimanual
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm
   ```
-* OpenArm Single (hardware:=gz is optional)
+* OpenArm Single (hardware:=gz, hardware:=isaac are optional)
   ```bash
   # Need to copy and replace openarm_single.yaml content into ros2_contorllers.yaml
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm_v10 hardware:=gz type:=single
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm hardware:=gz type:=left
+  # or RIght single arm
+  # ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm hardware:=gz type:=right
   ```
