@@ -73,7 +73,7 @@ joint_command is not joint_command's'!!!
 * Gazebo Simulation
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm hardware:=gz
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=openarm hardware:=gz world:=warehouse
   ```
   [Screencast from 2025-09-08 17-15-43.webm](https://github.com/user-attachments/assets/97720fe3-d873-4a01-b3a0-c7a084019f31)
 
