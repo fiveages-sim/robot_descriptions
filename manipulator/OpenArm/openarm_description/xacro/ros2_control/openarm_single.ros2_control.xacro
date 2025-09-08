@@ -2,88 +2,16 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="openarm_v10_system" params="name ros2_control_hardware_type">
 
+    <xacro:include filename="$(find openarm_description)/xacro/ros2_control/openarm_arm_gripper_system.xacro"/>
+    <xacro:include filename="$(find openarm_description)/xacro/ros2_control/hardware_system.xacro"/>
+
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
-    <ros2_control name="${prefix}openarm_v10_system" type="system">
-      <hardware>
-        <xacro:if value="${ros2_control_hardware_type == 'gz'}">
-          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-        </xacro:if>
-        <xacro:if value="${ros2_control_hardware_type == 'mock_components'}">
-          <plugin>mock_components/GenericSystem</plugin>
-        </xacro:if>
-        <xacro:if value="${ros2_control_hardware_type == 'isaac'}">
-          <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
-          <param name="joint_commands_topic">/isaac/joint_command</param>
-          <param name="joint_states_topic">/isaac/joint_states</param>
-          <param name="sum_wrapped_joint_states">false</param>
-          <param name="initialize_commands_from_state">true</param>
-        </xacro:if>
-        <xacro:if value="${ros2_control_hardware_type == 'real'}">
-          <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
-          <param name="joint_commands_topic">/joint_command_robot</param>
-          <param name="joint_states_topic">/joint_states_robot</param>
-          <param name="sum_wrapped_joint_states">false</param>
-          <param name="initialize_commands_from_state">true</param>
-        </xacro:if>
-      </hardware>
+    <ros2_control name="$openarm_v10_system" type="system">
+      <xacro:hardware_system ros2_control_hardware_type="${ros2_control_hardware_type}"/>
 
       <!-- 关节接口定义 -->
-      <joint name="${prefix}joint1">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint2">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint3">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint4">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint5">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint6">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint7">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}gripper_joint">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
+      <xacro:openarm_arm_gripper_system name="" />
 
     </ros2_control>
   </xacro:macro>
