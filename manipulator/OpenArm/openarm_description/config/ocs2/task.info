@@ -180,22 +180,22 @@ inputCost
     ; input costs for the single arm DOFs
     arm
     {
-      scaling 1e-3
+      scaling 1e-2
 
-      (0,0)  0.1  ; left_arm_1 velocity
-      (1,1)  0.1  ; left_arm_2 velocity
-      (2,2)  0.1  ; left_arm_3 velocity
-      (3,3)  0.1  ; left_arm_4 velocity
-      (4,4)  0.1  ; left_arm_5 velocity
-      (5,5)  0.1  ; left_arm_6 velocity
-      (6,6)  0.1  ; left_arm_7 velocity
-      (7,7)  0.1  ; right_arm_1 velocity
-      (8,8)  0.1  ; right_arm_2 velocity
-      (9,9)  0.1  ; right_arm_3 velocity
-      (10,10)  0.1  ; right_arm_4 velocity
-      (11,11)  0.1  ; right_arm_5 velocity
-      (12,12)  0.1  ; right_arm_6 velocity
-      (13,13)  0.1  ; right_arm_7 velocity
+      (0,0)  0.5  ; left_arm_1 velocity
+      (1,1)  0.5  ; left_arm_2 velocity
+      (2,2)  0.5  ; left_arm_3 velocity
+      (3,3)  0.5  ; left_arm_4 velocity
+      (4,4)  0.5  ; left_arm_5 velocity
+      (5,5)  0.5  ; left_arm_6 velocity
+      (6,6)  0.5  ; left_arm_7 velocity
+      (7,7)  0.5  ; right_arm_1 velocity
+      (8,8)  0.5  ; right_arm_2 velocity
+      (9,9)  0.5  ; right_arm_3 velocity
+      (10,10)  0.5  ; right_arm_4 velocity
+      (11,11)  0.5  ; right_arm_5 velocity
+      (12,12)  0.5  ; right_arm_6 velocity
+      (13,13)  0.5  ; right_arm_7 velocity
     }
   }
 }

@@ -11,7 +11,7 @@ model_information {
   ; base frame of the robot (from URDF)
   baseFrame                       "base_link"
   ; end-effector frame of the robot (from URDF)
-  eeFrame                         "hand_tcp" // left arm
+  eeFrame                         "hand_tcp"
 }
 
 model_settings
@@ -173,15 +173,15 @@ inputCost
     ; input costs for the single arm DOFs
     arm
     {
-      scaling 1e-3
+      scaling 1e-2
 
-      (0,0)  0.1  ; arm_1 velocity
-      (1,1)  0.1  ; arm_2 velocity
-      (2,2)  0.1  ; arm_3 velocity
-      (3,3)  0.1  ; arm_4 velocity
-      (4,4)  0.1  ; arm_5 velocity
-      (5,5)  0.1  ; arm_6 velocity
-      (6,6)  0.1  ; arm_7 velocity
+      (0,0)  1.0  ; arm_1 velocity
+      (1,1)  1.0  ; arm_2 velocity
+      (2,2)  1.0  ; arm_3 velocity
+      (3,3)  1.0  ; arm_4 velocity
+      (4,4)  1.0  ; arm_5 velocity
+      (5,5)  1.0  ; arm_6 velocity
+      (6,6)  1.0  ; arm_7 velocity
 
     }
   }
@@ -336,7 +336,6 @@ jointVelocityLimits
       (4,0)  5.0      ; arm_5 [rad/s]
       (5,0)  5.0      ; arm_6 [rad/s]
       (6,0)  5.0      ; arm_7 [rad/s]
-
     }
   }
 }

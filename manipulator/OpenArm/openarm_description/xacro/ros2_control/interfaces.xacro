@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="openarm_arm_gripper_system" params="name">
+  <xacro:macro name="openarm_interfaces" params="name">
 
 
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
