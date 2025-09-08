@@ -1,0 +1,46 @@
+# This config file of OpenArm Single is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+ocs2_arm_controller:
+  ros__parameters:
+    # Joint configuration
+    update_rate: 50  # Hz
+    info_file_name: single
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+      - joint7
+    
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      
+    future_time_offset: 2.0
+    robot_name: openarm
+    robot_type: "left"
+
+    # Control parameters
+    home_pos: [0.0, 0.0, 0.0, 1.281, 0.0, 0.0, -0.722]
+    rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+hand_controller:
+  ros__parameters:
+    joint: gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
