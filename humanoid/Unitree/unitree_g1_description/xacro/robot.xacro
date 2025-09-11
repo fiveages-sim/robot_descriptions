@@ -1,4 +1,5 @@
 <robot name="g1_29dof" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.1415926535897931"/>
 
 	<xacro:arg name="end_effector" default="rubber_hand"/>
 
@@ -46,12 +47,12 @@
 		<xacro:BrainCoHand name="right" direction="-1"/>
 
 		<joint name="left_hand_palm_joint" type="fixed" dont_collapse="true">
-			<origin xyz="0.0415 0.003 0" rpy="-1.5708 0 -1.5708"/>
+			<origin xyz="0.0415 0.003 0" rpy="${-PI/2} 0 ${-PI/2}"/>
 			<parent link="left_wrist_yaw_link"/>
 			<child link="left_hand_base"/>
 		</joint>
 		<joint name="right_hand_palm_joint" type="fixed" dont_collapse="true">
-			<origin xyz="0.0415 -0.003 0" rpy="1.5708 0 1.5708"/>
+			<origin xyz="0.0415 -0.003 0" rpy="${PI/2} 0 ${PI/2}"/>
 			<parent link="right_wrist_yaw_link"/>
 			<child link="right_hand_base"/>
 		</joint>

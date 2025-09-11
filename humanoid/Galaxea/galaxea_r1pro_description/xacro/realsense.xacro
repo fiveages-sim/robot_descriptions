@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="RealSense" params="side">
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
+	<xacro:macro name="RealSense" params="side">
     <xacro:property name="side_prefix" value="${side + '_' if side else ''}"/>
 
     <!-- RealSense Camera Link -->
@@ -8,13 +10,7 @@
       <inertial>
         <origin xyz="0.022169 0.0060171 -0.017353"/>
         <mass value="0.175"/>
-        <inertia
-          ixx="6.965E-06"
-          ixy="2.6612E-06"
-          ixz="1.2797E-06"
-          iyy="2.3281E-05"
-          iyz="-1.4268E-06"
-          izz="2.5513E-05"/>
+        <inertia ixx="6.965E-06" ixy="2.6612E-06" ixz="1.2797E-06" iyy="2.3281E-05" iyz="-1.4268E-06" izz="2.5513E-05"/>
       </inertial>
       <visual>
         <geometry>
@@ -30,7 +26,7 @@
 
     <!-- RealSense Joint: Arm 7 to Camera -->
     <joint name="${side_prefix}realsense_joint" type="fixed">
-      <origin xyz="0.02101 0.0028934 -0.1555183" rpy="2.70516 -0.0077831 -1.5708"/>
+      <origin xyz="0.02101 0.0028934 -0.1555183" rpy="2.70516 -0.0077831 ${-PI/2}"/>
       <parent link="${side_prefix}link7"/>
       <child link="${side_prefix}realsense_link"/>
     </joint>

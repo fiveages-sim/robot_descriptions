@@ -50,7 +50,7 @@
     <parent link="base_link"/>
     <child link="Link1"/>
     <axis xyz="0 0 1"/>
-    <limit effort="300" lower="-6.28318" upper="6.28318" velocity="3.14159"/>
+    <limit effort="300" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.141592653589793"/>
   </joint>
   <link name="Link2">
     <inertial>
@@ -70,7 +70,7 @@
       </geometry>
     </collision>
     <collision>
-      <origin rpy="0 1.5708 0" xyz="-0.2 0 0.15"/>
+      <origin rpy="0 1.5707963267948966 0" xyz="-0.2 0 0.15"/>
       <geometry>
         <cylinder length="0.43" radius="0.065"/>
       </geometry>
@@ -83,11 +83,11 @@
     </collision>
   </link>
   <joint name="joint2" type="revolute">
-    <origin rpy="1.5708 1.5708 0"/>
+    <origin rpy="1.5707963267948966 1.5707963267948966 0"/>
     <parent link="Link1"/>
     <child link="Link2"/>
     <axis xyz="0 0 1"/>
-    <limit effort="300" lower="-6.28318" upper="6.28318" velocity="3.14159"/>
+    <limit effort="300" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.141592653589793"/>
   </joint>
   <link name="Link3">
     <inertial>
@@ -107,7 +107,7 @@
       </geometry>
     </collision>
     <collision>
-      <origin rpy="0 1.5708 0" xyz="-0.2 0 0.03"/>
+      <origin rpy="0 1.5707963267948966 0" xyz="-0.2 0 0.03"/>
       <geometry>
         <cylinder length="0.26" radius="0.05"/>
       </geometry>
@@ -138,18 +138,18 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="1.5708 0 0"/>
+      <origin rpy="1.5707963267948966 0 0"/>
       <geometry>
         <cylinder length="0.155" radius="0.055"/>
       </geometry>
     </collision>
   </link>
   <joint name="joint4" type="revolute">
-    <origin rpy="0 0 -1.5708" xyz="-0.357 0 0.141"/>
+    <origin rpy="0 0 -1.5707963267948966" xyz="-0.357 0 0.141"/>
     <parent link="Link3"/>
     <child link="Link4"/>
     <axis xyz="0 0 1"/>
-    <limit effort="300" lower="-6.28318" upper="6.28318" velocity="3.14159"/>
+    <limit effort="300" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.141592653589793"/>
   </joint>
   <link name="Link5">
     <inertial>
@@ -163,18 +163,18 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="1.5708 0 0"/>
+      <origin rpy="1.5707963267948966 0 0"/>
       <geometry>
         <cylinder length="0.18" radius="0.055"/>
       </geometry>
     </collision>
   </link>
   <joint name="joint5" type="revolute">
-    <origin rpy="1.5708 0 0" xyz="0 -0.116 0"/>
+    <origin rpy="1.5707963267948966 0 0" xyz="0 -0.116 0"/>
     <parent link="Link4"/>
     <child link="Link5"/>
     <axis xyz="0 0 1"/>
-    <limit effort="300" lower="-6.28318" upper="6.28318" velocity="3.14159"/>
+    <limit effort="300" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.141592653589793"/>
   </joint>
   <link name="Link6">
     <inertial>
@@ -195,10 +195,10 @@
     </collision>
   </link>
   <joint name="joint6" type="revolute">
-    <origin rpy="-1.5708 0 0" xyz="0 0.105 0"/>
+    <origin rpy="-1.5707963267948966 0 0" xyz="0 0.105 0"/>
     <parent link="Link5"/>
     <child link="Link6"/>
     <axis xyz="0 0 1"/>
-    <limit effort="300" lower="-6.28318" upper="6.28318" velocity="3.14159"/>
+    <limit effort="300" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.141592653589793"/>
   </joint>
 </robot>

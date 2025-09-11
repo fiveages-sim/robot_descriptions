@@ -3,6 +3,7 @@
   <xacro:macro name="Arm" params="name">
     <xacro:include filename="$(find galaxea_a1_description)/xacro/a1xy_base.xacro"/>
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:property name="PI" value="3.1415926535897931"/>
 
     <xacro:Base name="${name}"/>
 
@@ -67,7 +68,7 @@
       <parent link="${prefix}link3"/>
       <child link="${prefix}link4"/>
       <axis xyz="0 1 0"/>
-      <limit lower="-1.5708" upper="1.5708" effort="14" velocity="32.9867"/>
+      <limit lower="-${PI}" upper="${PI}" effort="14" velocity="32.9867"/>
     </joint>
 
     <link name="${prefix}link5">
@@ -99,7 +100,7 @@
       <parent link="${prefix}link4"/>
       <child link="${prefix}link5"/>
       <axis xyz="0 0 1"/>
-      <limit lower="-1.5708" upper="1.5708" effort="14" velocity="32.9867"/>
+      <limit lower="-${PI}" upper="${PI}" effort="14" velocity="32.9867"/>
     </joint>
 
     <link name="${prefix}link6">

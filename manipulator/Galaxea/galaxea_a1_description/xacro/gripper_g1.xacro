@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:macro name="Gripper" params="name">
 
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>

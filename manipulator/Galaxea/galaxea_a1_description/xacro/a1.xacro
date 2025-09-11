@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:macro name="Arm" params="name direction:=normal">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
@@ -89,7 +90,7 @@
 
     <!-- Joint 2: Link1 to Link2 -->
     <joint name="${prefix}joint2" type="revolute">
-      <origin xyz="0 0 0.1061" rpy="1.5708 0 0"/>
+      <origin xyz="0 0 0.1061" rpy="${PI/2.0} 0 0"/>
       <parent link="${prefix}link1"/>
       <child link="${prefix}link2"/>
       <axis xyz="0 0 -1"/>
@@ -239,7 +240,7 @@
     <!-- Gripper Properties -->
     <xacro:property name="gripper_origin_xyz" value="${'0.1039 0 0'}"/>
     <xacro:property name="gripper_origin_rpy"
-                    value="${'-1.5708 0 0' if direction == 'normal' else '3.14159 0 0' if direction == 'right' else '0 0 0'}"/>
+                    value="${'-' + str(PI/2.0) + ' 0 0' if direction == 'normal' else str(PI) + ' 0 0' if direction == 'right' else '0 0 0'}"/>
     <origin xyz="${gripper_origin_xyz}" rpy="${gripper_origin_rpy}"/>
 
     <!-- Gripper Base Joint -->

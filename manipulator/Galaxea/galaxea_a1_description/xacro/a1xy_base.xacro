@@ -1,107 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="Base" params="name">
-    <!-- Base Link -->
-    <link name="${prefix}base_link">
-      <inertial>
-        <origin xyz="0.00303246421307354 -0.000695340443194854 0.0297996781638517"/>
-        <mass value="0.786"/>
-        <inertia
-            ixx="0.000209631286775999"
-            ixy="1.3987766340865E-06"
-            ixz="5.68764766805313E-06"
-            iyy="0.000199785107628426"
-            iyz="-3.65982104907021E-06"
-            izz="0.000237444184695321"/>
-      </inertial>
-      <visual>
-        <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/base_link.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/base_link.obj"/>
-        </geometry>
-      </collision>
-    </link>
+	<xacro:macro name="Base" params="name">
+		<!-- Base Link -->
+		<link name="${prefix}base_link">
+			<inertial>
+				<origin xyz="0.00303246421307354 -0.000695340443194854 0.0297996781638517"/>
+				<mass value="0.786"/>
+				<inertia
+						ixx="0.000209631286775999"
+						ixy="1.3987766340865E-06"
+						ixz="5.68764766805313E-06"
+						iyy="0.000199785107628426"
+						iyz="-3.65982104907021E-06"
+						izz="0.000237444184695321"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/base_link.obj"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/base_link.obj"/>
+				</geometry>
+			</collision>
+		</link>
 
-    <!-- Link 1 -->
-    <link name="${prefix}link1">
-      <inertial>
-        <origin xyz="4.1065175135883E-07 -0.00198628171247454 0.0468863413356551"/>
-        <mass value="0.839"/>
-        <inertia
-            ixx="0.000224135392915726"
-            ixy="-1.28206810172038E-09"
-            ixz="7.50235402650185E-09"
-            iyy="0.00026979982869931"
-            iyz="7.49527197322758E-09"
-            izz="0.000218724360467532"/>
-      </inertial>
-      <visual>
-        <origin xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link1.obj"/>
-        </geometry>
-        <material name="">
-          <color rgba="0.823529411764706 0.823529411764706 1 1"/>
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link1.obj"/>
-        </geometry>
-      </collision>
-    </link>
+		<!-- Link 1 -->
+		<link name="${prefix}link1">
+			<inertial>
+				<origin xyz="4.1065175135883E-07 -0.00198628171247454 0.0468863413356551"/>
+				<mass value="0.839"/>
+				<inertia
+						ixx="0.000224135392915726"
+						ixy="-1.28206810172038E-09"
+						ixz="7.50235402650185E-09"
+						iyy="0.00026979982869931"
+						iyz="7.49527197322758E-09"
+						izz="0.000218724360467532"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link1.obj"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link1.obj"/>
+				</geometry>
+			</collision>
+		</link>
 
-    <!-- Joint 1: Base to Link1 -->
-    <joint name="${prefix}joint1" type="revolute">
-      <origin xyz="0 0 0.08605"/>
-      <parent link="${prefix}base_link"/>
-      <child link="${prefix}link1"/>
-      <axis xyz="0 0 1"/>
-      <limit lower="-2.879795" upper="2.879795" effort="27" velocity="10.4720"/>
-    </joint>
+		<!-- Joint 1: Base to Link1 -->
+		<joint name="${prefix}joint1" type="revolute">
+			<origin xyz="0 0 0.08605"/>
+			<parent link="${prefix}base_link"/>
+			<child link="${prefix}link1"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-2.879795" upper="2.879795" effort="27" velocity="10.4720"/>
+		</joint>
 
-    <!-- Link 2 -->
-    <link name="${prefix}link2">
-      <inertial>
-        <origin xyz="-0.122673818397923 -0.0295401461831619 0.00364838977156251"/>
-        <mass value="1.09"/>
-        <inertia
-            ixx="0.000388311522528777"
-            ixy="-2.18086613093501E-05"
-            ixz="8.77434895649448E-06"
-            iyy="0.00274683151904258"
-            iyz="1.19756607314247E-06"
-            izz="0.00278055331308976"/>
-      </inertial>
-      <visual>
-        <origin xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link2.obj"/>
-        </geometry>
-        <material name="">
-          <color rgba="0.823529411764706 0.823529411764706 1 1"/>
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link2.obj"/>
-        </geometry>
-      </collision>
-    </link>
+		<!-- Link 2 -->
+		<link name="${prefix}link2">
+			<inertial>
+				<origin xyz="-0.122673818397923 -0.0295401461831619 0.00364838977156251"/>
+				<mass value="1.09"/>
+				<inertia
+						ixx="0.000388311522528777"
+						ixy="-2.18086613093501E-05"
+						ixz="8.77434895649448E-06"
+						iyy="0.00274683151904258"
+						iyz="1.19756607314247E-06"
+						izz="0.00278055331308976"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link2.obj"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link2.obj"/>
+				</geometry>
+			</collision>
+		</link>
 
-    <!-- Joint 2: Link1 to Link2 -->
-    <joint name="${prefix}joint2" type="revolute">
-      <origin xyz="0 0.03075 0.04925"/>
-      <parent link="${prefix}link1"/>
-      <child link="${prefix}link2"/>
-      <axis xyz="0 1 0"/>
-      <limit lower="0" upper="3.1416" effort="50" velocity="12.5664"/>
-    </joint>
-  </xacro:macro>
+		<!-- Joint 2: Link1 to Link2 -->
+		<joint name="${prefix}joint2" type="revolute">
+			<origin xyz="0 0.03075 0.04925"/>
+			<parent link="${prefix}link1"/>
+			<child link="${prefix}link2"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="0" upper="${PI}" effort="50" velocity="12.5664"/>
+		</joint>
+
+	</xacro:macro>
 </robot>

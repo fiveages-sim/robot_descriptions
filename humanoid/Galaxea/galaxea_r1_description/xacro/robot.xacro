@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="R1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.1415926535897931"/>
   <!-- Include Chassis -->
   <xacro:include filename="$(find galaxea_r1_description)/xacro/chassis.xacro"/>
   <xacro:Chassis/>
@@ -14,7 +15,7 @@
 
   <!-- Left Arm Base Joint: Torso 4 to Left Arm -->
   <joint name="left_arm_base_joint" type="fixed">
-    <origin xyz="0.00077694 0.097234 0.30285" rpy="-1.5708 0 0"/>
+    <origin xyz="0.00077694 0.097234 0.30285" rpy="${-PI/2} 0 0"/>
     <parent link="torso_link4"/>
     <child link="left_base_link"/>
   </joint>
@@ -28,7 +29,7 @@
 
   <!-- Right Arm Base Joint: Torso 4 to Right Arm -->
   <joint name="right_arm_base_joint" type="fixed">
-    <origin xyz="0.00077778 -0.097235 0.30285" rpy="1.5708 0 0"/>
+    <origin xyz="0.00077778 -0.097235 0.30285" rpy="${PI/2} 0 0"/>
     <parent link="torso_link4"/>
     <child link="right_base_link"/>
   </joint>

@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.1415926535897931"/>
 
 	<xacro:macro name="UnitreeG1Arm" params="name direction:=1">
 		<!-- 
@@ -26,7 +27,7 @@
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="0 ${direction*0.04} -0.01" rpy="0 1.5707963267948966 0"/>
+				<origin xyz="0 ${direction*0.04} -0.01" rpy="0 ${PI/2} 0"/>
 				<geometry>
 					<cylinder radius="0.03" length="0.05"/>
 				</geometry>

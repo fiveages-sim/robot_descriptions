@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="Torso">
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
+	<xacro:macro name="Torso">
 
     <!-- Torso Link 1 -->
     <link name="torso_link1">
       <inertial>
         <origin xyz="0.00065636 0.0032247 0.23142"/>
         <mass value="5.72"/>
-        <inertia
-          ixx="0.10931"
-          ixy="7.7893E-06"
-          ixz="-0.00017473"
-          iyy="0.10736"
-          iyz="0.00013763"
-          izz="0.0081222"/>
+        <inertia ixx="0.10931" ixy="7.7893E-06" ixz="-0.00017473" iyy="0.10736" iyz="0.00013763" izz="0.0081222"/>
       </inertial>
       <visual>
         <geometry>
@@ -41,13 +37,7 @@
       <inertial>
         <origin xyz="0.0052517 0.014412 0.15711"/>
         <mass value="3.5"/>
-        <inertia
-          ixx="0.026081"
-          ixy="-3.3406E-07"
-          ixz="0.00024541"
-          iyy="0.027574"
-          iyz="3.8474E-07"
-          izz="0.0018515"/>
+        <inertia ixx="0.026081" ixy="-3.3406E-07" ixz="0.00024541" iyy="0.027574" iyz="3.8474E-07" izz="0.0018515"/>
       </inertial>
       <visual>
         <geometry>
@@ -75,13 +65,7 @@
       <inertial>
         <origin xyz="-7.551E-06 -0.0092667 0.0042124"/>
         <mass value="3.4"/>
-        <inertia
-          ixx="0.0014058"
-          ixy="3.5487E-07"
-          ixz="9.0955E-08"
-          iyy="0.0021992"
-          iyz="1.6338E-05"
-          izz="0.0013332"/>
+        <inertia ixx="0.0014058" ixy="3.5487E-07" ixz="9.0955E-08" iyy="0.0021992" iyz="1.6338E-05" izz="0.0013332"/>
       </inertial>
       <visual>
         <geometry>
@@ -101,7 +85,7 @@
       <parent link="torso_link2"/>
       <child link="torso_link3"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="-1.8326" upper="1.5708" effort="500" velocity="2.5"/>
+      <limit lower="-1.8326" upper="${PI/2}" effort="500" velocity="2.5"/>
     </joint>
 
     <!-- Torso Link 4 -->
@@ -109,13 +93,7 @@
       <inertial>
         <origin xyz="-3.7511E-08 5.2756E-07 0.018688"/>
         <mass value="7.4"/>
-        <inertia
-          ixx="0.0014989"
-          ixy="2.9183E-08"
-          ixz="-7.7884E-10"
-          iyy="0.001499"
-          iyz="-1.2513E-10"
-          izz="0.0019043"/>
+        <inertia ixx="0.0014989" ixy="2.9183E-08" ixz="-7.7884E-10" iyy="0.001499" iyz="-1.2513E-10" izz="0.0019043"/>
       </inertial>
       <visual>
         <geometry>
@@ -143,13 +121,7 @@
       <inertial>
         <origin xyz="0.060004 0.015906 -0.068413"/>
         <mass value="2.05"/>
-        <inertia
-          ixx="0.010375"
-          ixy="1.9044E-07"
-          ixz="1.5997E-08"
-          iyy="0.014618"
-          iyz="0.00028961"
-          izz="0.012229"/>
+        <inertia ixx="0.010375" ixy="1.9044E-07" ixz="1.5997E-08" iyy="0.014618" iyz="0.00028961" izz="0.012229"/>
       </inertial>
       <visual>
         <geometry>
@@ -165,7 +137,7 @@
 
     <!-- ZED Joint: Torso 4 to ZED -->
     <joint name="zed_joint" type="fixed">
-      <origin xyz="0.065512 0.060005 0.47598" rpy="-1.9199 0 -1.5708"/>
+      <origin xyz="0.065512 0.060005 0.47598" rpy="-1.9199 0 ${-PI/2}"/>
       <parent link="torso_link4"/>
       <child link="zed_link"/>
       <axis xyz="0 0 0"/>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="R1Pro_Left_Arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.1415926535897931"/>
 
 	<xacro:macro name="Arm" params="name direction:=1">
 
@@ -185,7 +186,7 @@
 			<parent link="${prefix}link1"/>
 			<child link="${prefix}link2"/>
 			<axis xyz="${direction} 0 0"/>
-			<limit lower="-0.1745" upper="3.1416" effort="55" velocity="7.1209"/>
+			<limit lower="-0.1745" upper="${PI}" effort="55" velocity="7.1209"/>
 		</joint>
 
 		<joint name="${prefix}joint3" type="revolute">
@@ -225,7 +226,7 @@
 			<parent link="${prefix}link6"/>
 			<child link="${prefix}link7"/>
 			<axis xyz="1 0 0"/>
-			<limit lower="-1.5708" upper="1.5708" effort="18" velocity="10.4720"/>
+			<limit lower="${-PI/2}" upper="${PI/2}" effort="18" velocity="10.4720"/>
 		</joint>
 
 
@@ -233,7 +234,7 @@
 		<xacro:Gripper name="${name}"/>
 
 		<joint name="${prefix}gripper_base_joint" type="fixed">
-			<origin xyz="-0.0295 0 -0.16065" rpy="0 1.5708 0"/>
+			<origin xyz="-0.0295 0 -0.16065" rpy="0 ${PI/2} 0"/>
 			<parent link="${prefix}link7"/>
 			<child link="${prefix}gripper_base"/>
 		</joint>
