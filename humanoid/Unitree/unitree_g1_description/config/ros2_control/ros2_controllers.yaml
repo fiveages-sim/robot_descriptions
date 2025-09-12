@@ -1,7 +1,7 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Hz
+    update_rate: 500  # Hz
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -12,7 +12,8 @@ controller_manager:
 ocs2_arm_controller:
   ros__parameters:
     # Joint configuration
-    update_rate: 100  # Hz
+    update_rate: 500  # Hz
+    mpc_frequency: 100
     info_file_name: task
     joints:
       - left_shoulder_pitch_joint
@@ -30,7 +31,8 @@ ocs2_arm_controller:
       - right_wrist_pitch_joint
       - right_wrist_yaw_joint
 
-    force_gains: [60.0,2.0]
+    default_gains: [ 60.0,2.0 ]
+    ocs2_gains: [ 10.0,2.0 ]
 
     command_interfaces:
       - position
@@ -49,10 +51,10 @@ ocs2_arm_controller:
     # home_pos: [left_shoulder_pitch, left_shoulder_roll, left_shoulder_yaw, left_elbow, left_wrist_roll, left_wrist_pitch, left_wrist_yaw,
     #            right_shoulder_pitch, right_shoulder_roll, right_shoulder_yaw, right_elbow, right_wrist_roll, right_wrist_pitch, right_wrist_yaw]
     home_pos: [
-                0.0, 0.2, 0.0, 0.0, -0.2, 0.0, 0.0,
-                0.0, -0.2, 0.0, 0.0, 0.2, 0.0, 0.0]
+      0.0, 0.2, 0.0, 0.0, -0.2, 0.0, 0.0,
+      0.0, -0.2, 0.0, 0.0, 0.2, 0.0, 0.0 ]
     # rest_pos: [left_shoulder_pitch, left_shoulder_roll, left_shoulder_yaw, left_elbow, left_wrist_roll, left_wrist_pitch, left_wrist_yaw,
     #            right_shoulder_pitch, right_shoulder_roll, right_shoulder_yaw, right_elbow, right_wrist_roll, right_wrist_pitch, right_wrist_yaw]
     rest_pos: [
-                0.0, 0.2, 0.0, 1.57, 0.0, 0.0, 0.0,
-                0.0, -0.2, 0.0, 1.57, 0.0, 0.0, 0.0 ]
+      0.0, 0.2, 0.0, 1.57, 0.0, 0.0, 0.0,
+      0.0, -0.2, 0.0, 1.57, 0.0, 0.0, 0.0 ]

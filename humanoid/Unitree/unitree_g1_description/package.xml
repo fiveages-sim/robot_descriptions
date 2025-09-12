@@ -8,6 +8,8 @@
     <license>TODO</license>
 
     <exec_depend>robot_visualize_config</exec_depend>
+    <depend>brainco_description</depend>
+    <depend>unitree_ros2_control</depend>
 
     <export>
         <build_type>ament_cmake</build_type>

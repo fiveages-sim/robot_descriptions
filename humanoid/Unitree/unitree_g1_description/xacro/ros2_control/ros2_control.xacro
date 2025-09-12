@@ -10,6 +10,8 @@
           <param name="robot_type">humanoid</param>
           <param name="domain">1</param>
           <param name="network_interface">lo</param>
+          <param name="default_kp">80</param>
+          <param name="default_kd">2</param>
         </xacro:if>
         <xacro:if value="${ros2_control_hardware_type == 'gz'}">
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
