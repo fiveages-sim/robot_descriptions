@@ -7,11 +7,27 @@
 
 		<xacro:if value="${use_flange}">
 			<link name="${prefix}flange">
+				<inertial>
+					<origin xyz="-0.000388 0.002345 0.0"/>
+					<mass value="0.114"/>
+					<inertia
+						ixx="0.000040105"
+						ixy="0.000000214"
+						ixz="0.0"
+						iyy="0.000085776"
+						iyz="0.0"
+						izz="0.000054044"/>
+				</inertial>
 				<visual>
 					<geometry>
 						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/flange.obj"/>
 					</geometry>
 				</visual>
+				<collision>
+					<geometry>
+						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/flange.obj"/>
+					</geometry>
+				</collision>
 			</link>
 			<joint name="${prefix}flange_joint" type="fixed">
 				<origin xyz="0 0 0.0195"/>
