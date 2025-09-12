@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <robot name="cr5_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.1415926535897931"/>
 	<xacro:macro name="CR5" params="name collider:=convex">
 
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
-		<xacro:property name="PI" value="3.1415926535897931"/>
 		<link name="base_link">
 			<inertial>
 				<origin xyz="-8.0961E-06 0.0019103 0.028995"/>

@@ -188,9 +188,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0 0.1"/>
+      <origin xyz="0 0 0.14"/>
       <geometry>
-        <box size="0.05 0.15 0.2"/>
+        <cylinder length="0.28" radius="0.04"/>
       </geometry>
     </collision>
   </link>
