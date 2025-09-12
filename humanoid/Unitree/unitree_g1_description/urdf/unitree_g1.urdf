@@ -361,10 +361,9 @@
   <!-- Pelvis Link -->
 
   <!-- Base Link -->
-  <link name="base_footprint"/>
-  <joint name="base_footprint_joint" type="fixed">
-    <origin xyz="0 0 0.8"/>
-    <parent link="base_footprint"/>
+  <link name="base_link"/>
+  <joint name="base_link_joint" type="fixed">
+    <parent link="base_link"/>
     <child link="pelvis"/>
   </joint>
 
@@ -446,12 +445,6 @@
     <child link="torso_link"/>
     <axis xyz="0 1 0"/>
     <limit effort="35" lower="-0.52" upper="0.52" velocity="30"/>
-  </joint>
-  <!-- Base Link -->
-  <link name="base_link"/>
-  <joint name="base_joint" type="fixed">
-    <parent link="torso_link"/>
-    <child link="base_link"/>
   </joint>
   <!-- Logo -->
   <link name="logo_link">

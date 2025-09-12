@@ -7,6 +7,12 @@
 		Includes: pelvis, torso, head, sensors, and logo
 		-->
 
+		<link name="base_link"/>
+		<joint name="base_link_joint" type="fixed">
+			<parent link="base_link"/>
+			<child link="pelvis"/>
+		</joint>
+
 		<!-- Pelvis Link -->
 		<link name="pelvis">
 			<inertial>
@@ -92,13 +98,6 @@
 			<child link="torso_link"/>
 			<axis xyz="0 1 0"/>
 			<limit lower="-0.52" upper="0.52" effort="35" velocity="30"/>
-		</joint>
-
-		<!-- Base Link -->
-		<link name="base_link"/>
-		<joint name="base_joint" type="fixed">
-			<parent link="torso_link"/>
-			<child link="base_link"/>
 		</joint>
 
 		<!-- Logo -->

@@ -34,3 +34,11 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=unitree_g1
 ```
 [Screencast from 2025-09-02 17-39-02.webm](https://github.com/user-attachments/assets/034081ec-9e49-46a3-9a85-3c422ed5e40c)
+
+### 3.2 OCS2 Arm Controller Demo
+
+* Mock Components
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1
+  ```

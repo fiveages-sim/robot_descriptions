@@ -5,3 +5,46 @@ controller_manager:
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+ocs2_arm_controller:
+  ros__parameters:
+    # Joint configuration
+    update_rate: 100  # Hz
+    info_file_name: task
+    joints:
+      - left_shoulder_pitch_joint
+      - left_shoulder_roll_joint
+      - left_shoulder_yaw_joint
+      - left_elbow_joint
+      - left_wrist_roll_joint
+      - left_wrist_pitch_joint
+      - left_wrist_yaw_joint
+      - right_shoulder_pitch_joint
+      - right_shoulder_roll_joint
+      - right_shoulder_yaw_joint
+      - right_elbow_joint
+      - right_wrist_roll_joint
+      - right_wrist_pitch_joint
+      - right_wrist_yaw_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: unitree_g1
+
+    # Control parameters
+    # home_pos: [left_shoulder_pitch, left_shoulder_roll, left_shoulder_yaw, left_elbow, left_wrist_roll, left_wrist_pitch, left_wrist_yaw,
+    #            right_shoulder_pitch, right_shoulder_roll, right_shoulder_yaw, right_elbow, right_wrist_roll, right_wrist_pitch, right_wrist_yaw]
+    home_pos: [
+                0.0, 0.2, 0.0, 0.0, -0.2, 0.0, 0.0,
+                0.0, -0.2, 0.0, 0.0, 0.2, 0.0, 0.0]
+    # rest_pos: [left_shoulder_pitch, left_shoulder_roll, left_shoulder_yaw, left_elbow, left_wrist_roll, left_wrist_pitch, left_wrist_yaw,
+    #            right_shoulder_pitch, right_shoulder_roll, right_shoulder_yaw, right_elbow, right_wrist_roll, right_wrist_pitch, right_wrist_yaw]
+    rest_pos: [
+                0.0, 0.2, 0.0, 1.57, 0.0, 0.0, 0.0,
+                0.0, -0.2, 0.0, 1.57, 0.0, 0.0, 0.0 ]
