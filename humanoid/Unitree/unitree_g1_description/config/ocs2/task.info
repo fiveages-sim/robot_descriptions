@@ -240,9 +240,37 @@ finalEndEffector
 selfCollision
 { 
   ; activate self-collision constraint
-  activate  false
+  activate  true
 
-  ; TODO: Replace the collision meshes of the arm with primitive shapes.
+  ; Self Collision raw object pairs
+  collisionObjectPairs
+  {
+      [0] "19, 23",
+      [1] "19, 24",
+      [2] "19, 25",
+      [3] "19, 31",
+      [4] "19, 32",
+      [5] "19, 33",
+      ;[1] "1, 8",
+      ;[2] "4, 11",
+      ;[3] "7, 11"，
+      ;[4] "1, 11"
+  }
+
+  ; Self Collision pairs
+  collisionLinkPairs
+  {
+
+  }
+
+  ; minimum distance allowed between the pairs
+  minimumDistance  0.01
+
+  ; relaxed log barrier mu
+  mu      1e-3
+
+  ; relaxed log barrier delta
+  delta   1e-4
 }
 
 ; Only applied for arm joints: limits parsed from URDF
