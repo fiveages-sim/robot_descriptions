@@ -10,7 +10,7 @@ from launch.actions import DeclareLaunchArgument, OpaqueFunction
 import xacro
 
 
-def process_xacro(robot, arm_end_effector=None, collider=None):
+def process_xacro(robot, arm_type=None, collider=None):
     package_description = robot + "_description"
     pkg_path = os.path.join(get_package_share_directory(package_description))
     xacro_file = os.path.join(pkg_path, 'xacro', 'robot.xacro')
@@ -18,9 +18,9 @@ def process_xacro(robot, arm_end_effector=None, collider=None):
     # 构建mappings字典
     mappings = {}
     
-    # 如果指定了arm_end_effector，则传递给xacro
-    if arm_end_effector and arm_end_effector.strip():
-        mappings['end_effector'] = arm_end_effector
+    # 如果指定了arm_type，则传递给xacro
+    if arm_type and arm_type.strip():
+        mappings['type'] = arm_type
     
     # 如果指定了collider，则传递给xacro
     if collider and collider.strip():
@@ -41,9 +41,9 @@ def generate_launch_description():
 
     def launch_setup(context, *args, **kwargs):
         robot_value = context.launch_configurations['robot']
-        arm_end_effector_value = context.launch_configurations.get('end_effector', '')
+        arm_type_value = context.launch_configurations.get('type', '')
         collider_value = context.launch_configurations.get('collider', '')
-        robot_description = process_xacro(robot_value, arm_end_effector_value, collider_value)
+        robot_description = process_xacro(robot_value, arm_type_value, collider_value)
         return [
             Node(
                 package='rviz2',
@@ -80,9 +80,9 @@ def generate_launch_description():
             description='Robot name to visualize'
         ),
         DeclareLaunchArgument(
-            'end_effector',
+            'type',
             default_value='',
-            description='end_effector of the manipulator arm (empty means no end_effector parameter passed to xacro)'
+            description='type of the manipulator arm (empty means no type parameter passed to xacro)'
         ),
         DeclareLaunchArgument(
             'collider',

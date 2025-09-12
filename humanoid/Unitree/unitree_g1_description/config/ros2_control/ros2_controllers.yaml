@@ -30,10 +30,18 @@ ocs2_arm_controller:
       - right_wrist_pitch_joint
       - right_wrist_yaw_joint
 
+    force_gains: [60.0,2.0]
+
     command_interfaces:
       - position
+      - velocity
+      - effort
+      - kp
+      - kd
     state_interfaces:
       - position
+      - velocity
+      - effort
 
     robot_name: unitree_g1
 

@@ -21,7 +21,7 @@ colcon build --packages-up-to unitree_g1_description --symlink-install
 * G1 with BrainCo Revo2
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config humanoid.launch.py end_effector:=revo2
+  ros2 launch robot_visualize_config humanoid.launch.py type:=revo2
   ```
   ![Unitree G1](../../.images/unitree_g1_revo2.png)
 
@@ -41,4 +41,14 @@ ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=unitre
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1
+  ```
+* Mock Components
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1 type:=revo2
+  ```
+* Unitree Ros2 Control
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1 type:=revo2 hardware:=unitree
   ```

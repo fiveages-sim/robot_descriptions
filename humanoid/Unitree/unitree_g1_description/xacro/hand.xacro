@@ -1,38 +1,64 @@
 <?xml version="1.0" ?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:arg name="type" default="rubber_hand"/>
 
-	<xacro:macro name="UnitreeG1Hand" params="name direction:=1">
-		<!-- 
-		Unitree G1 Hand Macro
-		Parameters:
-		- name: hand name prefix (e.g., "left", "right")
-		- direction: 1 for left hand, -1 for right hand (for mirroring)
-		-->
+	<xacro:if value="${'$(arg type)' == 'rubber_hand'}">
+		<xacro:macro name="UnitreeG1Hand" params="name direction:=1">
+			<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+			<!-- Hand Link -->
+			<link name="${prefix}hand_base">
+				<inertial>
+					<origin xyz="0.05361310808 ${direction*-0.00295905240} 0.00215413091"/>
+					<mass value="0.170"/>
+					<inertia ixx="0.00010099485234748" ixy="${direction*0.00003618590790516}"
+									 ixz="-0.00000074301518642" iyy="0.00028135871571621"
+									 iyz="${direction*-0.00000330189743286}" izz="0.00021894770413514"/>
+				</inertial>
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find unitree_g1_description)/meshes/arm/hand.obj" scale="1 ${direction} 1"/>
+					</geometry>
+				</visual>
+				<collision>
+					<origin xyz="0.07 ${direction*-0.02} 0"/>
+					<geometry>
+						<box size="0.12 0.05 0.1"/>
+					</geometry>
+				</collision>
+			</link>
+		</xacro:macro>
 
-		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<xacro:UnitreeG1Hand name="left" direction="1"/>
+		<xacro:UnitreeG1Hand name="right" direction="-1"/>
 
-		<!-- Hand Link -->
-		<link name="${prefix}hand_base">
-			<inertial>
-				<origin xyz="0.05361310808 ${direction*-0.00295905240} 0.00215413091"/>
-				<mass value="0.170"/>
-				<inertia ixx="0.00010099485234748" ixy="${direction*0.00003618590790516}" 
-					ixz="-0.00000074301518642" iyy="0.00028135871571621" 
-					iyz="${direction*-0.00000330189743286}" izz="0.00021894770413514"/>
-			</inertial>
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find unitree_g1_description)/meshes/arm/hand.obj" scale="1 ${direction} 1"/>
-				</geometry>
-			</visual>
-			<collision>
-				<origin xyz="0.07 ${direction*-0.02} 0"/>
-				<geometry>
-					<box size="0.12 0.05 0.1"/>
-				</geometry>
-			</collision>
-		</link>
+		<joint name="left_hand_palm_joint" type="fixed" dont_collapse="true">
+			<origin xyz="0.0415 0.003 0"/>
+			<parent link="left_wrist_yaw_link"/>
+			<child link="left_hand_base"/>
+		</joint>
+		<joint name="right_hand_palm_joint" type="fixed" dont_collapse="true">
+			<origin xyz="0.0415 -0.003 0"/>
+			<parent link="right_wrist_yaw_link"/>
+			<child link="right_hand_base"/>
+		</joint>
+	</xacro:if>
 
-	</xacro:macro>
+	<xacro:if value="${'$(arg type)' == 'revo2'}">
+		<xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
+		<xacro:BrainCoHand name="left" direction="1" use_flange="true" fixed_joints="true"/>
+		<xacro:BrainCoHand name="right" direction="-1" use_flange="true" fixed_joints="true"/>
+
+		<joint name="left_hand_palm_joint" type="fixed" dont_collapse="true">
+			<origin xyz="0.0415 0 0"/>
+			<parent link="left_wrist_yaw_link"/>
+			<child link="left_flange"/>
+		</joint>
+
+		<joint name="right_hand_palm_joint" type="fixed" dont_collapse="true">
+			<origin xyz="0.0415 0 0"/>
+			<parent link="right_wrist_yaw_link"/>
+			<child link="right_flange"/>
+		</joint>
+	</xacro:if>
 
 </robot>
