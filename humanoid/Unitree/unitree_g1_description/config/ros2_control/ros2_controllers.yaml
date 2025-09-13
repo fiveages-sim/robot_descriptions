@@ -32,7 +32,7 @@ ocs2_arm_controller:
       - right_wrist_yaw_joint
 
     default_gains: [ 60.0,2.0 ]
-    ocs2_gains: [ 10.0,2.0 ]
+    ocs2_gains: [ 100.0,4.0 ]
 
     command_interfaces:
       - position
