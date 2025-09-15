@@ -50,9 +50,9 @@ ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=unitre
 * Unitree Ros2 Control
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1 hardware:=unitree
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1 hardware:=unitree_sim
   ```
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1 type:=revo2 hardware:=unitree
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1 type:=revo2 hardware:=unitree_real
   ```

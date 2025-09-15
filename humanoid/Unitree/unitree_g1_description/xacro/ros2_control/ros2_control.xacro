@@ -5,13 +5,19 @@
 
     <ros2_control name="UnitreeG1System" type="system">
       <hardware>
-        <xacro:if value="${ros2_control_hardware_type == 'unitree'}">
+        <xacro:if value="${ros2_control_hardware_type == 'unitree_sim'}">
           <plugin>unitree_ros2_control/HardwareUnitree</plugin>
           <param name="robot_type">humanoid</param>
+          <param name="domain">1</param>
+          <param name="network_interface">lo</param>
+          <param name="default_kp">60</param>
+          <param name="default_kd">2</param>
+        </xacro:if>
+        <xacro:if value="${ros2_control_hardware_type == 'unitree_real'}">
+          <plugin>unitree_ros2_control/HardwareUnitree</plugin>
+          <param name="robot_type">g1_arm_sdk</param>
           <param name="domain">0</param>
           <param name="network_interface">enp46s0</param>
-<!--          <param name="domain">1</param>-->
-<!--          <param name="network_interface">lo</param>-->
           <param name="default_kp">60</param>
           <param name="default_kd">2</param>
         </xacro:if>
