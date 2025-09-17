@@ -31,8 +31,7 @@ def launch_setup(context, *args, **kwargs):
     # 使用通用的 controller_manager launch 文件
     controller_manager_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
-            os.path.join(get_package_share_directory('robot_common_launch'), 'launch'),
-            '/controller_manager.launch.py',
+            os.path.join(get_package_share_directory('robot_common_launch'), 'launch','controller_manager.launch.py')
         ]),
         launch_arguments=[
             ('robot', robot_name),
