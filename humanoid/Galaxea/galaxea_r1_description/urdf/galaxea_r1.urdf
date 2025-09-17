@@ -46,7 +46,7 @@
     <parent link="base_link"/>
     <child link="steer_motor_link1"/>
     <axis xyz="0 0 1"/>
-    <limit effort="44" lower="-1.5708" upper="1.5708" velocity="3.1416"/>
+    <limit effort="44" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="3.141592653589793"/>
   </joint>
   <!-- Wheel Motor Link 1 -->
   <link name="wheel_motor_link1">
@@ -68,7 +68,7 @@
   </link>
   <!-- Wheel Motor Joint 1: Steer Motor 1 to Wheel Motor 1 -->
   <joint name="wheel_motor_joint1" type="continuous">
-    <origin rpy="0 0 3.14159" xyz="0 0 -0.09525"/>
+    <origin rpy="0 0 3.141592653589793" xyz="0 0 -0.09525"/>
     <parent link="steer_motor_link1"/>
     <child link="wheel_motor_link1"/>
     <axis xyz="0 1 0"/>
@@ -81,13 +81,13 @@
       <inertia ixx="8.8509E-05" ixy="3.7728E-06" ixz="4.584E-09" iyy="7.5337E-05" iyz="7.0145E-07" izz="0.00010162"/>
     </inertial>
     <visual>
-      <origin rpy="0 0 3.14159"/>
+      <origin rpy="0 0 3.141592653589793"/>
       <geometry>
         <mesh filename="package://galaxea_r1_description/meshes/steer_motor.obj"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 3.14159"/>
+      <origin rpy="0 0 3.141592653589793"/>
       <geometry>
         <mesh filename="package://galaxea_r1_description/meshes/steer_motor.obj"/>
       </geometry>
@@ -99,7 +99,7 @@
     <parent link="base_link"/>
     <child link="steer_motor_link2"/>
     <axis xyz="0 0 1"/>
-    <limit effort="44" lower="-1.5708" upper="1.5708" velocity="3.1416"/>
+    <limit effort="44" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="3.141592653589793"/>
   </joint>
   <!-- Wheel Motor Link 2 -->
   <link name="wheel_motor_link2">
@@ -150,7 +150,7 @@
     <parent link="base_link"/>
     <child link="steer_motor_link3"/>
     <axis xyz="0 0 1"/>
-    <limit effort="44" lower="-1.5708" upper="1.5708" velocity="3.1416"/>
+    <limit effort="44" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="3.141592653589793"/>
   </joint>
   <!-- Wheel Motor Link 3 -->
   <link name="wheel_motor_link3">
@@ -172,7 +172,7 @@
   </link>
   <!-- Wheel Motor Joint 3: Steer Motor 3 to Wheel Motor 3 -->
   <joint name="wheel_motor_joint3" type="continuous">
-    <origin rpy="0 0 3.14159" xyz="0 0 -0.09525"/>
+    <origin rpy="0 0 3.141592653589793" xyz="0 0 -0.09525"/>
     <parent link="steer_motor_link3"/>
     <child link="wheel_motor_link3"/>
     <axis xyz="0 1 0"/>
@@ -201,7 +201,7 @@
     <parent link="base_link"/>
     <child link="torso_link1"/>
     <axis xyz="0 1 0"/>
-    <limit effort="100" lower="-1.1345" upper="1.8326" velocity="2.5"/>
+    <limit effort="500" lower="-1.1345" upper="1.8326" velocity="2.5"/>
   </joint>
   <!-- Torso Link 2 -->
   <link name="torso_link2">
@@ -227,7 +227,7 @@
     <parent link="torso_link1"/>
     <child link="torso_link2"/>
     <axis xyz="0 1 0"/>
-    <limit effort="100" lower="-2.7925" upper="2.5307" velocity="2.5"/>
+    <limit effort="500" lower="-2.7925" upper="2.5307" velocity="2.5"/>
   </joint>
   <!-- Torso Link 3 -->
   <link name="torso_link3">
@@ -253,7 +253,7 @@
     <parent link="torso_link2"/>
     <child link="torso_link3"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="100" lower="-1.8326" upper="1.5708" velocity="2.5"/>
+    <limit effort="500" lower="-1.8326" upper="1.5707963267948966" velocity="2.5"/>
   </joint>
   <!-- Torso Link 4 -->
   <link name="torso_link4">
@@ -279,7 +279,7 @@
     <parent link="torso_link3"/>
     <child link="torso_link4"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-3.0543" upper="3.0543" velocity="2.5"/>
+    <limit effort="500" lower="-3.0543" upper="3.0543" velocity="2.5"/>
   </joint>
   <!-- ZED Camera Link -->
   <link name="zed_link">
@@ -301,7 +301,7 @@
   </link>
   <!-- ZED Joint: Torso 4 to ZED -->
   <joint name="zed_joint" type="fixed">
-    <origin rpy="-1.9199 0 -1.5708" xyz="0.065512 0.060005 0.47598"/>
+    <origin rpy="-1.9199 0 -1.5707963267948966" xyz="0.065512 0.060005 0.47598"/>
     <parent link="torso_link4"/>
     <child link="zed_link"/>
     <axis xyz="0 0 0"/>
@@ -315,12 +315,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/base_link.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/base_link.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/base_link.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/base_link.obj"/>
       </geometry>
     </collision>
   </link>
@@ -333,12 +333,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link1.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link1.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link1.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link1.obj"/>
       </geometry>
     </collision>
   </link>
@@ -348,7 +348,7 @@
     <parent link="left_base_link"/>
     <child link="left_link1"/>
     <axis xyz="0 0 1"/>
-    <limit effort="40" lower="-2.8798" upper="2.8798" velocity="20.944"/>
+    <limit effort="100" lower="-2.8798" upper="2.8798" velocity="20.944"/>
   </joint>
   <!-- Link 2 -->
   <link name="left_link2">
@@ -359,22 +359,22 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link2.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link2.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link2.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link2.obj"/>
       </geometry>
     </collision>
   </link>
   <!-- Joint 2: Link1 to Link2 -->
   <joint name="left_joint2" type="revolute">
-    <origin rpy="1.5708 0 0" xyz="0 0 0.1061"/>
+    <origin rpy="1.5707963267948966 0 0" xyz="0 0 0.1061"/>
     <parent link="left_link1"/>
     <child link="left_link2"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="40" lower="0" upper="3.2289" velocity="20.944"/>
+    <limit effort="100" lower="0" upper="3.2289" velocity="20.944"/>
   </joint>
   <!-- Link 3 -->
   <link name="left_link3">
@@ -385,12 +385,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link3.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link3.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link3.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link3.obj"/>
       </geometry>
     </collision>
   </link>
@@ -400,7 +400,7 @@
     <parent link="left_link2"/>
     <child link="left_link3"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="27" lower="-3.3161" upper="0" velocity="7.5398"/>
+    <limit effort="100" lower="-3.3161" upper="0" velocity="7.5398"/>
   </joint>
   <!-- Link 4 -->
   <link name="left_link4">
@@ -411,12 +411,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link4.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link4.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link4.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link4.obj"/>
       </geometry>
     </collision>
   </link>
@@ -426,7 +426,7 @@
     <parent link="left_link3"/>
     <child link="left_link4"/>
     <axis xyz="1 0 0"/>
-    <limit effort="7" lower="-2.8798" upper="2.8798" velocity="25.133"/>
+    <limit effort="100" lower="-2.8798" upper="2.8798" velocity="25.133"/>
   </joint>
   <!-- Link 5 -->
   <link name="left_link5">
@@ -437,12 +437,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link5.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link5.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link5.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link5.obj"/>
       </geometry>
     </collision>
   </link>
@@ -452,7 +452,7 @@
     <parent link="left_link4"/>
     <child link="left_link5"/>
     <axis xyz="0 1 0"/>
-    <limit effort="7" lower="-1.6581" upper="1.6581" velocity="25.133"/>
+    <limit effort="100" lower="-1.6581" upper="1.6581" velocity="25.133"/>
   </joint>
   <!-- Link 6 -->
   <link name="left_link6">
@@ -463,12 +463,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link6.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link6.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link6.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link6.obj"/>
       </geometry>
     </collision>
   </link>
@@ -478,7 +478,7 @@
     <parent link="left_link5"/>
     <child link="left_link6"/>
     <axis xyz="1 0 0"/>
-    <limit effort="7" lower="-2.8798" upper="2.8798" velocity="25.133"/>
+    <limit effort="100" lower="-2.8798" upper="2.8798" velocity="25.133"/>
   </joint>
   <link name="left_gripper_base">
     <inertial>
@@ -561,7 +561,7 @@
   </joint>
   <!-- Left Arm Base Joint: Torso 4 to Left Arm -->
   <joint name="left_arm_base_joint" type="fixed">
-    <origin rpy="-1.5708 0 0" xyz="0.00077694 0.097234 0.30285"/>
+    <origin rpy="-1.5707963267948966 0 0" xyz="0.00077694 0.097234 0.30285"/>
     <parent link="torso_link4"/>
     <child link="left_base_link"/>
   </joint>
@@ -585,7 +585,7 @@
   </link>
   <!-- RealSense Joint: Arm 6 to Camera -->
   <joint name="left_realsense_joint" type="fixed">
-    <origin rpy="-2.0071 0.0077831 -1.5708" xyz="0.098768 0.0021071 0.05055"/>
+    <origin rpy="-2.0071 0.0077831 -1.5707963267948966" xyz="0.098768 0.0021071 0.05055"/>
     <parent link="left_link6"/>
     <child link="left_realsense_link"/>
   </joint>
@@ -598,12 +598,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/base_link.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/base_link.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/base_link.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/base_link.obj"/>
       </geometry>
     </collision>
   </link>
@@ -616,12 +616,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link1.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link1.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link1.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link1.obj"/>
       </geometry>
     </collision>
   </link>
@@ -631,7 +631,7 @@
     <parent link="right_base_link"/>
     <child link="right_link1"/>
     <axis xyz="0 0 1"/>
-    <limit effort="40" lower="-2.8798" upper="2.8798" velocity="20.944"/>
+    <limit effort="100" lower="-2.8798" upper="2.8798" velocity="20.944"/>
   </joint>
   <!-- Link 2 -->
   <link name="right_link2">
@@ -642,22 +642,22 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link2.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link2.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link2.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link2.obj"/>
       </geometry>
     </collision>
   </link>
   <!-- Joint 2: Link1 to Link2 -->
   <joint name="right_joint2" type="revolute">
-    <origin rpy="1.5708 0 0" xyz="0 0 0.1061"/>
+    <origin rpy="1.5707963267948966 0 0" xyz="0 0 0.1061"/>
     <parent link="right_link1"/>
     <child link="right_link2"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="40" lower="0" upper="3.2289" velocity="20.944"/>
+    <limit effort="100" lower="0" upper="3.2289" velocity="20.944"/>
   </joint>
   <!-- Link 3 -->
   <link name="right_link3">
@@ -668,12 +668,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link3.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link3.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link3.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link3.obj"/>
       </geometry>
     </collision>
   </link>
@@ -683,7 +683,7 @@
     <parent link="right_link2"/>
     <child link="right_link3"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="27" lower="-3.3161" upper="0" velocity="7.5398"/>
+    <limit effort="100" lower="-3.3161" upper="0" velocity="7.5398"/>
   </joint>
   <!-- Link 4 -->
   <link name="right_link4">
@@ -694,12 +694,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link4.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link4.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link4.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link4.obj"/>
       </geometry>
     </collision>
   </link>
@@ -709,7 +709,7 @@
     <parent link="right_link3"/>
     <child link="right_link4"/>
     <axis xyz="1 0 0"/>
-    <limit effort="7" lower="-2.8798" upper="2.8798" velocity="25.133"/>
+    <limit effort="100" lower="-2.8798" upper="2.8798" velocity="25.133"/>
   </joint>
   <!-- Link 5 -->
   <link name="right_link5">
@@ -720,12 +720,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link5.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link5.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link5.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link5.obj"/>
       </geometry>
     </collision>
   </link>
@@ -735,7 +735,7 @@
     <parent link="right_link4"/>
     <child link="right_link5"/>
     <axis xyz="0 1 0"/>
-    <limit effort="7" lower="-1.6581" upper="1.6581" velocity="25.133"/>
+    <limit effort="100" lower="-1.6581" upper="1.6581" velocity="25.133"/>
   </joint>
   <!-- Link 6 -->
   <link name="right_link6">
@@ -746,12 +746,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link6.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link6.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_a1_description/meshes/a1/link6.obj"/>
+        <mesh filename="package://galaxea_a1_description/meshes/a1/visual/link6.obj"/>
       </geometry>
     </collision>
   </link>
@@ -761,7 +761,7 @@
     <parent link="right_link5"/>
     <child link="right_link6"/>
     <axis xyz="1 0 0"/>
-    <limit effort="7" lower="-2.8798" upper="2.8798" velocity="25.133"/>
+    <limit effort="100" lower="-2.8798" upper="2.8798" velocity="25.133"/>
   </joint>
   <link name="right_gripper_base">
     <inertial>
@@ -835,16 +835,16 @@
     <parent link="right_gripper_base"/>
     <child link="right_gripper_center"/>
   </joint>
-  <origin rpy="3.14159 0 0" xyz="0.1039 0 0"/>
+  <origin rpy="3.141592653589793 0 0" xyz="0.1039 0 0"/>
   <!-- Gripper Base Joint -->
   <joint name="right_gripper_base_joint" type="fixed">
-    <origin rpy="3.14159 0 0" xyz="0.1039 0 0"/>
+    <origin rpy="3.141592653589793 0 0" xyz="0.1039 0 0"/>
     <parent link="right_link6"/>
     <child link="right_gripper_base"/>
   </joint>
   <!-- Right Arm Base Joint: Torso 4 to Right Arm -->
   <joint name="right_arm_base_joint" type="fixed">
-    <origin rpy="1.5708 0 0" xyz="0.00077778 -0.097235 0.30285"/>
+    <origin rpy="1.5707963267948966 0 0" xyz="0.00077778 -0.097235 0.30285"/>
     <parent link="torso_link4"/>
     <child link="right_base_link"/>
   </joint>
@@ -868,7 +868,7 @@
   </link>
   <!-- RealSense Joint: Arm 6 to Camera -->
   <joint name="right_realsense_joint" type="fixed">
-    <origin rpy="1.1344 -0.0077831 1.5708" xyz="0.098762 0.0021071 -0.05055"/>
+    <origin rpy="1.1344 -0.0077831 1.5707963267948966" xyz="0.098762 0.0021071 -0.05055"/>
     <parent link="right_link6"/>
     <child link="right_realsense_link"/>
   </joint>

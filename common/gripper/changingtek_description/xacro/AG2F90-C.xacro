@@ -23,11 +23,6 @@
 						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/flange.obj"/>
 					</geometry>
 				</visual>
-				<collision>
-					<geometry>
-						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/flange.obj"/>
-					</geometry>
-				</collision>
 			</link>
 			<joint name="${prefix}flange_joint" type="fixed">
 				<origin xyz="0 0 0.0195"/>
