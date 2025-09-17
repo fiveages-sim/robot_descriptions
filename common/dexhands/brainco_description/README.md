@@ -16,7 +16,7 @@ colcon build --packages-up-to brainco_description --symlink-install
   ```bash
   # left hand
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config hand.launch.py hand:=brainco direction:=1
+  ros2 launch robot_common_launch hand.launch.py hand:=brainco direction:=1
   ```
   ![revo2 left](../.images/brainco_revo2_left.png)
     
@@ -24,6 +24,6 @@ colcon build --packages-up-to brainco_description --symlink-install
   ```bash
   # right hand
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config hand.launch.py hand:=brainco direction:=-1
+  ros2 launch robot_common_launch hand.launch.py hand:=brainco direction:=-1
   ```
   ![revo2 right](../.images/brainco_revo2_right.png)

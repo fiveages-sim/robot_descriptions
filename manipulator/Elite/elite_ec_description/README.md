@@ -15,11 +15,11 @@ colcon build --packages-up-to elite_ec_description --symlink-install
 * EC66
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator.launch.py robot:=elite_ec
+  ros2 launch robot_common_launch manipulator.launch.py robot:=elite_ec
   ```
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator.launch.py robot:=elite_ec collider:=simple
+  ros2 launch robot_common_launch manipulator.launch.py robot:=elite_ec collider:=simple
   ```
 
   ![ec66](../../.images/elite_ec66.png)
@@ -30,7 +30,7 @@ colcon build --packages-up-to elite_ec_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=elite_ec
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=elite_ec
 ```
 
 ### 3.2 OCS2 Arm Controller Demo

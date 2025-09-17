@@ -14,7 +14,7 @@ colcon build --packages-up-to inspire_description --symlink-install
 * EG2-4C2
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config gripper.launch.py gripper:=inspire
+  ros2 launch robot_common_launch gripper.launch.py gripper:=inspire
   ```
 
   ![EG2](../.images/inspire_eg2.png)

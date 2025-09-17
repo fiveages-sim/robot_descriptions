@@ -12,7 +12,7 @@ colcon build --packages-up-to agibot_g1_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=agibot_g1
+ros2 launch robot_common_launch manipulator.launch.py robot:=agibot_g1
 ```
     
 ![G1](../../.images/agibot_g1.png)
@@ -23,7 +23,7 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=agibot_g1
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=agibot_g1
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=agibot_g1
 ```
 
 [Screencast from 2025-09-05 11-16-59.webm](https://github.com/user-attachments/assets/efc29041-42ae-4062-95d0-0024767ddca1)

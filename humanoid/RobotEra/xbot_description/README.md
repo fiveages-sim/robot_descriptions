@@ -16,5 +16,5 @@ To visualize and check the configuration of the robot in rviz, simply launch:
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config visualize.launch.py robot:=xbot
+ros2 launch robot_common_launch visualize.launch.py robot:=xbot
 ```

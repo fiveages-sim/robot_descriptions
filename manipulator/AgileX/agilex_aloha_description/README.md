@@ -16,14 +16,14 @@ To visualize and check the configuration of the robot in rviz, simply launch:
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=agilex_aloha
+ros2 launch robot_common_launch manipulator.launch.py robot:=agilex_aloha
 ```
 
 ![split](../../.images/agilex_split_aloha.png)
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=agilex_aloha type:="v2"
+ros2 launch robot_common_launch manipulator.launch.py robot:=agilex_aloha type:="v2"
 ```
 
 ![aloha2](../../.images/agilex_aloha2.png)
@@ -35,7 +35,7 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=agilex_aloha typ
 * Split Aloha
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=agilex_aloha dual_arm:=true
+  ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=agilex_aloha dual_arm:=true
   ```
 
 ### 3.2 OCS2 Arm Controller Demo

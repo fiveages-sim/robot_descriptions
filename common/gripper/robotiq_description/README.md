@@ -14,7 +14,7 @@ colcon build --packages-up-to robotiq_description --symlink-install
 * Robotiq 85 Gripper
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config gripper.launch.py gripper:=robotiq
+  ros2 launch robot_common_launch gripper.launch.py gripper:=robotiq
   ```
 
   ![85](../.images/robotiq_85.png)

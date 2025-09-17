@@ -12,7 +12,7 @@ colcon build --packages-up-to airbot_play_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=airbot_play
+ros2 launch robot_common_launch manipulator.launch.py robot:=airbot_play
 ```
 
 ![airbot play](../../.images/airbot_play.png)
@@ -23,7 +23,7 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=airbot_play
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=airbot_play
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=airbot_play
 ```
 
 ### 3.2 OCS2 Arm Controller Demo

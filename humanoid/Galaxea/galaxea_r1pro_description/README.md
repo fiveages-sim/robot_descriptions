@@ -14,7 +14,7 @@ colcon build --packages-up-to galaxea_r1pro_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_r1pro
+ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_r1pro
 ```
 ![Galaxea R1 Pro](../../.images/galaxea_r1_pro.png)
 
@@ -24,7 +24,7 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_r1pro
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=galaxea_r1pro
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_r1pro
 ```
 
 ### 3.2 OCS2 Arm Controller Demo

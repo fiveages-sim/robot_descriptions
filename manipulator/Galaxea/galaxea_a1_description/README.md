@@ -15,7 +15,7 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 * A1
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_a1
+  ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_a1
   ```
 
   ![A1X](../../.images/galaxea_a1.png)
@@ -23,7 +23,7 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 * A1 X
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_a1 type:=x
+  ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_a1 type:=x
   ```
 
   ![A1X](../../.images/galaxea_a1x.png)
@@ -31,7 +31,7 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 * A1 Y
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_a1 type:=y
+  ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_a1 type:=y
   ```
 
   ![A1Y](../../.images/galaxea_a1y.png)
@@ -39,7 +39,7 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 * G1 Gripper
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config gripper.launch.py gripper:=galaxea_a1
+  ros2 launch robot_common_launch gripper.launch.py gripper:=galaxea_a1
   ```
 
 ## 3. OCS2 Demo
@@ -49,19 +49,19 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 * A1
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=galaxea_a1
+  ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_a1
   ```
 
 * A1 X
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=galaxea_a1 type:=x
+  ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_a1 type:=x
   ```
 
 * A1 Y
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=galaxea_a1 type:=y
+  ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_a1 type:=y
   ```
 
 ### 3.2 OCS2 Arm Controller Demo

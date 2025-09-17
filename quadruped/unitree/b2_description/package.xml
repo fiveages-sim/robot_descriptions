@@ -10,7 +10,7 @@ for b2 robot</p>
   <maintainer email="TODO@email.com" />
   <license>BSD</license>
 
-  <exec_depend>robot_visualize_config</exec_depend>
+  <exec_depend>robot_common_launch</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

@@ -12,7 +12,7 @@ colcon build --packages-up-to rm65_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=rm65
+ros2 launch robot_common_launch manipulator.launch.py robot:=rm65
 ```
 
 ![RM65](../../.images/realman_rm65.png)
@@ -20,5 +20,5 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=rm65
 ## 3. OCS2 Demo
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=rm65
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=rm65
 ```

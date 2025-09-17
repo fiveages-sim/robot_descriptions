@@ -15,14 +15,14 @@ colcon build --packages-up-to galaxea_r1lite_description --symlink-install
 * R1 Lite with A1X Arm
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_r1lite
+ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_r1lite
 ```
 
 ![A1X](../../.images/galaxea_r1lite_x.png)
 * R1 Lite with A1Y Arm
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_r1lite type:=y
+ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_r1lite type:=y
 ```
 
 ![A1Y](../../.images/galaxea_r1lite_y.png)
@@ -33,7 +33,7 @@ ros2 launch robot_visualize_config manipulator.launch.py robot:=galaxea_r1lite t
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=galaxea_r1
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_r1
 ```
 
 ### 3.2 OCS2 Arm Controller Demo

@@ -13,7 +13,7 @@ colcon build --packages-up-to x30_description --symlink-install
 To visualize and check the configuration of the robot in rviz, simply launch:
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config visualize.launch.py robot:=x30
+ros2 launch robot_common_launch visualize.launch.py robot:=x30
 ```
 
 ## Launch ROS2 Control

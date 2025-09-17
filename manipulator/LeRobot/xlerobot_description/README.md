@@ -12,5 +12,5 @@ colcon build --packages-up-to xlerobot_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=xlerobot
+ros2 launch robot_common_launch manipulator.launch.py robot:=xlerobot
 ```

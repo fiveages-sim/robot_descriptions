@@ -1,6 +1,6 @@
 # 通用机器人 OCS2 Launch 系统
 
-[这个文件夹](../common/robot_visualize_config)包含了一个通用的机器人 OCS2 launch 系统，允许你通过传入机器人名称来自动配置所有相关路径。ROS2版本的OCS2控制框架可以在这里找到：[OCS2 ROS2](https://github.com/legubiao/ocs2_ros2)
+[这个文件夹](../common/robot_common_launch)包含了一个通用的机器人 OCS2 launch 系统，允许你通过传入机器人名称来自动配置所有相关路径。ROS2版本的OCS2控制框架可以在这里找到：[OCS2 ROS2](https://github.com/legubiao/ocs2_ros2)
 
 ## 🚀 功能特点
 
@@ -16,19 +16,19 @@
 
 启动 Dobot CR5 机器人的 OCS2 控制器：
 ```bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=cr5
 ```
 
 启动 ARX X5 机器人的 OCS2 控制器：
 ```bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=x5
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=x5
 ```
 
 ### 调试模式
 
 启用调试模式获得详细日志：
 ```bash
-ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5 debug:=true
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=cr5 debug:=true
 ```
 
 ## 🎯 参数说明

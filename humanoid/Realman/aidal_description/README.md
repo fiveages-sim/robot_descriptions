@@ -12,7 +12,7 @@ colcon build --packages-up-to aidal_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config manipulator.launch.py robot:=aidal
+ros2 launch robot_common_launch manipulator.launch.py robot:=aidal
 ```
 
 ![Realman AIDAL](../../.images/realman_aidal.png)

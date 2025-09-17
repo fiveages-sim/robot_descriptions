@@ -16,7 +16,7 @@ colcon build --packages-up-to lite3_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_visualize_config visualize.launch.py robot:=lite3
+ros2 launch robot_common_launch visualize.launch.py robot:=lite3
 ```
 
 ## Launch ROS2 Control

@@ -13,7 +13,7 @@
 
   <license>Apache-2.0</license>
 
-  <exec_depend>robot_visualize_config</exec_depend>
+  <exec_depend>robot_common_launch</exec_depend>
   <exec_depend>so_arm_description</exec_depend>
 
   <export>

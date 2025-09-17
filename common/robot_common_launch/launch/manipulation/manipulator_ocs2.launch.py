@@ -5,18 +5,21 @@ from launch.substitutions import LaunchConfiguration
 from launch.actions import OpaqueFunction
 from launch import LaunchDescription
 
+# Import robot_common_launch utilities
+from robot_common_launch import get_robot_package_path, get_planning_urdf_path
+
 
 def generate_launch_description():
     """
     通用的机器人OCS2 launch文件
     
     使用方法:
-    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5
-    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=franka
-    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5 type:=red
-    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=piper type:=long_arm
-    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5 task_file:=task_custom
-    ros2 launch robot_visualize_config manipulator_ocs2.launch.py robot_name:=cr5 type:=red task_file:=task_red
+    ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=cr5
+    ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=franka
+    ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=cr5 type:=red
+    ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=piper type:=long_arm
+    ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=cr5 task_file:=task_custom
+    ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=cr5 type:=red task_file:=task_red
     """
     
     # 机器人名称参数
@@ -83,31 +86,25 @@ def generate_launch_description():
             print(f"🎮 Joystick control disabled")
         
         # 自动生成所有路径
-        try:
-            # URDF文件路径 - 如果有类型则使用类型版本，否则使用默认版本
-            if type_value and type_value.strip():
-                urdf_filename = f'{robot_identifier}.urdf'
-            else:
-                urdf_filename = f'{robot_name_value}.urdf'
-                
-            urdf_file_value = os.path.join(
-                get_package_share_directory(f'{robot_name_value}_description'),
-                'urdf', urdf_filename
-            )
-            print(f"📁 URDF: {urdf_file_value}")
-        except Exception as e:
-            print(f"❌ Error: Could not find {robot_name_value}_description package: {e}")
+        # 使用 robot_common_launch 工具获取机器人包路径
+        robot_pkg_path = get_robot_package_path(robot_name_value)
+        if robot_pkg_path is None:
+            print(f"❌ Error: Could not find {robot_name_value}_description package")
             return []
         
-        try:
-            task_file_path = os.path.join(
-                get_package_share_directory(f'{robot_name_value}_description'),
-                'config', 'ocs2', f'{task_file_value}.info'
-            )
-            print(f"📁 Task file: {task_file_path}")
-        except Exception as e:
-            print(f"❌ Error: Could not find task config for {robot_name_value}: {e}")
+        # 使用 robot_common_launch 工具获取 URDF 文件路径
+        urdf_file_value = get_planning_urdf_path(robot_name_value, type_value)
+        if urdf_file_value is None:
+            print(f"❌ Error: Could not find URDF file for {robot_name_value}")
             return []
+        print(f"📁 URDF: {urdf_file_value}")
+        
+        # 构建任务文件路径
+        task_file_path = os.path.join(
+            robot_pkg_path,
+            'config', 'ocs2', f'{task_file_value}.info'
+        )
+        print(f"📁 Task file: {task_file_path}")
         
         try:
             # lib folder路径 - 包含类型信息
