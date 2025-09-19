@@ -212,22 +212,12 @@
       <limit lower="-6.28" upper="6.28" effort="10" velocity="3.925"/>
     </joint>
 
-    <link name="${prefix}gripper_plate">
-      <xacro:visual_collision mesh="gripper_plate.obj"/>
-    </link>
+    <!-- End effector link for gripper attachment -->
+    <link name="${prefix}link6_ee"/>
     <joint name="${prefix}ee_joint" type="fixed">
       <origin xyz="0 0 -0.043" rpy="3.14159 0 1.5708"/>
       <parent link="${prefix}link6"/>
-      <child link="${prefix}gripper_plate"/>
-    </joint>
-
-    <xacro:include filename="$(find inspire_description)/xacro/EG2-4C2.xacro"/>
-    <xacro:Gripper name="${name}"/>
-
-    <joint name="${prefix}gripper_base_joint" type="fixed">
-      <origin xyz="0 0 0.0043"/>
-      <parent link="${prefix}gripper_plate" />
-      <child link="${prefix}gripper_base" />
+      <child link="${prefix}link6_ee"/>
     </joint>
   </xacro:macro>
 </robot>

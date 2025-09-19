@@ -55,7 +55,7 @@ def process_xacro(robot_name, xacro_filename="robot.xacro", **kwargs):
     mappings = {k: v for k, v in kwargs.items() if v and str(v).strip()}
     
     # 特殊处理：如果 type 参数为空，尝试从 xacro 文件读取默认值
-    if 'type' not in mappings and kwargs.get('type') is None:
+    if 'type' not in mappings:
         default_type = get_default_type_from_xacro(xacro_file)
         if default_type:
             mappings['type'] = default_type
@@ -127,6 +127,11 @@ def create_common_launch_arguments():
             'collider',
             default_value='',
             description='Collider type parameter for xacro (empty means no collider parameter passed to xacro)'
+        ),
+        DeclareLaunchArgument(
+            'direction',
+            default_value='',
+            description='Direction parameter for xacro (empty means no direction parameter passed to xacro)'
         ),
     ]
 

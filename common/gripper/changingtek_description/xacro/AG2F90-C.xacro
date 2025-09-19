@@ -4,6 +4,7 @@
 
 	<xacro:macro name="AG2F90-C" params="name use_flange:=false">
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<xacro:property name="PI" value="3.1415926535897931"/>
 
 		<xacro:if value="${use_flange}">
 			<link name="${prefix}flange">
@@ -50,7 +51,7 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/gripper_base.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/base.stl"/>
 				</geometry>
 			</collision>
 		</link>
@@ -74,17 +75,17 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/link_1.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/link_1.stl"/>
 				</geometry>
 			</collision>
 		</link>
 
 		<joint name="${prefix}gripper_joint" type="revolute">
-			<origin xyz="0 -0.030141 0.090147" rpy="1.5708 0 0"/>
+			<origin xyz="0 -0.030141 0.090147" rpy="${PI/2} 0 0"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}left_1_link"/>
 			<axis xyz="1 0 0"/>
-			<limit lower="0" upper="1" effort="25" velocity="4.1887902047863905"/>
+			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
 		</joint>
 
 		<link name="${prefix}left_in_link">
@@ -106,7 +107,7 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/in_link.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/in_link.stl"/>
 				</geometry>
 			</collision>
 		</link>
@@ -116,7 +117,7 @@
 			<parent link="${prefix}left_1_link"/>
 			<child link="${prefix}left_in_link"/>
 			<axis xyz="-1 0 0"/>
-			<limit lower="0" upper="1" effort="0" velocity="0"/>
+			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
 			<mimic joint="${prefix}gripper_joint" multiplier="0.1" offset="0"/>
 		</joint>
 
@@ -139,7 +140,7 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/up_link.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/up_link.stl"/>
 				</geometry>
 			</collision>
 		</link>
@@ -149,8 +150,8 @@
 			<parent link="${prefix}left_1_link"/>
 			<child link="${prefix}left_up_link"/>
 			<axis xyz="-1 0 0"/>
-			<limit lower="0" upper="1" effort="10" velocity="4.1887902047863905"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			<mimic joint="${prefix}gripper_joint"/>
 		</joint>
 
 		<link name="${prefix}left_Pad_link">
@@ -172,7 +173,7 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
 				</geometry>
 			</collision>
 		</link>
@@ -202,18 +203,18 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/link_2.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/link_2.stl"/>
 				</geometry>
 			</collision>
 		</link>
 
 		<joint name="${prefix}left_2_Joint" type="revolute">
-			<origin xyz="0 -0.016 0.107" rpy="1.5708 0 0"/>
+			<origin xyz="0 -0.016 0.107" rpy="${PI/2} 0 0"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}left_2_link"/>
 			<axis xyz="1 0 0"/>
-			<limit lower="0" upper="1" effort="10" velocity="4.1887902047863905"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			<mimic joint="${prefix}gripper_joint"/>
 		</joint>
 
 		<link name="${prefix}right_2_link">
@@ -235,18 +236,18 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/link_2.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/link_2.stl"/>
 				</geometry>
 			</collision>
 		</link>
 
 		<joint name="${prefix}right_2_Joint" type="revolute">
-			<origin xyz="0 0.016 0.107" rpy="1.5708 0 3.1416"/>
+			<origin xyz="0 0.016 0.107" rpy="${PI/2} 0 ${PI}"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}right_2_link"/>
 			<axis xyz="1 0 0"/>
-			<limit lower="0" upper="1" effort="10" velocity="4.1887902047863905"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			<mimic joint="${prefix}left_2_Joint"/>
 		</joint>
 
 		<link name="${prefix}right_1_link">
@@ -268,18 +269,18 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/link_1.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/link_1.stl"/>
 				</geometry>
 			</collision>
 		</link>
 
 		<joint name="${prefix}right_1_Joint" type="revolute">
-			<origin xyz="0 0.030141 0.090147" rpy="1.5708 0 3.1416"/>
+			<origin xyz="0 0.030141 0.090147" rpy="${PI/2} 0 ${PI}"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}right_1_link"/>
 			<axis xyz="1 0 0"/>
-			<limit lower="0" upper="1" effort="10" velocity="4.1887902047863905"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			<mimic joint="${prefix}gripper_joint"/>
 		</joint>
 
 		<link name="${prefix}right_in_link">
@@ -301,7 +302,7 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/in_link.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/in_link.stl"/>
 				</geometry>
 			</collision>
 		</link>
@@ -311,8 +312,8 @@
 			<parent link="${prefix}right_1_link"/>
 			<child link="${prefix}right_in_link"/>
 			<axis xyz="-1 0 0"/>
-			<limit lower="0" upper="1" effort="0" velocity="0"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="0.1" offset="0"/>
+			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			<mimic joint="${prefix}right_1_Joint" multiplier="0.1" offset="0"/>
 		</joint>
 
 		<link name="${prefix}right_up_link">
@@ -334,7 +335,7 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/up_link.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/up_link.stl"/>
 				</geometry>
 			</collision>
 		</link>
@@ -344,8 +345,8 @@
 			<parent link="${prefix}right_1_link"/>
 			<child link="${prefix}right_up_link"/>
 			<axis xyz="-1 0 0"/>
-			<limit lower="0" upper="1" effort="10" velocity="4.1887902047863905"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			<mimic joint="${prefix}right_1_Joint"/>
 		</joint>
 
 		<link name="${prefix}right_Pad_link">
@@ -367,7 +368,7 @@
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.obj"/>
+					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
 				</geometry>
 			</collision>
 		</link>

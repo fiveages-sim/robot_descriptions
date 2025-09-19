@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<robot name="RM65" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:arg name="type" default="empty"/>
+
+	<!-- 根据type参数决定使用哪种夹爪 -->
+	<xacro:if value="${'$(arg type)' == 'EG2-4C2'}">
+		<xacro:include filename="$(find inspire_description)/xacro/EG2-4C2.xacro"/>
+		<xacro:Gripper name=""/>
+		<joint name="gripper_fix" type="fixed">
+			<parent link="link6_ee"/>
+			<child link="gripper_base"/>
+		</joint>
+	</xacro:if>
+
+</robot>

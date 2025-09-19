@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <robot name="rm65" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find rm65_description)/xacro/arm.xacro"/>
+  <xacro:arg name="gripper_type" default="empty"/>
 
+  <xacro:include filename="$(find rm65_description)/xacro/arm.xacro"/>
   <xacro:rm65 name=""/>
+
+  <xacro:include filename="$(find rm65_description)/xacro/grippers.xacro"/>
 </robot>

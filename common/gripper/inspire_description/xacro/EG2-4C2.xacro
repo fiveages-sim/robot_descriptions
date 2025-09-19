@@ -2,6 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="Gripper" params="name">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:property name="PI" value="3.1415926535897931"/>
     <link name="${prefix}gripper_base">
       <inertial>
         <origin xyz="1.5645E-05 -4.1838E-06 0.038"/>
@@ -55,7 +56,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}left_outer_link"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="0" upper="0.82" effort="1" velocity="1"/>
+      <limit lower="0" upper="0.82" effort="50" velocity="${PI}"/>
     </joint>
     
     <link name="${prefix}left_inner_link">
@@ -87,7 +88,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}left_inner_link"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="0" upper="0.82" effort="1" velocity="1"/>
+      <limit lower="0" upper="0.82" effort="50" velocity="${PI}"/>
       <mimic joint="${prefix}gripper_joint"/>
     </joint>
     
@@ -120,7 +121,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}right_inner_link"/>
       <axis xyz="0 1 0"/>
-      <limit lower="0.82" upper="0" effort="1" velocity="1"/>
+      <limit lower="0" upper="0.82" effort="50" velocity="${PI}"/>
       <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
     
@@ -153,7 +154,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}right_outer_link"/>
       <axis xyz="0 1 0"/>
-      <limit lower="0" upper="0.82" effort="1" velocity="1"/>
+      <limit lower="0" upper="0.82" effort="50" velocity="${PI}"/>
       <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
     
@@ -186,7 +187,7 @@
       <parent link="${prefix}left_outer_link"/>
       <child link="${prefix}left_pad"/>
       <axis xyz="0 1 0"/>
-      <limit lower="0" upper="0.82" effort="1" velocity="1"/>
+      <limit lower="0" upper="0.82" effort="50" velocity="${PI}"/>
       <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
     
@@ -219,7 +220,7 @@
       <parent link="${prefix}right_outer_link"/>
       <child link="${prefix}right_pad"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="0" upper="0.82" effort="1" velocity="1"/>
+      <limit lower="0" upper="0.82" effort="50" velocity="${PI}"/>
       <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
     

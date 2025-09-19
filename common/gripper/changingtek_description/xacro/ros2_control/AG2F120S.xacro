@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- AG2F120S夹爪完整接口定义宏 - 参考fiveages w1的arm_interfaces设计 -->
+	<xacro:macro name="ag2f120s_interfaces" params="name">
+		<xacro:arg name="gazebo" default="false"/>
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+		<!-- 夹爪主关节接口定义 -->
+		<joint name="${prefix}gripper_joint">
+			<command_interface name="position"/>
+			<state_interface name="position">
+				<param name="initial_value">0.0</param>
+			</state_interface>
+			<state_interface name="velocity"/>
+			<state_interface name="effort"/>
+		</joint>
+
+		<xacro:if value="$(arg gazebo)">
+			<!-- AG2F120S夹爪的mimic关节接口 -->
+			<joint name="${prefix}left_support_joint">
+				<state_interface name="position"/>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+			<joint name="${prefix}left_2_joint">
+				<state_interface name="position"/>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+			<joint name="${prefix}right_2_joint">
+				<state_interface name="position"/>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+			<joint name="${prefix}right_1_joint">
+				<state_interface name="position"/>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+			<joint name="${prefix}right_support_joint">
+				<state_interface name="position"/>
+				<state_interface name="velocity"/>
+				<state_interface name="effort"/>
+			</joint>
+		</xacro:if>
+	</xacro:macro>
+
+</robot>

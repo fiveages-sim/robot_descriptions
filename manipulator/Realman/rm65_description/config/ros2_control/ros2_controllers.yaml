@@ -7,7 +7,7 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
 
     hand_controller:
-      type: position_controllers/GripperActionController
+      type: adaptive_gripper_controller/AdaptiveGripperController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -33,8 +33,9 @@ arm_controller:
 
 hand_controller:
   ros__parameters:
-    joint: finger_joint
-
+    joint: gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
 
 ocs2_arm_controller:
   ros__parameters:
@@ -56,5 +57,5 @@ ocs2_arm_controller:
     robot_name: rm65
 
     # Control parameters
-    home_pos: [0.0, 0.0, -1.5708, 0.0, 1.5708, 0.0]
-    zero_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_pos: [0.0, 0.0, -1.5708, 0.0, -1.5708, 0.0]
+    rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

@@ -82,15 +82,19 @@
         <state_interface name="effort"/>
       </joint>
 
-      <xacro:if value="${'$(arg type)' != 'empty'}">
-        <joint name="${prefix}gripper_joint">
-          <command_interface name="position"/>
-          <state_interface name="position">
-            <param name="initial_value">0.0</param>
-          </state_interface>
-          <state_interface name="velocity"/>
-          <state_interface name="effort"/>
-        </joint>
+      <!-- 夹爪接口定义 -->
+      <xacro:if value="${'$(arg type)' == 'AG2F90-C'}">
+        <xacro:include filename="$(find changingtek_description)/xacro/ros2_control/AG2F90-C.xacro"/>
+        <xacro:ag2f90c_interfaces name=""/>
+      </xacro:if>
+
+      <xacro:if value="${'$(arg type)' == 'AG2F120S'}">
+        <xacro:include filename="$(find changingtek_description)/xacro/ros2_control/AG2F120S.xacro"/>
+        <xacro:ag2f120s_interfaces name="" />
+      </xacro:if>
+      <xacro:if value="${'$(arg type)' == 'robotiq85'}">
+        <xacro:include filename="$(find robotiq_description)/xacro/ros2_control/2F85.xacro"/>
+        <xacro:robotiq_2f85_interfaces name=""/>
       </xacro:if>
 
     </ros2_control>
