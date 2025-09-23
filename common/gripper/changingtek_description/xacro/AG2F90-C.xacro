@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<xacro:macro name="AG2F90-C" params="name use_flange:=false">
+	<xacro:macro name="AG2F90-C" params="name use_flange:=false pad:=default">
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 		<xacro:property name="PI" value="3.1415926535897931"/>
 
@@ -85,7 +85,12 @@
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}left_1_link"/>
 			<axis xyz="1 0 0"/>
-			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			<xacro:if value="${pad == 'soft'}">
+				<limit lower="0.189" upper="1" effort="50" velocity="${PI}"/>
+			</xacro:if>
+			<xacro:if value="${pad == 'default' or pad == ''}">
+				<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			</xacro:if>
 		</joint>
 
 		<link name="${prefix}left_in_link">
@@ -168,12 +173,22 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link.obj"/>
+					<xacro:if value="${pad == 'soft'}">
+						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
+					</xacro:if>
+					<xacro:if value="${pad == 'default' or pad == ''}">
+						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link.obj"/>
+					</xacro:if>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
+					<xacro:if value="${pad == 'soft'}">
+						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
+					</xacro:if>
+					<xacro:if value="${pad == 'default' or pad == ''}">
+						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
+					</xacro:if>
 				</geometry>
 			</collision>
 		</link>
@@ -363,12 +378,22 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link.obj"/>
+					<xacro:if value="${pad == 'soft'}">
+						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
+					</xacro:if>
+					<xacro:if value="${pad == 'default' or pad == ''}">
+						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link.obj"/>
+					</xacro:if>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
+					<xacro:if value="${pad == 'soft'}">
+						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
+					</xacro:if>
+					<xacro:if value="${pad == 'default' or pad == ''}">
+						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
+					</xacro:if>
 				</geometry>
 			</collision>
 		</link>

@@ -83,7 +83,7 @@
       </joint>
 
       <!-- 夹爪接口定义 -->
-      <xacro:if value="${'$(arg type)' == 'AG2F90-C'}">
+      <xacro:if value="${'$(arg type)' == 'AG2F90-C' or '$(arg type)' == 'AG2F90-C-Soft'}">
         <xacro:include filename="$(find changingtek_description)/xacro/ros2_control/AG2F90-C.xacro"/>
         <xacro:ag2f90c_interfaces name=""/>
       </xacro:if>

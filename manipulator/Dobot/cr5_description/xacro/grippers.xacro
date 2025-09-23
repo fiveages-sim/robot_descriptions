@@ -24,6 +24,16 @@
 		</joint>
 	</xacro:if>
 
+	<xacro:if value="${'$(arg type)' == 'AG2F90-C-Soft'}">
+		<xacro:include filename="$(find changingtek_description)/xacro/AG2F90-C.xacro"/>
+		<xacro:AG2F90-C name="" use_flange="true" pad="soft"/>
+		<joint name="gripper_fix" type="fixed">
+			<parent link="Link6"/>
+			<child link="flange"/>
+			<origin rpy="0 0 ${PI/2}"/>
+		</joint>
+	</xacro:if>
+
 	<xacro:if value="${'$(arg type)' == 'AG2F120S'}">
 		<xacro:include filename="$(find changingtek_description)/xacro/AG2F120S.xacro"/>
 		<xacro:AG2F120S name=""/>
