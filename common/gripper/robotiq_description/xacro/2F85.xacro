@@ -291,5 +291,12 @@
       <parent link="${prefix}right_inner_finger"/>
       <child link="${prefix}right_inner_finger_pad"/>
     </joint>
+
+    <link name="${prefix}eef"/>
+    <joint name="${prefix}eef_joint" type="fixed">
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}eef"/>
+      <origin xyz="0 0 0.15"/>
+    </joint>
   </xacro:macro>
 </robot>

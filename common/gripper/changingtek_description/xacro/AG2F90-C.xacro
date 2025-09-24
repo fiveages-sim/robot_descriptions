@@ -12,12 +12,12 @@
 					<origin xyz="-0.000388 0.002345 0.0"/>
 					<mass value="0.114"/>
 					<inertia
-						ixx="0.000040105"
-						ixy="0.000000214"
-						ixz="0.0"
-						iyy="0.000085776"
-						iyz="0.0"
-						izz="0.000054044"/>
+							ixx="0.000040105"
+							ixy="0.000000214"
+							ixz="0.0"
+							iyy="0.000085776"
+							iyz="0.0"
+							izz="0.000054044"/>
 				</inertial>
 				<visual>
 					<geometry>
@@ -159,39 +159,58 @@
 			<mimic joint="${prefix}gripper_joint"/>
 		</joint>
 
-		<link name="${prefix}left_Pad_link">
-			<inertial>
-				<origin xyz="-3.83777509579761E-08 0.00303135276101582 0.0028336970357949"/>
-				<mass value="0.0183171479595721"/>
-				<inertia
-						ixx="2.35683098270332E-06"
-						ixy="-4.7353365844279E-12"
-						ixz="-9.31433971475514E-13"
-						iyy="9.08136064346118E-07"
-						iyz="-1.55873132053129E-08"
-						izz="3.18448591439082E-06"/>
-			</inertial>
-			<visual>
-				<geometry>
-					<xacro:if value="${pad == 'soft'}">
-						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
-					</xacro:if>
-					<xacro:if value="${pad == 'default' or pad == ''}">
-						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link.obj"/>
-					</xacro:if>
-				</geometry>
-			</visual>
-			<collision>
-				<geometry>
-					<xacro:if value="${pad == 'soft'}">
-						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
-					</xacro:if>
-					<xacro:if value="${pad == 'default' or pad == ''}">
-						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
-					</xacro:if>
-				</geometry>
-			</collision>
-		</link>
+		<geometry>
+			<xacro:if value="${pad == 'soft'}">
+				<link name="${prefix}left_Pad_link">
+					<inertial>
+						<origin xyz="0 0.02438 0.00359"/>
+						<mass value="0.03393"/>
+						<inertia
+								ixx="4.953269E-05"
+								ixy="-2.1801E-07"
+								ixz="-5.331E-08"
+								iyy="5.72939E-06"
+								iyz="1.60851E-06"
+								izz="4.880683E-05"/>
+					</inertial>
+					<visual>
+						<geometry>
+							<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
+						</geometry>
+					</visual>
+					<collision>
+						<geometry>
+							<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
+						</geometry>
+					</collision>
+				</link>
+			</xacro:if>
+			<xacro:if value="${pad == 'default' or pad == ''}">
+				<link name="${prefix}left_Pad_link">
+					<inertial>
+						<origin xyz="-3.83777509579761E-08 0.00303135276101582 0.0028336970357949"/>
+						<mass value="0.0183171479595721"/>
+						<inertia
+								ixx="2.35683098270332E-06"
+								ixy="-4.7353365844279E-12"
+								ixz="-9.31433971475514E-13"
+								iyy="9.08136064346118E-07"
+								iyz="-1.55873132053129E-08"
+								izz="3.18448591439082E-06"/>
+					</inertial>
+					<visual>
+						<geometry>
+							<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link.obj"/>
+						</geometry>
+					</visual>
+					<collision>
+						<geometry>
+							<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
+						</geometry>
+					</collision>
+				</link>
+			</xacro:if>
+		</geometry>
 
 		<joint name="${prefix}left_Pad_Joint" type="fixed">
 			<origin xyz="0 0.04125 -0.02425"/>
@@ -364,39 +383,58 @@
 			<mimic joint="${prefix}right_1_Joint"/>
 		</joint>
 
-		<link name="${prefix}right_Pad_link">
-			<inertial>
-				<origin xyz="-3.83777500494227E-08 0.0030313527610159 0.00283369703564792"/>
-				<mass value="0.0366342959191441"/>
-				<inertia
-						ixx="4.71366196540664E-06"
-						ixy="-9.47067316877366E-12"
-						ixz="-1.8628679404863E-12"
-						iyy="1.81627212869223E-06"
-						iyz="-3.11746264105278E-08"
-						izz="6.36897182878164E-06"/>
-			</inertial>
-			<visual>
-				<geometry>
-					<xacro:if value="${pad == 'soft'}">
-						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
-					</xacro:if>
-					<xacro:if value="${pad == 'default' or pad == ''}">
-						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link.obj"/>
-					</xacro:if>
-				</geometry>
-			</visual>
-			<collision>
-				<geometry>
-					<xacro:if value="${pad == 'soft'}">
-						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
-					</xacro:if>
-					<xacro:if value="${pad == 'default' or pad == ''}">
-						<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
-					</xacro:if>
-				</geometry>
-			</collision>
-		</link>
+		<geometry>
+			<xacro:if value="${pad == 'soft'}">
+				<link name="${prefix}right_Pad_link">
+					<inertial>
+						<origin xyz="0 0.02438 0.00359"/>
+						<mass value="0.03393"/>
+						<inertia
+								ixx="4.953269E-05"
+								ixy="-2.1801E-07"
+								ixz="-5.331E-08"
+								iyy="5.72939E-06"
+								iyz="1.60851E-06"
+								izz="4.880683E-05"/>
+					</inertial>
+					<visual>
+						<geometry>
+							<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
+						</geometry>
+					</visual>
+					<collision>
+						<geometry>
+							<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link_soft.obj"/>
+						</geometry>
+					</collision>
+				</link>
+			</xacro:if>
+			<xacro:if value="${pad == 'default' or pad == ''}">
+				<link name="${prefix}right_Pad_link">
+					<inertial>
+						<origin xyz="-3.83777509579761E-08 0.00303135276101582 0.0028336970357949"/>
+						<mass value="0.0183171479595721"/>
+						<inertia
+								ixx="2.35683098270332E-06"
+								ixy="-4.7353365844279E-12"
+								ixz="-9.31433971475514E-13"
+								iyy="9.08136064346118E-07"
+								iyz="-1.55873132053129E-08"
+								izz="3.18448591439082E-06"/>
+					</inertial>
+					<visual>
+						<geometry>
+							<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/visual/pad_link.obj"/>
+						</geometry>
+					</visual>
+					<collision>
+						<geometry>
+							<mesh filename="file://$(find changingtek_description)/meshes/AG2F90-C/collision/pad_link.stl"/>
+						</geometry>
+					</collision>
+				</link>
+			</xacro:if>
+		</geometry>
 
 		<joint name="${prefix}right_Pad_Joint" type="fixed">
 			<origin xyz="0 0.04125 -0.02425"/>
@@ -404,6 +442,16 @@
 			<child link="${prefix}right_Pad_link"/>
 		</joint>
 
-
+		<link name="${prefix}eef"/>
+		<joint name="${prefix}eef_joint" type="fixed">
+			<parent link="${prefix}gripper_base"/>
+			<child link="${prefix}eef"/>
+			<xacro:if value="${pad == 'default' or pad == ''}">
+				<origin xyz="0 0 0.19"/>
+			</xacro:if>
+			<xacro:if value="${pad == 'soft'}">
+				<origin xyz="0 0 0.27"/>
+			</xacro:if>
+		</joint>
 	</xacro:macro>
 </robot>
