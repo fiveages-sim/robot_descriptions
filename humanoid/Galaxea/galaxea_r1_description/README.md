@@ -32,7 +32,7 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_r
 ### 3.2 OCS2 Arm Controller Demo
 
 ```bash
-source ~/ros2_ws/install/setup.bash
+source ~/XZN/integrate_latest/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_r1
 ```
 

@@ -9,6 +9,12 @@ controller_manager:
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
 
+    left_hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
 ocs2_arm_controller:
   ros__parameters:
     # Joint configuration
@@ -18,7 +24,6 @@ ocs2_arm_controller:
       - torso_joint1
       - torso_joint2
       - torso_joint3
-      - torso_joint4
       - left_joint1
       - left_joint2
       - left_joint3
@@ -37,12 +42,24 @@ ocs2_arm_controller:
     state_interfaces:
       - position
 
-    robot_name: galaxea_r1
+    robot_name: galaxea_r1lite
 
     # Control parameters
-    home_pos: [ 0.0, 0.0, 0.0, 0.0,
-                1.635, 2.635, -2.2, 0.0, 0.0, 0.0,
-                -1.635, 2.635, -2.2, 0.0, 0.0, 0.0 ]
-    rest_pos: [ 1.833, -2.792, -0.913, 0.0,
-                -1.5708, 0.0, 0.0, 0.0, 0.0, 0.0,
-                1.5708, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+    home_pos: [ 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+    rest_pos: [ 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+
+left_hand_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
+
+right_hand_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
