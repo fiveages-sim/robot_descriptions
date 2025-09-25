@@ -98,6 +98,13 @@
 		<origin xyz="0.24 0 0.0145"/>
 	</joint>
 
+	<link name="imu"/>
+	<joint name="imu_joint" type="fixed">
+		<parent link="base"/>
+		<child link="imu"/>
+		<origin xyz="0.016 0 0.0145"/>
+	</joint>
+
 	<link name="right_wheel">
 		<inertial>
 			<origin xyz="-5.2736E-16 -0.033322 1.1102E-16"/>

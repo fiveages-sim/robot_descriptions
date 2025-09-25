@@ -35,6 +35,7 @@ diff_drive_controller:
     linear.x.max_velocity: 1.0
     angular.z.has_velocity_limits: true
     angular.z.max_velocity: 5.0
+    enable_odom_tf: false
 
 ocs2_arm_controller:
   ros__parameters:
