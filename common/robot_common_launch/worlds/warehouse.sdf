@@ -1,12 +1,18 @@
 <?xml version='1.0' encoding='ASCII'?>
 <sdf version='1.7'>
   <world name='warehouse'>
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin
+        filename="gz-sim-sensors-system"
+        name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
     <plugin
         filename="gz-sim-physics-system"
         name="gz::sim::systems::Physics">
-      <engine>
-        <filename>libgz-physics-bullet-featherstone-plugin.so</filename>
-      </engine>
     </plugin>
 
     <!-- Plugin for handling user commands -->
@@ -19,13 +25,6 @@
     <plugin
         filename="gz-sim-scene-broadcaster-system"
         name="gz::sim::systems::SceneBroadcaster">
-    </plugin>
-
-    <!-- Plugin for handling sensors like the LIDAR -->
-    <plugin
-        filename="gz-sim-sensors-system"
-        name="gz::sim::systems::Sensors">
-      <render_engine>ogre2</render_engine>
     </plugin>
 
     <!-- Plugin for IMU -->

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Gazebo friction properties for chassis base -->
+  <gazebo reference="base_link">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <maxVel>10.0</maxVel>
+  </gazebo>
+
+  <!-- Gazebo friction properties for left wheel -->
+  <gazebo reference="left_wheel">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <minDepth>0.0001</minDepth>
+  </gazebo>
+
+  <!-- Gazebo friction properties for right wheel -->
+  <gazebo reference="right_wheel">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <minDepth>0.0001</minDepth>
+  </gazebo>
+
+  <gazebo reference="scan">
+    <sensor name='laser_scan' type='gpu_lidar'>
+      <topic>scan</topic>
+      <update_rate>20</update_rate>
+      <gz_frame_id>scan</gz_frame_id>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>640</samples>
+            <resolution>1</resolution>
+            <min_angle>-1.5708</min_angle>
+            <max_angle>1.5708</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>1</samples>
+            <resolution>1</resolution>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.05</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </lidar>
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+    </sensor>
+  </gazebo>
+
+</robot>

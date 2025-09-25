@@ -15,6 +15,7 @@
 	<xacro:G1Arm name="left"/>
 	<xacro:G1Arm name="right" direction="-1"/>
 
+	<xacro:arg name="type" default="AG2F120S"/>
 	<!-- Include gripper -->
 	<xacro:include filename="$(find changingtek_description)/xacro/AG2F120S.xacro"/>
 	<xacro:AG2F120S name="left"/>

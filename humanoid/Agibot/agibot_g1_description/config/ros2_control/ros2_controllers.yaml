@@ -1,10 +1,13 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Hz
+    update_rate: 1000  # Hz
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
+    diff_drive_controller:
+      type: diff_drive_controller/DiffDriveController
 
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
@@ -14,6 +17,24 @@ controller_manager:
 
     right_hand_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
+
+diff_drive_controller:
+  ros__parameters:
+    update_rate: 50  # Hz
+
+    # 轮子关节
+    left_wheel_names: ["left_wheel_joint"]
+    right_wheel_names: ["right_wheel_joint"]
+
+    # 轮子间距
+    wheel_separation: 0.373
+    wheel_radius: 0.07948
+
+    # 限制参数
+    linear.x.has_velocity_limits: true
+    linear.x.max_velocity: 1.0
+    angular.z.has_velocity_limits: true
+    angular.z.max_velocity: 5.0
 
 ocs2_arm_controller:
   ros__parameters:
@@ -49,7 +70,7 @@ ocs2_arm_controller:
     home_pos: [ 0.292, 0.0,
                 0.153, 1.306, -0.117, -1.480, 0.0, 0.0, 1.5708,
                 0.153, 1.306, -0.117, -1.480, 0.0, 0.0, 1.5708]
-    rest_pos: [ 0.0, 0.0,
+    rest_pos: [ 0.1, 0.0,
                 0.0, 1.480, 0.0, -1.480, 0.0, 1.740, 0.0,
                 0.0, 1.480, 0.0, -1.480, 0.0, 1.740, 0.0 ]
 

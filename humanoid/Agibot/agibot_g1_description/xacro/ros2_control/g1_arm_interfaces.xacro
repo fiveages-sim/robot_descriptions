@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- G1手臂关节接口宏定义 -->
+  <xacro:macro name="g1_arm_interfaces" params="name">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <!-- 手臂关节接口定义 -->
+    <joint name="${prefix}joint1">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.80</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="${prefix}joint2">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">1.570</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="${prefix}joint3">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="${prefix}joint4">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">-1.080</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="${prefix}joint5">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="${prefix}joint6">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">1.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="${prefix}joint7">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">1.57</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+  </xacro:macro>
+
+</robot>

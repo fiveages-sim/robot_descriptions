@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib link4.mtl
+mtllib materials.mtl
 o arm_l_link4.001
 v -0.004315 -0.019030 -0.054858
 v -0.010319 0.003927 -0.055039
@@ -29952,7 +29952,7 @@ vn 0.0094 0.0015 -1.0000
 vn -0.1617 0.0004 -0.9868
 vn -0.0992 0.0046 -0.9951
 s 1
-usemtl material_white.003
+usemtl plastic_white
 f 1//1 2//2 3//3
 f 4//4 5//1 6//5
 f 7//6 8//1 9//4

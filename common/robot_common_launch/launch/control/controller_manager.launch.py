@@ -123,11 +123,6 @@ def generate_launch_description():
         )
         nodes.append(robot_state_publisher)
         
-        # Gazebo 相关节点 (仅在 Gazebo 模式下)
-        gazebo = None
-        gz_spawn_entity = None
-        bridge = None
-        
         if use_gazebo:
             # 世界文件路径
             world_path = os.path.join(get_package_share_directory(world_package), 'worlds', world + '.sdf')
@@ -157,12 +152,14 @@ def generate_launch_description():
                     'true',
                 ],
             )
-            
-            # 时钟桥接
+
             bridge = Node(
                 package='ros_gz_bridge',
                 executable='parameter_bridge',
-                arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'],
+                arguments=[
+                    "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
+                    "/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan",
+                ],
                 output='screen',
             )
             

@@ -566,7 +566,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/gripper_base.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/gripper_base.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -584,7 +584,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -609,7 +609,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -635,7 +635,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -658,7 +658,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -684,7 +684,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -710,7 +710,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -736,7 +736,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -762,7 +762,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -791,7 +791,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/gripper_base.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/gripper_base.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -809,7 +809,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -834,7 +834,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -860,7 +860,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -883,7 +883,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -909,7 +909,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_2.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -935,7 +935,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/link_1.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -961,7 +961,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/support_link.stl"/>
 			</geometry>
 		</collision>
 	</link>
@@ -987,7 +987,7 @@
 		</visual>
 		<collision>
 			<geometry>
-				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.obj"/>
+				<mesh filename="package://changingtek_description/meshes/AG2F120S/collision/pad_link.stl"/>
 			</geometry>
 		</collision>
 	</link>

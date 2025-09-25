@@ -16,8 +16,8 @@
 
 	<link name="base">
 		<inertial>
-			<origin xyz="-0.0134486971267798 0.00152103941353612 -0.0320076754329413"/>
-			<mass value="23.2085382238952"/>
+			<origin xyz="-0.00804486971267798 0 -0.120076754329413"/>
+			<mass value="65.2085382238952"/>
 			<inertia ixx="0.386955641760608" ixy="0.000135417314593726" ixz="0.00669301645720665" iyy="0.366800407621218"
 							 iyz="0.000105713634260505" izz="0.546852919828475"/>
 		</inertial>
@@ -33,12 +33,96 @@
 			</geometry>
 		</collision>
 		<collision>
-			<origin xyz="0.0 0.0 -0.061"/>
+			<origin xyz="0.01 0.0 -0.045"/>
 			<geometry>
-				<box size="0.5996094 0.449 0.30273438"/>
+				<box size="0.5796094 0.449 0.27073438"/>
+			</geometry>
+		</collision>
+
+		<collision>
+			<origin xyz="0.22 0.14 -0.175245"/>
+			<geometry>
+				<sphere radius="0.038"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="0.22 -0.14 -0.175245"/>
+			<geometry>
+				<sphere radius="0.038"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="-0.18 0.14 -0.175245"/>
+			<geometry>
+				<sphere radius="0.038"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="-0.18 -0.14 -0.175245"/>
+			<geometry>
+				<sphere radius="0.038"/>
 			</geometry>
 		</collision>
 	</link>
+
+	<link name="left_wheel">
+		<inertial>
+			<origin xyz="-5.2736E-16 -0.033322 1.1102E-16"/>
+			<mass value="5.8637"/>
+			<inertia
+					ixx="0.0051541"
+					ixy="-3.3734E-17"
+					ixz="1.0772E-17"
+					iyy="0.0090798"
+					iyz="5.0454E-18"
+					izz="0.0051541"/>
+		</inertial>
+		<collision>
+			<origin rpy="1.5708 0 0"/>
+			<geometry>
+				<cylinder radius="0.07948" length="0.034"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="left_wheel_joint" type="continuous">
+		<parent link="base"/>
+		<child link="left_wheel"/>
+		<origin xyz="0.016 0.1865 -0.133845"/>
+		<axis xyz="0 1 0"/>
+	</joint>
+
+	<link name="scan"/>
+	<joint name="scan_joint" type="fixed">
+		<parent link="base"/>
+		<child link="scan"/>
+		<origin xyz="0.24 0 0.0145"/>
+	</joint>
+
+	<link name="right_wheel">
+		<inertial>
+			<origin xyz="-5.2736E-16 -0.033322 1.1102E-16"/>
+			<mass value="5.8637"/>
+			<inertia
+					ixx="0.0051541"
+					ixy="-3.3734E-17"
+					ixz="1.0772E-17"
+					iyy="0.0090798"
+					iyz="5.0454E-18"
+					izz="0.0051541"/>
+		</inertial>
+		<collision>
+			<origin rpy="1.5708 0 0"/>
+			<geometry>
+				<cylinder radius="0.07948" length="0.034"/>
+			</geometry>
+		</collision>
+	</link>
+	<joint name="right_wheel_joint" type="continuous">
+		<parent link="base"/>
+		<child link="right_wheel"/>
+		<origin xyz="0.016 -0.1865 -0.133845"/>
+		<axis xyz="0 1 0"/>
+	</joint>
 
 	<link name="body_link1">
 		<inertial>
@@ -68,10 +152,15 @@
 
 	<link name="body_link2">
 		<inertial>
-			<origin xyz="0.193733558855111 -0.000484180179482319 -0.00124011422952511"/>
+			<origin xyz="-0.000484180179482319 -0.193733558855111 -0.00124011422952511"/>
 			<mass value="7.53199207979272"/>
-			<inertia ixx="0.016546682835947" ixy="0.000274441382484697" ixz="0.00102757387076422" iyy="0.0445441227006132"
-							 iyz="-0.000236858278708531" izz="0.0402036337794082"/>
+			<inertia
+					ixx="0.0788874639537613"
+					ixy="5.46530938736686E-10"
+					ixz="0.00286825206797472"
+					iyy="0.0515041942141216"
+					iyz="3.46275348004213E-07"
+					izz="0.0448953474115628"/>
 		</inertial>
 		<visual>
 			<geometry>
@@ -149,7 +238,7 @@
 		<child link="body_link1"/>
 		<origin xyz="0.0 0.0 0.4285"/>
 		<axis xyz="0.0 0.0 1.0"/>
-		<limit effort="1000.0" lower="0.0" upper="0.5" velocity="0.1"/>
+		<limit effort="1000" lower="0.0" upper="0.5" velocity="0.1"/>
 	</joint>
 
 	<joint name="body_joint2" type="revolute">

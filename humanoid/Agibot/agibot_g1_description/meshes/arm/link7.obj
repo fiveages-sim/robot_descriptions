@@ -1,6 +1,6 @@
 # Blender 4.5.2 LTS
 # www.blender.org
-mtllib link7.mtl
+mtllib materials.mtl
 o arm_l_link7
 v 0.012905 0.025118 -0.046000
 v 0.012140 0.025785 -0.045700
