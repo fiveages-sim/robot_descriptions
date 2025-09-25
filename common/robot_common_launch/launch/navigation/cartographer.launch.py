@@ -64,7 +64,7 @@ def generate_launch_description():
                        '-configuration_basename', configuration_basename],
             remappings=[
                 ('/points2', '/scan/point_cloud'),
-                ('/odom', '/diff_drive_controller/odom'),
+                ('/odom', '/odometry/filtered'),
             ]
         ),
 

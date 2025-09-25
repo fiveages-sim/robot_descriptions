@@ -92,12 +92,22 @@ def launch_setup(context, *args, **kwargs):
         ]
     )
 
+    robot_localization_node = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_node',
+        output='screen',
+        parameters=[os.path.join(get_package_share_directory('robot_common_launch'), 'config/nav2/ekf.yaml'),
+                    {'use_sim_time': use_sim_time}]
+    )
+
     return [
         controller_manager_launch,
         diff_drive_controller_spawner,
         ros_bridge,
         rosapi,
         twist_stamper,
+        robot_localization_node
     ]
 
 
@@ -122,8 +132,8 @@ def generate_launch_description():
     )
 
     world_arg = DeclareLaunchArgument(
-        'world', 
-        default_value='default', 
+        'world',
+        default_value='default',
         description='Gazebo world file name (only used when hardware=gz)'
     )
 
