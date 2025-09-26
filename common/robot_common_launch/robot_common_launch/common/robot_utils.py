@@ -8,6 +8,20 @@ import os
 import yaml
 from ament_index_python.packages import get_package_share_directory
 
+# 全局缓存字典，避免重复读取配置文件
+_config_cache = {}
+
+
+def clear_config_cache():
+    """
+    清除配置缓存
+    
+    在开发或测试时，如果配置文件被修改，可以调用此函数清除缓存
+    """
+    global _config_cache
+    _config_cache.clear()
+    print("[INFO] Config cache cleared")
+
 
 def get_robot_package_path(robot_name):
     """
@@ -50,6 +64,13 @@ def load_robot_config(robot_name, config_type="ros2_control", robot_type=""):
         >>> if config:
         ...     print(f"Loaded config from: {path}")
     """
+    # 创建缓存键
+    cache_key = f"{robot_name}_{config_type}_{robot_type}"
+    
+    # 检查缓存
+    if cache_key in _config_cache:
+        return _config_cache[cache_key]
+    
     robot_pkg_path = get_robot_package_path(robot_name)
     if robot_pkg_path is None:
         return None, None
@@ -63,9 +84,9 @@ def load_robot_config(robot_name, config_type="ros2_control", robot_type=""):
             if not os.path.exists(config_path):
                 config_file = "ros2_controllers.yaml"
                 config_path = os.path.join(robot_pkg_path, "config", "ros2_control", config_file)
-                print(f"[INFO] Type-specific config not found, using default: {config_file}")
+                print(f"[INFO] Type-specific ros2 control config not found, using default: {config_file}")
             else:
-                print(f"[INFO] Using config file: {config_file}")
+                print(f"[INFO] Using ros2 control config file: {config_file}")
         else:
             # For other config types, use the specified type
             config_file = f"{robot_type}.yaml" if robot_type and robot_type.strip() else f"{config_type}.yaml"
@@ -75,8 +96,12 @@ def load_robot_config(robot_name, config_type="ros2_control", robot_type=""):
         
         with open(config_path, 'r') as file:
             config = yaml.safe_load(file)
+        
+        # 缓存结果
+        result = (config, config_path)
+        _config_cache[cache_key] = result
             
-        return config, config_path
+        return result
         
     except FileNotFoundError:
         print(f"[WARN] {config_type} config file not found for robot '{robot_name}'")
@@ -116,17 +141,14 @@ def get_planning_urdf_path(robot_name, robot_type=""):
         
         # Check if type-specific URDF exists
         if os.path.exists(type_specific_urdf):
-            print(f"[INFO] Using type-specific planning URDF: {type_specific_urdf}")
             return type_specific_urdf
         else:
             # Fallback to default URDF if type-specific doesn't exist
             default_urdf = os.path.join(robot_pkg_path, "urdf", robot_name + ".urdf")
-            print(f"[WARN] Type-specific planning URDF not found: {type_specific_urdf}, falling back to default: {default_urdf}")
             return default_urdf
     else:
         # Use default URDF
         default_urdf = os.path.join(robot_pkg_path, "urdf", robot_name + ".urdf")
-        print(f"[INFO] Using default planning URDF: {default_urdf}")
         return default_urdf
 
 
@@ -150,13 +172,11 @@ def get_info_file_name(robot_name, robot_type="", config_type="ros2_control"):
     config, _ = load_robot_config(robot_name, config_type, robot_type)
     
     if config is None:
-        print(f"[WARN] Using default info_file_name: 'task' for robot '{robot_name}'")
         return 'task'
     
     try:
         # Extract info_file_name from ocs2_arm_controller parameters
         info_file_name = config.get('ocs2_arm_controller', {}).get('ros__parameters', {}).get('info_file_name', 'task')
-        print(f"[INFO] Found info_file_name: '{info_file_name}' for robot '{robot_name}'")
         return info_file_name
     except KeyError as e:
         print(f"[WARN] Key error in config for robot '{robot_name}': {e}, using default 'task'")
