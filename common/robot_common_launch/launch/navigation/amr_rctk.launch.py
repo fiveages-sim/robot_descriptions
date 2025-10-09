@@ -31,7 +31,7 @@ def generate_launch_description():
             output='screen',
             parameters=[
                 {'foldername': foldername},
-                {'navigation_command': 'robot_common_launch nav2.launch.py use_sim_time:=false'},
+                {'navigation_command': 'robot_common_launch navigation.launch.py'},
                 {'start_mapping_command': 'ros2 launch robot_common_launch cartographer.launch.py'},
                 {'save_map_command': 'ros2 run nav2_map_server map_saver_cli -f'}
             ]

@@ -29,7 +29,7 @@ ekf_node:
     #         from robot_localization! However, that instance should *not* fuse the global data.
     map_frame: map              # Defaults to "map" if unspecified
     odom_frame: odom            # Defaults to "odom" if unspecified
-    base_link_frame: base_link  # Defaults to "base_link" if unspecified
+    base_link_frame: base_footprint  # Defaults to "base_link" if unspecified
     world_frame: odom           # Defaults to the value of odom_frame if unspecified
 
     odom0: /diff_drive_controller/odom

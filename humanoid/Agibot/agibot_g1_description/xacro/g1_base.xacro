@@ -6,15 +6,15 @@
 <robot name="genie" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<!-- Base links -->
 
-	<link name="base_link"/>
+	<link name="base_footprint"/>
 
-	<joint name="base_link_joint" type="fixed">
+	<joint name="base_footprint_joint" type="fixed">
 		<origin xyz="0 0 0.211"/>
-		<parent link="base_link"/>
-		<child link="base"/>
+		<parent link="base_footprint"/>
+		<child link="base_link"/>
 	</joint>
 
-	<link name="base">
+	<link name="base_link">
 		<inertial>
 			<origin xyz="-0.00804486971267798 0 -0.120076754329413"/>
 			<mass value="65.2085382238952"/>
@@ -85,7 +85,7 @@
 		</collision>
 	</link>
 	<joint name="left_wheel_joint" type="continuous">
-		<parent link="base"/>
+		<parent link="base_link"/>
 		<child link="left_wheel"/>
 		<origin xyz="0.016 0.1865 -0.133845"/>
 		<axis xyz="0 1 0"/>
@@ -93,14 +93,14 @@
 
 	<link name="scan"/>
 	<joint name="scan_joint" type="fixed">
-		<parent link="base"/>
+		<parent link="base_link"/>
 		<child link="scan"/>
 		<origin xyz="0.24 0 0.0145"/>
 	</joint>
 
 	<link name="imu"/>
 	<joint name="imu_joint" type="fixed">
-		<parent link="base"/>
+		<parent link="base_link"/>
 		<child link="imu"/>
 		<origin xyz="0.016 0 0.0145"/>
 	</joint>
@@ -125,7 +125,7 @@
 		</collision>
 	</link>
 	<joint name="right_wheel_joint" type="continuous">
-		<parent link="base"/>
+		<parent link="base_link"/>
 		<child link="right_wheel"/>
 		<origin xyz="0.016 -0.1865 -0.133845"/>
 		<axis xyz="0 1 0"/>
@@ -241,7 +241,7 @@
 
 	<!-- Base joints -->
 	<joint name="body_joint1" type="prismatic">
-		<parent link="base"/>
+		<parent link="base_link"/>
 		<child link="body_link1"/>
 		<origin xyz="0.0 0.0 0.4285"/>
 		<axis xyz="0.0 0.0 1.0"/>

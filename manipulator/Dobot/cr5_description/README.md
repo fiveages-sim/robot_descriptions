@@ -66,7 +66,7 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=cr5
 * Isaac Sim
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py hardware:=isaac type:=AG2F90-C
+  ros2 launch ocs2_arm_controller demo.launch.py hardware:=isaac type:=AG2F90-C-Soft
   ```
 * Real Robot
   ```bash

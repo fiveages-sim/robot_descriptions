@@ -9,13 +9,13 @@
 <!-- =================================================================================== -->
 <robot name="genie">
 	<!-- Base links -->
-	<link name="base_link"/>
-	<joint name="base_link_joint" type="fixed">
+	<link name="base_footprint"/>
+	<joint name="base_footprint_joint" type="fixed">
 		<origin xyz="0 0 0.211"/>
-		<parent link="base_link"/>
-		<child link="base"/>
+		<parent link="base_footprint"/>
+		<child link="base_link"/>
 	</joint>
-	<link name="base">
+	<link name="base_link">
 		<inertial>
 			<origin xyz="-0.0134486971267798 0.00152103941353612 -0.0320076754329413"/>
 			<mass value="23.2085382238952"/>
@@ -138,7 +138,7 @@
 	</link>
 	<!-- Base joints -->
 	<joint name="body_joint1" type="prismatic">
-		<parent link="base"/>
+		<parent link="base_link"/>
 		<child link="body_link1"/>
 		<origin xyz="0.0 0.0 0.4285"/>
 		<axis xyz="0.0 0.0 1.0"/>

@@ -34,7 +34,7 @@ def generate_launch_description():
             'map',
             'map.yaml'))
 
-    param_file_name = 'default.yaml'
+    param_file_name = 'nav2_params.yaml'
     param_dir = LaunchConfiguration(
         'params_file',
         default=os.path.join(
@@ -70,7 +70,8 @@ def generate_launch_description():
             launch_arguments={
                 'map': map_dir,
                 'use_sim_time': use_sim_time,
-                'params_file': param_dir}.items(),
+                'params_file': param_dir
+            }.items(),
         ),
 
         Node(
