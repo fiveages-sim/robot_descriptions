@@ -62,12 +62,11 @@
     </collision>
   </link>
 
-  <joint name="rgt_wheel_joint" type="revolute">
+  <joint name="rgt_wheel_joint" type="continuous">
     <origin xyz="0 -0.16325 0.08401" rpy="1.5708 1.5708 0"/>
     <parent link="base_link"/>
     <child link="rgt_wheel_link"/>
-    <axis xyz="0 0 1"/>
-    <limit lower="-3.1416" upper="3.1416" effort="6.5" velocity="0.7"/>
+    <axis xyz="0 0 -1"/>
   </joint>
 
   <link name="rgt_behind_wheel_link">

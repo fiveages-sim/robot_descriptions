@@ -45,7 +45,7 @@ def generate_launch_description():
     
     world_arg = DeclareLaunchArgument(
         'world',
-        default_value='empty',
+        default_value='dart',
         description='Gazebo world file name (without .sdf extension)'
     )
     

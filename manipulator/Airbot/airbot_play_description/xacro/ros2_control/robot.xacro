@@ -7,13 +7,28 @@
 		<child link="base_link"/>
 	</joint>
 
-	<xacro:include filename="$(find airbot_play_description)/xacro/airbot_play.xacro"/>
-	<xacro:airbot_play name=""/>
+	<xacro:include filename="$(find airbot_play_description)/xacro/robot.xacro"/>
+	<xacro:include filename="$(find airbot_play_description)/xacro/ros2_control/interfaces.xacro"/>
 
-	<xacro:include filename="$(find airbot_play_description)/xacro/ros2_control/airbot_play.ros2_control.xacro" />
-	<xacro:airbot_play_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+	<ros2_control name="airbot_play_system" type="system">
+		<hardware>
+			<xacro:if value="${'$(arg ros2_control_hardware_type)' == 'gz'}">
+				<plugin>gz_ros2_control/GazeboSimSystem</plugin>
+			</xacro:if>
+			<xacro:if value="${'$(arg ros2_control_hardware_type)' == 'mock_components'}">
+				<plugin>mock_components/GenericSystem</plugin>
+			</xacro:if>
+			<xacro:if value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
+				<plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+				<param name="joint_commands_topic">/isaac/joint_command</param>
+				<param name="joint_states_topic">/isaac/joint_states</param>
+			</xacro:if>
+		</hardware>
 
-	<xacro:arg name="gazebo" default="false" />
+		<xacro:airbot_play_interfaces name=""/>
+	</ros2_control>
+
+	<xacro:arg name="gazebo" default="false"/>
 	<xacro:if value="$(arg gazebo)">
 		<gazebo>
 			<plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">

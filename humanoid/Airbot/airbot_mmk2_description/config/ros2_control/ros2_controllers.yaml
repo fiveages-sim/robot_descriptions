@@ -1,18 +1,22 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 50  # Hz
+    update_rate: 1000  # Hz
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    # 差速驱动控制器 - 用于轮子
     diff_drive_controller:
       type: diff_drive_controller/DiffDriveController
 
-    # 双臂控制器 - 使用ocs2 arm controller
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
+
+    left_hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
 
 # 差速驱动控制器配置
 diff_drive_controller:
@@ -71,3 +75,15 @@ ocs2_arm_controller:
     rest_pos: [ 0.87,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+
+left_hand_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 50.0
+
+right_hand_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 50.0

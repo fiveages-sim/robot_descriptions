@@ -45,7 +45,7 @@
 			<parent link="${prefix}base_link"/>
 			<child link="${prefix}link1"/>
 			<axis xyz="0 0 1"/>
-			<limit lower="-3.14" upper="2.09" effort="18" velocity="3.14"/>
+			<limit lower="-3.14" upper="2.09" effort="300" velocity="3.14"/>
 		</joint>
 
 		<link name="${prefix}link2">
@@ -82,7 +82,7 @@
 			<parent link="${prefix}link1"/>
 			<child link="${prefix}link2"/>
 			<axis xyz="0 0 1"/>
-			<limit lower="-2.96" upper="0.17" effort="18" velocity="3.14"/>
+			<limit lower="-2.96" upper="0.17" effort="300" velocity="3.14"/>
 		</joint>
 
 		<link name="${prefix}link3">
@@ -118,7 +118,7 @@
 			<parent link="${prefix}link2"/>
 			<child link="${prefix}link3"/>
 			<axis xyz="0 0 1"/>
-			<limit lower="-0.087" upper="3.14" effort="18" velocity="3.14"/>
+			<limit lower="-0.087" upper="3.14" effort="300" velocity="3.14"/>
 		</joint>
 
 		<link name="${prefix}link4">
@@ -243,7 +243,7 @@
 			<parent link="${prefix}link6"/>
 			<child link="${prefix}left"/>
 			<axis xyz="0 1 0"/>
-			<limit lower="0" upper="0.04" effort="100" velocity="2"/>
+			<limit lower="0" upper="0.04" effort="50" velocity="0.1"/>
 		</joint>
 
 		<link name="${prefix}right">
@@ -270,7 +270,7 @@
 			<parent link="${prefix}link6"/>
 			<child link="${prefix}right"/>
 			<axis xyz="0 -1 0"/>
-			<limit lower="0" upper="0.04" effort="100" velocity="2"/>
+			<limit lower="0" upper="0.04" effort="50" velocity="0.1"/>
 			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
 		</joint>
 

@@ -35,10 +35,22 @@ ros2 launch ocs2_arm_controller demo.launch.py robot:=airbot_mmk2
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=airbot_mmk2 hardware:=gz world:=dart
+ros2 launch ocs2_arm_controller demo.launch.py robot:=airbot_mmk2 hardware:=gz
 ```
 
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=airbot_mmk2 hardware:=isaac
 ```
+
+## 4. Navigation
+* Gazebo Simulation
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch diff_drive.launch.py robot:=airbot_mmk2 world:=warehouse
+  ```
+* SLAM Toolbox
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch navigation_slam.launch.py
+  ```

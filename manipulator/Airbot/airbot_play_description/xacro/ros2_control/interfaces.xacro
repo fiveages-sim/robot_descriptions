@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="airbot_play_interface" params="name">
+  <xacro:macro name="airbot_play_interfaces" params="name">
 
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
@@ -49,8 +49,19 @@
 
     <joint name="${prefix}gripper_joint">
       <command_interface name="position"/>
-      <state_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.01</param>
+      </state_interface>
       <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="${prefix}gripper_joint1">
+      <state_interface name="position">
+        <param name="initial_value">0.01</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
     </joint>
   </xacro:macro>
 </robot>
