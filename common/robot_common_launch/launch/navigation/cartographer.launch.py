@@ -24,10 +24,12 @@ from launch.substitutions import LaunchConfiguration
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import ThisLaunchFileDir
+from launch.conditions import IfCondition
 
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    use_rviz = LaunchConfiguration('use_rviz', default='true')
     prefix = get_package_share_directory('robot_common_launch')
     cartographer_config_dir = LaunchConfiguration('cartographer_config_dir', default=os.path.join(
         prefix, 'config', 'cartographer'))
@@ -53,6 +55,10 @@ def generate_launch_description():
             'use_sim_time',
             default_value='true',
             description='Use simulation (Gazebo) clock if true'),
+        DeclareLaunchArgument(
+            'use_rviz',
+            default_value='true',
+            description='Launch rviz if true'),
 
         Node(
             package='cartographer_ros',
@@ -91,6 +97,7 @@ def generate_launch_description():
             executable='rviz2',
             name='rviz2',
             arguments=['-d', rviz_config_dir],
-            parameters=[{'use_sim_time': use_sim_time}]
+            parameters=[{'use_sim_time': use_sim_time}],
+            condition=IfCondition(use_rviz)
         ),
     ])
