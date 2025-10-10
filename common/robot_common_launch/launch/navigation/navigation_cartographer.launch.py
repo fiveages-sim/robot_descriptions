@@ -9,7 +9,6 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
-    use_rviz = LaunchConfiguration('use_rviz')
     nav2_params_file = LaunchConfiguration('nav2_params_file')
     cartographer_config_dir = LaunchConfiguration('cartographer_config_dir')
     configuration_basename = LaunchConfiguration('configuration_basename')
@@ -18,10 +17,6 @@ def generate_launch_description():
         'use_sim_time',
         default_value='true',
         description='Use simulation/Gazebo clock')
-    declare_use_rviz_argument = DeclareLaunchArgument(
-        'use_rviz',
-        default_value='true',
-        description='Launch rviz if true')
     declare_nav2_params_file_cmd = DeclareLaunchArgument(
         'nav2_params_file',
         default_value=os.path.join(get_package_share_directory("robot_common_launch"),
@@ -37,7 +32,7 @@ def generate_launch_description():
         default_value='cartographer.lua',
         description='Name of lua file for cartographer')
 
-    # 引用 cartographer 的 launch 文件
+    # 引用 cartographer 的 launch 文件（禁用其自带的rviz）
     cartographer_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('robot_common_launch'),
@@ -45,7 +40,7 @@ def generate_launch_description():
         ]),
         launch_arguments={
             'use_sim_time': use_sim_time,
-            'use_rviz': use_rviz,
+            'use_rviz': 'false',
             'cartographer_config_dir': cartographer_config_dir,
             'configuration_basename': configuration_basename,
         }.items()
@@ -63,14 +58,25 @@ def generate_launch_description():
         }.items()
     )
 
+    # 引用 nav2_bringup 的 rviz launch 文件
+    rviz_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(get_package_share_directory('nav2_bringup'),
+                        'launch', 'rviz_launch.py')
+        ]),
+        launch_arguments={
+            'use_sim_time': use_sim_time,
+        }.items()
+    )
+
     ld = LaunchDescription()
 
     ld.add_action(declare_use_sim_time_argument)
-    ld.add_action(declare_use_rviz_argument)
     ld.add_action(declare_nav2_params_file_cmd)
     ld.add_action(declare_cartographer_config_dir_cmd)
     ld.add_action(declare_configuration_basename_cmd)
     ld.add_action(cartographer_launch)
     ld.add_action(nav2_launch)
+    ld.add_action(rviz_launch)
 
     return ld
