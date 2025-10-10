@@ -1,0 +1,68 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    left_hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+ocs2_arm_controller:
+  ros__parameters:
+    # Joint configuration
+    update_rate: 100  # Hz
+    info_file_name: fixed_base
+    joints:
+      - torso_joint_1
+      - torso_joint_2
+      - torso_joint_3
+      - torso_joint_4
+      - left_joint_1
+      - left_joint_2
+      - left_joint_3
+      - left_joint_4
+      - left_joint_5
+      - left_joint_6
+      - left_joint_7
+      - right_joint_1
+      - right_joint_2
+      - right_joint_3
+      - right_joint_4
+      - right_joint_5
+      - right_joint_6
+      - right_joint_7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: astribot_s1
+
+    # Control parameters - 使用 fixed_base.info 中的初始状态值
+    home_pos: [ 1.3, -2.3, 1.0, 0.0,
+                0.0, 0.0, -1.5708, 1.5708, 0.0, 0.0, 0.0,
+                0.0, 0.0, 1.5708, 1.5708, 0.0, 0.0, 0.0 ]
+    rest_pos: [ 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+
+left_hand_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
+
+right_hand_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
