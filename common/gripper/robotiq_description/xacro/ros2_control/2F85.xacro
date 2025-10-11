@@ -13,6 +13,9 @@
       </state_interface>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
+      <state_interface name="reverse_flag">
+        <param name="initial_value">-1.0</param>
+      </state_interface>
     </joint>
 
     <!-- Robotiq 2F85夹爪的mimic关节接口 -->

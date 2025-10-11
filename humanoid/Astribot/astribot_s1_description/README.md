@@ -37,3 +37,8 @@ colcon build --packages-up-to astribot_s1_description --symlink-install
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=astribot_s1
 ```
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch ocs2_arm_controller demo.launch.py robot:=astribot_s1
+```

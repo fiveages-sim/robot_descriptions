@@ -30,6 +30,11 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=airbot_pl
 
 ```bash
 source ~/ros2_ws/install/setup.bash
+ros2 launch ocs2_arm_controller demo.launch.py robot:=airbot_play
+```
+
+```bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=airbot_play hardware:=gz
 ```
 

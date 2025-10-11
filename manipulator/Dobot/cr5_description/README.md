@@ -52,7 +52,7 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=cr5
 * Mock Components
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py type:=AG2F90-C
+  ros2 launch ocs2_arm_controller demo.launch.py type:="robotiq85"
   ```
 * Gazebo
   ```bash
