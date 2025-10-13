@@ -9,6 +9,12 @@ controller_manager:
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
 
+    left_hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
 ocs2_arm_controller:
   ros__parameters:
     # Joint configuration
@@ -48,3 +54,15 @@ ocs2_arm_controller:
     rest_pos: [ 1.833, -2.792, -0.913, 0.0,
                 0.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0 ]
+
+left_hand_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
+
+right_hand_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
