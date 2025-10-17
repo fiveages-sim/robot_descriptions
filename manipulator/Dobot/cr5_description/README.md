@@ -57,11 +57,11 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=cr5
 * Gazebo
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py hardware:=gz type:=AG2F90-C-Soft world:=dart
+  ros2 launch ocs2_arm_controller demo.launch.py hardware:=gz type:=AG2F90-C-Soft
   ```
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py hardware:=gz type:=AG2F120S world:=dart
+  ros2 launch ocs2_arm_controller demo.launch.py hardware:=gz type:=AG2F120S
   ```
 * Isaac Sim
   ```bash

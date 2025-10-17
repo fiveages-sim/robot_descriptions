@@ -58,7 +58,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}finger1"/>
       <axis xyz="0 1 0"/>
-      <limit lower="0" upper="0.05" effort="100" velocity="0.25"/>
+      <limit lower="0" upper="0.05" effort="10" velocity="0.25"/>
     </joint>
 
     <link name="${prefix}finger2">
@@ -90,7 +90,7 @@
       <parent link="${prefix}gripper_base"/>
       <child link="${prefix}finger2"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="0" upper="0.05" effort="100" velocity="0.25"/>
+      <limit lower="0" upper="0.05" effort="10" velocity="0.25"/>
       <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
     </joint>
 

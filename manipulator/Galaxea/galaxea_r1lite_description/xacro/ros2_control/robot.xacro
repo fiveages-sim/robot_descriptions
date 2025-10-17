@@ -3,13 +3,33 @@
   <!-- Include Chassis -->
   <xacro:include filename="$(find galaxea_r1lite_description)/xacro/robot.xacro"/>
 
-  <!-- Import Piper ros2_control description -->
-  <xacro:include filename="$(find galaxea_a1_description)/xacro/ros2_control/galaxea_a1.ros2_control.xacro" />
-  <xacro:galaxea_a1_system name="left" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
-  <xacro:galaxea_a1_system name="right" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+  <!-- Import ros2_control interfaces -->
+  <xacro:include filename="$(find galaxea_a1_description)/xacro/ros2_control/interfaces.xacro"/>
+  <xacro:include filename="$(find galaxea_r1lite_description)/xacro/ros2_control/interfaces.xacro"/>
 
-  <xacro:include filename="$(find galaxea_r1lite_description)/xacro/ros2_control/galaxea_r1.ros2_control.xacro" />
-  <xacro:galaxea_r1_system ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+  <ros2_control name="galaxea_r1lite_system" type="system">
+    <hardware>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'gz'}">
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </xacro:if>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'mock_components'}">
+        <plugin>mock_components/GenericSystem</plugin>
+      </xacro:if>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
+        <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+        <param name="joint_commands_topic">/isaac/joint_command</param>
+        <param name="joint_states_topic">/isaac/joint_states</param>
+      </xacro:if>
+    </hardware>
+
+    <!-- Torso joints -->
+    <xacro:galaxea_r1_interfaces name=""/>
+
+    <!-- Left and right arm joints -->
+    <xacro:galaxea_a1_interfaces name="left"/>
+    <xacro:galaxea_a1_interfaces name="right"/>
+
+  </ros2_control>
 
   <xacro:arg name="gazebo" default="false" />
   <xacro:if value="$(arg gazebo)">

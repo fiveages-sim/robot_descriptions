@@ -79,10 +79,10 @@ left_hand_controller:
   ros__parameters:
     joint: left_gripper_joint
     force_feedback_ratio: 0.1
-    force_threshold: 0.5
+    force_threshold: 1.5
 
 right_hand_controller:
   ros__parameters:
     joint: right_gripper_joint
     force_feedback_ratio: 0.1
-    force_threshold: 0.5
+    force_threshold: 1.5

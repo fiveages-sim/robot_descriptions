@@ -1,7 +1,7 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 300  # Hz
+    update_rate: 60  # Hz
 
     arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
@@ -61,3 +61,4 @@ ocs2_arm_controller:
 
     # Control parameters
     home_pos: [0.0, 0.0, -1.5708, 0.0, 1.5708, 0.0]
+    rest_pos: [-3.1415926, 0.0, -1.5708, 0.0, 1.5708, 0.0]

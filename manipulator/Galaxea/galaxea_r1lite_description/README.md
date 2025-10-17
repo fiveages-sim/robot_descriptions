@@ -6,7 +6,7 @@ at [GalaxeaManipSim](https://github.com/OpenGalaxea/GalaxeaManipSim).
 ## 1. Build
 
 ```bash
-cd ~/XZN/integrate_latest/
+cd ~/ros2_ws
 colcon build --packages-up-to galaxea_r1lite_description --symlink-install
 ```
 
@@ -14,7 +14,7 @@ colcon build --packages-up-to galaxea_r1lite_description --symlink-install
 
 * R1 Lite with A1X Arm
 ```bash
-source ~/XZN/integrate_latest/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_r1lite
 ```
 
@@ -32,18 +32,18 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_r1lite type
 ### 3.1 Official OCS2 Mobile Manipulator Demo
 
 ```bash
-source ~/XZN/integrate_latest/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_r1lite
 ```
 
 ### 3.2 OCS2 Arm Controller Demo
 
 ```bash
-source ~/XZN/integrate_latest/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_r1lite
 ```
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_r1 hardware:=gz
+ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_r1lite hardware:=gz
 ```

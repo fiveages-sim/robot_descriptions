@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="galaxea_r1_interfaces" params="name">
+
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <!-- 躯干关节接口定义 -->
+    <joint name="${prefix}torso_joint1">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">-1.57</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="${prefix}torso_joint2">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">2.7</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="${prefix}torso_joint3">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">1.1</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+  </xacro:macro>
+</robot>
+

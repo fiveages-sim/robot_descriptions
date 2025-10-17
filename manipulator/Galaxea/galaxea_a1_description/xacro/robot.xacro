@@ -7,14 +7,13 @@
   <!-- 根据type参数决定is_master的值 -->
   <xacro:if value="${'$(arg type)' == 'a1'}">
     <xacro:include filename="$(find galaxea_a1_description)/xacro/a1.xacro"/>
-    <xacro:Arm name=""/>
   </xacro:if>
   <xacro:if value="${'$(arg type)' == 'x'}">
     <xacro:include filename="$(find galaxea_a1_description)/xacro/a1_x.xacro"/>
-    <xacro:Arm name=""/>
   </xacro:if>
   <xacro:if value="${'$(arg type)' == 'y'}">
     <xacro:include filename="$(find galaxea_a1_description)/xacro/a1_y.xacro"/>
-    <xacro:Arm name=""/>
   </xacro:if>
+
+  <xacro:Arm name=""/>
 </robot>

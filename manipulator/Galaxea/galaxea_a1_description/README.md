@@ -77,11 +77,11 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 * A1 X
   ```bash
   source ~/ros2_ws/install/setup.bash
-    ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=gz type:=x
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=gz type:=x
   ```
 
 * A1 Y
   ```bash
   source ~/ros2_ws/install/setup.bash
-    ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=gz type:=y world:=dart
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=gz type:=y world:=dart
   ```

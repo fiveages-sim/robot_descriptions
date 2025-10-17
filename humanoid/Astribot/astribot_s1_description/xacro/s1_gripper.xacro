@@ -54,8 +54,7 @@
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}gripper_L1"/>
 			<axis xyz="0 -1 0"/>
-			<limit lower="0" upper="1" effort="1" velocity="1"/>
-			<disable_collisions>true</disable_collisions>
+			<limit lower="0" upper="1" effort="10" velocity="1"/>
 		</joint>
 
 		<!-- 夹爪左侧手指 L2 -->
@@ -83,9 +82,8 @@
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}gripper_L2"/>
 			<axis xyz="0 -1 0"/>
-			<limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+			<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
 			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
-			<disable_collisions>true</disable_collisions>
 		</joint>
 
 		<!-- 夹爪左侧手指 L11 (末端) -->
@@ -118,9 +116,8 @@
 			<parent link="${prefix}gripper_L1"/>
 			<child link="${prefix}gripper_L11"/>
 			<axis xyz="0 1 0"/>
-			<limit effort="1" velocity="1" lower="-1.57" upper="1.57"/>
+			<limit effort="10" velocity="1" lower="-1.57" upper="1.57"/>
 			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
-			<disable_collisions>true</disable_collisions>
 		</joint>
 
 		<!-- 夹爪右侧手指 R1 -->
@@ -148,9 +145,8 @@
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}gripper_R1"/>
 			<axis xyz="0 1 0"/>
-			<limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+			<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
 			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
-			<disable_collisions>true</disable_collisions>
 		</joint>
 
 		<!-- 夹爪右侧手指 R2 -->
@@ -177,9 +173,9 @@
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}gripper_R2"/>
 			<axis xyz="0 1 0"/>
-			<limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+			<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
 			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
-			<disable_collisions>true</disable_collisions>
+			
 		</joint>
 
 		<!-- 夹爪右侧手指 R11 (末端) -->
@@ -211,15 +207,13 @@
 			<parent link="${prefix}gripper_R1"/>
 			<child link="${prefix}gripper_R11"/>
 			<axis xyz="0 -1 0"/>
-			<limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+			<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
 			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
-			<disable_collisions>true</disable_collisions>
 		</joint>
 
-		<!-- 夹爪中心参考坐标系 (可选) -->
 		<link name="${prefix}gripper_center"/>
 		<joint name="${prefix}gripper_center_joint" type="fixed">
-			<origin xyz="0 0 0.08" rpy="0 0 0"/>
+			<origin xyz="0 0 0.08"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}gripper_center"/>
 		</joint>
