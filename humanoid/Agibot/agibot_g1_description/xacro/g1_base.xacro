@@ -273,5 +273,12 @@
 		<limit effort="50.0" lower="-0.3490658503988659" upper="0.5235987755982988" velocity="1.0"/>
 	</joint>
 
+	<link name="head_camera"/>
+	<joint name="head_camera_joint" type="fixed">
+		<parent link="head_link2"/>
+		<child link="head_camera"/>
+		<origin xyz="0.103 -0.0421 0.0" rpy="1.5707963267948966 0 0"/>
+	</joint>
+
 </robot>
 

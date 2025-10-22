@@ -6,7 +6,11 @@
 
 使用方法:
 ros2 launch robot_common_launch controller_manager.launch.py robot:=cr5 type:=x5
-ros2 launch robot_common_launch controller_manager.launch.py robot:=cr5 type:=x5 use_gazebo:=true world:=warehouse
+ros2 launch robot_common_launch controller_manager.launch.py robot:=cr5 hardware:=gz
+ros2 launch robot_common_launch controller_manager.launch.py robot:=cr5 hardware:=gz world:=warehouse
+
+# Gazebo GUI可以随时连接（在另一个终端运行）:
+gz sim -g
 """
 
 import os
@@ -16,9 +20,11 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch.conditions import IfCondition
 from ament_index_python.packages import get_package_share_directory
+from ros_gz_bridge.actions import RosGzBridge
+from ros_gz_sim.actions import GzServer
 
 # Import robot_common_launch utilities
-from robot_common_launch import load_robot_config, get_robot_package_path
+from robot_common_launch import load_robot_config, get_robot_package_path, get_gz_bridge_config_path, get_gz_image_bridge_topics
 import xacro
 
 
@@ -127,16 +133,48 @@ def generate_launch_description():
             # 世界文件路径
             world_path = os.path.join(get_package_share_directory(world_package), 'worlds', world + '.sdf')
             
-            # 启动 Gazebo 仿真
-            gazebo = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([
-                    os.path.join(get_package_share_directory('ros_gz_sim'), 'launch'),
-                    '/gz_sim.launch.py',
-                ]),
-                launch_arguments=[
-                    ('gz_args', ['-r -v 4 ', world_path])
-                ],
+            # 启动 Gazebo Server (创建组合容器)
+            gz_server = GzServer(
+                world_sdf_file=world_path,
+                world_sdf_string='',
+                container_name='ros_gz_container',
+                create_own_container=True,
+                use_composition=True,
             )
+            
+            # 获取 Gazebo bridge 配置 (优先使用机器人特定配置，否则使用默认配置)
+            gz_bridge_config_path = get_gz_bridge_config_path(robot_name)
+            
+            # 启动 ROS-Gazebo Bridge (复用已创建的容器)
+            ros_gz_bridge = RosGzBridge(
+                bridge_name='ros_gz_bridge',
+                config_file=gz_bridge_config_path,
+                container_name='ros_gz_container',
+                create_own_container=False,
+                use_composition=True,
+            )
+            
+            nodes.extend([gz_server, ros_gz_bridge])
+            
+            # 检查是否需要启动 Image Bridge (可选)
+            gz_image_topics = get_gz_image_bridge_topics(robot_name)
+            if gz_image_topics is not None and len(gz_image_topics) > 0:
+                # 为每个图像话题创建独立的 image_bridge 节点
+                for topic in gz_image_topics:
+                    # 从话题名生成节点名称 (例如: /camera/image -> bridge_gz_ros_camera_image)
+                    node_name = f'bridge_gz_ros{topic.replace("/", "_")}'
+                    
+                    image_bridge_node = Node(
+                        package='ros_gz_image',
+                        executable='image_bridge',
+                        name=node_name,
+                        output='screen',
+                        parameters=[
+                            {'use_sim_time': use_sim_time},
+                        ],
+                        arguments=[topic],
+                    )
+                    nodes.append(image_bridge_node)
             
             # 在 Gazebo 中生成机器人
             gz_spawn_entity = Node(
@@ -152,19 +190,8 @@ def generate_launch_description():
                     'true',
                 ],
             )
-
-            bridge = Node(
-                package='ros_gz_bridge',
-                executable='parameter_bridge',
-                arguments=[
-                    "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
-                    "/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan",
-                    "/imu@sensor_msgs/msg/Imu@gz.msgs.IMU"
-                ],
-                output='screen',
-            )
             
-            nodes.extend([gazebo, gz_spawn_entity, bridge])
+            nodes.append(gz_spawn_entity)
         else:
             # ros2_control_node (仅在非Gazebo模式下)
             _, ros2_controllers_path = load_robot_config(robot_name, "ros2_control", robot_type)

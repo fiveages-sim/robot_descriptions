@@ -181,3 +181,98 @@ def get_info_file_name(robot_name, robot_type="", config_type="ros2_control"):
     except KeyError as e:
         print(f"[WARN] Key error in config for robot '{robot_name}': {e}, using default 'task'")
         return 'task'
+
+
+def get_gz_bridge_config_path(robot_name):
+    """
+    Get Gazebo bridge configuration file path for a robot.
+    
+    首先尝试加载机器人特定的配置，如果不存在则返回默认配置。
+    
+    Args:
+        robot_name (str): Name of the robot (e.g., 'cr5', 'agibot_g1', etc.)
+        
+    Returns:
+        str: Path to gz_bridge.yaml file (robot-specific or default)
+        
+    Example:
+        >>> bridge_config = get_gz_bridge_config_path('agibot_g1')
+        >>> print(f"Using bridge config: {bridge_config}")
+    """
+    robot_pkg_path = get_robot_package_path(robot_name)
+    
+    # 首先尝试机器人特定的配置
+    if robot_pkg_path is not None:
+        gz_bridge_config_path = os.path.join(robot_pkg_path, "config", "gazebo", "gz_bridge.yaml")
+        
+        if os.path.exists(gz_bridge_config_path):
+            print(f"[INFO] Using robot-specific Gazebo bridge config: {gz_bridge_config_path}")
+            return gz_bridge_config_path
+    
+    # 如果没有找到机器人特定的配置，使用默认配置
+    try:
+        robot_common_launch_path = get_package_share_directory('robot_common_launch')
+        default_gz_bridge_config_path = os.path.join(robot_common_launch_path, "config", "gazebo", "gz_bridge.yaml")
+        
+        if os.path.exists(default_gz_bridge_config_path):
+            print(f"[INFO] Using default Gazebo bridge config for robot '{robot_name}': {default_gz_bridge_config_path}")
+            return default_gz_bridge_config_path
+        else:
+            print(f"[WARN] Default Gazebo bridge config not found: {default_gz_bridge_config_path}")
+            return None
+    except Exception as e:
+        print(f"[ERROR] Failed to get default Gazebo bridge config: {e}")
+        return None
+
+
+def get_gz_image_bridge_topics(robot_name):
+    """
+    Get Gazebo image bridge topic list for a robot.
+    
+    仅查找机器人特定的配置，如果不存在则返回None（不启动image bridge）。
+    Image bridge是可选的，只有需要相机图像传输的机器人才需要配置。
+    
+    配置文件格式应该是一个YAML文件，包含一个话题列表：
+    ---
+    topics:
+      - /camera/image
+      - /camera/depth_image
+    
+    Args:
+        robot_name (str): Name of the robot (e.g., 'cr5', 'agibot_g1', etc.)
+        
+    Returns:
+        list or None: List of image topics if config exists, otherwise None
+        
+    Example:
+        >>> topics = get_gz_image_bridge_topics('agibot_g1')
+        >>> if topics:
+        ...     print(f"Image topics: {topics}")
+        ... else:
+        ...     print("No image bridge needed for this robot")
+    """
+    robot_pkg_path = get_robot_package_path(robot_name)
+    
+    if robot_pkg_path is None:
+        return None
+    
+    gz_image_bridge_config_path = os.path.join(robot_pkg_path, "config", "gazebo", "gz_image_bridge.yaml")
+    
+    if os.path.exists(gz_image_bridge_config_path):
+        try:
+            with open(gz_image_bridge_config_path, 'r') as file:
+                config = yaml.safe_load(file)
+                
+            if config and 'topics' in config:
+                topics = config['topics']
+                print(f"[INFO] Found Gazebo image bridge config for robot '{robot_name}' with {len(topics)} topics")
+                return topics
+            else:
+                print(f"[WARN] Image bridge config exists but 'topics' key not found for robot '{robot_name}'")
+                return None
+        except Exception as e:
+            print(f"[ERROR] Failed to read image bridge config for robot '{robot_name}': {e}")
+            return None
+    else:
+        print(f"[INFO] No image bridge config found for robot '{robot_name}', skipping image bridge")
+        return None

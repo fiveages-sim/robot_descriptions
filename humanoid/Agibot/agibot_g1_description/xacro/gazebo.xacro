@@ -1,116 +1,204 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- Gazebo friction properties for chassis base -->
-  <gazebo reference="base_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <maxVel>10.0</maxVel>
-  </gazebo>
+	<!-- Gazebo friction properties for chassis base -->
+	<gazebo reference="base_link">
+		<mu1>0.0</mu1>
+		<mu2>0.0</mu2>
+		<kp>1000000.0</kp>
+		<kd>100.0</kd>
+		<maxVel>10.0</maxVel>
+	</gazebo>
 
-  <!-- Gazebo friction properties for left wheel -->
-  <gazebo reference="left_wheel">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <minDepth>0.0001</minDepth>
-  </gazebo>
+	<!-- Gazebo friction properties for left wheel -->
+	<gazebo reference="left_wheel">
+		<mu1>1.0</mu1>
+		<mu2>1.0</mu2>
+		<minDepth>0.0001</minDepth>
+	</gazebo>
 
-  <!-- Gazebo friction properties for right wheel -->
-  <gazebo reference="right_wheel">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <minDepth>0.0001</minDepth>
-  </gazebo>
+	<!-- Gazebo friction properties for right wheel -->
+	<gazebo reference="right_wheel">
+		<mu1>1.0</mu1>
+		<mu2>1.0</mu2>
+		<minDepth>0.0001</minDepth>
+	</gazebo>
 
-  <gazebo reference="scan">
-    <sensor name='laser_scan' type='gpu_lidar'>
-      <topic>scan</topic>
-      <update_rate>20</update_rate>
-      <gz_frame_id>scan</gz_frame_id>
-      <lidar>
-        <scan>
-          <horizontal>
-            <samples>360</samples>
-            <resolution>1.000000</resolution>
-            <min_angle>-2.2</min_angle>
-            <max_angle>2.2</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.10000</min>
-          <max>20</max>
-          <resolution>0.015000</resolution>
-        </range>
-      </lidar>
-      <always_on>true</always_on>
-      <visualize>true</visualize>
-    </sensor>
-  </gazebo>
+	<gazebo reference="scan">
+		<sensor name='laser_scan' type='gpu_lidar'>
+			<topic>scan</topic>
+			<update_rate>20</update_rate>
+			<gz_frame_id>scan</gz_frame_id>
+			<lidar>
+				<scan>
+					<horizontal>
+						<samples>360</samples>
+						<resolution>1.000000</resolution>
+						<min_angle>-2.2</min_angle>
+						<max_angle>2.2</max_angle>
+					</horizontal>
+				</scan>
+				<range>
+					<min>0.10000</min>
+					<max>20</max>
+					<resolution>0.015000</resolution>
+				</range>
+			</lidar>
+			<always_on>true</always_on>
+			<visualize>true</visualize>
+		</sensor>
+	</gazebo>
 
-  <!-- IMU -->
-  <gazebo reference="imu">
-    <sensor name="imu" type="imu">
-      <always_on>1</always_on>
-      <update_rate>1000</update_rate>
-      <visualize>true</visualize>
-      <topic>imu</topic>
-      <gz_frame_id>imu</gz_frame_id>
-      <imu>
-        <angular_velocity>
-          <x>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-4</stddev>
-              <bias_mean>0.0000075</bias_mean>
-              <bias_stddev>0.0000008</bias_stddev>
-            </noise>
-          </x>
-          <y>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-4</stddev>
-              <bias_mean>0.0000075</bias_mean>
-              <bias_stddev>0.0000008</bias_stddev>
-            </noise>
-          </y>
-          <z>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-4</stddev>
-              <bias_mean>0.0000075</bias_mean>
-              <bias_stddev>0.0000008</bias_stddev>
-            </noise>
-          </z>
-        </angular_velocity>
-        <linear_acceleration>
-          <x>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>1.7e-2</stddev>
-              <bias_mean>0.1</bias_mean>
-              <bias_stddev>0.001</bias_stddev>
-            </noise>
-          </x>
-          <y>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>1.7e-2</stddev>
-              <bias_mean>0.1</bias_mean>
-              <bias_stddev>0.001</bias_stddev>
-            </noise>
-          </y>
-          <z>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>1.7e-2</stddev>
-              <bias_mean>0.1</bias_mean>
-              <bias_stddev>0.001</bias_stddev>
-            </noise>
-          </z>
-        </linear_acceleration>
-      </imu>
-    </sensor>
-  </gazebo>
+	<!-- IMU -->
+	<gazebo reference="imu">
+		<sensor name="imu" type="imu">
+			<always_on>1</always_on>
+			<update_rate>1000</update_rate>
+			<visualize>true</visualize>
+			<topic>imu</topic>
+			<gz_frame_id>imu</gz_frame_id>
+			<imu>
+				<angular_velocity>
+					<x>
+						<noise type="gaussian">
+							<mean>0.0</mean>
+							<stddev>2e-4</stddev>
+							<bias_mean>0.0000075</bias_mean>
+							<bias_stddev>0.0000008</bias_stddev>
+						</noise>
+					</x>
+					<y>
+						<noise type="gaussian">
+							<mean>0.0</mean>
+							<stddev>2e-4</stddev>
+							<bias_mean>0.0000075</bias_mean>
+							<bias_stddev>0.0000008</bias_stddev>
+						</noise>
+					</y>
+					<z>
+						<noise type="gaussian">
+							<mean>0.0</mean>
+							<stddev>2e-4</stddev>
+							<bias_mean>0.0000075</bias_mean>
+							<bias_stddev>0.0000008</bias_stddev>
+						</noise>
+					</z>
+				</angular_velocity>
+				<linear_acceleration>
+					<x>
+						<noise type="gaussian">
+							<mean>0.0</mean>
+							<stddev>1.7e-2</stddev>
+							<bias_mean>0.1</bias_mean>
+							<bias_stddev>0.001</bias_stddev>
+						</noise>
+					</x>
+					<y>
+						<noise type="gaussian">
+							<mean>0.0</mean>
+							<stddev>1.7e-2</stddev>
+							<bias_mean>0.1</bias_mean>
+							<bias_stddev>0.001</bias_stddev>
+						</noise>
+					</y>
+					<z>
+						<noise type="gaussian">
+							<mean>0.0</mean>
+							<stddev>1.7e-2</stddev>
+							<bias_mean>0.1</bias_mean>
+							<bias_stddev>0.001</bias_stddev>
+						</noise>
+					</z>
+				</linear_acceleration>
+			</imu>
+		</sensor>
+	</gazebo>
+
+	<gazebo reference="left_camera">
+		<sensor name="left_camera" type="camera">
+			<camera>
+				<horizontal_fov>1.047198</horizontal_fov>
+				<image>
+					<width>1280</width>
+					<height>720</height>
+				</image>
+				<clip>
+					<near>0.05</near>
+					<far>15</far>
+				</clip>
+				<noise>
+					<type>gaussian</type>
+					<mean>0.0</mean>
+					<stddev>0.007</stddev>
+				</noise>
+				<optical_frame_id>left_camera</optical_frame_id>
+				<camera_info_topic>left_camera/camera_info</camera_info_topic>
+			</camera>
+			<always_on>true</always_on>
+			<update_rate>15</update_rate>
+			<visualize>true</visualize>
+			<topic>left_camera/image</topic>
+		</sensor>
+	</gazebo>
+
+	<gazebo reference="right_camera">
+		<sensor name="right_camera" type="camera">
+			<camera>
+				<horizontal_fov>1.047198</horizontal_fov>
+				<image>
+					<width>1280</width>
+					<height>720</height>
+				</image>
+				<clip>
+					<near>0.05</near>
+					<far>15</far>
+				</clip>
+				<noise>
+					<type>gaussian</type>
+					<mean>0.0</mean>
+					<stddev>0.007</stddev>
+				</noise>
+				<optical_frame_id>right_camera</optical_frame_id>
+				<camera_info_topic>right_camera/camera_info</camera_info_topic>
+			</camera>
+			<always_on>true</always_on>
+			<update_rate>15</update_rate>
+			<visualize>true</visualize>
+			<topic>right_camera/image</topic>
+		</sensor>
+	</gazebo>
+
+	<gazebo reference="head_camera">
+		<sensor name="head_camera" type="rgbd_camera">
+			<always_on>true</always_on>
+			<update_rate>30.0</update_rate>
+			<topic>head_camera</topic>
+			<gz_frame_id>head_camera</gz_frame_id>
+			<visualize>true</visualize>
+			<camera>
+				<horizontal_fov>2.094</horizontal_fov>
+				<image>
+					<width>1280</width>
+					<height>720</height>
+				</image>
+				<clip>
+					<near>0.05</near>
+					<far>50</far>
+				</clip>
+			</camera>
+			<baseline>0.2</baseline>
+			<pointCloudCutoff>0.5</pointCloudCutoff>
+			<pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+			<distortionK1>0</distortionK1>
+			<distortionK2>0</distortionK2>
+			<distortionK3>0</distortionK3>
+			<distortionT1>0</distortionT1>
+			<distortionT2>0</distortionT2>
+			<CxPrime>0</CxPrime>
+			<Cx>0</Cx>
+			<Cy>0</Cy>
+			<focalLength>0</focalLength>
+			<hackBaseline>0</hackBaseline>
+		</sensor>
+	</gazebo>
 </robot>

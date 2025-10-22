@@ -1,0 +1,4 @@
+topics:
+  - /left_camera/image
+  - /right_camera/image
+  - /head_camera/image

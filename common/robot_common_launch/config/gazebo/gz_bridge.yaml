@@ -1,0 +1,11 @@
+---
+# 默认的 Gazebo-ROS2 Bridge 配置
+# 这个文件提供了最常用的话题桥接配置
+# 机器人特定的配置应放在各自的 robot_description 包的 config/gazebo/gz_bridge.yaml 中
+
+# 时钟同步 (必须)
+- ros_topic_name: "/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
