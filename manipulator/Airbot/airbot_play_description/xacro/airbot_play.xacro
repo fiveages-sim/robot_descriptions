@@ -282,12 +282,12 @@
 			<child link="${prefix}gripper_center"/>
 		</joint>
 
-		<link name="${prefix}camera_link"/>
+		<link name="${prefix}camera"/>
 
 		<joint name="${prefix}camera_joint" type="fixed">
 			<origin xyz="-0.105 0 -0.111" rpy="0 -1.046 0"/>
 			<parent link="${prefix}link6"/>
-			<child link="${prefix}camera_link"/>
+			<child link="${prefix}camera"/>
 		</joint>
 	</xacro:macro>
 </robot>

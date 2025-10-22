@@ -35,5 +35,6 @@
 				<parameters>$(find airbot_play_description)/config/ros2_control/ros2_controllers.yaml</parameters>
 			</plugin>
 		</gazebo>
+		<xacro:include filename="$(find airbot_play_description)/xacro/ros2_control/gazebo.xacro"/>
 	</xacro:if>
 </robot>
