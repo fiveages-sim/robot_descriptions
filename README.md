@@ -66,14 +66,6 @@ I add mobile manipulator OCS2 config for some of the manipulator robots, you can
 
 <img src="manipulator/.images/dobot_cr5_ocs2.gif" width="300" height="200" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/lekiwi_ocs2.gif" width="300" height="200" style="object-fit: cover; object-position: center;">
 
-## Grippers
-
-| Brand                                          | Models               | Repaint | Images                                                                                                                                                                                                                                                            |
-|------------------------------------------------|----------------------|-------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [ChangingTek](common/gripper/changingtek_description) | AG2F90-C<br>AG2F120S | Yes   | <img src="common/gripper/.images/tek_ag2f90c.png" width="150" height="150" style="object-fit: cover; object-position: center;">  <img src="common/gripper/.images/tek_ag2f120s.png" width="150" height="150" style="object-fit: cover; object-position: center;"> | |
-| [Robotiq](common/gripper/robotiq_description)         | 2F-85                | Yes   | <img src="common/gripper/.images/robotiq_85.png" width="150" height="150" style="object-fit: cover; object-position: center;">                                                                                                                                    |
-| [Inspire](common/gripper/inspire_description) | EG2-4C2              | Yes   | <img src="common/gripper/.images/inspire_eg2.png" width="150" height="150" style="object-fit: cover; object-position: center;">                                                                                                                                   |                                                                                                                                  |
-
 ## Quadruped Robots
 
 | Brand         | Model                                               | Repaint | Images                                                        |
