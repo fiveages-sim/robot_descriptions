@@ -11,18 +11,18 @@ git clone https://github.com/fiveages-sim/robot_descriptions
 # Navigate to the repository directory
 cd robot_descriptions
 
-# Initialize and update the common submodule
+# Initialize and update all submodules
 git submodule init
 git submodule update
 ```
 
-Or clone the repository with submodules in one command:
+Or clone the repository with all submodules in one command:
 
 ```bash
 git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 ```
 
-> **Note**: The `common` submodule contains shared robot description files such as grippers, dexterous hands, and camera models. If you don't initialize the submodule, these common components will not be available.
+> **Note**: This repository uses git submodules. Make sure to initialize them to access all robot descriptions and components. See the [Submodules](#submodules) section below for details.
 
 ## Humanoid Robots
 
@@ -48,7 +48,6 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 |----------------|-------------------------------------------------------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | TheRobotStudio | [SO-ARM](manipulator/LeRobot/so_arm_description)            | Yes     | <img src="manipulator/.images/so100.png" width="200" height="150" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/so101.png" width="200" height="150" style="object-fit: cover; object-position: center;">                                                                                                                                         |
 | SIGRobotics    | [Lekiwi](manipulator/LeRobot/lekiwi_description)            | Yes     | <img src="manipulator/.images/lekiwi_100.png" width="200" height="150" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/lekiwi_101.png" width="200" height="150" style="object-fit: cover; object-position: center;">                                                                                                                               |
-| Dobot          | [CR5](manipulator/Dobot/cr5_description)                    | Yes     | <img src="manipulator/.images/dobot_cr5.png" width="200" height="150" style="object-fit: cover; object-position: center;">     <img src="manipulator/.images/dobot_cr5_robotiq85.png" width="200" height="150" style="object-fit: cover; object-position: center;">                                                                                                                   |
 | ARX            | [X5/R5](manipulator/ARX/arx5_description)                   | Yes     | <img src="manipulator/.images/arx_x5.png" width="200">    <img src="manipulator/.images/arx_r5.png" width="200">                                                                                                                                                                                                                                                                      |
 | AgileX         | [Piper](manipulator/AgileX/piper_description)               | Yes     | <img src="manipulator/.images/agilex_piper.png" width="200" height="120" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/agilex_piper_master.png" width="200" height="120" style="object-fit: cover; object-position: center;">                                                                                                                    |
 | AgileX         | [AgileX Aloha](manipulator/AgileX/agilex_aloha_description) | Yes     | <img src="manipulator/.images/agilex_split_aloha.png" width="180">   <img src="manipulator/.images/agilex_aloha2.png" width="260">                                                                                                                                                                                                                                                    |
@@ -59,12 +58,44 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Elite          | [EC Series](manipulator/Elite/elite_ec_description)         | Yes     | <img src="manipulator/.images/elite_ec66.png" width="200">                                                                                                                                                                                                                                                                                                                            |
 | OpenArm        | [OpenArm](manipulator/OpenArm/openarm_description)          | Yes     | <img src="manipulator/.images/openarm_single.png" width="200" style="object-fit: cover; object-position: center;">     <img src="manipulator/.images/openarm_bimanual.png" width="200" style="object-fit: cover; object-position: center;">                                                                                                                                           |
 
+## Submodules
+
+This repository uses git submodules to manage shared components and specific robot descriptions independently:
+
+| Name | Path | Repository | Description |
+|------|------|------------|-------------|
+| Common Components | `common` | [robot-descriptions-common](https://github.com/fiveages-sim/robot-descriptions-common) | Shared grippers, dexterous hands, camera models, and launch utilities |
+| Dobot CR5 | `manipulator/Dobot` | [robot-descriptions-dobot](https://github.com/fiveages-sim/robot-descriptions-dobot) | 6-DOF collaborative robot arm with real hardware integration |
+
+### Using Submodules
+
+**Initialize all submodules:**
+```bash
+git submodule update --init --recursive
+```
+
+**Initialize a specific submodule:**
+```bash
+# For common components
+git submodule update --init common
+
+# For Dobot robot
+git submodule update --init manipulator/Dobot
+```
+
+**Update submodules to latest version:**
+```bash
+git submodule update --remote
+```
+
+See the individual submodule repositories for detailed documentation and usage instructions.
+
 ### Manipulator Robots with OCS2
 
 I add mobile manipulator OCS2 config for some of the manipulator robots, you can use them with the
 `manipulator_ocs2.launch.py` launch file. More details can be found in the [OCS2 documentation](docs/OCS2.md).
 
-<img src="manipulator/.images/dobot_cr5_ocs2.gif" width="300" height="200" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/lekiwi_ocs2.gif" width="300" height="200" style="object-fit: cover; object-position: center;">
+<img src="manipulator/.images/lekiwi_ocs2.gif" width="300" height="200" style="object-fit: cover; object-position: center;">
 
 ## Quadruped Robots
 
