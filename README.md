@@ -4,13 +4,25 @@ This repository contains the URDF files for quadruped, humanoid, and manipulator
 
 ## Quick Start
 
-To clone this repository with only the latest commit (shallow clone):
-
 ```bash
-git clone --depth 1 https://github.com/fiveages-sim/robot_descriptions
+# Clone the repository
+git clone https://github.com/fiveages-sim/robot_descriptions
+
+# Navigate to the repository directory
+cd robot_descriptions
+
+# Initialize and update the common submodule
+git submodule init
+git submodule update
 ```
 
-This will significantly reduce download time and disk space usage.
+Or clone the repository with submodules in one command:
+
+```bash
+git clone --recursive https://github.com/fiveages-sim/robot_descriptions
+```
+
+> **Note**: The `common` submodule contains shared robot description files such as grippers, dexterous hands, and camera models. If you don't initialize the submodule, these common components will not be available.
 
 ## Humanoid Robots
 
