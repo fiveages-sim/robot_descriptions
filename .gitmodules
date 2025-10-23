@@ -1,6 +1,8 @@
 [submodule "common"]
 	path = common
 	url = https://github.com/fiveages-sim/robot-descriptions-common
+	branch = main
 [submodule "manipulator/Dobot"]
 	path = manipulator/Dobot
 	url = git@github.com:fiveages-sim/robot-descriptions-dobot.git
+	branch = main
