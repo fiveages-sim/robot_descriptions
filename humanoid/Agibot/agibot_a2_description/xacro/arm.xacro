@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="a2_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- A2 Arm Macro
+		Parameters:
+		- name: arm name prefix (e.g., "left" or "right")
+		- direction: direction multiplier (1 for left, -1 for right)
+		- joint_idx_offset: joint index offset (13 for left, 20 for right)
+	-->
+	<xacro:macro name="A2Arm" params="name direction:=1 joint_idx_offset:=13">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<xacro:property name="dir" value="${direction}"/>
+		<xacro:property name="idx_base" value="${joint_idx_offset}"/>
+
+		<!-- Arm base link -->
+		<link name="${prefix}arm_base"/>
+		<joint name="${prefix}arm_base_joint" type="fixed">
+			<origin rpy="1.5707963  0 0" xyz="-0.03779 0 0.3421"/>
+			<parent link="base_link"/>
+			<child link="${prefix}arm_base"/>
+		</joint>
+
+		<!-- Arm link 01 -->
+		<link name="${prefix}arm_link01">
+			<inertial>
+				<origin xyz="-0.002330 0.008782 ${dir*0.032870}"/>
+				<mass value="0.276944"/>
+				<inertia ixx="0.000595" iyy="0.000381" izz="0.000542" ixy="-0.000006" ixz="${-dir*0.000002}"
+								 iyz="${dir*0.000053}"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/visual/link1.obj" scale="1 1 ${dir}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/collision/link1.stl" scale="1 1 ${dir}"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}arm_joint1" type="revolute">
+			<origin xyz="-0.0 0.0 ${-dir*0.191}" rpy="0 0 -1.5707963"/>
+			<parent link="${prefix}arm_base"/>
+			<child link="${prefix}arm_link01"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-2.967" upper="2.967" effort="0" velocity="0"/>
+		</joint>
+
+		<!-- Arm link 02 -->
+		<link name="${prefix}arm_link02">
+			<inertial>
+				<origin xyz="-0.000451 ${-dir*0.051682} -0.001084"/>
+				<mass value="2.852114"/>
+				<inertia ixx="0.011984" iyy="0.002880" izz="0.011709" ixy="${dir*0.000039}" ixz="0.000003"
+								 iyz="${dir*0.000140}"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/visual/link2.obj" scale="1 ${dir} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/collision/link2.stl" scale="1 ${dir} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}arm_joint2" type="revolute">
+			<origin xyz="0 0 -0.0" rpy="1.5707963 0 0"/>
+			<parent link="${prefix}arm_link01"/>
+			<child link="${prefix}arm_link02"/>
+			<axis xyz="0 0 ${dir}"/>
+			<limit lower="-0.523598767" upper="1.658062761" effort="0" velocity="0"/>
+		</joint>
+
+		<!-- Arm link 03 -->
+		<link name="${prefix}arm_link03">
+			<inertial>
+				<origin xyz="-0.000673 0.001065 ${dir*0.079222}"/>
+				<mass value="1.310295"/>
+				<inertia ixx="0.002030" iyy="0.002186" izz="0.001189" ixy="-0.000008" ixz="${dir*0.000005}"
+								 iyz="${dir*0.000018}"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/visual/link3.obj" scale="1 1 ${dir}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/collision/link3.stl" scale="1 1 ${dir}"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}arm_joint3" type="revolute">
+			<origin rpy="1.5707963 0 0" xyz="0 ${-dir*0.154} 0"/>
+			<parent link="${prefix}arm_link02"/>
+			<child link="${prefix}arm_link03"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-2.967" upper="2.967" effort="0" velocity="0"/>
+		</joint>
+
+		<!-- Arm link 04 -->
+		<link name="${prefix}arm_link04">
+			<inertial>
+				<origin xyz="0.000273 ${-dir*0.066853} -0.007408"/>
+				<mass value="0.677343"/>
+				<inertia ixx="0.000893" iyy="0.000508" izz="0.000767" ixy="${-dir*0.000001}" ixz="-0.000002"
+								 iyz="${dir*0.000238}"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/visual/link4.obj" scale="1 ${dir} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/collision/link4.stl" scale="1 ${dir} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}arm_joint4" type="revolute">
+			<origin xyz="0 0 ${dir*0.093}" rpy="-1.5707963  0  1.5707963"/>
+			<parent link="${prefix}arm_link03"/>
+			<child link="${prefix}arm_link04"/>
+			<axis xyz="0 0 ${-dir}"/>
+			<limit lower="0" upper="2.094395067" effort="0" velocity="0"/>
+		</joint>
+
+		<!-- Arm link 05 -->
+		<link name="${prefix}arm_link05">
+			<inertial>
+				<origin xyz="-0.001962 -0.000002 ${dir*0.071786}"/>
+				<mass value="0.260886"/>
+				<inertia ixx="0.000638" iyy="0.000618" izz="0.000229" ixy="0.000000" ixz="${dir*0.000015}" iyz="0.000000"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/visual/link5.obj" scale="1 1 ${dir}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/collision/link5.stl" scale="1 1 ${dir}"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}arm_joint5" type="fixed">
+			<origin xyz="0  ${-dir*0.103} 0.0" rpy="1.5707963 0 0"/>
+			<parent link="${prefix}arm_link04"/>
+			<child link="${prefix}arm_link05"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-2.87979" upper="2.87979" velocity="0.0" effort="0"/>
+		</joint>
+
+		<!-- Arm link 06 -->
+		<link name="${prefix}arm_link06">
+			<inertial>
+				<origin xyz="0.00018011 -0.00021701 0.00000000"/>
+				<mass value="0.02504627"/>
+				<inertia ixx="0.00000197" iyy="0.00000173" izz="0.00000071" ixy="0.00000000" ixz="0.00000000" iyz="0.00000000"/>
+			</inertial>
+			<visual name="">
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/visual/link6.obj"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${prefix}arm_joint6" type="revolute">
+			<origin xyz="-0.01 0 ${dir*0.1595}" rpy="-1.5707963 1.5707963 0"/>
+			<parent link="${prefix}arm_link05"/>
+			<child link="${prefix}arm_link06"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-0.785398" upper="0.785398" velocity="0.0" effort="0"/>
+		</joint>
+
+		<!-- Arm link 07 -->
+		<link name="${prefix}arm_link07">
+			<inertial>
+				<origin xyz="${-dir*0.01211757} -0.00009712 0.00886324"/>
+				<mass value="0.05050219"/>
+				<inertia ixx="0.00000828" iyy="0.00001140" izz="0.00001294" ixy="${dir*0.00000006}" ixz="${-dir*0.00000179}"
+								 iyz="0.00000004"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/arm/visual/link7.obj" scale="${dir} 1 1"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${prefix}arm_joint7" type="revolute">
+			<origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+			<parent link="${prefix}arm_link06"/>
+			<child link="${prefix}arm_link07"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-0.5236" upper="0.5236" effort="0" velocity="0"/>
+		</joint>
+
+	</xacro:macro>
+
+</robot>
+

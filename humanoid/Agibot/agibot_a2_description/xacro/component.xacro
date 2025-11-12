@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!-- =================================================================================== -->
+<!-- |    Complete Robot Description for Agibot G1                                     | -->
+<!-- |    This file includes the base robot structure and both arms                    | -->
+<!-- =================================================================================== -->
+<robot name="LeftArm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:arg name="type" default="left"/>
+
+	<xacro:if value="${'$(arg type)' == 'left'}">
+		<link name="base_link"/>
+		<xacro:include filename="$(find agibot_a2_description)/xacro/arm.xacro"/>
+		<xacro:A2Arm name="left" direction="1" joint_idx_offset="13"/>
+	</xacro:if>
+
+	<xacro:if value="${'$(arg type)' == 'right'}">
+		<link name="base_link"/>
+		<xacro:include filename="$(find agibot_a2_description)/xacro/arm.xacro"/>
+		<xacro:A2Arm name="right" direction="-1" joint_idx_offset="20"/>
+	</xacro:if>
+
+	<xacro:if value="${'$(arg type)' == 'base'}">
+		<xacro:include filename="$(find agibot_g1_description)/xacro/g1_base.xacro"/>
+	</xacro:if>
+</robot>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="a2_leg" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- A2 Leg Macro
+		Parameters:
+		- name: leg name prefix (e.g., "left" or "right")
+		- direction: direction multiplier (1 for left, -1 for right)
+		- joint_idx_offset: joint index offset (1 for left, 7 for right)
+		- parent_link: parent link name (usually "base_link")
+		- hip_roll_origin_y: y position for hip_roll joint origin (0.105 for left, -0.105 for right)
+	-->
+	<xacro:macro name="A2Leg" params="name direction:=1 joint_idx_offset:=1 parent_link hip_roll_origin_y">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<xacro:property name="dir" value="${direction}"/>
+		<xacro:property name="idx_base" value="${joint_idx_offset}"/>
+
+		<!-- Hip roll -->
+		<link name="${prefix}hip_roll">
+			<inertial>
+				<origin xyz="${dir*0.00011252} ${dir*0.02130615} -0.07465143"/>
+				<mass value="2.39059365"/>
+				<inertia ixx="0.00381223" iyy="0.00368166" izz="0.00334373" ixy="${-dir*0.00000253}" ixz="${dir*0.00000433}" iyz="0.00019809"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}hip_roll.stl"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}hip_roll_hull.stl"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="idx${idx_base}_${prefix}hip_roll" type="revolute">
+			<origin xyz="-0.0808 ${hip_roll_origin_y} -0.0652" rpy="0.7854 0 1.5708"/>
+			<parent link="${parent_link}"/>
+			<child link="${prefix}hip_roll"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-0.698" upper="0.698" effort="120" velocity="12"/>
+		</joint>
+
+		<!-- Hip yaw -->
+		<link name="${prefix}hip_yaw">
+			<inertial>
+				<origin xyz="-0.00012288 ${dir*0.01576460} 0.10828703"/>
+				<mass value="3.79911511"/>
+				<inertia ixx="0.00941292" iyy="0.01442888" izz="0.00698406" ixy="${dir*0.00000766}" ixz="0.00000238" iyz="${-dir*0.00055185}"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}hip_yaw.stl"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}hip_yaw_hull.stl"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="idx${idx_base+1}_${prefix}hip_yaw" type="revolute">
+			<origin xyz="0 -0.017 -0.0682" rpy="1.5708 -1.5708 0"/>
+			<parent link="${prefix}hip_roll"/>
+			<child link="${prefix}hip_yaw"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-1.57" upper="1.57" effort="120" velocity="12"/>
+		</joint>
+
+		<!-- Hip pitch -->
+		<link name="${prefix}hip_pitch">
+			<inertial>
+				<origin xyz="-0.06943423 0.00469099 ${dir*0.02228242}"/>
+				<mass value="5.92461880"/>
+				<inertia ixx="0.01406779" iyy="0.08875802" izz="0.09356940" ixy="0.00370132" ixz="${-dir*0.00808512}" iyz="${dir*0.00067639}"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}hip_pitch.stl"/>
+				</geometry>
+				<material name="metallic silver">
+					<color rgba="0.878431373 0.878431373 0.901960784 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}hip_pitch_hull.stl"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="idx${idx_base+2}_${prefix}hip_pitch" type="revolute">
+			<origin xyz="0 ${-dir*0.020} 0.1205" rpy="1.5708 0.7854 0"/>
+			<parent link="${prefix}hip_yaw"/>
+			<child link="${prefix}hip_pitch"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-1.919862144" upper="0.78539815" effort="140" velocity="12"/>
+		</joint>
+
+		<!-- Tarsus -->
+		<link name="${prefix}tarsus">
+			<inertial>
+				<origin xyz="-0.17711952 0.00417209 ${dir*0.00013325}"/>
+				<mass value="3.02166726"/>
+				<inertia ixx="0.00286094" iyy="0.02537518" izz="0.02674320" ixy="-0.00112212" ixz="${dir*0.00004708}" iyz="${dir*0.00001928}"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}tarsus.stl"/>
+				</geometry>
+				<material name="metallic silver">
+					<color rgba="0.878431373 0.878431373 0.901960784 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}tarsus_hull.stl"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="idx${idx_base+3}_${prefix}tarsus" type="revolute">
+			<origin xyz="-0.34 0 0"/>
+			<parent link="${prefix}hip_pitch"/>
+			<child link="${prefix}tarsus"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-0.087266461" upper="2.443460911" effort="140" velocity="12"/>
+		</joint>
+
+		<!-- Toe pitch -->
+		<link name="${prefix}toe_pitch">
+			<inertial>
+				<mass value="0.08772028"/>
+				<inertia ixx="0.00001572" iyy="0.00001128" izz="0.00001148" ixy="0.0" ixz="0.0" iyz="0.0"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}toe_pitch.stl"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}toe_pitch_hull.stl"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="idx${idx_base+4}_${prefix}toe_pitch" type="revolute">
+			<origin xyz="-0.377 0 0"/>
+			<parent link="${prefix}tarsus"/>
+			<child link="${prefix}toe_pitch"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-1.047197533" upper="0.523598767" effort="50" velocity="12"/>
+		</joint>
+
+		<!-- Toe roll -->
+		<link name="${prefix}toe_roll">
+			<inertial>
+				<origin xyz="-0.03898340 ${dir*0.00002335} 0.03167314"/>
+				<mass value="1.21058213"/>
+				<inertia ixx="0.00701152" iyy="0.00653210" izz="0.00112114" ixy="${-dir*0.00000021}" ixz="0.00015476" iyz="${-dir*0.00000270}"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}toe_roll.stl"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}toe_roll_hull.stl"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="idx${idx_base+5}_${prefix}toe_roll" type="revolute">
+			<origin xyz="0 0 0" rpy="-1.5707963 0 0"/>
+			<parent link="${prefix}toe_pitch"/>
+			<child link="${prefix}toe_roll"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-0.488692182" upper="0.488692182" effort="50" velocity="12"/>
+		</joint>
+
+		<!-- Toe A -->
+		<link name="${prefix}toe_A">
+			<inertial>
+				<origin xyz="0.0161339967539726 0.000256129454551002 ${dir*0.00157429551114607}"/>
+				<mass value="0.0959876868449394"/>
+				<inertia ixx="1.47306660350068E-05" ixy="7.10372384628399E-07" ixz="${dir*1.01514226468701E-05}"
+							 iyy="5.94672539950203E-05" iyz="${dir*1.61153684004436E-07}" izz="6.68731361080011E-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}toe_A.stl"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}toe_A_hull.stl"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</collision>
+		</link>
+		<joint name="idx${idx_base+4}_01_${prefix}toe_motorA" type="fixed">
+			<origin xyz="-0.138 0 ${-dir*0.0315}" rpy="0 0 -1.5708"/>
+			<parent link="${prefix}tarsus"/>
+			<child link="${prefix}toe_A"/>
+			<axis xyz="0 0 1"/>
+			<xacro:if value="${name == 'left'}">
+				<limit lower="-1.5708" upper="1.5708" effort="0" velocity="0"/>
+			</xacro:if>
+			<xacro:unless value="${name == 'left'}">
+				<limit lower="0" upper="0" effort="0" velocity="0"/>
+			</xacro:unless>
+		</joint>
+
+		<!-- Toe A rod -->
+		<link name="${prefix}toe_A_rod">
+			<inertial>
+				<origin xyz="-0.11950903764711 -4.54312300279813E-09 2.0722082788957E-05"/>
+				<mass value="0.133194826485547"/>
+				<inertia ixx="4.13825335822083E-06" ixy="6.85930711305851E-12" ixz="2.45335802357092E-09"
+							 iyy="0.000625059882342822" iyz="2.33641130593936E-12" izz="0.000627531716420437"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}toe_A_rod.stl"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}toe_A_rod_hull.stl"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="idx${idx_base+4}_01_${prefix}toe_motorA_ball" type="fixed">
+			<origin xyz="0.062992 0.001 0" rpy="${-dir*3.1416} 0 1.5708"/>
+			<parent link="${prefix}toe_A"/>
+			<child link="${prefix}toe_A_rod"/>
+			<axis xyz="0 0 0"/>
+		</joint>
+
+		<!-- Toe B -->
+		<link name="${prefix}toe_B">
+			<inertial>
+				<origin xyz="0.0161339965985728 0.000256125750057401 ${-dir*0.00157429547986562}"/>
+				<mass value="0.0959876865489089"/>
+				<inertia ixx="1.47306660936761E-05" ixy="7.10374422550964E-07" ixz="${-dir*1.0151422567557E-05}"
+							 iyy="5.94672535179347E-05" iyz="${-dir*1.61154476946449E-07}" izz="6.68731357299622E-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}toe_B.stl"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}toe_B_hull.stl"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="idx${idx_base+5}_01_${prefix}toe_motorB" type="fixed">
+			<origin xyz="-0.232 0 ${dir*0.0315}" rpy="0 0 -1.5708"/>
+			<parent link="${prefix}tarsus"/>
+			<child link="${prefix}toe_B"/>
+			<axis xyz="0 0 1"/>
+			<xacro:if value="${name == 'left'}">
+				<limit lower="-1.5708" upper="1.5708" effort="0" velocity="0"/>
+			</xacro:if>
+			<xacro:unless value="${name == 'left'}">
+				<limit lower="0" upper="0" effort="0" velocity="0"/>
+			</xacro:unless>
+		</joint>
+
+		<!-- Toe B rod -->
+		<link name="${prefix}toe_B_rod">
+			<inertial>
+				<origin xyz="-0.0725000006179941 2.39833153337088E-11 2.75483156604583E-05"/>
+				<mass value="0.0989853087337602"/>
+				<inertia ixx="3.41390504492216E-06" ixy="-7.00234342247419E-12" ixz="-1.67152635087163E-13"
+							 iyy="0.000168898913472365" iyz="-6.91334604265453E-15" izz="0.000171065639810982"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}toe_B_rod.stl"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}toe_B_rod_hull.stl"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="idx${idx_base+5}_01_${prefix}toe_motorB_ball" type="fixed">
+			<origin xyz="0.063 0.001 0" rpy="${-dir*3.14159265358666} 0 1.57074160362305"/>
+			<parent link="${prefix}toe_B"/>
+			<child link="${prefix}toe_B_rod"/>
+			<axis xyz="0 0 0"/>
+		</joint>
+
+	</xacro:macro>
+
+</robot>
+

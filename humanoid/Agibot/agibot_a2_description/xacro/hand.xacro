@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="a2_hand" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- A2 Hand Macro
+		Parameters:
+		- name: hand name prefix (e.g., "left" or "right")
+		- direction: direction multiplier (1 for left, -1 for right)
+		- parent_link: parent link name to connect the hand (e.g., "left_arm_link07" or "right_arm_link07")
+	-->
+	<xacro:macro name="A2Hand" params="name direction:=1 parent_link">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<xacro:property name="prefix_upper" value="${'L' if name == 'left' else 'R'}_"/>
+		<xacro:property name="dir" value="${direction}"/>
+
+		<!-- Hand connection joint -->
+		<joint name="${prefix}arm_joint07_fixed" type="fixed">
+			<origin rpy="${dir*1.5707963} 0 -1.5707963" xyz="0 0 0"/>
+			<parent link="${parent_link}"/>
+			<child link="${prefix}hand"/>
+		</joint>
+
+		<!-- Hand link -->
+		<link name="${prefix}hand">
+			<inertial>
+				<origin xyz="-0.00174346841701916 ${dir*0.00527579194314928} 0.0630645733021228"/>
+				<mass value="0.153951635222705"/>
+				<inertia ixx="8.73156029524248e-05" ixy="${dir*2.76454788715318e-07}" ixz="-6.56394653650542e-07"
+								 iyy="0.00013139692405234" iyz="${dir*2.87478350015867e-06}" izz="6.85856479957296e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/paw.obj" scale="1 ${-direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_paw_hull.stl"
+								scale="1 ${-direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- Thumb swing -->
+		<link name="${prefix_upper}thumb_swing">
+			<inertial>
+				<origin xyz="-0.00794385183139725 ${-dir*0.000525120612119151} 0.00647353069427367"/>
+				<mass value="0.00344766519929713"/>
+				<inertia ixx="9.46681111469513e-08" ixy="${-dir*2.82870154716105e-09}" ixz="6.48803833821274e-10"
+								 iyy="1.37273777260403e-07" iyz="${dir*4.31486298309418e-11}" izz="9.49138662594884e-08"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_thumb_swing.stl"
+								scale="1 ${-direction} 1"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_thumb_swing_hull.stl"
+								scale="1 ${-direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix_upper}thumb_swing_joint" type="revolute">
+			<origin xyz="-0.029178 ${-dir*0.01525} 0.0384"/>
+			<parent link="${name}_hand"/>
+			<child link="${prefix_upper}thumb_swing"/>
+			<axis xyz="0 0 ${dir}"/>
+			<limit lower="0" upper="2.286" effort="1" velocity="100"/>
+		</joint>
+
+		<!-- Thumb 1 -->
+		<link name="${prefix_upper}thumb_1">
+			<inertial>
+				<origin xyz="0.0259002099345081 0.0127439796878742 ${dir*1.99493196570838e-05}"/>
+				<mass value="0.0221480762523199"/>
+				<inertia ixx="3.31629342056679e-06" ixy="-8.26036894806839e-07" ixz="${dir*5.55467469886505e-10}"
+								 iyy="3.39227446692523e-06" iyz="${dir*2.74467395508138e-09}" izz="5.78826252617142e-06"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_thumb_1.stl"
+								scale="1 1 ${-direction}"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_thumb_1_hull.stl"
+								scale="1 1 ${-direction}"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix_upper}thumb_1_joint" type="revolute">
+			<origin xyz="-0.013367 0.00088357 ${-dir*0.0052468}" rpy="1.5708 0 3.0756"/>
+			<parent link="${prefix_upper}thumb_swing"/>
+			<child link="${prefix_upper}thumb_1"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="0" upper="0.78" effort="1" velocity="100"/>
+		</joint>
+
+		<!-- Thumb 2 -->
+		<link name="${prefix_upper}thumb_2">
+			<inertial>
+				<origin xyz="0.0112938280283933 0.00190048762153883 ${-dir*0.00768932284017045}"/>
+				<mass value="0.00380031199387229"/>
+				<inertia ixx="4.33768382054372e-07" ixy="-3.01457326686904e-08" ixz="${-dir*2.51640808750991e-11}"
+								 iyy="3.41487853815651e-07" iyz="${-dir*8.87078510861614e-11}" izz="4.77629558482899e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_thumb_2.stl"
+								scale="1 1 ${-direction}"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_thumb_2_hull.stl"
+								scale="1 1 ${-direction}"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix_upper}thumb_2_joint" type="revolute">
+			<origin xyz="0.0389415822724812 0.0379042246431505 ${-dir*0.00770000000000043}"/>
+			<parent link="${prefix_upper}thumb_1"/>
+			<child link="${prefix_upper}thumb_2"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="0" upper="0.9144" effort="1" velocity="100"/>
+			<mimic joint="${prefix_upper}thumb_1_joint" multiplier="0.40" offset="0"/>
+		</joint>
+
+		<!-- Thumb 3 -->
+		<link name="${prefix_upper}thumb_3">
+			<inertial>
+				<origin xyz="0.00856534554797862 0.00586022128255342 ${-dir*0.00530182283153385}"/>
+				<mass value="0.0067706894584641"/>
+				<inertia ixx="4.15501197420746e-07" ixy="-1.25284733421831e-07" ixz="${dir*1.14020106815917e-10}"
+								 iyy="2.49677035533967e-07" iyz="${dir*1.89120892374144e-10}" izz="4.96219470794644e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_thumb_3.stl"
+								scale="1 1 ${-direction}"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_thumb_3_hull.stl"
+								scale="1 1 ${-direction}"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix_upper}thumb_3_joint" type="revolute">
+			<origin xyz="0.01728 0.014743 ${dir*0.0024}"/>
+			<parent link="${prefix_upper}thumb_2"/>
+			<child link="${prefix_upper}thumb_3"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="0" upper="1.3716" effort="1" velocity="100"/>
+			<mimic joint="${prefix_upper}thumb_1_joint" multiplier="0.60" offset="0"/>
+		</joint>
+
+		<!-- Index 1 -->
+		<link name="${prefix_upper}index_1">
+			<inertial>
+				<origin xyz="${dir*0.00224105284932037} 0.012077244969504 -0.0060501936211354"/>
+				<mass value="0.00439457695368253"/>
+				<inertia ixx="6.7083586478962e-07" ixy="${dir*6.24488990875019e-09}" ixz="${-dir*3.08577901734797e-12}"
+								 iyy="2.67077182124417e-07" iyz="6.36376851728619e-12" izz="6.64566137309628e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_index_1.stl" scale="${-direction} 1 1"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_index_1_hull.stl" scale="${-direction} 1 1"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix_upper}index_1_joint" type="fixed">
+			<origin xyz="-0.034645 ${dir*0.0059953} 0.11967" rpy="1.6319 0 -1.5708"/>
+			<parent link="${name}_hand"/>
+			<child link="${prefix_upper}index_1"/>
+			<axis xyz="0 0 ${-dir}"/>
+			<limit lower="0" upper="1.7" effort="1" velocity="100"/>
+		</joint>
+
+		<!-- Index 2 -->
+		<link name="${prefix_upper}index_2">
+			<inertial>
+				<origin xyz="${dir*0.00267181156648408} 0.0187445889538955 -0.00504998556104182"/>
+				<mass value="0.00571203807044643"/>
+				<inertia ixx="8.55148442316881e-07" ixy="${-dir*8.71729684204069e-08}" ixz="${dir*8.24415168858219e-14}"
+								 iyy="1.37439550017429e-07" iyz="-2.39445035228549e-12" izz="8.7133999943214e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_index_2.stl" scale="${-direction} 1 1"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_index_2_hull.stl" scale="${-direction} 1 1"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix_upper}index_2_joint" type="fixed">
+			<origin xyz="-0.00025731 0.032131 -0.001"/>
+			<parent link="${prefix_upper}index_1"/>
+			<child link="${prefix_upper}index_2"/>
+			<axis xyz="0 0 ${-dir}"/>
+			<limit lower="0" upper="1.7" effort="1" velocity="100"/>
+			<mimic joint="${prefix_upper}index_1_joint" multiplier="1" offset="0"/>
+		</joint>
+
+		<!-- Middle 1 -->
+		<link name="${prefix_upper}middle_1">
+			<inertial>
+				<origin xyz="${dir*0.00224109922728143} 0.0120773004987843 -0.00605026659163534"/>
+				<mass value="0.00439459313596441"/>
+				<inertia ixx="6.70837166910088e-07" ixy="${-dir*6.24455169745287e-09}" ixz="3.25321014718543e-12"
+								 iyy="2.67075608382375e-07" iyz="7.72285454063169e-12" izz="6.64566599226699e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_middle_1.stl" scale="${-direction} 1 1"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_middle_1_hull.stl" scale="${-direction} 1 1"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix_upper}middle_1_joint" type="fixed">
+			<origin xyz="-0.014728 ${dir*0.0059953} 0.1205" rpy="1.5708 0 -1.5708"/>
+			<parent link="${name}_hand"/>
+			<child link="${prefix_upper}middle_1"/>
+			<axis xyz="0 0 ${-dir}"/>
+			<limit lower="0" upper="1.7" effort="1" velocity="100"/>
+		</joint>
+
+		<!-- Middle 2 -->
+		<link name="${prefix_upper}middle_2">
+			<inertial>
+				<origin xyz="${dir*0.00298222684069903} 0.0208035344929268 -0.00505001299185808"/>
+				<mass value="0.00621146132075292"/>
+				<inertia ixx="1.14490560231061e-06" ixy="${-dir*9.72401476943198e-08}" ixz="${-dir*1.3517205790896e-13}"
+								 iyy="1.43751808502962e-07" iyz="-2.47497784308553e-12" izz="1.15530613342501e-06"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_middle_2.stl" scale="${-direction} 1 1"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_middle_2_hull.stl" scale="${-direction} 1 1"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix_upper}middle_2_joint" type="fixed">
+			<origin xyz="-0.000257313524408706 0.0321313914917268 -0.000999999999997433"/>
+			<parent link="${prefix_upper}middle_1"/>
+			<child link="${prefix_upper}middle_2"/>
+			<axis xyz="0 0 ${-dir}"/>
+			<limit lower="0" upper="1.7" effort="1" velocity="100"/>
+			<mimic joint="${prefix_upper}middle_1_joint" multiplier="1" offset="0"/>
+		</joint>
+
+		<!-- Ring 1 -->
+		<link name="${prefix_upper}ring_1">
+			<inertial>
+				<origin xyz="${dir*0.00224111083051005} 0.0120773228749342 -0.00605025463459374"/>
+				<mass value="0.00439459971330683"/>
+				<inertia ixx="6.70838404636804e-07" ixy="${dir*6.24505446614477e-09}" ixz="${dir*3.11377919594888e-12}"
+								 iyy="2.67075452784363e-07" iyz="6.97432649840291e-12" izz="6.64567590491197e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_ring_1.stl" scale="${-direction} 1 1"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_ring_1_hull.stl" scale="${-direction} 1 1"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix_upper}ring_1_joint" type="fixed">
+			<origin xyz="0.0060088 ${dir*0.0059953} 0.12031" rpy="1.5184 0 -1.5708"/>
+			<parent link="${name}_hand"/>
+			<child link="${prefix_upper}ring_1"/>
+			<axis xyz="0 0 ${-dir}"/>
+			<limit lower="0" upper="1.7" effort="1" velocity="100"/>
+		</joint>
+
+		<!-- Ring 2 -->
+		<link name="${prefix_upper}ring_2">
+			<inertial>
+				<origin xyz="${dir*0.00298222724294862} 0.0208035302665959 -0.00505000729887283"/>
+				<mass value="0.0062114646816875"/>
+				<inertia ixx="1.14490597705472e-06" ixy="${dir*9.724016633507e-08}" ixz="${dir*1.8724939827074e-14}"
+								 iyy="1.43751909738487e-07" iyz="-2.55418863081498e-12" izz="1.15530647485239e-06"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_ring_2.stl" scale="${-direction} 1 1"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_ring_2_hull.stl" scale="${-direction} 1 1"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix_upper}ring_2_joint" type="fixed">
+			<origin xyz="-0.00025731 0.032131 -0.001"/>
+			<parent link="${prefix_upper}ring_1"/>
+			<child link="${prefix_upper}ring_2"/>
+			<axis xyz="0 0 ${-dir}"/>
+			<limit lower="0" upper="1.7" effort="1" velocity="100"/>
+			<mimic joint="${prefix_upper}ring_1_joint" multiplier="1" offset="0"/>
+		</joint>
+
+		<!-- Pinky 1 -->
+		<link name="${prefix_upper}pinky_1">
+			<inertial>
+				<origin xyz="${dir*0.00224116685703836} 0.0120774556144769 -0.00605021177667593"/>
+				<mass value="0.00439465496713926"/>
+				<inertia ixx="6.70846058569314e-07" ixy="${-dir*6.24765025269437e-09}" ixz="${-dir*2.14363990209694e-12}"
+								 iyy="2.67077034128326e-07" iyz="4.49364771164151e-12" izz="6.64575163698131e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_pinky_1.stl" scale="${-direction} 1 1"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_pinky_1_hull.stl" scale="${-direction} 1 1"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix_upper}pinky_1_joint" type="fixed">
+			<origin xyz="0.026254 ${dir*0.0059953} 0.11901" rpy="1.4661 0 -1.5708"/>
+			<parent link="${name}_hand"/>
+			<child link="${prefix_upper}pinky_1"/>
+			<axis xyz="0 0 ${-dir}"/>
+			<limit lower="0" upper="1.7" effort="1" velocity="100"/>
+		</joint>
+
+		<!-- Pinky 2 -->
+		<link name="${prefix_upper}pinky_2">
+			<inertial>
+				<origin xyz="${dir*0.00379562052007763} 0.0143619415198121 -0.00504990649038004"/>
+				<mass value="0.00441618939121693"/>
+				<inertia ixx="4.4165258349127e-07" ixy="${dir*2.35241296174338e-08}" ixz="${-dir*1.03160129872049e-12}"
+								 iyy="9.72293330312645e-08" iyz="3.91885258086726e-12" izz="4.50179231370321e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/visual/R_pinky_2.stl" scale="${-direction} 1 1"/>
+				</geometry>
+				<material name="metallic black">
+					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/hand/collision/R_pinky_2_hull.stl" scale="${-direction} 1 1"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix_upper}pinky_2_joint" type="fixed">
+			<origin xyz="-0.00025731 0.032131 -0.001"/>
+			<parent link="${prefix_upper}pinky_1"/>
+			<child link="${prefix_upper}pinky_2"/>
+			<axis xyz="0 0 ${-dir}"/>
+			<limit lower="0" upper="1.7" effort="1" velocity="100"/>
+			<mimic joint="${prefix_upper}pinky_1_joint" multiplier="1" offset="0"/>
+		</joint>
+
+	</xacro:macro>
+
+</robot>
+

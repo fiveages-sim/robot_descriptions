@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<!-- =================================================================================== -->
+<!-- |    Complete Robot Description for Agibot A2                                     | -->
+<!-- |    This file includes the base robot structure and both arms                    | -->
+<!-- =================================================================================== -->
+<robot name="Agibot A2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<!-- Include arm, hand and leg macros -->
+	<xacro:include filename="$(find agibot_a2_description)/xacro/arm.xacro"/>
+	<xacro:include filename="$(find agibot_a2_description)/xacro/hand.xacro"/>
+	<xacro:include filename="$(find agibot_a2_description)/xacro/leg.xacro"/>
+	
+	<link name="base_link">
+		<inertial>
+			<origin xyz="-0.07088950 -0.00016512 0.16138088"/>
+			<mass value="18.89945962"/>
+			<inertia ixx="0.59376016" iyy="0.55503329" izz="0.18455985" ixy="0.00015891" ixz="0.00353796" iyz="-0.00043902"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="file://$(find agibot_a2_description)/meshes/body/visual/body.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="file://$(find agibot_a2_description)/meshes/body/collision/body.stl"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<!-- left leg -->
+	<xacro:A2Leg name="left" direction="1" joint_idx_offset="1" parent_link="base_link" hip_roll_origin_y="0.105"/>
+
+	<!-- right leg -->
+	<xacro:A2Leg name="right" direction="-1" joint_idx_offset="7" parent_link="base_link" hip_roll_origin_y="-0.105"/>
+
+	<!-- left arm -->
+	<xacro:A2Arm name="left" direction="1" joint_idx_offset="13"/>
+
+	<!-- Left hand fingers -->
+	<xacro:A2Hand name="left" direction="1" parent_link="left_arm_link07"/>
+
+	<!-- right arm -->
+	<xacro:A2Arm name="right" direction="-1" joint_idx_offset="20"/>
+
+	<!-- Right hand fingers -->
+	<xacro:A2Hand name="right" direction="-1" parent_link="right_arm_link07"/>
+
+	<link name="head_link01">
+		<inertial>
+			<origin xyz="-0.00154008 0.00649494 0.11627791"/>
+			<mass value="1.39889495"/>
+			<inertia ixx="0.00378192" iyy="0.00393150" izz="0.00152438" ixy="-0.00000282" ixz="0.00029671" iyz="-0.00021616"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="file://$(find agibot_a2_description)/meshes/body/visual/head1.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="file://$(find agibot_a2_description)/meshes/body/collision/head1.stl"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="head_joint1" type="fixed">
+		<origin xyz="-0.03779 0 0.4101"/>
+		<parent link="base_link"/>
+		<child link="head_link01"/>
+		<axis xyz="0 0 1"/>
+		<limit lower="-2.2" upper="2.2" effort="0" velocity="0"/>
+	</joint>
+
+	<link name="head_link02">
+		<inertial>
+			<origin xyz="0.03256533 0.02834041 0.00009476"/>
+			<mass value="0.65606942"/>
+			<inertia ixx="0.00350189" iyy="0.00369636" izz="0.00360950" ixy="0.00039729" ixz="-0.00000150" iyz="0.00000231"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="file://$(find agibot_a2_description)/meshes/body/visual/head2.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="file://$(find agibot_a2_description)/meshes/body/collision/head2.stl"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="head_joint2" type="fixed">
+		<origin xyz="-0.00501 0 0.16059" rpy="1.5708 0 0"/>
+		<parent link="head_link01"/>
+		<child link="head_link02"/>
+		<axis xyz="0 0 1"/>
+		<limit lower="-0.5" upper="0.5" effort="0" velocity="0"/>
+	</joint>
+</robot>
