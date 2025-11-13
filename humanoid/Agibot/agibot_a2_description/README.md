@@ -30,6 +30,26 @@ colcon build --packages-up-to agibot_a2_description --symlink-install
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch component.launch.py robot:=agibot_a2 type:=right
   ```
+* Left Hand
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=agibot_a2 type:=left_hand
+  ```
+* Right Hand
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=agibot_a2 type:=right_hand
+  ```
+* Left Leg
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=agibot_a2 type:=left_leg
+  ```
+* Right Leg
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=agibot_a2 type:=right_leg
+  ```
   
 ## 3. OCS2 Demo
 
