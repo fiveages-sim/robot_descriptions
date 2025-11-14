@@ -23,20 +23,17 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}hip_roll.stl"/>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/hip_roll.obj"/>
 				</geometry>
-				<material name="metallic black">
-					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
-				</material>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}hip_roll_hull.stl"/>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/hip_roll.stl"/>
 				</geometry>
 			</collision>
 		</link>
 
-		<joint name="idx${idx_base}_${prefix}hip_roll" type="revolute">
+		<joint name="${prefix}hip_roll" type="revolute">
 			<origin xyz="-0.0808 ${hip_roll_origin_y} -0.0652" rpy="0.7854 0 1.5708"/>
 			<parent link="${parent_link}"/>
 			<child link="${prefix}hip_roll"/>
@@ -53,20 +50,17 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}hip_yaw.stl"/>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/hip_yaw.obj" scale="1 ${direction} 1"/>
 				</geometry>
-				<material name="metallic black">
-					<color rgba="0.235294118 0.235294118 0.235294118 1"/>
-				</material>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}hip_yaw_hull.stl"/>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/hip_yaw.stl" scale="1 ${direction} 1"/>
 				</geometry>
 			</collision>
 		</link>
 
-		<joint name="idx${idx_base+1}_${prefix}hip_yaw" type="revolute">
+		<joint name="${prefix}hip_yaw" type="revolute">
 			<origin xyz="0 -0.017 -0.0682" rpy="1.5708 -1.5708 0"/>
 			<parent link="${prefix}hip_roll"/>
 			<child link="${prefix}hip_yaw"/>
@@ -83,20 +77,17 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}hip_pitch.stl"/>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/hip_pitch.obj" scale="1 1 ${direction}"/>
 				</geometry>
-				<material name="metallic silver">
-					<color rgba="0.878431373 0.878431373 0.901960784 1"/>
-				</material>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/${prefix}hip_pitch_hull.stl"/>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/collision/hip_pitch.stl" scale="1 1 ${direction}"/>
 				</geometry>
 			</collision>
 		</link>
 
-		<joint name="idx${idx_base+2}_${prefix}hip_pitch" type="revolute">
+		<joint name="${prefix}hip_pitch" type="revolute">
 			<origin xyz="0 ${-dir*0.020} 0.1205" rpy="1.5708 0.7854 0"/>
 			<parent link="${prefix}hip_yaw"/>
 			<child link="${prefix}hip_pitch"/>
@@ -113,11 +104,8 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/${prefix}tarsus.stl"/>
+					<mesh filename="file://$(find agibot_a2_description)/meshes/leg/visual/tarsus.obj" scale="1 1 ${direction}"/>
 				</geometry>
-				<material name="metallic silver">
-					<color rgba="0.878431373 0.878431373 0.901960784 1"/>
-				</material>
 			</visual>
 			<collision>
 				<geometry>
@@ -126,7 +114,7 @@
 			</collision>
 		</link>
 
-		<joint name="idx${idx_base+3}_${prefix}tarsus" type="revolute">
+		<joint name="${prefix}tarsus" type="revolute">
 			<origin xyz="-0.34 0 0"/>
 			<parent link="${prefix}hip_pitch"/>
 			<child link="${prefix}tarsus"/>
