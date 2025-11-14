@@ -1,6 +1,6 @@
 # Blender 4.5.4 LTS
 # www.blender.org
-mtllib hip_pitch.mtl
+mtllib materials.mtl
 o left_hip_pitch
 v -0.329842 0.028300 0.028512
 v -0.332949 0.029230 0.040420

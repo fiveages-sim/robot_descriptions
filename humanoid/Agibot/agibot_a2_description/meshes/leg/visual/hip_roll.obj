@@ -1,6 +1,6 @@
 # Blender 4.5.4 LTS
 # www.blender.org
-mtllib hip_roll.mtl
+mtllib materials.mtl
 o left_hip_roll
 v -0.038104 0.015783 -0.039839
 v -0.038530 0.014714 -0.040420

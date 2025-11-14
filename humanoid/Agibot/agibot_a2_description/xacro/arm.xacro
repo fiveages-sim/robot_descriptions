@@ -151,7 +151,7 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}arm_joint5" type="fixed">
+		<joint name="${prefix}arm_joint5" type="revolute">
 			<origin xyz="0  ${-dir*0.103} 0.0" rpy="1.5707963 0 0"/>
 			<parent link="${prefix}arm_link04"/>
 			<child link="${prefix}arm_link05"/>

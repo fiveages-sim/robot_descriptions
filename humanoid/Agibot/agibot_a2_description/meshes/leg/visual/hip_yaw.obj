@@ -1,6 +1,6 @@
 # Blender 4.5.4 LTS
 # www.blender.org
-mtllib hip_yaw.mtl
+mtllib materials.mtl
 o left_hip_yaw
 v -0.073475 0.038000 0.093619
 v -0.072406 0.038000 0.090861
