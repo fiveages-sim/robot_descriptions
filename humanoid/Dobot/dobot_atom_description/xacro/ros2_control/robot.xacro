@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Complete Robot Description for Dobot Atom                                    | -->
+<!-- |    This file includes the base robot structure and both arms                    | -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="dobot_atom">
+
+  <xacro:arg name="type" default="upper"/>
+	<xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
+
+  <!-- include the main robot definition (this file defines links/joints/macros) -->
+  <xacro:include filename="$(find dobot_atom_description)/xacro/robot.xacro">
+    <xacro:arg name="type" value="$(arg type)"/>
+  </xacro:include>
+
+  <!-- Import modular interface components -->
+  <xacro:include filename="$(find dobot_atom_description)/xacro/ros2_control/atom_head_interfaces.xacro"/>
+  <xacro:include filename="$(find dobot_atom_description)/xacro/ros2_control/atom_arm_interfaces.xacro"/>
+
+  <!-- ros2_control system definition -->
+  <ros2_control name="dobotAtomSystem" type="system">
+    <hardware>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'gz'}">
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </xacro:if>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'mock_components'}">
+        <plugin>mock_components/GenericSystem</plugin>
+      </xacro:if>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
+        <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+        <param name="joint_commands_topic">/isaac/joint_command</param>
+        <param name="joint_states_topic">/isaac/joint_states</param>
+        <param name="sum_wrapped_joint_states">false</param>
+        <param name="initialize_commands_from_state">true</param>
+      </xacro:if>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'real'}">
+        <plugin>dobot_ros2_control/DobotHardware</plugin>
+        <!-- real hardware plugin params can be customized via robot-specific files -->
+      </xacro:if>
+    </hardware>
+
+    <!-- 头部接口 -->
+    <xacro:atom_head_interfaces/>
+
+    <!-- 左臂接口 -->
+    <xacro:atom_arm_interfaces name="left"/>
+
+		<!-- 右臂接口 -->
+		<xacro:atom_arm_interfaces name="right"/>
+
+    <!-- If your URDF/xacro defines ros2_control interfaces in separate files,
+         include them here. For now we assume the included xacro provides required interfaces. -->
+  </ros2_control>
+
+  <!-- Gazebo plugin injection when using Gazebo hardware -->
+  <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'gz'}">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find dobot_atom_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+
+</robot>

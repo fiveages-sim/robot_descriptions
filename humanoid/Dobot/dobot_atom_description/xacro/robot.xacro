@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com)
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+
+
 <robot name="atom" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<link name="base_link"/>
-	<joint name="base_joint" type="fixed">
-		<parent link="base_link"/>
-		<child link="pelvis"/>
-	</joint>
-	<xacro:include filename="$(find dobot_atom_description)/xacro/full_body.xacro"/>
+
+	<!-- 切换模式参数 -->
+	<xacro:arg name="type" default="full" />
+
+    <!-- 当为 full 模式时，创建 base_link -> pelvis 连接 -->
+    <xacro:if value="${'$(arg type)' == 'full'}">
+    	<joint name="base_joint" type="fixed">
+    		<parent link="base_link"/>
+    		<child link="pelvis"/>
+    	</joint>
+    </xacro:if>
+
+	<!-- 全身模式 -->
+    <xacro:if value="${'$(arg type)' == 'full'}">
+        <xacro:include filename="$(find dobot_atom_description)/xacro/full_body.xacro"/>
+    </xacro:if>
+
+    <!-- 上半身模式 -->
+    <xacro:if value="${'$(arg type)' == 'upper'}">
+        <xacro:include filename="$(find dobot_atom_description)/xacro/full_upper_body.xacro"/>
+    </xacro:if>
+	
+	<!--xacro:include filename="$(find dobot_atom_description)/xacro/full_body.xacro"/-->
+    
 </robot>

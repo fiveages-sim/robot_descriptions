@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+
+
+<robot name="atom" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:property name="type" value="upper"/>
+
+	<!-- Without Left Leg -->
+	<!-- xacro:include filename="$(find dobot_atom_description)/xacro/leg.xacro"/>
+	<! xacro:AtomLeg name="" direction="1" parent_link="pelvis"/-->
+
+	<!-- Without Right Leg -->
+	<!-- xacro:AtomLeg name="" direction="-1" parent_link="pelvis"/-->
+
+	<!-- Upper Body (Torso, Head, IMU) -->
+	<xacro:include filename="$(find dobot_atom_description)/xacro/upper_body.xacro"/>
+	<xacro:AtomUpperBody parent_link="base_link" type="upper"/>
+
+	<!-- Left Arm -->
+	<xacro:include filename="$(find dobot_atom_description)/xacro/arm.xacro"/>
+	<xacro:AtomArm name="left" direction="1" parent_link="torso_link"/>
+
+	<!-- Right Arm -->
+	<xacro:AtomArm name="right" direction="-1" parent_link="torso_link"/>
+
+</robot>

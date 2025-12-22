@@ -4,7 +4,7 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot name="atom" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:macro name="AtomUpperBody" params="parent_link">
+	<xacro:macro name="AtomUpperBody" params="parent_link type">
 
 		<link name="torso_link">
 			<inertial>
@@ -25,12 +25,23 @@
 			</collision>
 		</link>
 
-		<joint name="torso_joint" type="revolute">
-			<parent link="${parent_link}"/>
-			<child link="torso_link"/>
-			<axis xyz="0 0 1"/>
-			<limit lower="-2.7925" upper="2.7925" effort="1000" velocity="100"/>
-		</joint>
+		<xacro:if value="${type == 'upper'}">
+			<!-- upper 模式锁死躯干 -->
+			<joint name="torso_joint" type="fixed">
+				<parent link="${parent_link}"/>
+				<child link="torso_link"/>
+			</joint>
+		</xacro:if>
+
+		<xacro:if value="${type != 'upper'}">
+		<!-- full 模式保持原来的可旋转关节 -->
+			<joint name="torso_joint" type="revolute">
+				<parent link="${parent_link}"/>
+				<child link="torso_link"/>
+				<axis xyz="0 0 1"/>
+				<limit lower="-2.7925" upper="2.7925" effort="1000" velocity="100"/>
+			</joint>
+		</xacro:if>
 
 		<link name="head_yaw_link">
 			<inertial>

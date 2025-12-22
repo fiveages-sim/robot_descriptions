@@ -25,7 +25,7 @@
 
 	<!-- Upper Body (Torso, Head, IMU) -->
 	<xacro:include filename="$(find dobot_atom_description)/xacro/upper_body.xacro"/>
-	<xacro:AtomUpperBody parent_link="pelvis"/>
+	<xacro:AtomUpperBody parent_link="pelvis" type="full"/>
 
 	<!-- Left Arm -->
 	<xacro:include filename="$(find dobot_atom_description)/xacro/arm.xacro"/>
