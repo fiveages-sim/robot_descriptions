@@ -21,7 +21,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/body/torso.obj"/>
+        <mesh filename="package://dobot_atom_description/meshes/body/torso.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -44,7 +44,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/body/head_yaw.obj"/>
+        <mesh filename="package://dobot_atom_description/meshes/body/head_yaw.obj"/>
       </geometry>
     </visual>
   </link>
@@ -63,7 +63,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/body/head_pitch.obj"/>
+        <mesh filename="package://dobot_atom_description/meshes/body/head_pitch.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -97,7 +97,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link1.obj" scale="1 1 1"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link1.obj" scale="1 1 1"/>
       </geometry>
     </visual>
   </link>
@@ -117,7 +117,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link2.obj" scale="1 1 1"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link2.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -143,7 +143,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link3.obj"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link3.obj"/>
       </geometry>
     </visual>
   </link>
@@ -163,7 +163,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link4.obj"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link4.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -189,7 +189,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link5.obj"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link5.obj"/>
       </geometry>
     </visual>
   </link>
@@ -209,7 +209,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link6.obj" scale="1 1 1"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link6.obj" scale="1 1 1"/>
       </geometry>
     </visual>
   </link>
@@ -229,7 +229,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link7.obj" scale="1 1 1"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link7.obj" scale="1 1 1"/>
       </geometry>
     </visual>
   </link>
@@ -249,7 +249,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link1.obj" scale="1 -1 1"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link1.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
   </link>
@@ -269,7 +269,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link2.obj" scale="1 -1 1"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link2.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -295,7 +295,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link3.obj"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link3.obj"/>
       </geometry>
     </visual>
   </link>
@@ -315,7 +315,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link4.obj"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link4.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -341,7 +341,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link5.obj"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link5.obj"/>
       </geometry>
     </visual>
   </link>
@@ -361,7 +361,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link6.obj" scale="1 -1 1"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link6.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
   </link>
@@ -381,7 +381,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link7.obj" scale="1 -1 1"/>
+        <mesh filename="package://dobot_atom_description/meshes/arm/link7.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
   </link>
