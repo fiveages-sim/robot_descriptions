@@ -9,9 +9,7 @@
 	<xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
 
   <!-- include the main robot definition (this file defines links/joints/macros) -->
-  <xacro:include filename="$(find dobot_atom_description)/xacro/robot.xacro">
-    <xacro:arg name="type" value="$(arg type)"/>
-  </xacro:include>
+  <xacro:include filename="$(find dobot_atom_description)/xacro/robot.xacro"/>
 
   <!-- Import modular interface components -->
   <xacro:include filename="$(find dobot_atom_description)/xacro/ros2_control/atom_head_interfaces.xacro"/>

@@ -38,12 +38,7 @@
 					<mesh filename="file://$(find dobot_atom_description)/meshes/arm/link2.obj" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
-			<collision>
-				<origin xyz="0 0 -0.1"/>
-				<geometry>
-					<box size="0.06 0.06 0.24"/>
-				</geometry>
-			</collision>
+			
 		</link>
 
 		<joint name="${prefix}shoulder_roll_joint" type="revolute">
@@ -67,6 +62,12 @@
 					<mesh filename="file://$(find dobot_atom_description)/meshes/arm/link3.obj"/>
 				</geometry>
 			</visual>
+			<collision>
+				<origin xyz="0 0 0"/>
+				<geometry>
+					<cylinder radius="0.04" length="0.20"/>
+				</geometry>
+			</collision>
 		</link>
 
 		<joint name="${prefix}shoulder_yaw_joint" type="revolute">
@@ -91,9 +92,9 @@
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="0.16 0 0"/>
+				<origin rpy="1.57079632679 0 0"/>
 				<geometry>
-					<box size="0.30 0.06 0.06"/>
+					<cylinder radius="0.04" length="0.11"/>
 				</geometry>
 			</collision>
 		</link>
@@ -118,6 +119,14 @@
 					<mesh filename="file://$(find dobot_atom_description)/meshes/arm/link5.obj"/>
 				</geometry>
 			</visual>
+			<collision>
+                <origin 
+				    xyz="-0.04 0 0"
+				    rpy="0 1.57079632679 0"/>
+                <geometry>
+                    <cylinder radius="0.045" length="0.15"/>
+                </geometry>
+            </collision>
 		</link>
 
 		<joint name="${prefix}elbow_roll_joint" type="revolute">
@@ -140,6 +149,12 @@
 					<mesh filename="file://$(find dobot_atom_description)/meshes/arm/link6.obj" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
+			<collision>
+				<origin rpy="1.57079632679 0 0"/>
+				<geometry>
+					<cylinder radius="0.035" length="0.09"/>
+				</geometry>
+			</collision>
 		</link>
 
 		<joint name="${prefix}wrist_pitch_joint" type="revolute">
@@ -162,6 +177,12 @@
 					<mesh filename="file://$(find dobot_atom_description)/meshes/arm/link7.obj" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
+			<collision>
+                <origin rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.035" length="0.09"/>
+                </geometry>
+            </collision>
 		</link>
 
 		<joint name="${prefix}wrist_yaw_joint" type="revolute">

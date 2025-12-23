@@ -21,7 +21,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/body/torso.obj"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/body/torso.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -44,7 +44,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/body/head_yaw.obj"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/body/head_yaw.obj"/>
       </geometry>
     </visual>
   </link>
@@ -63,7 +63,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/body/head_pitch.obj"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/body/head_pitch.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -97,7 +97,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link1.obj" scale="1 1 1"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link1.obj" scale="1 1 1"/>
       </geometry>
     </visual>
   </link>
@@ -117,15 +117,9 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link2.obj" scale="1 1 1"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link2.obj" scale="1 1 1"/>
       </geometry>
     </visual>
-    <collision>
-      <origin xyz="0 0 -0.1"/>
-      <geometry>
-        <box size="0.06 0.06 0.24"/>
-      </geometry>
-    </collision>
   </link>
   <joint name="left_shoulder_roll_joint" type="revolute">
     <origin rpy="0.18 0 0" xyz="0 0.078 0"/>
@@ -143,9 +137,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link3.obj"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link3.obj"/>
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.20" radius="0.04"/>
+      </geometry>
+    </collision>
   </link>
   <joint name="left_shoulder_yaw_joint" type="revolute">
     <origin xyz="0 0 -0.135"/>
@@ -163,13 +163,13 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link4.obj"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link4.obj"/>
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0.16 0 0"/>
+      <origin rpy="1.57079632679 0 0"/>
       <geometry>
-        <box size="0.30 0.06 0.06"/>
+        <cylinder length="0.11" radius="0.04"/>
       </geometry>
     </collision>
   </link>
@@ -189,9 +189,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link5.obj"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link5.obj"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 1.57079632679 0" xyz="-0.04 0 0"/>
+      <geometry>
+        <cylinder length="0.15" radius="0.045"/>
+      </geometry>
+    </collision>
   </link>
   <joint name="left_elbow_roll_joint" type="revolute">
     <origin xyz="0.1453 0 0"/>
@@ -209,9 +215,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link6.obj" scale="1 1 1"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link6.obj" scale="1 1 1"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="1.57079632679 0 0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.035"/>
+      </geometry>
+    </collision>
   </link>
   <joint name="left_wrist_pitch_joint" type="revolute">
     <origin xyz="0.05345 0 0"/>
@@ -229,9 +241,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link7.obj" scale="1 1 1"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link7.obj" scale="1 1 1"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.035"/>
+      </geometry>
+    </collision>
   </link>
   <joint name="left_wrist_yaw_joint" type="revolute">
     <origin xyz="0.085 0 0"/>
@@ -249,7 +267,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link1.obj" scale="1 -1 1"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link1.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
   </link>
@@ -269,15 +287,9 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link2.obj" scale="1 -1 1"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link2.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
-    <collision>
-      <origin xyz="0 0 -0.1"/>
-      <geometry>
-        <box size="0.06 0.06 0.24"/>
-      </geometry>
-    </collision>
   </link>
   <joint name="right_shoulder_roll_joint" type="revolute">
     <origin rpy="-0.18 0 0" xyz="0 -0.078 0"/>
@@ -295,9 +307,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link3.obj"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link3.obj"/>
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.20" radius="0.04"/>
+      </geometry>
+    </collision>
   </link>
   <joint name="right_shoulder_yaw_joint" type="revolute">
     <origin xyz="0 0 -0.135"/>
@@ -315,13 +333,13 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link4.obj"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link4.obj"/>
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0.16 0 0"/>
+      <origin rpy="1.57079632679 0 0"/>
       <geometry>
-        <box size="0.30 0.06 0.06"/>
+        <cylinder length="0.11" radius="0.04"/>
       </geometry>
     </collision>
   </link>
@@ -341,9 +359,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link5.obj"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link5.obj"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 1.57079632679 0" xyz="-0.04 0 0"/>
+      <geometry>
+        <cylinder length="0.15" radius="0.045"/>
+      </geometry>
+    </collision>
   </link>
   <joint name="right_elbow_roll_joint" type="revolute">
     <origin xyz="0.1453 0 0"/>
@@ -361,9 +385,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link6.obj" scale="1 -1 1"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link6.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="1.57079632679 0 0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.035"/>
+      </geometry>
+    </collision>
   </link>
   <joint name="right_wrist_pitch_joint" type="revolute">
     <origin xyz="0.05345 0 0"/>
@@ -381,9 +411,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://dobot_atom_description/meshes/arm/link7.obj" scale="1 -1 1"/>
+        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/arm/link7.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.035"/>
+      </geometry>
+    </collision>
   </link>
   <joint name="right_wrist_yaw_joint" type="revolute">
     <origin xyz="0.085 0 0"/>

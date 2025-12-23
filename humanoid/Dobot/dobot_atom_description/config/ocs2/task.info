@@ -224,9 +224,38 @@ bodyRelative
 selfCollision
 {
   ; activate self-collision constraint
-  activate  false
+  activate  true
 
-  ; TODO: Replace the collision meshes of the arm with primitive shapes.
+  ; Self Collision raw object pairs
+  collisionObjectPairs
+  {
+       
+  }
+
+  ; Self Collision pairs
+  collisionLinkPairs
+  {
+    [0]  "torso_link, left_elbow_pitch_link",
+    [1]  "torso_link, left_elbow_roll_link",
+    [2]  "torso_link, left_wrist_pitch_link",
+    [3]  "torso_link, left_wrist_yaw_link",
+    [4]  "torso_link, right_elbow_pitch_link",
+    [5]  "torso_link, right_elbow_roll_link",
+    [6]  "torso_link, right_wrist_pitch_link",
+    [7]  "torso_link, right_wrist_yaw_link",
+    [8]  "torso_link, left_shoulder_yaw_link",
+    [9]  "torso_link, right_shoulder_yaw_link",
+
+  }
+
+  ; minimum distance allowed between the pairs
+  minimumDistance  0.01
+
+  ; relaxed log barrier mu
+  mu      1e-3
+
+  ; relaxed log barrier delta
+  delta   1e-4
 }
 
 ; Only applied for arm joints: limits parsed from URDF
@@ -283,20 +312,20 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-      (0,0)  -5.0
-      (1,0)  -5.0
-      (2,0)  -5.0
-      (3,0)  -5.0
-      (4,0)  -5.0
-      (5,0)  -5.0
-      (6,0)  -5.0
-      (7,0)  -5.0
-      (8,0)  -5.0
-      (9,0)  -5.0
-      (10,0) -5.0
-      (11,0) -5.0
-      (12,0) -5.0
-      (13,0) -5.0
+      (0,0)  -1.57
+      (1,0)  -1.57
+      (2,0)  -1.57
+      (3,0)  -1.57
+      (4,0)  -1.57
+      (5,0)  -1.57
+      (6,0)  -1.57
+      (7,0)  -1.57
+      (8,0)  -1.57
+      (9,0)  -1.57
+      (10,0) -1.57
+      (11,0) -1.57
+      (12,0) -1.57
+      (13,0) -1.57
     }
   }
   upperBound
@@ -332,20 +361,20 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-      (0,0)  5.0
-      (1,0)  5.0
-      (2,0)  5.0
-      (3,0)  5.0
-      (4,0)  5.0
-      (5,0)  5.0
-      (6,0)  5.0
-      (7,0)  5.0
-      (8,0)  5.0
-      (9,0)  5.0
-      (10,0) 5.0
-      (11,0) 5.0
-      (12,0) 5.0
-      (13,0) 5.0
+      (0,0)  1.57
+      (1,0)  1.57
+      (2,0)  1.57
+      (3,0)  1.57
+      (4,0)  1.57
+      (5,0)  1.57
+      (6,0)  1.57
+      (7,0)  1.57
+      (8,0)  1.57
+      (9,0)  1.57
+      (10,0) 1.57
+      (11,0) 1.57
+      (12,0) 1.57
+      (13,0) 1.57
     }
   }
 }

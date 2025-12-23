@@ -13,7 +13,7 @@ colcon build --packages-up-to dobot_atom_description --symlink-install
 ### 2.1 Full Robot
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_common_launch manipulator.launch.py robot:=dobot_atom type:=full
+ros2 launch robot_common_launch manipulator.launch.py robot:=dobot_atom
 ```
   ![Atom](.images/dobot_atom.png)
 
@@ -46,7 +46,7 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=dobot_atom type:=up
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=dobot_atom type:=upper
+ros2 launch ocs2_arm_controller demo.launch.py robot:=dobot_atom
 ```
 ```bash
 source ~/ros2_ws/install/setup.bash
