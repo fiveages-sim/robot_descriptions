@@ -3,7 +3,7 @@
 <!-- |    Complete Robot Description for Agibot G1                                     | -->
 <!-- |    This file includes the base robot structure and both arms                    | -->
 <!-- =================================================================================== -->
-<robot name="LeftArm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Dobot_Atom" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:arg name="type" default="upper_body"/>
 	<link name="base_link"/>
