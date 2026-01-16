@@ -16,20 +16,20 @@ ocs2_arm_controller:
     mpc_frequency: 100
     info_file_name: task
     joints:
-      - left_shoulder_pitch_joint
-      - left_shoulder_roll_joint
-      - left_shoulder_yaw_joint
-      - left_elbow_joint
-      - left_wrist_roll_joint
-      - left_wrist_pitch_joint
-      - left_wrist_yaw_joint
-      - right_shoulder_pitch_joint
-      - right_shoulder_roll_joint
-      - right_shoulder_yaw_joint
-      - right_elbow_joint
-      - right_wrist_roll_joint
-      - right_wrist_pitch_joint
-      - right_wrist_yaw_joint
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
 
     default_gains: [ 60.0,2.0 ]
     ocs2_gains: [ 100.0,4.0 ]
@@ -48,13 +48,13 @@ ocs2_arm_controller:
     robot_name: unitree_g1
 
     # Control parameters
-    # home_pos: [left_shoulder_pitch, left_shoulder_roll, left_shoulder_yaw, left_elbow, left_wrist_roll, left_wrist_pitch, left_wrist_yaw,
-    #            right_shoulder_pitch, right_shoulder_roll, right_shoulder_yaw, right_elbow, right_wrist_roll, right_wrist_pitch, right_wrist_yaw]
+    # home_pos: [left_joint1, left_joint2, left_joint3, left_joint4, left_joint5, left_joint6, left_joint7,
+    #            right_joint1, right_joint2, right_joint3, right_joint4, right_joint5, right_joint6, right_joint7]
     home_pos: [
       0.0, 0.2, 0.0, 0.0, -0.2, 0.0, 0.0,
       0.0, -0.2, 0.0, 0.0, 0.2, 0.0, 0.0 ]
-    # rest_pos: [left_shoulder_pitch, left_shoulder_roll, left_shoulder_yaw, left_elbow, left_wrist_roll, left_wrist_pitch, left_wrist_yaw,
-    #            right_shoulder_pitch, right_shoulder_roll, right_shoulder_yaw, right_elbow, right_wrist_roll, right_wrist_pitch, right_wrist_yaw]
+    # rest_pos: [left_joint1, left_joint2, left_joint3, left_joint4, left_joint5, left_joint6, left_joint7,
+    #            right_joint1, right_joint2, right_joint3, right_joint4, right_joint5, right_joint6, right_joint7]
     rest_pos: [
       0.0, 0.2, 0.0, 1.57, 0.0, 0.0, 0.0,
       0.0, -0.2, 0.0, 1.57, 0.0, 0.0, 0.0 ]

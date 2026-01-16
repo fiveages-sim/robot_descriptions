@@ -42,8 +42,8 @@
 			</visual>
 		</link>
 
-		<!-- Waist Yaw Joint -->
-		<joint name="waist_yaw_joint" type="revolute">
+		<!-- Waist Yaw Joint -> body_joint1 -->
+		<joint name="body_joint1" type="revolute">
 			<parent link="pelvis"/>
 			<child link="waist_yaw_link"/>
 			<axis xyz="0 0 1"/>
@@ -64,8 +64,8 @@
 			</visual>
 		</link>
 
-		<!-- Waist Roll Joint -->
-		<joint name="waist_roll_joint" type="revolute">
+		<!-- Waist Roll Joint -> body_joint2 -->
+		<joint name="body_joint2" type="revolute">
 			<origin xyz="-0.0039635 0 0.044"/>
 			<parent link="waist_yaw_link"/>
 			<child link="waist_roll_link"/>
@@ -99,8 +99,8 @@
 			</collision>
 		</link>
 
-		<!-- Waist Pitch Joint -->
-		<joint name="waist_pitch_joint" type="revolute">
+		<!-- Waist Pitch Joint -> body_joint3 -->
+		<joint name="body_joint3" type="revolute">
 			<parent link="waist_roll_link"/>
 			<child link="torso_link"/>
 			<axis xyz="0 1 0"/>

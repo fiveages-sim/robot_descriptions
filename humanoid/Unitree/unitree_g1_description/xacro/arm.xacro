@@ -34,8 +34,8 @@
 			</collision>
 		</link>
 
-		<!-- Shoulder Pitch Joint -->
-		<joint name="${prefix}shoulder_pitch_joint" type="revolute">
+		<!-- Shoulder Pitch Joint -> left/right_joint1 -->
+		<joint name="${name}_joint1" type="revolute">
 			<origin xyz="0.0039563 ${direction*0.10022} 0.24778"
 							rpy="${direction*0.27931} 5.4949E-05 ${direction*-0.00019159}"/>
 			<parent link="torso_link"/>
@@ -66,8 +66,8 @@
 			</collision>
 		</link>
 
-		<!-- Shoulder Roll Joint -->
-		<joint name="${prefix}shoulder_roll_joint" type="revolute">
+		<!-- Shoulder Roll Joint -> left/right_joint2 -->
+		<joint name="${name}_joint2" type="revolute">
 			<origin xyz="0 ${direction*0.038} -0.013831" rpy="${direction*-0.27925} 0 0"/>
 			<parent link="${prefix}shoulder_pitch_link"/>
 			<child link="${prefix}shoulder_roll_link"/>
@@ -104,8 +104,8 @@
 			</collision>
 		</link>
 
-		<!-- Shoulder Yaw Joint -->
-		<joint name="${prefix}shoulder_yaw_joint" type="revolute">
+		<!-- Shoulder Yaw Joint -> left/right_joint3 -->
+		<joint name="${name}_joint3" type="revolute">
 			<origin xyz="0 ${direction*0.00624} -0.1032"/>
 			<parent link="${prefix}shoulder_roll_link"/>
 			<child link="${prefix}shoulder_yaw_link"/>
@@ -135,8 +135,8 @@
 			</collision>
 		</link>
 
-		<!-- Elbow Joint -->
-		<joint name="${prefix}elbow_joint" type="revolute">
+		<!-- Elbow Joint -> left/right_joint4 -->
+		<joint name="${name}_joint4" type="revolute">
 			<origin xyz="0.015783 0 -0.080518"/>
 			<parent link="${prefix}shoulder_yaw_link"/>
 			<child link="${prefix}elbow_link"/>
@@ -160,8 +160,8 @@
 			</visual>
 		</link>
 
-		<!-- Wrist Roll Joint -->
-		<joint name="${prefix}wrist_roll_joint" type="revolute">
+		<!-- Wrist Roll Joint -> left/right_joint5 -->
+		<joint name="${name}_joint5" type="revolute">
 			<origin xyz="0.100 ${direction*0.00188791} -0.010"/>
 			<axis xyz="1 0 0"/>
 			<parent link="${prefix}elbow_link"/>
@@ -197,8 +197,8 @@
 			</collision>
 		</link>
 
-		<!-- Wrist Pitch Joint -->
-		<joint name="${prefix}wrist_pitch_joint" type="revolute">
+		<!-- Wrist Pitch Joint -> left/right_joint6 -->
+		<joint name="${name}_joint6" type="revolute">
 			<origin xyz="0.038 0 0"/>
 			<axis xyz="0 1 0"/>
 			<parent link="${prefix}wrist_roll_link"/>
@@ -222,8 +222,8 @@
 			</visual>
 		</link>
 
-		<!-- Wrist Yaw Joint -->
-		<joint name="${prefix}wrist_yaw_joint" type="revolute">
+		<!-- Wrist Yaw Joint -> left/right_joint7 -->
+		<joint name="${name}_joint7" type="revolute">
 			<origin xyz="0.046 0 0"/>
 			<axis xyz="0 0 1"/>
 			<parent link="${prefix}wrist_pitch_link"/>
