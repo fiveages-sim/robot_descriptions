@@ -1,12 +1,16 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:macro name="EndEffectors" params="gripper_type:=''">
+	<xacro:macro name="EndEffectors" params="hand_type:='' gripper_type:=''">
 
-		<!-- Note: gripper_type 不为空时表示使用夹爪 -->
+		<!-- Note: 
+		     - gripper_type 不为空时表示使用夹爪（保持原有逻辑）
+		     - hand_type 只在需要区分灵巧手时使用（如 revo1）
+		     - 两者都为空时表示无末端执行器配置
+		-->
 
 		<!-- 无末端执行器配置（但有 eef 作为控制参考帧） -->
-		<xacro:if value="${gripper_type == ''}">
+		<xacro:if value="${hand_type == '' and gripper_type == ''}">
 			<link name="left_eef"/>
 			<link name="right_eef"/>
 
@@ -35,6 +39,24 @@
 			<joint name="right_gripper_base_joint" type="fixed">
 				<parent link="right_tcp"/>
 				<child link="right_gripper_base"/>
+			</joint>
+		</xacro:if>
+
+		<!-- 灵巧手类型 -->
+		<xacro:if value="${hand_type == 'revo1'}">
+			<xacro:include filename="$(find brainco_description)/xacro/revo1.xacro"/>
+			<xacro:BrainCoHand name="left_hand" direction="1" fixed_joints="false"/>
+			<joint name="left_hand_base_joint" type="fixed">
+				<origin rpy="${PI/2} 0 ${PI}"/>
+				<parent link="left_tcp"/>
+				<child link="left_hand_hand_base"/>
+			</joint>
+
+			<xacro:BrainCoHand name="right_hand" direction="-1" fixed_joints="false"/>
+			<joint name="right_hand_base_joint" type="fixed">
+				<parent link="right_tcp"/>
+				<child link="right_hand_hand_base"/>
+				<origin rpy="${PI/2} 0 0"/>
 			</joint>
 		</xacro:if>
 

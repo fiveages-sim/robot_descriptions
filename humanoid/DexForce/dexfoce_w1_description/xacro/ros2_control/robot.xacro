@@ -46,6 +46,13 @@
 				</joint>
 			</xacro:if>
 
+			<!-- 灵巧手接口 -->
+			<xacro:if value="${selected_hand_type == 'revo1'}">
+				<xacro:include filename="$(find brainco_description)/xacro/ros2_control/revo1.xacro"/>
+				<xacro:revo1_interfaces name="left_hand"/>
+				<xacro:revo1_interfaces name="right_hand"/>
+			</xacro:if>
+
 		</ros2_control>
 	</xacro:unless>
 

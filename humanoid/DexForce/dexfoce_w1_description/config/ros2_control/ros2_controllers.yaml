@@ -26,6 +26,14 @@ controller_manager:
     right_gripper_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
 
+    # 左手灵巧手控制器（当使用 revo1 时）
+    left_hand_controller:
+      type: basic_joint_controller/BasicJointController
+
+    # 右手灵巧手控制器（当使用 revo1 时）
+    right_hand_controller:
+      type: basic_joint_controller/BasicJointController
+
 ocs2_arm_controller:
   ros__parameters:
     # Joint configuration
@@ -57,12 +65,12 @@ ocs2_arm_controller:
       - position
 
     robot_name: dexforce_w1
-    home_duration: 5.0
+    home_duration: 2.0
 
     # Control parameters
-    home_pos: [ 0.7926059109053656, -1.587880172869279, 0.7949180464573827, 0.003975739419116047,
-                -0.02993215461049283, -1.0991224218933804, 0.34046655885981225, -1.1303994311190029, 1.0029829581920897, 0.07173384646801646, 0.5133756036770659,
-                0.01985129519519344, 1.096437786478001, -0.3318246868797691, 1.136413824542045, -1.001083106365191, -0.07390825090344708, -0.5146014285223156]
+    home_pos: [ 0.8226576537403151, -1.6487403093780617, 0.8256779111871975, -0.012672635090826726,
+                0.04978448403140176, -1.259670418457927, 0.017143960989356215, -1.2284462809312793, -0.3344284774777865, -0.37823581036173337, -0.08182587640356918,
+                -0.021663995239618032, 1.2963002282720757, 0.0036730772504967, 1.208405306146659, 0.29475436529728094, 0.367001605535868, 0.11967288493466821]
     rest_pos: [ 1.57, -2.70, 1.13, 0.0,
                 0.0, -1.57, 0.0, -2.35, 0.0, 0.0, 0.0,
                 0.0, 1.57, 0.0,  2.35, 0.0, 0.0, 0.0]
@@ -86,8 +94,8 @@ head_joint_controller:
     home_1: [0.0, 0.0]           # 配置 0: 正视前方
     home_2: [0.0, -0.1]          # 配置 1: 向下看
     
-    home_duration: 5.0
-    movej_duration: 5.0
+    home_duration: 2.0
+    movej_duration: 2.0
     hold_position_threshold: 0.1
 
 # 左手夹爪控制器配置
@@ -101,3 +109,65 @@ right_gripper_controller:
   ros__parameters:
     joint: right_gripper_joint
     use_effort_interface: false
+
+# 左手灵巧手控制器配置（BrainCo Revo1）
+left_hand_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    target_command_enabled: true
+    movej_interpolation_type: "none"
+    home_interpolation_type: "none"
+
+    # 6个主控关节
+    joints:
+      - left_hand_thumb_joint2
+      - left_hand_thumb_joint1
+      - left_hand_index_joint
+      - left_hand_middle_joint
+      - left_hand_ring_joint
+      - left_hand_pinky_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    # Home 配置
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
+
+# 右手灵巧手控制器配置（BrainCo Revo1）
+right_hand_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    target_command_enabled: true
+    movej_interpolation_type: "none"
+    home_interpolation_type: "none"
+
+    # 6个主控关节
+    joints:
+      - right_hand_thumb_joint2
+      - right_hand_thumb_joint1
+      - right_hand_index_joint
+      - right_hand_middle_joint
+      - right_hand_ring_joint
+      - right_hand_pinky_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    # Home 配置
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
