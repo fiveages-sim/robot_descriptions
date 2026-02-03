@@ -9,11 +9,11 @@ controller_manager:
     ocs2_wbc_controller:
       type: ocs2_arm_controller/Ocs2ArmController
 
-    left_gripper_controller:
-      type: adaptive_gripper_controller/AdaptiveGripperController
+    left_hand_controller:
+      type: basic_joint_controller/BasicJointController
 
-    right_gripper_controller:
-      type: adaptive_gripper_controller/AdaptiveGripperController
+    right_hand_controller:
+      type: basic_joint_controller/BasicJointController
 
     head_joint_controller:
       type: basic_joint_controller/BasicJointController
@@ -82,14 +82,64 @@ head_joint_controller:
     movej_duration: 2.0
     hold_position_threshold: 0.1
 
-left_gripper_controller:
+# 左手灵巧手控制器配置（BrainCo Revo2）
+left_hand_controller:
   ros__parameters:
-    joint: left_gripper_joint
-    force_feedback_ratio: 0.1
-    force_threshold: 0.5
+    update_rate: 100  # Hz
+    target_command_enabled: true
+    movej_interpolation_type: "none"
+    home_interpolation_type: "none"
 
-right_gripper_controller:
+    # 6个主控关节
+    joints:
+      - left_hand_thumb_joint1
+      - left_hand_thumb_joint2
+      - left_hand_index_joint
+      - left_hand_middle_joint
+      - left_hand_ring_joint
+      - left_hand_pinky_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    # Home 配置
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
+
+# 右手灵巧手控制器配置（BrainCo Revo2）
+right_hand_controller:
   ros__parameters:
-    joint: right_gripper_joint
-    force_feedback_ratio: 0.1
-    force_threshold: 0.5
+    update_rate: 100  # Hz
+    target_command_enabled: true
+    movej_interpolation_type: "none"
+    home_interpolation_type: "none"
+
+    # 6个主控关节
+    joints:
+      - right_hand_thumb_joint1
+      - right_hand_thumb_joint2
+      - right_hand_index_joint
+      - right_hand_middle_joint
+      - right_hand_ring_joint
+      - right_hand_pinky_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    # Home 配置
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1

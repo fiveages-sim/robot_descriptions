@@ -57,19 +57,19 @@
 
 	<xacro:if value="${'$(arg type)' == 'revo2'}">
 		<xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
-		<xacro:BrainCoHand name="left" direction="1" fixed_joints="true"/>
-		<xacro:BrainCoHand name="right" direction="-1" fixed_joints="true"/>
+		<xacro:BrainCoHand name="left_hand" direction="1" fixed_joints="false"/>
+		<xacro:BrainCoHand name="right_hand" direction="-1" fixed_joints="false"/>
 
 		<joint name="left_gripper_fixed_joint" type="fixed">
 			<origin xyz="0 -0.048 0" rpy="1.5708 3.1416 0"/>
 			<parent link="left_link_7"/>
-			<child link="left_hand_base"/>
+			<child link="left_hand_hand_base"/>
 		</joint>
 
 		<joint name="right_gripper_fixed_joint" type="fixed">
 			<origin xyz="0 -0.048 0" rpy="1.5708 0 0"/>
 			<parent link="right_link_7"/>
-			<child link="right_hand_base"/>
+			<child link="right_hand_hand_base"/>
 		</joint>
 	</xacro:if>
 </robot>

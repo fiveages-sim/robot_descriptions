@@ -29,7 +29,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/base.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/base.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
 		</link>
@@ -42,7 +42,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link1.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link1.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -73,7 +73,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link2.obj" scale="1 1 ${direction} "/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link2.glb" scale="1 1 ${direction} "/>
 				</geometry>
 			</visual>
 		</link>
@@ -93,7 +93,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link3.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link3.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -120,7 +120,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link4.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link4.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -148,7 +148,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link5.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link5.glb"/>
 				</geometry>
 				<material name="">
 					<color rgba="0.698039215686274 0.698039215686274 0.698039215686274 1"/>
@@ -177,7 +177,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link6.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link6.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -198,7 +198,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link7.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link7.glb"/>
 				</geometry>
 			</visual>
 			<collision>

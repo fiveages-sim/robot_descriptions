@@ -6,12 +6,17 @@
 <robot name="astribot_whole_body" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<!-- Include the base robot structure -->
+	<!-- Type argument will be inherited by robot.xacro -->
+	<xacro:arg name="type" default="gripper"/>
 	<xacro:include filename="$(find astribot_s1_description)/xacro/robot.xacro"/>
 
 	<!-- Import modular interface components -->
 	<xacro:include filename="$(find astribot_s1_description)/xacro/ros2_control/astribot_s1_base_interfaces.xacro"/>
 	<xacro:include filename="$(find astribot_s1_description)/xacro/ros2_control/astribot_s1_arm_interfaces.xacro"/>
 	<xacro:include filename="$(find astribot_s1_description)/xacro/ros2_control/astribot_s1_gripper_interfaces.xacro"/>
+	
+	<!-- Get type argument -->
+	<xacro:property name="type_arg" value="$(arg type)"/>
 
 	<!-- Unified ros2_control system -->
 	<ros2_control name="astribot_s1_unified_system" type="system">
@@ -38,9 +43,18 @@
 		<!-- 右臂接口 -->
 		<xacro:astribot_s1_arm_interfaces name="right"/>
 
-		<!-- 夹爪接口 -->
-		<xacro:astribot_s1_gripper_interfaces name="left"/>
-		<xacro:astribot_s1_gripper_interfaces name="right"/>
+		<!-- 夹爪接口或灵巧手接口 -->
+		<xacro:if value="${type_arg == 'gripper'}">
+			<xacro:astribot_s1_gripper_interfaces name="left"/>
+			<xacro:astribot_s1_gripper_interfaces name="right"/>
+		</xacro:if>
+		
+		<!-- 灵巧手接口 -->
+		<xacro:if value="${type_arg == 'revo2'}">
+			<xacro:include filename="$(find brainco_description)/xacro/ros2_control/revo2.xacro"/>
+			<xacro:revo2_interfaces name="left_hand"/>
+			<xacro:revo2_interfaces name="right_hand"/>
+		</xacro:if>
 
 	</ros2_control>
 

@@ -24,7 +24,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/base.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/base.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -44,7 +44,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/link1.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/link1.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -72,7 +72,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/link2.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/link2.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -101,12 +101,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/pad.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/pad.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/pad.obj"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/pad.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -135,7 +135,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/link1.obj" scale="-1 1 1"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/link1.glb" scale="-1 1 1"/>
 				</geometry>
 			</visual>
 		</link>
@@ -164,7 +164,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/link2.obj" scale="-1 1 1"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/link2.glb" scale="-1 1 1"/>
 				</geometry>
 			</visual>
 		</link>
@@ -193,12 +193,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/pad.obj" scale="-1 1 1"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/pad.glb" scale="-1 1 1"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/pad.obj" scale="-1 1 1"/>
+					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_gripper/pad.glb" scale="-1 1 1"/>
 				</geometry>
 			</collision>
 		</link>
