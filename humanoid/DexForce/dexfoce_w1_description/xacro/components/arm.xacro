@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Unified arm definition for DexForce W1 robot
+  Supports both Anthropomorphic and Industrial arm types
+  Parameters:
+    - name: prefix for link names (e.g., 'left' or 'right')
+    - direction: 1 for left arm (default), -1 for right arm
+    - arm_type: 'anthropomorphic' or 'industrial' (default: 'anthropomorphic')
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="dexforce_w1_arm" params="name:='' direction:=1 arm_type:='anthropomorphic'">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<xacro:property name="arm_side" value="${'Left' if direction == 1 else 'Right'}"/>
+		<xacro:property name="arm_prefix" value="${'arml' if direction == 1 else 'armr'}"/>
+		<xacro:property name="mesh_type" value="${arm_type}"/>
+		<xacro:property name="common_arm_path" value="${'LeftArm' if direction == 1 else 'RightArm'}"/>
+
+		<link name="waist_to_${prefix}arm_connector"/>
+		<link name="${prefix}arm_base"/>
+
+		<!-- J1 -->
+		<link name="${prefix}j1">
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<inertial>
+					<origin xyz="-2.2097730e-02  6.8020948e-03  7.8858121e-02"/>
+					<mass value="1.3497532"/>
+					<inertia ixx="1.4265178e-03" ixy="6.7924025e-05" ixz="2.0743078e-04" iyy="1.7452314e-03" iyz="-2.5645235e-04" izz="1.0432941e-03"/>
+				</inertial>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<inertial>
+					<origin xyz="0.0217280 -3.7e-08 0.0245775"/>
+					<mass value="0.0617557"/>
+					<inertia ixx="8.98857e-05" ixy="1.18e-10" ixz="-1.64240e-05" iyy="7.65203e-05" iyz="3.3e-12" izz="5.82039e-05"/>
+				</inertial>
+			</xacro:if>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Common/Arm/link1.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Common/Arm/link1.obj"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- J2 -->
+		<link name="${prefix}j2">
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<xacro:if value="${direction == 1}">
+					<inertial>
+						<origin xyz="7.4493179e-02  5.4776062e-03  1.1269136e-02"/>
+						<mass value="1.4928861"/>
+						<inertia ixx="1.2788191e-03" ixy="1.0008039e-04" ixz="2.8099405e-04" iyy="1.7498196e-03" iyz="1.3220976e-04" izz="2.0259514e-03"/>
+					</inertial>
+				</xacro:if>
+				<xacro:if value="${direction == -1}">
+					<inertial>
+						<origin xyz="7.4503421e-02  8.6398496e-03  7.3875448e-03"/>
+						<mass value="1.4928861"/>
+						<inertia ixx="1.3168555e-03" ixy="6.4048285e-05" ixz="2.3637923e-05" iyy="1.9564386e-03" iyz="2.2964738e-04" izz="1.8585844e-03"/>
+					</inertial>
+				</xacro:if>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<xacro:if value="${direction == 1}">
+					<inertial>
+						<origin xyz="-2.444967030657E-05 0.0277120124268351 0.002065951716533"/>
+						<mass value="0.59391088809807"/>
+						<inertia ixx="0.00146067643923269" ixy="1.03156332448455E-07" ixz="-2.83186077993591E-07" iyy="0.00074821846171173" iyz="2.05306188783727E-05" izz="0.00162233746428049"/>
+					</inertial>
+				</xacro:if>
+				<xacro:if value="${direction == -1}">
+					<inertial>
+						<origin xyz="-2.68912291436774E-05 -0.0271642833216401 -0.00244577686011921"/>
+						<mass value="0.529644346347686"/>
+						<inertia ixx="0.00136599044699519" ixy="-9.33736661055696E-08" ixz="-2.88346823938123E-07" iyy="0.000633335651206301" iyz="9.46753050436713E-07" izz="0.0015375592043898"/>
+					</inertial>
+				</xacro:if>
+			</xacro:if>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Common/Arm/link2.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Common/Arm/link2.obj"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- J3 -->
+		<link name="${prefix}j3">
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<xacro:if value="${direction == 1}">
+					<inertial>
+						<origin xyz="-3.0779128e-02  2.3551922e-02  9.5698192e-02 "/>
+						<mass value="1.4997301"/>
+						<inertia ixx="2.9132663e-03" ixy="1.1962671e-04" ixz="9.9797977e-05" iyy="2.7529670e-03" iyz="-6.5635889e-04" izz="1.7005461e-03"/>
+					</inertial>
+				</xacro:if>
+				<xacro:if value="${direction == -1}">
+					<inertial>
+						<origin xyz="9.4849212e-03 -2.3561648e-02  1.0295135e-01"/>
+						<mass value="1.4997301"/>
+						<inertia ixx="3.6145187e-03" ixy="2.3474607e-04" ixz="-4.2307811e-04" iyy="3.1581989e-03" iyz="8.5973311e-04" izz="1.4009665e-03"/>
+					</inertial>
+				</xacro:if>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<xacro:if value="${direction == 1}">
+					<inertial>
+						<origin xyz="-0.001449598951343 0.00110765276545413 0.0672524717935882"/>
+						<mass value="0.175833450838491"/>
+						<inertia ixx="0.00050069122150075" ixy="-4.15643136399077E-05" ixz="3.911921157587E-06" iyy="0.000514247576272716" iyz="5.74471072418561E-05" izz="0.000298810400830447"/>
+					</inertial>
+				</xacro:if>
+				<xacro:if value="${direction == -1}">
+					<inertial>
+						<origin xyz="-0.000560286789709874 -0.00624382282483051 0.0659263962551476"/>
+						<mass value="0.170955807859573"/>
+						<inertia ixx="0.000287819200980914" ixy="1.68406364325701E-08" ixz="-2.34666473537304E-07" iyy="0.000328909375482212" iyz="-3.99265946192522E-05" izz="0.000135758959240241"/>
+					</inertial>
+				</xacro:if>
+			</xacro:if>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Common/Arm/link3.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Common/Arm/link3.obj" scale="1 ${direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- J4 -->
+		<link name="${prefix}j4">
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<xacro:if value="${direction == 1}">
+					<inertial>
+						<origin xyz="7.9139301e-02  9.0218591e-05  4.6401369e-03 "/>
+						<mass value="1.1318974"/>
+						<inertia ixx="8.5909310e-04" ixy="2.6724360e-06" ixz="2.3395344e-04" iyy="1.5127053e-03" iyz="6.2885682e-07" izz="1.4507260e-03"/>
+					</inertial>
+				</xacro:if>
+				<xacro:if value="${direction == -1}">
+					<inertial>
+						<origin xyz="-4.8716687e-05 -7.9139305e-02  4.5417266e-03"/>
+						<mass value="1.1318974"/>
+						<inertia ixx="1.5137272e-03" ixy="1.5021396e-06" ixz="-3.2891726e-07" iyy="8.6021305e-04" iyz="-2.3129546e-04" izz="1.4508237e-03"/>
+					</inertial>
+				</xacro:if>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<inertial>
+					<origin xyz="-8.9e-06 ${direction * 0.0717106} 0.0023564"/>
+					<mass value="0.407494"/>
+					<inertia ixx="0.00064935" ixy="${direction * -1.0e-07}" ixz="-2.52e-07" iyy="0.00040145" iyz="${direction * 0.000122145}" izz="0.00064502"/>
+				</inertial>
+			</xacro:if>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Common/Arm/link4.glb" scale="1 1 ${direction}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Common/Arm/link4.obj" scale="1 1 ${direction}"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- J5 -->
+		<link name="${prefix}j5">
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<xacro:if value="${direction == 1}">
+					<inertial>
+						<origin xyz="-6.8452097e-05 -1.6339752e-02  4.7773028e-02"/>
+						<mass value="1.1865221"/>
+						<inertia ixx="1.7309858e-03" ixy=" 3.3947403e-06" ixz="-4.1732012e-07" iyy="1.5458309e-03" iyz="3.0462375e-04" izz="9.8698385e-04"/>
+					</inertial>
+				</xacro:if>
+				<xacro:if value="${direction == -1}">
+					<inertial>
+						<origin xyz="-7.2715831e-05  1.6196953e-02  4.7799231e-02"/>
+						<mass value="1.1842602"/>
+						<inertia ixx="1.7197116e-03" ixy="-3.6654609e-06" ixz="-9.7904563e-07" iyy="1.5409585e-03" iyz="-2.9712912e-04" izz="9.8002806e-04"/>
+					</inertial>
+				</xacro:if>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<inertial>
+					<origin xyz="-0.0179098 ${direction * -2.82e-05} 0.0542199"/>
+					<mass value="0.115744"/>
+					<inertia ixx="0.00024259" ixy="${direction * 1.4e-08}" ixz="-1.12395e-05" iyy="0.00019278" iyz="${direction * 1.54e-07}" izz="0.00012394"/>
+				</inertial>
+			</xacro:if>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Common/Arm/link5.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Common/Arm/link5.obj" scale="1 ${direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- J6 -->
+		<link name="${prefix}j6">
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<inertial>
+					<origin xyz="${direction * -1.8e-05} ${direction * -4.847e-03} 1.840867e-03"/>
+					<mass value="0.98636414"/>
+					<inertia ixx="7.01699e-04" ixy="${direction * 2.22e-06}" ixz="${direction * -1.99e-07}" iyy="6.73097e-04" iyz="${direction * 1.0e-06}" izz="6.22094e-04"/>
+				</inertial>
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Anthropomorphic/link6.glb" scale="1 1 ${direction}"/>
+					</geometry>
+				</visual>
+				<collision>
+					<geometry>
+						<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Anthropomorphic/link6.obj" scale="1 1 ${direction}"/>
+					</geometry>
+				</collision>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<xacro:if value="${direction == 1}">
+					<inertial>
+						<origin xyz="0.00262995272118555 2.00517190074301E-07 0.000876499231786676"/>
+						<mass value="0.0613168928170912"/>
+						<inertia ixx="6.9137861088907E-05" ixy="1.31675827639121E-10" ixz="7.69032334507134E-06" iyy="6.08185510943234E-05" iyz="-1.33584071785073E-08" izz="4.57909126217623E-05"/>
+					</inertial>
+				</xacro:if>
+				<xacro:if value="${direction == -1}">
+					<inertial>
+						<origin xyz="0.0104802586024549 1.27846526032371E-07 0.00306423009155909"/>
+						<mass value="0.0517804206666816"/>
+						<inertia ixx="6.23570081930076E-05" ixy="7.63276996759942E-11" ixz="7.69036051388971E-06" iyy="5.73899118815061E-05" iyz="1.22126708396455E-08" izz="4.23327111131328E-05"/>
+					</inertial>
+				</xacro:if>
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Industrial/link6.glb" scale="1 1 ${direction}"/>
+					</geometry>
+				</visual>
+				<collision>
+					<geometry>
+						<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Industrial/link6.obj" scale="1 1 ${direction}"/>
+					</geometry>
+				</collision>
+			</xacro:if>
+		</link>
+
+		<!-- J7 -->
+		<link name="${prefix}j7">
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<inertial>
+					<origin xyz="3.53912e-02 ${direction * -1.19e-06} 3.2097365e-02"/>
+					<mass value="0.059937603"/>
+					<inertia ixx="2.9853294e-05" ixy="${direction * -3.2e-09}" ixz="2.0599320e-05" iyy="6.9425737e-05" iyz="${direction * 1.68e-09}" izz="5.84999e-05"/>
+				</inertial>
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Anthropomorphic/link7.glb"/>
+					</geometry>
+				</visual>
+				<collision>
+					<geometry>
+						<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Anthropomorphic/link7.obj"/>
+					</geometry>
+				</collision>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<inertial>
+					<origin xyz="0 0 0.048"/>
+					<mass value="0.05"/>
+					<inertia ixx="1E-05" ixy="1E-11" ixz="1E-06" iyy="1E-05" iyz="1E-08" izz="1E-05"/>
+				</inertial>
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Industrial/link7.glb"/>
+					</geometry>
+				</visual>
+				<collision>
+					<geometry>
+						<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Industrial/link7.obj"/>
+					</geometry>
+				</collision>
+			</xacro:if>
+		</link>
+
+		<link name="${prefix}tcp">
+			<inertial>
+				<origin xyz="0 0 0.048"/>
+				<mass value="0.05"/>
+				<inertia ixx="1E-05" ixy="1E-11" ixz="1E-06" iyy="1E-05" iyz="1E-08" izz="1E-05"/>
+			</inertial>
+		</link>
+
+		<!-- Joints -->
+		<joint name="${prefix}arm_connector_joint" type="fixed">
+			<xacro:if value="${direction == 1}">
+				<origin xyz="0 0.0985 0.235" rpy="-1.5707963267948966 -1.5707963267948966 0"/>
+			</xacro:if>
+			<xacro:if value="${direction == -1}">
+				<origin xyz="0 -0.0985 0.235" rpy="1.5707963267948966 1.5707963267948966 0"/>
+			</xacro:if>
+			<parent link="waist"/>
+			<child link="waist_to_${prefix}arm_connector"/>
+		</joint>
+
+		<joint name="${prefix}arm_base_joint" type="fixed">
+			<parent link="waist_to_${prefix}arm_connector"/>
+			<child link="${prefix}arm_base"/>
+		</joint>
+
+		<joint name="${prefix}joint1" type="revolute">
+			<parent link="${prefix}arm_base"/>
+			<child link="${prefix}j1"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-2.9670597283903604" upper="2.9670597283903604" effort="100" velocity="0.8726646259971648"/>
+		</joint>
+
+		<joint name="${prefix}joint2" type="revolute">
+			<origin xyz="0 0 0.1025" rpy="1.5707963267948966 0 3.141592653589793"/>
+			<parent link="${prefix}j1"/>
+			<child link="${prefix}j2"/>
+			<axis xyz="0 0 1"/>
+			<xacro:if value="${direction == 1}">
+				<limit lower="-2.0943951023931953" upper="1.5707963267948966" effort="100" velocity="0.8726646259971648"/>
+			</xacro:if>
+			<xacro:if value="${direction == -1}">
+				<limit lower="-1.5707963267948966" upper="2.0943951023931953" effort="100" velocity="0.8726646259971648"/>
+			</xacro:if>
+		</joint>
+
+		<joint name="${prefix}joint3" type="revolute">
+			<origin xyz="0 0.260 0.0" rpy="1.5707963267948966 -1.5707963267948966 3.141592653589793"/>
+			<parent link="${prefix}j2"/>
+			<child link="${prefix}j3"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-2.9670597283903604" upper="2.9670597283903604" effort="100" velocity="0.8726646259971648"/>
+		</joint>
+
+		<joint name="${prefix}joint4" type="revolute">
+			<origin xyz="0 0 0" rpy="1.5707963267948966 0 0"/>
+			<parent link="${prefix}j3"/>
+			<child link="${prefix}j4"/>
+			<xacro:if value="${direction == 1}">
+				<axis xyz="0 0 1"/>
+				<limit lower="-2.356194490192345" upper="1.5707963267948966" effort="50" velocity="0.8726646259971648"/>
+			</xacro:if>
+			<xacro:if value="${direction == -1}">
+				<axis xyz="0 0 -1"/>
+				<limit lower="-1.5707963267948966" upper="2.356194490192345" effort="50" velocity="0.8726646259971648"/>
+			</xacro:if>
+		</joint>
+
+		<joint name="${prefix}joint5" type="revolute">
+			<origin xyz="0 0.166 0.0" rpy="-1.5707963267948966 3.141592653589793 0"/>
+			<parent link="${prefix}j4"/>
+			<child link="${prefix}j5"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-2.9670597283903604" upper="2.9670597283903604" effort="50" velocity="0.8726646259971648"/>
+		</joint>
+
+		<joint name="${prefix}joint6" type="revolute">
+			<origin xyz="0 0 0.098" rpy="1.5707963267948966 0 0"/>
+			<parent link="${prefix}j5"/>
+			<child link="${prefix}j6"/>
+			<xacro:if value="${direction == 1}">
+				<axis xyz="0 0 -1"/>
+			</xacro:if>
+			<xacro:if value="${direction == -1}">
+				<axis xyz="0 0 1"/>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="50" velocity="0.8726646259971648"/>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<limit lower="-1.5707963267948966" upper="1.5707963267948966" effort="50" velocity="0.8726646259971648"/>
+			</xacro:if>
+		</joint>
+
+		<joint name="${prefix}joint7" type="revolute">
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<origin xyz="0 0 0" rpy="-1.5707963267948966 3.141592653589793 1.5707963267948966"/>
+				<xacro:if value="${direction == 1}">
+					<limit lower="-1.5707963267948966" upper="1.0471975511965976" effort="50" velocity="0.8726646259971648"/>
+				</xacro:if>
+				<xacro:if value="${direction == -1}">
+					<limit lower="-1.0471975511965976" upper="1.5707963267948966" effort="50" velocity="0.8726646259971648"/>
+				</xacro:if>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<origin xyz="0 0 0" rpy="-1.5707963267948966 0 0"/>
+				<limit lower="-2.9670597283903604" upper="2.9670597283903604" effort="50" velocity="0.8726646259971648"/>
+			</xacro:if>
+			<parent link="${prefix}j6"/>
+			<child link="${prefix}j7"/>
+			<axis xyz="0 0 1"/>
+		</joint>
+
+		<joint name="${prefix}tcp_joint" type="fixed">
+			<xacro:if value="${arm_type == 'anthropomorphic'}">
+				<origin xyz="-0.066 0 0" rpy="0 -1.5707963267948966 0"/>
+			</xacro:if>
+			<xacro:if value="${arm_type == 'industrial'}">
+				<origin xyz="0 0 0.066"/>
+			</xacro:if>
+			<parent link="${prefix}j7"/>
+			<child link="${prefix}tcp"/>
+		</joint>
+
+	</xacro:macro>
+</robot>

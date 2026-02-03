@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com)
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+
+<robot name="DexForce W1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- 切换模式参数 -->
+	<!-- type 选项：
+	     - ANTHROPOMORPHIC: 类人型（默认）
+	     - pro: 工业型（无夹爪）
+	     - pro_pgc140: 工业型（带 PGC_140_50 夹爪）
+	-->
+	<xacro:arg name="type" default="ANTHROPOMORPHIC"/>
+	<xacro:property name="type_arg" value="$(arg type)"/>
+
+	<!-- 默认值 -->
+	<xacro:property name="selected_arm_type" value="anthropomorphic"/>
+	<xacro:property name="selected_gripper_type" value=""/>
+
+	<!-- 从 type 解析 arm_type 和 gripper_type -->
+	<xacro:if value="${type_arg == 'pro'}">
+		<xacro:property name="selected_arm_type" value="industrial"/>
+	</xacro:if>
+	<xacro:if value="${type_arg == 'pro_pgc140'}">
+		<xacro:property name="selected_arm_type" value="industrial"/>
+		<xacro:property name="selected_gripper_type" value="pgc_140_50"/>
+	</xacro:if>
+
+	<!-- Include common components -->
+	<xacro:include filename="$(find dexforce_w1_description)/xacro/components/chassis.xacro"/>
+	<xacro:include filename="$(find dexforce_w1_description)/xacro/components/body.xacro"/>
+	<xacro:include filename="$(find dexforce_w1_description)/xacro/components/arm.xacro"/>
+
+	<!-- Generate chassis and body (common for both configurations) -->
+	<xacro:dexforce_w1_chassis/>
+	<xacro:dexforce_w1_body/>
+
+	<!-- Generate arms based on configuration type -->
+	<xacro:dexforce_w1_arm name="left" direction="1" arm_type="${selected_arm_type}"/>
+	<xacro:dexforce_w1_arm name="right" direction="-1" arm_type="${selected_arm_type}"/>
+
+	<!-- Include and generate end effector frames -->
+	<xacro:include filename="$(find dexforce_w1_description)/xacro/eefs.xacro"/>
+	<xacro:EndEffectors gripper_type="${selected_gripper_type}"/>
+
+</robot>

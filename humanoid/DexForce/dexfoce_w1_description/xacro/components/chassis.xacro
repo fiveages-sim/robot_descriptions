@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Chassis definition for DexForce W1 robot
+  Contains base_link, wheels, and wheel joints
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="dexforce_w1_chassis">
+		<link name="base_link">
+			<inertial>
+				<origin xyz="-6.9481412e-03 -2.8983362e-03  1.0943608e-01"/>
+				<mass value="51.3211"/>
+				<inertia ixx="1.6616493e+4" ixy="-2.2400581e+3" ixz="0.0" iyy="-2.2400581e+3" iyz="1.6616324e+4" izz="0.0"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Visual/Common/base_link.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find dexforce_w1_description)/meshes/Collision/Common/base_link.obj"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="wheel_left">
+			<inertial>
+				<origin xyz="1.29654835478998E-09 -0.0388109425454037 1.46411155282911E-07"/>
+				<mass value="1.81841495723996"/>
+				<inertia ixx="0.00458785167524735" ixy="2.63111479143607E-11" ixz="2.02429770259449E-10"
+								 iyy="0.00846145621331285" iyz="7.59817806948718E-11" izz="0.00458785310793277"/>
+			</inertial>
+		</link>
+		<link name="wheel_right">
+			<inertial>
+				<origin xyz="-1.29654938174628E-09 0.0388109425454037 1.46411155255155E-07"/>
+				<mass value="1.81841495723996"/>
+				<inertia ixx="0.00458785167524735" ixy="2.63111168444812E-11" ixz="-2.02429769062992E-10"
+								 iyy="0.00846145621331285" iyz="-7.59817809326904E-11" izz="0.00458785310793277"/>
+			</inertial>
+		</link>
+
+		<joint name="WHEEL_LEFT" type="fixed">
+			<origin xyz="0 0.2539 0.053"/>
+			<parent link="base_link"/>
+			<child link="wheel_left"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+		<joint name="WHEEL_RIGHT" type="fixed">
+			<origin xyz="0 -0.2539 0.053"/>
+			<parent link="base_link"/>
+			<child link="wheel_right"/>
+			<axis xyz="0 -1 0"/>
+		</joint>
+	</xacro:macro>
+</robot>

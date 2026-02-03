@@ -1,0 +1,104 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # 全身控制器 - 使用ocs2 arm controller
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    # 头部控制器 - 使用basic joint controller
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    # 身体控制器 - 使用basic joint controller
+    body_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+        # 左手夹爪控制器
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    # 右手夹爪控制器
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+ocs2_arm_controller:
+  ros__parameters:
+    # Joint configuration
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    joints:
+      - body_joint1
+      - body_joint2
+      - body_joint3
+      - body_joint4
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: dexforce_w1
+    robot_type: pro
+    home_duration: 5.0
+
+    # Control parameters
+    home_pos: [ 0.7926059109053656, -1.587880172869279, 0.7949180464573827, 0.003975739419116047,
+                -0.02993215461049283, -1.0991224218933804, 0.34046655885981225, -1.1303994311190029, 1.0029829581920897, 0.07173384646801646, 0.5133756036770659,
+                0.01985129519519344, 1.096437786478001, -0.3318246868797691, 1.136413824542045, -1.001083106365191, -0.07390825090344708, -0.5146014285223156]
+    rest_pos: [ 1.57, -2.70, 1.13, 0.0,
+                0.0, -1.57, 0.0, -2.35, 0.0, 0.0, 0.0,
+                0.0, 1.57, 0.0,  2.35, 0.0, 0.0, 0.0]
+
+# 头部关节控制器配置
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    
+    # 头部关节
+    joints:
+      - head_joint1
+      - head_joint2
+    
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_1: [0.0, 0.0]           # 配置 0: 正视前方
+    home_2: [0.0, -0.1]          # 配置 1: 向下看
+    
+    home_duration: 5.0
+    movej_duration: 5.0
+    hold_position_threshold: 0.1
+
+# 左手夹爪控制器配置
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    use_effort_interface: false
+
+# 右手夹爪控制器配置
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    use_effort_interface: false

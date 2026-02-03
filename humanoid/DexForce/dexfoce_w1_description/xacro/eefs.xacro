@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="EndEffectors" params="gripper_type:=''">
+
+		<!-- Note: gripper_type 不为空时表示使用夹爪 -->
+
+		<!-- 无末端执行器配置（但有 eef 作为控制参考帧） -->
+		<xacro:if value="${gripper_type == ''}">
+			<link name="left_eef"/>
+			<link name="right_eef"/>
+
+			<joint name="left_eef_joint" type="fixed">
+				<parent link="left_tcp"/>
+				<child link="left_eef"/>
+			</joint>
+
+			<joint name="right_eef_joint" type="fixed">
+				<parent link="right_tcp"/>
+				<child link="right_eef"/>
+			</joint>
+		</xacro:if>
+
+		<!-- 夹爪类型：gripper_type 不为空即表示使用夹爪 -->
+		<xacro:if value="${gripper_type == 'pgc_140_50'}">
+			<xacro:include filename="$(find dh_description)/xacro/PGC_140_50.xacro"/>
+			<xacro:PGC_140_50 name="left" pad="dexforce"/>
+			<xacro:PGC_140_50 name="right" pad="dexforce"/>
+
+			<joint name="left_gripper_base_joint" type="fixed">
+				<parent link="left_tcp"/>
+				<child link="left_gripper_base"/>
+			</joint>
+
+			<joint name="right_gripper_base_joint" type="fixed">
+				<parent link="right_tcp"/>
+				<child link="right_gripper_base"/>
+			</joint>
+		</xacro:if>
+
+	</xacro:macro>
+</robot>
