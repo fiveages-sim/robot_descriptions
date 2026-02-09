@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>zerith_h1_description</name>
+    <version>0.0.0</version>
+    <description>The Robot Description package for Zerith H1 Pro</description>
+
+    <maintainer email="biao876990970@hotmail.com">Huang Zhenbiao</maintainer>
+    <license>TODO</license>
+
+    <exec_depend>robot_common_launch</exec_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+
+</package>

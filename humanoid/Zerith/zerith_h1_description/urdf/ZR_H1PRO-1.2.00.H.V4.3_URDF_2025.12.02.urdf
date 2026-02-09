@@ -1,0 +1,1978 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02">
+  <link
+    name="dipan_link">
+    <inertial>
+      <origin
+        xyz="0.00021947 -0.00045719 0.08921288"
+        rpy="0 0 0" />
+      <mass
+        value="92.40985888" />
+      <inertia
+        ixx="12.0810981"
+        ixy="-0.00505423"
+        ixz="1.25403037"
+        iyy="12.71175466"
+        iyz="-0.00705268"
+        izz="2.84527064" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/dipan_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/dipan_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="daogui_link">
+    <inertial>
+      <origin
+        xyz="0.11560518 0.00060964 0.12206768"
+        rpy="0 0 0" />
+      <mass
+        value="4.61714" />
+      <inertia
+        ixx="0.00837134"
+        ixy="9.116e-05"
+        ixz="-0.00126268"
+        iyy="0.02136748"
+        iyz="-5.34e-06"
+        izz="0.02010722" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/daogui_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.66667 0.70588 0.76471 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/daogui_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="daogui_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="dipan_link" />
+    <child
+      link="daogui_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0.8"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="body_pitch_link">
+    <inertial>
+      <origin
+        xyz="-0.00013249 0.00049551 0.10848426"
+        rpy="0 0 0" />
+      <mass
+        value="3.528" />
+      <inertia
+        ixx="0.01235314"
+        ixy="-9.38e-06"
+        ixz="6.133e-05"
+        iyy="0.01092549"
+        iyz="0.00020606"
+        izz="0.00739427" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/body_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/body_pitch_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="body_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="0.1518 0 0.1275"
+      rpy="0 0 0" />
+    <parent
+      link="daogui_link" />
+    <child
+      link="body_pitch_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.05236"
+      upper="1.309"
+      effort="204"
+      velocity="3.14" />
+  </joint>
+  <link
+    name="body_yaw_link">
+    <inertial>
+      <origin
+        xyz="-0.00140951 0.00031062 0.13782806"
+        rpy="0 0 0" />
+      <mass
+        value="3.85886409" />
+      <inertia
+        ixx="0.03623808"
+        ixy="-3.118e-05"
+        ixz="0.00019346"
+        iyy="0.02298934"
+        iyz="3.738e-05"
+        izz="0.02244436" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/body_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.66667 0.70588 0.76471 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/body_yaw_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="body_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="2.7149E-05 -0.00012105 0.1572"
+      rpy="0 0 0" />
+    <parent
+      link="body_pitch_link" />
+    <child
+      link="body_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.0472"
+      upper="1.0472"
+      effort="204"
+      velocity="3.14" />
+  </joint>
+  <link
+    name="left_shoulder_pitch_link">
+    <inertial>
+      <origin
+        xyz="-0.00318713 0.04899419 0.00017253"
+        rpy="0 0 0" />
+      <mass
+        value="0.64195" />
+      <inertia
+        ixx="0.00045222"
+        ixy="4.1e-06"
+        ixz="1.97e-06"
+        iyy="0.00047136"
+        iyz="-1.26e-06"
+        izz="0.00059588" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_shoulder_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_shoulder_pitch_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_shoulder_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="-0.00021966 0.11612 0.16797"
+      rpy="0 0 0" />
+    <parent
+      link="body_yaw_link" />
+    <child
+      link="left_shoulder_pitch_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-2.7925"
+      upper="1.5708"
+      effort="36"
+      velocity="8.164" />
+  </joint>
+  <link
+    name="left_shoulder_roll_link">
+    <inertial>
+      <origin
+        xyz="0.00026688 0.00923491 -0.07177934"
+        rpy="0 0 0" />
+      <mass
+        value="0.74474" />
+      <inertia
+        ixx="0.00140268"
+        ixy="5.1e-06"
+        ixz="-3.427e-05"
+        iyy="0.00171477"
+        iyz="5.976e-05"
+        izz="0.00086884" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_shoulder_roll_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_shoulder_roll_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_shoulder_roll_joint"
+    type="revolute">
+    <origin
+      xyz="0.00019251 0.054 0.00013479"
+      rpy="0 0 0" />
+    <parent
+      link="left_shoulder_pitch_link" />
+    <child
+      link="left_shoulder_roll_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-0.5236"
+      upper="2.0944"
+      effort="36"
+      velocity="8.164" />
+  </joint>
+  <link
+    name="left_shoulder_yaw_link">
+    <inertial>
+      <origin
+        xyz="0.02386961 -0.00041351 -0.12487547"
+        rpy="0 0 0" />
+      <mass
+        value="0.86464" />
+      <inertia
+        ixx="0.0031744"
+        ixy="5.93e-06"
+        ixz="0.00082261"
+        iyy="0.00347038"
+        iyz="-1.674e-05"
+        izz="0.00088318" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_shoulder_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_shoulder_yaw_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_shoulder_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.01 -0.12225"
+      rpy="0 0 0" />
+    <parent
+      link="left_shoulder_roll_link" />
+    <child
+      link="left_shoulder_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.9671"
+      upper="2.9671"
+      effort="27"
+      velocity="7.3267" />
+  </joint>
+  <link
+    name="left_elbow_link">
+    <inertial>
+      <origin
+        xyz="0.03098556 0.00057542 -0.0288024"
+        rpy="0 0 0" />
+      <mass
+        value="0.33048" />
+      <inertia
+        ixx="0.0004881"
+        ixy="1.78e-06"
+        ixz="0.00012277"
+        iyy="0.00048504"
+        iyz="-2.1e-06"
+        izz="0.00054349" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_elbow_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_elbow_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_elbow_joint"
+    type="revolute">
+    <origin
+      xyz="0.042 0 -0.16775"
+      rpy="0 0 0" />
+    <parent
+      link="left_shoulder_yaw_link" />
+    <child
+      link="left_elbow_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.5184"
+      upper="1.5708"
+      effort="27"
+      velocity="7.3267" />
+  </joint>
+  <link
+    name="left_wrist_roll_link">
+    <inertial>
+      <origin
+        xyz="0.06375062 -5.405e-05 -0.0009515"
+        rpy="0 0 0" />
+      <mass
+        value="0.865677" />
+      <inertia
+        ixx="0.00052491"
+        ixy="-6.1e-07"
+        ixz="3.461e-05"
+        iyy="0.00159541"
+        iyz="6.3e-07"
+        izz="0.00149224" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_wrist_roll_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_wrist_roll_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_wrist_roll_joint"
+    type="revolute">
+    <origin
+      xyz="0.07422 0 -0.042"
+      rpy="0 0 0" />
+    <parent
+      link="left_elbow_link" />
+    <child
+      link="left_wrist_roll_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-2.9671"
+      upper="2.9671"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="left_wrist_yaw_link">
+    <inertial>
+      <origin
+        xyz="0.0 0.0033242 -0.00085429"
+        rpy="0 0 0" />
+      <mass
+        value="0.344922" />
+      <inertia
+        ixx="0.00015509"
+        ixy="-0.0"
+        ixz="3e-08"
+        iyy="0.00016396"
+        iyz="-2.04e-06"
+        izz="0.0001271" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_wrist_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_wrist_yaw_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_wrist_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="0.16278 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="left_wrist_roll_link" />
+    <child
+      link="left_wrist_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.0472"
+      upper="1.0472"
+      effort="9"
+      velocity="16.747" />
+  </joint>
+  <link
+    name="left_wrist_pitch_link">
+    <inertial>
+      <origin
+        xyz="0.07825733 0.00143511 0.00315751"
+        rpy="0 0 0" />
+      <mass
+        value="0.5139" />
+      <inertia
+        ixx="0.00046134"
+        ixy="4.762e-05"
+        ixz="-1.314e-05"
+        iyy="0.00044669"
+        iyz="-5.2e-07"
+        izz="0.00060413" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_wrist_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.66667 0.69804 0.76863 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_wrist_pitch_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_wrist_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="left_wrist_yaw_link" />
+    <child
+      link="left_wrist_pitch_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.0472"
+      upper="1.0472"
+      effort="9"
+      velocity="16.747" />
+  </joint>
+  <link
+    name="left_jaw_left_finger_link">
+    <inertial>
+      <origin
+        xyz="0.02875166 0.04972677 -0.00087113"
+        rpy="0 0 0" />
+      <mass
+        value="0.057096" />
+      <inertia
+        ixx="1.643e-05"
+        ixy="2.46e-06"
+        ixz="1.89e-06"
+        iyy="2.627e-05"
+        iyz="4.7e-07"
+        izz="2.05e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_jaw_left_finger_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.49804 0.49804 0.49804 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_jaw_left_finger_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_jaw_left_finger_joint"
+    type="prismatic">
+    <origin
+      xyz="0.102 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="left_wrist_pitch_link" />
+    <child
+      link="left_jaw_left_finger_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.04"
+      upper="0"
+      effort="120"
+      velocity="0.25" />
+  </joint>
+  <link
+    name="left_jaw_right_finger_link">
+    <inertial>
+      <origin
+        xyz="0.02884254 -0.05065805 -0.00142222"
+        rpy="0 0 0" />
+      <mass
+        value="0.057987" />
+      <inertia
+        ixx="1.518e-05"
+        ixy="-3.71e-06"
+        ixz="1.14e-06"
+        iyy="2.561e-05"
+        iyz="3.1e-07"
+        izz="1.872e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_jaw_right_finger_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.49804 0.49804 0.49804 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_jaw_right_finger_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_jaw_right_finger_joint"
+    type="prismatic">
+    <origin
+      xyz="0.102 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="left_wrist_pitch_link" />
+    <child
+      link="left_jaw_right_finger_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="0"
+      upper="0.04"
+      effort="120"
+      velocity="0.25" />
+  </joint>
+  <link
+    name="left_jaw_camera_link">
+    <inertial>
+      <origin
+        xyz="0.0 0.005 -0.01561719"
+        rpy="0 0 0" />
+      <mass
+        value="0.05789" />
+      <inertia
+        ixx="1.081e-05"
+        ixy="-0.0"
+        ixz="-0.0"
+        iyy="1.08e-05"
+        iyz="-0.0"
+        izz="1.658e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_jaw_camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_jaw_camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_jaw_camera_joint"
+    type="fixed">
+    <origin
+      xyz="0.11933 0.009 0.060373"
+      rpy="-2.0071 0 -1.5708" />
+    <parent
+      link="left_wrist_pitch_link" />
+    <child
+      link="left_jaw_camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_end_effector_link">
+    <inertial>
+      <origin
+        xyz="-0.027172 -5.6108E-09 1.2941E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0066601" />
+      <inertia
+        ixx="1.2345E-05"
+        ixy="-7.5727E-14"
+        ixz="2.3275E-11"
+        iyy="6.5495E-08"
+        iyz="-8.2193E-15"
+        izz="1.232E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_end_effector_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.68627 0.68627 0.68627 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_end_effector_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_end_effector_joint"
+    type="fixed">
+    <origin
+      xyz="0.1435 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="left_wrist_pitch_link" />
+    <child
+      link="left_end_effector_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_shoulder_pitch_link">
+    <inertial>
+      <origin
+        xyz="-0.00296457 -0.04904683 3.797e-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.64101" />
+      <inertia
+        ixx="0.00045089"
+        ixy="-2.81e-06"
+        ixz="2e-06"
+        iyy="0.00047256"
+        iyz="1.25e-06"
+        izz="0.00059577" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_shoulder_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_shoulder_pitch_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_shoulder_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="-2.7149E-05 -0.11588 0.1681"
+      rpy="0 0 0" />
+    <parent
+      link="body_yaw_link" />
+    <child
+      link="right_shoulder_pitch_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-2.7925"
+      upper="1.5708"
+      effort="36"
+      velocity="8.164" />
+  </joint>
+  <link
+    name="right_shoulder_roll_link">
+    <inertial>
+      <origin
+        xyz="-0.00133187 -0.00922469 -0.07161686"
+        rpy="0 0 0" />
+      <mass
+        value="0.74679" />
+      <inertia
+        ixx="0.00139598"
+        ixy="5.44e-06"
+        ixz="5.175e-05"
+        iyy="0.00171725"
+        iyz="-6.198e-05"
+        izz="0.00087417" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_shoulder_roll_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_shoulder_roll_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_shoulder_roll_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.054 0"
+      rpy="0 0 0" />
+    <parent
+      link="right_shoulder_pitch_link" />
+    <child
+      link="right_shoulder_roll_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-2.0944"
+      upper="0.5236"
+      effort="36"
+      velocity="8.164" />
+  </joint>
+  <link
+    name="right_shoulder_yaw_link">
+    <inertial>
+      <origin
+        xyz="0.0239688 0.00071183 -0.1239035"
+        rpy="0 0 0" />
+      <mass
+        value="0.876" />
+      <inertia
+        ixx="0.00321433"
+        ixy="-1.109e-05"
+        ixz="0.00082281"
+        iyy="0.00352394"
+        iyz="2.732e-05"
+        izz="0.0008837" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_shoulder_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_shoulder_yaw_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_shoulder_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.01 -0.12225"
+      rpy="0 0 0" />
+    <parent
+      link="right_shoulder_roll_link" />
+    <child
+      link="right_shoulder_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.9671"
+      upper="2.9671"
+      effort="27"
+      velocity="7.3267" />
+  </joint>
+  <link
+    name="right_elbow_link">
+    <inertial>
+      <origin
+        xyz="0.03112194 -0.0007412 -0.02933948"
+        rpy="0 0 0" />
+      <mass
+        value="0.33678" />
+      <inertia
+        ixx="0.00049435"
+        ixy="-1.58e-06"
+        ixz="0.00012405"
+        iyy="0.00049082"
+        iyz="3.2e-07"
+        izz="0.00054512" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_elbow_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_elbow_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_elbow_joint"
+    type="revolute">
+    <origin
+      xyz="0.042 0 -0.16775"
+      rpy="0 0 0" />
+    <parent
+      link="right_shoulder_yaw_link" />
+    <child
+      link="right_elbow_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.5184"
+      upper="1.5708"
+      effort="27"
+      velocity="7.3267" />
+  </joint>
+  <link
+    name="right_wrist_roll_link">
+    <inertial>
+      <origin
+        xyz="0.06371011 -6.085e-05 -0.0009271"
+        rpy="0 0 0" />
+      <mass
+        value="0.86459" />
+      <inertia
+        ixx="0.00052336"
+        ixy="-6.6e-07"
+        ixz="3.426e-05"
+        iyy="0.00159313"
+        iyz="7.8e-07"
+        izz="0.00149055" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_wrist_roll_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_wrist_roll_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_wrist_roll_joint"
+    type="revolute">
+    <origin
+      xyz="0.07422 0 -0.042"
+      rpy="0 0 0" />
+    <parent
+      link="right_elbow_link" />
+    <child
+      link="right_wrist_roll_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-2.9671"
+      upper="2.9671"
+      effort="9"
+      velocity="16.747" />
+  </joint>
+  <link
+    name="right_wrist_yaw_link">
+    <inertial>
+      <origin
+        xyz="0.0 -0.00328156 -0.00077334"
+        rpy="0 0 0" />
+      <mass
+        value="0.344042" />
+      <inertia
+        ixx="0.00015395"
+        ixy="-0.0"
+        ixz="-3e-08"
+        iyy="0.00016307"
+        iyz="2.5e-06"
+        izz="0.00012685" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_wrist_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_wrist_yaw_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_wrist_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="0.16278 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="right_wrist_roll_link" />
+    <child
+      link="right_wrist_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.0472"
+      upper="1.0472"
+      effort="9"
+      velocity="16.747" />
+  </joint>
+  <link
+    name="right_wrist_pitch_link">
+    <inertial>
+      <origin
+        xyz="0.07825729 -0.00152809 0.00315775"
+        rpy="0 0 0" />
+      <mass
+        value="0.5139" />
+      <inertia
+        ixx="0.0004612"
+        ixy="-4.866e-05"
+        ixz="-1.313e-05"
+        iyy="0.00044669"
+        iyz="-5.33e-06"
+        izz="0.00060399" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_wrist_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.66667 0.69804 0.76863 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_wrist_pitch_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_wrist_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="right_wrist_yaw_link" />
+    <child
+      link="right_wrist_pitch_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.0472"
+      upper="1.0472"
+      effort="9"
+      velocity="16.747" />
+  </joint>
+  <link
+    name="right_jaw_left_finger_link">
+    <inertial>
+      <origin
+        xyz="0.02884538 0.0506592 -0.00142357"
+        rpy="0 0 0" />
+      <mass
+        value="0.057986" />
+      <inertia
+        ixx="1.518e-05"
+        ixy="3.71e-06"
+        ixz="1.13e-06"
+        iyy="2.562e-05"
+        iyz="-3.1e-07"
+        izz="1.874e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_jaw_left_finger_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.49804 0.49804 0.49804 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_jaw_left_finger_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_jaw_left_finger_joint"
+    type="prismatic">
+    <origin
+      xyz="0.102 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="right_wrist_pitch_link" />
+    <child
+      link="right_jaw_left_finger_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.04"
+      upper="0"
+      effort="120"
+      velocity="0.25" />
+  </joint>
+  <link
+    name="right_jaw_right_finger_link">
+    <inertial>
+      <origin
+        xyz="0.02884278 -0.05065791 -0.00142222"
+        rpy="0 0 0" />
+      <mass
+        value="0.057987" />
+      <inertia
+        ixx="1.518e-05"
+        ixy="-3.71e-06"
+        ixz="1.14e-06"
+        iyy="2.561e-05"
+        iyz="3.1e-07"
+        izz="1.872e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_jaw_right_finger_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.49804 0.49804 0.49804 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_jaw_right_finger_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_jaw_right_finger_joint"
+    type="prismatic">
+    <origin
+      xyz="0.102 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="right_wrist_pitch_link" />
+    <child
+      link="right_jaw_right_finger_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="0"
+      upper="0.04"
+      effort="120"
+      velocity="0.25" />
+  </joint>
+  <link
+    name="right_jaw_camera_link">
+    <inertial>
+      <origin
+        xyz="0.0 0.005 -0.01561719"
+        rpy="0 0 0" />
+      <mass
+        value="0.05789" />
+      <inertia
+        ixx="1.081e-05"
+        ixy="-0.0"
+        ixz="-0.0"
+        iyy="1.08e-05"
+        iyz="-0.0"
+        izz="1.658e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_jaw_camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_jaw_camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_jaw_camera_joint"
+    type="fixed">
+    <origin
+      xyz="0.11933 0.0090006 0.060373"
+      rpy="-2.0071 0 -1.5708" />
+    <parent
+      link="right_wrist_pitch_link" />
+    <child
+      link="right_jaw_camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_end_effector_link">
+    <inertial>
+      <origin
+        xyz="-0.027172 -1.3538E-07 1.2941E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0066601" />
+      <inertia
+        ixx="1.2345E-05"
+        ixy="5.8568E-11"
+        ixz="2.3275E-11"
+        iyy="6.5495E-08"
+        iyz="-8.108E-15"
+        izz="1.232E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_end_effector_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.68627 0.68627 0.68627 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_end_effector_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_end_effector_joint"
+    type="fixed">
+    <origin
+      xyz="0.1435 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="right_wrist_pitch_link" />
+    <child
+      link="right_end_effector_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="neck_yaw_link">
+    <inertial>
+      <origin
+        xyz="-0.00118756 -0.00142144 0.08983028"
+        rpy="0 0 0" />
+      <mass
+        value="0.500718" />
+      <inertia
+        ixx="0.00087672"
+        ixy="2.99e-06"
+        ixz="-3.24e-06"
+        iyy="0.00084562"
+        iyz="-5.84e-06"
+        izz="0.00027146" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/neck_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.34902 0.35686 0.31373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/neck_yaw_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="neck_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="-2.71488271641473E-05 0.000121052292962553 0.2491"
+      rpy="0 0 0" />
+    <parent
+      link="body_yaw_link" />
+    <child
+      link="neck_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="9"
+      velocity="16.747" />
+  </joint>
+  <link
+    name="neck_pitch_link">
+    <inertial>
+      <origin
+        xyz="0.04074346 -0.00094429 0.04406688"
+        rpy="0 0 0" />
+      <mass
+        value="0.85987615" />
+      <inertia
+        ixx="0.00305527"
+        ixy="-3.089e-05"
+        ixz="0.00012776"
+        iyy="0.00319256"
+        iyz="-3.464e-05"
+        izz="0.00271799" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/neck_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/neck_pitch_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="neck_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0.11"
+      rpy="0 0 0" />
+    <parent
+      link="neck_yaw_link" />
+    <child
+      link="neck_pitch_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.7854"
+      upper="0.5236"
+      effort="9"
+      velocity="16.747" />
+  </joint>
+  <link
+    name="neck_camera_link">
+    <inertial>
+      <origin
+        xyz="0.02975925 8.48e-06 -0.00996785"
+        rpy="0 0 0" />
+      <mass
+        value="0.07123" />
+      <inertia
+        ixx="6.97e-06"
+        ixy="3e-08"
+        ixz="1.8e-07"
+        iyy="4.688e-05"
+        iyz="-4e-08"
+        izz="4.697e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/neck_camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/neck_camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="neck_camera_joint"
+    type="fixed">
+    <origin
+      xyz="0.0675568573382885 0.0324999999999979 -0.0363332072227294"
+      rpy="-1.78023593389281 0 -1.5707963267949" />
+    <parent
+      link="neck_pitch_link" />
+    <child
+      link="neck_camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_front_wheel_link">
+    <inertial>
+      <origin
+        xyz="0.0 0.0 0.0"
+        rpy="0 0 0" />
+      <mass
+        value="0.16" />
+      <inertia
+        ixx="6.766e-05"
+        ixy="-0.0"
+        ixz="-0.0"
+        iyy="7.514e-05"
+        iyz="-0.0"
+        izz="6.766e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_front_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.6902 0.6902 0.6902 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_front_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_front_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="0.184 0.148 -0.156"
+      rpy="0 0 0" />
+    <parent
+      link="dipan_link" />
+    <child
+      link="left_front_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="left_middle_wheel_link">
+    <inertial>
+      <origin
+        xyz="0.0 0.00140713 0.0"
+        rpy="0 0 0" />
+      <mass
+        value="2.0" />
+      <inertia
+        ixx="0.00516956"
+        ixy="-0.0"
+        ixz="-0.0"
+        iyy="0.00976607"
+        iyz="-0.0"
+        izz="0.00516956" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_middle_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_middle_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_middle_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.0544 0.1895 -0.0965"
+      rpy="0 0 0" />
+    <parent
+      link="dipan_link" />
+    <child
+      link="left_middle_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      effort="60"
+      velocity="2.3" />
+  </joint>
+  <link
+    name="left_rear_wheel_link">
+    <inertial>
+      <origin
+        xyz="0.0 0.0 0.0"
+        rpy="0 0 0" />
+      <mass
+        value="0.12" />
+      <inertia
+        ixx="4.893e-05"
+        ixy="-0.0"
+        ixz="-0.0"
+        iyy="4.906e-05"
+        iyz="-0.0"
+        izz="4.938e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_rear_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/left_rear_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_rear_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="-0.1465 0.151 -0.155"
+      rpy="0 0 0" />
+    <parent
+      link="dipan_link" />
+    <child
+      link="left_rear_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="right_front_wheel_link">
+    <inertial>
+      <origin
+        xyz="0.0 0.0 0.0"
+        rpy="0 0 0" />
+      <mass
+        value="0.16" />
+      <inertia
+        ixx="6.766e-05"
+        ixy="-0.0"
+        ixz="-0.0"
+        iyy="7.514e-05"
+        iyz="-0.0"
+        izz="6.766e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_front_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.6902 0.6902 0.6902 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_front_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_front_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="0.184 -0.148 -0.156"
+      rpy="0 0 0" />
+    <parent
+      link="dipan_link" />
+    <child
+      link="right_front_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_middle_wheel_link">
+    <inertial>
+      <origin
+        xyz="0.0 -0.00140713 0.0"
+        rpy="0 0 0" />
+      <mass
+        value="2.0" />
+      <inertia
+        ixx="0.00516956"
+        ixy="-0.0"
+        ixz="-0.0"
+        iyy="0.00976607"
+        iyz="-0.0"
+        izz="0.00516956" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_middle_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_middle_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_middle_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.0544 -0.1895 -0.0965"
+      rpy="0 0 0" />
+    <parent
+      link="dipan_link" />
+    <child
+      link="right_middle_wheel_link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      effort="60"
+      velocity="2.3" />
+  </joint>
+  <link
+    name="right_rear_wheel_link">
+    <inertial>
+      <origin
+        xyz="0.0 0.0 0.0"
+        rpy="0 0 0" />
+      <mass
+        value="0.12" />
+      <inertia
+        ixx="4.893e-05"
+        ixy="-0.0"
+        ixz="-0.0"
+        iyy="4.906e-05"
+        iyz="-0.0"
+        izz="4.938e-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_rear_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ZR_H1PRO-1.2.00.H.V4.3_URDF_2025.12.02/meshes/right_rear_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_rear_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="-0.1465 -0.151 -0.155"
+      rpy="0 0 0" />
+    <parent
+      link="dipan_link" />
+    <child
+      link="right_rear_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
