@@ -11,7 +11,7 @@
 		<link name="${prefix}camera_stand">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_g1_description)/meshes/camera/120s_camera_stand.obj"/>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/camera/120s_camera_stand.glb"/>
 				</geometry>
 			</visual>
 		</link>

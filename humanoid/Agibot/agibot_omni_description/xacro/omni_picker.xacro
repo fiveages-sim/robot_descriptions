@@ -13,7 +13,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="${mesh_path}/gripper_base.obj"/>
+					<mesh filename="${mesh_path}/gripper_base.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -32,12 +32,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="${mesh_path}/narrow_1.obj"/>
+					<mesh filename="${mesh_path}/narrow_1.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="${mesh_path}/narrow_1.obj"/>
+					<mesh filename="${mesh_path}/narrow_1.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -64,12 +64,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="${mesh_path}/narrow_2.obj"/>
+					<mesh filename="${mesh_path}/narrow_2.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="${mesh_path}/narrow_2.obj"/>
+					<mesh filename="${mesh_path}/narrow_2.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -97,12 +97,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="${mesh_path}/narrow_3.obj"/>
+					<mesh filename="${mesh_path}/narrow_3.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="${mesh_path}/narrow_3.obj"/>
+					<mesh filename="${mesh_path}/narrow_3.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -139,12 +139,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="${mesh_path}/narrow_loop.obj"/>
+					<mesh filename="${mesh_path}/narrow_loop.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="${mesh_path}/narrow_loop.obj"/>
+					<mesh filename="${mesh_path}/narrow_loop.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -172,12 +172,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="${mesh_path}/wide_1.obj"/>
+					<mesh filename="${mesh_path}/wide_1.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="${mesh_path}/wide_1.obj"/>
+					<mesh filename="${mesh_path}/wide_1.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -205,12 +205,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="${mesh_path}/wide_2.obj"/>
+					<mesh filename="${mesh_path}/wide_2.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="${mesh_path}/wide_2.obj"/>
+					<mesh filename="${mesh_path}/wide_2.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -238,12 +238,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="${mesh_path}/wide_3.obj"/>
+					<mesh filename="${mesh_path}/wide_3.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="${mesh_path}/wide_3.obj"/>
+					<mesh filename="${mesh_path}/wide_3.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -278,12 +278,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="${mesh_path}/wide_loop.obj"/>
+					<mesh filename="${mesh_path}/wide_loop.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="${mesh_path}/wide_loop.obj"/>
+					<mesh filename="${mesh_path}/wide_loop.glb"/>
 				</geometry>
 			</collision>
 		</link>

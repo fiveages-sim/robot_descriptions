@@ -14,7 +14,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/base_link.obj"/>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/base_link.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -29,7 +29,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link1.obj"/>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link1.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -50,7 +50,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link2.obj"/>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link2.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -69,7 +69,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link3.obj"/>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link3.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -88,7 +88,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link4.obj"/>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link4.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -108,7 +108,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link5.obj"/>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link5.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -128,7 +128,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link6.obj"/>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link6.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -148,7 +148,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link7.obj"/>
+					<mesh filename="file://$(find agibot_g1_description)/meshes/arm/link7.glb"/>
 				</geometry>
 			</visual>
 			<collision>

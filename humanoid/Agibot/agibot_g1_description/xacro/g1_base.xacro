@@ -23,7 +23,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_g1_description)/meshes/base/base.obj"/>
+				<mesh filename="file://$(find agibot_g1_description)/meshes/base/base.glb"/>
 			</geometry>
 		</visual>
 		<collision>
@@ -79,7 +79,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_g1_description)/meshes/base/wheel.obj" scale="1 1 1"/>
+				<mesh filename="file://$(find agibot_g1_description)/meshes/base/wheel.glb" scale="1 1 1"/>
 			</geometry>
 		</visual>
 		<collision>
@@ -125,7 +125,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_g1_description)/meshes/base/wheel.obj" scale="1 -1 1"/>
+				<mesh filename="file://$(find agibot_g1_description)/meshes/base/wheel.glb" scale="1 -1 1"/>
 			</geometry>
 		</visual>
 		<collision>
@@ -151,7 +151,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_g1_description)/meshes/base/body_link1.obj"/>
+				<mesh filename="file://$(find agibot_g1_description)/meshes/base/body_link1.glb"/>
 			</geometry>
 		</visual>
 		<collision>
@@ -182,7 +182,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_g1_description)/meshes/base/body_link2.obj"/>
+				<mesh filename="file://$(find agibot_g1_description)/meshes/base/body_link2.glb"/>
 			</geometry>
 			<origin rpy="0.0 0.0 -1.5707963267948966"/>
 		</visual>
@@ -224,7 +224,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_g1_description)/meshes/base/head_link1.obj"/>
+				<mesh filename="file://$(find agibot_g1_description)/meshes/base/head_link1.glb"/>
 			</geometry>
 		</visual>
 	</link>
@@ -238,7 +238,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_g1_description)/meshes/base/head_link2.obj"/>
+				<mesh filename="file://$(find agibot_g1_description)/meshes/base/head_link2.glb"/>
 			</geometry>
 			<origin rpy="-3.141592653589793 0.0 0.0"/>
 		</visual>
