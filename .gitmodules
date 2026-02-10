@@ -25,3 +25,6 @@
 [submodule "quadruped"]
 	path = quadruped
 	url = git@github.com:fiveages-sim/robot-descriptions-quadruped.git
+[submodule "manipulator/ARX"]
+	path = manipulator/ARX
+	url = git@github.com:fiveages-sim/robot-descriptions-arx.git
