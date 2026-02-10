@@ -41,8 +41,6 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Astribot | [S1](humanoid/Astribot/astribot_s1_description)      | Yes     | <img src="humanoid/.images/astribot_s1_revo2.png" width="200"><img src="humanoid/.images/astribot_s1.png" width="200">                                                                                                  |
 | Galaxea  | [R1](humanoid/Galaxea/galaxea_r1_description)        | Yes     | <img src="humanoid/.images/galaxea_r1_down.png" width="180">     <img src="humanoid/.images/galaxea_r1.png" width="160">                                                                                                |
 | Galaxea  | [R1 Pro](humanoid/Galaxea/galaxea_r1pro_description) | Yes     | <img src="humanoid/.images/galaxea_r1_pro.png" width="200">                                                                                                                                                             |
-| ARX      | [LIFT](humanoid/ARX/arx_lift_description)            | Yes     | <img src="humanoid/.images/arx_lift.png" width="150" style="object-fit: cover; object-position: center;">     <img src="humanoid/.images/arx_lift2.png" width="150" style="object-fit: cover; object-position: center;"> |
-| ARX      | [X7S](humanoid/ARX/arx_x7s_description)                  | Yes     | <img src="humanoid/.images/arx_x7s.png" width="150">                                                                                                                                                                    |
 | Realman  | [AIDAL](humanoid/Realman/aidal_description)          | Yes     | <img src="humanoid/.images/realman_aidal.png" width="200">                                                                                                                                                              |
 | Unitree  | [G1](humanoid/Unitree/unitree_g1_description)        | Yes     | <img src="humanoid/.images/unitree_g1.png" width="160">                                                                                                                                                                 |
 
@@ -52,7 +50,6 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 |----------------|-------------------------------------------------------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | TheRobotStudio | [SO-ARM](manipulator/LeRobot/so_arm_description)            | Yes     | <img src="manipulator/.images/so100.png" width="200" height="150" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/so101.png" width="200" height="150" style="object-fit: cover; object-position: center;">                                                                                                                                         |
 | SIGRobotics    | [Lekiwi](manipulator/LeRobot/lekiwi_description)            | Yes     | <img src="manipulator/.images/lekiwi_100.png" width="200" height="150" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/lekiwi_101.png" width="200" height="150" style="object-fit: cover; object-position: center;">                                                                                                                               |
-| ARX            | [X5/R5](manipulator/ARX/arx5_description)                   | Yes     | <img src="manipulator/.images/arx_x5.png" width="200">    <img src="manipulator/.images/arx_r5.png" width="200">                                                                                                                                                                                                                                                                      |
 | AgileX         | [Piper](manipulator/AgileX/piper_description)               | Yes     | <img src="manipulator/.images/agilex_piper.png" width="200" height="120" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/agilex_piper_master.png" width="200" height="120" style="object-fit: cover; object-position: center;">                                                                                                                    |
 | AgileX         | [AgileX Aloha](manipulator/AgileX/agilex_aloha_description) | Yes     | <img src="manipulator/.images/agilex_split_aloha.png" width="180">   <img src="manipulator/.images/agilex_aloha2.png" width="260">                                                                                                                                                                                                                                                    |
 | Galaxea        | [A1/A1X/A1Y](manipulator/Galaxea/galaxea_a1_description)    | Yes     | <img src="manipulator/.images/galaxea_a1.png" width="200" height="120" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/galaxea_a1x.png" width="200" height="120" style="object-fit: cover; object-position: center;"> <img src="manipulator/.images/galaxea_a1y.png" width="200" height="120" style="object-fit: cover; object-position: center;"> |
@@ -73,6 +70,7 @@ This repository uses git submodules to manage shared components and specific rob
 | Dobot CR5 | `manipulator/Dobot` | [robot-descriptions-dobot](https://github.com/fiveages-sim/robot-descriptions-dobot) | 6-DOF collaborative robot arm with real hardware integration |
 | Tianji M6 | `manipulator/Tianji` | [robot-descriptions-tianji](https://github.com/fiveages-sim/robot-descriptions-tianji) | M6-CCS and M6-SRS manipulator arms |
 | Rokae AR5 | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | 6-DOF industrial robot arm |
+| ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
 
 ### Using Submodules
 
@@ -97,6 +95,9 @@ git submodule update --init manipulator/Tianji
 
 # For Rokae robot
 git submodule update --init manipulator/Rokae
+
+# For ARX robots
+git submodule update --init manipulator/ARX
 ```
 
 **Update submodules to latest version:**
