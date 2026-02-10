@@ -11,9 +11,9 @@ colcon build --packages-up-to zerith_h1_description --symlink-install
 
 ## Visualize the robot
 
-To visualize and check the configuration of the robot in rviz, simply launch:
-
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1
 ```
+
+![zerith h1](../../.images/zerith_h1.png)

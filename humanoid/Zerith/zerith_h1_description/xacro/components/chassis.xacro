@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Chassis Description for Zerith H1                                            | -->
+<!-- |    Parameterized macro: drive_joint_type="continuous" (default) or "fixed"       | -->
+<!-- =================================================================================== -->
+<robot name="zerith_h1_chassis" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="H1Chassis" params="drive_joint_type:=continuous">
+
+		<link name="base_link">
+			<inertial>
+				<origin xyz="0.00021947 -0.00045719 0.08921288"/>
+				<mass value="92.40985888"/>
+				<inertia ixx="12.0810981" ixy="-0.00505423" ixz="1.25403037"
+						iyy="12.71175466" iyz="-0.00705268" izz="2.84527064"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/base/base_link.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/base/base_link.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- =============================================================================== -->
+		<!-- Left Front Wheel (passive/support)                                              -->
+		<!-- =============================================================================== -->
+		<link name="left_front_wheel_link">
+			<inertial>
+				<origin xyz="0.0 0.0 0.0"/>
+				<mass value="0.16"/>
+				<inertia ixx="6.766e-05" ixy="-0.0" ixz="-0.0"
+						iyy="7.514e-05" iyz="-0.0" izz="6.766e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/base/support_wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.025"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="left_front_wheel_joint" type="fixed">
+			<origin xyz="0.184 0.148 -0.156"/>
+			<parent link="base_link"/>
+			<child link="left_front_wheel_link"/>
+			<axis xyz="0 0 0"/>
+			<limit effort="0" velocity="0"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Left Middle Wheel (drive)                                                       -->
+		<!-- =============================================================================== -->
+		<link name="left_middle_wheel_link">
+			<inertial>
+				<origin xyz="0.0 0.00140713 0.0"/>
+				<mass value="2.0"/>
+				<inertia ixx="0.00516956" ixy="-0.0" ixz="-0.0"
+						iyy="0.00976607" iyz="-0.0" izz="0.00516956"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/base/drive_wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder radius="0.0835" length="0.04"/>
+				</geometry>
+				<origin rpy="1.5707963267949 0 0"/>
+			</collision>
+		</link>
+		<joint name="left_wheel_joint" type="${drive_joint_type}">
+			<origin xyz="0.0544 0.1895 -0.0965"/>
+			<parent link="base_link"/>
+			<child link="left_middle_wheel_link"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="60" velocity="2.3"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Left Rear Wheel (passive/support)                                               -->
+		<!-- =============================================================================== -->
+		<link name="left_rear_wheel_link">
+			<inertial>
+				<origin xyz="0.0 0.0 0.0"/>
+				<mass value="0.12"/>
+				<inertia ixx="4.893e-05" ixy="-0.0" ixz="-0.0"
+						iyy="4.906e-05" iyz="-0.0" izz="4.938e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/base/support_wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.025"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="left_rear_wheel_joint" type="fixed">
+			<origin xyz="-0.1465 0.151 -0.155"/>
+			<parent link="base_link"/>
+			<child link="left_rear_wheel_link"/>
+			<axis xyz="0 0 0"/>
+			<limit lower="0" upper="0" effort="0" velocity="0"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Right Front Wheel (passive/support)                                             -->
+		<!-- =============================================================================== -->
+		<link name="right_front_wheel_link">
+			<inertial>
+				<origin xyz="0.0 0.0 0.0"/>
+				<mass value="0.16"/>
+				<inertia ixx="6.766e-05" ixy="-0.0" ixz="-0.0"
+						iyy="7.514e-05" iyz="-0.0" izz="6.766e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/base/support_wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.025"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="right_front_wheel_joint" type="fixed">
+			<origin xyz="0.184 -0.148 -0.156"/>
+			<parent link="base_link"/>
+			<child link="right_front_wheel_link"/>
+			<axis xyz="0 0 0"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Right Middle Wheel (drive)                                                      -->
+		<!-- =============================================================================== -->
+		<link name="right_middle_wheel_link">
+			<inertial>
+				<origin xyz="0.0 -0.00140713 0.0"/>
+				<mass value="2.0"/>
+				<inertia ixx="0.00516956" ixy="-0.0" ixz="-0.0"
+						iyy="0.00976607" iyz="-0.0" izz="0.00516956"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/base/drive_wheel.glb" scale="1 -1 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder radius="0.0835" length="0.04"/>
+				</geometry>
+				<origin rpy="1.5707963267949 0 0"/>
+			</collision>
+		</link>
+		<joint name="right_wheel_joint" type="${drive_joint_type}">
+			<origin xyz="0.0544 -0.1895 -0.0965"/>
+			<parent link="base_link"/>
+			<child link="right_middle_wheel_link"/>
+			<axis xyz="0 -1 0"/>
+			<limit effort="60" velocity="2.3"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Right Rear Wheel (passive/support)                                              -->
+		<!-- =============================================================================== -->
+		<link name="right_rear_wheel_link">
+			<inertial>
+				<origin xyz="0.0 0.0 0.0"/>
+				<mass value="0.12"/>
+				<inertia ixx="4.893e-05" ixy="-0.0" ixz="-0.0"
+						iyy="4.906e-05" iyz="-0.0" izz="4.938e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/base/support_wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.025"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="right_rear_wheel_joint" type="fixed">
+			<origin xyz="-0.1465 -0.151 -0.155"/>
+			<parent link="base_link"/>
+			<child link="right_rear_wheel_link"/>
+		</joint>
+
+	</xacro:macro>
+
+</robot>

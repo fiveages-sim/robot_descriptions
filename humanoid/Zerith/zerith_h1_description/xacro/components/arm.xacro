@@ -1,0 +1,341 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Arm Description for Zerith H1                                                | -->
+<!-- |    Parameterized macro: name="left"/"right", direction=1/-1                     | -->
+<!-- |    Parent: body_yaw_link (from body)                                            | -->
+<!-- =================================================================================== -->
+<robot name="zerith_h1_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="H1Arm" params="name direction:=1">
+		<xacro:property name="prefix" value="${name}_"/>
+
+		<!-- =============================================================================== -->
+		<!-- Shoulder Pitch                                                                  -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}shoulder_pitch_link">
+			<inertial>
+				<origin xyz="-0.00318713 ${direction*0.04899419} 0.00017253"/>
+				<mass value="0.64195"/>
+				<inertia ixx="0.00045222" ixy="${direction*4.1e-06}" ixz="1.97e-06"
+								 iyy="0.00047136" iyz="${direction*-1.26e-06}" izz="0.00059588"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link1.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link1.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint1" type="revolute">
+			<origin xyz="-0.00021966 ${direction*0.11612} 0.16797"/>
+			<parent link="body_yaw_link"/>
+			<child link="${prefix}shoulder_pitch_link"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-2.7925" upper="1.5708" effort="36" velocity="8.164"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Shoulder Roll                                                                   -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}shoulder_roll_link">
+			<inertial>
+				<origin xyz="0.00026688 ${direction*0.00923491} -0.07177934"/>
+				<mass value="0.74474"/>
+				<inertia ixx="0.00140268" ixy="${direction*5.1e-06}" ixz="-3.427e-05"
+								 iyy="0.00171477" iyz="${direction*5.976e-05}" izz="0.00086884"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link2.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link2.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint2" type="revolute">
+			<origin xyz="0.00019251 ${direction*0.054} 0.00013479"/>
+			<parent link="${prefix}shoulder_pitch_link"/>
+			<child link="${prefix}shoulder_roll_link"/>
+			<axis xyz="1 0 0"/>
+			<limit lower="${-0.5236 if direction == 1 else -2.0944}"
+						 upper="${2.0944 if direction == 1 else 0.5236}"
+						 effort="36" velocity="8.164"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Shoulder Yaw                                                                    -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}shoulder_yaw_link">
+			<inertial>
+				<origin xyz="0.02386961 ${direction*-0.00041351} -0.12487547"/>
+				<mass value="0.86464"/>
+				<inertia ixx="0.0031744" ixy="${direction*5.93e-06}" ixz="0.00082261"
+								 iyy="0.00347038" iyz="${direction*-1.674e-05}" izz="0.00088318"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link3.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link3.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint3" type="revolute">
+			<origin xyz="0 ${direction*0.01} -0.12225"/>
+			<parent link="${prefix}shoulder_roll_link"/>
+			<child link="${prefix}shoulder_yaw_link"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-2.9671" upper="2.9671" effort="27" velocity="7.3267"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Elbow                                                                           -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}elbow_link">
+			<inertial>
+				<origin xyz="0.03098556 ${direction*0.00057542} -0.0288024"/>
+				<mass value="0.33048"/>
+				<inertia ixx="0.0004881" ixy="${direction*1.78e-06}" ixz="0.00012277"
+								 iyy="0.00048504" iyz="${direction*-2.1e-06}" izz="0.00054349"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link4.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link4.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint4" type="revolute">
+			<origin xyz="0.042 0 -0.16775"/>
+			<parent link="${prefix}shoulder_yaw_link"/>
+			<child link="${prefix}elbow_link"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-1.5184" upper="1.5708" effort="27" velocity="7.3267"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Wrist Roll                                                                      -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}wrist_roll_link">
+			<inertial>
+				<origin xyz="0.06375062 ${direction*-5.405e-05} -0.0009515"/>
+				<mass value="0.865677"/>
+				<inertia ixx="0.00052491" ixy="${direction*-6.1e-07}" ixz="3.461e-05"
+								 iyy="0.00159541" iyz="${direction*6.3e-07}" izz="0.00149224"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link5.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link5.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint5" type="revolute">
+			<origin xyz="0.07422 0 -0.042"/>
+			<parent link="${prefix}elbow_link"/>
+			<child link="${prefix}wrist_roll_link"/>
+			<axis xyz="1 0 0"/>
+			<limit lower="-2.9671" upper="2.9671"
+						 effort="${0 if direction == 1 else 9}"
+						 velocity="${0 if direction == 1 else 16.747}"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Wrist Yaw                                                                       -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}wrist_yaw_link">
+			<inertial>
+				<origin xyz="0.0 ${direction*0.0033242} -0.00085429"/>
+				<mass value="0.344922"/>
+				<inertia ixx="0.00015509" ixy="${direction*-0.0}" ixz="3e-08"
+								 iyy="0.00016396" iyz="${direction*-2.04e-06}" izz="0.0001271"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link6.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link6.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint6" type="revolute">
+			<origin xyz="0.16278 0 0"/>
+			<parent link="${prefix}wrist_roll_link"/>
+			<child link="${prefix}wrist_yaw_link"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-1.0472" upper="1.0472" effort="9" velocity="16.747"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Wrist Pitch                                                                     -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}wrist_pitch_link">
+			<inertial>
+				<origin xyz="0.07825733 ${direction*0.00143511} 0.00315751"/>
+				<mass value="0.5139"/>
+				<inertia ixx="0.00046134" ixy="${direction*4.762e-05}" ixz="-1.314e-05"
+								 iyy="0.00044669" iyz="${direction*-5.2e-07}" izz="0.00060413"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link7.glb"  scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link7.glb"  scale="1 ${direction} 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint7" type="revolute">
+			<origin xyz="0 0 0"/>
+			<parent link="${prefix}wrist_yaw_link"/>
+			<child link="${prefix}wrist_pitch_link"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-1.0472" upper="1.0472" effort="9" velocity="16.747"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Jaw Left Finger                                                                 -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}jaw_left_finger_link">
+			<inertial>
+				<origin xyz="0.02875166 0.04972677 -0.00087113"/>
+				<mass value="0.057096"/>
+				<inertia ixx="1.643e-05" ixy="2.46e-06" ixz="1.89e-06"
+								 iyy="2.627e-05" iyz="4.7e-07" izz="2.05e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/finger.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/finger.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}gripper_joint" type="prismatic">
+			<origin xyz="0.102 0 0"/>
+			<parent link="${prefix}wrist_pitch_link"/>
+			<child link="${prefix}jaw_left_finger_link"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-0.04" upper="0" effort="120" velocity="0.25"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Jaw Right Finger                                                                -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}jaw_right_finger_link">
+			<inertial>
+				<origin xyz="0.02884254 -0.05065805 -0.00142222"/>
+				<mass value="0.057987"/>
+				<inertia ixx="1.518e-05" ixy="-3.71e-06" ixz="1.14e-06"
+								 iyy="2.561e-05" iyz="3.1e-07" izz="1.872e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/finger.glb" scale="1 -1 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/finger.glb" scale="1 -1 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}jaw_right_finger_joint" type="prismatic">
+			<origin xyz="0.102 0 0"/>
+			<parent link="${prefix}wrist_pitch_link"/>
+			<child link="${prefix}jaw_right_finger_link"/>
+			<axis xyz="0 1 0"/>
+			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+			<limit lower="0" upper="0.04" effort="120" velocity="0.25"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Jaw Camera                                                                      -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}jaw_camera_link">
+			<inertial>
+				<origin xyz="0.0 0.005 -0.01561719"/>
+				<mass value="0.05789"/>
+				<inertia ixx="1.081e-05" ixy="-0.0" ixz="-0.0"
+								 iyy="1.08e-05" iyz="-0.0" izz="1.658e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/d405/d405.obj"/>
+				</geometry>
+				<origin xyz="0.009 0 0.00377" rpy="1.5708 -1.5708 0"/>
+			</visual>
+		</link>
+
+		<joint name="${prefix}jaw_camera_joint" type="fixed">
+			<origin xyz="0.11933 0.009 0.060373" rpy="-2.0071 0 -1.5708"/>
+			<parent link="${prefix}wrist_pitch_link"/>
+			<child link="${prefix}jaw_camera_link"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- End Effector                                                                    -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}end_effector_link">
+			<inertial>
+				<origin xyz="-0.027172 -5.6108E-09 1.2941E-06"/>
+				<mass value="0.0066601"/>
+				<inertia ixx="1.2345E-05" ixy="-7.5727E-14" ixz="2.3275E-11"
+								 iyy="6.5495E-08" iyz="-8.2193E-15" izz="1.232E-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/eef.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/eef.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}end_effector_joint" type="fixed">
+			<origin xyz="0.1435 0 0"/>
+			<parent link="${prefix}wrist_pitch_link"/>
+			<child link="${prefix}end_effector_link"/>
+		</joint>
+
+	</xacro:macro>
+
+</robot>
