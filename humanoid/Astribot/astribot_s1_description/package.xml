@@ -13,7 +13,7 @@
 
   <exec_depend>robot_common_launch</exec_depend>
   <depend>brainco_description</depend>
-  <depend>arx_lift_description</depend>
+  <depend>component_models</depend>
 
   <export>
     <build_type>ament_cmake</build_type>

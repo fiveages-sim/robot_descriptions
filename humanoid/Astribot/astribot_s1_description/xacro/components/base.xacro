@@ -25,7 +25,7 @@
 			</collision>
 		</link>
 
-		<xacro:include filename="$(find arx_lift_description)/xacro/components/wheel.xacro"/>
+		<xacro:include filename="$(find component_models)/xacro/angellun_omniwheel.xacro"/>
 		<!-- 根据enable_wheel_joints参数决定使用轮子宏还是空link -->
 		<xacro:if value="${enable_wheel_joints}">
 			<!-- 启用轮子关节时：使用空link -->
