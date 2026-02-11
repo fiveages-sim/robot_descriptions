@@ -28,3 +28,6 @@
 [submodule "manipulator/ARX"]
 	path = manipulator/ARX
 	url = git@github.com:fiveages-sim/robot-descriptions-arx.git
+[submodule "humanoid/Ubtech"]
+	path = humanoid/Ubtech
+	url = git@github.com:fiveages-sim/robot-descriptions-ubtech.git
