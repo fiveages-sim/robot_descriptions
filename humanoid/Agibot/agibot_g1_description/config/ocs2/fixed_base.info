@@ -162,10 +162,10 @@ inputCost
     ; input costs for the arm DOFs
     arm
     {
-      scaling 1e-3
+      scaling 1e-4
 
-         (0,0)   1.0       ; body_joint1
-         (1,0)   1.0       ; body_joint2
+         (0,0)   5.0       ; body_joint1
+         (1,0)   5.0       ; body_joint2
          (2,0)   1.0      ; left_joint1
          (3,0)   1.0      ; left_joint2
          (4,0)   1.0      ; left_joint3
@@ -221,7 +221,7 @@ finalEndEffector
 
 bodyRelative
 {
-  activate                   true
+  activate                   false
   bodyLinkName               "body_link2"
   rollTolerance              0.1
   pitchTolerance             0.1
@@ -293,22 +293,22 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-        (0,0)  -0.5         ; body_joint1 [m/s]
+        (0,0)  -0.1         ; body_joint1 [m/s]
         (1,0)  -1.0         ; body_joint2 [rad/s]
-        (2,0)  -1.57         ; left_joint1 [rad/s]
-        (3,0)  -1.57         ; left_joint2 [rad/s]
-        (4,0)  -1.57         ; left_joint3 [rad/s]
-        (5,0)  -1.57         ; left_joint4 [rad/s]
-        (6,0)  -1.57         ; left_joint5 [rad/s]
-        (7,0)  -1.57         ; left_joint6 [rad/s]
-        (8,0)  -1.57         ; left_joint7 [rad/s]
-        (9,0)  -1.57         ; right_joint1 [rad/s]
-        (10,0)  -1.57        ; right_joint2 [rad/s]
-        (11,0)  -1.57        ; right_joint3 [rad/s]
-        (12,0)  -1.57        ; right_joint4 [rad/s]
-        (13,0)  -1.57        ; right_joint5 [rad/s]
-        (14,0)  -1.57        ; right_joint6 [rad/s]
-        (15,0)  -1.57        ; right_joint7 [rad/s]
+        (2,0)  -1.07         ; left_joint1 [rad/s]
+        (3,0)  -1.07         ; left_joint2 [rad/s]
+        (4,0)  -1.07         ; left_joint3 [rad/s]
+        (5,0)  -1.07         ; left_joint4 [rad/s]
+        (6,0)  -1.07         ; left_joint5 [rad/s]
+        (7,0)  -1.07         ; left_joint6 [rad/s]
+        (8,0)  -1.07         ; left_joint7 [rad/s]
+        (9,0)  -1.07         ; right_joint1 [rad/s]
+        (10,0)  -1.07        ; right_joint2 [rad/s]
+        (11,0)  -1.07        ; right_joint3 [rad/s]
+        (12,0)  -1.07        ; right_joint4 [rad/s]
+        (13,0)  -1.07        ; right_joint5 [rad/s]
+        (14,0)  -1.07        ; right_joint6 [rad/s]
+        (15,0)  -1.07        ; right_joint7 [rad/s]
     }
   }
 
@@ -345,22 +345,22 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-        (0,0)  0.5          ; body_joint1 [m/s]
+        (0,0)  0.1          ; body_joint1 [m/s]
         (1,0)  1.0          ; body_joint2 [rad/s]
-        (2,0)  1.57          ; left_joint1 [rad/s]
-        (3,0)  1.57          ; left_joint2 [rad/s]
-        (4,0)  1.57          ; left_joint3 [rad/s]
-        (5,0)  1.57          ; left_joint4 [rad/s]
-        (6,0)  1.57          ; left_joint5 [rad/s]
-        (7,0)  1.57          ; left_joint6 [rad/s]
-        (8,0)  1.57          ; left_joint7 [rad/s]
-        (9,0)  1.57          ; right_joint1 [rad/s]
-        (10,0)  1.57         ; right_joint2 [rad/s]
-        (11,0)  1.57         ; right_joint3 [rad/s]
-        (12,0)  1.57         ; right_joint4 [rad/s]
-        (13,0)  1.57         ; right_joint5 [rad/s]
-        (14,0)  1.57         ; right_joint6 [rad/s]
-        (15,0)  1.57         ; right_joint7 [rad/s]
+        (2,0)  1.07          ; left_joint1 [rad/s]
+        (3,0)  1.07          ; left_joint2 [rad/s]
+        (4,0)  1.07          ; left_joint3 [rad/s]
+        (5,0)  1.07          ; left_joint4 [rad/s]
+        (6,0)  1.07          ; left_joint5 [rad/s]
+        (7,0)  1.07          ; left_joint6 [rad/s]
+        (8,0)  1.07          ; left_joint7 [rad/s]
+        (9,0)  1.07          ; right_joint1 [rad/s]
+        (10,0)  1.07         ; right_joint2 [rad/s]
+        (11,0)  1.07         ; right_joint3 [rad/s]
+        (12,0)  1.07         ; right_joint4 [rad/s]
+        (13,0)  1.07         ; right_joint5 [rad/s]
+        (14,0)  1.07         ; right_joint6 [rad/s]
+        (15,0)  1.07         ; right_joint7 [rad/s]
     }
   }
 }
