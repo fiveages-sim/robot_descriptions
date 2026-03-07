@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot name="nero" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:arg name="type" default="v1"/>
+    <xacro:arg name="stand" default="v1"/>
+    <xacro:arg name="direction" default="left"/>
+    <xacro:arg name="scene" default="world"/>
+
+    <xacro:property name="prefix" value="$(arg direction)_"/>
+    <xacro:property name="selected_scene" value="$(arg scene)"/>
+
+    <xacro:include filename="$(find nero_description)/xacro/nero.xacro"/>
+
+    <link name="base_link"/>
+    <xacro:if value="${selected_scene == 'world'}">
+        <link name="world"/>
+        <joint name="world_fixed" type="fixed">
+            <parent link="world"/>
+            <child link="base_link"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+    </xacro:if>
+
+    <joint name="${prefix}base_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="${prefix}base_link"/>
+    </joint>
+
+    <xacro:Nero type="$(arg type)" stand="$(arg stand)" direction="$(arg direction)" prefix="${prefix}"/>
+
+</robot>

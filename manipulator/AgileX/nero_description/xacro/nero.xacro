@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="Nero" params="type stand direction prefix">
+
+        <xacro:include filename="$(find nero_description)/xacro/hand.xacro"/>
+
+        <link name="${prefix}base_link">
+            <inertial>
+                <origin xyz="-0.00963614954335565 0.00016786624100977 0.044860101664403" rpy="0 0 0"/>
+                <mass value="0.77"/>
+                <inertia ixx="0.0006669" ixy="0.0" ixz="0.0" iyy="0.00054501" iyz="0.0" izz="0.00051509"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/base_link.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/base_link.glb"/>
+                </geometry>
+            </collision>
+        </link>
+        <link name="${prefix}link1">
+            <inertial>
+                <origin xyz="-0.00077 -0.00006 -0.00686" rpy="0 0 0"/>
+                <mass value="0.77"/>
+                <inertia ixx="0.0006669" ixy="0.0" ixz="0.0" iyy="0.00054501" iyz="0.0" izz="0.00051509"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link1.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link1.glb"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint1" type="revolute">
+            <origin xyz="0 0 0.138" rpy="0 0 0"/>
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}link1"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-2.7" upper="2.7" effort="0" velocity="0"/>
+        </joint>
+        <link name="${prefix}link2">
+            <inertial>
+                <origin xyz="-0.00011 -0.06072 0.00148" rpy="0 0 0"/>
+                <mass value="0.49"/>
+                <inertia ixx="0.00053808" ixy="0.0" ixz="0.0" iyy="0.00029435" iyz="0.0" izz="0.00040266"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link2.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link2.glb"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint2" type="revolute">
+            <origin xyz="0 0 0" rpy="1.5708 3.1415 0"/>
+            <parent link="${prefix}link1"/>
+            <child link="${prefix}link2"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.74" upper="1.74" effort="0" velocity="0"/>
+        </joint>
+        <link name="${prefix}link3">
+            <inertial>
+                <origin xyz="0.00014 0.00211 -0.04853" rpy="0 0 0"/>
+                <mass value="0.67"/>
+                <inertia ixx="0.00342528" ixy="0.0" ixz="0.0" iyy="0.0033924" iyz="0.0" izz="0.00026169"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link3.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link3.glb"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint3" type="revolute">
+            <origin xyz="0 -0.31 0" rpy="-1.5708 0 3.1416"/>
+            <parent link="${prefix}link2"/>
+            <child link="${prefix}link3"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-2.75" upper="2.75" effort="0" velocity="0"/>
+        </joint>
+        <link name="${prefix}link4">
+            <inertial>
+                <origin xyz="-0.00013 -0.05482 0.00132" rpy="0 0 0"/>
+                <mass value="0.41"/>
+                <inertia ixx="0.00031331" ixy="0.0" ixz="0.0" iyy="0.00013204" iyz="0.0" izz="0.0002393"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link4.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link4.glb"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint4" type="revolute">
+            <origin xyz="0 0 0" rpy="-1.5708 0 3.1416"/>
+            <parent link="${prefix}link3"/>
+            <child link="${prefix}link4"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.01" upper="2.14" effort="0" velocity="0"/>
+        </joint>
+        <link name="${prefix}link5">
+            <inertial>
+                <origin xyz="0.00303 0.00617 -0.11778" rpy="0 0 0"/>
+                <mass value="0.56"/>
+                <inertia ixx="0.0008249" ixy="0.0" ixz="0.0" iyy="0.00078548" iyz="0.0" izz="0.00021015"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link5.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link5.glb"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint5" type="revolute">
+            <origin xyz="0 -0.27001 0" rpy="1.5708 -1.5708 0"/>
+            <parent link="${prefix}link4"/>
+            <child link="${prefix}link5"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-2.75" upper="2.75" effort="0" velocity="0"/>
+        </joint>
+        <link name="${prefix}link6">
+            <inertial>
+                <origin xyz="0.00014 -0.0027 -0.00025" rpy="0 0 0"/>
+                <mass value="0.31"/>
+                <inertia ixx="0.00008181" ixy="0.0" ixz="0.0" iyy="0.00007176" iyz="0.0" izz="0.00007906"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link6.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link6.glb"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint6" type="revolute">
+            <origin xyz="0 0 0" rpy="1.5708 -1.5708 0"/>
+            <parent link="${prefix}link5"/>
+            <child link="${prefix}link6"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-0.73" upper="0.95" effort="0" velocity="0"/>
+        </joint>
+        <link name="${prefix}link7">
+            <inertial>
+                <origin xyz="-0.00014000 -0.00010000 -0.00275000" rpy="0 0 0"/>
+                <mass value="0.000001"/>
+                <inertia ixx="1.1000000000000001e-07" ixy="0" ixz="0" iyy="1.1000000000000001e-07" iyz="0" izz="1.9999999999999999e-07"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link7.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/link7.glb"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint7" type="revolute">
+            <origin xyz="0 -0.0235 0" rpy="1.5708 0 0"/>
+            <parent link="${prefix}link6"/>
+            <child link="${prefix}link7"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
+        </joint>
+
+        <xacro:Hand type="${type}" stand="${stand}" direction="${direction}" prefix="${prefix}"/>
+
+    </xacro:macro>
+</robot>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot name="nero_right" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="side" value="right"/>
+    <xacro:property name="prefix" value="right_"/>
+    <xacro:arg name="type" default="v1"/>
+    <xacro:arg name="stand" default="v1"/>
+
+    <xacro:include filename="$(find nero_description)/xacro/nero.xacro"/>
+
+    <link name="world"/>
+    <joint name="world_to_base" type="fixed">
+        <parent link="world"/>
+        <child link="right_base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 3.14159"/> </joint>
+
+    <xacro:Nero type="$(arg type)" stand="$(arg stand)" side="${side}" prefix="${prefix}"/>
+</robot>

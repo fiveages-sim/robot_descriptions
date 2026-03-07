@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find revo2_description)/xacro/revo_hand.xacro"/>
+
+    <xacro:macro name="Hand" params="type stand direction prefix">
+
+        <xacro:property name="actual_stand" value="${type if type != 'hand' else stand}"/>
+        <xacro:property name="stand_link_name" value="${prefix}stand_adapter"/>
+
+        <link name="${stand_link_name}">
+            <visual>
+                <xacro:if value="${actual_stand == 'v1'}">
+                    <origin xyz="0 0 0" rpy="-1.57 -1.57 -1.57"/>
+                    <geometry>
+                        <mesh filename="package://nero_description/meshes/stand_v1.glb"/>
+                    </geometry>
+                </xacro:if>
+                <xacro:if value="${actual_stand == 'v2'}">
+                    <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
+                    <geometry>
+                        <mesh filename="package://nero_description/meshes/stand_v2.glb"/>
+                    </geometry>
+                </xacro:if>
+                <xacro:if value="${actual_stand == 'link8'}">
+                    <origin xyz="0 0 0" rpy="0 0 0"/>
+                    <geometry>
+                        <mesh filename="package://nero_description/meshes/link8.glb"/>
+                    </geometry>
+                </xacro:if>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://nero_description/meshes/${'link8' if actual_stand == 'link8' else 'stand_v1'}.glb"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="${prefix}stand_joint" type="fixed">
+            <xacro:if value="${actual_stand == 'link8'}">
+                <origin xyz="0.032 0 -0.0235" rpy="-1.5708 0 -1.5708"/>
+            </xacro:if>
+            <xacro:unless value="${actual_stand == 'link8'}">
+                <origin xyz="0.033 0 -0.0235" rpy="0 0 0"/>
+            </xacro:unless>
+            <parent link="${prefix}link7"/>
+            <child link="${stand_link_name}"/>
+        </joint>
+
+        <xacro:if value="${type == 'hand'}">
+            <joint name="${prefix}hand_connection_joint" type="fixed">
+                <origin xyz="0.01093 0 0" rpy="-1.57 3.14 -1.57"/>
+                <parent link="${stand_link_name}"/>
+                <child link="${prefix}hand_base_link"/>
+            </joint>
+            <xacro:RevoHand direction="${direction}"/>
+        </xacro:if>
+
+    </xacro:macro>
+</robot>
