@@ -15,4 +15,9 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=aidal
 ```
 
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_common_launch manipulator.launch.py robot:=aidal type:=eg2-4c2
+```
+
 ![Realman AIDAL](../../.images/realman_aidal.png)

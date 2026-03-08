@@ -1,37 +1,77 @@
 <?xml version="1.0"?>
-<robot name="overseas_65_b_v_description" xmlns:xacro="http://ros.org/wiki/xacro">
-  <!-- 引入各个模块的 xacro 文件，分别定义底盘、夹爪、升降平台、机械臂及关节 -->
-  <xacro:include filename="$(find aidal_description)/xacro/woosh_agv.xacro"/>
-  <xacro:include filename="$(find aidal_description)/xacro/body.xacro"/>
-<!--  <xacro:include filename="$(find aidal_description)/xacro/pro_arm.xacro"/>-->
-<!--  <xacro:include filename="$(find aidal_description)/xacro/right_arm.xacro"/>-->
+<robot name="RealMan_AIDAL" xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:arg name="type" default="empty"/>
 
-  <xacro:include filename="$(find rm65_description)/xacro/arm.xacro"/>
-  <xacro:rm65 name="l" direction="l"/>
-  <xacro:rm65 name="r" direction="r"/>
+	<xacro:property name="type_arg" value="$(arg type)"/>
+	<xacro:property name="selected_gripper_type" value="empty"/>
+	<xacro:if value="${type_arg == 'eg2-4c2'}">
+		<xacro:property name="selected_gripper_type" value="EG2-4C2"/>
+	</xacro:if>
 
-  <joint name="body_base_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="body_base_link"/>
-  </joint>
-  <joint name="l_base_joint1" type="fixed">
-    <origin xyz="0.1 -0.1103 0.031645" rpy="0 -0.7854 3.14159"/>
-    <parent link="platform_base_link"/>
-    <child link="l_base_link"/>
-  </joint>
+	<!-- 引入各个模块的 xacro 文件，分别定义底盘、夹爪、升降平台、机械臂及关节 -->
+	<xacro:include filename="$(find aidal_description)/xacro/components/woosh_agv.xacro"/>
+	<xacro:include filename="$(find aidal_description)/xacro/components/body.xacro"/>
+	<xacro:include filename="$(find aidal_description)/xacro/ee.xacro"/>
 
-  <joint name="r_base_joint1" type="fixed">
-    <origin xyz="-0.1 -0.1103 0.031645" rpy="0 -0.7854 0" />
-    <parent link="platform_base_link" />
-    <child link="r_base_link" />
-  </joint>
-  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/left_hand.urdf.xacro"/>-->
-  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/right_hand.urdf.xacro"/>-->
-  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/rm65_b_v_right.urdf.xacro"/>-->
-  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/joint.urdf.xacro"/>-->
-  <!--  &lt;!&ndash; 在 Gazebo 仿真环境中添加控制传动配置及 Gazebo 专用插件 &ndash;&gt;-->
-  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/rm65_b_v_left_transmission.xacro"/>-->
-  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/rm65_b_v_right_transmission.xacro"/>-->
-  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/body_head_platform_transmission.xacro"/>-->
-  <!--  <xacro:include filename="$(find overseas_65_b_v_description)/urdf/common_gazebo.xacro"/>-->
+	<xacro:include filename="$(find rm75_description)/xacro/arm.xacro"/>
+	<xacro:rm75 name="left" use_base_link="false" ee_type="aidal"/>
+	<xacro:rm75 name="right" use_base_link="false" ee_type="aidal"/>
+	<xacro:aidal_ee type="${selected_gripper_type}"/>
+
+	<joint name="body_base_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="body_base_link"/>
+	</joint>
+
+	<joint name="l_base_joint1" type="fixed">
+		<origin xyz="0.1 -0.1103 0.031645" rpy="0 -0.7854 3.14159"/>
+		<parent link="platform_base_link"/>
+		<child link="left_base_link"/>
+	</joint>
+
+	<joint name="r_base_joint1" type="fixed">
+		<origin xyz="-0.1 -0.1103 0.031645" rpy="0 -0.7854 0"/>
+		<parent link="platform_base_link"/>
+		<child link="right_base_link"/>
+	</joint>
+
+	<link name="left_base_link">
+		<inertial>
+			<origin xyz="-3.58E-05 -0.0056915 0.024464"/>
+			<mass value="0.23441"/>
+			<inertia
+					ixx="0.00027369"
+					ixy="6.5702E-08"
+					ixz="2.7812E-09"
+					iyy="0.000264"
+					iyz="-1.6355E-06"
+					izz="0.00036679"/>
+		</inertial>
+	</link>
+
+	<joint name="l_base_joint2" type="fixed">
+		<origin xyz="0 0 0.187" rpy="-1.5708 0 0"/>
+		<parent link="left_base_link"/>
+		<child link="left_arm_root"/>
+	</joint>
+
+	<link name="right_base_link">
+		<inertial>
+			<origin xyz="-4.8022E-05 0.0056915 0.024715"/>
+			<mass value="0.23441"/>
+			<inertia
+					ixx="0.00027369"
+					ixy="6.5702E-08"
+					ixz="-3.2599E-09"
+					iyy="0.000264"
+					iyz="1.6355E-06"
+					izz="0.00036679"/>
+		</inertial>
+	</link>
+
+	<joint name="r_base_joint2" type="fixed">
+		<origin xyz="0 0 0.187" rpy="-1.5708 0 3.1415"/>
+		<parent link="right_base_link"/>
+		<child link="right_arm_root"/>
+	</joint>
 </robot>
