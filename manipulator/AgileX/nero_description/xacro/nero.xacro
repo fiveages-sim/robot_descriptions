@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="Nero" params="type stand direction prefix">
-
-        <xacro:include filename="$(find nero_description)/xacro/hand.xacro"/>
+    <xacro:include filename="$(find nero_description)/xacro/hand.xacro"/>
+    <xacro:macro name="Nero" params="type stand direction prefix is_arm_only:=false">
+        <xacro:unless value="${is_arm_only}">
+            <xacro:Hand type="${type}" stand="${stand}" direction="${direction}" prefix="${prefix}"/>
+        </xacro:unless>
 
         <link name="${prefix}base_link">
             <inertial>
@@ -13,13 +15,13 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/base_link.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/base_link.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/base_link.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/base_link.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -32,13 +34,13 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link1.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link1.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link1.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link1.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -58,13 +60,13 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link2.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link2.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link2.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link2.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -84,13 +86,13 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link3.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link3.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link3.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link3.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -110,13 +112,13 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link4.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link4.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link4.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link4.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -136,13 +138,13 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link5.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link5.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link5.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link5.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -162,13 +164,13 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link6.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link6.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link6.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link6.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -188,13 +190,13 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link7.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link7.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://nero_description/meshes/link7.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/link7.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -206,7 +208,6 @@
             <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
         </joint>
 
-        <xacro:Hand type="${type}" stand="${stand}" direction="${direction}" prefix="${prefix}"/>
 
     </xacro:macro>
 </robot>

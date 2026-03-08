@@ -1,31 +1,53 @@
 <?xml version="1.0"?>
-<robot name="nero" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Nero" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:arg name="type" default="v1"/>
-    <xacro:arg name="stand" default="v1"/>
+    <xacro:arg name="collider" default="simple"/>
     <xacro:arg name="direction" default="left"/>
     <xacro:arg name="scene" default="world"/>
 
     <xacro:property name="prefix" value="$(arg direction)_"/>
-    <xacro:property name="selected_scene" value="$(arg scene)"/>
+    <xacro:property name="type_arg" value="$(arg type)"/>
+
+    <xacro:property name="is_stand_only" value="${'stand' in type_arg}"/>
+    <xacro:property name="is_arm_only" value="${type_arg == 'arm_only'}"/>
+
+    <xacro:property name="stand_type" value="v1"/>
+    <xacro:if value="${'v2' in type_arg}"><xacro:property name="stand_type" value="v2"/></xacro:if>
+    <xacro:if value="${'link8' in type_arg}"><xacro:property name="stand_type" value="link8"/></xacro:if>
 
     <xacro:include filename="$(find nero_description)/xacro/nero.xacro"/>
 
-    <link name="base_link"/>
-    <xacro:if value="${selected_scene == 'world'}">
+    <xacro:if value="${'$(arg scene)' == 'world'}">
         <link name="world"/>
+    </xacro:if>
+
+    <xacro:if value="${is_stand_only}">
+        <xacro:include filename="$(find nero_description)/xacro/hand.xacro"/>
+        <xacro:Hand type="hand" stand="${stand_type}" direction="$(arg direction)" prefix="${prefix}" standalone="true"/>
         <joint name="world_fixed" type="fixed">
             <parent link="world"/>
-            <child link="base_link"/>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <child link="${prefix}stand_adapter"/>
         </joint>
     </xacro:if>
 
-    <joint name="${prefix}base_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="${prefix}base_link"/>
-    </joint>
+    <xacro:unless value="${is_stand_only}">
+        <link name="base_link"/>
+        <xacro:if value="${'$(arg scene)' == 'world'}">
+            <joint name="world_fixed" type="fixed">
+                <parent link="world"/>
+                <child link="base_link"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </joint>
+        </xacro:if>
 
-    <xacro:Nero type="$(arg type)" stand="$(arg stand)" direction="$(arg direction)" prefix="${prefix}"/>
+        <joint name="${prefix}base_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${prefix}base_link"/>
+            <origin xyz="0 0 0" rpy="0 0 3.14159"/>
+        </joint>
 
+        <xacro:Nero type="${type_arg}" stand="${stand_type}" direction="$(arg direction)" prefix="${prefix}"
+                    is_arm_only="${is_arm_only}"/>
+    </xacro:unless>
 </robot>

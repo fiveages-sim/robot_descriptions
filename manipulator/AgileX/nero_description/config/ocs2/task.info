@@ -1,0 +1,130 @@
+; robot model meta-information
+model_information {
+  manipulatorModelType     0      // 0: Default-arm (固定底座)
+
+  removeJoints {
+  }
+
+  baseFrame                       "base_link"
+  eeFrame                         "left_link6"
+}
+
+model_settings
+{
+  usePreComputation               true
+  recompileLibraries              true
+}
+
+; DDP (Differential Dynamic Programming)
+ddp
+{
+  algorithm                       SLQ
+  nThreads                        3
+  threadPriority                  50
+  maxNumIterations                1
+  minRelCost                      0.1
+  constraintTolerance             1e-3
+  displayInfo                     false
+  displayShortSummary             false
+  checkNumericalStability         false
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  timeStep                        1e-3
+  backwardPassIntegratorType      ODE45
+  strategy                        LINE_SEARCH
+  lineSearch
+  {
+    minStepLength                 1e-2
+    maxStepLength                 1.0
+  }
+}
+
+; MPC 控制频率设置
+mpc
+{
+  timeHorizon                     1.0   ; 预测时域 [s]
+  solutionTimeWindow              0.2   ; [s]
+  mpcDesiredFrequency             100   ; [Hz]
+  mrtDesiredFrequency             400   ; [Hz]
+}
+
+; 初始状态（7个关节的弧度值）
+initialState
+{
+  arm
+  {
+    (0,0)   0.0     ; left_joint1
+    (1,0)   -0.5     ; left_joint2
+    (2,0)   0.0     ; left_joint3
+    (3,0)   2.0     ; left_joint4
+    (4,0)   0.0     ; left_joint5
+    (5,0)   0.0     ; left_joint6
+    (6,0)   0.0     ; left_joint7
+  }
+}
+
+inputCost
+{
+  R
+  {
+    arm
+    {
+      scaling 1e-2
+      ; 惩罚关节速度，数值越大动作越平滑/迟钝
+      (0,0)  1.0  ; left_joint1
+      (1,1)  1.0  ; left_joint2
+      (2,2)  1.0  ; left_joint3
+      (3,3)  1.0  ; left_joint4
+      (4,4)  1.0  ; left_joint5
+      (5,5)  1.0  ; left_joint6
+      (6,6)  1.0  ; left_joint7
+    }
+  }
+}
+
+endEffector
+{
+  muPosition      10.0
+  muOrientation    5.0
+}
+
+finalEndEffector
+{
+  muPosition      10.0
+  muOrientation    5.0
+}
+
+; 关节速度限制 [rad/s]
+jointVelocityLimits
+{
+  activate  true
+  mu      0.01
+  delta   1e-3
+
+  lowerBound
+  {
+    arm
+    {
+      (0,0)  -10.0
+      (1,0)  -10.0
+      (2,0)  -10.0
+      (3,0)  -10.0
+      (4,0)  -10.0
+      (5,0)  -10.0
+      (6,0)  -10.0
+    }
+  }
+  upperBound
+  {
+    arm
+    {
+      (0,0)  10.0
+      (1,0)  10.0
+      (2,0)  10.0
+      (3,0)  10.0
+      (4,0)  10.0
+      (5,0)  10.0
+      (6,0)  10.0
+    }
+  }
+}

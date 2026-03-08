@@ -11,26 +11,28 @@ colcon build --packages-up-to nero_description --symlink-install
 ```
 
 ## 2. Visualize the robot
-
-* Launch left Nero Arm with v1 stand
+### 2.1 Full Nero Arm
+* Launch left Nero Arm with v1 stand and revo2 hand
     ```bash
     source ~/ros2_ws/install/setup.bash
     ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="v1" direction:=left
     ```
-* Launch left Nero Arm with revo2 hand
-    ```bash
-    source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="hand" direction:=left
-    ```
-* Launch right Nero Arm with v1 stand
+* Launch right Nero Arm with v1 stand and revo2 hand
     ```bash
     source ~/ros2_ws/install/setup.bash
     ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="v1" direction:=right
     ```
-* Launch right Nero Arm with revo2 hand
+
+### 2.2 Components
+* Arm only
     ```bash
     source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="hand" direction:=right
+    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="arm_only" direction:=left
+    ```
+* Stand only
+    ```bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="stand_v1" direction:=left
     ```
 
 ## 3. OCS2 Demo
@@ -39,10 +41,16 @@ colcon build --packages-up-to nero_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=nero
+ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=nero 
 ```
 
 ### 3.2 OCS2 Arm Controller Demo
+* Mock Hardware
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=nero type:=arm_only
+  ```
+  
 * Gazebo
   ```bash
   source ~/ros2_ws/install/setup.bash
@@ -52,5 +60,5 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=nero
 * Isaac Sim
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=nero hardware:=isaac
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=nero hardware:=isaac type:=arm_only
   ```

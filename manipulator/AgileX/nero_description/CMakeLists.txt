@@ -21,7 +21,7 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 install(
-  DIRECTORY meshes urdf xacro config launch
+  DIRECTORY meshes urdf xacro config
   DESTINATION share/${PROJECT_NAME}
 )
 if(BUILD_TESTING)

@@ -4,18 +4,19 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="nero">
-  <link name="base_link"/>
   <link name="world"/>
+  <link name="base_link"/>
   <joint name="world_fixed" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
-  <joint name="right_base_joint" type="fixed">
+  <joint name="left_base_joint" type="fixed">
     <parent link="base_link"/>
-    <child link="right_base_link"/>
+    <child link="left_base_link"/>
+    <origin rpy="0 0 3.14159" xyz="0 0 0"/>
   </joint>
-  <link name="right_base_link">
+  <link name="left_base_link">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.00963614954335565 0.00016786624100977 0.044860101664403"/>
       <mass value="0.77"/>
@@ -24,17 +25,17 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/base_link.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/base_link.glb"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/base_link.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/base_link.glb"/>
       </geometry>
     </collision>
   </link>
-  <link name="right_link1">
+  <link name="left_link1">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.00077 -0.00006 -0.00686"/>
       <mass value="0.77"/>
@@ -43,24 +44,24 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link1.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link1.glb"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link1.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link1.glb"/>
       </geometry>
     </collision>
   </link>
-  <joint name="right_joint1" type="revolute">
+  <joint name="left_joint1" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.138"/>
-    <parent link="right_base_link"/>
-    <child link="right_link1"/>
+    <parent link="left_base_link"/>
+    <child link="left_link1"/>
     <axis xyz="0 0 1"/>
     <limit effort="0" lower="-2.7" upper="2.7" velocity="0"/>
   </joint>
-  <link name="right_link2">
+  <link name="left_link2">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.00011 -0.06072 0.00148"/>
       <mass value="0.49"/>
@@ -69,24 +70,24 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link2.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link2.glb"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link2.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link2.glb"/>
       </geometry>
     </collision>
   </link>
-  <joint name="right_joint2" type="revolute">
+  <joint name="left_joint2" type="revolute">
     <origin rpy="1.5708 3.1415 0" xyz="0 0 0"/>
-    <parent link="right_link1"/>
-    <child link="right_link2"/>
+    <parent link="left_link1"/>
+    <child link="left_link2"/>
     <axis xyz="0 0 1"/>
     <limit effort="0" lower="-1.74" upper="1.74" velocity="0"/>
   </joint>
-  <link name="right_link3">
+  <link name="left_link3">
     <inertial>
       <origin rpy="0 0 0" xyz="0.00014 0.00211 -0.04853"/>
       <mass value="0.67"/>
@@ -95,24 +96,24 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link3.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link3.glb"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link3.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link3.glb"/>
       </geometry>
     </collision>
   </link>
-  <joint name="right_joint3" type="revolute">
+  <joint name="left_joint3" type="revolute">
     <origin rpy="-1.5708 0 3.1416" xyz="0 -0.31 0"/>
-    <parent link="right_link2"/>
-    <child link="right_link3"/>
+    <parent link="left_link2"/>
+    <child link="left_link3"/>
     <axis xyz="0 0 1"/>
     <limit effort="0" lower="-2.75" upper="2.75" velocity="0"/>
   </joint>
-  <link name="right_link4">
+  <link name="left_link4">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.00013 -0.05482 0.00132"/>
       <mass value="0.41"/>
@@ -121,24 +122,24 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link4.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link4.glb"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link4.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link4.glb"/>
       </geometry>
     </collision>
   </link>
-  <joint name="right_joint4" type="revolute">
+  <joint name="left_joint4" type="revolute">
     <origin rpy="-1.5708 0 3.1416" xyz="0 0 0"/>
-    <parent link="right_link3"/>
-    <child link="right_link4"/>
+    <parent link="left_link3"/>
+    <child link="left_link4"/>
     <axis xyz="0 0 1"/>
     <limit effort="0" lower="-1.01" upper="2.14" velocity="0"/>
   </joint>
-  <link name="right_link5">
+  <link name="left_link5">
     <inertial>
       <origin rpy="0 0 0" xyz="0.00303 0.00617 -0.11778"/>
       <mass value="0.56"/>
@@ -147,24 +148,24 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link5.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link5.glb"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link5.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link5.glb"/>
       </geometry>
     </collision>
   </link>
-  <joint name="right_joint5" type="revolute">
+  <joint name="left_joint5" type="revolute">
     <origin rpy="1.5708 -1.5708 0" xyz="0 -0.27001 0"/>
-    <parent link="right_link4"/>
-    <child link="right_link5"/>
+    <parent link="left_link4"/>
+    <child link="left_link5"/>
     <axis xyz="0 0 1"/>
     <limit effort="0" lower="-2.75" upper="2.75" velocity="0"/>
   </joint>
-  <link name="right_link6">
+  <link name="left_link6">
     <inertial>
       <origin rpy="0 0 0" xyz="0.00014 -0.0027 -0.00025"/>
       <mass value="0.31"/>
@@ -173,24 +174,24 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link6.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link6.glb"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link6.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link6.glb"/>
       </geometry>
     </collision>
   </link>
-  <joint name="right_joint6" type="revolute">
+  <joint name="left_joint6" type="revolute">
     <origin rpy="1.5708 -1.5708 0" xyz="0 0 0"/>
-    <parent link="right_link5"/>
-    <child link="right_link6"/>
+    <parent link="left_link5"/>
+    <child link="left_link6"/>
     <axis xyz="0 0 1"/>
     <limit effort="0" lower="-0.73" upper="0.95" velocity="0"/>
   </joint>
-  <link name="right_link7">
+  <link name="left_link7">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.00014000 -0.00010000 -0.00275000"/>
       <mass value="0.000001"/>
@@ -199,39 +200,21 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link7.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link7.glb"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://nero_description/meshes/link7.glb"/>
+        <mesh filename="file:///home/shiman-liang/ros2_ws/install/nero_description/share/nero_description/meshes/link7.glb"/>
       </geometry>
     </collision>
   </link>
-  <joint name="right_joint7" type="revolute">
+  <joint name="left_joint7" type="revolute">
     <origin rpy="1.5708 0 0" xyz="0 -0.0235 0"/>
-    <parent link="right_link6"/>
-    <child link="right_link7"/>
+    <parent link="left_link6"/>
+    <child link="left_link7"/>
     <axis xyz="0 0 1"/>
     <limit effort="0" lower="-1.57" upper="1.57" velocity="0"/>
-  </joint>
-  <link name="right_stand_adapter">
-    <visual>
-      <origin rpy="-1.57 -1.57 -1.57" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://nero_description/meshes/stand_v1.glb"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://nero_description/meshes/stand_v1.glb"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_stand_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.033 0 -0.0235"/>
-    <parent link="right_link7"/>
-    <child link="right_stand_adapter"/>
   </joint>
 </robot>
