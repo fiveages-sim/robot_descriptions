@@ -25,6 +25,10 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=rm75 type:=fb
 ```
 ```bash
 source ~/ros2_ws/install/setup.bash
+ros2 launch robot_common_launch manipulator.launch.py robot:=rm75 type:=fb_camera
+```
+```bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=rm75 type:=aidal
 ```
 

@@ -155,6 +155,21 @@
 			<xacro:if value="${ee_type_norm == 'basic'}">
 				<xacro:visual_collision mesh="ee/ee_basic.glb"/>
 			</xacro:if>
+			<xacro:if value="${ee_type_norm == 'fb_camera'}">
+				<xacro:visual_collision mesh="ee/ee_fb_camera.glb"/>
+				<visual>
+					<origin xyz="-0.033 -0.0085 0.01562"/>
+					<geometry>
+						<mesh filename="${mesh_path}/ee/camera_stand_d405.glb"/>
+					</geometry>
+				</visual>
+				<visual>
+					<origin xyz="-0.13322 -0.0005 0.044651" rpy="0 -1.5708 -1.5708"/>
+					<geometry>
+						<mesh filename="file://$(find sensor_models)/meshes/d405.glb"/>
+					</geometry>
+				</visual>
+			</xacro:if>
 		</link>
 
 		
@@ -235,6 +250,9 @@
 			</xacro:if>
 			<xacro:if value="${ee_type_norm == 'fb'}">
 				<origin xyz="0 0 0.046"/>
+			</xacro:if>
+			<xacro:if value="${ee_type_norm == 'fb_camera'}">
+				<origin xyz="0 0 0.0695"/>
 			</xacro:if>
 			<parent link="${prefix}link7"/>
 			<child link="${prefix}ee"/>

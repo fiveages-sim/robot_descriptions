@@ -16,6 +16,9 @@
 	<xacro:if value="${type_arg == 'fb'}">
 		<xacro:property name="selected_ee_type" value="fb"/>
 	</xacro:if>
+	<xacro:if value="${type_arg == 'fb_camera'}">
+		<xacro:property name="selected_ee_type" value="fb_camera"/>
+	</xacro:if>
 
 	<xacro:if value="${type_arg == 'aidal'}">
 		<xacro:property name="selected_ee_type" value="aidal"/>
