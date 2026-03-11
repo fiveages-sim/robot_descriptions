@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<!--
+  Component-wise description for Ai2 Bot2, used by
+  robot_descriptions/common/robot_common_launch/visualize/component.launch.py
+
+  Supported types (arg "type"):
+    - base (default)
+    - base (full body, no gripper): base_link from chassis, body, ego on body_link4, arms on body_link4
+    - arms (arms only, like FiveAges W2): no body, no chassis, no ego; base_link exists for RViz fixed frame
+    - left_arm / right_arm: root = base_link, both arms only, no body/chassis/ego
+-->
+<robot name="ai2_bot2_component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- component.launch.py default should show the base -->
+  <xacro:arg name="type" default="base"/>
+  <!-- Lock chassis joints by default for visualization (like W2) -->
+  <xacro:arg name="chassis_joints_movable" default="false"/>
+
+  <!-- Root link: type=base uses chassis (base_link); otherwise provide a stable base_link for RViz -->
+  <xacro:if value="${'$(arg type)' != 'base'}">
+    <link name="base_link"/>
+  </xacro:if>
+
+  <!-- type=arms: arms only (no body/chassis/ego); keep base_link so RViz fixed frame works -->
+  <xacro:if value="${'$(arg type)' == 'arms'}">
+    <link name="arm_base"/>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="arm_base"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
+    <xacro:Ai2Bot2Arm name="left" parent_link="arm_base" direction="1"/>
+    <xacro:Ai2Bot2Arm name="right" parent_link="arm_base" direction="-1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'base'}">
+    <xacro:include filename="$(find ai2_bot2_description)/xacro/components/chassis.xacro"/>
+    <xacro:include filename="$(find ai2_bot2_description)/xacro/components/body.xacro"/>
+    <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
+    <xacro:Ai2Bot2Chassis joints_movable="$(arg chassis_joints_movable)"/>
+    <xacro:Ai2Bot2Body parent_link="base_link"/>
+    <link name="ego"></link>
+    <joint name="ego_joint" type="fixed">
+      <origin xyz="-0.061 0 0.3255" rpy="0 0 0" />
+      <parent link="body_link_4" />
+      <child link="ego" />
+    </joint>
+    <xacro:Ai2Bot2Arm name="left" parent_link="body_link_4" direction="1"/>
+    <xacro:Ai2Bot2Arm name="right" parent_link="body_link_4" direction="-1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left_arm'}">
+    <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
+    <xacro:Ai2Bot2Arm name="left" parent_link="base_link" direction="1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right_arm'}">
+    <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
+    <xacro:Ai2Bot2Arm name="right" parent_link="base_link" direction="-1"/>
+  </xacro:if>
+
+</robot>

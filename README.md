@@ -36,6 +36,7 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Galaxea  | [R1 Pro](humanoid/Galaxea/galaxea_r1pro_description) | Yes     | <img src="humanoid/.images/galaxea_r1_pro.png" width="200">                                                                                                                                                                   |
 | Realman  | [AIDAL](humanoid/Realman/aidal_description)          | Yes     | <img src="humanoid/.images/realman_aidal.png" width="200">                                                                                                                                                                    |
 | Zerith   | [H1](humanoid/Zerith/zerith_h1_description)          | Yes     | <img src="humanoid/.images/zerith_h1.png" width="200">                                                                                                                                                                        |
+| Ai2      | [Bot2](humanoid/Ai2robotics/ai2_bot2_description)    | Yes     | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                        |
 
 ## Mobile Manipulators
 
