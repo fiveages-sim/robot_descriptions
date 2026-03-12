@@ -1,0 +1,93 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_wbc_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+ocs2_wbc_controller:
+  ros__parameters:
+    update_rate: 100
+    mpc_frequency: 100
+    info_file_name: fixed_base
+
+    joints:
+      - leg_joint1
+      - leg_joint2
+      - leg_joint3
+      - leg_joint4
+      - left_arm_joint1
+      - left_arm_joint2
+      - left_arm_joint3
+      - left_arm_joint4
+      - left_arm_joint5
+      - left_arm_joint6
+      - left_arm_joint7
+      - right_arm_joint1
+      - right_arm_joint2
+      - right_arm_joint3
+      - right_arm_joint4
+      - right_arm_joint5
+      - right_arm_joint6
+      - right_arm_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: galbot_one
+    home_interpolation_type: linear
+    # joint order:
+    # [leg_joint1, leg_joint2, leg_joint3, leg_joint4,
+#  left_arm_joint1..7, right_arm_joint1..7]
+    # home: low standing posture (between upright and squat), arms relatively open
+    home_pos: [0.48, 1.20, 0.95, 0.0, 0.15,  0.70, 0.00,  1.00, 0.00, 0.35, 0.00, -0.15, -0.70, 0.00, -1.00, 0.00, -0.35, 0.00]
+    # rest: full squat posture, arms folded closer to body
+    rest_pos: [0.20, 0.55, 0.40, 0.0, 0.35,  1.20, 0.25,  1.60, 0.20, 0.80, 0.10, -0.35, -1.20,-0.25, -1.60,-0.20,-0.80,-0.10]
+
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100
+    joints:
+      - head_joint1
+      - head_joint2
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    home_1: [0.0, 0.0]
+    home_2: [0.0, -0.1]
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
+
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_left_joint
+    joints:
+      - left_gripper_left_joint
+      - left_gripper_right_joint
+    use_effort_interface: false
+
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_left_joint
+    joints:
+      - right_gripper_left_joint
+      - right_gripper_right_joint
+    use_effort_interface: false

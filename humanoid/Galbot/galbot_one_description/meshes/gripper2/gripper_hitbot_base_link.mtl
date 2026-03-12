@@ -1,0 +1,17 @@
+# Blender 4.2.2 LTS MTL File: 'gripper.blend'
+# www.blender.org
+
+newmtl 材质
+Kd 0.757000 0.757000 0.757000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3
+Pr 0.437000
+Pm 1.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000

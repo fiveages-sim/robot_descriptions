@@ -1,0 +1,165 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link name="omni_chassis_leg_mount_link"/>
+  <joint name="omni_chassis_leg_mount_joint" type="fixed">
+    <origin rpy="1.5707963267948966 0 0" xyz="0.134 -0.087 0.13"/>
+    <parent link="omni_chassis_base_link"/>
+    <child link="omni_chassis_leg_mount_link"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+  <joint name="leg_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="omni_chassis_leg_mount_link"/>
+    <child link="leg_base_link"/>
+  </joint>
+  <link name="leg_base_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0027248 -0.094364 -0.050137"/>
+      <mass value="0.91885"/>
+      <inertia ixx="0.0043203" ixy="6.1508E-05" ixz="8.9569E-05" iyy="0.0039878" iyz="-0.0010684" izz="0.0027984"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_base_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_base_link_convex.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="leg_link1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.23294 -0.0052987 0.0039698"/>
+      <mass value="4.7692"/>
+      <inertia ixx="0.019082" ixy="-0.0011116" ixz="0.00034191" iyy="0.16145" iyz="-6.2146E-05" izz="0.15826"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_link1.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_link1_convex.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leg_joint1" type="revolute">
+    <origin rpy="-3.141592653589793 0 2.756573021" xyz="0 0 -0.087"/>
+    <parent link="leg_base_link"/>
+    <child link="leg_link1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="169" lower="0" upper="0.994837674" velocity="2.3"/>
+  </joint>
+  <link name="leg_link2">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.19637 2.4915E-06 0.0034234"/>
+      <mass value="3.6233"/>
+      <inertia ixx="0.0054462" ixy="-2.1435E-06" ixz="-2.9611E-05" iyy="0.066819" iyz="5.2347E-08" izz="0.071791"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_link2.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_link2_convex.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leg_joint2" type="revolute">
+    <origin rpy="-3.141592653589793 0 2.756573021" xyz="0.45 0 0"/>
+    <parent link="leg_link1"/>
+    <child link="leg_link2"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="169" lower="0" upper="3.141592654" velocity="2.3"/>
+  </joint>
+  <link name="leg_link3">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-1.1016E-05 0.012237 0.0042074"/>
+      <mass value="1.7624"/>
+      <inertia ixx="0.006745" ixy="-4.1776E-07" ixz="8.7932E-07" iyy="0.0066437" iyz="9.063E-05" izz="0.0073862"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_link3.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_link3_convex.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leg_joint3" type="revolute">
+    <origin rpy="-3.141592653589793 0 -3.141592653589793" xyz="0.39 0 0"/>
+    <parent link="leg_link2"/>
+    <child link="leg_link3"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="84" lower="0" upper="2.35619449" velocity="2.83"/>
+  </joint>
+  <link name="leg_link4">
+    <inertial>
+      <origin rpy="0 0 0" xyz="5.7927E-05 -3.0701E-05 0.15111"/>
+      <mass value="0.37584"/>
+      <inertia ixx="0.00049514" ixy="-3.0213E-07" ixz="-3.9055E-09" iyy="0.00051468" iyz="1.3486E-09" izz="0.00084078"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_link4.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://galbot_one_description/meshes/leg/leg_link4_convex.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leg_joint4" type="revolute">
+    <origin rpy="1.5707963267948966 0 -3.141592653589793" xyz="0 0 0"/>
+    <parent link="leg_link3"/>
+    <child link="leg_link4"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="30" lower="-1.570796327" upper="1.570796327" velocity="3.56"/>
+  </joint>
+  <link name="leg_torso_mount_link"/>
+  <joint name="leg_torso_mount_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="leg_link4"/>
+    <child link="leg_torso_mount_link"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+  <joint name="torso_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="leg_torso_mount_link"/>
+    <child link="torso_base_link"/>
+  </joint>
+</robot>
