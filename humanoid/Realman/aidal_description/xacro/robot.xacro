@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot name="RealMan_AIDAL" xmlns:xacro="http://ros.org/wiki/xacro">
 	<xacro:arg name="type" default="empty"/>
+	<xacro:property name="PI" value="3.1415926535897931"/>
 
 	<xacro:property name="type_arg" value="$(arg type)"/>
 	<xacro:property name="selected_gripper_type" value="empty"/>
@@ -10,6 +11,7 @@
 
 	<!-- 引入各个模块的 xacro 文件，分别定义底盘、夹爪、升降平台、机械臂及关节 -->
 	<xacro:include filename="$(find aidal_description)/xacro/components/woosh_agv.xacro"/>
+	<xacro:woosh_agv joints_movable="false"/>
 	<xacro:include filename="$(find aidal_description)/xacro/components/body.xacro"/>
 	<xacro:include filename="$(find aidal_description)/xacro/ee.xacro"/>
 
@@ -23,54 +25,14 @@
 		<child link="body_base_link"/>
 	</joint>
 
-	<joint name="l_base_joint1" type="fixed">
-		<origin xyz="0.1 -0.1103 0.031645" rpy="0 -0.7854 3.14159"/>
-		<parent link="platform_base_link"/>
-		<child link="left_base_link"/>
-	</joint>
-
-	<joint name="r_base_joint1" type="fixed">
-		<origin xyz="-0.1 -0.1103 0.031645" rpy="0 -0.7854 0"/>
-		<parent link="platform_base_link"/>
-		<child link="right_base_link"/>
-	</joint>
-
-	<link name="left_base_link">
-		<inertial>
-			<origin xyz="-3.58E-05 -0.0056915 0.024464"/>
-			<mass value="0.23441"/>
-			<inertia
-					ixx="0.00027369"
-					ixy="6.5702E-08"
-					ixz="2.7812E-09"
-					iyy="0.000264"
-					iyz="-1.6355E-06"
-					izz="0.00036679"/>
-		</inertial>
-	</link>
-
 	<joint name="l_base_joint2" type="fixed">
-		<origin xyz="0 0 0.187" rpy="-1.5708 0 0"/>
+		<origin xyz="0 0 0.187" rpy="-${PI/2} 0 0"/>
 		<parent link="left_base_link"/>
 		<child link="left_arm_root"/>
 	</joint>
 
-	<link name="right_base_link">
-		<inertial>
-			<origin xyz="-4.8022E-05 0.0056915 0.024715"/>
-			<mass value="0.23441"/>
-			<inertia
-					ixx="0.00027369"
-					ixy="6.5702E-08"
-					ixz="-3.2599E-09"
-					iyy="0.000264"
-					iyz="1.6355E-06"
-					izz="0.00036679"/>
-		</inertial>
-	</link>
-
 	<joint name="r_base_joint2" type="fixed">
-		<origin xyz="0 0 0.187" rpy="-1.5708 0 3.1415"/>
+		<origin xyz="0 0 0.187" rpy="-${PI/2} 0 ${PI}"/>
 		<parent link="right_base_link"/>
 		<child link="right_arm_root"/>
 	</joint>

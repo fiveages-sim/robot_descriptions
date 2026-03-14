@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="body_head_platform" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:property name="mesh_path" value="file://$(find aidal_description)/meshes/body/"/>
   <xacro:macro name="visual_collision" params="mesh">
     <visual>
@@ -28,7 +29,7 @@
           iyz="0.012363"
           izz="0.15316"/>
     </inertial>
-    <xacro:visual_collision mesh="body_base_link.obj"/>
+    <xacro:visual_collision mesh="base.glb"/>
   </link>
   <link name="platform_base_link">
     <inertial>
@@ -42,7 +43,7 @@
           iyz="6.163E-05"
           izz="0.021546"/>
     </inertial>
-    <xacro:visual_collision mesh="platform_body.obj"/>
+    <xacro:visual_collision mesh="lift.glb"/>
   </link>
   <link name="head_link1">
     <inertial>
@@ -56,7 +57,7 @@
           iyz="-4.661E-07"
           izz="1.3605E-05"/>
     </inertial>
-    <xacro:visual_collision mesh="head_link1.obj"/>
+    <xacro:visual_collision mesh="head1.glb"/>
   </link>
   <link name="head_link2">
     <inertial>
@@ -70,7 +71,7 @@
           iyz="1.8036E-05"
           izz="0.00052625"/>
     </inertial>
-    <xacro:visual_collision mesh="head_link2.obj"/>
+    <xacro:visual_collision mesh="head2.glb"/>
   </link>
   <link name="camera_link">
     <inertial>
@@ -84,16 +85,21 @@
           iyz="6.4645E-10"
           izz="3.0901E-05"/>
     </inertial>
-    <xacro:visual_collision mesh="d435.obj"/>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find sensor_models)/meshes/d435.glb"/>
+      </geometry>
+    </visual>
   </link>
 
-  <joint name="platform_joint" type="prismatic">
-    <origin xyz="0 -0.11663 1.271" />
+  <joint name="lift_joint" type="prismatic">
+    <origin xyz="0 -0.11663 0.271" />
     <parent link="body_base_link"/>
     <child link="platform_base_link"/>
-    <axis xyz="0 0 -1"/>
+    <axis xyz="0 0 1"/>
     <limit lower="0" upper="1" effort="60" velocity="0.15"/>
   </joint>
+
   <joint name="head_joint1" type="revolute">
     <origin xyz="0 -0.1018 0.126" />
     <parent link="platform_base_link"/>
@@ -101,6 +107,7 @@
     <axis xyz="0 0 1"/>
     <limit lower="-1.256" upper="1.256" effort="2" velocity="1.57"/>
   </joint>
+
   <joint name="head_joint2" type="revolute">
     <origin xyz="0 -0.02 0.044" />
     <parent link="head_link1"/>
@@ -108,12 +115,69 @@
     <axis xyz="-1 0 0"/>
     <limit lower="-0.419" upper="0.419" effort="2" velocity="1.57"/>
   </joint>
+
   <joint name="camera_joint" type="fixed">
-    <origin xyz="-0.0002391 -0.076866 0.061606" rpy="-1.5708 0 3.14159"/>
+    <origin xyz="-0.0002391 -0.076866 0.061606" rpy="-${PI/2} 0 ${PI}"/>
     <parent link="head_link2"/>
     <child link="camera_link"/>
-    <axis xyz="0 0 0"/>
   </joint>
+
+  <link name="top_camera"/>
+  <joint name="top_camera_joint" type="fixed">
+    <origin xyz=" 0 -0.1275 1.451" rpy="-${PI/2} 0 ${PI}"/>
+    <parent link="body_base_link"/>
+    <child link="top_camera"/>
+  </joint>
+
+  <joint name="l_base_joint1" type="fixed">
+    <origin xyz="0.1 -0.1103 0.031645" rpy="0 -${PI/4} ${PI}"/>
+    <parent link="platform_base_link"/>
+    <child link="left_base_link"/>
+  </joint>
+
+  <joint name="r_base_joint1" type="fixed">
+    <origin xyz="-0.1 -0.1103 0.031645" rpy="0 -${PI/4} 0"/>
+    <parent link="platform_base_link"/>
+    <child link="right_base_link"/>
+  </joint>
+
+  <link name="left_base_link">
+    <inertial>
+      <origin xyz="-3.58E-05 -0.0056915 0.024464"/>
+      <mass value="0.23441"/>
+      <inertia
+          ixx="0.00027369"
+          ixy="6.5702E-08"
+          ixz="2.7812E-09"
+          iyy="0.000264"
+          iyz="-1.6355E-06"
+          izz="0.00036679"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="${mesh_path}arm_base.glb"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="right_base_link">
+    <inertial>
+      <origin xyz="-4.8022E-05 0.0056915 0.024715"/>
+      <mass value="0.23441"/>
+      <inertia
+          ixx="0.00027369"
+          ixy="6.5702E-08"
+          ixz="-3.2599E-09"
+          iyy="0.000264"
+          iyz="1.6355E-06"
+          izz="0.00036679"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="${mesh_path}arm_base.glb"/>
+      </geometry>
+    </visual>
+  </link>
 </robot>
 
 

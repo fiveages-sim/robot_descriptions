@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="aidal_ee" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:include filename="$(find inspire_description)/xacro/EG2-4C2.xacro"/>
   <xacro:macro name="aidal_ee" params="type:='EG2-4C2'">
     <xacro:property name="gripper_type_norm" value="${str(type).upper()}"/>
@@ -9,13 +10,13 @@
       <joint name="left_gripper_fix" type="fixed">
         <parent link="left_ee"/>
         <child link="left_gripper_base"/>
-        <origin xyz="0 0 0.004" rpy="0 0 1.5708"/>
+        <origin xyz="0 0 0.004" rpy="0 0 ${PI/2}"/>
       </joint>
       <xacro:Gripper name="right"/>
       <joint name="right_gripper_fix" type="fixed">
         <parent link="right_ee"/>
         <child link="right_gripper_base"/>
-        <origin xyz="0 0 0.004" rpy="0 0 1.5708"/>
+        <origin xyz="0 0 0.004" rpy="0 0 ${PI/2}"/>
       </joint>
     </xacro:if>
     <!-- type='empty' 时不加载任何夹爪 -->
