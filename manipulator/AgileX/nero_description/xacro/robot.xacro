@@ -1,20 +1,60 @@
 <?xml version="1.0"?>
 <robot name="Nero" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:arg name="type" default="v1"/>
+    <xacro:arg name="type" default="dual"/>
     <xacro:arg name="collider" default="simple"/>
-    <xacro:arg name="direction" default="left"/>
     <xacro:arg name="scene" default="world"/>
 
-    <xacro:property name="prefix" value="$(arg direction)_"/>
     <xacro:property name="type_arg" value="$(arg type)"/>
-
-    <xacro:property name="is_stand_only" value="${'stand' in type_arg}"/>
-    <xacro:property name="is_arm_only" value="${type_arg == 'arm_only'}"/>
-
     <xacro:property name="stand_type" value="v1"/>
-    <xacro:if value="${'v2' in type_arg}"><xacro:property name="stand_type" value="v2"/></xacro:if>
-    <xacro:if value="${'link8' in type_arg}"><xacro:property name="stand_type" value="link8"/></xacro:if>
+
+    <xacro:property name="selected_arm_config" value="left"/>
+    <xacro:property name="selected_gripper_type" value="none"/>
+    <xacro:property name="selected_arm_style" value="default"/>
+
+    <xacro:if value="${type_arg == 'left'}">
+        <xacro:property name="selected_arm_config" value="left"/>
+    </xacro:if>
+    <xacro:if value="${type_arg == 'right'}">
+        <xacro:property name="selected_arm_config" value="right"/>
+    </xacro:if>
+    <xacro:if value="${type_arg == 'dual'}">
+        <xacro:property name="selected_arm_config" value="dual"/>
+        <xacro:property name="selected_gripper_type" value="none"/>
+        <xacro:property name="selected_arm_style" value="dual_config"/>
+    </xacro:if>
+
+    <xacro:if value="${type_arg == 'brainco'}">
+        <xacro:property name="selected_arm_config" value="left"/>
+        <xacro:property name="selected_gripper_type" value="brainco"/>
+    </xacro:if>
+    <xacro:if value="${type_arg == 'ag2f90'}">
+        <xacro:property name="selected_arm_config" value="left"/>
+        <xacro:property name="selected_gripper_type" value="ag2f90"/>
+    </xacro:if>
+    <xacro:if value="${type_arg == 'rg75'}">
+        <xacro:property name="selected_arm_config" value="left"/>
+        <xacro:property name="selected_gripper_type" value="rg75"/>
+    </xacro:if>
+
+    <xacro:if value="${type_arg == 'dual_brainco'}">
+        <xacro:property name="selected_arm_config" value="dual"/>
+        <xacro:property name="selected_gripper_type" value="brainco"/>
+        <xacro:property name="selected_arm_style" value="dual_config"/>
+    </xacro:if>
+    <xacro:if value="${type_arg == 'dual_ag2f90'}">
+        <xacro:property name="selected_arm_config" value="dual"/>
+        <xacro:property name="selected_gripper_type" value="ag2f90"/>
+        <xacro:property name="selected_arm_style" value="dual_config"/>
+    </xacro:if>
+    <xacro:if value="${type_arg == 'dual_rg75'}">
+        <xacro:property name="selected_arm_config" value="dual"/>
+        <xacro:property name="selected_gripper_type" value="rg75"/>
+        <xacro:property name="selected_arm_style" value="dual_config"/>
+    </xacro:if>
+    <xacro:if value="${type_arg == 'stand'}">
+        <xacro:property name="selected_arm_config" value="stand_only"/>
+    </xacro:if>
 
     <xacro:include filename="$(find nero_description)/xacro/nero.xacro"/>
 
@@ -22,32 +62,72 @@
         <link name="world"/>
     </xacro:if>
 
-    <xacro:if value="${is_stand_only}">
+    <xacro:if value="${selected_arm_config == 'stand_only'}">
         <xacro:include filename="$(find nero_description)/xacro/hand.xacro"/>
-        <xacro:Hand type="hand" stand="${stand_type}" direction="$(arg direction)" prefix="${prefix}" standalone="true"/>
+        <xacro:Hand type="brainco" stand="${stand_type}" direction="left" prefix="left_" standalone="true"/>
         <joint name="world_fixed" type="fixed">
             <parent link="world"/>
-            <child link="${prefix}stand_adapter"/>
+            <child link="left_stand_adapter"/>
         </joint>
     </xacro:if>
 
-    <xacro:unless value="${is_stand_only}">
+    <xacro:if value="${selected_arm_config == 'left'}">
         <link name="base_link"/>
         <xacro:if value="${'$(arg scene)' == 'world'}">
             <joint name="world_fixed" type="fixed">
                 <parent link="world"/>
                 <child link="base_link"/>
-                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </joint>
+        </xacro:if>
+        <joint name="left_base_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="left_base_link"/>
+            <origin xyz="0 0 0" rpy="0 0 3.14159"/>
+        </joint>
+        <xacro:Nero type="${selected_gripper_type}" stand="${stand_type}" direction="left" prefix="left_"
+                    is_arm_only="${selected_gripper_type == 'none'}"/>
+    </xacro:if>
+
+    <xacro:if value="${selected_arm_config == 'right'}">
+        <link name="base_link"/>
+        <xacro:if value="${'$(arg scene)' == 'world'}">
+            <joint name="world_fixed" type="fixed">
+                <parent link="world"/>
+                <child link="base_link"/>
+            </joint>
+        </xacro:if>
+        <joint name="right_base_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="right_base_link"/>
+            <origin xyz="0 0 0" rpy="0 0 3.14159"/>
+        </joint>
+        <xacro:Nero type="${selected_gripper_type}" stand="${stand_type}" direction="right" prefix="right_"
+                    is_arm_only="${selected_gripper_type == 'none'}"/>
+    </xacro:if>
+
+    <xacro:if value="${selected_arm_config == 'dual'}">
+        <link name="base_link"/>
+        <xacro:if value="${'$(arg scene)' == 'world'}">
+            <joint name="world_fixed" type="fixed">
+                <parent link="world"/>
+                <child link="base_link"/>
             </joint>
         </xacro:if>
 
-        <joint name="${prefix}base_joint" type="fixed">
-            <parent link="base_link"/>
-            <child link="${prefix}base_link"/>
-            <origin xyz="0 0 0" rpy="0 0 3.14159"/>
+        <joint name="left_arm_base_joint" type="fixed">
+            <parent link="base_link"/> <child link="left_base_link"/>
+            <origin xyz="0.0 0.1 0" rpy="1.5708 0 3.14159"/>
         </joint>
 
-        <xacro:Nero type="${type_arg}" stand="${stand_type}" direction="$(arg direction)" prefix="${prefix}"
-                    is_arm_only="${is_arm_only}"/>
-    </xacro:unless>
+        <joint name="right_arm_base_joint" type="fixed">
+            <parent link="base_link"/> <child link="right_base_link"/>
+            <origin xyz="0.0 -0.1 0" rpy="-1.5708 0 -3.14159"/>
+        </joint>
+
+        <xacro:Nero type="${selected_gripper_type}" stand="${stand_type}" direction="left" prefix="left_"
+                    is_arm_only="${selected_gripper_type == 'none'}"/>
+        <xacro:Nero type="${selected_gripper_type}" stand="${stand_type}" direction="right" prefix="right_"
+                    is_arm_only="${selected_gripper_type == 'none'}"/>
+    </xacro:if>
+
 </robot>

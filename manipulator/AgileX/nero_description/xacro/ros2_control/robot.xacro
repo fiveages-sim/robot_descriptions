@@ -1,13 +1,11 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nero_robot">
     <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
-    <xacro:arg name="type" default="v1"/>
-    <xacro:arg name="direction" default="left"/>
+
+    <xacro:arg name="type" default="dual"/>
     <xacro:arg name="gazebo" default="false" />
 
-    <xacro:property name="prefix" value="$(arg direction)_"/>
-    <xacro:property name="type_arg" value="$(arg type)"/>
-    <xacro:property name="is_arm_only" value="${type_arg == 'arm_only'}"/>
+    <xacro:property name="selected_arm_config" value="$(arg type)"/>
 
     <xacro:include filename="$(find nero_description)/xacro/nero.xacro"/>
 
@@ -15,27 +13,58 @@
     <joint name="world_fixed" type="fixed">
         <parent link="world"/>
         <child link="base_link"/>
+        <origin/>
     </joint>
-
     <link name="base_link"/>
-    <joint name="${prefix}base_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="${prefix}base_link"/>
-        <origin xyz="0 0 0" rpy="0 0 3.14159"/>
-    </joint>
 
-    <xacro:Nero type="$(arg type)" stand="v1" direction="$(arg direction)" prefix="${prefix}" is_arm_only="${is_arm_only}"/>
+    <xacro:if value="${selected_arm_config == 'dual'}">
+        <joint name="left_arm_base_joint" type="fixed">
+            <parent link="base_link"/> <child link="left_base_link"/>
+            <origin xyz="0.0 0.1 0" rpy="1.5708 0 3.14159"/>
+        </joint>
+        <xacro:Nero type="none" stand="v1" direction="left" prefix="left_" is_arm_only="true"/>
+
+        <joint name="right_arm_base_joint" type="fixed">
+            <parent link="base_link"/> <child link="right_base_link"/>
+            <origin xyz="0.0 -0.1 0" rpy="-1.5708 0 -3.14159"/>
+        </joint>
+        <xacro:Nero type="none" stand="v1" direction="right" prefix="right_" is_arm_only="true"/>
+    </xacro:if>
+
+    <xacro:if value="${selected_arm_config == 'left'}">
+        <joint name="left_base_joint" type="fixed">
+            <parent link="base_link"/> <child link="left_base_link"/>
+            <origin xyz="0 0 0" rpy="0 0 3.14159"/>
+        </joint>
+        <xacro:Nero type="none" stand="v1" direction="left" prefix="left_" is_arm_only="true"/>
+    </xacro:if>
+
+    <xacro:if value="${selected_arm_config == 'right'}">
+        <joint name="right_base_joint" type="fixed">
+            <parent link="base_link"/> <child link="right_base_link"/>
+            <origin xyz="0 0 0" rpy="0 0 3.14159"/>
+        </joint>
+        <xacro:Nero type="none" stand="v1" direction="right" prefix="right_" is_arm_only="true"/>
+    </xacro:if>
 
     <xacro:include filename="$(find nero_description)/xacro/ros2_control/nero.ros2_control.xacro" />
     <xacro:nero_system
             name="NeroSystem"
-            prefix="${prefix}"
+            arm_config="${selected_arm_config}"
             ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
 
     <xacro:if value="$(arg gazebo)">
         <gazebo>
             <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-                <parameters>$(find nero_description)/config/ros2_control/nero_controllers.yaml</parameters>
+                <xacro:if value="${selected_arm_config == 'dual'}">
+                    <parameters>$(find nero_description)/config/ros2_control/dual_ros2_controllers.yaml</parameters>
+                </xacro:if>
+                <xacro:if value="${selected_arm_config == 'left'}">
+                    <parameters>$(find nero_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+                </xacro:if>
+                <xacro:if value="${selected_arm_config == 'right'}">
+                    <parameters>$(find nero_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+                </xacro:if>
             </plugin>
         </gazebo>
     </xacro:if>

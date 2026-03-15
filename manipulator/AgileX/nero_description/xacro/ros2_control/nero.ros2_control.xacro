@@ -1,7 +1,52 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="nero_system" params="name prefix ros2_control_hardware_type">
 
+    <xacro:macro name="nero_interfaces" params="prefix">
+        <joint name="${prefix}joint1">
+            <command_interface name="position"/>
+            <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+        <joint name="${prefix}joint2">
+            <command_interface name="position"/>
+            <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+        <joint name="${prefix}joint3">
+            <command_interface name="position"/>
+            <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+        <joint name="${prefix}joint4">
+            <command_interface name="position"/>
+            <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+        <joint name="${prefix}joint5">
+            <command_interface name="position"/>
+            <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+        <joint name="${prefix}joint6">
+            <command_interface name="position"/>
+            <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+        <joint name="${prefix}joint7">
+            <command_interface name="position"/>
+            <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="nero_system" params="name arm_config ros2_control_hardware_type">
         <ros2_control name="${name}" type="system">
             <hardware>
                 <xacro:if value="${ros2_control_hardware_type == 'gz'}">
@@ -17,24 +62,18 @@
                 </xacro:if>
             </hardware>
 
-            <xacro:macro name="configure_joint" params="joint_name initial_pos:=0.0">
-                <joint name="${joint_name}">
-                    <command_interface name="position"/>
-                    <state_interface name="position">
-                        <param name="initial_value">${initial_pos}</param>
-                    </state_interface>
-                    <state_interface name="velocity"/>
-                    <state_interface name="effort"/>
-                </joint>
-            </xacro:macro>
+            <xacro:if value="${arm_config == 'dual'}">
+                <xacro:nero_interfaces prefix="left_"/>
+                <xacro:nero_interfaces prefix="right_"/>
+            </xacro:if>
 
-            <xacro:configure_joint joint_name="${prefix}joint1"/>
-            <xacro:configure_joint joint_name="${prefix}joint2"/>
-            <xacro:configure_joint joint_name="${prefix}joint3"/>
-            <xacro:configure_joint joint_name="${prefix}joint4"/>
-            <xacro:configure_joint joint_name="${prefix}joint5"/>
-            <xacro:configure_joint joint_name="${prefix}joint6"/>
-            <xacro:configure_joint joint_name="${prefix}joint7"/>
+            <xacro:if value="${arm_config == 'left'}">
+                <xacro:nero_interfaces prefix="left_"/>
+            </xacro:if>
+
+            <xacro:if value="${arm_config == 'right'}">
+                <xacro:nero_interfaces prefix="right_"/>
+            </xacro:if>
 
         </ros2_control>
     </xacro:macro>

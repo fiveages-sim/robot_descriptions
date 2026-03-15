@@ -207,7 +207,5 @@
             <axis xyz="0 0 1"/>
             <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
         </joint>
-
-
     </xacro:macro>
 </robot>

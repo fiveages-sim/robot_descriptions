@@ -11,28 +11,34 @@ colcon build --packages-up-to nero_description --symlink-install
 ```
 
 ## 2. Visualize the robot
-### 2.1 Full Nero Arm
-* Launch left Nero Arm with v1 stand and revo2 hand
-    ```bash
-    source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="v1" direction:=left
-    ```
-* Launch right Nero Arm with v1 stand and revo2 hand
-    ```bash
-    source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="v1" direction:=right
-    ```
 
-### 2.2 Components
-* Arm only
+### 2.1 Basic Arm Configuration
+* Single Arm
     ```bash
     source ~/ros2_ws/install/setup.bash
     ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="arm_only" direction:=left
     ```
-* Stand only
+* Dual Arm
     ```bash
     source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="stand_v1" direction:=left
+    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="dual"
+    ```
+  
+### 2.2 Full Nero Arm
+* Dual Arm with revo2
+    ```bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="dual_brainco" 
+    ```
+* Dual Arm with ChangingTek AG2F90
+    ```bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="dual_ag2f90" 
+    ```
+* Dual Arm with Jodell RG75
+    ```bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 launch robot_common_launch manipulator.launch.py robot:=nero type:="dual_rg75" 
     ```
 
 ## 3. OCS2 Demo
@@ -48,9 +54,8 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=nero
 * Mock Hardware
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=nero type:=arm_only
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=nero type:=left
   ```
-  
 * Gazebo
   ```bash
   source ~/ros2_ws/install/setup.bash

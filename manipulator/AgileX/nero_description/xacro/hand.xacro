@@ -2,53 +2,74 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:macro name="Hand" params="type stand direction prefix standalone:=false">
-        <xacro:property name="actual_stand" value="${type if type != 'hand' else stand}"/>
-        <xacro:property name="stand_link_name" value="${prefix}stand_adapter"/>
 
-        <xacro:property name="stand_origin_rpy" value="0 0 0"/>
-        <xacro:if value="${actual_stand == 'v1'}">
-            <xacro:property name="stand_origin_rpy" value="-1.57 -1.57 -1.57"/>
-        </xacro:if>
-        <xacro:if value="${actual_stand == 'v2'}">
-            <xacro:property name="stand_origin_rpy" value="-1.57 0 -1.57"/>
-        </xacro:if>
+        <xacro:property name="brainco_dir"
+                        value="${1 if direction == 'left' else (-1 if direction == 'right' else direction)}"/>
+        <xacro:property name="stand_link_name" value="${prefix}stand_adapter"/>
 
         <link name="${stand_link_name}">
             <visual>
-                <origin xyz="0 0 0" rpy="${stand_origin_rpy}"/>
+                <origin xyz="0 0 0" rpy="-1.57 -1.57 -1.57"/>
                 <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/${actual_stand if actual_stand == 'link8' else 'stand_' + actual_stand}.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/stand_v1.glb"/>
                 </geometry>
             </visual>
             <collision>
-                <origin xyz="0 0 0" rpy="${stand_origin_rpy}"/>
+                <origin xyz="0 0 0" rpy="-1.57 -1.57 -1.57"/>
                 <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/${'link8' if actual_stand == 'link8' else 'stand_v1'}.glb"/>
+                    <mesh filename="file://$(find nero_description)/meshes/stand_v1.glb"/>
                 </geometry>
             </collision>
         </link>
 
         <xacro:unless value="${standalone}">
             <joint name="${prefix}stand_joint" type="fixed">
-                <xacro:if value="${actual_stand == 'link8'}">
-                    <origin xyz="0.032 0 -0.0235" rpy="-1.5708 0 -1.5708"/>
-                </xacro:if>
-                <xacro:unless value="${actual_stand == 'link8'}">
-                    <origin xyz="0.033 0 -0.0235" rpy="0 0 0"/>
-                </xacro:unless>
+                <origin xyz="0.033 0 -0.0235" rpy="0 0 0"/>
                 <parent link="${prefix}link7"/>
                 <child link="${stand_link_name}"/>
             </joint>
         </xacro:unless>
 
-        <xacro:if value="${type == 'hand' or type == 'v1' or type == 'v2'}">
-            <xacro:include filename="$(find revo2_description)/xacro/revo_hand.xacro"/>
+        <xacro:if value="${'brainco' in type}">
+            <xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
+
             <joint name="${prefix}hand_connection_joint" type="fixed">
                 <origin xyz="0.01093 0 0" rpy="-1.57 3.14 -1.57"/>
                 <parent link="${stand_link_name}"/>
-                <child link="${prefix}hand_base_link"/>
+                <child link="${prefix}hand_base"/>
             </joint>
-            <xacro:RevoHand direction="${direction}"/>
+
+            <xacro:BrainCoHand name="${prefix[:-1] if prefix.endswith('_') else prefix}"
+                               direction="${brainco_dir}"
+                               use_flange="false"/>
         </xacro:if>
+
+        <xacro:if value="${'ag2f90' in type}">
+            <xacro:include filename="$(find changingtek_description)/xacro/AG2F90-C.xacro"/>
+
+            <joint name="${prefix}hand_connection_joint" type="fixed">
+                <origin xyz="0.01093 0 0" rpy="-1.57 3.14 -1.57"/>
+                <parent link="${stand_link_name}"/>
+                <child link="${prefix}flange"/>
+            </joint>
+
+            <xacro:AG2F90-C name="${prefix[:-1] if prefix.endswith('_') else prefix}"
+                            use_flange="true"
+                            pad="default"/>
+        </xacro:if>
+
+        <xacro:if value="${'rg75' in type}">
+            <xacro:include filename="$(find jodell_description)/xacro/RG75-300.xacro"/>
+
+            <joint name="${prefix}hand_connection_joint" type="fixed">
+                <origin xyz="0.01093 0 0" rpy="-1.57 3.14 -1.57"/>
+                <parent link="${stand_link_name}"/>
+                <child link="${prefix}flange"/>
+            </joint>
+
+            <xacro:RG75-300 name="${prefix[:-1] if prefix.endswith('_') else prefix}"
+                            use_flange="true"/>
+        </xacro:if>
+
     </xacro:macro>
 </robot>
