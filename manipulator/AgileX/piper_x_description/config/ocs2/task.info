@@ -1,0 +1,190 @@
+; robot model meta-information
+model_information {
+  manipulatorModelType     0      // 0: Default-arm, 1: Wheel-based manipulator, 2: Floating-arm manipulator, 3: Fully actuated floating-arm manipulator
+
+  ; motion joints in the URDF to consider fixed (ignore in whole-body control)
+  removeJoints {
+    [0] "joint7"
+    [1] "joint8"
+  }
+
+  ; base frame of the robot (from URDF)
+  baseFrame                       "base_link"
+  ; end-effector frame of the robot (from URDF)
+  eeFrame                         "gripper_center"
+}
+
+model_settings
+{
+  usePreComputation               true
+  recompileLibraries              true
+}
+
+; DDP settings
+ddp
+{
+  algorithm                       SLQ
+  nThreads                        3
+  threadPriority                  50
+  maxNumIterations                1
+  minRelCost                      0.1
+  constraintTolerance             1e-3
+  displayInfo                     false
+  displayShortSummary             false
+  checkNumericalStability         false
+  debugPrintRollout               false
+  debugCaching                    false
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  maxNumStepsPerSecond            100000
+  timeStep                        1e-3
+  backwardPassIntegratorType      ODE45
+  constraintPenaltyInitialValue   20.0
+  constraintPenaltyIncreaseRate   2.0
+  preComputeRiccatiTerms          true
+  useFeedbackPolicy               false
+  strategy                        LINE_SEARCH
+  lineSearch
+  {
+    minStepLength                 1e-2
+    maxStepLength                 1.0
+    hessianCorrectionStrategy     DIAGONAL_SHIFT
+    hessianCorrectionMultiple     1e-3
+  }
+}
+
+; Rollout settings
+rollout
+{
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  timeStep                        1e-2
+  integratorType                  ODE45
+  maxNumStepsPerSecond            100000
+  checkNumericalStability         false
+}
+
+; MPC settings
+mpc
+{
+  timeHorizon                     1.0   ; [s]
+  solutionTimeWindow              0.2   ; [s]
+  coldStart                       false
+  debugPrint                      false
+  mpcDesiredFrequency             100   ; [Hz]
+  mrtDesiredFrequency             400   ; [Hz]
+}
+
+; initial state
+initialState
+{
+  base
+  {
+    defaultManipulator {}
+  }
+
+  ; initial state for the arm DOFs
+  arm
+  {
+    (0,0)   0.0     ; joint1
+    (1,0)   0.5   ; joint2
+    (2,0)  -0.35     ; joint3
+    (3,0)   0.0     ; joint4
+    (4,0)   0.0     ; joint5
+    (5,0)   0.0     ; joint6
+  }
+}
+
+inputCost
+{
+  R
+  {
+    base
+    {
+      defaultManipulator {}
+    }
+    arm
+    {
+      scaling 1e-2
+      (0,0)  1.0
+      (1,1)  1.0
+      (2,2)  1.0
+      (3,3)  1.0
+      (4,4)  1.0
+      (5,5)  1.0
+    }
+  }
+}
+
+endEffector
+{
+  muPosition      10.0
+  muOrientation    5.0
+}
+
+finalEndEffector
+{
+  muPosition      10.0
+  muOrientation    5.0
+}
+
+selfCollision
+{
+  activate  false
+  collisionObjectPairs {}
+  collisionLinkPairs
+  {
+    [0] "link2, link8",
+    [0] "link2, link7"
+  }
+  minimumDistance  0.05
+  mu      1e-2
+  delta   1e-3
+}
+
+jointPositionLimits
+{
+  activate  true
+  mu      0.01
+  delta   1e-3
+}
+
+jointVelocityLimits
+{
+  mu      0.01
+  delta   1e-3
+
+  lowerBound
+  {
+    base
+    {
+      defaultManipulator {}
+    }
+    arm
+    {
+      (0,0)  -15.0
+      (1,0)  -15.0
+      (2,0)  -15.0
+      (3,0)  -15.0
+      (4,0)  -15.0
+      (5,0)  -15.0
+    }
+  }
+
+  upperBound
+  {
+    base
+    {
+      defaultManipulator {}
+    }
+    arm
+    {
+      (0,0)  15.0
+      (1,0)  15.0
+      (2,0)  15.0
+      (3,0)  15.0
+      (4,0)  15.0
+      (5,0)  15.0
+    }
+  }
+}

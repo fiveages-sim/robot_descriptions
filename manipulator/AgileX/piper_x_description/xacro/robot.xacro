@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="piper_x" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:arg name="type" default="piper_x_camera"/>
+    <xacro:arg name="collider" default="simple"/>
+    <xacro:arg name="direction" default="1"/>
+
+    <xacro:include filename="$(find piper_x_description)/xacro/arm.xacro" />
+
+    <xacro:if value="${'$(arg type)' == 'piper_x_camera'}">
+        <xacro:piper_x prefix="" camera="d435" gripper="true"/>
+    </xacro:if>
+
+    <xacro:if value="${'$(arg type)' == 'piper_x'}">
+        <xacro:piper_x prefix="" camera="none" gripper="true"/>
+    </xacro:if>
+
+    <xacro:if value="${'$(arg type)' == 'piper_x_naked'}">
+        <xacro:piper_x prefix="" camera="none" gripper="false"/>
+    </xacro:if>
+
+</robot>

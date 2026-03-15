@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="piper_x">
+
+    <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
+
+    <xacro:arg name="type" default="piper_x_camera"/>
+    <xacro:arg name="collider" default="simple"/>
+    <xacro:arg name="direction" default="1"/>
+
+    <link name="world"/>
+    <joint name="world_fixed" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+    </joint>
+
+    <xacro:include filename="$(find piper_x_description)/xacro/arm.xacro" />
+
+    <xacro:if value="${'$(arg type)' == 'piper_x_camera'}">
+        <xacro:piper_x prefix="" camera="d435" gripper="true"/>
+    </xacro:if>
+    <xacro:if value="${'$(arg type)' == 'piper_x'}">
+        <xacro:piper_x prefix="" camera="none" gripper="true"/>
+    </xacro:if>
+    <xacro:if value="${'$(arg type)' == 'piper_x_naked'}">
+        <xacro:piper_x prefix="" camera="none" gripper="false"/>
+    </xacro:if>
+
+    <xacro:include filename="$(find piper_x_description)/xacro/ros2_control/piper_x.ros2_control.xacro" />
+    <xacro:piper_x_system name="" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+
+    <xacro:arg name="gazebo" default="false" />
+    <xacro:if value="$(arg gazebo)">
+        <gazebo>
+            <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+                <parameters>$(find piper_x_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+            </plugin>
+        </gazebo>
+    </xacro:if>
+
+</robot>
