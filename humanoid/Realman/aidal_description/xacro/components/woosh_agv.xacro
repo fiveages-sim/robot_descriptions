@@ -60,7 +60,7 @@
 			</geometry>
 		</visual>
 		<collision>
-			<origin rpy=" 0 1.5708 0" xyz="-0.024 0 0"/>
+			<origin rpy="0 ${PI/2} 0"/>
 			<geometry>
 				<cylinder radius="0.085" length="0.034"/>
 			</geometry>
@@ -84,7 +84,7 @@
 			</geometry>
 		</visual>
 		<collision>
-			<origin rpy="0 1.5708 0" xyz="0.024 0 0"/>
+			<origin rpy="0 ${PI/2} 0"/>
 			<geometry>
 				<cylinder radius="0.085" length="0.034"/>
 			</geometry>
@@ -224,7 +224,7 @@
 	</link>
 
 	<joint name="right_wheel_joint" type="${wheel_joint_type}">
-		<origin xyz="-0.148 0.015574 -0.153"/>
+		<origin xyz="-0.183 0.015574 -0.153"/>
 		<parent link="base_link"/>
 		<child link="right_wheel_link"/>
 		<xacro:if value="${joints_movable}">
@@ -234,7 +234,7 @@
 	</joint>
 
 	<joint name="left_wheel_joint" type="${wheel_joint_type}">
-		<origin xyz="0.148 0.015574 -0.153"/>
+		<origin xyz="0.183 0.015574 -0.153"/>
 		<parent link="base_link"/>
 		<child link="left_wheel_link"/>
 		<xacro:if value="${joints_movable}">
@@ -244,7 +244,7 @@
 	</joint>
 
 	<joint name="caster_1_joint" type="${steer_joint_type}">
-		<origin xyz="0.124 -0.17843 -0.1593" rpy="0 0 ${PI}"/>
+		<origin xyz="0.124 -0.17843 -0.1589" rpy="0 0 ${PI}"/>
 		<parent link="base_link"/>
 		<child link="caster_1_link"/>
 		<xacro:if value="${joints_movable}">
@@ -260,7 +260,7 @@
 		</xacro:if>
 	</joint>
 	<joint name="caster_2_joint" type="${steer_joint_type}">
-		<origin xyz="-0.126 0.22157 -0.1593" rpy="0 0 ${PI}"/>
+		<origin xyz="-0.124 0.194004 -0.1589" rpy="0 0 ${PI}"/>
 		<parent link="base_link"/>
 		<child link="caster_2_link"/>
 		<xacro:if value="${joints_movable}">
@@ -276,7 +276,7 @@
 		</xacro:if>
 	</joint>
 	<joint name="caster_3_joint" type="${steer_joint_type}">
-		<origin xyz="0.124 0.22157 -0.1593" rpy="0 0 ${PI}"/>
+		<origin xyz="0.124 0.194004 -0.1589" rpy="0 0 ${PI}"/>
 		<parent link="base_link"/>
 		<child link="caster_3_link"/>
 		<xacro:if value="${joints_movable}">
@@ -292,7 +292,7 @@
 		</xacro:if>
 	</joint>
 	<joint name="caster_4_joint" type="${steer_joint_type}">
-		<origin xyz="-0.126 -0.17843 -0.1593" rpy="0 0 ${PI}"/>
+		<origin xyz="-0.124 -0.17843 -0.1589" rpy="0 0 ${PI}"/>
 		<parent link="base_link"/>
 		<child link="caster_4_link"/>
 		<xacro:if value="${joints_movable}">
@@ -300,7 +300,7 @@
 		</xacro:if>
 	</joint>
 	<joint name="caster_wheel_4_joint" type="${wheel_joint_type}">
-		<origin xyz="0 -0.022 -0.0412"/>
+		<origin xyz="0 -0.022 -0.04516"/>
 		<parent link="caster_4_link"/>
 		<child link="caster_wheel_4_link"/>
 		<xacro:if value="${joints_movable}">
@@ -315,6 +315,40 @@
 		<child link="base_link"/>
 	</joint>
 	</xacro:macro>
+
+	<link name="chassis_panel">
+<!--		<xacro:visual_mesh mesh="panel.glb"/>-->
+	</link>
+	<joint name="chassis_panel_joint" type="fixed">
+		<origin xyz="0.18 0.118  -0.0275"/>
+		<parent link="base_link"/>
+		<child link="chassis_panel"/>
+	</joint>
+
+	<link name="lidar_link">
+<!--		<visual>-->
+<!--			<geometry>-->
+<!--				<mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>-->
+<!--			</geometry>-->
+<!--		</visual>-->
+	</link>
+	<joint name="lidar_joint" type="fixed">
+		<origin xyz="0 -0.2496  -0.094808"/>
+		<parent link="base_link"/>
+		<child link="lidar_link"/>
+	</joint>
+	<link name="chassis_camera_link">
+<!--		<visual>-->
+<!--			<geometry>-->
+<!--				<mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_DW.glb"/>-->
+<!--			</geometry>-->
+<!--		</visual>-->
+	</link>
+	<joint name="chassis_camera_joint" type="fixed">
+		<origin xyz="0 -0.2965  -0.1126" rpy="-${PI/2} 0 ${PI}"/>
+		<parent link="base_link"/>
+		<child link="chassis_camera_link"/>
+	</joint>
 </robot>
 
 

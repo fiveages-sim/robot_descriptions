@@ -7,9 +7,6 @@
       <geometry>
         <mesh filename="${mesh_path}${mesh}" />
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1" />
-      </material>
     </visual>
     <collision>
       <geometry>
