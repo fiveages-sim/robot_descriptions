@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="QuantaX1Swivel" params="prefix x y z">
+		<link name="${prefix}_swivel_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/swivel_base.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="${prefix}_swivel_joint" type="fixed">
+			<parent link="chassis_base_link"/>
+			<child link="${prefix}_swivel_link"/>
+			<origin xyz="${x} ${y} ${z}"/>
+		</joint>
+
+		<link name="${prefix}_swivel_yaw">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/swivel_yaw.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="${prefix}_swivel_yaw" type="continuous">
+			<parent link="${prefix}_swivel_link"/>
+			<child link="${prefix}_swivel_yaw"/>
+			<axis xyz="0 0 1"/>
+		</joint>
+
+		<link name="${prefix}_roller_1">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/swivel_roller_small.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.0175"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix}_swivel_roller_1" type="continuous">
+			<parent link="${prefix}_swivel_yaw"/>
+			<child link="${prefix}_roller_1"/>
+			<axis xyz="0 1 0"/>
+			<origin xyz="0.045295 0.000296 -0.016972"/>
+		</joint>
+
+		<link name="${prefix}_roller_2">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/swivel_roller_small.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.0175"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix}_swivel_roller_2" type="continuous">
+			<parent link="${prefix}_swivel_yaw"/>
+			<child link="${prefix}_roller_2"/>
+			<axis xyz="0 1 0"/>
+			<origin xyz="0.012295 0.034228 -0.029472"/>
+		</joint>
+
+		<link name="${prefix}_roller_3">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/swivel_roller_small.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.0175"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix}_swivel_roller_3" type="continuous">
+			<parent link="${prefix}_swivel_yaw"/>
+			<child link="${prefix}_roller_3"/>
+			<axis xyz="0 1 0"/>
+			<origin xyz="0.012295 -0.034572 -0.029472"/>
+		</joint>
+
+		<link name="${prefix}_roller_4">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/swivel_roller_large.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.0225"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix}_swivel_roller_4" type="continuous">
+			<parent link="${prefix}_swivel_yaw"/>
+			<child link="${prefix}_roller_4"/>
+			<axis xyz="0 1 0"/>
+			<origin xyz="-0.024705 0.000072 -0.039472"/>
+		</joint>
+	</xacro:macro>
+</robot>

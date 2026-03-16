@@ -1,0 +1,304 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:include filename="$(find quanta_x1_description)/xacro/ros2_control/arm_ros2_control.xacro"/>
+	<xacro:macro name="QuantaX1SingleArm" params="name">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<link name="${prefix}base_link">
+			<inertial>
+				<origin xyz="0.000238 0.00013244931 0.034204173"/>
+				<mass value="0.79593333"/>
+				<inertia ixx="0.00059303627" ixy="-4.87e-06" ixz="-5.43e-06" iyy="0.000545589" iyz="-2.11e-05"
+								 izz="0.00069653281"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/base_link.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/collision/arm_base_link.STL"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="${prefix}link1">
+			<inertial>
+				<origin xyz="0.007810838937702481 0.0011076286631175366 0.02426181163850782"/>
+				<mass value="0.2510810252060531"/>
+				<inertia ixx="0.0004275152565049913" ixy="1.030510320224895e-05" ixz="-5.994180357795875e-05"
+								 iyy="0.00026196915127602624" iyz="1.0066781981036254e-05" izz="0.000415165386314554"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/link1.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/collision/arm_link1.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint1" type="revolute">
+			<origin xyz="0 0 0.0625"/>
+			<parent link="${prefix}base_link"/>
+			<child link="${prefix}link1"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="30" lower="-2.7925" upper="2.7925" velocity="4.188"/>
+		</joint>
+
+		<link name="${prefix}link2">
+			<inertial>
+				<origin xyz="-0.15381704830483484 -0.00011199564144071329 -0.00026700643776945683"/>
+				<mass value="1.5771732292559344"/>
+				<inertia ixx="0.0014031256048235117" ixy="0.00010892900431431927" ixz="-8.54720090731793e-05"
+								 iyy="0.03962371897744438" iyz="-2.2855830003715362e-05" izz="0.03967424133196259"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/link2.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/collision/arm_link2.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint2" type="revolute">
+			<origin xyz="0.025 0 0.053"/>
+			<parent link="${prefix}link1"/>
+			<child link="${prefix}link2"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="30" lower="0" upper="3.6652" velocity="4.188"/>
+		</joint>
+
+		<link name="${prefix}link3">
+			<inertial>
+				<origin xyz="0.1385210808598483 0.00253238548905837 0.06158724605952495"/>
+				<mass value="0.6627915784943733"/>
+				<inertia ixx="0.0015522508861326215" ixy="-0.00010615692078180672" ixz="-0.002032090005871977"
+								 iyy="0.011406238909394585" iyz="-4.251418536811518e-05" izz="0.011154791194818183"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/link3.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/collision/arm_link3.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint3" type="revolute">
+			<origin xyz="-0.26 0 0"/>
+			<parent link="${prefix}link2"/>
+			<child link="${prefix}link3"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="30" lower="-2.7925" upper="0" velocity="4.188"/>
+		</joint>
+
+		<link name="${prefix}link4">
+			<inertial>
+				<origin xyz="0.04301615126347572 0.0016682254432532977 0.028359076787964795"/>
+				<mass value="0.2891160137828098"/>
+				<inertia ixx="0.0006996069132001018" ixy="6.481354006932883e-06" ixz="-0.0002650787522496869"
+								 iyy="0.0008022030829096281" iyz="1.0224826928243e-05" izz="0.0005061413378757481"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/link4.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/collision/arm_link4.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint4" type="revolute">
+			<origin xyz="0.2315 0 0.075"/>
+			<parent link="${prefix}link3"/>
+			<child link="${prefix}link4"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="9" lower="-1.5708" upper="1.5708" velocity="6.77"/>
+		</joint>
+
+		<link name="${prefix}link5">
+			<inertial>
+				<origin xyz="-0.005012762706162766 0.0021383490282471935 -0.06677500986852268"/>
+				<mass value="1.113646081040198"/>
+				<inertia ixx="0.001261798831549919" ixy="-4.75162482050646e-08" ixz="-0.00013588938588108646"
+								 iyy="0.0013233572826209603" iyz="-1.0301387034244709e-05" izz="0.0004509905795410465"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/link5.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/collision/arm_link5.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}joint5" type="revolute">
+			<origin xyz="0.0825 0.0025 0.085"/>
+			<parent link="${prefix}link4"/>
+			<child link="${prefix}link5"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="9" lower="-1.5708" upper="1.5708" velocity="6.77"/>
+		</joint>
+
+		<link name="${prefix}link6">
+			<inertial>
+				<origin xyz="-0.0009628072232098361 3.942264660638254e-08 1.2854205565674401e-06"/>
+				<mass value="0.0013351036695665433"/>
+				<inertia ixx="2.6354984881880227e-07" ixy="6.609323825533091e-16" ixz="-5.338665245967903e-16"
+								 iyy="1.3205614748783394e-07" iyz="-3.331103251123419e-13" izz="1.3205600942633837e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/link6.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${prefix}joint6" type="revolute">
+			<origin xyz="0.0395 0 -0.0945"/>
+			<parent link="${prefix}link5"/>
+			<child link="${prefix}link6"/>
+			<axis xyz="1 0 0"/>
+			<limit effort="9" lower="-1.9199" upper="1.9199" velocity="6.77"/>
+		</joint>
+
+		<xacro:QuantaX1ArmRos2Control prefix="${prefix}"/>
+		<link name="${prefix}gripper_base_link">
+			<inertial>
+				<origin xyz="0.04699233 -4.878E-05 0.0039474"/>
+				<mass value="0.50842594"/>
+				<inertia ixx="0.00039042" ixy="-9.5E-07" ixz="-3.09E-05" iyy="0.0004399" iyz="2.825E-05" izz="0.00031969"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/base.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/gripper_base_link.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<link name="${prefix}gripper_motor_link">
+			<inertial>
+				<mass value="0.001"/>
+				<inertia ixx="1.6667e-10" ixy="0" ixz="0" iyy="1.6667e-10" iyz="0" izz="1.6667e-10"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<box size="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="">
+					<color rgba="1 1 1 1"/>
+				</material>
+			</visual>
+		</link>
+
+		<joint name="${prefix}gripper_joint" type="revolute">
+			<parent link="${prefix}gripper_base_link"/>
+			<child link="${prefix}gripper_motor_link"/>
+			<axis xyz="1 0 0"/>
+			<limit effort="10" lower="0" upper="5.717175" velocity="23.0"/>
+		</joint>
+
+		<link name="${prefix}gripper_left_link">
+			<inertial>
+				<origin xyz="0.011286 0.0039584 0.0083862"/>
+				<mass value="0.16837"/>
+				<inertia ixx="0.00015937" ixy="-2.583E-05" ixz="-2.154E-05" iyy="0.0001001" iyz="-1.876E-05" izz="0.00018968"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/finger.glb" scale="1 -1 -1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/finger.STL" scale="1 -1 -1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}gripper_left_joint" type="prismatic">
+			<origin xyz="0.080074 0 -0.018"/>
+			<parent link="${prefix}gripper_base_link"/>
+			<child link="${prefix}gripper_left_link"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="20" lower="0" upper="0.04875" velocity="0.19611962"/>
+			<mimic joint="${prefix}gripper_joint" multiplier="0.00852694" offset="0"/>
+		</joint>
+
+		<link name="${prefix}gripper_right_link">
+			<inertial>
+				<origin xyz="0.011286 -0.0039584 -0.0083862"/>
+				<mass value="0.16837"/>
+				<inertia ixx="0.00015937" ixy="2.583E-05" ixz="2.154E-05" iyy="0.0001001" iyz="-1.876E-05" izz="0.00018968"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/finger.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/finger.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}gripper_right_joint" type="prismatic">
+			<origin xyz="0.080074 0 0.018"/>
+			<parent link="${prefix}gripper_base_link"/>
+			<child link="${prefix}gripper_right_link"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="20" lower="-0.04875" upper="0" velocity="0.19611962"/>
+			<mimic joint="${prefix}gripper_joint" multiplier="-0.00852694" offset="0"/>
+		</joint>
+
+		<link name="${prefix}gripper_camera_base_link">
+			<inertial>
+				<origin xyz="0.0037222 0.00027198 -0.00052596"/>
+				<mass value="0.0040002"/>
+				<inertia ixx="3.1609E-07" ixy="-9.042E-09" ixz="1.7773E-08" iyy="2.6592E-07" iyz="-1.3288E-08"
+								 izz="2.5703E-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/usb_camera/camera_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${prefix}gripper_camera_base_joint" type="fixed">
+			<origin rpy="-2.00714 0 -1.57084" xyz="0.086876 0 0.09203"/>
+			<parent link="${prefix}gripper_base_link"/>
+			<child link="${prefix}gripper_camera_base_link"/>
+		</joint>
+
+		<joint name="${prefix}gripper_connector" type="fixed">
+			<parent link="${prefix}link6"/>
+			<child link="${prefix}gripper_base_link"/>
+		</joint>
+
+		<xacro:QuantaX1ArmGripperRos2Control prefix="${prefix}"/>
+	</xacro:macro>
+</robot>
