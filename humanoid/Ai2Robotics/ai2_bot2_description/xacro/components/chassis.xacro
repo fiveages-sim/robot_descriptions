@@ -42,12 +42,12 @@
     <link name="driven_fl_link_v">
       <visual>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_v.STL"/>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_v.STL"/>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/>
         </geometry>
       </collision>
     </link>
@@ -62,12 +62,12 @@
     <link name="driven_fl_link_h">
       <visual>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_h.STL"/>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_h.STL"/>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/>
         </geometry>
       </collision>
     </link>
@@ -80,8 +80,8 @@
     </joint>
 
     <link name="driven_rl_link_v">
-      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_v.STL"/></geometry></visual>
-      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_v.STL"/></geometry></collision>
+      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/></geometry></visual>
+      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/></geometry></collision>
     </link>
     <joint name="driven_rl_joint_v" type="${wheel_joint_type}">
       <origin xyz="-0.215 0.15 0.085704" rpy="0 0 0" />
@@ -91,8 +91,8 @@
       <limit effort="2000" velocity="10" />
     </joint>
     <link name="driven_rl_link_h">
-      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_h.STL"/></geometry></visual>
-      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_h.STL"/></geometry></collision>
+      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/></geometry></visual>
+      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/></geometry></collision>
     </link>
     <joint name="driven_rl_joint_h" type="${wheel_joint_type}">
       <origin xyz="-0.016001 0 -0.0482" rpy="-1.5708 0 0" />
@@ -103,8 +103,8 @@
     </joint>
 
     <link name="driven_fr_link_v">
-      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_v.STL"/></geometry></visual>
-      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_v.STL"/></geometry></collision>
+      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/></geometry></visual>
+      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/></geometry></collision>
     </link>
     <joint name="driven_fr_joint_v" type="${wheel_joint_type}">
       <origin xyz="0.215 -0.15 0.085704" rpy="0 0 0" />
@@ -114,8 +114,8 @@
       <limit effort="2000" velocity="10" />
     </joint>
     <link name="driven_fr_link_h">
-      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_h.STL"/></geometry></visual>
-      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_h.STL"/></geometry></collision>
+      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/></geometry></visual>
+      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/></geometry></collision>
     </link>
     <joint name="driven_fr_joint_h" type="${wheel_joint_type}">
       <origin xyz="-0.016001 0 -0.0482" rpy="-1.5708 0 0" />
@@ -126,8 +126,8 @@
     </joint>
 
     <link name="driven_rr_link_v">
-      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_v.STL"/></geometry></visual>
-      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_v.STL"/></geometry></collision>
+      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/></geometry></visual>
+      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/></geometry></collision>
     </link>
     <joint name="driven_rr_joint_v" type="${wheel_joint_type}">
       <origin xyz="-0.215 -0.15 0.085704" rpy="0 0 0" />
@@ -137,8 +137,8 @@
       <limit effort="2000" velocity="10" />
     </joint>
     <link name="driven_rr_link_h">
-      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_h.STL"/></geometry></visual>
-      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driven_wheel_left_front_link_h.STL"/></geometry></collision>
+      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/></geometry></visual>
+      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/></geometry></collision>
     </link>
     <joint name="driven_rr_joint_h" type="${wheel_joint_type}">
       <origin xyz="-0.016001 0 -0.0482" rpy="-1.5708 0 0" />
@@ -151,12 +151,12 @@
     <link name="driving_left_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driving_wheel_left_link.STL"/>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driving.glb" scale="1 1 1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driving_wheel_left_link.STL"/>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driving.glb" scale="1 1 1"/>
         </geometry>
       </collision>
     </link>
@@ -169,8 +169,18 @@
     </joint>
 
     <link name="driving_right_link">
-      <visual><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driving_wheel_left_link.STL"/></geometry></visual>
-      <collision><geometry><mesh filename="file://$(find ai2_bot2_description)/meshes/Collision/driving_wheel_left_link.STL"/></geometry></collision>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driving.glb"
+                scale="1 1 -1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driving.glb"
+                scale="1 1 -1"/>
+        </geometry>
+      </collision>
     </link>
     <joint name="driving_right_joint" type="${wheel_joint_type}">
       <origin xyz="0 -0.208 0.0845" rpy="-1.5708 0 0" />

@@ -1,0 +1,33 @@
+/**:
+  ros__parameters:
+    # Linear scale for interactive marker / joystick control (position step per tick)
+    linear_scale: 0.01
+    
+    # Angular scale for interactive marker / joystick control (radian step per tick)
+    angular_scale: 0.005
+    
+    # VR update rate (Hz) - kept for consistency, even if VR is not used
+    vr_update_rate: 500.0
+
+    # Fixed frame for end-effector markers (must exist in TF / URDF)
+    # For Ai2 Bot2, base frame in task.info is "base_link"
+    marker_fixed_frame: base_link
+#
+#    # Whether to enable VR input handling (can be left true; has no effect if VR is not running)
+#    enable_vr: true
+#
+#    # Optional head joint mapping for marker-based head control
+#    # These names should match joints in ai2_bot2 body.xacro
+#    head_joint_to_rpy_mapping:
+#      head_joint1: "head_yaw"      # yaw marker
+#      head_joint2: "head_pitch"    # pitch marker
+#
+#    # Axis direction for head RPY (flip sign if rotation is inverted)
+#    head_rpy_axis_direction:
+#      head_yaw: 1.0
+#      head_pitch: 1.0
+#      head_roll: 1.0
+#
+#    # Head link name for TF lookup (matches ai2_bot2 body.xacro)
+#    head_link_name: "head_link2"
+

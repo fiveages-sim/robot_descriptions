@@ -140,8 +140,8 @@
       <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="10" />
     </joint>
 
-    <!-- head: head_link_1 (neck), head_joint_1, head_link_2 (head), head_joint_2 -->
-    <link name="head_link_1">
+    <!-- head: head_link1 (neck), head_joint1, head_link2 (head), head_joint2 -->
+    <link name="head_link1">
       <inertial>
         <origin xyz="-1.4269E-12 0.0053202 0.055582" />
         <mass value="0.2237" />
@@ -154,15 +154,15 @@
           izz="4.8068E-05" />
       </inertial>
     </link>
-    <joint name="head_joint_1" type="revolute">
+    <joint name="head_joint1" type="revolute">
       <origin xyz="-0.041 0 0.46874" />
       <parent link="body_link4" />
-      <child link="head_link_1" />
+      <child link="head_link1" />
       <axis xyz="0 0 1" />
       <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="10" />
     </joint>
 
-    <link name="head_link_2">
+    <link name="head_link2">
       <inertial>
         <origin xyz="0.028328 -0.035178 -0.00055178" />
         <mass value="0.56733" />
@@ -188,10 +188,10 @@
         </geometry>
       </collision>
     </link>
-    <joint name="head_joint_2" type="revolute">
+    <joint name="head_joint2" type="revolute">
       <origin xyz="0 0 0.06" rpy="-1.5708 0 0" />
-      <parent link="head_link_1" />
-      <child link="head_link_2" />
+      <parent link="head_link1" />
+      <child link="head_link2" />
       <axis xyz="0 0 1" />
       <limit lower="-0.4014" upper="0.38397" effort="1000" velocity="10" />
     </joint>

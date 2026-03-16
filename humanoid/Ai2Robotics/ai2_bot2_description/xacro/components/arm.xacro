@@ -317,15 +317,12 @@
                          iyy="0.000151676252224174" iyz="-2.82790388376229E-05" izz="0.000142517590749322"/>
             </inertial>
             <visual>
-
                 <geometry>
                     <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link7.glb"
                           scale="1 1 ${direction}"/>
                 </geometry>
-
             </visual>
             <collision>
-
                 <geometry>
                     <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link7.glb"
                           scale="1 1 ${direction}"/>

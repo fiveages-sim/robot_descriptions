@@ -5,7 +5,7 @@
 <!-- |    Structure : base_link (chassis) -> body ->                                    | -->
 <!-- |    body_link4; ego and arms both attach to body_link4.                           | -->
 <!-- =================================================================================== -->
-<robot name="ai2_bot2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Ai2_Bot2" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Parse end-effector type from 'type' arg (similar to FiveAges W2 robot.xacro) -->
   <xacro:arg name="type" default=""/>
