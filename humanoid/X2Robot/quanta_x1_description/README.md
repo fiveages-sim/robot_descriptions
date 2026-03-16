@@ -1,6 +1,6 @@
 # X2Robot Quanta X1 Description
 
-This package contains the URDF and configuration files for the Ai2 Bot2 humanoid. 
+This package contains the URDF and configuration files for the XSquare Quanta X1 Robot.  The origin models could be found at [XSquare Robot SDK](https://github.com/X-Square-Robot/sdk_robot).
 
 ## 1. Build
 
