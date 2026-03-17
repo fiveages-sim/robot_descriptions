@@ -43,16 +43,26 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=ai2_bot2 type:=insp
 
 ## 3. OCS2 Demo
 
-### 3.1 Official OCS2 Mobile Manipulator Demo
+### 3.1 OCS2 Arm Controller Demo
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=dobot_atom
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=ai2_bot2 
 ```
+
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=dobot_atom hardware:=isaac 
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=ai2_bot2 type:=inspire
 ```
+
+### 3.2 Isaac Sim
+
+* Empty Hand
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch ocs2_arm_controller demo.launch.py robot:=ai2_bot2 hardware:=isaac
+```
+
 
 https://github.com/user-attachments/assets/ba05a717-cc46-4093-aa56-1ad4ea8a5264
 
