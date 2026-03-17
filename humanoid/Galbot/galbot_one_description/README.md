@@ -11,6 +11,8 @@ colcon build --packages-up-to galbot_one_description --symlink-install
 
 ## Visualize
 
+### Full Robot
+
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch humanoid.launch.py robot:=galbot_one type:=type1
@@ -22,6 +24,32 @@ Switch to gripper2:
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch humanoid.launch.py robot:=galbot_one type:=type2
 ```
+
+### Component
+
+* Base
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=galbot_one type:=base
+  ```
+
+* Chassis
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=galbot_one type:=chassis
+  ```
+
+* Body
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=galbot_one type:=body
+  ```
+
+* Arms module
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=galbot_one type:=arm
+  ```
 
 ## Full-body OCS2 Demo
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<!--
+  Component-wise description for Galbot One, used by
+  robot_common_launch/launch/visualize/component.launch.py
+
+  Supported types (arg "type"):
+    - base (default)
+    - chassis
+    - body
+    - arm
+-->
+<robot name="galbot_one_component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="base"/>
+  <xacro:arg name="enable_wheel_joints" default="true"/>
+
+  <xacro:if value="${'$(arg type)' == 'base'}">
+    <xacro:include filename="$(find galbot_one_description)/xacro/components/chassis.xacro"/>
+    <xacro:include filename="$(find galbot_one_description)/xacro/components/body.xacro"/>
+    <xacro:GalbotOneChassis enable_wheel_joints="true"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'chassis'}">
+    <xacro:include filename="$(find galbot_one_description)/xacro/components/chassis.xacro"/>
+    <xacro:GalbotOneChassis enable_wheel_joints="true"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <link name="base_link"/>
+    <joint name="base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="omni_chassis_leg_mount_link"/>
+    </joint>
+    <link name="omni_chassis_leg_mount_link"/>
+    <xacro:include filename="$(find galbot_one_description)/xacro/components/body.xacro"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'arm'}">
+    <!-- arm.xacro mounts on torso arm mount links, provide placeholders for component mode -->
+    <link name="torso_right_arm_mount_link"/>
+    <link name="torso_left_arm_mount_link"/>
+    <xacro:include filename="$(find galbot_one_description)/xacro/components/arm.xacro"/>
+  </xacro:if>
+</robot>
