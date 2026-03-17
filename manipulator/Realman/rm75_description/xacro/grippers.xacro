@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<robot name="RM65" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="rm75_gripper" params="gripper_type:='empty' parent_link:='ee'">
+		<xacro:property name="gripper_type_norm" value="${str(gripper_type).upper()}"/>
+
+		<!-- 根据 gripper_type 参数决定使用哪种夹爪 -->
+		<xacro:if value="${gripper_type_norm == 'EG2-4C2'}">
+			<xacro:include filename="$(find inspire_description)/xacro/EG2-4C2.xacro"/>
+			<xacro:Gripper name=""/>
+			<joint name="gripper_fix" type="fixed">
+				<parent link="${parent_link}"/>
+				<child link="gripper_base"/>
+				<origin xyz="0 0 0.004" rpy="0 0 1.5708"/>
+			</joint>
+		</xacro:if>
+	</xacro:macro>
+
+</robot>

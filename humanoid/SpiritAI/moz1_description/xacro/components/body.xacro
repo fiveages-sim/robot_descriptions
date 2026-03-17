@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.1415926535897931"/>
+	<xacro:macro name="moz1_body">
+		<link name="leg01">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/leg1.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/leg1.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="body_joint1" type="revolute">
+			<origin xyz="-0.1114 0 0.1875" />
+			<parent link="base_link"/>
+			<child link="leg01"/>
+			<axis xyz="-1 0 0"/>
+			<limit lower="-0.523598776" upper="0.523598776" effort="0" velocity="0"/>
+		</joint>
+
+		<link name="leg02">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/leg2.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/leg1.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		
+		<joint name="body_joint2" type="revolute">
+			<origin xyz="0 0 0.122" />
+			<parent link="leg01"/>
+			<child link="leg02"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-1.570796327" upper="1.570796327" effort="0" velocity="0"/>
+		</joint>
+		
+		<link name="leg03">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/leg3.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/leg3.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="body_joint3" type="revolute">
+			<origin xyz="0 0 0.285" />
+			<parent link="leg02"/>
+			<child link="leg03"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-2.530727415" upper="0.017453293" effort="0" velocity="0"/>
+		</joint>
+
+		<link name="waist01">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/waist1.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/waist1.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="body_joint4" type="revolute">
+			<origin xyz="0 0 0.318" />
+			<parent link="leg03"/>
+			<child link="waist01"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-0.174532925" upper="1.396263402" effort="0" velocity="0"/>
+		</joint>
+
+		<link name="waist02">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/waist2.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/waist2.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="body_joint5" type="revolute">
+			<origin xyz="0 0 0.12" />
+			<parent link="waist01"/>
+			<child link="waist02"/>
+			<axis xyz="-1 0 0"/>
+			<limit lower="-0.523598776" upper="0.523598776" effort="0" velocity="0"/>
+		</joint>
+
+		<link name="waist03">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/waist3.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/waist3.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="body_joint6" type="revolute">
+			<origin xyz="0 0 0.1019" />
+			<parent link="waist02"/>
+			<child link="waist03"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-3.141592654" upper="3.141592654" effort="0" velocity="0"/>
+		</joint>
+
+		<link name="head21">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/head1.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/head1.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="head_joint1" type="revolute">
+			<origin xyz="0 0 0.3491" />
+			<parent link="waist03"/>
+			<child link="head21"/>
+			<axis xyz="1 0 0"/>
+			<limit lower="-${PI*65/180}" upper="${PI*65/180}" effort="0" velocity="0"/>
+		</joint>
+
+		<link name="head22">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/head2.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/body/head2.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="head_joint2" type="revolute">
+			<origin xyz="0 0 0.103" />
+			<parent link="head21"/>
+			<child link="head22"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-${PI/60}" upper="${PI*5/18}" effort="0" velocity="0"/>
+		</joint>
+
+		<link name="head23">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/head23.STL"/>
+				</geometry>
+				<material name="">
+					<color rgba="0.8 0.8 0.8 1.0"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)/meshes/head23.STL"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="Head-2" type="fixed">
+			<origin xyz="0 0 0.04" />
+			<parent link="head22"/>
+			<child link="head23"/>
+		</joint>
+	</xacro:macro>
+</robot>

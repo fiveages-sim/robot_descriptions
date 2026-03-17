@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot name="Realman RM75" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<!-- 从 type 参数解析出 hand_type 和 gripper_type -->
+	<xacro:arg name="type" default=""/>
+	<xacro:property name="type_arg" value="$(arg type)"/>
+
+  <xacro:property name="enable_joint3" value="true"/>
+	<xacro:property name="selected_ee_type" value="basic"/>
+	<xacro:property name="selected_gripper_type" value="empty"/>
+
+
+	<xacro:if value="${type_arg == 'none'}">
+		<xacro:property name="selected_ee_type" value="none"/>
+	</xacro:if>
+	<xacro:if value="${type_arg == 'fb'}">
+		<xacro:property name="selected_ee_type" value="fb"/>
+	</xacro:if>
+	<xacro:if value="${type_arg == 'fb_camera'}">
+		<xacro:property name="selected_ee_type" value="fb_camera"/>
+	</xacro:if>
+
+	<xacro:if value="${type_arg == 'aidal'}">
+		<xacro:property name="selected_ee_type" value="aidal"/>
+		<xacro:property name="selected_gripper_type" value="eg2-4c2"/>
+	</xacro:if>
+
+	<xacro:if value="${type_arg == 65}">
+		<xacro:property name="enable_joint3" value="false"/>
+	</xacro:if>
+
+	<xacro:if value="${type_arg == '65_fb'}">
+		<xacro:property name="enable_joint3" value="false"/>
+		<xacro:property name="selected_ee_type" value="fb"/>
+	</xacro:if>
+
+  <xacro:include filename="$(find rm75_description)/xacro/arm.xacro"/>
+  <xacro:rm75 name="" enable_joint3="${enable_joint3}" ee_type="${selected_ee_type}"/>
+
+  <xacro:include filename="$(find rm75_description)/xacro/grippers.xacro"/>
+  <xacro:rm75_gripper gripper_type="${selected_gripper_type}" parent_link="ee"/>
+</robot>

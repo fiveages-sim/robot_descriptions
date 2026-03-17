@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!--
+  Component-wise description for Quanta X1, used by
+  robot_descriptions/common/robot_common_launch/launch/visualize/component.launch.py
+
+  Supported types (arg "type"):
+    - base (default)
+    - arm (single left arm)
+-->
+<robot name="quanta_x1_component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="base"/>
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <!-- type=base: visualize base-related components -->
+  <xacro:if value="${'$(arg type)' == 'base'}">
+    <xacro:include filename="$(find quanta_x1_description)/xacro/components/base.xacro"/>
+    <xacro:QuantaX1Base/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'arm'}">
+    <xacro:include filename="$(find quanta_x1_description)/xacro/components/arm.xacro"/>
+    <xacro:QuantaX1SingleArm name="" />
+  </xacro:if>
+
+</robot>

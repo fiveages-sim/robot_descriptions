@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="Woosh AGV" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:arg name="type" default="woosh_agv"/>
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
+	<xacro:if value="${'$(arg type)' == 'woosh_agv'}">
+		<xacro:include filename="$(find aidal_description)/xacro/components/woosh_agv.xacro"/>
+		<xacro:woosh_agv joints_movable="true"/>
+	</xacro:if>
+
+	<xacro:if value="${'$(arg type)' == 'body'}">
+		<link name="base_link"/>
+		<joint name="body_base_joint" type="fixed">
+			<parent link="base_link"/>
+			<child link="body_base_link"/>
+		</joint>
+
+		<xacro:include filename="$(find aidal_description)/xacro/components/body.xacro"/>
+	</xacro:if>
+</robot>

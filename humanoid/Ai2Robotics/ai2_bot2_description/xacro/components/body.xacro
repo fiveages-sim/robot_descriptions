@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--
+    Ai2-Bot2 body: lower-body chain (body_link1..3, body_joint1..3) + torso (waist_yaw_torso_link, body_joint4).
+    Chain: parent_link -> body_link1 -> body_link2 -> body_link3 -> waist_yaw_torso_link.
+    Use <xacro:Ai2Bot2Body parent_link="base_link"/> then attach head/arms to waist_yaw_torso_link.
+  -->
+
+  <xacro:macro name="Ai2Bot2Body" params="parent_link">
+
+    <!-- body_link1 (ankle/calf) -->
+    <link name="body_link1">
+      <inertial>
+        <origin xyz="0.0040321 -0.3007 0.0026114" />
+        <mass value="8.2502" />
+        <inertia
+          ixx="0.093386"
+          ixy="-0.0049619"
+          ixz="-0.00010259"
+          iyy="0.019887"
+          iyz="0.00015883"
+          izz="0.090475" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link1.glb" />
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link1.glb" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="body_joint1" type="revolute">
+      <origin xyz="0.19155 0 0.294" rpy="-1.5708 0 0" />
+      <parent link="${parent_link}" />
+      <child link="body_link1" />
+      <axis xyz="0 0 1" />
+      <limit lower="-1.1868" upper="0" effort="1000" velocity="10" />
+    </joint>
+
+    <!-- body_link2 (knee/thigh) -->
+    <link name="body_link2">
+      <inertial>
+        <origin xyz="-0.0065356 -0.15379 -0.0042654" />
+        <mass value="3.312" />
+        <inertia
+          ixx="0.03805"
+          ixy="-0.00010138"
+          ixz="1.1661E-06"
+          iyy="0.0070468"
+          iyz="6.6081E-06"
+          izz="0.041003" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link2.glb" />
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link2.glb" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="body_joint2" type="revolute">
+      <origin xyz="0 -0.38704 0" />
+      <parent link="body_link1" />
+      <child link="body_link2" />
+      <axis xyz="0 0 1" />
+      <limit lower="-0.38397" upper="2.7576" effort="1000" velocity="10" />
+    </joint>
+
+    <!-- body_link3 (waist) -->
+    <link name="body_link3">
+      <inertial>
+        <origin xyz="0.0057091 -0.043636 0.0033344" />
+        <mass value="5.6895" />
+        <inertia
+          ixx="0.010503"
+          ixy="0.00050418"
+          ixz="1.2455E-05"
+          iyy="0.0080802"
+          iyz="-4.4802E-05"
+          izz="0.011644" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link3.glb" />
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link3.glb" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="body_joint3" type="revolute">
+      <origin xyz="0 -0.27 0" />
+      <parent link="body_link2" />
+      <child link="body_link3" />
+      <axis xyz="0 0 1" />
+      <limit lower="-1.5708" upper="0.5236" effort="1000" velocity="10" />
+    </joint>
+
+    <!-- waist_yaw_torso_link (torso, parent for head/arms) -->
+    <link name="body_link4" >
+      <inertial>
+        <origin xyz="-0.014346 4.4158E-06 0.20167" />
+        <mass value="4.6934" />
+        <inertia
+          ixx="0.048256"
+          ixy="-1.0989E-06"
+          ixz="0.0042551"
+          iyy="0.041609"
+          iyz="1.1206E-07"
+          izz="0.017837" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link4.glb" />
+        </geometry>
+        <material name="">
+          <color rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link4.glb" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="body_joint4" type="revolute">
+      <origin xyz="0 -0.1655 0" rpy="1.5708 0 0" />
+      <parent link="body_link3" />
+      <child link="body_link4" />
+      <axis xyz="0 0 1" />
+      <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="10" />
+    </joint>
+
+    <!-- head: head_link1 (neck), head_joint1, head_link2 (head), head_joint2 -->
+    <link name="head_link1">
+      <inertial>
+        <origin xyz="-1.4269E-12 0.0053202 0.055582" />
+        <mass value="0.2237" />
+        <inertia
+          ixx="8.9086E-05"
+          ixy="2.4443E-15"
+          ixz="5.7682E-20"
+          iyy="6.5512E-05"
+          iyz="3.0856E-06"
+          izz="4.8068E-05" />
+      </inertial>
+    </link>
+    <joint name="head_joint1" type="revolute">
+      <origin xyz="-0.041 0 0.46874" />
+      <parent link="body_link4" />
+      <child link="head_link1" />
+      <axis xyz="0 0 1" />
+      <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="10" />
+    </joint>
+
+    <link name="head_link2">
+      <inertial>
+        <origin xyz="0.028328 -0.035178 -0.00055178" />
+        <mass value="0.56733" />
+        <inertia
+          ixx="0.0020659"
+          ixy="-0.00054222"
+          ixz="-7.9302E-07"
+          iyy="0.0025822"
+          iyz="-4.5882E-07"
+          izz="0.002181" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/head_pitch.glb" />
+        </geometry>
+        <material name="">
+          <color rgba="0.75294 0.75294 0.75294 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/head_pitch.glb" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="head_joint2" type="revolute">
+      <origin xyz="0 0 0.06" rpy="-1.5708 0 0" />
+      <parent link="head_link1" />
+      <child link="head_link2" />
+      <axis xyz="0 0 1" />
+      <limit lower="-0.4014" upper="0.38397" effort="1000" velocity="10" />
+    </joint>
+
+  </xacro:macro>
+
+</robot>

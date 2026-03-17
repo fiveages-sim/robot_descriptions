@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<robot name="body_head_platform" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="mesh_path" value="file://$(find aidal_description)/meshes/body/"/>
+  <xacro:macro name="visual_collision" params="mesh">
+    <visual>
+      <geometry>
+        <mesh filename="${mesh_path}${mesh}" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="${mesh_path}${mesh}" />
+      </geometry>
+    </collision>
+  </xacro:macro>
+  <link name="body_base_link">
+    <inertial>
+      <origin xyz="-0.0002128 -0.02749 0.37118" />
+      <mass value="12.159"/>
+      <inertia
+          ixx="0.69175"
+          ixy="3.0303E-06"
+          ixz="-1.7947E-05"
+          iyy="0.68839"
+          iyz="0.012363"
+          izz="0.15316"/>
+    </inertial>
+    <xacro:visual_collision mesh="base.glb"/>
+  </link>
+  <link name="platform_base_link">
+    <inertial>
+      <origin xyz="-4.8033E-05 -0.05292 0.00070789" />
+      <mass value="2.8992"/>
+      <inertia
+          ixx="0.013327"
+          ixy="3.14E-06"
+          ixz="3.5257E-06"
+          iyy="0.032331"
+          iyz="6.163E-05"
+          izz="0.021546"/>
+    </inertial>
+    <xacro:visual_collision mesh="lift.glb"/>
+  </link>
+  <link name="head_link1">
+    <inertial>
+      <origin xyz="-0.00017562 -0.015989 0.024926" />
+      <mass value="0.049513"/>
+      <inertia
+          ixx="1.6251E-05"
+          ixy="-4.4281E-09"
+          ixz="7.808E-08"
+          iyy="2.2171E-05"
+          iyz="-4.661E-07"
+          izz="1.3605E-05"/>
+    </inertial>
+    <xacro:visual_collision mesh="head1.glb"/>
+  </link>
+  <link name="head_link2">
+    <inertial>
+      <origin xyz="-0.00051349 -0.027144 0.0551" />
+      <mass value="0.23639"/>
+      <inertia
+          ixx="0.00025664"
+          ixy="-1.6537E-08"
+          ixz="1.3993E-07"
+          iyy="0.0005615"
+          iyz="1.8036E-05"
+          izz="0.00052625"/>
+    </inertial>
+    <xacro:visual_collision mesh="head2.glb"/>
+  </link>
+  <link name="camera_link">
+    <inertial>
+      <origin xyz="0.0016556 -0.01252 1.2156E-05" />
+      <mass value="0.049778"/>
+      <inertia
+          ixx="4.8577E-06"
+          ixy="4.3442E-07"
+          ixz="-6.2436E-10"
+          iyy="3.075E-05"
+          iyz="6.4645E-10"
+          izz="3.0901E-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find sensor_models)/meshes/d435.glb"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="lift_joint" type="prismatic">
+    <origin xyz="0 -0.11663 0.271" />
+    <parent link="body_base_link"/>
+    <child link="platform_base_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="0" upper="1" effort="60" velocity="0.15"/>
+  </joint>
+
+  <joint name="head_joint1" type="revolute">
+    <origin xyz="0 -0.1018 0.126" />
+    <parent link="platform_base_link"/>
+    <child link="head_link1"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.256" upper="1.256" effort="2" velocity="1.57"/>
+  </joint>
+
+  <joint name="head_joint2" type="revolute">
+    <origin xyz="0 -0.02 0.044" />
+    <parent link="head_link1"/>
+    <child link="head_link2"/>
+    <axis xyz="-1 0 0"/>
+    <limit lower="-0.419" upper="0.419" effort="2" velocity="1.57"/>
+  </joint>
+
+  <joint name="camera_joint" type="fixed">
+    <origin xyz="-0.0002391 -0.076866 0.061606" rpy="-${PI/2} 0 ${PI}"/>
+    <parent link="head_link2"/>
+    <child link="camera_link"/>
+  </joint>
+
+  <link name="top_camera"/>
+  <joint name="top_camera_joint" type="fixed">
+    <origin xyz=" 0 -0.1275 1.451" rpy="-${PI/2} 0 ${PI}"/>
+    <parent link="body_base_link"/>
+    <child link="top_camera"/>
+  </joint>
+
+  <joint name="l_base_joint1" type="fixed">
+    <origin xyz="0.1 -0.1103 0.031645" rpy="0 -${PI/4} ${PI}"/>
+    <parent link="platform_base_link"/>
+    <child link="left_base_link"/>
+  </joint>
+
+  <joint name="r_base_joint1" type="fixed">
+    <origin xyz="-0.1 -0.1103 0.031645" rpy="0 -${PI/4} 0"/>
+    <parent link="platform_base_link"/>
+    <child link="right_base_link"/>
+  </joint>
+
+  <link name="left_base_link">
+    <inertial>
+      <origin xyz="-3.58E-05 -0.0056915 0.024464"/>
+      <mass value="0.23441"/>
+      <inertia
+          ixx="0.00027369"
+          ixy="6.5702E-08"
+          ixz="2.7812E-09"
+          iyy="0.000264"
+          iyz="-1.6355E-06"
+          izz="0.00036679"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="${mesh_path}arm_base.glb"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="right_base_link">
+    <inertial>
+      <origin xyz="-4.8022E-05 0.0056915 0.024715"/>
+      <mass value="0.23441"/>
+      <inertia
+          ixx="0.00027369"
+          ixy="6.5702E-08"
+          ixz="-3.2599E-09"
+          iyy="0.000264"
+          iyz="1.6355E-06"
+          izz="0.00036679"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="${mesh_path}arm_base.glb"/>
+      </geometry>
+    </visual>
+  </link>
+</robot>
+
+
+

@@ -1,0 +1,391 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!--
+      Ai2-Bot2 arm: single parametric macro for left/right arms.
+      Usage: <xacro:Ai2Bot2Arm name="left" parent_link="..." direction="1"/>
+             <xacro:Ai2Bot2Arm name="right" parent_link="..." direction="-1"/>
+      Links/joints use ${prefix}base_link, ${prefix}link1..8, ${prefix}joint0..8.
+      Meshes use ZPF_left_* glb with scale="1 ${direction} 1"; set direction to -1 for mirror.
+    -->
+
+    <xacro:macro name="Ai2Bot2Arm" params="name parent_link direction:=1">
+        <xacro:property name="prefix" value="${name}_"/>
+
+        <link name="${prefix}base_link">
+            <inertial>
+                <xacro:if value="${direction == 1}">
+                    <origin xyz="1.7227967e-05 -2.7405976e-04 6.7417875e-02"/>
+                </xacro:if>
+                <xacro:if value="${direction == -1}">
+                    <origin xyz="1.7227967e-05 2.7405976e-04 6.7417875e-02"/>
+                </xacro:if>
+                <mass value="1.39"/>
+                <inertia ixx="1.7468022e-03" ixy="4.4167244e-07" ixz="8.1232278e-07"
+                         iyy="1.7511135e-03" iyz="-1.7950155e-05" izz="1.1806738e-03"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/arm_base_link.glb"
+                          scale="1 ${direction} 1"/>
+                </geometry>
+                <material name="">
+                    <color rgba="0.86667 0.86667 0.8902 1"/>
+                </material>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/arm_base_link.glb"
+                          scale="1 ${direction} 1"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint0" type="fixed">
+            <xacro:if value="${direction == 1}">
+                <origin xyz="-0.061 0.0485 0.3255" rpy="-1.5708 -1.5708 0"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <origin xyz="-0.061 -0.0485 0.3255" rpy="1.5708 -1.5708 0"/>
+            </xacro:if>
+            <parent link="${parent_link}"/>
+            <child link="${prefix}base_link"/>
+            <axis xyz="0 0 0"/>
+        </joint>
+
+        <link name="${prefix}link1">
+            <inertial>
+                <xacro:if value="${direction == 1}">
+                    <origin xyz="-1.1436e-3 -1.5043e-2 -3.0119e-2"/>
+                </xacro:if>
+                <xacro:if value="${direction == -1}">
+                    <origin xyz="-1.1436e-3 1.5043e-2 -3.0119e-2"/>
+                </xacro:if>
+                <mass value="0.5885"/>
+                <inertia ixx="1.6599262e-03" ixy="-6.1451353e-05" ixz="1.5137541e-04"
+                         iyy="1.5735435e-03" iyz="2.0085037e-04" izz="1.5710792e-03"/>
+            </inertial>
+            <visual>
+
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link1.glb"
+                          scale="1 ${direction} 1"/>
+                </geometry>
+
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link1.glb"
+                          scale="1 ${direction} 1"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint1" type="revolute">
+            <xacro:if value="${direction == 1}">
+                <origin xyz="0 0 0.1785"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <origin xyz="0 0 0.1785"/>
+            </xacro:if>
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}link1"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-3.1" upper="3.1" effort="60" velocity="3.14"/>
+        </joint>
+
+        <link name="${prefix}link2">
+            <inertial>
+                <xacro:if value="${direction == 1}">
+                    <origin xyz="1.255e-4 -6.489e-3 -1.5096e-2"/>
+                </xacro:if>
+                <xacro:if value="${direction == -1}">
+                    <origin xyz="1.255e-4 -6.489e-3 1.5096e-2"/>
+                </xacro:if>
+                <mass value="1.37"/>
+                <inertia ixx="1.7992218e-03" ixy="-1.1620208e-06" ixz="-3.9132877e-06"
+                         iyy="1.2916690e-03" iyz="1.1836315e-04" izz="1.5723054e-03"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link2.glb"
+                          scale="1 1 ${direction}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link2.glb"
+                          scale="1 1 ${direction}"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint2" type="revolute">
+            <origin xyz="0 0 0" rpy="-1.5708 -1.5708 0"/>
+            <parent link="${prefix}link1"/>
+            <child link="${prefix}link2"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-0.44" upper="3.1" effort="60" velocity="3.14"/>
+        </joint>
+
+        <link name="${prefix}link3">
+            <inertial>
+                <xacro:if value="${direction == 1}">
+                    <origin xyz="4.7568e-3 3.1731e-3 -9.229e-2"/>
+                </xacro:if>
+                <xacro:if value="${direction == -1}">
+                    <origin xyz="-4.7568e-3 3.1731e-3 -9.229e-2"/>
+                </xacro:if>
+                <mass value="2.29"/>
+                <inertia ixx="3.7492999e-02" ixy="-6.5328616e-05" ixz="6.1380090e-05"
+                         iyy="3.7362685e-02" iyz="-5.4729831e-05" izz="1.8817538e-03"/>
+            </inertial>
+            <visual>
+
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link3.glb"
+                          scale="${direction} 1 1"/>
+                </geometry>
+
+            </visual>
+            <collision>
+
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link3.glb"
+                          scale="${direction} 1 1"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint3" type="revolute">
+            <xacro:if value="${direction == 1}">
+                <origin xyz="0 -0.28998 0" rpy="1.5708 -1.5708 0"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <origin xyz="0 -0.28998 0" rpy="1.5708 -1.5708 0"/>
+            </xacro:if>
+            <parent link="${prefix}link2"/>
+            <child link="${prefix}link3"/>
+            <xacro:if value="${direction == 1}">
+                <axis xyz="0 0 1"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <axis xyz="0 0 -1"/>
+            </xacro:if>
+            <limit lower="-3.1" upper="3.1" effort="30" velocity="3.14"/>
+        </joint>
+
+        <link name="${prefix}link4">
+            <inertial>
+                <xacro:if value="${direction == 1}">
+                    <origin xyz="-9.542e-3 8.999e-2 -4.374e-3"/>
+                </xacro:if>
+                <xacro:if value="${direction == -1}">
+                    <origin xyz="9.542e-3 8.999e-2 -4.374e-3"/>
+                </xacro:if>
+                <mass value="0.82"/>
+                <inertia ixx="2.8633804e-03" ixy="-2.9024436e-05" ixz="2.8630445e-05"
+                         iyy="7.2655797e-04" iyz="-2.4077951e-04" izz="2.7356732e-03"/>
+            </inertial>
+            <visual>
+
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link4.glb"
+                          scale="${direction} 1 1"/>
+                </geometry>
+
+            </visual>
+            <collision>
+
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link4.glb"
+                          scale="${direction} 1 1"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint4" type="revolute">
+            <xacro:if value="${direction == 1}">
+                <origin xyz="0.01 0 0" rpy="1.5708 0 0"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <origin xyz="-0.01 0 0" rpy="1.5708 0 0"/>
+            </xacro:if>
+            <parent link="${prefix}link3"/>
+            <child link="${prefix}link4"/>
+            <xacro:if value="${direction == 1}">
+                <axis xyz="0 0 1"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <axis xyz="0 0 -1"/>
+            </xacro:if>
+            <limit lower="-2.27" upper="0" effort="30" velocity="3.14"/>
+        </joint>
+
+        <link name="${prefix}link5">
+            <inertial>
+                <xacro:if value="${direction == 1}">
+                    <origin xyz="-2.3965e-5 -2.247e-2 -8.5293e-2"/>
+                </xacro:if>
+                <xacro:if value="${direction == -1}">
+                    <origin xyz="2.3965e-5 -2.247e-2 -8.5293e-2"/>
+                </xacro:if>
+                <mass value="1.017"/>
+                <inertia ixx="2.2579574e-03" ixy="2.0270009e-07" ixz="3.2535431e-08"
+                         iyy="2.0417531e-03" iyz="3.7131069e-04" izz="9.5194483e-04"/>
+            </inertial>
+            <visual>
+
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link5.glb"
+                          scale="${direction} 1 1"/>
+                </geometry>
+
+            </visual>
+            <collision>
+
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link5.glb"
+                          scale="${direction} 1 1"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint5" type="revolute">
+            <xacro:if value="${direction == 1}">
+                <origin xyz="-0.01 0.3088 0" rpy="-1.5708 0 0"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <origin xyz="0.01 0.3088 0" rpy="-1.5708 0 0"/>
+            </xacro:if>
+            <parent link="${prefix}link4"/>
+            <child link="${prefix}link5"/>
+            <xacro:if value="${direction == 1}">
+                <axis xyz="0 0 1"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <axis xyz="0 0 -1"/>
+            </xacro:if>
+            <limit lower="-3.1" upper="3.1" effort="10" velocity="3.14"/>
+        </joint>
+
+        <link name="${prefix}link6">
+            <inertial>
+                <xacro:if value="${direction == 1}">
+                    <origin xyz="9.154e-3 -8.103e-3 2.957e-3"/>
+                </xacro:if>
+                <xacro:if value="${direction == -1}">
+                    <origin xyz="9.154e-3 8.103e-3 2.957e-3"/>
+                </xacro:if>
+                <mass value="0.55"/>
+                <inertia ixx="3.7382788e-04" ixy="3.1477249e-06" ixz="1.5645983e-05"
+                         iyy="2.7467239e-04" iyz="-1.1682175e-05" izz="3.2231106e-04"/>
+            </inertial>
+            <visual>
+
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link6.glb"
+                          scale="1 ${direction} 1"/>
+                </geometry>
+
+            </visual>
+            <collision>
+
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link6.glb"
+                          scale="1 ${direction} 1"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint6" type="revolute">
+            <origin xyz="0 0 0" rpy="1.5708 -1.5708 0"/>
+            <parent link="${prefix}link5"/>
+            <child link="${prefix}link6"/>
+            <xacro:if value="${direction == 1}">
+                <axis xyz="0 0 1"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <axis xyz="0 0 -1"/>
+            </xacro:if>
+            <limit lower="-1.22" upper="1.22" effort="10" velocity="3.14"/>
+        </joint>
+
+        <link name="${prefix}link7">
+            <inertial>
+                <xacro:if value="${direction == 1}">
+                    <origin xyz="1.547e-4 5.483e-2 5.55e-3"/>
+                </xacro:if>
+                <xacro:if value="${direction == -1}">
+                    <origin xyz="1.547e-4 5.483e-2 -5.55e-3"/>
+                </xacro:if>
+                <mass value="0.266"/>
+                <inertia ixx="0.000132576941913423" ixy="9.13805899339808E-06" ixz="-9.14363365511958E-08"
+                         iyy="0.000151676252224174" iyz="-2.82790388376229E-05" izz="0.000142517590749322"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link7.glb"
+                          scale="1 1 ${direction}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link7.glb"
+                          scale="1 1 ${direction}"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}joint7" type="revolute">
+            <xacro:if value="${direction == 1}">
+                <origin xyz="0.01 0 0" rpy="1.5708 -1.5708 0"/>
+            </xacro:if>
+            <xacro:if value="${direction == -1}">
+                <origin xyz="0.01 0 0" rpy="1.5708 -1.5708 0"/>
+            </xacro:if>
+            <parent link="${prefix}link6"/>
+            <child link="${prefix}link7"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-2.09" upper="0.49" effort="10" velocity="3.14"/>
+        </joint>
+
+        <link name="${prefix}link8">
+            <inertial>
+                <xacro:if value="${direction == 1}">
+                    <origin xyz="-0.000223537609806423 8.8367558294447E-05 -0.0171573759779855"/>
+                </xacro:if>
+                <xacro:if value="${direction == -1}">
+                    <origin xyz="0.000223537609806423 8.8367558294447E-05 -0.0171573759779855"/>
+                </xacro:if>
+                <mass value="0.165822774021484"/>
+                <inertia ixx="4.88486899397696E-05" ixy="-9.4591722796062E-08" ixz="3.0611887075293E-07"
+                         iyy="4.94603620572993E-05" iyz="8.02154219939052E-09" izz="7.6901626133018E-05"/>
+            </inertial>
+            <visual>
+                <origin xyz="-0.033 -0.0085 0.01562"/>
+                <geometry>
+                    <mesh filename="file://$(find rm75_description)/meshes/ee/camera_stand_d405.glb"/>
+                </geometry>
+            </visual>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find rm75_description)/meshes/ee/ee_fb_camera.glb"/>
+                </geometry>
+            </visual>
+            <visual>
+                <origin xyz="-0.13322 -0.0005 0.044651" rpy="0 -1.5708 -1.5708"/>
+                <geometry>
+                    <mesh filename="file://$(find sensor_models)/meshes/d405.glb"/>
+                </geometry>
+            </visual>
+        </link>
+        <joint name="${prefix}joint8" type="fixed">
+            <origin xyz="0 -0.04512 0" rpy="1.5708 3.1415926 0"/>
+            <parent link="${prefix}link7"/>
+            <child link="${prefix}link8"/>
+            <axis xyz="0 0 -1"/>
+            <limit lower="0" upper="0" effort="0" velocity="0"/>
+        </joint>
+        <link name="${prefix}ee"/>
+        <joint name="${prefix}ee_joint" type="fixed">
+            <origin xyz="0 0 0.0695"/>
+            <parent link="${prefix}link8"/>
+            <child link="${prefix}ee"/>
+        </joint>
+
+    </xacro:macro>
+
+</robot>

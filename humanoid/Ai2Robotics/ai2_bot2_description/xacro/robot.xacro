@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Ai2 Bot2 Full Robot (visualization)                                           | -->
+<!-- |    Used by robot_common_launch manipulator.launch.py (xacro_filename=robot.xacro)| -->
+<!-- |    Structure : base_link (chassis) -> body ->                                    | -->
+<!-- |    body_link4; ego and arms both attach to body_link4.                           | -->
+<!-- =================================================================================== -->
+<robot name="Ai2_Bot2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Parse end-effector type from 'type' arg (similar to FiveAges W2 robot.xacro) -->
+  <xacro:arg name="type" default=""/>
+  <xacro:property name="type_arg" value="$(arg type)"/>
+  <xacro:property name="selected_gripper_type" value=""/>
+
+  <xacro:if value="${type_arg == 'inspire'}">
+    <xacro:property name="selected_gripper_type" value="inspire_eg2"/>
+  </xacro:if>
+
+  <xacro:include filename="$(find ai2_bot2_description)/xacro/components/chassis.xacro"/>
+  <xacro:include filename="$(find ai2_bot2_description)/xacro/components/body.xacro"/>
+  <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
+
+  <xacro:Ai2Bot2Chassis/>
+  <xacro:Ai2Bot2Body parent_link="base_link"/>
+
+  <!-- ego frame (only in full robot; not used in component type=arms) -->
+  <link name="ego"></link>
+  <joint name="ego_joint" type="fixed">
+    <origin xyz="-0.061 0 0.3255" rpy="0 0 0" />
+    <parent link="body_link4" />
+    <child link="ego" />
+  </joint>
+
+  <!-- Arms on body_link4 (W2 full robot uses arm_base under body_link4; we keep arms on body_link4) -->
+  <xacro:Ai2Bot2Arm name="left" parent_link="body_link4" direction="1"/>
+  <xacro:Ai2Bot2Arm name="right" parent_link="body_link4" direction="-1"/>
+
+  <!-- Inspire EG2 gripper (type:=inspire) -->
+  <xacro:if value="${selected_gripper_type == 'inspire_eg2'}">
+    <xacro:include filename="$(find inspire_description)/xacro/EG2-4C2.xacro"/>
+
+    <xacro:Gripper name="left"/>
+    <joint name="left_gripper_mount" type="fixed">
+      <parent link="left_ee"/>
+      <child link="left_gripper_base"/>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+    </joint>
+
+    <xacro:Gripper name="right"/>
+    <joint name="right_gripper_mount" type="fixed">
+      <parent link="right_ee"/>
+      <child link="right_gripper_base"/>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+    </joint>
+  </xacro:if>
+
+</robot>

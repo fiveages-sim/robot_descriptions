@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Arm ros2_control interfaces for Ai2 Bot2                                     | -->
+<!-- |    Parameterized macro: name="L"/"R"                                            | -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="ai2_bot2_arm_interfaces" params="name">
+
+		<xacro:property name="prefix" value="${name}_"/>
+
+		<joint name="${prefix}joint1">
+			<command_interface name="position"/>
+			<state_interface name="position"/>
+			<state_interface name="velocity"/>
+			<state_interface name="effort"/>
+		</joint>
+
+		<joint name="${prefix}joint2">
+			<command_interface name="position"/>
+			<state_interface name="position"/>
+			<state_interface name="velocity"/>
+			<state_interface name="effort"/>
+		</joint>
+
+		<joint name="${prefix}joint3">
+			<command_interface name="position"/>
+			<state_interface name="position"/>
+			<state_interface name="velocity"/>
+			<state_interface name="effort"/>
+		</joint>
+
+		<joint name="${prefix}joint4">
+			<command_interface name="position"/>
+			<state_interface name="position"/>
+			<state_interface name="velocity"/>
+			<state_interface name="effort"/>
+		</joint>
+
+		<joint name="${prefix}joint5">
+			<command_interface name="position"/>
+			<state_interface name="position"/>
+			<state_interface name="velocity"/>
+			<state_interface name="effort"/>
+		</joint>
+
+		<joint name="${prefix}joint6">
+			<command_interface name="position"/>
+			<state_interface name="position"/>
+			<state_interface name="velocity"/>
+			<state_interface name="effort"/>
+		</joint>
+
+		<joint name="${prefix}joint7">
+			<command_interface name="position"/>
+			<state_interface name="position"/>
+			<state_interface name="velocity"/>
+			<state_interface name="effort"/>
+		</joint>
+
+	</xacro:macro>
+</robot>

@@ -1,0 +1,441 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:include filename="$(find quanta_x1_description)/xacro/ros2_control/base_ros2_control.xacro"/>
+	<xacro:include filename="$(find quanta_x1_description)/xacro/components/swivel.xacro"/>
+	<xacro:macro name="QuantaX1Base">
+		<link name="base_link"/>
+		<joint name="chassis_base_joint" type="fixed">
+			<parent link="base_link"/>
+			<child link="chassis_base_link"/>
+
+		</joint>
+		<link name="chassis_base_link">
+			<inertial>
+				<origin xyz="-0.030758221 -0.000842378 0.4035307"/>
+				<mass value="53.267819"/>
+				<inertia ixx="8.9227043" ixy="-0.010655229" ixz="0.32575221" iyy="9.4295012" iyz="-0.016851522"
+								 izz="1.4374052"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/base_link.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/collision/chassis_base_link.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<link name="right_wheel_link">
+			<inertial>
+				<origin xyz="-2.25e-05 0.034770535 -1.03e-05"/>
+				<mass value="4.1486831"/>
+				<inertia ixx="0.010547795" ixy="3.11548e-06" ixz="-9.39e-07" iyy="0.017789282" iyz="1.28202e-06"
+								 izz="0.010549381"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/drive_wheel.glb" scale="1 -1 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin rpy="${PI/2} 0 0"/>
+				<geometry>
+					<cylinder radius="0.085" length="0.05"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="right_wheel_joint" type="continuous">
+			<origin xyz="0 -0.208 0.085999"/>
+			<parent link="chassis_base_link"/>
+			<child link="right_wheel_link"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+
+		<link name="left_wheel_link">
+			<inertial>
+				<origin xyz="-2.47e-05 -0.034770535 -4.32e-06"/>
+				<mass value="4.1486831"/>
+				<inertia ixx="0.010547525" ixy="-3.21e-06" ixz="-6.18e-07" iyy="0.017789282" iyz="-1.02e-06" izz="0.01054965"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/drive_wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin rpy="${PI/2} 0 0"/>
+				<geometry>
+					<cylinder radius="0.085" length="0.05"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="left_wheel_joint" type="continuous">
+			<origin xyz="0 0.208 0.086001"/>
+			<parent link="chassis_base_link"/>
+			<child link="left_wheel_link"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+
+		<link name="lift_link">
+			<inertial>
+				<origin xyz="0.10585739 -0.000670192 0.070677225"/>
+				<mass value="9.3945533"/>
+				<inertia ixx="0.16936114" ixy="-0.000662449" ixz="0.0114" iyy="0.11444096" iyz="5.14865e-05" izz="0.18075529"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/lift.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/collision/lift_link.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="lift_joint" type="prismatic">
+			<origin xyz="-0.0385 0 0.36"/>
+			<parent link="chassis_base_link"/>
+			<child link="lift_link"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="2000" lower="0" upper="0.78" velocity="0.2"/>
+		</joint>
+		<link name="head_yaw_link">
+			<inertial>
+				<origin xyz="9.85219e-05 -0.00010749 0.056689166"/>
+				<mass value="0.64404227"/>
+				<inertia ixx="0.000486721" ixy="-1.25e-06" ixz="-8.64e-07" iyy="0.000572985" iyz="1.41146e-05"
+								 izz="0.000333911"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/head_yaw.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/collision/head_yaw_link.STL"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="head_yaw_joint" type="revolute">
+			<origin xyz="0.1595 0 0.2245"/>
+			<parent link="lift_link"/>
+			<child link="head_yaw_link"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="9" lower="-1.5708" upper="1.5708" velocity="3.77"/>
+		</joint>
+		<link name="head_pitch_link">
+			<inertial>
+				<origin xyz="2.79439e-05 1.4773183 -0.10496909"/>
+				<mass value="0.59804473"/>
+				<inertia ixx="0.00131549" ixy="-1.93e-06" ixz="-1.23e-06" iyy="0.001827745" iyz="-6.2e-05" izz="0.002283248"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/head_pitch.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/collision/head_pitch_link.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="head_pitch_joint" type="revolute">
+			<origin xyz="0 0 0.062"/>
+			<parent link="head_yaw_link"/>
+			<child link="head_pitch_link"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="9" lower="-0.1745" upper="1.2217" velocity="3.77"/>
+		</joint>
+
+		<link name="left_frame_link"/>
+
+		<joint name="left_frame_joint" type="fixed">
+			<origin xyz="0.2305 0.266 0"/>
+			<parent link="lift_link"/>
+			<child link="left_frame_link"/>
+		</joint>
+
+		<link name="right_frame_link"/>
+
+		<joint name="right_frame_joint" type="fixed">
+			<origin xyz="0.2305 -0.266 0"/>
+			<parent link="lift_link"/>
+			<child link="right_frame_link"/>
+		</joint>
+
+		<link name="head_camera_frame_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_DCW2.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="head_camera_connector" type="fixed">
+			<origin xyz="-0.05335 -0.00767 0.0517"/>
+			<parent link="head_pitch_link"/>
+			<child link="head_camera_frame_link"/>
+		</joint>
+
+		<link name="chest_lh_camera_base_link">
+			<inertial>
+				<origin xyz="0.00349024922357966 0.000276649960086055 -0.000534994"/>
+				<mass value="0.00393260330317804"/>
+				<inertia ixx="3.15744311043792e-07" ixy="8.78969389340262e-09" ixz="-1.73e-08" iyy="2.54375929436225e-07"
+								 iyz="1.32776953041271e-08" izz="2.45491900233462e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/usb_camera/camera_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="chest_lh_camera_base_joint" type="fixed">
+			<origin xyz="0.2458 0 0.021" rpy="-1.5708 0 -1.5708"/>
+			<parent link="lift_link"/>
+			<child link="chest_lh_camera_base_link"/>
+		</joint>
+
+		<link name="right_tof_link">
+			<inertial>
+				<origin xyz="-0.008023809 -2.66e-05 -5.14e-06"/>
+				<mass value="0.00778764279571635"/>
+				<inertia ixx="6.03021904733343e-07" ixy="1.41722536763984e-09" ixz="1.44457398242051e-10"
+								 iyy="4.88588917479349e-07" iyz="1.53120484487309e-11" izz="4.87991398776118e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/tof/tof_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="right_tof_joint" type="fixed">
+			<origin rpy="0 0.2618 0" xyz="0.28438 -0.102 0.17463"/>
+			<parent link="chassis_base_link"/>
+			<child link="right_tof_link"/>
+		</joint>
+
+		<link name="left_tof_link">
+			<inertial>
+				<origin xyz="-0.008023809 -2.66e-05 -5.14e-06"/>
+				<mass value="0.00778764279571633"/>
+				<inertia ixx="6.03021904733342e-07" ixy="1.41722536764021e-09" ixz="1.44457398242501e-10"
+								 iyy="4.88588917479348e-07" iyz="1.53120484467497e-11" izz="4.87991398776117e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/tof/tof_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="left_tof_joint" type="fixed">
+			<origin rpy="0 0.2618 0" xyz="0.28438 0.102 0.17463"/>
+			<parent link="chassis_base_link"/>
+			<child link="left_tof_link"/>
+		</joint>
+
+		<link name="left_front_ultrasonic_link">
+			<inertial>
+				<origin xyz="-0.013843472 1.09356967925578e-14 -0.000113947"/>
+				<mass value="0.00892178440560957"/>
+				<inertia ixx="9.74741018449185e-07" ixy="-3.05e-20" ixz="1.73818627794853e-08" iyy="5.91407456386679e-07"
+								 iyz="-8.28e-18" izz="1.0946892805387e-06"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/ultrasonic/ultrasonic_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="left_front_ultrasonic_joint" type="fixed">
+			<origin rpy="0 -0.2618 -0.2618" xyz="0.2612 0.172 0.17811"/>
+			<parent link="chassis_base_link"/>
+			<child link="left_front_ultrasonic_link"/>
+		</joint>
+
+		<link name="left_rear_ultrasonic_link">
+			<inertial>
+				<origin xyz="-0.013843472 1.69864122767649e-14 -0.000113947"/>
+				<mass value="0.00892178440560658"/>
+				<inertia ixx="9.74741018449214e-07" ixy="8.95274120578393e-19" ixz="1.73818627801905e-08"
+								 iyy="5.91407456386544e-07" iyz="-8.27e-18" izz="1.09468928053872e-06"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/ultrasonic/ultrasonic_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="left_rear_ultrasonic_joint" type="fixed">
+			<origin rpy="0 -0.2618 -2.8274" xyz="-0.26102 0.17142 0.21811"/>
+			<parent link="chassis_base_link"/>
+			<child link="left_rear_ultrasonic_link"/>
+		</joint>
+
+		<link name="right_front_ultrasonic_link">
+			<inertial>
+				<origin xyz="-0.013843472 1.69586567011493e-14 -0.000113947"/>
+				<mass value="0.00892178440560675"/>
+				<inertia ixx="9.74741018449211e-07" ixy="8.39819932312838e-19" ixz="1.73818627801337e-08"
+								 iyy="5.91407456386574e-07" iyz="-8.29e-18" izz="1.09468928053873e-06"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/ultrasonic/ultrasonic_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="right_front_ultrasonic_joint" type="fixed">
+			<origin rpy="0 -0.2618 0.2618" xyz="0.2612 -0.172 0.17811"/>
+			<parent link="chassis_base_link"/>
+			<child link="right_front_ultrasonic_link"/>
+		</joint>
+
+		<link name="right_rear_ultrasonic_link">
+			<inertial>
+				<origin xyz="-0.013843472 1.01585406753202e-14 -0.000113947"/>
+				<mass value="0.00892178440560984"/>
+				<inertia ixx="9.74741018449204e-07" ixy="-7.59e-20" ixz="1.73818627794188e-08" iyy="5.91407456386667e-07"
+								 iyz="-8.26e-18" izz="1.09468928053869e-06"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/ultrasonic/ultrasonic_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="right_rear_ultrasonic_joint" type="fixed">
+			<origin rpy="0 -0.2618 2.8274" xyz="-0.26102 -0.17142 0.21811"/>
+			<parent link="chassis_base_link"/>
+			<child link="right_rear_ultrasonic_link"/>
+		</joint>
+
+		<link name="2d_laser_link"/>
+
+		<joint name="2d_laser_link_connector" type="fixed">
+			<origin xyz="0.235 0 0.219"/>
+			<parent link="chassis_base_link"/>
+			<child link="2d_laser_link"/>
+		</joint>
+
+		<link name="3d_laser_link"/>
+
+		<joint name="3d_laser_link_connector" type="fixed">
+			<origin xyz="0.235 0 0.21"/>
+			<parent link="chassis_base_link"/>
+			<child link="3d_laser_link"/>
+		</joint>
+
+		<link name="base_front_camera_frame_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_Max.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="base_front_camera_connector" type="fixed">
+			<origin rpy="0 -0.34907 0" xyz="0.273 0 0.158"/>
+			<parent link="chassis_base_link"/>
+			<child link="base_front_camera_frame_link"/>
+		</joint>
+
+		<link name="left_up_camera_base_link">
+			<inertial>
+				<origin xyz="0.00441611097656924 -1.67e-16 -0.000268164"/>
+				<mass value="0.00469862275446301"/>
+				<inertia ixx="3.85215034520352e-07" ixy="-1.22e-20" ixz="9.47029983048071e-09" iyy="3.32214139196315e-07"
+								 iyz="-4.04e-22" izz="3.17754525441374e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/usb_camera/camera_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="left_up_camera_base_joint" type="fixed">
+			<origin rpy="-2.35619 0 -0.34909" xyz="-0.022392 0.1299 1.4414"/>
+			<parent link="chassis_base_link"/>
+			<child link="left_up_camera_base_link"/>
+		</joint>
+
+		<link name="right_up_camera_base_link">
+			<inertial>
+				<origin xyz="0.00441611097656958 -2.78e-17 -0.000268164"/>
+				<mass value="0.00469862275446298"/>
+				<inertia ixx="3.85215034520349e-07" ixy="-1.21e-20" ixz="9.47029983048099e-09" iyy="3.32214139196311e-07"
+								 iyz="-1.39e-22" izz="3.1775452544137e-07"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/usb_camera/camera_01.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="right_up_camera_base_joint" type="fixed">
+			<origin rpy="-2.3562 0 -2.7925" xyz="-0.022392 -0.1299 1.4414"/>
+			<parent link="chassis_base_link"/>
+			<child link="right_up_camera_base_link"/>
+		</joint>
+
+		<link name="imu_link"/>
+		<joint name="imu_joint" type="fixed">
+			<origin xyz="0.16798 0.00009 0.2076"/>
+			<parent link="chassis_base_link"/>
+			<child link="imu_link"/>
+			
+		</joint>
+		<xacro:QuantaX1BaseRos2Control/>
+
+		<link name="2d_laser_base">
+			<inertial>
+				<origin xyz="0 0 0.03"/>
+				<mass value="0.0145098733371325"/>
+				<inertia ixx="1.31154092579587E-05" ixy="2.30174744915791E-07" ixz="-1.33602201591692E-09"
+								 iyy="1.37294183645858E-06" iyz="-1.54099158222408E-08" izz="1.23744229267791E-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/2d_lidars/waveshare_STL-27L.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		
+		<joint name="2d_laser_joint" type="fixed">
+			<origin xyz="0 0 0.027"/>
+			<parent link="2d_laser_base"/>
+			<child link="2d_laser"/>
+		</joint>
+
+		<link name="2d_laser"/>
+
+		<joint name="laser_connector" type="fixed">
+			<parent link="2d_laser_link"/>
+			<child link="2d_laser_base"/>
+		</joint>
+
+		<xacro:QuantaX1Swivel prefix="fl" x="0.212205" y="0.172203" z="0.061972"/>
+		<xacro:QuantaX1Swivel prefix="fr" x="0.212205" y="-0.172203" z="0.061972"/>
+		<xacro:QuantaX1Swivel prefix="rl" x="-0.1878" y="0.172203" z="0.061972"/>
+		<xacro:QuantaX1Swivel prefix="rr" x="-0.1878" y="-0.172203" z="0.061972"/>
+
+	</xacro:macro>
+</robot>
