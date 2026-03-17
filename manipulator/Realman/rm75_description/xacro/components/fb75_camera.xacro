@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot name="Realman RM75 FB75 Camera Component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="rm75_fb75_camera" params="prefix parent_link with_fb75_ee:='false'">
+		<xacro:property name="with_fb75_ee_bool" value="${str(with_fb75_ee).lower() in ['1', 'true', 'yes', 'on']}"/>
+		<xacro:property name="mount_link" value="${prefix + 'fb75_ee' if with_fb75_ee_bool else parent_link}"/>
+
+		<xacro:if value="${with_fb75_ee_bool}">
+			<link name="${prefix}fb75_ee">
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find rm75_description)/meshes/ee/ee_fb_camera.glb"/>
+					</geometry>
+				</visual>
+				<collision>
+					<geometry>
+						<mesh filename="file://$(find rm75_description)/meshes/ee/ee_fb_camera.glb"/>
+					</geometry>
+				</collision>
+			</link>
+
+			<joint name="${prefix}fb75_ee_joint" type="fixed">
+				<parent link="${parent_link}"/>
+				<child link="${prefix}fb75_ee"/>
+			</joint>
+		</xacro:if>
+
+		<link name="${prefix}camera_stand">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find rm75_description)/meshes/ee/camera_stand_d405.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${prefix}camera_stand_joint" type="fixed">
+			<origin xyz="-0.033 -0.0085 0.01562"/>
+			<parent link="${mount_link}"/>
+			<child link="${prefix}camera_stand"/>
+		</joint>
+
+		<link name="${prefix}camera">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/d405.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${prefix}camera_joint" type="fixed">
+			<origin xyz="-0.10022 0.008 0.029031" rpy="0 -1.5708 -1.5708"/>
+			<parent link="${prefix}camera_stand"/>
+			<child link="${prefix}camera"/>
+		</joint>
+	</xacro:macro>
+</robot>
