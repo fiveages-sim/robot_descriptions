@@ -40,7 +40,12 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=ai2_bot2 type:=insp
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch component.launch.py robot:=ai2_bot2 type:=left_arm
   ```
-
+* Chassis
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=ai2_bot2 type:=chassis
+  ```
+  
 ## 3. OCS2 Demo
 
 ### 3.1 OCS2 Arm Controller Demo
