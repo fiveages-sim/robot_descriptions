@@ -9,15 +9,15 @@
     - arms (arms only, like FiveAges W2): no body, no chassis, no ego; base_link exists for RViz fixed frame
     - left_arm / right_arm: root = base_link, both arms only, no body/chassis/ego
 -->
-<robot name="ai2_bot2_component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Ai2_Bot2_Chassis" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- component.launch.py default should show the base -->
   <xacro:arg name="type" default="base"/>
   <!-- Lock chassis joints by default for visualization (like W2) -->
   <xacro:arg name="chassis_joints_movable" default="false"/>
 
-  <!-- Root link: type=base uses chassis (base_link); otherwise provide a stable base_link for RViz -->
-  <xacro:if value="${'$(arg type)' != 'base'}">
+  <!-- Root link: type=base and type=chassis get base_link from chassis; others need a placeholder for RViz -->
+  <xacro:if value="${'$(arg type)' != 'base' and '$(arg type)' != 'chassis'}">
     <link name="base_link"/>
   </xacro:if>
 
@@ -43,11 +43,11 @@
     <link name="ego"></link>
     <joint name="ego_joint" type="fixed">
       <origin xyz="-0.061 0 0.3255" rpy="0 0 0" />
-      <parent link="body_link_4" />
+      <parent link="body_link4" />
       <child link="ego" />
     </joint>
-    <xacro:Ai2Bot2Arm name="left" parent_link="body_link_4" direction="1"/>
-    <xacro:Ai2Bot2Arm name="right" parent_link="body_link_4" direction="-1"/>
+    <xacro:Ai2Bot2Arm name="left" parent_link="body_link4" direction="1"/>
+    <xacro:Ai2Bot2Arm name="right" parent_link="body_link4" direction="-1"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'left_arm'}">
@@ -58,6 +58,11 @@
   <xacro:if value="${'$(arg type)' == 'right_arm'}">
     <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
     <xacro:Ai2Bot2Arm name="right" parent_link="base_link" direction="-1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'chassis'}">
+    <xacro:include filename="$(find ai2_bot2_description)/xacro/components/chassis.xacro"/>
+    <xacro:Ai2Bot2Chassis joints_movable="true"/>
   </xacro:if>
 
 </robot>

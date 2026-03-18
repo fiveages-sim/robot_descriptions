@@ -4,7 +4,7 @@ project(aidal_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-		DIRECTORY meshes xacro
+		DIRECTORY meshes xacro config urdf
 		DESTINATION share/${PROJECT_NAME}/
 )
 

@@ -314,41 +314,41 @@
 			<parent link="base_footprint"/>
 			<child link="base_link"/>
 		</joint>
+
+		<link name="chassis_panel">
+			<xacro:visual_mesh mesh="panel.glb"/>
+		</link>
+		<joint name="chassis_panel_joint" type="fixed">
+			<origin xyz="0.18 0.118  -0.0275"/>
+			<parent link="base_link"/>
+			<child link="chassis_panel"/>
+		</joint>
+
+		<link name="lidar_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="lidar_joint" type="fixed">
+			<origin xyz="0 -0.2496  -0.094808"/>
+			<parent link="base_link"/>
+			<child link="lidar_link"/>
+		</joint>
+		<link name="chassis_camera_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_DW.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="chassis_camera_joint" type="fixed">
+			<origin xyz="0 -0.2965  -0.1126" rpy="-${PI/2} 0 ${PI}"/>
+			<parent link="base_link"/>
+			<child link="chassis_camera_link"/>
+		</joint>
 	</xacro:macro>
-
-	<link name="chassis_panel">
-		<xacro:visual_mesh mesh="panel.glb"/>
-	</link>
-	<joint name="chassis_panel_joint" type="fixed">
-		<origin xyz="0.18 0.118  -0.0275"/>
-		<parent link="base_link"/>
-		<child link="chassis_panel"/>
-	</joint>
-
-	<link name="lidar_link">
-		<visual>
-			<geometry>
-				<mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>
-			</geometry>
-		</visual>
-	</link>
-	<joint name="lidar_joint" type="fixed">
-		<origin xyz="0 -0.2496  -0.094808"/>
-		<parent link="base_link"/>
-		<child link="lidar_link"/>
-	</joint>
-	<link name="chassis_camera_link">
-		<visual>
-			<geometry>
-				<mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_DW.glb"/>
-			</geometry>
-		</visual>
-	</link>
-	<joint name="chassis_camera_joint" type="fixed">
-		<origin xyz="0 -0.2965  -0.1126" rpy="-${PI/2} 0 ${PI}"/>
-		<parent link="base_link"/>
-		<child link="chassis_camera_link"/>
-	</joint>
 </robot>
 
 

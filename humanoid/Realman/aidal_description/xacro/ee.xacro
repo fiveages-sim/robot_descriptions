@@ -5,6 +5,19 @@
   <xacro:macro name="aidal_ee" params="type:='EG2-4C2'">
     <xacro:property name="gripper_type_norm" value="${str(type).upper()}"/>
 
+    <xacro:if value="${gripper_type_norm == 'EMPTY'}">
+      <link name="left_eef"/>
+      <link name="right_eef"/>
+      <joint name="left_ee_fix" type="fixed">
+        <parent link="left_ee"/>
+        <child link="left_eef"/>
+      </joint>
+      <joint name="right_ee_fix" type="fixed">
+        <parent link="right_ee"/>
+        <child link="right_eef"/>
+      </joint>
+    </xacro:if>
+
     <xacro:if value="${gripper_type_norm == 'EG2-4C2'}">
       <xacro:Gripper name="left"/>
       <joint name="left_gripper_fix" type="fixed">
