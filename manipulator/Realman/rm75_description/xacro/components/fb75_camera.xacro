@@ -41,7 +41,7 @@
 		<link name="${prefix}camera">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find sensor_models)/meshes/d405.glb"/>
+					<mesh filename="file://$(find sensor_models)/meshes/realsense/d405.glb"/>
 				</geometry>
 			</visual>
 		</link>
