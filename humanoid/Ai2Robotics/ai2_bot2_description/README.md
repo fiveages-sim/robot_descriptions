@@ -45,6 +45,11 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=ai2_bot2 type:=insp
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch component.launch.py robot:=ai2_bot2 type:=chassis
   ```
+* Body
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=ai2_bot2 type:=body
+  ```
   
 ## 3. OCS2 Demo
 

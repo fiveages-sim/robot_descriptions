@@ -9,7 +9,7 @@
     - arms (arms only, like FiveAges W2): no body, no chassis, no ego; base_link exists for RViz fixed frame
     - left_arm / right_arm: root = base_link, both arms only, no body/chassis/ego
 -->
-<robot name="Ai2_Bot2_Chassis" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Ai2_Bot2_Arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- component.launch.py default should show the base -->
   <xacro:arg name="type" default="base"/>
@@ -63,6 +63,11 @@
   <xacro:if value="${'$(arg type)' == 'chassis'}">
     <xacro:include filename="$(find ai2_bot2_description)/xacro/components/chassis.xacro"/>
     <xacro:Ai2Bot2Chassis joints_movable="true"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <xacro:include filename="$(find ai2_bot2_description)/xacro/components/body.xacro"/>
+    <xacro:Ai2Bot2Body parent_link="base_link"/>
   </xacro:if>
 
 </robot>

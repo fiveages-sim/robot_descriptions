@@ -16,6 +16,13 @@
       <xacro:property name="wheel_joint_type" value="fixed"/>
     </xacro:unless>
 
+    <link name="base_footprint"/>
+    <joint name="base_footprint_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+    </joint>
+
     <link name="base_link">
       <inertial>
         <origin xyz="-0.026689 -0.0065193 0.14154" rpy="0 0 0"/>
@@ -220,11 +227,11 @@
     </joint>
 
     <link name="chassis_panel">
-      <visual>
-        <geometry>
-          <mesh filename="file://$(find aidal_description)/meshes/woosh_agv/panel.glb"/>
-        </geometry>
-      </visual>
+<!--      <visual>-->
+<!--        <geometry>-->
+<!--          <mesh filename="file://$(find aidal_description)/meshes/woosh_agv/panel.glb"/>-->
+<!--        </geometry>-->
+<!--      </visual>-->
     </link>
     <joint name="chassis_panel_joint" type="fixed">
       <origin xyz="-0.0524 0.1771 0.2463" rpy="1.5708 -1.5708 0"/>
@@ -233,27 +240,27 @@
     </joint>
 
     <link name="charge_port">
-      <visual>
-        <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/charge_port.glb"/>
-        </geometry>
-      </visual>
+<!--      <visual>-->
+<!--        <geometry>-->
+<!--          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/charge_port.glb"/>-->
+<!--        </geometry>-->
+<!--      </visual>-->
     </link>
     <joint name="charge_port" type="fixed">
-<!--      <origin xyz="-0.0524 0.1771 0.2463"/>-->
+      <origin xyz="0.283736 0 0.056555" rpy="0 0 0"/>
       <parent link="base_link"/>
       <child link="charge_port"/>
     </joint>
 
     <link name="lidar_link">
-      		<visual>
-      			<geometry>
-      				<mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>
-      			</geometry>
-      		</visual>
+<!--      <visual>-->
+<!--        <geometry>-->
+<!--          <mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>-->
+<!--        </geometry>-->
+<!--      </visual>-->
     </link>
     <joint name="lidar_joint" type="fixed">
-      <origin xyz="0.260985 0 0.126476"/>
+      <origin xyz="0.260985 0 0.126476" rpy="0 0 1.5708"/>
       <parent link="base_link"/>
       <child link="lidar_link"/>
     </joint>
