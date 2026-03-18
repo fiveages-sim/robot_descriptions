@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot name="RealMan_AIDAL" xmlns:xacro="http://ros.org/wiki/xacro">
 	<xacro:arg name="type" default="empty"/>
+	<xacro:arg name="joints_movable" default="false"/>
 	<xacro:property name="PI" value="3.1415926535897931"/>
 
 	<xacro:property name="type_arg" value="$(arg type)"/>
@@ -11,7 +12,7 @@
 
 	<!-- 引入各个模块的 xacro 文件，分别定义底盘、夹爪、升降平台、机械臂及关节 -->
 	<xacro:include filename="$(find aidal_description)/xacro/components/woosh_agv.xacro"/>
-	<xacro:woosh_agv joints_movable="false"/>
+	<xacro:woosh_agv joints_movable="$(arg joints_movable)"/>
 	<xacro:include filename="$(find aidal_description)/xacro/components/body.xacro"/>
 	<xacro:include filename="$(find aidal_description)/xacro/ee.xacro"/>
 
