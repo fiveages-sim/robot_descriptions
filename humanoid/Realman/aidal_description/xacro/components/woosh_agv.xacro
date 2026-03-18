@@ -22,333 +22,333 @@
 			<xacro:property name="wheel_joint_type" value="fixed"/>
 		</xacro:unless>
 
-	<link name="base_link">
-		<inertial>
-			<origin xyz="-0.012628 -0.016092 -0.060646"/>
-			<mass value="2.5521"/>
-			<inertia
-					ixx="0.066197"
-					ixy="7.0297E-05"
-					ixz="0.00017628"
-					iyy="0.034903"
-					iyz="-0.00059595"
-					izz="0.097938"/>
-		</inertial>
-		<xacro:visual_mesh mesh="base.glb"/>
-		<collision>
-			<origin xyz="-0.015574 0 -0.1"/>
-			<geometry>
-				<box size="0.4 0.6 0.2"/>
-			</geometry>
-		</collision>
-	</link>
-	<link name="right_wheel_link">
-		<inertial>
-			<origin xyz="-0.024898 2.5665E-18 0"/>
-			<mass value="1.0523"/>
-			<inertia
-					ixx="0.0033125"
-					ixy="1.5953E-19"
-					ixz="1.2287E-20"
-					iyy="0.0018066"
-					iyz="2.5666E-19"
-					izz="0.0018066"/>
-		</inertial>
-		<visual>
-			<geometry>
-				<mesh filename="${mesh_path}wheel.glb" scale="-1 1 1"/>
-			</geometry>
-		</visual>
-		<collision>
-			<origin rpy="0 ${PI/2} 0"/>
-			<geometry>
-				<cylinder radius="0.085" length="0.034"/>
-			</geometry>
-		</collision>
-	</link>
-	<link name="left_wheel_link">
-		<inertial>
-			<origin xyz="0.025224 -8.8034E-15 0"/>
-			<mass value="1.0734"/>
-			<inertia
-					ixx="0.0033996"
-					ixy="-5.0277E-16"
-					ixz="9.2981E-21"
-					iyy="0.0019593"
-					iyz="3.7534E-19"
-					izz="0.0019593"/>
-		</inertial>
-		<visual>
-			<geometry>
-				<mesh filename="${mesh_path}wheel.glb"/>
-			</geometry>
-		</visual>
-		<collision>
-			<origin rpy="0 ${PI/2} 0"/>
-			<geometry>
-				<cylinder radius="0.085" length="0.034"/>
-			</geometry>
-		</collision>
-	</link>
-	<link name="caster_1_link">
-		<inertial>
-			<origin xyz="0.00067987 -0.0050012 -0.013414"/>
-			<mass value="0.088835"/>
-			<inertia
-					ixx="3.1679E-05"
-					ixy="2.0129E-08"
-					ixz="2.7021E-08"
-					iyy="3.9438E-05"
-					iyz="-3.2776E-06"
-					izz="4.6143E-05"/>
-		</inertial>
-		<xacro:visual_mesh mesh="caster.glb"/>
-	</link>
-	<link name="caster_wheel_1_link">
-		<inertial>
-			<origin xyz="0.0010651 2.2204E-16 9.4369E-16"/>
-			<mass value="0.12664"/>
-			<inertia
-					ixx="0.00011169"
-					ixy="1.1345E-14"
-					ixz="2.2064E-14"
-					iyy="6.0838E-05"
-					iyz="1.7051E-09"
-					izz="6.084E-05"/>
-		</inertial>
-		<xacro:visual_mesh mesh="caster_wheel.glb"/>
-		<collision>
-			<geometry>
-				<sphere radius="0.0375"/>
-			</geometry>
-		</collision>
-	</link>
-	<link name="caster_2_link">
-		<inertial>
-			<origin xyz="0.00067987 -0.0050012 -0.013414"/>
-			<mass value="0.088835"/>
-			<inertia
-					ixx="3.1679E-05"
-					ixy="2.0129E-08"
-					ixz="2.7021E-08"
-					iyy="3.9438E-05"
-					iyz="-3.2776E-06"
-					izz="4.6143E-05"/>
-		</inertial>
-		<xacro:visual_mesh mesh="caster.glb"/>
-	</link>
-	<link name="caster_wheel_2_link">
-		<inertial>
-			<origin xyz="0.0010651 6.1062E-16 7.7716E-16"/>
-			<mass value="0.12664"/>
-			<inertia
-					ixx="0.00011169"
-					ixy="1.9869E-14"
-					ixz="1.4856E-14"
-					iyy="6.084E-05"
-					iyz="2.0109E-09"
-					izz="6.0838E-05"/>
-		</inertial>
-		<xacro:visual_mesh mesh="caster_wheel.glb"/>
-		<collision>
-			<geometry>
-				<sphere radius="0.0375"/>
-			</geometry>
-		</collision>
-	</link>
-	<link name="caster_3_link">
-		<inertial>
-			<origin xyz="0.00067987 -0.0050012 -0.013414"/>
-			<mass value="0.088835"/>
-			<inertia
-					ixx="3.1679E-05"
-					ixy="2.0129E-08"
-					ixz="2.7021E-08"
-					iyy="3.9438E-05"
-					iyz="-3.2776E-06"
-					izz="4.6143E-05"/>
-		</inertial>
-		<xacro:visual_mesh mesh="caster.glb"/>
-	</link>
-	<link name="caster_wheel_3_link">
-		<inertial>
-			<origin xyz="0.0010651 -3.3307E-16 8.8818E-16"/>
-			<mass value="0.12664"/>
-			<inertia
-					ixx="0.00011169"
-					ixy="-1.8513E-15"
-					ixz="2.474E-14"
-					iyy="6.0837E-05"
-					iyz="-3.1204E-10"
-					izz="6.0841E-05"/>
-		</inertial>
-		<xacro:visual_mesh mesh="caster_wheel.glb"/>
-		<collision>
-			<geometry>
-				<sphere radius="0.0375"/>
-			</geometry>
-		</collision>
-	</link>
-	<link name="caster_4_link">
-		<inertial>
-			<origin xyz="0.00067987 -0.0050012 -0.0094542"/>
-			<mass value="0.088835"/>
-			<inertia
-					ixx="3.1679E-05"
-					ixy="2.0129E-08"
-					ixz="2.7021E-08"
-					iyy="3.9438E-05"
-					iyz="-3.2776E-06"
-					izz="4.6143E-05"/>
-		</inertial>
-		<xacro:visual_mesh mesh="caster.glb"/>
-	</link>
-	<link name="caster_wheel_4_link">
-		<inertial>
-			<origin xyz="0.0010651 -4.996E-16 7.494E-16"/>
-			<mass value="0.12664"/>
-			<inertia
-					ixx="0.00011169"
-					ixy="-7.4776E-15"
-					ixz="2.3656E-14"
-					iyy="6.0837E-05"
-					iyz="-1.205E-09"
-					izz="6.0841E-05"/>
-		</inertial>
-		<xacro:visual_mesh mesh="caster_wheel.glb"/>
-		<collision>
-			<geometry>
-				<sphere radius="0.0375"/>
-			</geometry>
-		</collision>
-	</link>
+		<link name="base_link">
+			<inertial>
+				<origin xyz="-0.012628 -0.016092 -0.060646"/>
+				<mass value="2.5521"/>
+				<inertia
+						ixx="0.066197"
+						ixy="7.0297E-05"
+						ixz="0.00017628"
+						iyy="0.034903"
+						iyz="-0.00059595"
+						izz="0.097938"/>
+			</inertial>
+			<xacro:visual_mesh mesh="base.glb"/>
+			<collision>
+				<origin xyz="-0.015574 0 -0.1"/>
+				<geometry>
+					<box size="0.4 0.6 0.2"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="right_wheel_link">
+			<inertial>
+				<origin xyz="-0.024898 2.5665E-18 0"/>
+				<mass value="1.0523"/>
+				<inertia
+						ixx="0.0033125"
+						ixy="1.5953E-19"
+						ixz="1.2287E-20"
+						iyy="0.0018066"
+						iyz="2.5666E-19"
+						izz="0.0018066"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="${mesh_path}wheel.glb" scale="-1 1 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin rpy="0 ${PI/2} 0"/>
+				<geometry>
+					<cylinder radius="0.085" length="0.034"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="left_wheel_link">
+			<inertial>
+				<origin xyz="0.025224 -8.8034E-15 0"/>
+				<mass value="1.0734"/>
+				<inertia
+						ixx="0.0033996"
+						ixy="-5.0277E-16"
+						ixz="9.2981E-21"
+						iyy="0.0019593"
+						iyz="3.7534E-19"
+						izz="0.0019593"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="${mesh_path}wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin rpy="0 ${PI/2} 0"/>
+				<geometry>
+					<cylinder radius="0.085" length="0.034"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="caster_1_link">
+			<inertial>
+				<origin xyz="0.00067987 -0.0050012 -0.013414"/>
+				<mass value="0.088835"/>
+				<inertia
+						ixx="3.1679E-05"
+						ixy="2.0129E-08"
+						ixz="2.7021E-08"
+						iyy="3.9438E-05"
+						iyz="-3.2776E-06"
+						izz="4.6143E-05"/>
+			</inertial>
+			<xacro:visual_mesh mesh="caster.glb"/>
+		</link>
+		<link name="caster_wheel_1_link">
+			<inertial>
+				<origin xyz="0.0010651 2.2204E-16 9.4369E-16"/>
+				<mass value="0.12664"/>
+				<inertia
+						ixx="0.00011169"
+						ixy="1.1345E-14"
+						ixz="2.2064E-14"
+						iyy="6.0838E-05"
+						iyz="1.7051E-09"
+						izz="6.084E-05"/>
+			</inertial>
+			<xacro:visual_mesh mesh="caster_wheel.glb"/>
+			<collision>
+				<geometry>
+					<sphere radius="0.0375"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="caster_2_link">
+			<inertial>
+				<origin xyz="0.00067987 -0.0050012 -0.013414"/>
+				<mass value="0.088835"/>
+				<inertia
+						ixx="3.1679E-05"
+						ixy="2.0129E-08"
+						ixz="2.7021E-08"
+						iyy="3.9438E-05"
+						iyz="-3.2776E-06"
+						izz="4.6143E-05"/>
+			</inertial>
+			<xacro:visual_mesh mesh="caster.glb"/>
+		</link>
+		<link name="caster_wheel_2_link">
+			<inertial>
+				<origin xyz="0.0010651 6.1062E-16 7.7716E-16"/>
+				<mass value="0.12664"/>
+				<inertia
+						ixx="0.00011169"
+						ixy="1.9869E-14"
+						ixz="1.4856E-14"
+						iyy="6.084E-05"
+						iyz="2.0109E-09"
+						izz="6.0838E-05"/>
+			</inertial>
+			<xacro:visual_mesh mesh="caster_wheel.glb"/>
+			<collision>
+				<geometry>
+					<sphere radius="0.0375"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="caster_3_link">
+			<inertial>
+				<origin xyz="0.00067987 -0.0050012 -0.013414"/>
+				<mass value="0.088835"/>
+				<inertia
+						ixx="3.1679E-05"
+						ixy="2.0129E-08"
+						ixz="2.7021E-08"
+						iyy="3.9438E-05"
+						iyz="-3.2776E-06"
+						izz="4.6143E-05"/>
+			</inertial>
+			<xacro:visual_mesh mesh="caster.glb"/>
+		</link>
+		<link name="caster_wheel_3_link">
+			<inertial>
+				<origin xyz="0.0010651 -3.3307E-16 8.8818E-16"/>
+				<mass value="0.12664"/>
+				<inertia
+						ixx="0.00011169"
+						ixy="-1.8513E-15"
+						ixz="2.474E-14"
+						iyy="6.0837E-05"
+						iyz="-3.1204E-10"
+						izz="6.0841E-05"/>
+			</inertial>
+			<xacro:visual_mesh mesh="caster_wheel.glb"/>
+			<collision>
+				<geometry>
+					<sphere radius="0.0375"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="caster_4_link">
+			<inertial>
+				<origin xyz="0.00067987 -0.0050012 -0.0094542"/>
+				<mass value="0.088835"/>
+				<inertia
+						ixx="3.1679E-05"
+						ixy="2.0129E-08"
+						ixz="2.7021E-08"
+						iyy="3.9438E-05"
+						iyz="-3.2776E-06"
+						izz="4.6143E-05"/>
+			</inertial>
+			<xacro:visual_mesh mesh="caster.glb"/>
+		</link>
+		<link name="caster_wheel_4_link">
+			<inertial>
+				<origin xyz="0.0010651 -4.996E-16 7.494E-16"/>
+				<mass value="0.12664"/>
+				<inertia
+						ixx="0.00011169"
+						ixy="-7.4776E-15"
+						ixz="2.3656E-14"
+						iyy="6.0837E-05"
+						iyz="-1.205E-09"
+						izz="6.0841E-05"/>
+			</inertial>
+			<xacro:visual_mesh mesh="caster_wheel.glb"/>
+			<collision>
+				<geometry>
+					<sphere radius="0.0375"/>
+				</geometry>
+			</collision>
+		</link>
 
-	<joint name="right_wheel_joint" type="${wheel_joint_type}">
-		<origin xyz="-0.183 0.015574 -0.153"/>
-		<parent link="base_link"/>
-		<child link="right_wheel_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="1 0 0"/>
-			<limit effort="100" velocity="10"/>
-		</xacro:if>
-	</joint>
+		<joint name="right_wheel_joint" type="${wheel_joint_type}">
+			<origin xyz="-0.183 0.015574 -0.153"/>
+			<parent link="base_link"/>
+			<child link="right_wheel_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="1 0 0"/>
+				<limit effort="100" velocity="10"/>
+			</xacro:if>
+		</joint>
 
-	<joint name="left_wheel_joint" type="${wheel_joint_type}">
-		<origin xyz="0.183 0.015574 -0.153"/>
-		<parent link="base_link"/>
-		<child link="left_wheel_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="1 0 0"/>
-			<limit effort="100" velocity="10"/>
-		</xacro:if>
-	</joint>
+		<joint name="left_wheel_joint" type="${wheel_joint_type}">
+			<origin xyz="0.183 0.015574 -0.153"/>
+			<parent link="base_link"/>
+			<child link="left_wheel_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="1 0 0"/>
+				<limit effort="100" velocity="10"/>
+			</xacro:if>
+		</joint>
 
-	<joint name="caster_1_joint" type="${steer_joint_type}">
-		<origin xyz="0.124 -0.17843 -0.1589" rpy="0 0 ${PI}"/>
-		<parent link="base_link"/>
-		<child link="caster_1_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="0 0 1"/>
-		</xacro:if>
-	</joint>
-	<joint name="caster_wheel_1_joint" type="${wheel_joint_type}">
-		<origin xyz="0 -0.022 -0.04516"/>
-		<parent link="caster_1_link"/>
-		<child link="caster_wheel_1_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="1 0 0"/>
-		</xacro:if>
-	</joint>
-	<joint name="caster_2_joint" type="${steer_joint_type}">
-		<origin xyz="-0.124 0.194004 -0.1589" rpy="0 0 ${PI}"/>
-		<parent link="base_link"/>
-		<child link="caster_2_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="0 0 1"/>
-		</xacro:if>
-	</joint>
-	<joint name="caster_wheel_2_joint" type="${wheel_joint_type}">
-		<origin xyz="0 -0.022 -0.04516" />
-		<parent link="caster_2_link"/>
-		<child link="caster_wheel_2_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="1 0 0"/>
-		</xacro:if>
-	</joint>
-	<joint name="caster_3_joint" type="${steer_joint_type}">
-		<origin xyz="0.124 0.194004 -0.1589" rpy="0 0 ${PI}"/>
-		<parent link="base_link"/>
-		<child link="caster_3_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="0 0 1"/>
-		</xacro:if>
-	</joint>
-	<joint name="caster_wheel_3_joint" type="${wheel_joint_type}">
-		<origin xyz="0 -0.022 -0.04516"/>
-		<parent link="caster_3_link"/>
-		<child link="caster_wheel_3_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="1 0 0"/>
-		</xacro:if>
-	</joint>
-	<joint name="caster_4_joint" type="${steer_joint_type}">
-		<origin xyz="-0.124 -0.17843 -0.1589" rpy="0 0 ${PI}"/>
-		<parent link="base_link"/>
-		<child link="caster_4_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="0 0 1"/>
-		</xacro:if>
-	</joint>
-	<joint name="caster_wheel_4_joint" type="${wheel_joint_type}">
-		<origin xyz="0 -0.022 -0.04516"/>
-		<parent link="caster_4_link"/>
-		<child link="caster_wheel_4_link"/>
-		<xacro:if value="${joints_movable}">
-			<axis xyz="1 0 0"/>
-		</xacro:if>
-	</joint>
+		<joint name="caster_1_joint" type="${steer_joint_type}">
+			<origin xyz="0.124 -0.17843 -0.1589" rpy="0 0 ${PI}"/>
+			<parent link="base_link"/>
+			<child link="caster_1_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="0 0 1"/>
+			</xacro:if>
+		</joint>
+		<joint name="caster_wheel_1_joint" type="${wheel_joint_type}">
+			<origin xyz="0 -0.022 -0.04516"/>
+			<parent link="caster_1_link"/>
+			<child link="caster_wheel_1_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="1 0 0"/>
+			</xacro:if>
+		</joint>
+		<joint name="caster_2_joint" type="${steer_joint_type}">
+			<origin xyz="-0.124 0.194004 -0.1589" rpy="0 0 ${PI}"/>
+			<parent link="base_link"/>
+			<child link="caster_2_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="0 0 1"/>
+			</xacro:if>
+		</joint>
+		<joint name="caster_wheel_2_joint" type="${wheel_joint_type}">
+			<origin xyz="0 -0.022 -0.04516"/>
+			<parent link="caster_2_link"/>
+			<child link="caster_wheel_2_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="1 0 0"/>
+			</xacro:if>
+		</joint>
+		<joint name="caster_3_joint" type="${steer_joint_type}">
+			<origin xyz="0.124 0.194004 -0.1589" rpy="0 0 ${PI}"/>
+			<parent link="base_link"/>
+			<child link="caster_3_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="0 0 1"/>
+			</xacro:if>
+		</joint>
+		<joint name="caster_wheel_3_joint" type="${wheel_joint_type}">
+			<origin xyz="0 -0.022 -0.04516"/>
+			<parent link="caster_3_link"/>
+			<child link="caster_wheel_3_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="1 0 0"/>
+			</xacro:if>
+		</joint>
+		<joint name="caster_4_joint" type="${steer_joint_type}">
+			<origin xyz="-0.124 -0.17843 -0.1589" rpy="0 0 ${PI}"/>
+			<parent link="base_link"/>
+			<child link="caster_4_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="0 0 1"/>
+			</xacro:if>
+		</joint>
+		<joint name="caster_wheel_4_joint" type="${wheel_joint_type}">
+			<origin xyz="0 -0.022 -0.04516"/>
+			<parent link="caster_4_link"/>
+			<child link="caster_wheel_4_link"/>
+			<xacro:if value="${joints_movable}">
+				<axis xyz="1 0 0"/>
+			</xacro:if>
+		</joint>
 
-	<link name="base_footprint"/>
-	<joint name="base_footprint_joint" type="fixed">
-		<origin xyz="0.015574 0 0.238" rpy="0 0 ${PI/2}"/>
-		<parent link="base_footprint"/>
-		<child link="base_link"/>
-	</joint>
+		<link name="base_footprint"/>
+		<joint name="base_footprint_joint" type="fixed">
+			<origin xyz="0.015574 0 0.238" rpy="0 0 ${PI/2}"/>
+			<parent link="base_footprint"/>
+			<child link="base_link"/>
+		</joint>
+
+		<link name="chassis_panel">
+			<xacro:visual_mesh mesh="panel.glb"/>
+		</link>
+		<joint name="chassis_panel_joint" type="fixed">
+			<origin xyz="0.18 0.118  -0.0275"/>
+			<parent link="base_link"/>
+			<child link="chassis_panel"/>
+		</joint>
+
+		<link name="lidar_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="lidar_joint" type="fixed">
+			<origin xyz="0 -0.2496  -0.094808"/>
+			<parent link="base_link"/>
+			<child link="lidar_link"/>
+		</joint>
+		<link name="chassis_camera_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_DW.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="chassis_camera_joint" type="fixed">
+			<origin xyz="0 -0.2965  -0.1126" rpy="-${PI/2} 0 ${PI}"/>
+			<parent link="base_link"/>
+			<child link="chassis_camera_link"/>
+		</joint>
 	</xacro:macro>
-
-	<link name="chassis_panel">
-<!--		<xacro:visual_mesh mesh="panel.glb"/>-->
-	</link>
-	<joint name="chassis_panel_joint" type="fixed">
-		<origin xyz="0.18 0.118  -0.0275"/>
-		<parent link="base_link"/>
-		<child link="chassis_panel"/>
-	</joint>
-
-	<link name="lidar_link">
-<!--		<visual>-->
-<!--			<geometry>-->
-<!--				<mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>-->
-<!--			</geometry>-->
-<!--		</visual>-->
-	</link>
-	<joint name="lidar_joint" type="fixed">
-		<origin xyz="0 -0.2496  -0.094808"/>
-		<parent link="base_link"/>
-		<child link="lidar_link"/>
-	</joint>
-	<link name="chassis_camera_link">
-<!--		<visual>-->
-<!--			<geometry>-->
-<!--				<mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_DW.glb"/>-->
-<!--			</geometry>-->
-<!--		</visual>-->
-	</link>
-	<joint name="chassis_camera_joint" type="fixed">
-		<origin xyz="0 -0.2965  -0.1126" rpy="-${PI/2} 0 ${PI}"/>
-		<parent link="base_link"/>
-		<child link="chassis_camera_link"/>
-	</joint>
 </robot>
 
 

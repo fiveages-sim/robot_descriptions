@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="FB75 Camera" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:arg name="type" default="fb75_camera"/>
+	<xacro:arg name="name" default=""/>
+	<xacro:property name="prefix" value="${'$(arg name)' + '_' if '$(arg name)' else ''}"/>
+
+	<xacro:if value="${'$(arg type)' == 'fb75_camera'}">
+		<xacro:include filename="$(find rm75_description)/xacro/components/fb75_camera.xacro"/>
+		<link name="${prefix}base_link"/>
+		<xacro:rm75_fb75_camera prefix="${prefix}" parent_link="${prefix}base_link" with_fb75_ee="true"/>
+	</xacro:if>
+</robot>

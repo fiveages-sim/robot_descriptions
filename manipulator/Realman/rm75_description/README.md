@@ -42,6 +42,12 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=rm75 type:=65_fb
 ```
 
+### 2.3 RM75 FB75 Camera Component
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_common_launch component.launch.py robot:=rm75 type:=fb75_camera
+```
+
 ![RM65](../../.images/realman_rm65.png)
 
 ## 3. OCS2 Demo

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="Realman RM75" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:include filename="$(find rm75_description)/xacro/components/fb75_camera.xacro"/>
 	<xacro:macro name="rm75" params="name direction:='' enable_joint3:=true ee_type:='aidal' use_base_link:=true">
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 		<xacro:property name="enable_joint3_bool" value="${str(enable_joint3).lower() in ['1', 'true', 'yes', 'on']}"/>
@@ -157,20 +158,11 @@
 			</xacro:if>
 			<xacro:if value="${ee_type_norm == 'fb_camera'}">
 				<xacro:visual_collision mesh="ee/ee_fb_camera.glb"/>
-				<visual>
-					<origin xyz="-0.033 -0.0085 0.01562"/>
-					<geometry>
-						<mesh filename="${mesh_path}/ee/camera_stand_d405.glb"/>
-					</geometry>
-				</visual>
-				<visual>
-					<origin xyz="-0.13322 -0.0005 0.044651" rpy="0 -1.5708 -1.5708"/>
-					<geometry>
-						<mesh filename="file://$(find sensor_models)/meshes/d405.glb"/>
-					</geometry>
-				</visual>
 			</xacro:if>
 		</link>
+		<xacro:if value="${ee_type_norm == 'fb_camera'}">
+			<xacro:rm75_fb75_camera prefix="${prefix}" parent_link="${prefix}link7"/>
+		</xacro:if>
 
 		
 		<joint name="${prefix}joint1" type="revolute">

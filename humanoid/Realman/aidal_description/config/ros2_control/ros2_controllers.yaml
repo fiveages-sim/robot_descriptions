@@ -1,0 +1,90 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: fixed_base
+    joints:
+      - lift_joint
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: aidal
+    home_duration: 2.0
+    home_pos: [
+      0.75,
+      0.0, -1.8708, 1.5708, 1.5708, 0.0, 0.0, 3.1415,
+      0.0, 1.8708, -1.5708, -1.5708,  0.0, 0.0, 0.0
+    ]
+    rest_pos: [
+      0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ]
+
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - head_joint1
+      - head_joint2
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_1: [0.0, 0.0]
+    home_2: [0.0, -0.1]
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
+
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 50.0
+
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 50.0

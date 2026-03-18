@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<robot name="Quanta X1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:include filename="$(find quanta_x1_description)/xacro/components/base.xacro"/>
+  <xacro:include filename="$(find quanta_x1_description)/xacro/components/arm.xacro"/>
+
+  <xacro:QuantaX1Base/>
+  <xacro:QuantaX1SingleArm name="left"/>
+  <xacro:QuantaX1SingleArm name="right"/>
+
+  <joint name="left_connector" type="fixed">
+    <parent link="left_frame_link"/>
+    <child link="left_base_link"/>
+  </joint>
+  
+  <joint name="right_connector" type="fixed">
+    <parent link="right_frame_link"/>
+    <child link="right_base_link"/>
+  </joint>
+
+</robot>
