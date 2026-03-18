@@ -1,664 +1,247 @@
 <?xml version="1.0" ?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:if value="${type_arg == 'type1'}">
-    <joint name="right_gripper_joint" type="fixed">
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <parent link="right_flange_mount_link"/>
-      <child link="right_gripper_base_link"/>
-    </joint>
-    <link name="right_gripper_base_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0.0875969515032359 -0.000593766922509439 -0.000273353044587243"/>
-        <mass value="0.229646651659589"/>
-        <inertia ixx="8.60029243295527E-05" ixy="2.00063024143341E-06" ixz="2.85398505671959E-06" iyy="7.73254340691918E-05" iyz="-1.0856442426917E-07" izz="9.78281466602487E-05"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_base_link.stl"/>
-        </geometry>
-        <material name="">
-          <color rgba="1 1 1 1"/>
-        </material>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_base_link_convex.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <link name="right_gripper_left_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="-0.0231481638496937 -4.90112376816481E-07 -0.000267991935875532"/>
-        <mass value="0.00675449578859124"/>
-        <inertia ixx="3.19945619554153E-07" ixy="-7.76829664652689E-12" ixz="-3.91342467850705E-07" iyy="1.5976052028241E-06" iyz="2.16781299849398E-11" izz="1.50158040800935E-06"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_left_link.stl"/>
-        </geometry>
-        <material name="">
-          <color rgba="1 1 1 1"/>
-        </material>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_left_link_convex.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="right_gripper_left_joint" type="prismatic">
-      <origin rpy="1.5707963267948966 0 3.141592653589793" xyz="0 0 0.21579"/>
-      <parent link="right_gripper_base_link"/>
-      <child link="right_gripper_left_link"/>
-      <axis xyz="0 0 1"/>
-      <limit effort="2" lower="0.005" upper="0.05" velocity="0.045"/>
-    </joint>
-    <link name="right_gripper_right_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="-0.0231481638496943 -4.90112376734401E-07 -0.000267991935824489"/>
-        <mass value="0.00675449578859123"/>
-        <inertia ixx="3.19945619552427E-07" ixy="-7.76829655500751E-12" ixz="-3.91342467848098E-07" iyy="1.5976052028241E-06" iyz="2.16781300075729E-11" izz="1.50158040801108E-06"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_right_link.stl"/>
-        </geometry>
-        <material name="">
-          <color rgba="1 1 1 1"/>
-        </material>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_right_link_convex.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="right_gripper_right_joint" type="prismatic">
-      <origin rpy="-1.5707963267948966 0 -3.141592653589793" xyz="0 0 0.21579"/>
-      <parent link="right_gripper_base_link"/>
-      <child link="right_gripper_right_link"/>
-      <axis xyz="0 0 1"/>
-      <limit effort="2" lower="0.005" upper="0.05" velocity="0.045"/>
-      <!-- mimic not supported in isaac sim 2023.1.0-hotfix  -->
-      <!-- <mimic joint="${name}_left_joint" multiplier="-1" offset="0" /> -->
-    </joint>
-  </xacro:if>
-  <xacro:if value="${type_arg == 'type2'}">
-    <joint name="right_gripper_joint" type="fixed">
-      <origin rpy="0 1.5707963267948966 0" xyz="0 0 0"/>
-      <parent link="right_flange_mount_link"/>
-      <child link="right_gripper_base_link"/>
-    </joint>
-    <link name="right_gripper_base_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0.0875969515032359 -0.000593766922509439 -0.000273353044587243"/>
-        <mass value="0.229646651659589"/>
-        <inertia ixx="8.60029243295527E-05" ixy="2.00063024143341E-06" ixz="2.85398505671959E-06" iyy="7.73254340691918E-05" iyz="-1.0856442426917E-07" izz="9.78281466602487E-05"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/gripper_hitbot_base_link_nomtl_ascii.obj"/>
-        </geometry>
-        <material name="">
-          <color rgba="1 1 1 1"/>
-        </material>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/gripper_hitbot_base_link.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <link name="right_gripper_l1_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.121835 0 -0.02"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l1.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.121835 0 -0.02"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l1.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="right_gripper_l1_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.121835 0 0.02"/>
-      <parent link="right_gripper_base_link"/>
-      <child link="right_gripper_l1_link"/>
-      <axis xyz="0 1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
-    </joint>
-    <link name="right_gripper_l2_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.1368 0 -0.01"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l2.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.1368 0 -0.01"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l2.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="right_gripper_l2_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.1368 0 0.01"/>
-      <parent link="right_gripper_base_link"/>
-      <child link="right_gripper_l2_link"/>
-      <axis xyz="0 1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
-    </joint>
-    <link name="right_gripper_l3_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l3.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l3.stl"/>
-        </geometry>
-      </collision>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l4.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l4.stl"/>
-        </geometry>
-      </collision>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l5.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l5.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="right_gripper_l3_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.064985 0 0.00125"/>
-      <parent link="right_gripper_l1_link"/>
-      <child link="right_gripper_l3_link"/>
-      <axis xyz="0 -1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
-    </joint>
-    <link name="right_gripper_r1_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.121835 0 0.02"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r1.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.121835 0 0.02"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r1.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="right_gripper_r1_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.121835 0 -0.02"/>
-      <parent link="right_gripper_base_link"/>
-      <child link="right_gripper_r1_link"/>
-      <axis xyz="0 -1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
-    </joint>
-    <link name="right_gripper_r2_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.1368 0 0.01"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r2.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.1368 0 0.01"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r2.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="right_gripper_r2_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.1368 0 -0.01"/>
-      <parent link="right_gripper_base_link"/>
-      <child link="right_gripper_r2_link"/>
-      <axis xyz="0 -1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
-    </joint>
-    <link name="right_gripper_r3_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r3.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r3.stl"/>
-        </geometry>
-      </collision>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r4.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r4.stl"/>
-        </geometry>
-      </collision>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r5.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r5.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="right_gripper_r3_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.064985 0 -0.00125"/>
-      <parent link="right_gripper_r1_link"/>
-      <child link="right_gripper_r3_link"/>
-      <axis xyz="0 1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
-    </joint>
-  </xacro:if>
-  <!-- Tool Center Point -->
-  <link name="right_gripper_tcp_link"/>
-  <joint name="right_tcp_joint" type="fixed">
-    <origin rpy="0 3.141592653589793 -1.5707963267948966" xyz="0 0 0.21579"/>
-    <parent link="right_gripper_base_link"/>
-    <child link="right_gripper_tcp_link"/>
-    <axis xyz="0 0 0"/>
-  </joint>
+  <xacro:property name="PI" value="3.141592653589793"/>
 
-  <xacro:if value="${type_arg == 'type1'}">
-    <joint name="left_gripper_joint" type="fixed">
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <parent link="left_flange_mount_link"/>
-      <child link="left_gripper_base_link"/>
+  <!-- mount_rpy defines gripper_base_link frame orientation relative to flange_mount_link. -->
+  <xacro:macro name="Gripper" params="name mount_rpy:='${PI/2}  0  0'">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <!-- Mount gripper on flange (fixed) -->
+    <joint name="${prefix}gripper_mount_joint" type="fixed">
+      <origin rpy="${mount_rpy}"/>
+      <parent link="${prefix}flange_mount_link"/>
+      <child link="${prefix}gripper_base_link"/>
     </joint>
-    <link name="left_gripper_base_link">
+
+    <link name="${prefix}gripper_base_link">
       <inertial>
-        <origin rpy="0 0 0" xyz="0.0875969515032359 -0.000593766922509439 -0.000273353044587243"/>
+        <origin xyz="0.0875969515032359 -0.000593766922509439 -0.000273353044587243"/>
         <mass value="0.229646651659589"/>
         <inertia ixx="8.60029243295527E-05" ixy="2.00063024143341E-06" ixz="2.85398505671959E-06" iyy="7.73254340691918E-05" iyz="-1.0856442426917E-07" izz="9.78281466602487E-05"/>
       </inertial>
       <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_base_link.stl"/>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/base.glb"/>
         </geometry>
-        <material name="">
-          <color rgba="1 1 1 1"/>
-        </material>
       </visual>
       <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_base_link_convex.stl"/>
+          <box size="0.095000 0.047000 0.067000"/>
         </geometry>
       </collision>
     </link>
-    <link name="left_gripper_left_link">
+
+    <link name="${prefix}gripper_l1_link">
       <inertial>
-        <origin rpy="0 0 0" xyz="-0.0231481638496937 -4.90112376816481E-07 -0.000267991935875532"/>
-        <mass value="0.00675449578859124"/>
-        <inertia ixx="3.19945619554153E-07" ixy="-7.76829664652689E-12" ixz="-3.91342467850705E-07" iyy="1.5976052028241E-06" iyz="2.16781299849398E-11" izz="1.50158040800935E-06"/>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
       </inertial>
       <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_left_link.stl"/>
-        </geometry>
-        <material name="">
-          <color rgba="1 1 1 1"/>
-        </material>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_left_link_convex.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="left_gripper_left_joint" type="prismatic">
-      <origin rpy="1.5707963267948966 0 3.141592653589793" xyz="0 0 0.21579"/>
-      <parent link="left_gripper_base_link"/>
-      <child link="left_gripper_left_link"/>
-      <axis xyz="0 0 1"/>
-      <limit effort="2" lower="0.005" upper="0.05" velocity="0.045"/>
-    </joint>
-    <link name="left_gripper_right_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="-0.0231481638496943 -4.90112376734401E-07 -0.000267991935824489"/>
-        <mass value="0.00675449578859123"/>
-        <inertia ixx="3.19945619552427E-07" ixy="-7.76829655500751E-12" ixz="-3.91342467848098E-07" iyy="1.5976052028241E-06" iyz="2.16781300075729E-11" izz="1.50158040801108E-06"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_right_link.stl"/>
-        </geometry>
-        <material name="">
-          <color rgba="1 1 1 1"/>
-        </material>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_right_link_convex.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <joint name="left_gripper_right_joint" type="prismatic">
-      <origin rpy="-1.5707963267948966 0 -3.141592653589793" xyz="0 0 0.21579"/>
-      <parent link="left_gripper_base_link"/>
-      <child link="left_gripper_right_link"/>
-      <axis xyz="0 0 1"/>
-      <limit effort="2" lower="0.005" upper="0.05" velocity="0.045"/>
-      <!-- mimic not supported in isaac sim 2023.1.0-hotfix  -->
-      <!-- <mimic joint="${name}_left_joint" multiplier="-1" offset="0" /> -->
-    </joint>
-  </xacro:if>
-  <xacro:if value="${type_arg == 'type2'}">
-    <joint name="left_gripper_joint" type="fixed">
-      <origin rpy="0 1.5707963267948966 0" xyz="0 0 0"/>
-      <parent link="left_flange_mount_link"/>
-      <child link="left_gripper_base_link"/>
-    </joint>
-    <link name="left_gripper_base_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0.0875969515032359 -0.000593766922509439 -0.000273353044587243"/>
-        <mass value="0.229646651659589"/>
-        <inertia ixx="8.60029243295527E-05" ixy="2.00063024143341E-06" ixz="2.85398505671959E-06" iyy="7.73254340691918E-05" iyz="-1.0856442426917E-07" izz="9.78281466602487E-05"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/gripper_hitbot_base_link_nomtl_ascii.obj"/>
-        </geometry>
-        <material name="">
-          <color rgba="1 1 1 1"/>
-        </material>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/gripper_hitbot_base_link_convex.stl"/>
-        </geometry>
-      </collision>
-    </link>
-    <link name="left_gripper_l1_link">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.121835 0 -0.02"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l1.obj"/>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link1.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.121835 0 -0.02"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l1.stl"/>
-        </geometry>
-      </collision>
     </link>
-    <joint name="left_gripper_l1_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.121835 0 0.02"/>
-      <parent link="left_gripper_base_link"/>
-      <child link="left_gripper_l1_link"/>
+    <!-- Main driven finger joint (shows in joint_state_publisher as gripper_joint) -->
+    <joint name="${prefix}gripper_joint" type="revolute">
+      <origin xyz="-0.121835 0 0.02"/>
+      <parent link="${prefix}gripper_base_link"/>
+      <child link="${prefix}gripper_l1_link"/>
       <axis xyz="0 1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
+      <limit effort="2" lower="0" upper="1" velocity="3"/>
     </joint>
-    <link name="left_gripper_l2_link">
+
+    <link name="${prefix}gripper_l2_link">
       <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
       </inertial>
       <visual>
-        <origin rpy="0 0 0" xyz="0.1368 0 -0.01"/>
+
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l2.obj"/>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link2.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.1368 0 -0.01"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l2.stl"/>
-        </geometry>
-      </collision>
     </link>
-    <joint name="left_gripper_l2_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.1368 0 0.01"/>
-      <parent link="left_gripper_base_link"/>
-      <child link="left_gripper_l2_link"/>
+    <joint name="${prefix}gripper_l2_joint" type="revolute">
+      <origin xyz="-0.1368 0 0.01"/>
+      <parent link="${prefix}gripper_base_link"/>
+      <child link="${prefix}gripper_l2_link"/>
       <axis xyz="0 1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
+      <limit effort="2" lower="0" upper="1" velocity="3"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1.0"/>
     </joint>
-    <link name="left_gripper_l3_link">
+
+    <link name="${prefix}gripper_l3_link">
       <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
       </inertial>
       <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
+
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l3.obj"/>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link3.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l3.stl"/>
-        </geometry>
-      </collision>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l4.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l4.stl"/>
-        </geometry>
-      </collision>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l5.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l5.stl"/>
-        </geometry>
-      </collision>
     </link>
-    <joint name="left_gripper_l3_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.064985 0 0.00125"/>
-      <parent link="left_gripper_l1_link"/>
-      <child link="left_gripper_l3_link"/>
+    <joint name="${prefix}gripper_l3_joint" type="revolute">
+      <origin xyz="-0.064985 0 0.00125"/>
+      <parent link="${prefix}gripper_l1_link"/>
+      <child link="${prefix}gripper_l3_link"/>
       <axis xyz="0 -1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
+      <limit effort="2" lower="0" upper="1" velocity="3"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1.0"/>
     </joint>
-    <link name="left_gripper_r1_link">
+
+    <link name="${prefix}gripper_l4_link">
       <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
       </inertial>
       <visual>
-        <origin rpy="0 0 0" xyz="0.121835 0 0.02"/>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r1.obj"/>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link4.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.121835 0 0.02"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r1.stl"/>
-        </geometry>
-      </collision>
     </link>
-    <joint name="left_gripper_r1_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.121835 0 -0.02"/>
-      <parent link="left_gripper_base_link"/>
-      <child link="left_gripper_r1_link"/>
+    <joint name="${prefix}gripper_l4_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${prefix}gripper_l3_link"/>
+      <child link="${prefix}gripper_l4_link"/>
+    </joint>
+
+    <link name="${prefix}gripper_l5_link">
+      <inertial>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link5.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${prefix}gripper_l5_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${prefix}gripper_l3_link"/>
+      <child link="${prefix}gripper_l5_link"/>
+    </joint>
+
+    <link name="${prefix}gripper_r1_link">
+      <inertial>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+      </inertial>
+      <visual>
+
+        <geometry>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link1.glb" scale="1 1 -1"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${prefix}gripper_r1_joint" type="revolute">
+      <origin xyz="-0.121835 0 -0.02"/>
+      <parent link="${prefix}gripper_base_link"/>
+      <child link="${prefix}gripper_r1_link"/>
       <axis xyz="0 -1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
+      <limit effort="2" lower="0" upper="1" velocity="3"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1.0"/>
     </joint>
-    <link name="left_gripper_r2_link">
+
+    <link name="${prefix}gripper_r2_link">
       <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
       </inertial>
       <visual>
-        <origin rpy="0 0 0" xyz="0.1368 0 0.01"/>
+
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r2.obj"/>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link2.glb" scale="1 1 -1"/>
         </geometry>
       </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.1368 0 0.01"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r2.stl"/>
-        </geometry>
-      </collision>
     </link>
-    <joint name="left_gripper_r2_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.1368 0 -0.01"/>
-      <parent link="left_gripper_base_link"/>
-      <child link="left_gripper_r2_link"/>
+    <joint name="${prefix}gripper_r2_joint" type="revolute">
+      <origin xyz="-0.1368 0 -0.01"/>
+      <parent link="${prefix}gripper_base_link"/>
+      <child link="${prefix}gripper_r2_link"/>
       <axis xyz="0 -1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
+      <limit effort="2" lower="0" upper="1" velocity="3"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1.0"/>
     </joint>
-    <link name="left_gripper_r3_link">
+
+    <link name="${prefix}gripper_r3_link">
       <inertial>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="0"/>
-        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
       </inertial>
       <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
+
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r3.obj"/>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link3.glb" scale="1 1 -1"/>
         </geometry>
       </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r3.stl"/>
-        </geometry>
-      </collision>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r4.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r4.stl"/>
-        </geometry>
-      </collision>
-      <visual>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r5.obj"/>
-        </geometry>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
-        <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r5.stl"/>
-        </geometry>
-      </collision>
     </link>
-    <joint name="left_gripper_r3_joint" type="revolute">
-      <origin rpy="0 0 0" xyz="-0.064985 0 -0.00125"/>
-      <parent link="left_gripper_r1_link"/>
-      <child link="left_gripper_r3_link"/>
+
+    <joint name="${prefix}gripper_r3_joint" type="revolute">
+      <origin xyz="-0.064985 0 -0.00125"/>
+      <parent link="${prefix}gripper_r1_link"/>
+      <child link="${prefix}gripper_r3_link"/>
       <axis xyz="0 1 0"/>
-      <limit effort="2" lower="0" upper="3" velocity="3"/>
+      <limit effort="2" lower="0" upper="1" velocity="3"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1.0"/>
     </joint>
-  </xacro:if>
-  <!-- Tool Center Point -->
-  <link name="left_gripper_tcp_link"/>
-  <joint name="left_tcp_joint" type="fixed">
-    <origin rpy="0 3.141592653589793 -1.5707963267948966" xyz="0 0 0.21579"/>
-    <parent link="left_gripper_base_link"/>
-    <child link="left_gripper_tcp_link"/>
-    <axis xyz="0 0 0"/>
-  </joint>
+
+    <link name="${prefix}gripper_r4_link">
+      <inertial>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link4.glb" scale="1 1 -1"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${prefix}gripper_r4_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${prefix}gripper_r3_link"/>
+      <child link="${prefix}gripper_r4_link"/>
+    </joint>
+
+    <link name="${prefix}gripper_r5_link">
+      <inertial>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link5.glb" scale="1 1 -1"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${prefix}gripper_r5_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${prefix}gripper_r3_link"/>
+      <child link="${prefix}gripper_r5_link"/>
+    </joint>
+
+    <link name="${prefix}gripper_tcp_link"/>
+    <joint name="${prefix}tcp_joint" type="fixed">
+      <origin rpy="0 ${PI/2} 0" xyz="-0.21579 0 0"/>
+      <parent link="${prefix}gripper_base_link"/>
+      <child link="${prefix}gripper_tcp_link"/>
+      <axis xyz="0 0 0"/>
+    </joint>
+  </xacro:macro>
 </robot>

@@ -660,7 +660,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_base_link.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_base_link.stl"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -669,7 +669,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_base_link_convex.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_base_link_convex.stl"/>
       </geometry>
     </collision>
   </link>
@@ -682,7 +682,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_left_link.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_left_link.stl"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -691,7 +691,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_left_link_convex.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_left_link_convex.stl"/>
       </geometry>
     </collision>
   </link>
@@ -711,7 +711,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_right_link.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_right_link.stl"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -720,7 +720,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_right_link_convex.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_right_link_convex.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1053,7 +1053,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_base_link.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_base_link.stl"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -1062,7 +1062,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_base_link_convex.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_base_link_convex.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1075,7 +1075,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_left_link.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_left_link.stl"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -1084,7 +1084,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_left_link_convex.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_left_link_convex.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1104,7 +1104,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_right_link.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_right_link.stl"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -1113,7 +1113,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper1/gripper_hitbot_right_link_convex.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_right_link_convex.stl"/>
       </geometry>
     </collision>
   </link>

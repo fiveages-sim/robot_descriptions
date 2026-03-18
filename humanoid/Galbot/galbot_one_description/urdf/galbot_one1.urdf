@@ -661,7 +661,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/gripper_hitbot_base_link_nomtl_ascii.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_base_link_nomtl_ascii.obj"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -670,7 +670,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/gripper_hitbot_base_link.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_base_link.stl"/>
       </geometry>
     </collision>
   </link>
@@ -683,13 +683,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.121835 0 -0.02"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l1.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l1.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.121835 0 -0.02"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l1.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -709,13 +709,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.1368 0 -0.01"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l2.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l2.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.1368 0 -0.01"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l2.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l2.stl"/>
       </geometry>
     </collision>
   </link>
@@ -735,37 +735,37 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l3.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l3.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l3.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l3.stl"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l4.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l4.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l4.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l4.stl"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l5.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l5.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l5.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l5.stl"/>
       </geometry>
     </collision>
   </link>
@@ -785,13 +785,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.121835 0 0.02"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r1.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r1.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.121835 0 0.02"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r1.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -811,13 +811,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.1368 0 0.01"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r2.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r2.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.1368 0 0.01"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r2.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r2.stl"/>
       </geometry>
     </collision>
   </link>
@@ -837,37 +837,37 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r3.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r3.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r3.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r3.stl"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r4.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r4.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r4.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r4.stl"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r5.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r5.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r5.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r5.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1199,7 +1199,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/gripper_hitbot_base_link_nomtl_ascii.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_base_link_nomtl_ascii.obj"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -1208,7 +1208,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/gripper_hitbot_base_link_convex.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/gripper_hitbot_base_link_convex.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1221,13 +1221,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.121835 0 -0.02"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l1.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l1.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.121835 0 -0.02"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l1.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1247,13 +1247,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.1368 0 -0.01"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l2.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l2.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.1368 0 -0.01"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l2.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l2.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1273,37 +1273,37 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l3.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l3.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l3.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l3.stl"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l4.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l4.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l4.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l4.stl"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l5.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l5.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 -0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_l5.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_l5.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1323,13 +1323,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.121835 0 0.02"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r1.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r1.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.121835 0 0.02"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r1.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1349,13 +1349,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.1368 0 0.01"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r2.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r2.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.1368 0 0.01"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r2.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r2.stl"/>
       </geometry>
     </collision>
   </link>
@@ -1375,37 +1375,37 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r3.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r3.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r3.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r3.stl"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r4.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r4.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r4.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r4.stl"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r5.obj"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r5.obj"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.18682 0 0.02125"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/gripper2/new_gripper_r5.stl"/>
+        <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/new_gripper_r5.stl"/>
       </geometry>
     </collision>
   </link>

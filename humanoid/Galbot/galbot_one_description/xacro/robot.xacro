@@ -25,14 +25,19 @@
 #####################################################################################
 -->
 <robot name="galbot_one" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:arg name="type" default="type1"/>
   <xacro:arg name="enable_wheel_joints" default="false"/>
-  <xacro:property name="type_arg" value="$(arg type)"/>
-  <xacro:property name="selected_gripper_mesh_dir" value="gripper1"/>
-  <xacro:if value="${type_arg == 'type2'}">
-    <xacro:property name="selected_gripper_mesh_dir" value="gripper2"/>
-  </xacro:if>
+  <!-- type options:
+       - gripper (default): show both grippers
+       - none: hide grippers (full-body visualization without end-effectors)
+  -->
+  <xacro:arg name="type" default="gripper"/>
   <xacro:include filename="$(find galbot_one_description)/xacro/components/base.xacro"/>
   <xacro:include filename="$(find galbot_one_description)/xacro/components/arm.xacro"/>
   <xacro:include filename="$(find galbot_one_description)/xacro/components/gripper.xacro"/>
+
+  <xacro:if value="${'$(arg type)' == 'gripper'}">
+    <!-- Instantiate both grippers -->
+    <xacro:Gripper name="right"/>
+    <xacro:Gripper name="left"/>
+  </xacro:if>
 </robot>

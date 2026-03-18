@@ -15,14 +15,14 @@ colcon build --packages-up-to galbot_one_description --symlink-install
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_common_launch humanoid.launch.py robot:=galbot_one type:=type1
+ros2 launch robot_common_launch humanoid.launch.py robot:=galbot_one
 ```
 
-Switch to gripper2:
+Hide grippers (type:=none):
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch robot_common_launch humanoid.launch.py robot:=galbot_one type:=type2
+ros2 launch robot_common_launch humanoid.launch.py robot:=galbot_one type:=none
 ```
 
 ### Component
@@ -51,6 +51,12 @@ ros2 launch robot_common_launch humanoid.launch.py robot:=galbot_one type:=type2
   ros2 launch robot_common_launch component.launch.py robot:=galbot_one type:=arm
   ```
 
+* Gripper module
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=galbot_one type:=gripper
+  ```
+
 ## Full-body OCS2 Demo
 
 ```bash
@@ -61,12 +67,10 @@ ros2 launch ocs2_arm_controller full_body.launch.py \
   rviz_config:=/home/angel/ros2_ws/src/robot-descriptions/humanoid/Galbot/galbot_one_description/config/rviz/fullbody.rviz
 ```
 
-Run with gripper2:
+Run with gripper_hitbot:
 
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller full_body.launch.py \
-  robot:=galbot_one \
-  type:=type2 \
-  rviz_config:=/home/angel/ros2_ws/src/robot-descriptions/humanoid/Galbot/galbot_one_description/config/rviz/fullbody.rviz
+  robot:=galbot_one 
 ```

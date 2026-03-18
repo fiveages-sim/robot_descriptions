@@ -25,8 +25,6 @@
 #####################################################################################
 -->
 <robot name="galbot_one" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:arg name="type" default="type1"/>
-  <xacro:property name="type_arg" value="$(arg type)"/>
   <xacro:property name="ros2_control_config_basename" value="ros2_controllers.yaml"/>
   <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/chassis.xacro"/>
   <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/torso.xacro"/>
@@ -83,47 +81,7 @@
     <joint name="head_joint1"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
     <joint name="head_joint2"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
 
-    <xacro:if value="${type_arg == 'type1'}">
-      <!-- Gripper prismatic joints for type1 -->
-      <joint name="left_gripper_left_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.02</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="left_gripper_right_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.02</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="right_gripper_left_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.02</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="right_gripper_right_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.02</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-    </xacro:if>
-    <xacro:if value="${type_arg == 'type2'}">
-      <!-- Charlie gripper joints for type2 -->
+    <!-- Gripper joints -->
       <joint name="left_gripper_l1_joint">
         <command_interface name="position"/>
         <state_interface name="position">
@@ -232,7 +190,7 @@
           <param name="initial_value">0.0</param>
         </state_interface>
       </joint>
-    </xacro:if>
+    
   </ros2_control>
 
   <xacro:arg name="gazebo" default="false"/>

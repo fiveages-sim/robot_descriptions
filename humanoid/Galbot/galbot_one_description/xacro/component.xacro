@@ -35,9 +35,39 @@
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'arm'}">
-    <!-- arm.xacro mounts on torso arm mount links, provide placeholders for component mode -->
+    <!-- Use a single base_link as root to avoid multiple roots for robot_state_publisher -->
+    <link name="base_link"/>
+
+    <!-- Mount links for both arms, attached rigidly to base_link in component mode -->
     <link name="torso_right_arm_mount_link"/>
+    <joint name="base_to_torso_right_arm_mount_joint" type="fixed">
+      <!-- Match torso_right_arm_mount_joint pose from body.xacro -->
+      <origin rpy="1.5707963267948966 0 0" xyz="0 -0.13 0.39599"/>
+      <parent link="base_link"/>
+      <child link="torso_right_arm_mount_link"/>
+    </joint>
+
     <link name="torso_left_arm_mount_link"/>
+    <joint name="base_to_torso_left_arm_mount_joint" type="fixed">
+      <!-- Match torso_left_arm_mount_joint pose from body.xacro -->
+      <origin rpy="1.5707963267948966 0 3.141592653589793" xyz="0 0.13 0.39599"/>
+      <parent link="base_link"/>
+      <child link="torso_left_arm_mount_link"/>
+    </joint>
+
     <xacro:include filename="$(find galbot_one_description)/xacro/components/arm.xacro"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'gripper'}">
+    <link name="base_link"/>
+
+    <!-- Component-mode gripper: single unprefixed instance (gripper_joint) -->
+    <link name="flange_mount_link"/>
+    <joint name="base_to_flange_mount_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="flange_mount_link"/>
+    </joint>
+
+    <xacro:include filename="$(find galbot_one_description)/xacro/gripper.xacro"/>
   </xacro:if>
 </robot>
