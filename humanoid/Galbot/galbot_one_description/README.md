@@ -1,7 +1,7 @@
 # Galbot One Description
 
-This package contains URDF/Xacro/config files for Galbot One, aligned with the workspace conventions used by `robot_common_launch` and `ocs2_arm_controller`.
-
+This package contains the description files for Galbot humanoid. The origin models could be found at [RoboHanger_code](https://github.com/chen01yx/RoboHanger_code)
+![galbot_one.png](../../.images/galbot_one.png)
 ## Build
 
 ```bash
