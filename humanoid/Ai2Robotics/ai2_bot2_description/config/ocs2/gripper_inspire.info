@@ -6,15 +6,18 @@ model_information {
   removeJoints {
     [0]  "head_joint1"
     [1]  "head_joint2"
-
+    [2]  "left_gripper_joint"
+    [3]  "right_gripper_joint"
   }
 
   ; base frame in URDF (from URDF)
   baseFrame                       "base_link"
-  ; end-effector frames in URDF
-  ; use the dedicated ee links so the OCS2 marker coincides with the actual tool frame
-  eeFrame                         "left_ee"
-  eeFrame1                        "right_ee"
+  ; end-effector frames — point to the gripper TCP so the OCS2 marker sits at the
+  ; actual grip centre (left_gripper_tcp / right_gripper_tcp are fixed links added
+  ; to EG2-4C2.xacro at xyz="0 0 0.13" from gripper_base).
+  ; When running WITHOUT type:=inspire (no gripper), revert these to "left_ee" / "right_ee".
+  eeFrame                         "left_gripper_tcp"
+  eeFrame1                        "right_gripper_tcp"
 }
 
 model_settings

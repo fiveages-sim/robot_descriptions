@@ -1,0 +1,293 @@
+; Split-body OCS2 config — arms only (14 DOF), body joints fixed.
+; body_joint1-4 are added to removeJoints so Pinocchio locks them;
+; only the 14 arm joints enter the OCS2 state / input space.
+; Body joints are still controlled by body_joint_controller separately.
+model_information {
+
+  manipulatorModelType     0
+
+  removeJoints {
+    [0]  "head_joint1"
+    [1]  "head_joint2"
+    [2]  "body_joint1"
+    [3]  "body_joint2"
+    [4]  "body_joint3"
+    [5]  "body_joint4"
+  }
+
+  baseFrame                       "base_link"
+  eeFrame                         "left_ee"
+  eeFrame1                        "right_ee"
+}
+
+model_settings
+{
+  usePreComputation               true
+  recompileLibraries              true
+}
+
+ddp
+{
+  algorithm                       SLQ
+  nThreads                        3
+  threadPriority                  50
+  maxNumIterations                1
+  minRelCost                      0.1
+  constraintTolerance             1e-3
+  displayInfo                     false
+  displayShortSummary             false
+  checkNumericalStability         false
+  debugPrintRollout               false
+  debugCaching                    false
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  maxNumStepsPerSecond            100000
+  timeStep                        1e-3
+  backwardPassIntegratorType      ODE45
+  constraintPenaltyInitialValue   20.0
+  constraintPenaltyIncreaseRate   2.0
+  preComputeRiccatiTerms          true
+  useFeedbackPolicy               false
+  strategy                        LINE_SEARCH
+  lineSearch
+  {
+    minStepLength                 1e-2
+    maxStepLength                 1.0
+    hessianCorrectionStrategy     DIAGONAL_SHIFT
+    hessianCorrectionMultiple     1e-3
+  }
+}
+
+rollout
+{
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  timeStep                        1e-2
+  integratorType                  ODE45
+  maxNumStepsPerSecond            100000
+  checkNumericalStability         false
+}
+
+mpc
+{
+  timeHorizon                     1.0
+  solutionTimeWindow              0.2
+  coldStart                       false
+  debugPrint                      false
+  mpcDesiredFrequency             100
+  mrtDesiredFrequency             400
+}
+
+; arm DOFs only — 14 joints (body joints locked via removeJoints)
+initialState
+{
+  base
+  {
+    wheelBasedMobileManipulator
+    {
+      (0,0)  0.0  ; position x
+      (1,0)  0.0  ; position y
+      (2,0)  0.0  ; heading
+    }
+  }
+
+  arm
+  {
+    (0,0)   0.0      ; left_joint1
+    (1,0)   0.0      ; left_joint2
+    (2,0)   0.0      ; left_joint3
+    (3,0)   0.0      ; left_joint4
+    (4,0)   0.0      ; left_joint5
+    (5,0)   0.0      ; left_joint6
+    (6,0)   0.0      ; left_joint7
+    (7,0)   0.0      ; right_joint1
+    (8,0)   0.0      ; right_joint2
+    (9,0)   0.0      ; right_joint3
+    (10,0)  0.0      ; right_joint4
+    (11,0)  0.0      ; right_joint5
+    (12,0)  0.0      ; right_joint6
+    (13,0)  0.0      ; right_joint7
+  }
+}
+
+inputCost
+{
+  R
+  {
+    base
+    {
+      defaultManipulator          {}
+      floatingArmManipulator      {}
+      fullyActuatedFloatingArmManipulator
+      {
+        scaling 1e-2
+        (0,0)  5.0  (1,1)  5.0  (2,2)  5.0
+        (3,3)  5.0  (4,4)  5.0  (5,5)  5.0
+      }
+      wheelBasedMobileManipulator
+      {
+        scaling 1e-2
+        (0,0)  5.0  ; forward velocity
+        (1,1)  5.0  ; turning velocity
+      }
+    }
+
+    arm
+    {
+      scaling 1e-3
+      (0,0)   1.0      ; left_joint1
+      (1,0)   1.0      ; left_joint2
+      (2,0)   1.0      ; left_joint3
+      (3,0)   1.0      ; left_joint4
+      (4,0)   1.0      ; left_joint5
+      (5,0)   1.0      ; left_joint6
+      (6,0)   1.0      ; left_joint7
+      (7,0)   1.0      ; right_joint1
+      (8,0)   1.0      ; right_joint2
+      (9,0)   1.0      ; right_joint3
+      (10,0)  1.0      ; right_joint4
+      (11,0)  1.0      ; right_joint5
+      (12,0)  1.0      ; right_joint6
+      (13,0)  1.0      ; right_joint7
+    }
+  }
+}
+
+endEffector
+{
+  dualArmMode      true
+  leftArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+  rightArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+}
+
+finalEndEffector
+{
+  dualArmMode      true
+  leftArm
+  {
+    muPosition      5.0
+    muOrientation   2.5
+  }
+  rightArm
+  {
+    muPosition      5.0
+    muOrientation   2.5
+  }
+}
+
+bodyRelative
+{
+  activate                   true
+  bodyLinkName               "base_link"
+  rollTolerance              0.1
+  pitchTolerance             0.1
+  muRoll                     20.0
+  muPitch                    20.0
+  muPositionX                0.0
+  muPositionY                0.0
+}
+
+selfCollision
+{
+  activate  true
+  collisionObjectPairs {}
+  collisionLinkPairs
+  {
+    [0]  "body_link4, left_link8",
+    [1]  "body_link4, right_link8",
+  }
+  minimumDistance  0.01
+  mu      1e-3
+  delta   1e-4
+}
+
+jointPositionLimits
+{
+  activate  true
+  mu      0.001
+  delta   1e-3
+}
+
+jointVelocityLimits
+{
+  mu      0.01
+  delta   1e-3
+
+  lowerBound
+  {
+    base
+    {
+      defaultManipulator          {}
+      floatingArmManipulator      {}
+      fullyActuatedFloatingArmManipulator
+      {
+        (0,0)  -0.5  (1,0)  -0.1  (2,0)  -0.1
+        (3,0)  -0.3  (4,0)  -0.3  (5,0)  -0.3
+      }
+      wheelBasedMobileManipulator
+      {
+        (0,0)  -2.0  (1,0)  -2.0
+      }
+    }
+    arm
+    {
+      (0,0)  -1.07   ; left_joint1
+      (1,0)  -1.07   ; left_joint2
+      (2,0)  -1.07   ; left_joint3
+      (3,0)  -1.07   ; left_joint4
+      (4,0)  -1.07   ; left_joint5
+      (5,0)  -1.07   ; left_joint6
+      (6,0)  -1.07   ; left_joint7
+      (7,0)  -1.07   ; right_joint1
+      (8,0)  -1.07   ; right_joint2
+      (9,0)  -1.07   ; right_joint3
+      (10,0) -1.07   ; right_joint4
+      (11,0) -1.07   ; right_joint5
+      (12,0) -1.07   ; right_joint6
+      (13,0) -1.07   ; right_joint7
+    }
+  }
+
+  upperBound
+  {
+    base
+    {
+      defaultManipulator          {}
+      floatingArmManipulator      {}
+      fullyActuatedFloatingArmManipulator
+      {
+        (0,0)  0.5  (1,0)  0.1  (2,0)  0.1
+        (3,0)  0.3  (4,0)  0.3  (5,0)  0.3
+      }
+      wheelBasedMobileManipulator
+      {
+        (0,0)  2.0  (1,0)  2.0
+      }
+    }
+    arm
+    {
+      (0,0)  1.07   ; left_joint1
+      (1,0)  1.07   ; left_joint2
+      (2,0)  1.07   ; left_joint3
+      (3,0)  1.07   ; left_joint4
+      (4,0)  1.07   ; left_joint5
+      (5,0)  1.07   ; left_joint6
+      (6,0)  1.07   ; left_joint7
+      (7,0)  1.07   ; right_joint1
+      (8,0)  1.07   ; right_joint2
+      (9,0)  1.07   ; right_joint3
+      (10,0) 1.07   ; right_joint4
+      (11,0) 1.07   ; right_joint5
+      (12,0) 1.07   ; right_joint6
+      (13,0) 1.07   ; right_joint7
+    }
+  }
+}

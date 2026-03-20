@@ -53,11 +53,12 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=ai2_bot2 type:=insp
   
 ## 3. OCS2 Demo
 
-### 3.1 OCS2 Arm Controller Demo
+### 3.1 Full Body Control
+
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller full_body.launch.py robot:=ai2_bot2 
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=ai2_bot2
 ```
 
 ```bash
@@ -65,14 +66,31 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=ai2_bot2 type:=inspire
 ```
 
-### 3.2 Isaac Sim
+### 3.2 Split Body Control
+
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch ocs2_arm_controller split_body.launch.py robot:=ai2_bot2
+```
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch ocs2_arm_controller split_body.launch.py robot:=ai2_bot2 type:=inspire
+```
+
+### 3.3 Isaac Sim
 
 * Empty Hand
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=ai2_bot2 hardware:=isaac
 ```
-
+* With Inspire EG2 Gripper
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch ocs2_arm_controller demo.launch.py robot:=ai2_bot2 type:=inspire hardware:=isaac
+```
 
 https://github.com/user-attachments/assets/ba05a717-cc46-4093-aa56-1ad4ea8a5264
 

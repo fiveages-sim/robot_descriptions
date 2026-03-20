@@ -24,21 +24,21 @@
                 <inertia ixx="1.7468022e-03" ixy="4.4167244e-07" ixz="8.1232278e-07"
                          iyy="1.7511135e-03" iyz="-1.7950155e-05" izz="1.1806738e-03"/>
             </inertial>
-<!--            <visual>-->
-<!--                <geometry>-->
-<!--                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/arm_base_link.glb"-->
-<!--                          scale="1 ${direction} 1"/>-->
-<!--                </geometry>-->
-<!--                <material name="">-->
-<!--                    <color rgba="0.86667 0.86667 0.8902 1"/>-->
-<!--                </material>-->
-<!--            </visual>-->
-<!--            <collision>-->
-<!--                <geometry>-->
-<!--                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/arm_base_link.glb"-->
-<!--                          scale="1 ${direction} 1"/>-->
-<!--                </geometry>-->
-<!--            </collision>-->
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/arm_base_link.glb"
+                          scale="1 ${direction} 1"/>
+                </geometry>
+                <material name="">
+                    <color rgba="0.86667 0.86667 0.8902 1"/>
+                </material>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/arm_base_link.glb"
+                          scale="1 ${direction} 1"/>
+                </geometry>
+            </collision>
         </link>
         <joint name="${prefix}joint0" type="fixed">
             <xacro:if value="${direction == 1}">
@@ -317,12 +317,15 @@
                          iyy="0.000151676252224174" iyz="-2.82790388376229E-05" izz="0.000142517590749322"/>
             </inertial>
             <visual>
+
                 <geometry>
                     <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link7.glb"
                           scale="1 1 ${direction}"/>
                 </geometry>
+
             </visual>
             <collision>
+
                 <geometry>
                     <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/arm/link7.glb"
                           scale="1 1 ${direction}"/>

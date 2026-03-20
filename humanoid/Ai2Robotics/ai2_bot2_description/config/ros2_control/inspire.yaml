@@ -1,4 +1,13 @@
-# This config file is used by ros2_control
+# ros2_control config when launch uses type:=inspire (Inspire EG2 gripper).
+# Selected by load_robot_config(..., robot_type='inspire') → progressive match inspire.yaml
+#
+# OCS2 (CtrlComponent):
+#   - info_file_name: gripper_inspire  → share/.../config/ocs2/gripper_inspire.info
+#   - robot_type: inspire             → share/.../urdf/ai2_bot2_inspire.urdf (must exist)
+#
+# Robot state / ros2_control xacro still comes from launch type:=inspire (same as default
+# ros2_controllers.yaml); only OCS2 task + Pinocchio URDF switch here.
+
 controller_manager:
   ros__parameters:
     update_rate: 50  # Hz
@@ -26,14 +35,13 @@ controller_manager:
     right_gripper_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
 
-
-    
 ocs2_wbc_controller:
   ros__parameters:
-    # Joint configuration
     update_rate: 50  # Hz
     mpc_frequency: 25
-    info_file_name: task
+    # Gripper variant: separate OCS2 task + exported URDF with gripper tree
+    info_file_name: gripper_inspire
+    robot_type: inspire
     joints:
       - body_joint1
       - body_joint2
@@ -62,7 +70,6 @@ ocs2_wbc_controller:
     robot_name: ai2_bot2
     home_duration: 2.0
 
-    # Control parameters
     home_1: [
       0.0,
       0.0,
@@ -83,7 +90,6 @@ ocs2_wbc_controller:
       0.0,
       -0.0002
     ]
-    # Control parameters
     home_2: [
       0.0,
       0.0,
@@ -110,7 +116,8 @@ ocs2_arm_controller:
   ros__parameters:
     update_rate: 50  # Hz
     mpc_frequency: 25
-    info_file_name: split
+    info_file_name: split_inspire
+    robot_type: inspire
     joints:
       - left_joint1
       - left_joint2

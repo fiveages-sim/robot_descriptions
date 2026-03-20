@@ -872,4 +872,364 @@
     <parent link="right_link8"/>
     <child link="right_ee"/>
   </joint>
+  <link name="left_gripper_base">
+    <inertial>
+      <origin xyz="1.5645E-05 -4.1838E-06 0.038"/>
+      <mass value="0.072633"/>
+      <inertia ixx="5.095E-05" ixy="-7.3167E-13" ixz="2.0229E-08" iyy="6.0883E-05" iyz="-4.5583E-09" izz="1.933E-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/baselink.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/baselink.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_left_outer_link">
+    <inertial>
+      <origin xyz="0.0087669 0.009 0.013992"/>
+      <mass value="0.0024292"/>
+      <inertia ixx="5.1061E-07" ixy="-8.6739E-19" ixz="-2.508E-07" iyy="5.7398E-07" iyz="-1.3667E-18" izz="2.6747E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/outer_link.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/outer_link.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_gripper_joint" type="revolute">
+    <origin xyz="-0.04 -0.009 0.079"/>
+    <parent link="left_gripper_base"/>
+    <child link="left_left_outer_link"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+  </joint>
+  <link name="left_left_inner_link">
+    <inertial>
+      <origin xyz="0.0087435 0.009 0.013955"/>
+      <mass value="0.0038971"/>
+      <inertia ixx="5.6941E-07" ixy="-1.0711E-18" ixz="-2.6891E-07" iyy="6.2305E-07" iyz="-1.6845E-18" izz="3.0871E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/inner_link.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/inner_link.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_left_inner_joint" type="revolute">
+    <origin xyz="-0.03 -0.009 0.081"/>
+    <parent link="left_gripper_base"/>
+    <child link="left_left_inner_link"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="left_gripper_joint"/>
+  </joint>
+  <link name="left_right_inner_link">
+    <inertial>
+      <origin xyz="-0.0087435 0.009 0.013955"/>
+      <mass value="0.0038971"/>
+      <inertia ixx="5.6941E-07" ixy="1.0666E-18" ixz="2.6891E-07" iyy="6.2305E-07" iyz="-1.8084E-18" izz="3.0871E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/inner_link.obj" scale="-1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/inner_link.obj" scale="-1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_right_inner_joint" type="revolute">
+    <origin xyz="0.03 -0.009 0.081"/>
+    <parent link="left_gripper_base"/>
+    <child link="left_right_inner_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="left_gripper_joint" multiplier="1" offset="0"/>
+  </joint>
+  <link name="left_right_outer_link">
+    <inertial>
+      <origin xyz="-0.0087669 0.009 0.013992"/>
+      <mass value="0.0024292"/>
+      <inertia ixx="5.1061E-07" ixy="-9.5279E-19" ixz="2.508E-07" iyy="5.7398E-07" iyz="7.6863E-19" izz="2.6747E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/outer_link.obj" scale="-1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/outer_link.obj" scale="-1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_right_outer_joint" type="revolute">
+    <origin xyz="0.04 -0.009 0.079"/>
+    <parent link="left_gripper_base"/>
+    <child link="left_right_outer_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="left_gripper_joint" multiplier="1" offset="0"/>
+  </joint>
+  <link name="left_left_pad">
+    <inertial>
+      <origin xyz="0.011864 0.006 0.011367"/>
+      <mass value="0.0045068"/>
+      <inertia ixx="5.1288E-07" ixy="-9.8137E-14" ixz="-9.4703E-08" iyy="5.3203E-07" iyz="-6.212E-14" izz="2.009E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/pad.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/pad.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_left_pad_joint" type="revolute">
+    <origin xyz="0.0223 0.003 0.035591"/>
+    <parent link="left_left_outer_link"/>
+    <child link="left_left_pad"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="left_gripper_joint" multiplier="1" offset="0"/>
+  </joint>
+  <link name="left_right_pad">
+    <inertial>
+      <origin xyz="-0.011864 0.006 0.011367"/>
+      <mass value="0.0045068"/>
+      <inertia ixx="5.1288E-07" ixy="-9.8137E-14" ixz="9.4703E-08" iyy="5.3203E-07" iyz="6.2119E-14" izz="2.009E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/pad.obj" scale="-1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/pad.obj" scale="-1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_right_pad_joint" type="revolute">
+    <origin xyz="-0.0223 0.003 0.035591"/>
+    <parent link="left_right_outer_link"/>
+    <child link="left_right_pad"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="left_gripper_joint" multiplier="1" offset="0"/>
+  </joint>
+  <!-- Tool-Center-Point: midpoint between the two pads when fully closed.
+         z = 0.079 (outer-link) + 0.036 (pad joint) + 0.015 (pad contact face) ≈ 0.13 m.
+         Adjust xyz z-value if the OCS2 marker does not sit at the actual grip point. -->
+  <link name="left_gripper_tcp"/>
+  <joint name="left_gripper_tcp_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.13"/>
+    <parent link="left_gripper_base"/>
+    <child link="left_gripper_tcp"/>
+  </joint>
+  <joint name="left_gripper_mount" type="fixed">
+    <parent link="left_ee"/>
+    <child link="left_gripper_base"/>
+    <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+  </joint>
+  <link name="right_gripper_base">
+    <inertial>
+      <origin xyz="1.5645E-05 -4.1838E-06 0.038"/>
+      <mass value="0.072633"/>
+      <inertia ixx="5.095E-05" ixy="-7.3167E-13" ixz="2.0229E-08" iyy="6.0883E-05" iyz="-4.5583E-09" izz="1.933E-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/baselink.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/baselink.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_left_outer_link">
+    <inertial>
+      <origin xyz="0.0087669 0.009 0.013992"/>
+      <mass value="0.0024292"/>
+      <inertia ixx="5.1061E-07" ixy="-8.6739E-19" ixz="-2.508E-07" iyy="5.7398E-07" iyz="-1.3667E-18" izz="2.6747E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/outer_link.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/outer_link.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_gripper_joint" type="revolute">
+    <origin xyz="-0.04 -0.009 0.079"/>
+    <parent link="right_gripper_base"/>
+    <child link="right_left_outer_link"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+  </joint>
+  <link name="right_left_inner_link">
+    <inertial>
+      <origin xyz="0.0087435 0.009 0.013955"/>
+      <mass value="0.0038971"/>
+      <inertia ixx="5.6941E-07" ixy="-1.0711E-18" ixz="-2.6891E-07" iyy="6.2305E-07" iyz="-1.6845E-18" izz="3.0871E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/inner_link.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/inner_link.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_left_inner_joint" type="revolute">
+    <origin xyz="-0.03 -0.009 0.081"/>
+    <parent link="right_gripper_base"/>
+    <child link="right_left_inner_link"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="right_gripper_joint"/>
+  </joint>
+  <link name="right_right_inner_link">
+    <inertial>
+      <origin xyz="-0.0087435 0.009 0.013955"/>
+      <mass value="0.0038971"/>
+      <inertia ixx="5.6941E-07" ixy="1.0666E-18" ixz="2.6891E-07" iyy="6.2305E-07" iyz="-1.8084E-18" izz="3.0871E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/inner_link.obj" scale="-1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/inner_link.obj" scale="-1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_right_inner_joint" type="revolute">
+    <origin xyz="0.03 -0.009 0.081"/>
+    <parent link="right_gripper_base"/>
+    <child link="right_right_inner_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="right_gripper_joint" multiplier="1" offset="0"/>
+  </joint>
+  <link name="right_right_outer_link">
+    <inertial>
+      <origin xyz="-0.0087669 0.009 0.013992"/>
+      <mass value="0.0024292"/>
+      <inertia ixx="5.1061E-07" ixy="-9.5279E-19" ixz="2.508E-07" iyy="5.7398E-07" iyz="7.6863E-19" izz="2.6747E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/outer_link.obj" scale="-1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/outer_link.obj" scale="-1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_right_outer_joint" type="revolute">
+    <origin xyz="0.04 -0.009 0.079"/>
+    <parent link="right_gripper_base"/>
+    <child link="right_right_outer_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="right_gripper_joint" multiplier="1" offset="0"/>
+  </joint>
+  <link name="right_left_pad">
+    <inertial>
+      <origin xyz="0.011864 0.006 0.011367"/>
+      <mass value="0.0045068"/>
+      <inertia ixx="5.1288E-07" ixy="-9.8137E-14" ixz="-9.4703E-08" iyy="5.3203E-07" iyz="-6.212E-14" izz="2.009E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/pad.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/pad.obj"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_left_pad_joint" type="revolute">
+    <origin xyz="0.0223 0.003 0.035591"/>
+    <parent link="right_left_outer_link"/>
+    <child link="right_left_pad"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="right_gripper_joint" multiplier="1" offset="0"/>
+  </joint>
+  <link name="right_right_pad">
+    <inertial>
+      <origin xyz="-0.011864 0.006 0.011367"/>
+      <mass value="0.0045068"/>
+      <inertia ixx="5.1288E-07" ixy="-9.8137E-14" ixz="9.4703E-08" iyy="5.3203E-07" iyz="6.2119E-14" izz="2.009E-07"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/pad.obj" scale="-1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file:///home/ly/ros2_ws/install/inspire_description/share/inspire_description/meshes/EG2-4C2/pad.obj" scale="-1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_right_pad_joint" type="revolute">
+    <origin xyz="-0.0223 0.003 0.035591"/>
+    <parent link="right_right_outer_link"/>
+    <child link="right_right_pad"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="50" lower="0" upper="0.82" velocity="3.141592653589793"/>
+    <mimic joint="right_gripper_joint" multiplier="1" offset="0"/>
+  </joint>
+  <!-- Tool-Center-Point: midpoint between the two pads when fully closed.
+         z = 0.079 (outer-link) + 0.036 (pad joint) + 0.015 (pad contact face) ≈ 0.13 m.
+         Adjust xyz z-value if the OCS2 marker does not sit at the actual grip point. -->
+  <link name="right_gripper_tcp"/>
+  <joint name="right_gripper_tcp_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.13"/>
+    <parent link="right_gripper_base"/>
+    <child link="right_gripper_tcp"/>
+  </joint>
+  <joint name="right_gripper_mount" type="fixed">
+    <parent link="right_ee"/>
+    <child link="right_gripper_base"/>
+    <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+  </joint>
 </robot>

@@ -18,7 +18,6 @@
 
     <link name="base_footprint"/>
     <joint name="base_footprint_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="base_footprint"/>
       <child link="base_link"/>
     </joint>
@@ -31,16 +30,14 @@
                  iyy="0.65327" iyz="-6.4191E-05" izz="0.70449"/>
       </inertial>
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/chassis.glb"/>
         </geometry>
-        <material name=""><color rgba="1 1 1 1"/></material>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0.1"/>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/chassis.glb"/>
+          <box size="0.6 0.46 0.15"/>
         </geometry>
       </collision>
     </link>
@@ -200,7 +197,7 @@
       <origin xyz="0 0.208 0.0845" rpy="0 0 -1.5708" />
       <parent link="base_link" />
       <child link="driving_left_link" />
-      <axis xyz="1 0 0" />
+      <axis xyz="-1 0 0" />
       <limit effort="2000" velocity="10" />
     </joint>
 
@@ -222,7 +219,7 @@
       <origin xyz="0 -0.208 0.0845" rpy="0 0 -1.5708" />
       <parent link="base_link" />
       <child link="driving_right_link" />
-      <axis xyz="1 0 0" />
+      <axis xyz="-1 0 0" />
       <limit effort="2000" velocity="10" />
     </joint>
 
