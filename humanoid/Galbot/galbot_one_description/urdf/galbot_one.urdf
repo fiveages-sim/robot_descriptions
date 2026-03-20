@@ -28,7 +28,7 @@
 </link>
   <!-- omni_chassis_leg_mount_link and its joint come from chassis.xacro -->
   <joint name="leg_joint" type="fixed">
-    <origin />
+    <origin rpy = "1.57 0 0"/>
     <parent link="omni_chassis_leg_mount_link" />
     <child link="leg_base_link" />
   </joint>
@@ -239,7 +239,7 @@
     </link>
   <link name="omni_chassis_leg_mount_link" />
   <joint name="omni_chassis_leg_mount_joint" type="fixed">
-    <origin rpy="1.5707963267948966 0 0" xyz="0.134 -0.087 0.13" />
+    <origin rpy="0 0 0" xyz="0.134 -0.087 0.13" />
     <parent link="omni_chassis_base_link" />
     <child link="omni_chassis_leg_mount_link" />
   </joint>

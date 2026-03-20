@@ -2,7 +2,6 @@
 
 This package contains URDF/Xacro/config files for Galbot One, aligned with the workspace conventions used by `robot_common_launch` and `ocs2_arm_controller`.
 
-![galbot_one.png](../../.images/galbot_one.png)
 ## Build
 
 ```bash
@@ -10,7 +9,7 @@ cd ~/ros2_ws
 colcon build --packages-up-to galbot_one_description --symlink-install
 ```
 
-## Visualize!
+## Visualize the robot
 
 ### Full Robot
 
@@ -29,8 +28,6 @@ ros2 launch robot_common_launch humanoid.launch.py robot:=galbot_one type:=none
 ### Component
 
 
-
-
 * Chassis
   ```bash
   source ~/ros2_ws/install/setup.bash
@@ -43,19 +40,19 @@ ros2 launch robot_common_launch humanoid.launch.py robot:=galbot_one type:=none
   ros2 launch robot_common_launch component.launch.py robot:=galbot_one type:=body
   ```
 
-* Arms module
+* Arms module 
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch component.launch.py robot:=galbot_one type:=arm
   ```
 
-* Gripper module
+* Gripper module 
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch component.launch.py robot:=galbot_one type:=gripper
   ```
 
-## Full-body OCS2 Demo
+## Full-body ROS2 Control Demo
 
 
 
