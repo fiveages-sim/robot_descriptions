@@ -31,9 +31,11 @@
        - none: hide grippers (full-body visualization without end-effectors)
   -->
   <xacro:arg name="type" default="gripper"/>
-  <xacro:include filename="$(find galbot_one_description)/xacro/components/base.xacro"/>
+  <xacro:include filename="$(find galbot_one_description)/xacro/components/chassis.xacro"/>
+  <xacro:include filename="$(find galbot_one_description)/xacro/components/body.xacro"/>
   <xacro:include filename="$(find galbot_one_description)/xacro/components/arm.xacro"/>
   <xacro:include filename="$(find galbot_one_description)/xacro/components/gripper.xacro"/>
+  <xacro:GalbotOneChassis enable_wheel_joints="$(arg enable_wheel_joints)"/>
 
   <xacro:if value="${'$(arg type)' == 'gripper'}">
     <!-- Instantiate both grippers -->

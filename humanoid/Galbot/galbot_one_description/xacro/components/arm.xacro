@@ -14,16 +14,11 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/base.glb" scale="1 -1 1"/>
+        <mesh filename="package://galbot_one_description/meshes/arm/base.glb" scale ="1 -1 1"/>
       </geometry>
       
     </visual>
-    <collision>
-      
-      <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/right_arm_base_link_convex.stl"/>
-      </geometry>
-    </collision>
+
   </link>
   <link name="right_arm_link1">
     <inertial>
@@ -38,12 +33,7 @@
       </geometry>
       
     </visual>
-    <collision>
-      
-      <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/right_arm_link1_convex.stl"/>
-      </geometry>
-    </collision>
+
   </link>
   <joint name="right_arm_joint1" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.076"/>
@@ -66,9 +56,9 @@
       
     </visual>
     <collision>
-      
+      <origin rpy="-1.5707963267948966 0 0" xyz="0 -0.074 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/right_arm_link2_convex.stl"/>
+        <cylinder length="0.19825" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -93,9 +83,9 @@
       
     </visual>
     <collision>
-      
+      <origin rpy="0 0 0" xyz="0 0 -0.074"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/right_arm_link3_convex.stl"/>
+        <cylinder length="0.223485" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -120,9 +110,9 @@
       
     </visual>
     <collision>
-      
+      <origin rpy="1.5707963267948966 0 0" xyz=" 0 -0.040  0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/right_arm_link4_convex.stl"/>
+        <cylinder length="0.12085" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -142,14 +132,14 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link5.glb"/>
+        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link5.glb" />
       </geometry>
       
     </visual>
     <collision>
-      
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/right_arm_link5_convex.stl"/>
+        <cylinder length="0.068650" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -169,14 +159,14 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link6.glb" scale="1 -1 1"/>
+        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link6.glb" />
       </geometry>
       
     </visual>
     <collision>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/right_arm_link6_convex.stl"/>
+        <cylinder length="0.085000" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -196,14 +186,14 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link7.glb" scale="1 -1 1"/>
+        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link7.glb" />
       </geometry>
       
     </visual>
     <collision>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/right_arm_link7_convex.stl"/>
+        <cylinder length="0.075650" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -222,7 +212,7 @@
     <axis xyz="0 0 0"/>
   </joint>
   <joint name="right_flange_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0"/>
+    
     <parent link="right_arm_end_effector_mount_link"/>
     <child link="right_flange_base_link"/>
   </joint>
@@ -239,12 +229,6 @@
       </geometry>
       
     </visual>
-    <collision>
-      
-      <geometry>
-        <mesh filename="package://galbot_one_description/meshes/flange/flange_base_link_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <link name="right_flange_mount_link"/>
   <joint name="right_flange_mount_joint" type="fixed">
@@ -271,12 +255,6 @@
       </geometry>
       
     </visual>
-    <collision>
-      
-      <geometry>
-        <mesh filename="package://galbot_one_description/meshes/camera/arm_camera_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
 
   <joint name="left_arm_joint" type="fixed">
@@ -300,7 +278,7 @@
     <collision>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_base_link_convex.stl"/>
+        <cylinder length="0.091350" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -320,7 +298,7 @@
     <collision>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link1_convex.stl"/>
+        <cylinder length="0.068650" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -345,9 +323,9 @@
       
     </visual>
     <collision>
-      
+      <origin rpy="1.5707963267948966 0 0" xyz="0 -0.074 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link2_convex.stl"/>
+        <cylinder length="0.19825" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -372,9 +350,9 @@
       
     </visual>
     <collision>
-      
+      <origin rpy="0 0 0" xyz="0 0 -0.074"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link3_convex.stl"/>
+        <cylinder length="0.223485" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -399,9 +377,9 @@
       
     </visual>
     <collision>
-      
+      <origin rpy="1.5707963267948966 0 0" xyz=" 0 -0.040  0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link4_convex.stl"/>
+        <cylinder length="0.12085" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -424,11 +402,11 @@
         <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link5.glb"/>
       </geometry>
       
-    </visual>
+    </visual>S
     <collision>
-      
+      <origin rpy="0 0 0" xyz="0 -0.046 -0.09"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link5_convex.stl"/>
+        <cylinder length="0.068650" radius="0.034983"/>
       </geometry>
     </collision>
   </link>
@@ -455,7 +433,7 @@
     <collision>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link6_convex.stl"/>
+        <cylinder length="0.085000" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -482,7 +460,7 @@
     <collision>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link7_convex.stl"/>
+        <cylinder length="0.075650" radius="0.044983"/>
       </geometry>
     </collision>
   </link>
@@ -501,7 +479,7 @@
     <axis xyz="0 0 0"/>
   </joint>
   <joint name="left_flange_joint" type="fixed">
-    <origin rpy="0 0 3.14" xyz="0 0 0"/>
+    <origin rpy="0 0 3.14"/>
     <parent link="left_arm_end_effector_mount_link"/>
     <child link="left_flange_base_link"/>
   </joint>
@@ -518,12 +496,6 @@
       </geometry>
       
     </visual>
-    <collision>
-      
-      <geometry>
-        <mesh filename="package://galbot_one_description/meshes/flange/flange_base_link_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <link name="left_flange_mount_link"/>
   <joint name="left_flange_mount_joint" type="fixed">
@@ -533,7 +505,7 @@
     <axis xyz="0 0 0"/>
   </joint>
   <joint name="left_arm_camera_joint" type="fixed">
-    <origin rpy="3.1415926 -1.308996939 0" xyz="0.0526 -0.02 0.02054"/>
+    <origin rpy="3.14 -1.308996939 0" xyz="0.0526 -0.02 0.02054"/>
     <parent link="left_flange_base_link"/>
     <child link="left_arm_camera_flange_link"/>
   </joint>
@@ -550,11 +522,5 @@
       </geometry>
       
     </visual>
-    <collision>
-      
-      <geometry>
-        <mesh filename="package://galbot_one_description/meshes/camera/arm_camera_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
 </robot>

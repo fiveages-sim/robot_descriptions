@@ -1,6 +1,6 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 78
+    Help Height: 138
     Name: Displays
     Property Tree Widget:
       Expanded:
@@ -9,7 +9,7 @@ Panels:
         - /Pose1
         - /Pose2
       Splitter Ratio: 0.5
-    Tree Height: 167
+    Tree Height: 225
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -79,154 +79,331 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
-        head_pitch_link:
+        chassis_lidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        head_yaw_link:
+        head_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_base_link:
+        head_link1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_camera:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_center:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_left:
+        head_link2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_link1:
+        left_arm_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_link2:
+        left_arm_camera_flange_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_link3:
+        left_arm_end_effector_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_arm_link1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_link4:
+        left_arm_link2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_link5:
+        left_arm_link3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_link6:
+        left_arm_link4:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_right:
+        left_arm_link5:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lft_behind_wheel_link:
+        left_arm_link6:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lft_front_wheel_link:
+        left_arm_link7:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lft_wheel_link:
+        left_flange_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rgt_behind_wheel_link:
+        left_flange_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_gripper_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rgt_front_wheel_link:
+        left_gripper_l1_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rgt_wheel_link:
+        left_gripper_l2_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_base_link:
+        left_gripper_l3_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_camera:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_center:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_left:
+        left_gripper_l4_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_link1:
+        left_gripper_l5_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_link2:
+        left_gripper_r1_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_link3:
+        left_gripper_r2_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_link4:
+        left_gripper_r3_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_link5:
+        left_gripper_r4_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_link6:
+        left_gripper_r5_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_right:
+        left_gripper_tcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        leg_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        slide_link:
+        leg_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        leg_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        leg_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        leg_link4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        leg_torso_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        omni_chassis_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        omni_chassis_leg_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_arm_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_camera_flange_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_end_effector_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_arm_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link6:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link7:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_flange_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_flange_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_gripper_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l4_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l5_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r4_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r5_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_tcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        torso_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        torso_head_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        torso_left_arm_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        torso_right_arm_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wheel_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wheel_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wheel_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wheel_4:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -266,6 +443,339 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        chassis_lidar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_arm_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_arm_camera_flange_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_arm_end_effector_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_arm_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_arm_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_arm_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_arm_link4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_arm_link5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_arm_link6:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_arm_link7:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_flange_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_flange_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_gripper_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_l1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_l2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_l3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_l4_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_l5_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_r1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_r2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_r3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_r4_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_r5_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_tcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        leg_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        leg_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        leg_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        leg_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        leg_link4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        leg_torso_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        omni_chassis_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        omni_chassis_leg_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_arm_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_camera_flange_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_end_effector_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_arm_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link6:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm_link7:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_flange_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_flange_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_gripper_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l4_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_l5_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r4_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_r5_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_tcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        torso_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        torso_head_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        torso_left_arm_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        torso_right_arm_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wheel_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wheel_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wheel_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wheel_4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Mass Properties:
         Inertia: false
         Mass: false
@@ -290,8 +800,7 @@ Visualization Manager:
       Enabled: true
       Name: MarkerArray
       Namespaces:
-        Left Arm Trajectory: true
-        Right Arm Trajectory: true
+        {}
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -410,14 +919,14 @@ Window Geometry:
     collapsed: false
   GripperControlPanel:
     collapsed: false
-  Height: 749
+  Height: 1295
   Hide Left Dock: false
   Hide Right Dock: false
   JointControlPanel:
     collapsed: false
   OCS2FSMPanel:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000001560000024bfc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005d00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003f00000135000000cc00fffffffb00000018004f00430053003200460053004d00500061006e0065006c010000017a0000009d0000007700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000002600470072006900700070006500720043006f006e00740072006f006c00500061006e0065006c010000021d0000006d0000006d00ffffff000000010000010f000002b0fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d000002b0000000a900fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000056e0000003efc0100000002fb0000000800540069006d006501000000000000056e0000026f00fffffffb0000000800540069006d00650100000000000004500000000000000000000004120000024b00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000028900000405fc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b000000b200fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000070000001dd0000018600fffffffb00000018004f00430053003200460053004d00500061006e0065006c010000025900000135000000fd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000002600470072006900700070006500720043006f006e00740072006f006c00500061006e0065006c010000039a000000db000000b300ffffff00000001000001b000000405fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fc0000007000000405000001740100003bfa000000000100000002fb00000022004a006f0069006e00740043006f006e00740072006f006c00500061006e0065006c0100000000ffffffff000001b000fffffffb0000000a0056006900650077007301000004110000015d0000015d00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000056e0000005efc0100000002fb0000000800540069006d006501000000000000056e0000047a00fffffffb0000000800540069006d006501000000000000045000000000000000000000011d0000040500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -425,7 +934,7 @@ Window Geometry:
   Tool Properties:
     collapsed: false
   Views:
-    collapsed: true
+    collapsed: false
   Width: 1390
   X: 211
-  Y: 109
+  Y: 64

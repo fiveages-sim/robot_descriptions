@@ -23,8 +23,9 @@
         </geometry>
       </visual>
       <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/chassis/omni_chassis_base_link_convex.stl"/>
+          <box size="0.40 0.40 0.20"/>
         </geometry>
       </collision>
     </link>

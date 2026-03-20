@@ -43,15 +43,9 @@
     <visual>
       <origin/>
       <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_base_link.stl"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_base.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <origin  />
-      <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_base_link_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <link name="leg_link1">
     <inertial>
@@ -65,12 +59,6 @@
         <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link1.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <origin  />
-      <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link1_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <joint name="leg_joint1" type="revolute">
     <origin rpy="-3.141592653589793 0 2.756573021" xyz="0 0 -0.087"/>
@@ -91,12 +79,6 @@
         <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link2.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <origin  />
-      <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link2_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <joint name="leg_joint2" type="revolute">
     <origin rpy="-3.141592653589793 0 2.756573021" xyz="0.45 0 0"/>
@@ -117,12 +99,6 @@
         <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link3.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <origin  />
-      <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link3_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <joint name="leg_joint3" type="revolute">
     <origin rpy="-3.141592653589793 0 -3.141592653589793" xyz="0.39 0 0"/>
@@ -143,12 +119,6 @@
         <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link4.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <origin  />
-      <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link4_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <joint name="leg_joint4" type="revolute">
     <origin rpy="${PI/2} 0 -3.141592653589793" />
@@ -211,15 +181,9 @@
     <visual>
       <origin/>
       <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/head/head_base_link.stl"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/head/head_base.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <origin  />
-      <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/head/head_base_link_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <link name="head_link1">
     <inertial>
@@ -233,12 +197,6 @@
         <mesh filename="file://$(find galbot_one_description)/meshes/head/head_link1.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <origin  />
-      <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/head/head_link1_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <joint name="head_joint1" type="revolute">
     <origin  xyz="0 0 0.068"/>
@@ -259,12 +217,6 @@
         <mesh filename="file://$(find galbot_one_description)/meshes/head/base1.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <origin  />
-      <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/head/head_link2_convex.stl"/>
-      </geometry>
-    </collision>
   </link>
   <joint name="head_joint2" type="revolute">
     <origin rpy="${-PI/2} 0 0" />

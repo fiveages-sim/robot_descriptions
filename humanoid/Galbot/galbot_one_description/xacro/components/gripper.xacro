@@ -3,7 +3,7 @@
   <xacro:property name="PI" value="3.141592653589793"/>
 
   <!-- mount_rpy defines gripper_base_link frame orientation relative to flange_mount_link. -->
-  <xacro:macro name="Gripper" params="name mount_rpy:='${PI/2}  0  0'">
+  <xacro:macro name="Gripper" params="name mount_rpy:='${PI/2}  ${PI/2}  0'">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
     <!-- Mount gripper on flange (fixed) -->
@@ -44,7 +44,7 @@
         </geometry>
       </visual>
     </link>
-    <!-- Main driven finger joint (shows in joint_state_publisher as gripper_joint) -->
+    <!-- Main driven finger joint (Astribot-style: *_gripper_joint) -->
     <joint name="${prefix}gripper_joint" type="revolute">
       <origin xyz="-0.121835 0 0.02"/>
       <parent link="${prefix}gripper_base_link"/>

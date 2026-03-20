@@ -21,7 +21,7 @@ model_information {
     [15] "right_gripper_r1_joint"
     [16] "right_gripper_r2_joint"
     [17] "right_gripper_r3_joint"
-  
+
   }
 
   baseFrame                       "base_link"
@@ -203,6 +203,18 @@ finalEndEffector
   }
 }
 
+bodyRelative
+{
+  activate                   true
+  bodyLinkName               "torso_base_link"
+  rollTolerance              0.1
+  pitchTolerance             0.1
+  muRoll                     20.0
+  muPitch                    20.0
+  muPositionX                0.0
+  muPositionY                0.0
+}
+
 selfCollision
 {
   ; activate self-collision constraint
@@ -211,25 +223,6 @@ selfCollision
   ; Self Collision raw object pairs
   collisionObjectPairs
   {
-      [0] "36, 15",
-      [1] "37, 16",
-      [2] "38, 17",
-      [3] "39, 18",
-      [4] "41, 20",
-      [5] "34, 6",
-      [6] "35, 6",
-      [7] "36, 6",
-      [8] "37, 6",
-      [9] "38, 6",
-      [10] "13, 6",
-      [11] "14, 6",
-      [12] "15, 6",
-      [13] "16, 6",
-      [14] "17, 6",
-      [15] "35, 4",
-      [16] "36, 4",
-      [17] "14, 4",
-      [18] "15, 4",
   }
 
   ; Self Collision pairs
@@ -237,20 +230,24 @@ selfCollision
   {
 
 
-
-
-
-
-
-
+    [0] "right_arm_link3, torso_base_link",
+    [1] "right_arm_link4, torso_base_link",A
+    [2] "right_arm_link5, torso_base_link",
+    [3] "right_arm_link6, torso_base_link",
+    [4] "right_arm_link7, torso_base_link",
+    [5] "left_arm_link3, torso_base_link",
+    [6] "left_arm_link4, torso_base_link",
+    [7] "left_arm_link5, torso_base_link",
+    [8] "left_arm_link6, torso_base_link",
+    [9] "left_arm_link7, torso_base_link",
 
   }
 
   ; minimum distance allowed between the pairs [m]
-  minimumDistance  0.01
+  minimumDistance  0.02
 
   ; activation distance: penalty only active when distance < this value [m]
-  activationDistance  0.2
+  activationDistance  0.1
 
   ; relaxed log barrier mu
   mu      1e-2

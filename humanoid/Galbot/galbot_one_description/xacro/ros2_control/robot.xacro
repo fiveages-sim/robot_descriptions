@@ -24,24 +24,19 @@
 #
 #####################################################################################
 -->
-<robot name="galbot_one" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="galbot_one_ros2_control" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="gripper"/>
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
   <xacro:property name="ros2_control_config_basename" value="ros2_controllers.yaml"/>
-  <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/chassis.xacro"/>
-  <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/torso.xacro"/>
-  
-  
-  <!-- ROBOT -->
-  <!-- Robot Base Link -->
-  
-  <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/leg.xacro"/>
-  <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/head.xacro"/>
-  <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/gripper.xacro"/>
-  
-  
-  <!-- Head Mount -->
-  
-    <!-- Right Arm Mount -->
-  <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/arm.xacro"/>
+
+  <!-- Geometry/kinematics come from main robot xacro -->
+  <xacro:include filename="$(find galbot_one_description)/xacro/robot.xacro"/>
+
+  <!-- ros2_control interfaces (Astribot-style split) -->
+  <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/galbot_one_base_interfaces.xacro"/>
+  <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/galbot_one_arm_interfaces.xacro"/>
+  <xacro:include filename="$(find galbot_one_description)/xacro/ros2_control/galbot_one_gripper_interfaces.xacro"/>
+
   <ros2_control name="galbot_one_system" type="system">
     <hardware>
       <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'gz'}">
@@ -57,140 +52,14 @@
       </xacro:if>
     </hardware>
 
-    <joint name="leg_joint1"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="leg_joint2"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="leg_joint3"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="leg_joint4"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
+    <xacro:galbot_one_base_interfaces/>
+    <xacro:galbot_one_arm_interfaces name="left"/>
+    <xacro:galbot_one_arm_interfaces name="right"/>
 
-    <joint name="left_arm_joint1"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="left_arm_joint2"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="left_arm_joint3"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="left_arm_joint4"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="left_arm_joint5"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="left_arm_joint6"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="left_arm_joint7"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-
-    <joint name="right_arm_joint1"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="right_arm_joint2"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="right_arm_joint3"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="right_arm_joint4"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="right_arm_joint5"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="right_arm_joint6"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="right_arm_joint7"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-
-    <joint name="head_joint1"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-    <joint name="head_joint2"><command_interface name="position"/><state_interface name="position"/><state_interface name="velocity"/></joint>
-
-    <!-- Gripper joints -->
-      <joint name="left_gripper_l1_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="left_gripper_l2_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="left_gripper_l3_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="left_gripper_r1_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="left_gripper_r2_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="left_gripper_r3_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="right_gripper_l1_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="right_gripper_l2_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="right_gripper_l3_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="right_gripper_r1_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="right_gripper_r2_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-      <joint name="right_gripper_r3_joint">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-        <state_interface name="velocity">
-          <param name="initial_value">0.0</param>
-        </state_interface>
-      </joint>
-    
+    <xacro:if value="${'$(arg type)' == 'gripper'}">
+      <xacro:galbot_one_gripper_interfaces name="left"/>
+      <xacro:galbot_one_gripper_interfaces name="right"/>
+    </xacro:if>
   </ros2_control>
 
   <xacro:arg name="gazebo" default="false"/>
