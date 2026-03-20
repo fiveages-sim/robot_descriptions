@@ -41,7 +41,7 @@
     <visual>
       <origin />
       <geometry>
-        <mesh filename="file:///home/king/ros2_ws/install/galbot_one_description/share/galbot_one_description/meshes/leg/leg_base_link.stl" />
+        <mesh filename="file:///home/king/ros2_ws/install/galbot_one_description/share/galbot_one_description/meshes/leg/leg_base.glb" />
       </geometry>
     </visual>
     </link>
@@ -188,7 +188,7 @@
     <visual>
       <origin />
       <geometry>
-        <mesh filename="file:///home/king/ros2_ws/install/galbot_one_description/share/galbot_one_description/meshes/head/head_link1.stl" />
+        <mesh filename="file:///home/king/ros2_ws/install/galbot_one_description/share/galbot_one_description/meshes/head/head_link1.glb" />
       </geometry>
     </visual>
     </link>
@@ -208,7 +208,7 @@
     <visual>
       <origin />
       <geometry>
-        <mesh filename="file:///home/king/ros2_ws/install/galbot_one_description/share/galbot_one_description/meshes/head/base1.glb" />
+        <mesh filename="file:///home/king/ros2_ws/install/galbot_one_description/share/galbot_one_description/meshes/head/head_link2.glb" />
       </geometry>
     </visual>
     </link>

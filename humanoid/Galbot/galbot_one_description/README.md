@@ -2,7 +2,7 @@
 
 This package contains URDF/Xacro/config files for Galbot One, aligned with the workspace conventions used by `robot_common_launch` and `ocs2_arm_controller`.
 
-![galbot_one.png](../../.images/galbot_one.png)![galbot_one.png](../galbot_one.png)
+![galbot_one.png](../../.images/galbot_one.png)
 ## Build
 
 ```bash

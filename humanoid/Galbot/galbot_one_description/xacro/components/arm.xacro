@@ -14,7 +14,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/base.glb" scale ="1 -1 1"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/base.glb" scale ="1 -1 1"/>
       </geometry>
       
     </visual>
@@ -29,7 +29,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link1.glb" scale="1 -1 1"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link1.glb" scale="1 -1 1"/>
       </geometry>
       
     </visual>
@@ -51,7 +51,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link2.glb" scale="-1 1 1"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link2.glb" scale="-1 1 1"/>
       </geometry>
       
     </visual>
@@ -78,7 +78,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link3.glb" scale="1 -1 1"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link3.glb" scale="1 -1 1"/>
       </geometry>
       
     </visual>
@@ -105,7 +105,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link4.glb" scale="1 -1 1"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link4.glb" scale="1 -1 1"/>
       </geometry>
       
     </visual>
@@ -132,7 +132,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link5.glb" />
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link5.glb" />
       </geometry>
       
     </visual>
@@ -159,7 +159,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link6.glb" />
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link6.glb" />
       </geometry>
       
     </visual>
@@ -186,7 +186,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link7.glb" />
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link7.glb" />
       </geometry>
       
     </visual>
@@ -225,7 +225,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/flange/flange.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/flange/flange.glb"/>
       </geometry>
       
     </visual>
@@ -251,7 +251,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/camera/arm_camera.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/camera/arm_camera.glb"/>
       </geometry>
       
     </visual>
@@ -271,7 +271,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/base.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/base.glb"/>
       </geometry>
       
     </visual>
@@ -289,9 +289,9 @@
       <inertia ixx="0.0014148" ixy="1.786E-06" ixz="8.6353E-07" iyy="0.001774" iyz="-5.8604E-06" izz="0.0011021"/>
     </inertial>
     <visual>
-      
+      <origin rpy="0 0 3.14" />
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link1.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link1.glb"/>
       </geometry>
       
     </visual>
@@ -318,7 +318,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link2.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link2.glb"/>
       </geometry>
       
     </visual>
@@ -345,7 +345,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link3.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link3.glb"/>
       </geometry>
       
     </visual>
@@ -372,7 +372,7 @@
     <visual>
       <origin rpy="0 0 3.14" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link4.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link4.glb"/>
       </geometry>
       
     </visual>
@@ -399,7 +399,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link5.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link5.glb"/>
       </geometry>
       
     </visual>S
@@ -426,7 +426,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link6.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link6.glb"/>
       </geometry>
       
     </visual>
@@ -453,7 +453,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/arm/left_arm_link7.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/arm/left_arm_link7.glb"/>
       </geometry>
       
     </visual>
@@ -492,7 +492,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/flange/flange.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/flange/flange.glb"/>
       </geometry>
       
     </visual>
@@ -518,7 +518,7 @@
     <visual>
       
       <geometry>
-        <mesh filename="package://galbot_one_description/meshes/camera/arm_camera.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/camera/arm_camera.glb"/>
       </geometry>
       
     </visual>

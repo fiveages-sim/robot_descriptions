@@ -19,7 +19,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/chassis/chassis.glb"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/chassis/chassis.glb"/>
         </geometry>
       </visual>
       <collision>

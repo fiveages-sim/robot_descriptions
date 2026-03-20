@@ -21,7 +21,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/base.glb"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/base.glb"/>
         </geometry>
       </visual>
       <collision>
@@ -40,7 +40,7 @@
       <visual>
 
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link1.glb"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link1.glb"/>
         </geometry>
       </visual>
     </link>
@@ -62,7 +62,7 @@
       <visual>
 
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link2.glb"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link2.glb"/>
         </geometry>
       </visual>
     </link>
@@ -84,7 +84,7 @@
       <visual>
 
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link3.glb"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link3.glb"/>
         </geometry>
       </visual>
     </link>
@@ -105,7 +105,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link4.glb"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link4.glb"/>
         </geometry>
       </visual>
     </link>
@@ -123,7 +123,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link5.glb"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link5.glb"/>
         </geometry>
       </visual>
     </link>
@@ -142,7 +142,7 @@
       <visual>
 
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link1.glb" scale="1 1 -1"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link1.glb" scale="1 1 -1"/>
         </geometry>
       </visual>
     </link>
@@ -164,7 +164,7 @@
       <visual>
 
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link2.glb" scale="1 1 -1"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link2.glb" scale="1 1 -1"/>
         </geometry>
       </visual>
     </link>
@@ -186,7 +186,7 @@
       <visual>
 
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link3.glb" scale="1 1 -1"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link3.glb" scale="1 1 -1"/>
         </geometry>
       </visual>
     </link>
@@ -208,7 +208,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link4.glb" scale="1 1 -1"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link4.glb" scale="1 1 -1"/>
         </geometry>
       </visual>
     </link>
@@ -226,7 +226,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://galbot_one_description/meshes/gripper_hitbot/link5.glb" scale="1 1 -1"/>
+          <mesh filename="file://$(find galbot_one_description)/meshes/gripper_hitbot/link5.glb" scale="1 1 -1"/>
         </geometry>
       </visual>
     </link>

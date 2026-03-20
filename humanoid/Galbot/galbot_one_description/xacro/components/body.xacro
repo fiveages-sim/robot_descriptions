@@ -214,7 +214,7 @@
     <visual>
       <origin/>
       <geometry>
-        <mesh filename="file://$(find galbot_one_description)/meshes/head/base1.glb"/>
+        <mesh filename="file://$(find galbot_one_description)/meshes/head/head_link2.glb"/>
       </geometry>
     </visual>
   </link>
