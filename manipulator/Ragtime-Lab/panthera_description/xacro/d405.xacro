@@ -6,7 +6,7 @@
     <link name="${prefix}camera_support">
       <visual>
         <geometry>
-          <mesh filename="file://$(find arx5_description)/meshes/camera_support.obj"/>
+          <mesh filename="file://$(find arx5_description)/meshes/camera_stand/stand_d405.glb"/>
         </geometry>
       </visual>
     </link>
@@ -20,13 +20,13 @@
     <link name="${prefix}camera">
       <visual>
         <geometry>
-          <mesh filename="file://$(find arx5_description)/meshes/d405.obj"/>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d405.glb"/>
         </geometry>
       </visual>
     </link>
 
     <joint name="${prefix}camera_fixed" type="fixed">
-      <origin xyz="0.0385 0 0.0475" rpy="0 0.523 0"/>
+      <origin xyz="0.0385 0 0.0475" rpy="-2.093 0 -1.5708"/>
       <parent link="${prefix}camera_support"/>
       <child link="${prefix}camera"/>
     </joint>

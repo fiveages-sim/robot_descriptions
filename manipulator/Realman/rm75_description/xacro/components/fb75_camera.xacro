@@ -5,6 +5,12 @@
 		<xacro:property name="mount_link" value="${prefix + 'fb75_ee' if with_fb75_ee_bool else parent_link}"/>
 
 		<xacro:if value="${with_fb75_ee_bool}">
+			<inertial>
+				<origin xyz="0.0 0.0 -0.0171573759779855"/>
+				<mass value="0.165822774021484"/>
+				<inertia ixx="4.88486899397696E-05" ixy="-9.4591722796062E-08" ixz="3.0611887075293E-07"
+								 iyy="4.94603620572993E-05" iyz="8.02154219939052E-09" izz="7.6901626133018E-05"/>
+			</inertial>
 			<link name="${prefix}fb75_ee">
 				<visual>
 					<geometry>
@@ -47,7 +53,7 @@
 		</link>
 
 		<joint name="${prefix}camera_joint" type="fixed">
-			<origin xyz="-0.10022 0.008 0.029031" rpy="0 -1.5708 -1.5708"/>
+			<origin xyz="-0.10022 0.008 0.029031" rpy="0 0 3.1415926535"/>
 			<parent link="${prefix}camera_stand"/>
 			<child link="${prefix}camera"/>
 		</joint>

@@ -30,13 +30,13 @@
 		<link name="${prefix}camera">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find sensor_models)/meshes/d405/d405.obj"/>
+					<mesh filename="file://$(find sensor_models)/meshes/realsense/d405.glb"/>
 				</geometry>
 			</visual>
 		</link>
 
 		<joint name="${prefix}camera_joint" type="fixed">
-			<origin rpy="0 ${-PI/2} ${PI/2}" xyz="0.008996 0 0"/>
+			<origin xyz="0.008996 0 0"/>
 			<parent link="${prefix}camera_stand"/>
 			<child link="${prefix}camera"/>
 		</joint>

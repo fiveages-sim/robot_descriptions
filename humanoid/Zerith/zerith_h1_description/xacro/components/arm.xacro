@@ -296,14 +296,13 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find sensor_models)/meshes/d405/d405.obj"/>
+					<mesh filename="file://$(find sensor_models)/meshes/realsense/d405.glb"/>
 				</geometry>
-				<origin xyz="0.009 0 0.00377" rpy="1.5708 -1.5708 0"/>
 			</visual>
 		</link>
 
 		<joint name="${prefix}jaw_camera_joint" type="fixed">
-			<origin xyz="0.11933 0.009 0.060373" rpy="-2.0071 0 -1.5708"/>
+			<origin xyz="0.12275 0.000 0.05878" rpy="-2.0071 0 -1.5708"/>
 			<parent link="${prefix}wrist_pitch_link"/>
 			<child link="${prefix}jaw_camera_link"/>
 		</joint>

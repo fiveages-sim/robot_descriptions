@@ -17,7 +17,7 @@
 		</link>
 
 		<joint name="${prefix}camera_joint" type="fixed">
-			<origin xyz="0 -0.079320 0.108617" rpy="0 -1.117 1.5708"/>
+			<origin xyz="0 -0.079320 0.108617" rpy="-0.4538 0 0"/>
 			<parent link="${prefix}camera_stand"/>
 			<child link="${prefix}camera"/>
 		</joint>
@@ -26,7 +26,7 @@
 		<link name="${prefix}camera">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find sensor_models)/meshes/d405/d405.obj"/>
+					<mesh filename="file://$(find sensor_models)/meshes/realsense/d405.glb"/>
 				</geometry>
 			</visual>
 		</link>
