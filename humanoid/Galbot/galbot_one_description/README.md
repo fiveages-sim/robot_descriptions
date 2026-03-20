@@ -63,3 +63,7 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller full_body.launch.py \
   robot:=galbot_one 
 ```
+
+https://github.com/user-attachments/assets/2948099b-ac18-473c-8201-79c42028e2c4
+
+
