@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Galbot One gripper interfaces (current single configuration) -->
+  <xacro:macro name="galbot_one_gripper_interfaces" params="name">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <!-- Main driven joint (Astribot-style: *_gripper_joint) -->
+    <joint name="${prefix}gripper_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"><param name="initial_value">0.0</param></state_interface>
+    </joint>
+
+    <!-- Other finger joints are mimic joints in URDF: do NOT expose command interfaces -->
+    <joint name="${prefix}gripper_l2_joint"><state_interface name="position"/><state_interface name="velocity"/></joint>
+    <joint name="${prefix}gripper_l3_joint"><state_interface name="position"/><state_interface name="velocity"/></joint>
+    <joint name="${prefix}gripper_r1_joint"><state_interface name="position"/><state_interface name="velocity"/></joint>
+    <joint name="${prefix}gripper_r2_joint"><state_interface name="position"/><state_interface name="velocity"/></joint>
+    <joint name="${prefix}gripper_r3_joint"><state_interface name="position"/><state_interface name="velocity"/></joint>
+  </xacro:macro>
+
+</robot>
+

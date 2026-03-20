@@ -25,7 +25,7 @@ colcon build --packages-up-to astribot_s1_description --symlink-install
 * Robot with BrainCo Revo2 hand
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch manipulator.launch.py robot:=astribot_s1 type:=revo2
+  ros2 launch robot_common_launch manipulator.launch.py robot:=astribot_s1 type:=
   ```
   ![S1 revo2](../../.images/astribot_s1_revo2.png)
 

@@ -1,0 +1,228 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.141592653589793"/>
+
+  <link name="torso_base_link">
+    <inertial>
+      <origin  xyz="0.009452 -0.0097068 -0.041989"/>
+      <mass value="1.5697"/>
+      <inertia ixx="0.018397" ixy="-6.5897E-07" ixz="0.00030036" iyy="0.013058" iyz="0.00016843" izz="0.0082332"/>
+    </inertial>
+    <visual>
+      <origin/>
+      <geometry>
+        <mesh filename="file://$(find galbot_one_description)/meshes/torso/torso_base_link.glb"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin  xyz="0 0 0.3035"/>
+      <geometry>
+        <box size="0.232789 0.271990 0.248400"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin  xyz="0 0 0.0965"/>
+      <geometry>
+        <box size="0.155192 0.181326 0.165600"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- omni_chassis_leg_mount_link and its joint come from chassis.xacro -->
+  <joint name="leg_joint" type="fixed">
+    <origin rpy="1.57 0 0" />
+    <parent link="omni_chassis_leg_mount_link"/>
+    <child link="leg_base_link"/>
+  </joint>
+  <link name="leg_base_link">
+    <inertial>
+      <origin  xyz="0.0027248 -0.094364 -0.050137"/>
+      <mass value="0.91885"/>
+      <inertia ixx="0.0043203" ixy="6.1508E-05" ixz="8.9569E-05" iyy="0.0039878" iyz="-0.0010684" izz="0.0027984"/>
+    </inertial>
+    <visual>
+      <origin/>
+      <geometry>
+        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_base.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="leg_link1">
+    <inertial>
+      <origin  xyz="0.23294 -0.0052987 0.0039698"/>
+      <mass value="4.7692"/>
+      <inertia ixx="0.019082" ixy="-0.0011116" ixz="0.00034191" iyy="0.16145" iyz="-6.2146E-05" izz="0.15826"/>
+    </inertial>
+    <visual>
+      <origin/>
+      <geometry>
+        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link1.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="leg_joint1" type="revolute">
+    <origin rpy="-3.141592653589793 0 2.756573021" xyz="0 0 -0.087"/>
+    <parent link="leg_base_link"/>
+    <child link="leg_link1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="169" lower="0" upper="0.994837674" velocity="2.3"/>
+  </joint>
+  <link name="leg_link2">
+    <inertial>
+      <origin  xyz="0.19637 2.4915E-06 0.0034234"/>
+      <mass value="3.6233"/>
+      <inertia ixx="0.0054462" ixy="-2.1435E-06" ixz="-2.9611E-05" iyy="0.066819" iyz="5.2347E-08" izz="0.071791"/>
+    </inertial>
+    <visual>
+      <origin/>
+      <geometry>
+        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link2.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="leg_joint2" type="revolute">
+    <origin rpy="-3.141592653589793 0 2.756573021" xyz="0.45 0 0"/>
+    <parent link="leg_link1"/>
+    <child link="leg_link2"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="169" lower="0" upper="3.141592654" velocity="2.3"/>
+  </joint>
+  <link name="leg_link3">
+    <inertial>
+      <origin  xyz="-1.1016E-05 0.012237 0.0042074"/>
+      <mass value="1.7624"/>
+      <inertia ixx="0.006745" ixy="-4.1776E-07" ixz="8.7932E-07" iyy="0.0066437" iyz="9.063E-05" izz="0.0073862"/>
+    </inertial>
+    <visual>
+      <origin/>
+      <geometry>
+        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link3.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="leg_joint3" type="revolute">
+    <origin rpy="-3.141592653589793 0 -3.141592653589793" xyz="0.39 0 0"/>
+    <parent link="leg_link2"/>
+    <child link="leg_link3"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="84" lower="0" upper="2.35619449" velocity="2.83"/>
+  </joint>
+  <link name="leg_link4">
+    <inertial>
+      <origin  xyz="5.7927E-05 -3.0701E-05 0.15111"/>
+      <mass value="0.37584"/>
+      <inertia ixx="0.00049514" ixy="-3.0213E-07" ixz="-3.9055E-09" iyy="0.00051468" iyz="1.3486E-09" izz="0.00084078"/>
+    </inertial>
+    <visual>
+      <origin/>
+      <geometry>
+        <mesh filename="file://$(find galbot_one_description)/meshes/leg/leg_link4.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="leg_joint4" type="revolute">
+    <origin rpy="${PI/2} 0 -3.141592653589793" />
+    <parent link="leg_link3"/>
+    <child link="leg_link4"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="30" lower="${-PI/2}" upper="${PI/2}" velocity="3.56"/>
+  </joint>
+  <link name="leg_torso_mount_link"/>
+  <joint name="leg_torso_mount_joint" type="fixed">
+    <origin  />
+    <parent link="leg_link4"/>
+    <child link="leg_torso_mount_link"/>
+    <axis />
+  </joint>
+  <joint name="torso_joint" type="fixed">
+    <origin  />
+    <parent link="leg_torso_mount_link"/>
+    <child link="torso_base_link"/>
+  </joint>
+
+  <!-- Head mount -->
+  <link name="torso_head_mount_link"/>
+  <joint name="torso_head_mount_joint" type="fixed">
+    <origin xyz="-0.0081669 5E-05 0.51594"/>
+    <parent link="torso_base_link"/>
+    <child link="torso_head_mount_link"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+  <!-- Right arm mount (matches ros2_control/arm.xacro and component.xacro) -->
+  <link name="torso_right_arm_mount_link"/>
+  <joint name="torso_right_arm_mount_joint" type="fixed">
+    <origin rpy="1.5707963267948966 0 0" xyz="0 -0.13 0.39599"/>
+    <parent link="torso_base_link"/>
+    <child link="torso_right_arm_mount_link"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+  <!-- Left arm mount -->
+  <link name="torso_left_arm_mount_link"/>
+  <joint name="torso_left_arm_mount_joint" type="fixed">
+    <origin rpy="1.5707963267948966 0 3.141592653589793" xyz="0 0.13 0.39599"/>
+    <parent link="torso_base_link"/>
+    <child link="torso_left_arm_mount_link"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+  <joint name="head_joint" type="fixed">
+    <origin  />
+    <parent link="torso_head_mount_link"/>
+    <child link="head_base_link"/>
+  </joint>
+  <link name="head_base_link">
+    <inertial>
+      <origin  xyz="0.009452 -0.0097068 -0.16194"/>
+      <mass value="1.5697"/>
+      <inertia ixx="0.018397" ixy="-6.5897E-07" ixz="0.00030036" iyy="0.013058" iyz="0.00016843" izz="0.0082332"/>
+    </inertial>
+    <visual>
+      <origin/>
+      <geometry>
+        <mesh filename="file://$(find galbot_one_description)/meshes/head/head_base.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="head_link1">
+    <inertial>
+      <origin  xyz="0 0.020487 -0.038531"/>
+      <mass value="0.067654"/>
+      <inertia ixx="6.0514E-05" ixy="9.335E-21" ixz="-2.5793E-20" iyy="6.6478E-05" iyz="-1.3077E-05" izz="2.4032E-05"/>
+    </inertial>
+    <visual>
+      <origin/>
+      <geometry>
+        <mesh filename="file://$(find galbot_one_description)/meshes/head/head_link1.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="head_joint1" type="revolute">
+    <origin  xyz="0 0 0.068"/>
+    <parent link="head_base_link"/>
+    <child link="head_link1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="4" lower="${-PI/2}" upper="${PI/2}" velocity="8.38"/>
+  </joint>
+  <link name="head_link2">
+    <inertial>
+      <origin  xyz="0.024473 -0.053558 0.0026343"/>
+      <mass value="0.34019"/>
+      <inertia ixx="0.0011508" ixy="-0.00026177" ixz="-4.0924E-07" iyy="0.00085046" iyz="1.4953E-08" izz="0.0010147"/>
+    </inertial>
+    <visual>
+      <origin/>
+      <geometry>
+        <mesh filename="file://$(find galbot_one_description)/meshes/head/head_link2.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="head_joint2" type="revolute">
+    <origin rpy="${-PI/2} 0 0" />
+    <parent link="head_link1"/>
+    <child link="head_link2"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="4" lower="-0.366519143" upper="0.366519143" velocity="8.38"/>
+  </joint>
+</robot>

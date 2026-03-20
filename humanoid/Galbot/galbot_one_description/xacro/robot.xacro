@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<!-- =================================================================================== -->
+<!-- |    Galbot One main xacro entry                                                 | -->
+<!-- |    Assembles robot from modular components                                     | -->
+<!-- =================================================================================== -->
+<!-- 
+#####################################################################################
+#
+# Copyright (c) 2023-2024 Galbot, Inc. All lefts Reserved.
+#
+# This software contains confidential and proprietary information of Galbot, Inc.
+# ("Confidential Information"). You shall not disclose such Confidential Information
+# and shall use it only in accordance with the terms of the license agreement you
+# entered into with Galbot, Inc.
+#
+# UNAUTHORIZED COPYING, USE, OR DISTRIBUTION OF THIS SOFTWARE, OR ANY PORTION OR
+# DERIVATIVE THEREOF, IS STRICTLY PROHIBITED. IF YOU HAVE RECEIVED THIS SOFTWARE IN
+# ERROR, PLEASE NOTIFY GALBOT, INC. IMMEDIATELY AND DELETE IT FROM YOUR SYSTEM.
+#
+#####################################################################################
+#
+# Description: Xacro file for Galbot One.
+# Author: Herman Ye@Galbot, Yuhao Zeng@Galbot
+#
+#####################################################################################
+-->
+<robot name="galbot_one" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="enable_wheel_joints" default="false"/>
+  <!-- type options:
+       - gripper (default): show both grippers
+       - none: hide grippers (full-body visualization without end-effectors)
+  -->
+  <xacro:arg name="type" default="gripper"/>
+  <xacro:include filename="$(find galbot_one_description)/xacro/components/chassis.xacro"/>
+  <xacro:include filename="$(find galbot_one_description)/xacro/components/body.xacro"/>
+  <xacro:include filename="$(find galbot_one_description)/xacro/components/arm.xacro"/>
+  <xacro:include filename="$(find galbot_one_description)/xacro/components/gripper.xacro"/>
+  <xacro:GalbotOneChassis enable_wheel_joints="$(arg enable_wheel_joints)"/>
+
+  <xacro:if value="${'$(arg type)' == 'gripper'}">
+    <!-- Instantiate both grippers -->
+    <xacro:Gripper name="right"/>
+    <xacro:Gripper name="left"/>
+  </xacro:if>
+</robot>
