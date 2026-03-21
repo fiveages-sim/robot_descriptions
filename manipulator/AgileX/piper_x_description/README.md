@@ -22,11 +22,6 @@ colcon build --packages-up-to piper_x_description --symlink-install
     source ~/ros2_ws/install/setup.bash
     ros2 launch robot_common_launch manipulator.launch.py robot:=piper_x type:="piper_x"
     ```
-* Launch Arm without Cameras and Grippers
-    ```bash
-    source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_common_launch manipulator.launch.py robot:=piper_x type:="piper_x_naked"
-    ```
 
 ## 3. OCS2 Demo
 
