@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="piper_l_system" params="name ros2_control_hardware_type">
+
+        <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+        <ros2_control name="${prefix}piper_l_system" type="system">
+            <hardware>
+                <xacro:if value="${ros2_control_hardware_type == 'gz'}">
+                    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+                </xacro:if>
+                <xacro:if value="${ros2_control_hardware_type == 'mock_components'}">
+                    <plugin>mock_components/GenericSystem</plugin>
+                </xacro:if>
+            </hardware>
+
+            <joint name="${prefix}joint1">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+
+            <joint name="${prefix}joint2">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.25</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+
+            <joint name="${prefix}joint3">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">-0.3</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+
+            <joint name="${prefix}joint4">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+
+            <joint name="${prefix}joint5">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+
+            <joint name="${prefix}joint6">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+
+            <joint name="${prefix}joint7">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+            </joint>
+
+            <joint name="${prefix}joint8">
+                <param name="mimic">${prefix}joint7</param>
+                <param name="multiplier">-1.0</param>
+                <state_interface name="position"/>
+            </joint>
+        </ros2_control>
+    </xacro:macro>
+</robot>

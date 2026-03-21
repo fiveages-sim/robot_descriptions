@@ -1,0 +1,108 @@
+model_information {
+  manipulatorModelType     0      // Default-arm
+
+  removeJoints {
+    [0] "joint7"
+    [1] "joint8"
+  }
+
+  baseFrame                       "base_link"
+  eeFrame                         "gripper_center"
+}
+
+model_settings
+{
+  usePreComputation               true
+  recompileLibraries              true
+}
+
+ddp
+{
+  algorithm                       SLQ
+  nThreads                        3
+  maxNumIterations                1
+  timeStep                        1e-3
+  strategy                        LINE_SEARCH
+}
+
+mpc
+{
+  timeHorizon                     1.0
+  mpcDesiredFrequency             100
+  mrtDesiredFrequency             400
+}
+
+initialState
+{
+  arm
+  {
+    (0,0)   0.0     ; joint1
+    (1,0)   0.5     ; joint2
+    (2,0)  -0.35    ; joint3
+    (3,0)   0.0     ; joint4
+    (4,0)   0.0     ; joint5
+    (5,0)   0.0     ; joint6
+  }
+}
+
+inputCost
+{
+  R
+  {
+    arm
+    {
+      scaling 1e-2
+      (0,0)  1.0
+      (1,1)  1.0
+      (2,2)  1.0
+      (3,3)  1.0
+      (4,4)  1.0
+      (5,5)  1.0
+    }
+  }
+}
+
+endEffector
+{
+  muPosition      10.0
+  muOrientation    5.0
+}
+
+jointPositionLimits
+{
+  activate  true
+  mu      0.01
+  delta   1e-3
+}
+
+jointVelocityLimits
+{
+  mu      0.01
+  delta   1e-3
+
+  lowerBound
+  {
+    arm
+    {
+      (0,0)  -3.0
+      (1,0)  -3.0
+      (2,0)  -3.0
+      (3,0)  -3.0
+      (4,0)  -3.0
+      (5,0)  -3.0
+    }
+  }
+
+  upperBound
+  {
+    arm
+    {
+      (0,0)  3.0
+      (1,0)  3.0
+      (2,0)  3.0
+      (3,0)  3.0
+      (4,0)  3.0
+      (5,0)  3.0
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="piper_l" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:arg name="type" default="piper_l_camera"/>
+    <xacro:arg name="prefix" default=""/>
+
+    <xacro:include filename="$(find piper_l_description)/xacro/arm.xacro" />
+
+    <xacro:if value="${'$(arg type)' == 'piper_l_camera'}">
+        <xacro:piper_l prefix="$(arg prefix)" camera="d435"/>
+    </xacro:if>
+
+    <xacro:if value="${'$(arg type)' == 'piper_l'}">
+        <xacro:piper_l prefix="$(arg prefix)" camera="none"/>
+    </xacro:if>
+
+</robot>
