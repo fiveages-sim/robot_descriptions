@@ -12,12 +12,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/base_link.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/base_link.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/base_link.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/base_link.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -31,12 +31,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link1.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link1.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link1.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link1.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -57,12 +57,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link2.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link2.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link2.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link2.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -83,12 +83,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link3.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link3.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link3.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link3.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -109,12 +109,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link4.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link4.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link4.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link4.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -135,12 +135,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link5.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link5.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link5.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link5.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -161,13 +161,13 @@
             <visual>
                 <origin xyz="0.008 -0.002 0.064" rpy="-1.57 0 1.57"/>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/gripper_base_100_v3.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/gripper_base_100_v3.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0.008 -0.002 0.064" rpy="-1.57 0 1.57"/>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/gripper_base_100_v3.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/gripper_base_100_v3.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -182,12 +182,12 @@
         <link name="${prefix}link7">
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link7.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link7.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link7.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link7.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -202,12 +202,12 @@
         <link name="${prefix}link8">
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link8.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link8.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_l_description/meshes/link8.glb"/>
+                    <mesh filename="file://$(find piper_l_description)/meshes/link8.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -225,13 +225,13 @@
                 <visual>
                     <origin rpy="0 0 0" xyz="0 0 0"/>
                     <geometry>
-                        <mesh filename="package://piper_l_description/meshes/realsense_mid_stand_v2.glb"/>
+                        <mesh filename="file://$(find piper_l_description)/meshes/realsense_mid_stand_v2.glb"/>
                     </geometry>
                 </visual>
                 <collision>
                     <origin rpy="0 0 0" xyz="0 0 0"/>
                     <geometry>
-                        <mesh filename="package://piper_l_description/meshes/realsense_mid_stand_v2.glb"/>
+                        <mesh filename="file://$(find piper_l_description)/meshes/realsense_mid_stand_v2.glb"/>
                     </geometry>
                 </collision>
             </link>
@@ -244,7 +244,7 @@
             <link name="${prefix}d435_camera_link">
                 <visual>
                     <geometry>
-                        <mesh filename="package://sensor_models/meshes/d435/d435.obj"/>
+                        <mesh filename="file://$(find sensor_models)/meshes/d435/d435.obj"/>
                     </geometry>
                 </visual>
                 <collision>
