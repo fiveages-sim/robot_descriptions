@@ -13,13 +13,13 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/base_link.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/base_link.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/base_link.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/base_link.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -33,12 +33,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link1.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link1.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link1.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link1.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -59,12 +59,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link2.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link2.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link2.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link2.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -85,12 +85,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link3.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link3.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link3.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link3.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -111,12 +111,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link4.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link4.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link4.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link4.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -137,12 +137,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link5.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link5.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link5.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link5.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -163,13 +163,13 @@
             <visual>
                 <origin xyz="0 0 -0.035" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link6.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link6.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0 0 -0.035" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link6.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link6.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -191,13 +191,15 @@
             <visual>
                 <origin xyz="0.002 0.0078 0.06" rpy="-1.57 0 3.14"/>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/gripper_base_100_v2.glb" scale="0.8 0.8 0.8"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/gripper_base_100_v2.glb"
+                          scale="0.8 0.8 0.8"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0.002 0.0078 0.06" rpy="-1.57 0 3.14"/>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/gripper_base_100_v2.glb" scale="0.8 0.8 0.8"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/gripper_base_100_v2.glb"
+                          scale="0.8 0.8 0.8"/>
                 </geometry>
             </collision>
         </link>
@@ -216,12 +218,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link7.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link7.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link7.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link7.glb"/>
                 </geometry>
             </collision>
         </link>
@@ -242,12 +244,12 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link8.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link8.glb"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://piper_x_description/meshes/link8.glb"/>
+                    <mesh filename="file://$(find piper_x_description)/meshes/link8.glb"/>
                 </geometry>
             </collision>
         </link>

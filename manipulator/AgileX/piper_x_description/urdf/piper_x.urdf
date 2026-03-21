@@ -257,13 +257,13 @@
     <visual name="">
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/shiman-liang/ros2_ws/install/piper_x_description/share/piper_x_description/meshes/realsense_mid_stand.glb"/>
+        <mesh filename="package://piper_x_description/meshes/realsense_mid_stand.glb"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/shiman-liang/ros2_ws/install/piper_x_description/share/piper_x_description/meshes/realsense_mid_stand.glb"/>
+        <mesh filename="package://piper_x_description/meshes/realsense_mid_stand.glb"/>
       </geometry>
     </collision>
   </link>

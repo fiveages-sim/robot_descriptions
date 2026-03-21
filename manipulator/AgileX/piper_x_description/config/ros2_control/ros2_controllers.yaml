@@ -33,9 +33,10 @@ arm_controller:
 
 hand_controller:
   ros__parameters:
-    joint: joint7 # 匹配 piper_x 的主驱动夹爪关节
-    force_feedback_ratio: 1.0
-    force_threshold: 2.0
+    joint: joint7
+    use_effort_interface: false
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
 
 ocs2_arm_controller:
   ros__parameters:
@@ -54,7 +55,7 @@ ocs2_arm_controller:
     state_interfaces:
       - position
 
-    robot_name: piper_x # 变更为 piper_x
+    robot_name: piper_x
     future_time_offset: 2.0
 
     # Control parameters

@@ -69,16 +69,8 @@
                 <command_interface name="position"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
-                <state_interface name="effort"/>
             </joint>
 
-            <joint name="${prefix}joint8">
-                <param name="mimic">${prefix}joint7</param>
-                <param name="multiplier">-1.0</param>
-                <state_interface name="position"/>
-                <state_interface name="velocity"/>
-                <state_interface name="effort"/>
-            </joint>
         </ros2_control>
     </xacro:macro>
 </robot>
