@@ -65,5 +65,5 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=nero
 * Isaac Sim
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=nero hardware:=isaac type:=arm_only
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=nero hardware:=isaac type:=left
   ```
