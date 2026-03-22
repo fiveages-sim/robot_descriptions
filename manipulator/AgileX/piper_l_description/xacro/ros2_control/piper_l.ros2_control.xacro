@@ -12,6 +12,11 @@
                 <xacro:if value="${ros2_control_hardware_type == 'mock_components'}">
                     <plugin>mock_components/GenericSystem</plugin>
                 </xacro:if>
+                <xacro:if value="${ros2_control_hardware_type == 'isaac'}">
+                    <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+                    <param name="joint_commands_topic">/isaac/joint_command</param>
+                    <param name="joint_states_topic">/isaac/joint_states</param>
+                </xacro:if>
             </hardware>
 
             <joint name="${prefix}joint1">
@@ -57,12 +62,7 @@
             <joint name="${prefix}joint7">
                 <command_interface name="position"/>
                 <state_interface name="position"/>
-            </joint>
-
-            <joint name="${prefix}joint8">
-                <param name="mimic">${prefix}joint7</param>
-                <param name="multiplier">-1.0</param>
-                <state_interface name="position"/>
+                <state_interface name="velocity"/>
             </joint>
         </ros2_control>
     </xacro:macro>

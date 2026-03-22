@@ -32,6 +32,7 @@ arm_controller:
 hand_controller:
   ros__parameters:
     joint: joint7
+    use_effort_interface: false
     force_feedback_ratio: 1.0
     force_threshold: 2.0
 
