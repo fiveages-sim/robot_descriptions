@@ -118,7 +118,7 @@ jobs:
       - name: Install system tools
         shell: bash
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           sudo apt-get update
           sudo apt-get install -y curl gnupg lsb-release software-properties-common
@@ -138,15 +138,22 @@ jobs:
             python3-colcon-common-extensions \
             python3-vcstool \
             python3-pip \
+            python3-catkin-pkg-modules \
             fakeroot \
             dpkg-dev \
             rsync \
             build-essential \
             cmake \
+            ros-${{ steps.meta.outputs.ros_distro }}-ament-cmake \
+            ros-${{ steps.meta.outputs.ros_distro }}-ament-cmake-core \
+            ros-${{ steps.meta.outputs.ros_distro }}-ament-package \
             ros-${{ steps.meta.outputs.ros_distro }}-ros-base
 
           sudo rosdep init || true
           rosdep update
+
+          source "/opt/ros/${{ steps.meta.outputs.ros_distro }}/setup.bash"
+          python3 -c "import ament_package; print('ament_package ready:', ament_package.__file__)"
 
       - name: Install common ROS dependencies
         shell: bash
@@ -158,6 +165,10 @@ jobs:
           set +u
           source "/opt/ros/${ROS_DISTRO}/setup.bash"
           set -u
+
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")')/site-packages"
+          export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
+
           rosdep install \
             --from-paths common \
             --ignore-src \
@@ -166,7 +177,7 @@ jobs:
             -r \
             -y
 
-          python3 -c "import ament_package; print('ament_package ready:', ament_package.__file__)"
+          python3 -c "import os, ament_package; print('PYTHONPATH=', os.environ.get('PYTHONPATH', '')); print('ament_package ready:', ament_package.__file__)"
 
       - name: Build common install space
         shell: bash
@@ -178,6 +189,11 @@ jobs:
           set +u
           source "/opt/ros/${ROS_DISTRO}/setup.bash"
           set -u
+
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")')/site-packages"
+          export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
+
+          python3 -c "import os, ament_package; print('Build PYTHONPATH=', os.environ.get('PYTHONPATH', '')); print('ament_package ready:', ament_package.__file__)"
 
           build_root="${RUNNER_TEMP}/colcon-common"
           package_root="${RUNNER_TEMP}/deb-build/package"
