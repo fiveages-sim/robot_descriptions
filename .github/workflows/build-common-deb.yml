@@ -166,7 +166,7 @@ jobs:
           source "/opt/ros/${ROS_DISTRO}/setup.bash"
           set -u
 
-          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")')/site-packages"
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(\"{}.{}\".format(sys.version_info.major, sys.version_info.minor))')/site-packages"
           export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
 
           rosdep install \
@@ -190,7 +190,7 @@ jobs:
           source "/opt/ros/${ROS_DISTRO}/setup.bash"
           set -u
 
-          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")')/site-packages"
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(\"{}.{}\".format(sys.version_info.major, sys.version_info.minor))')/site-packages"
           export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
 
           python3 -c "import os, ament_package; print('Build PYTHONPATH=', os.environ.get('PYTHONPATH', '')); print('ament_package ready:', ament_package.__file__)"
