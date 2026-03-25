@@ -259,4 +259,11 @@ jobs:
           DEB_PATH: ${{ steps.build.outputs.deb_path }}
         run: |
           set -euo pipefail
+
+          if ! gh release view "$TAG" > /dev/null 2>&1; then
+            gh release create "$TAG" \
+              --title "$TAG" \
+              --notes "Automated release for Debian packages."
+          fi
+
           gh release upload "$TAG" "$DEB_PATH" --clobber
