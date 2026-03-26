@@ -1,4 +1,4 @@
-name: Build Common Deb
+name: Build Robots Deb
 
 on:
   push:
@@ -15,18 +15,33 @@ on:
         required: false
         default: jazzy
         type: string
+      ocs2_release_tag:
+        description: Release tag used to fetch the ocs2_ros2 bundle
+        required: false
+        type: string
+      arms_release_tag:
+        description: Release tag used to fetch the arms_ros2_control bundle
+        required: false
+        type: string
 
 permissions:
   contents: write
 
 jobs:
-  build-common-deb:
+  build-robots-deb:
     runs-on: ubuntu-24.04
     env:
-      PACKAGE_NAME: robot-descriptions-jazzy-common
-      DEB_FILE_PREFIX: robot_descriptions_jazzy_common
+      PACKAGE_NAME: robot-descriptions-jazzy-robots
+      DEB_FILE_PREFIX: robot_descriptions_jazzy_robots
+      COMMON_PACKAGE_NAME: robot-descriptions-jazzy-common
+      ARMS_PACKAGE_NAME: arms-ros2-control-jazzy
+      OCS2_PACKAGE_NAME: ocs2-ros2-jazzy-mobile-manipulator
+      ARMS_DEB_FILE_PREFIX: arms_ros2_control_jazzy
+      OCS2_DEB_FILE_PREFIX: ocs2_ros2_jazzy_mobile_manipulator
       INSTALL_PREFIX: /opt/ros/jazzy
       DEFAULT_ROS_DISTRO: jazzy
+      ARMS_RELEASE_REPO: YangLuo-Bionics/arms_ros2_control
+      OCS2_RELEASE_REPO: YangLuo-Bionics/ocs2_ros2
 
     steps:
       - name: Checkout repository
@@ -41,6 +56,8 @@ jobs:
         env:
           INPUT_TAG: ${{ github.event.inputs.tag }}
           INPUT_ROS_DISTRO: ${{ github.event.inputs.ros_distro }}
+          INPUT_OCS2_TAG: ${{ github.event.inputs.ocs2_release_tag }}
+          INPUT_ARMS_TAG: ${{ github.event.inputs.arms_release_tag }}
         run: |
           set -eo pipefail
 
@@ -63,49 +80,72 @@ jobs:
           fi
 
           ros_distro="${INPUT_ROS_DISTRO:-$DEFAULT_ROS_DISTRO}"
+          ocs2_tag="${INPUT_OCS2_TAG:-$tag}"
+          arms_tag="${INPUT_ARMS_TAG:-$tag}"
+
+          ocs2_version="${ocs2_tag#v}"
+          ocs2_version="${ocs2_version#V}"
+          ocs2_version="$(printf '%s' "$ocs2_version" | sed 's/-/~/g')"
+
+          arms_version="${arms_tag#v}"
+          arms_version="${arms_version#V}"
+          arms_version="$(printf '%s' "$arms_version" | sed 's/-/~/g')"
+
           deb_file="${DEB_FILE_PREFIX}_${version}_amd64.deb"
+          ocs2_deb_file="${OCS2_DEB_FILE_PREFIX}_${ocs2_version}_amd64.deb"
+          arms_deb_file="${ARMS_DEB_FILE_PREFIX}_${arms_version}_amd64.deb"
 
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "ros_distro=$ros_distro" >> "$GITHUB_OUTPUT"
           echo "deb_file=$deb_file" >> "$GITHUB_OUTPUT"
+          echo "ocs2_tag=$ocs2_tag" >> "$GITHUB_OUTPUT"
+          echo "ocs2_deb_file=$ocs2_deb_file" >> "$GITHUB_OUTPUT"
+          echo "arms_tag=$arms_tag" >> "$GITHUB_OUTPUT"
+          echo "arms_deb_file=$arms_deb_file" >> "$GITHUB_OUTPUT"
 
-      - name: Initialize common submodule
+      - name: Initialize repository submodules
         shell: bash
         env:
           SUBMODULES_TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
         run: |
           set -eo pipefail
 
-          common_url="$(git config --file .gitmodules --get submodule.common.url)"
-          if [[ -z "$common_url" ]]; then
-            echo "Unable to resolve the common submodule URL." >&2
-            exit 1
+          if [[ ! -f .gitmodules ]]; then
+            exit 0
           fi
 
-          # Support both public submodules and private submodules accessed via PAT.
-          if [[ -n "${SUBMODULES_TOKEN:-}" ]]; then
-            common_url="${common_url/git@github.com:/https://x-access-token:${SUBMODULES_TOKEN}@github.com/}"
-            common_url="${common_url/https:\/\/github.com\//https://x-access-token:${SUBMODULES_TOKEN}@github.com/}"
-          else
-            common_url="${common_url/git@github.com:/https://github.com/}"
-          fi
+          while IFS=$'\t' read -r path url; do
+            [[ -n "${path:-}" ]] || continue
+            resolved_url="$url"
 
-          git submodule set-url common "$common_url"
-          git submodule update --init --depth 1 common
+            if [[ -n "${SUBMODULES_TOKEN:-}" ]]; then
+              resolved_url="${resolved_url/git@github.com:/https://x-access-token:${SUBMODULES_TOKEN}@github.com/}"
+              resolved_url="${resolved_url/https:\/\/github.com\//https://x-access-token:${SUBMODULES_TOKEN}@github.com/}"
+            else
+              resolved_url="${resolved_url/git@github.com:/https://github.com/}"
+            fi
 
-      - name: Validate common payload
+            git submodule set-url "$path" "$resolved_url"
+          done < <(
+            git config --file .gitmodules --get-regexp '^submodule\..*\.path$' \
+              | while read -r key path; do
+                  name="${key#submodule.}"
+                  name="${name%.path}"
+                  url="$(git config --file .gitmodules --get "submodule.${name}.url")"
+                  printf '%s\t%s\n' "$path" "$url"
+                done
+          )
+
+          git submodule update --init --recursive --depth 1
+
+      - name: Validate workspace payload
         shell: bash
         run: |
           set -eo pipefail
 
           if [[ ! -d common ]]; then
             echo "common submodule directory is missing." >&2
-            exit 1
-          fi
-
-          if [[ -z "$(ls -A common)" ]]; then
-            echo "common submodule is empty." >&2
             exit 1
           fi
 
@@ -154,7 +194,51 @@ jobs:
           source "/opt/ros/${{ steps.meta.outputs.ros_distro }}/setup.bash"
           python3 -c "import ament_package; print('ament_package ready:', ament_package.__file__)"
 
-      - name: Install common ROS dependencies
+      - name: Download dependency debs
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OCS2_TAG: ${{ steps.meta.outputs.ocs2_tag }}
+          OCS2_DEB_FILE: ${{ steps.meta.outputs.ocs2_deb_file }}
+          ARMS_TAG: ${{ steps.meta.outputs.arms_tag }}
+          ARMS_DEB_FILE: ${{ steps.meta.outputs.arms_deb_file }}
+        run: |
+          set -eo pipefail
+
+          deps_dir="${RUNNER_TEMP}/dependency-debs"
+          rm -rf "$deps_dir"
+          mkdir -p "$deps_dir"
+
+          gh release download "$OCS2_TAG" \
+            --repo "$OCS2_RELEASE_REPO" \
+            --pattern "$OCS2_DEB_FILE" \
+            --dir "$deps_dir"
+
+          gh release download "$ARMS_TAG" \
+            --repo "$ARMS_RELEASE_REPO" \
+            --pattern "$ARMS_DEB_FILE" \
+            --dir "$deps_dir"
+
+      - name: Install dependency files into ROS prefix
+        shell: bash
+        env:
+          OCS2_DEB_FILE: ${{ steps.meta.outputs.ocs2_deb_file }}
+          ARMS_DEB_FILE: ${{ steps.meta.outputs.arms_deb_file }}
+        run: |
+          set -eo pipefail
+
+          deps_dir="${RUNNER_TEMP}/dependency-debs"
+          extract_root="${RUNNER_TEMP}/dependency-extract"
+          rm -rf "$extract_root"
+          mkdir -p "$extract_root/ocs2" "$extract_root/arms"
+
+          dpkg-deb -x "$deps_dir/$OCS2_DEB_FILE" "$extract_root/ocs2"
+          dpkg-deb -x "$deps_dir/$ARMS_DEB_FILE" "$extract_root/arms"
+
+          sudo rsync -a "$extract_root/ocs2${INSTALL_PREFIX}/" "${INSTALL_PREFIX}/"
+          sudo rsync -a "$extract_root/arms${INSTALL_PREFIX}/" "${INSTALL_PREFIX}/"
+
+      - name: Install external ROS dependencies
         shell: bash
         env:
           ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
@@ -166,16 +250,15 @@ jobs:
           export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
 
           rosdep install \
-            --from-paths common \
+            --from-paths . \
             --ignore-src \
             --rosdistro "${ROS_DISTRO}" \
             --reinstall \
             -r \
-            -y
+            -y \
+            --skip-keys "ocs2_arm_controller basic_joint_controller adaptive_gripper_controller unitree_ros2_control"
 
-          python3 -c "import os, ament_package; print('PYTHONPATH=', os.environ.get('PYTHONPATH', '')); print('ament_package ready:', ament_package.__file__)"
-
-      - name: Build common install space
+      - name: Build common underlay
         shell: bash
         env:
           ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
@@ -186,18 +269,56 @@ jobs:
           ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
           export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
 
-          python3 -c "import os, ament_package; print('Build PYTHONPATH=', os.environ.get('PYTHONPATH', '')); print('ament_package ready:', ament_package.__file__)"
+          underlay_root="${RUNNER_TEMP}/robot-descriptions-common-underlay"
+          rm -rf "$underlay_root"
+          mkdir -p "$underlay_root"
 
-          build_root="${RUNNER_TEMP}/colcon-common"
+          colcon --log-base "${underlay_root}/log" build \
+            --base-paths "${GITHUB_WORKSPACE}/common" \
+            --build-base "${underlay_root}/build" \
+            --install-base "${underlay_root}/install" \
+            --merge-install
+
+          if [[ ! -f "${underlay_root}/install/setup.bash" ]]; then
+            echo "Common underlay setup.bash was not generated." >&2
+            exit 1
+          fi
+
+      - name: Build robots install space
+        shell: bash
+        env:
+          ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
+        run: |
+          set -eo pipefail
+          source "/opt/ros/${ROS_DISTRO}/setup.bash"
+          source "${RUNNER_TEMP}/robot-descriptions-common-underlay/install/setup.bash"
+
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
+          export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
+
+          source_root="${RUNNER_TEMP}/robot-descriptions-robots-src"
+          build_root="${RUNNER_TEMP}/colcon-robots"
           package_root="${RUNNER_TEMP}/deb-build/package"
           install_prefix="${INSTALL_PREFIX}"
           install_root="${package_root}${install_prefix}"
 
-          rm -rf "$build_root" "$package_root"
-          mkdir -p "$build_root" "$package_root"
+          rm -rf "$source_root" "$build_root" "$package_root"
+          mkdir -p "$source_root" "$build_root" "$package_root"
+
+          rsync -a \
+            --exclude ".git/" \
+            --exclude ".github/" \
+            --exclude "common/" \
+            --exclude "humanoid/Unitree/" \
+            "${GITHUB_WORKSPACE}/" "${source_root}/"
+
+          if grep -R --include package.xml -n "<name>robot_common_launch</name>" "${source_root}" > /dev/null 2>&1; then
+            echo "common packages leaked into the robots source tree." >&2
+            exit 1
+          fi
 
           colcon --log-base "${build_root}/log" build \
-            --base-paths "${GITHUB_WORKSPACE}/common" \
+            --base-paths "${source_root}" \
             --build-base "${build_root}/build" \
             --install-base "${install_root}" \
             --merge-install
@@ -237,7 +358,7 @@ PY
             "${install_root}/COLCON_IGNORE"
 
           if [[ ! -d "${install_root}/share/ament_index/resource_index/packages" ]]; then
-            echo "ament index was not generated in the install space." >&2
+            echo "ament index was not generated in the robots install space." >&2
             exit 1
           fi
 
@@ -263,15 +384,15 @@ PY
           Section: misc
           Priority: optional
           Architecture: amd64
-          Depends: ros-${ROS_DISTRO}-ros-base
+          Depends: ros-${ROS_DISTRO}-ros-base, ${COMMON_PACKAGE_NAME}, ${ARMS_PACKAGE_NAME}
           Maintainer: ${GITHUB_REPOSITORY} maintainers <github-actions[bot]@users.noreply.github.com>
           Installed-Size: ${installed_size}
-          Description: Shared robot_descriptions common ROS packages
-           Prebuilt ROS packages from robot_descriptions/common installed into ${INSTALL_PREFIX} while excluding shared prefix setup files.
+          Description: Robot description ROS packages excluding common assets
+           Prebuilt ROS packages from robot_descriptions outside common/, installed into ${INSTALL_PREFIX} while excluding shared prefix setup files.
           EOF
 
-          if [[ ! -d "${package_root}${install_prefix}/share/robot_common_launch" ]]; then
-            echo "robot_common_launch was not installed into the package root." >&2
+          if [[ ! -d "${package_root}${install_prefix}/share" ]]; then
+            echo "No packages were installed into the robots package root." >&2
             exit 1
           fi
 

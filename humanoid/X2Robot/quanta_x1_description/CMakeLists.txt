@@ -4,7 +4,7 @@ project(quanta_x1_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-        DIRECTORY meshes xacro config urdf
+        DIRECTORY xacro urdf meshes
         DESTINATION share/${PROJECT_NAME}/
 )
 
