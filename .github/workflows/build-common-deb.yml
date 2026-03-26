@@ -202,13 +202,9 @@ jobs:
             --install-base "${install_root}" \
             --merge-install
 
-          python3 - "$install_root" "$install_prefix" <<'PY'
-import os
-import sys
-
+          python3 -c 'import os, sys
 install_root = sys.argv[1]
 runtime_prefix = sys.argv[2]
-
 for dirpath, _, filenames in os.walk(install_root):
     for filename in filenames:
         path = os.path.join(dirpath, filename)
@@ -220,8 +216,7 @@ for dirpath, _, filenames in os.walk(install_root):
         if install_root not in content:
             continue
         with open(path, "w", encoding="utf-8") as f:
-            f.write(content.replace(install_root, runtime_prefix))
-PY
+            f.write(content.replace(install_root, runtime_prefix))' "$install_root" "$install_prefix"
 
           rm -f \
             "${install_root}/setup.bash" \
