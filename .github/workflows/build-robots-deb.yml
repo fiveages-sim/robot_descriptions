@@ -32,11 +32,11 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       PACKAGE_NAME: robot-descriptions-jazzy-robots
-      DEB_FILE_PREFIX: robot_descriptions_jazzy_robots
+      DEB_FILE_PREFIX: robot-descriptions-jazzy-robots
       COMMON_PACKAGE_NAME: robot-descriptions-jazzy-common
       ARMS_PACKAGE_NAME: arms-ros2-control-jazzy
       OCS2_PACKAGE_NAME: ocs2-ros2-jazzy-mobile-manipulator
-      ARMS_DEB_FILE_PREFIX: arms_ros2_control_jazzy
+      ARMS_DEB_FILE_PREFIX: arms-ros2-control-jazzy
       OCS2_DEB_FILE_PREFIX: ocs2-ros2-jazzy-mobile-manipulator
       INSTALL_PREFIX: /opt/ros/jazzy
       DEFAULT_ROS_DISTRO: jazzy
