@@ -366,7 +366,7 @@
             <visual>
                 <origin xyz="-0.13322 -0.0005 0.044651" rpy="0 -1.5708 -1.5708"/>
                 <geometry>
-                    <mesh filename="file://$(find sensor_models)/meshes/d405.glb"/>
+                    <mesh filename="file://$(find sensor_models)/meshes/d405/d405.obj"/>
                 </geometry>
             </visual>
         </link>
