@@ -52,6 +52,9 @@ jobs:
             echo "A release tag is required for workflow_dispatch." >&2
             exit 1
           fi
+          if [[ "${tag}" != [vV]* ]]; then
+            tag="v${tag}"
+          fi
 
           version="${tag#v}"
           version="${version#V}"
@@ -208,9 +211,11 @@ jobs:
             "${install_root}/setup.bash" \
             "${install_root}/setup.sh" \
             "${install_root}/setup.zsh" \
+            "${install_root}/setup.ps1" \
             "${install_root}/local_setup.bash" \
             "${install_root}/local_setup.sh" \
             "${install_root}/local_setup.zsh" \
+            "${install_root}/local_setup.ps1" \
             "${install_root}/_local_setup_util.py" \
             "${install_root}/_local_setup_util_sh.py" \
             "${install_root}/_local_setup_util_ps1.py" \

@@ -72,6 +72,10 @@ jobs:
             local resolved_repo=""
             local resolved_tag=""
 
+            if [[ -n "${requested_tag:-}" && "${requested_tag}" != [vV]* ]]; then
+              requested_tag="v${requested_tag}"
+            fi
+
             if [[ -n "${requested_tag:-}" ]]; then
               if gh release view "$requested_tag" --repo "$primary_repo" --json tagName >/dev/null 2>&1; then
                 resolved_repo="$primary_repo"
@@ -108,6 +112,9 @@ jobs:
           else
             echo "A release tag is required for workflow_dispatch." >&2
             exit 1
+          fi
+          if [[ "${tag}" != [vV]* ]]; then
+            tag="v${tag}"
           fi
 
           version="${tag#v}"
@@ -390,9 +397,11 @@ jobs:
             "${install_root}/setup.bash" \
             "${install_root}/setup.sh" \
             "${install_root}/setup.zsh" \
+            "${install_root}/setup.ps1" \
             "${install_root}/local_setup.bash" \
             "${install_root}/local_setup.sh" \
             "${install_root}/local_setup.zsh" \
+            "${install_root}/local_setup.ps1" \
             "${install_root}/_local_setup_util.py" \
             "${install_root}/_local_setup_util_sh.py" \
             "${install_root}/_local_setup_util_ps1.py" \
