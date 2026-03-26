@@ -37,11 +37,13 @@ jobs:
       ARMS_PACKAGE_NAME: arms-ros2-control-jazzy
       OCS2_PACKAGE_NAME: ocs2-ros2-jazzy-mobile-manipulator
       ARMS_DEB_FILE_PREFIX: arms_ros2_control_jazzy
-      OCS2_DEB_FILE_PREFIX: ocs2_ros2_jazzy_mobile_manipulator
+      OCS2_DEB_FILE_PREFIX: ocs2-ros2-jazzy-mobile-manipulator
       INSTALL_PREFIX: /opt/ros/jazzy
       DEFAULT_ROS_DISTRO: jazzy
-      ARMS_RELEASE_REPO: YangLuo-Bionics/arms_ros2_control
-      OCS2_RELEASE_REPO: YangLuo-Bionics/ocs2_ros2
+      PREFERRED_ARMS_RELEASE_REPO: fiveages/arms_ros2_control
+      FALLBACK_ARMS_RELEASE_REPO: YangLuo-Bionics/arms_ros2_control
+      PREFERRED_OCS2_RELEASE_REPO: legubiao/ocs2_ros2
+      FALLBACK_OCS2_RELEASE_REPO: YangLuo-Bionics/ocs2_ros2
 
     steps:
       - name: Checkout repository
@@ -54,12 +56,50 @@ jobs:
         id: meta
         shell: bash
         env:
+          GH_TOKEN: ${{ github.token }}
           INPUT_TAG: ${{ github.event.inputs.tag }}
           INPUT_ROS_DISTRO: ${{ github.event.inputs.ros_distro }}
           INPUT_OCS2_TAG: ${{ github.event.inputs.ocs2_release_tag }}
           INPUT_ARMS_TAG: ${{ github.event.inputs.arms_release_tag }}
         run: |
           set -eo pipefail
+
+          resolve_release_source() {
+            local requested_tag="$1"
+            local primary_repo="$2"
+            local fallback_repo="$3"
+            local dependency_name="$4"
+            local resolved_repo=""
+            local resolved_tag=""
+
+            if [[ -n "${requested_tag:-}" ]]; then
+              if gh release view "$requested_tag" --repo "$primary_repo" --json tagName >/dev/null 2>&1; then
+                resolved_repo="$primary_repo"
+                resolved_tag="$requested_tag"
+              elif gh release view "$requested_tag" --repo "$fallback_repo" --json tagName >/dev/null 2>&1; then
+                resolved_repo="$fallback_repo"
+                resolved_tag="$requested_tag"
+              else
+                echo "Unable to find release tag ${requested_tag} for ${dependency_name} in ${primary_repo} or ${fallback_repo}." >&2
+                exit 1
+              fi
+            else
+              resolved_tag="$(gh release view --repo "$primary_repo" --json tagName --jq .tagName 2>/dev/null || true)"
+              if [[ -n "${resolved_tag}" ]]; then
+                resolved_repo="$primary_repo"
+              else
+                resolved_tag="$(gh release view --repo "$fallback_repo" --json tagName --jq .tagName 2>/dev/null || true)"
+                if [[ -n "${resolved_tag}" ]]; then
+                  resolved_repo="$fallback_repo"
+                else
+                  echo "Unable to find any published release for ${dependency_name} in ${primary_repo} or ${fallback_repo}." >&2
+                  exit 1
+                fi
+              fi
+            fi
+
+            printf '%s\n%s\n' "$resolved_repo" "$resolved_tag"
+          }
 
           if [[ -n "${INPUT_TAG:-}" ]]; then
             tag="$INPUT_TAG"
@@ -80,8 +120,25 @@ jobs:
           fi
 
           ros_distro="${INPUT_ROS_DISTRO:-$DEFAULT_ROS_DISTRO}"
-          ocs2_tag="${INPUT_OCS2_TAG:-$tag}"
-          arms_tag="${INPUT_ARMS_TAG:-$tag}"
+          mapfile -t ocs2_release_info < <(
+            resolve_release_source \
+              "${INPUT_OCS2_TAG:-}" \
+              "$PREFERRED_OCS2_RELEASE_REPO" \
+              "$FALLBACK_OCS2_RELEASE_REPO" \
+              "ocs2_ros2"
+          )
+          ocs2_repo="${ocs2_release_info[0]}"
+          ocs2_tag="${ocs2_release_info[1]}"
+
+          mapfile -t arms_release_info < <(
+            resolve_release_source \
+              "${INPUT_ARMS_TAG:-}" \
+              "$PREFERRED_ARMS_RELEASE_REPO" \
+              "$FALLBACK_ARMS_RELEASE_REPO" \
+              "arms_ros2_control"
+          )
+          arms_repo="${arms_release_info[0]}"
+          arms_tag="${arms_release_info[1]}"
 
           ocs2_version="${ocs2_tag#v}"
           ocs2_version="${ocs2_version#V}"
@@ -99,8 +156,10 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "ros_distro=$ros_distro" >> "$GITHUB_OUTPUT"
           echo "deb_file=$deb_file" >> "$GITHUB_OUTPUT"
+          echo "ocs2_repo=$ocs2_repo" >> "$GITHUB_OUTPUT"
           echo "ocs2_tag=$ocs2_tag" >> "$GITHUB_OUTPUT"
           echo "ocs2_deb_file=$ocs2_deb_file" >> "$GITHUB_OUTPUT"
+          echo "arms_repo=$arms_repo" >> "$GITHUB_OUTPUT"
           echo "arms_tag=$arms_tag" >> "$GITHUB_OUTPUT"
           echo "arms_deb_file=$arms_deb_file" >> "$GITHUB_OUTPUT"
 
@@ -198,8 +257,10 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          OCS2_RELEASE_REPO: ${{ steps.meta.outputs.ocs2_repo }}
           OCS2_TAG: ${{ steps.meta.outputs.ocs2_tag }}
           OCS2_DEB_FILE: ${{ steps.meta.outputs.ocs2_deb_file }}
+          ARMS_RELEASE_REPO: ${{ steps.meta.outputs.arms_repo }}
           ARMS_TAG: ${{ steps.meta.outputs.arms_tag }}
           ARMS_DEB_FILE: ${{ steps.meta.outputs.arms_deb_file }}
         run: |
