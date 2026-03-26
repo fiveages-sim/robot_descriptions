@@ -39,7 +39,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/chassis/chassis.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/chassis/chassis.glb"/>
       </geometry>
     </visual>
     <collision>
@@ -53,7 +53,7 @@
   <link name="driven_fl_link_v">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/chassis/driven_v.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/chassis/driven_v.glb"/>
       </geometry>
     </visual>
   </link>
@@ -67,7 +67,7 @@
   <link name="driven_fl_link_h">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/chassis/driven_h.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/chassis/driven_h.glb"/>
       </geometry>
     </visual>
     <collision>
@@ -86,7 +86,7 @@
   <link name="driven_rl_link_v">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/chassis/driven_v.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/chassis/driven_v.glb"/>
       </geometry>
     </visual>
   </link>
@@ -100,7 +100,7 @@
   <link name="driven_rl_link_h">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/chassis/driven_h.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/chassis/driven_h.glb"/>
       </geometry>
     </visual>
     <collision>
@@ -119,7 +119,7 @@
   <link name="driven_fr_link_v">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/chassis/driven_v.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/chassis/driven_v.glb"/>
       </geometry>
     </visual>
   </link>
@@ -133,7 +133,7 @@
   <link name="driven_fr_link_h">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/chassis/driven_h.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/chassis/driven_h.glb"/>
       </geometry>
     </visual>
     <collision>
@@ -152,7 +152,7 @@
   <link name="driven_rr_link_v">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/chassis/driven_v.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/chassis/driven_v.glb"/>
       </geometry>
     </visual>
   </link>
@@ -166,7 +166,7 @@
   <link name="driven_rr_link_h">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/chassis/driven_h.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/chassis/driven_h.glb"/>
       </geometry>
     </visual>
     <collision>
@@ -185,7 +185,7 @@
   <link name="driving_left_link">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/aidal_description/share/aidal_description/meshes/woosh_agv/wheel.glb" scale="1 1 1"/>
+        <mesh filename="package://aidal_description/meshes/woosh_agv/wheel.glb" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -205,7 +205,7 @@
   <link name="driving_right_link">
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/aidal_description/share/aidal_description/meshes/woosh_agv/wheel.glb" scale="1 1 -1"/>
+        <mesh filename="package://aidal_description/meshes/woosh_agv/wheel.glb" scale="1 1 -1"/>
       </geometry>
     </visual>
     <collision>
@@ -267,12 +267,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/link1.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/link1.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/link1.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/link1.glb"/>
       </geometry>
     </collision>
   </link>
@@ -292,12 +292,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/link2.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/link2.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/link2.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/link2.glb"/>
       </geometry>
     </collision>
   </link>
@@ -317,12 +317,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/link3.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/link3.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/link3.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/link3.glb"/>
       </geometry>
     </collision>
   </link>
@@ -342,7 +342,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/link4.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/link4.glb"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -350,7 +350,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/link4.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/link4.glb"/>
       </geometry>
     </collision>
   </link>
@@ -384,7 +384,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/head_pitch.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/head_pitch.glb"/>
       </geometry>
       <material name="">
         <color rgba="0.75294 0.75294 0.75294 1"/>
@@ -392,7 +392,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/body/head_pitch.glb"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/body/head_pitch.glb"/>
       </geometry>
     </collision>
   </link>
@@ -418,7 +418,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/arm_base_link.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/arm_base_link.glb" scale="1 1 1"/>
       </geometry>
       <material name="">
         <color rgba="0.86667 0.86667 0.8902 1"/>
@@ -426,7 +426,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/arm_base_link.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/arm_base_link.glb" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -444,12 +444,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link1.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link1.glb" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link1.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link1.glb" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -468,12 +468,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link2.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link2.glb" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link2.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link2.glb" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -492,12 +492,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link3.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link3.glb" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link3.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link3.glb" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -516,12 +516,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link4.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link4.glb" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link4.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link4.glb" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -540,12 +540,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link5.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link5.glb" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link5.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link5.glb" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -564,12 +564,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link6.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link6.glb" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link6.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link6.glb" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -588,12 +588,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link7.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link7.glb" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link7.glb" scale="1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link7.glb" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -613,18 +613,18 @@
     <visual>
       <origin xyz="-0.033 -0.0085 0.01562"/>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/rm75_description/share/rm75_description/meshes/ee/camera_stand_d405.glb"/>
+        <mesh filename="package://rm75_description/meshes/ee/camera_stand_d405.glb"/>
       </geometry>
     </visual>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/rm75_description/share/rm75_description/meshes/ee/ee_fb_camera.glb"/>
+        <mesh filename="package://rm75_description/meshes/ee/ee_fb_camera.glb"/>
       </geometry>
     </visual>
     <visual>
-      <origin rpy="0 -1.5708 -1.5708" xyz="-0.13322 -0.0005 0.044651"/>
+      <origin rpy="0 0 3.1415" xyz="-0.13322 -0.0005 0.044651"/>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/sensor_models/share/sensor_models/meshes/d405.glb"/>
+        <mesh filename="package://sensor_models/meshes/realsense/d405.glb"/>
       </geometry>
     </visual>
   </link>
@@ -649,7 +649,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/arm_base_link.glb" scale="1 -1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/arm_base_link.glb" scale="1 -1 1"/>
       </geometry>
       <material name="">
         <color rgba="0.86667 0.86667 0.8902 1"/>
@@ -657,7 +657,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/arm_base_link.glb" scale="1 -1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/arm_base_link.glb" scale="1 -1 1"/>
       </geometry>
     </collision>
   </link>
@@ -675,12 +675,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link1.glb" scale="1 -1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link1.glb" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link1.glb" scale="1 -1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link1.glb" scale="1 -1 1"/>
       </geometry>
     </collision>
   </link>
@@ -699,12 +699,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link2.glb" scale="1 1 -1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link2.glb" scale="1 1 -1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link2.glb" scale="1 1 -1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link2.glb" scale="1 1 -1"/>
       </geometry>
     </collision>
   </link>
@@ -723,12 +723,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link3.glb" scale="-1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link3.glb" scale="-1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link3.glb" scale="-1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link3.glb" scale="-1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -747,12 +747,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link4.glb" scale="-1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link4.glb" scale="-1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link4.glb" scale="-1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link4.glb" scale="-1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -771,12 +771,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link5.glb" scale="-1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link5.glb" scale="-1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link5.glb" scale="-1 1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link5.glb" scale="-1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -795,12 +795,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link6.glb" scale="1 -1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link6.glb" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link6.glb" scale="1 -1 1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link6.glb" scale="1 -1 1"/>
       </geometry>
     </collision>
   </link>
@@ -819,12 +819,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link7.glb" scale="1 1 -1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link7.glb" scale="1 1 -1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/ai2_bot2_description/share/ai2_bot2_description/meshes/Visual/arm/link7.glb" scale="1 1 -1"/>
+        <mesh filename="package://ai2_bot2_description/meshes/Visual/arm/link7.glb" scale="1 1 -1"/>
       </geometry>
     </collision>
   </link>
@@ -844,18 +844,18 @@
     <visual>
       <origin xyz="-0.033 -0.0085 0.01562"/>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/rm75_description/share/rm75_description/meshes/ee/camera_stand_d405.glb"/>
+        <mesh filename="package://rm75_description/meshes/ee/camera_stand_d405.glb"/>
       </geometry>
     </visual>
     <visual>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/rm75_description/share/rm75_description/meshes/ee/ee_fb_camera.glb"/>
+        <mesh filename="package://rm75_description/meshes/ee/ee_fb_camera.glb"/>
       </geometry>
     </visual>
     <visual>
-      <origin rpy="0 -1.5708 -1.5708" xyz="-0.13322 -0.0005 0.044651"/>
+      <origin rpy="0 0 3.1415" xyz="-0.13322 -0.0005 0.044651"/>
       <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/sensor_models/share/sensor_models/meshes/d405.glb"/>
+        <mesh filename="package://sensor_models/meshes/realsense/d405.glb"/>
       </geometry>
     </visual>
   </link>

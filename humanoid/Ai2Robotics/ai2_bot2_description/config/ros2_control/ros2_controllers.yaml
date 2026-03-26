@@ -20,14 +20,6 @@ controller_manager:
     body_joint_controller:
       type: basic_joint_controller/BasicJointController
 
-    left_gripper_controller:
-      type: adaptive_gripper_controller/AdaptiveGripperController
-
-    right_gripper_controller:
-      type: adaptive_gripper_controller/AdaptiveGripperController
-
-
-    
 ocs2_wbc_controller:
   ros__parameters:
     # Joint configuration
@@ -171,8 +163,8 @@ head_joint_controller:
       - position
       - velocity
 
-    home_1: [0.0, 0.0]
-    home_2: [0.0, -0.1]
+    home_1: [ 0.0, 0.0 ]
+    home_2: [ 0.0, -0.1 ]
 
     home_duration: 2.0
     movej_duration: 2.0
@@ -195,7 +187,7 @@ body_joint_controller:
       - position
       - velocity
 
-    home_1: [0.0, 0.0, 0.0, 0.0]
+    home_1: [ 0.0, 0.0, 0.0, 0.0 ]
 
     home_duration: 3.0
     movej_duration: 3.0
