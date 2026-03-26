@@ -197,7 +197,7 @@ jobs:
 
           build_root="${RUNNER_TEMP}/colcon-common"
           package_root="${RUNNER_TEMP}/deb-build/package"
-          install_prefix="/opt/ros/${ROS_DISTRO}"
+          install_prefix="/opt/fa/${PACKAGE_NAME}"
 
           rm -rf "$build_root" "$package_root"
           mkdir -p "$build_root" "$package_root"
@@ -224,7 +224,7 @@ jobs:
           set -euo pipefail
 
           package_root="${RUNNER_TEMP}/deb-build/package"
-          install_prefix="/opt/ros/${ROS_DISTRO}"
+          install_prefix="/opt/fa/${PACKAGE_NAME}"
 
           mkdir -p "$package_root/DEBIAN"
           installed_size="$(du -sk "$package_root" | cut -f1)"
