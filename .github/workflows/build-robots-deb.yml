@@ -16,11 +16,11 @@ on:
         default: jazzy
         type: string
       ocs2_release_tag:
-        description: Release tag used to fetch the ocs2_ros2 bundle
+        description: Release tag used to fetch the ocs2_ros2 bundle (optional; leave blank to use the latest release, preferring the upstream repo and falling back to this fork)
         required: false
         type: string
       arms_release_tag:
-        description: Release tag used to fetch the arms_ros2_control bundle
+        description: Release tag used to fetch the arms_ros2_control bundle (optional; leave blank to use the latest release, preferring the upstream repo and falling back to this fork)
         required: false
         type: string
 
