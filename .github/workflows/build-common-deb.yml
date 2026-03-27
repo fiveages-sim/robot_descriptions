@@ -1,9 +1,9 @@
 name: Build Common Deb
 
 on:
-  release:
-    types:
-      - published
+  push:
+    tags:
+      - "v*"
   workflow_dispatch:
     inputs:
       tag:
@@ -23,7 +23,9 @@ jobs:
   build-common-deb:
     runs-on: ubuntu-24.04
     env:
-      PACKAGE_NAME: robot-descriptions-common
+      PACKAGE_NAME: robot-descriptions-jazzy-common
+      DEB_FILE_PREFIX: robot-descriptions-jazzy-common
+      INSTALL_PREFIX: /opt/ros/jazzy
       DEFAULT_ROS_DISTRO: jazzy
 
     steps:
@@ -39,19 +41,19 @@ jobs:
         env:
           INPUT_TAG: ${{ github.event.inputs.tag }}
           INPUT_ROS_DISTRO: ${{ github.event.inputs.ros_distro }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
-          if [[ -n "${RELEASE_TAG:-}" ]]; then
-            tag="$RELEASE_TAG"
-          elif [[ -n "${INPUT_TAG:-}" ]]; then
+          if [[ -n "${INPUT_TAG:-}" ]]; then
             tag="$INPUT_TAG"
           elif [[ "${GITHUB_REF_TYPE:-}" == "tag" ]]; then
             tag="${GITHUB_REF_NAME}"
           else
             echo "A release tag is required for workflow_dispatch." >&2
             exit 1
+          fi
+          if [[ "${tag}" != [vV]* ]]; then
+            tag="v${tag}"
           fi
 
           version="${tag#v}"
@@ -64,7 +66,7 @@ jobs:
           fi
 
           ros_distro="${INPUT_ROS_DISTRO:-$DEFAULT_ROS_DISTRO}"
-          deb_file="${PACKAGE_NAME}_${version}_amd64.deb"
+          deb_file="${DEB_FILE_PREFIX}_${version}_amd64.deb"
 
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
@@ -76,7 +78,7 @@ jobs:
         env:
           SUBMODULES_TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           common_url="$(git config --file .gitmodules --get submodule.common.url)"
           if [[ -z "$common_url" ]]; then
@@ -98,7 +100,7 @@ jobs:
       - name: Validate common payload
         shell: bash
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           if [[ ! -d common ]]; then
             echo "common submodule directory is missing." >&2
@@ -160,11 +162,8 @@ jobs:
         env:
           ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
         run: |
-          set -euo pipefail
-
-          set +u
+          set -eo pipefail
           source "/opt/ros/${ROS_DISTRO}/setup.bash"
-          set -u
 
           ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
           export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
@@ -184,11 +183,8 @@ jobs:
         env:
           ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
         run: |
-          set -euo pipefail
-
-          set +u
+          set -eo pipefail
           source "/opt/ros/${ROS_DISTRO}/setup.bash"
-          set -u
 
           ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
           export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
@@ -197,7 +193,8 @@ jobs:
 
           build_root="${RUNNER_TEMP}/colcon-common"
           package_root="${RUNNER_TEMP}/deb-build/package"
-          install_prefix="/opt/fa/${PACKAGE_NAME}"
+          install_prefix="${INSTALL_PREFIX}"
+          install_root="${package_root}${install_prefix}"
 
           rm -rf "$build_root" "$package_root"
           mkdir -p "$build_root" "$package_root"
@@ -205,10 +202,27 @@ jobs:
           colcon --log-base "${build_root}/log" build \
             --base-paths "${GITHUB_WORKSPACE}/common" \
             --build-base "${build_root}/build" \
-            --install-base "${package_root}${install_prefix}" \
+            --install-base "${install_root}" \
             --merge-install
 
-          if [[ ! -d "${package_root}${install_prefix}/share/ament_index/resource_index/packages" ]]; then
+          python3 -c "import sys; exec('''import os\ninstall_root = sys.argv[1]\nruntime_prefix = sys.argv[2]\nfor dirpath, _, filenames in os.walk(install_root):\n    for filename in filenames:\n        path = os.path.join(dirpath, filename)\n        try:\n            with open(path, 'r', encoding='utf-8') as f:\n                content = f.read()\n        except Exception:\n            continue\n        if install_root not in content:\n            continue\n        with open(path, 'w', encoding='utf-8') as f:\n            f.write(content.replace(install_root, runtime_prefix))''')" "$install_root" "$install_prefix"
+
+          rm -f \
+            "${install_root}/setup.bash" \
+            "${install_root}/setup.sh" \
+            "${install_root}/setup.zsh" \
+            "${install_root}/setup.ps1" \
+            "${install_root}/local_setup.bash" \
+            "${install_root}/local_setup.sh" \
+            "${install_root}/local_setup.zsh" \
+            "${install_root}/local_setup.ps1" \
+            "${install_root}/_local_setup_util.py" \
+            "${install_root}/_local_setup_util_sh.py" \
+            "${install_root}/_local_setup_util_ps1.py" \
+            "${install_root}/.colcon_install_layout" \
+            "${install_root}/COLCON_IGNORE"
+
+          if [[ ! -d "${install_root}/share/ament_index/resource_index/packages" ]]; then
             echo "ament index was not generated in the install space." >&2
             exit 1
           fi
@@ -221,10 +235,10 @@ jobs:
           VERSION: ${{ steps.meta.outputs.version }}
           DEB_FILE: ${{ steps.meta.outputs.deb_file }}
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           package_root="${RUNNER_TEMP}/deb-build/package"
-          install_prefix="/opt/fa/${PACKAGE_NAME}"
+          install_prefix="${INSTALL_PREFIX}"
 
           mkdir -p "$package_root/DEBIAN"
           installed_size="$(du -sk "$package_root" | cut -f1)"
@@ -239,7 +253,7 @@ jobs:
           Maintainer: ${GITHUB_REPOSITORY} maintainers <github-actions[bot]@users.noreply.github.com>
           Installed-Size: ${installed_size}
           Description: Shared robot_descriptions common ROS packages
-           Prebuilt ROS packages from robot_descriptions/common, including robot_common_launch and shared model assets.
+           Prebuilt ROS packages from robot_descriptions/common installed into ${INSTALL_PREFIX} while excluding shared prefix setup files.
           EOF
 
           if [[ ! -d "${package_root}${install_prefix}/share/robot_common_launch" ]]; then
@@ -258,7 +272,7 @@ jobs:
           TAG: ${{ steps.meta.outputs.tag }}
           DEB_PATH: ${{ steps.build.outputs.deb_path }}
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           if ! gh release view "$TAG" > /dev/null 2>&1; then
             gh release create "$TAG" \
