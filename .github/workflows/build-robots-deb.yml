@@ -1,9 +1,8 @@
 name: Build Robots Deb
 
+# Robots deb 依赖 ocs2 + arms 的 release，建议在 common tag 打完、arms release 就绪后再手动触发，
+# 避免与 Build Common Deb 共用 push tag（否则同一 v* tag 会同时跑 common + robots 两个 workflow）。
 on:
-  push:
-    tags:
-      - "v*"
   workflow_dispatch:
     inputs:
       tag:

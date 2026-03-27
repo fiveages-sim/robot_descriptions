@@ -100,6 +100,10 @@ source /opt/ros/jazzy/setup.bash
 - 如果上游仓库没有 release，再回退到当前 fork 仓库的 release
 - 如果手动指定了某个依赖 tag，则优先在上游仓库查找该 tag，找不到再回退到当前 fork 仓库
 
+`robot-descriptions-jazzy-robots` 的 CI 仅支持 **手动触发**（`workflow_dispatch`），避免与 `common` 打同一 `v*` tag 时两条 workflow 一起跑。打完 `common`、发布好 `arms` 后，再在 Actions 里单独运行 **Build Robots Deb**，并填入 `v0.1.3` 等 tag 与依赖 release tag。
+
+Fork 仓库若子模块为私有，须在 **Settings → Secrets → Actions** 中配置 `SUBMODULES_TOKEN`（对 `fiveages-sim/*` 相关子模块有读权限的 PAT），与上游仓库互不相通。
+
 ## 备注
 
 - 这几个 deb 仍然依赖 ROS 官方 apt 源中的系统包。
