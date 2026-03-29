@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:arg name="collider" default="convex"/>
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="collider_type" value="$(arg collider)"/>
+    <xacro:include filename="$(find piper_description)/xacro/components/gripper_x.xacro"/>
+    <xacro:macro name="piper_x_arm" params="name collider:=convex camera:=d435 with_gripper:='true'">
+        <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+        <link name="${prefix}base_link">
+            <inertial>
+                <origin xyz="-0.00347 -0.00012 0.04283" rpy="0 0 0"/>
+                <mass value="1.07"/>
+                <inertia ixx="0.00298745" ixy="0.00000369" ixz="0.00016646" iyy="0.00312688" iyz="0.00000832"
+                         izz="0.00093042"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/base/base_link.glb"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <origin xyz="0 0 0" rpy="0 0 0"/>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/base/base_link.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+
+        <link name="${prefix}link1">
+            <inertial>
+                <origin xyz="0.00065 0.00006 -0.00325" rpy="0 0 0"/>
+                <mass value="0.71"/>
+                <inertia ixx="0.00051254" ixy="0.00000294" ixz="0.00001039" iyy="0.00041089" iyz="0.00000240"
+                         izz="0.00045962"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/base/link1.glb"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/base/link1.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+        <joint name="${prefix}joint1" type="revolute">
+            <origin xyz="0 0 0.123" rpy="0 0 0"/>
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}link1"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-2.618" upper="2.618" effort="100" velocity="10"/>
+        </joint>
+
+        <link name="${prefix}link2">
+            <inertial>
+                <origin xyz="0.21854 -0.00853 0.00234" rpy="0 0 0"/>
+                <mass value="1.16"/>
+                <inertia ixx="0.00109788" ixy="0.00180610" ixz="0.00055040" iyy="0.06763354" iyz="0.00000813"
+                         izz="0.06762540"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/base/link2.glb"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/base/link2.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+        <joint name="${prefix}joint2" type="revolute">
+            <origin xyz="0 0 0" rpy="1.5708 -0.13586 3.1416"/>
+            <parent link="${prefix}link1"/>
+            <child link="${prefix}link2"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="0" upper="3.14" effort="100" velocity="10"/>
+        </joint>
+
+        <link name="${prefix}link3">
+            <inertial>
+                <origin xyz="0.20190 -0.00415 -0.00114" rpy="0 0 0"/>
+                <mass value="0.67"/>
+                <inertia ixx="0.00033471" ixy="0.00026891" ixz="0.00013918" iyy="0.03360411" iyz="0.00000052"
+                         izz="0.03356941"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/piper_x/link3.glb"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/piper_x/link3.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+        <joint name="${prefix}joint3" type="revolute">
+            <origin xyz="0.28503 0 0" rpy="0 0 2.8377"/>
+            <parent link="${prefix}link2"/>
+            <child link="${prefix}link3"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-2.9671" upper="0" effort="100" velocity="10"/>
+        </joint>
+
+        <link name="${prefix}link4">
+            <inertial>
+                <origin xyz="0.06593 -0.04751 -0.00274" rpy="0 0 0"/>
+                <mass value="0.4"/>
+                <inertia ixx="0.00120173" ixy="0.00138165" ixz="0.00001187" iyy="0.00209324" iyz="0.00000217"
+                         izz="0.00307814"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/piper_x/link4.glb"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/piper_x/link4.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+        <joint name="${prefix}joint4" type="revolute">
+            <origin xyz="0.27264 0 0" rpy="0 0 0.075129"/>
+            <parent link="${prefix}link3"/>
+            <child link="${prefix}link4"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.57" upper="1.57" effort="100" velocity="10"/>
+        </joint>
+
+        <link name="${prefix}link5">
+            <inertial>
+                <origin xyz="0.00005 0.0 -0.00417" rpy="0 0 0"/>
+                <mass value="0.35"/>
+                <inertia ixx="0.00022660" ixy="0.00000019" ixz="0.00000005" iyy="0.00017740" iyz="0.00000085"
+                         izz="0.00019425"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/piper_x/link5.glb"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/piper_x/link5.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+        <joint name="${prefix}joint5" type="revolute">
+            <origin xyz="0.076857 0.00062395 0" rpy="-1.5708 0 0"/>
+            <parent link="${prefix}link4"/>
+            <child link="${prefix}link5"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.57" upper="1.57" effort="100" velocity="10"/>
+        </joint>
+
+        <xacro:if value="${str(with_gripper).lower() in ['1', 'true', 'yes', 'on']}">
+            <xacro:piper_gripper_x
+                    prefix="${prefix}"
+                    parent_link="${prefix}link5"
+                    collider="${collider}"
+                    camera="${camera}"/>
+        </xacro:if>
+    </xacro:macro>
+</robot>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<robot name="Piper Gripper $(arg type)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="collider" default="convex"/>
+  <xacro:arg name="camera" default="none"/>
+  <xacro:arg name="type" default="x"/>
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <link name="gripper_base"/>
+
+  <xacro:include filename="$(find piper_description)/xacro/components/gripper_x.xacro"/>
+  <xacro:include filename="$(find piper_description)/xacro/components/gripper_slave.xacro"/>
+  <xacro:if value="${'$(arg type)' == 'x'}">
+    <xacro:piper_gripper_x
+        prefix=""
+        parent_link="gripper_base"
+        collider="$(arg collider)"
+        camera="$(arg camera)"/>
+  </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'slave'}">
+    <xacro:piper_gripper_slave
+        prefix=""
+        parent_link="gripper_base"
+        collider="$(arg collider)"
+        camera="$(arg camera)"/>
+  </xacro:if>
+</robot>

@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find piper_description)/xacro/components/camera.xacro"/>
+    <xacro:macro name="piper_gripper_x" params="prefix parent_link collider:=simple camera:=d435">
+        <link name="${prefix}link6">
+            <inertial>
+                <origin xyz="0 0 -0.00351" rpy="0 0 0"/>
+                <mass value="0.007"/>
+                <inertia ixx="0.00000064" ixy="0" ixz="0" iyy="0.00000064" iyz="0" izz="0.00000106"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 -0.035" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/piper_x/link6.glb"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <origin xyz="0 0 -0.035" rpy="0 0 0"/>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/piper_x/link6.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+
+        <joint name="${prefix}joint6" type="revolute">
+            <origin xyz="0.035 0 0" rpy="1.5708 0 1.5708"/>
+            <parent link="${parent_link}"/>
+            <child link="${prefix}link6"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-3.14" upper="3.14" effort="100" velocity="10"/>
+        </joint>
+
+        <link name="${prefix}gripper_base">
+            <inertial>
+                <origin xyz="-0.00006 -0.00003 0.0321436689908876" rpy="0 0 0"/>
+                <mass value="0.52"/>
+                <inertia ixx="0.00151445" ixy="0.00000048" ixz="0.00000003" iyy="0.00162326" iyz="0.00000277"
+                         izz="0.00030728"/>
+            </inertial>
+            <visual>
+                <origin xyz="0.002 0.0078 0.06" rpy="-1.57 0 3.14"/>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base_100_v2.glb"
+                          scale="0.8 0.8 0.8"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <origin xyz="0.002 0.0078 0.06" rpy="-1.57 0 3.14"/>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base_100_v2.glb"
+                              scale="0.8 0.8 0.8"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+        <joint name="${prefix}joint6_to_gripper_base" type="fixed">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <parent link="${prefix}link6"/>
+            <child link="${prefix}gripper_base"/>
+        </joint>
+
+        <link name="${prefix}link7">
+            <inertial>
+                <origin xyz="0.000277816920932317 -0.0467673824063769 -0.00921030054508036" rpy="0 0 0"/>
+                <mass value="0.0264822021416248"/>
+                <inertia ixx="9.99779119357223E-06" ixy="-1.57542283433504E-07" ixz="2.71367446701359E-08"
+                         iyy="6.17952441557932E-06" iyz="1.58939319453383E-06" izz="1.4210192754512E-05"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/gripper/link7.glb"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/gripper/link7.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+        <joint name="${prefix}joint7" type="prismatic">
+            <origin xyz="0 0 0.13503" rpy="1.5708 0 1.5708"/>
+            <parent link="${prefix}gripper_base"/>
+            <child link="${prefix}link7"/>
+            <axis xyz="0 0 -1"/>
+            <limit lower="0" upper="0.05" effort="100" velocity="1"/>
+        </joint>
+
+        <link name="${prefix}link8">
+            <inertial>
+                <origin xyz="0.000277816920932317 0.0467673824063769 -0.00921030054508036" rpy="0 0 0"/>
+                <mass value="0.0264822021416248"/>
+                <inertia ixx="9.99779119357223E-06" ixy="-1.57542283433504E-07" ixz="2.71367446701359E-08"
+                         iyy="6.17952441557932E-06" iyz="1.58939319453383E-06" izz="1.4210192754512E-05"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find piper_description)/meshes/gripper/link8.glb"/>
+                </geometry>
+            </visual>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/gripper/link8.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+        <joint name="${prefix}joint8" type="prismatic">
+            <origin xyz="0 0 0.13503" rpy="-1.5708 0 1.5708"/>
+            <parent link="${prefix}gripper_base"/>
+            <child link="${prefix}link8"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-0.05" upper="0" effort="100" velocity="1"/>
+            <mimic joint="${prefix}joint7" multiplier="-1" offset="0"/>
+        </joint>
+
+        <link name="${prefix}gripper_center"/>
+        <joint name="${prefix}gripper_center_fixed" type="fixed">
+            <parent link="${prefix}link6"/>
+            <child link="${prefix}gripper_center"/>
+            <origin xyz="0 0 0.13503" rpy="1.5708 -1.5708 0"/>
+        </joint>
+
+        <xacro:piper_camera prefix="${prefix}" parent_link="${prefix}gripper_base" camera="${camera}" collider="${collider}" arm_type="piper_x"/>
+
+    </xacro:macro>
+</robot>

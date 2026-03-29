@@ -1,16 +1,28 @@
 <?xml version="1.0"?>
 
-<robot name="Piper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="piper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:arg name="collider" default="convex"/>
+    <xacro:arg name="type" default="piper"/>
+    <xacro:arg name="style" default="slave"/>
 
-  <xacro:arg name="type" default="slave"/>
+    <xacro:if value="${'$(arg type)' == 'piper'}">
+        <xacro:include filename="$(find piper_description)/xacro/piper_arm.xacro"/>
+        <xacro:if value="${'$(arg style)' == 'master'}">
+            <xacro:piper_arm name="" collider="$(arg collider)" is_master="true"/>
+        </xacro:if>
+        <xacro:if value="${'$(arg style)' == 'slave'}">
+            <xacro:piper_arm name="" collider="$(arg collider)" is_master="false"/>
+        </xacro:if>
+    </xacro:if>
 
-  <xacro:include filename="$(find piper_description)/xacro/Piper.xacro"/>
-  
-  <!-- 根据type参数决定is_master的值 -->
-  <xacro:if value="${'$(arg type)' == 'master'}">
-    <xacro:Piper name="" is_master="true"/>
-  </xacro:if>
-  <xacro:unless value="${'$(arg type)' == 'master'}">
-    <xacro:Piper name="" is_master="false"/>
-  </xacro:unless>
+    <xacro:if value="${'$(arg type)' == 'piper_x'}">
+        <xacro:include filename="$(find piper_description)/xacro/piper_x_arm.xacro"/>
+        <xacro:piper_x_arm name="" collider="$(arg collider)"/>
+    </xacro:if>
+
+    <xacro:if value="${'$(arg type)' == 'piper_l'}">
+        <xacro:include filename="$(find piper_description)/xacro/piper_l_arm.xacro"/>
+        <xacro:piper_l_arm name="" collider="$(arg collider)"/>
+    </xacro:if>
+
 </robot>

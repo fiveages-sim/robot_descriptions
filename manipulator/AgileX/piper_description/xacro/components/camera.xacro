@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="piper_camera" params="prefix parent_link camera:=d435 collider:=simple arm_type:=piper_x">
+        <xacro:if value="${camera == 'none'}">
+            <link name="${prefix}camera_stand_link"/>
+        </xacro:if>
+
+        <xacro:if value="${camera == 'd435'}">
+
+            <xacro:if value="${arm_type == 'piper_x'}">
+                <link name="${prefix}camera_stand_link">
+                    <visual>
+                        <geometry>
+                            <mesh filename="file://$(find piper_description)/meshes/camera_stand/realsense_mid_stand.glb"/>
+                        </geometry>
+                    </visual>
+                    <xacro:if value="${collider == 'convex'}">
+                        <collision>
+                            <geometry>
+                                <mesh filename="file://$(find piper_description)/meshes/camera_stand/realsense_mid_stand.glb"/>
+                            </geometry>
+                        </collision>
+                    </xacro:if>
+                </link>
+
+                <joint name="${prefix}camera_stand_joint" type="fixed">
+                    <origin rpy="1.57 3.14 0.0" xyz="0.001 -0.036 0.022"/>
+                    <parent link="${parent_link}"/>
+                    <child link="${prefix}camera_stand_link"/>
+                </joint>
+
+                <link name="${prefix}camera">
+                    <visual>
+                        <origin xyz="0.018 0 0" rpy="0 0 0"/>
+                        <geometry>
+                            <mesh filename="file://$(find sensor_models)/meshes/d435/d435.obj"/>
+                        </geometry>
+                    </visual>
+                </link>
+
+                <joint name="${prefix}camera_fixed" type="fixed">
+                    <origin rpy="0.0 -1.22 1.57" xyz="0.029 -0.069 0.022"/>
+                    <parent link="${parent_link}"/>
+                    <child link="${prefix}camera"/>
+                </joint>
+            </xacro:if>
+
+            <xacro:if value="${arm_type == 'piper_l'}">
+                <link name="${prefix}camera_stand_link">
+                    <visual>
+                        <origin rpy="0.0 3.14 1.57" xyz="0.0 0.0 0.0"/>
+                        <geometry>
+                            <mesh filename="file://$(find piper_description)/meshes/camera_stand/realsense_mid_stand_v2.glb"/>
+                        </geometry>
+                    </visual>
+                    <xacro:if value="${collider == 'convex'}">
+                        <collision>
+                            <origin rpy="0.0 3.14 1.57" xyz="0.0 0.0 0.0"/>
+                            <geometry>
+                                <mesh filename="file://$(find piper_description)/meshes/camera_stand/realsense_mid_stand_v2.glb"/>
+                            </geometry>
+                        </collision>
+                    </xacro:if>
+                </link>
+
+                <joint name="${prefix}camera_stand_joint" type="fixed">
+                    <origin xyz="-0.034 -0.002 0.023" rpy="0 0 0"/>
+                    <parent link="${parent_link}"/>
+                    <child link="${prefix}camera_stand_link"/>
+                </joint>
+
+                <link name="${prefix}camera">
+                    <visual>
+                        <geometry>
+                            <mesh filename="file://$(find sensor_models)/meshes/d435/d435.obj"/>
+                        </geometry>
+                    </visual>
+                </link>
+
+                <joint name="${prefix}camera_fixed" type="fixed">
+                    <origin xyz="-0.032 -0.028 0.018" rpy="0.0 -1.22 0"/>
+                    <parent link="${prefix}camera_stand_link"/>
+                    <child link="${prefix}camera"/>
+                </joint>
+            </xacro:if>
+
+<!--            <xacro:if value="${arm_type == 'piper'}">-->
+<!--                <link name="${prefix}camera_stand_link">-->
+<!--                    <visual>-->
+<!--                        <geometry>-->
+<!--                            <mesh filename="file://$(find piper_description)/meshes/camera_stand/camera_stand.glb"/>-->
+<!--                        </geometry>-->
+<!--                    </visual>-->
+<!--                    <xacro:if value="${collider == 'convex'}">-->
+<!--                        <collision>-->
+<!--                            <geometry>-->
+<!--                                <mesh filename="file://$(find piper_description)/meshes/camera_stand/camera_stand.glb"/>-->
+<!--                            </geometry>-->
+<!--                        </collision>-->
+<!--                    </xacro:if>-->
+<!--                </link>-->
+
+<!--                <joint name="${prefix}camera_stand_joint" type="fixed">-->
+<!--                    <origin rpy="1.57 1.57 -1.57" xyz="0.001 -0.036 0.022"/>-->
+<!--                    <parent link="${parent_link}"/>-->
+<!--                    <child link="${prefix}camera_stand_link"/>-->
+<!--                </joint>-->
+
+<!--                <link name="${prefix}camera">-->
+<!--                    <visual>-->
+<!--                        <geometry>-->
+<!--                            <mesh filename="file://$(find sensor_models)/meshes/d435/d435.obj"/>-->
+<!--                        </geometry>-->
+<!--                    </visual>-->
+<!--                    <xacro:if value="${collider == 'convex'}">-->
+<!--                        <collision>-->
+<!--                            <geometry>-->
+<!--                                <mesh filename="file://$(find sensor_models)/meshes/d435/d435.obj"/>-->
+<!--                            </geometry>-->
+<!--                        </collision>-->
+<!--                    </xacro:if>-->
+<!--                    <xacro:if value="${collider == 'simple'}">-->
+<!--                        <collision name="simple_d435camera">-->
+<!--                            <origin xyz="-0.0125 0 0" rpy="0 0 0"/>-->
+<!--                            <geometry>-->
+<!--                                <box size="0.0251 0.0899 0.025"/>-->
+<!--                            </geometry>-->
+<!--                        </collision>-->
+<!--                    </xacro:if>-->
+<!--                </link>-->
+
+<!--                <joint name="${prefix}camera_fixed" type="fixed">-->
+<!--                    <origin xyz="-0.073 0 0.041" rpy="-0.3463 0 -1.5708"/>-->
+<!--                    <parent link="${prefix}camera_stand_link"/>-->
+<!--                    <child link="${prefix}camera"/>-->
+<!--                </joint>-->
+<!--            </xacro:if>-->
+        </xacro:if>
+    </xacro:macro>
+</robot>

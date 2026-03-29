@@ -11,17 +11,28 @@ colcon build --packages-up-to piper_description --symlink-install
 ```
 
 ## 2. Visualize the robot
+* Piper_x
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch manipulator.launch.py robot:=piper type:=piper_x
+  ```
+
+* Piper_l
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch manipulator.launch.py robot:=piper type:=piper_l
+  ```
 
 * Launch Slave Arm with camera
     ```bash
     source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_common_launch manipulator.launch.py
+    ros2 launch robot_common_launch manipulator.launch.py robot:=piper style:=slave
     ```
   ![piper](../../.images/agilex_piper.png)
 * Launch Master Arm
     ```bash
     source ~/ros2_ws/install/setup.bash
-    ros2 launch robot_common_launch manipulator.launch.py type:="master"
+    ros2 launch robot_common_launch manipulator.launch.py robot:=piper style:=master
     ```
   ![piper master](../../.images/agilex_piper_master.png)
 
