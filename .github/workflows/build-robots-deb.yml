@@ -9,6 +9,7 @@ name: Build Robots Deb
 # - humanoid/Booster/、humanoid/RobotEra/、humanoid/Agibot/agibot_a2_description/
 # - manipulator/Tianji/（子模块常为私有；无 SUBMODULES_TOKEN 时 CI 不初始化、不进 deb）
 # - manipulator/Rokae/（robot-descriptions-rokae 常为私有；无 SUBMODULES_TOKEN 时同上）
+# - humanoid/Ubtech/（子模块仍在 .gitmodules 供本地克隆；本 workflow 不 init、rsync 排除，不进 deb）
 # - manipulator/Elite/、manipulator/LeRobot/、manipulator/OpenArm/、manipulator/Ragtime-Lab/
 on:
   workflow_dispatch:
@@ -187,17 +188,17 @@ jobs:
           )
 
           # Do not init FiveAges W1/W2 (out of packaging scope; private fa-w1/fa-w2 repos not needed in CI).
+          # Do not init humanoid/Ubtech: keep submodule in repo for developers, but exclude from robots deb (see rsync below).
           _submodules_to_init=(
             common
             manipulator/Dobot
             quadruped
             manipulator/ARX
-            humanoid/Ubtech
           )
           if [[ -n "${SUBMODULES_TOKEN:-}" ]]; then
             _submodules_to_init+=(manipulator/Rokae)
           else
-            echo "::notice::Skipping manipulator/Rokae submodule init (SUBMODULES_TOKEN empty; fiveages-sim/robot-descriptions-rokae is private over anonymous HTTPS). Configure SUBMODULES_TOKEN to ship Rokae in the deb."
+            echo "::notice::Skipping manipulator/Rokae submodule init (SUBMODULES_TOKEN empty; fiveages-sim/robot-descriptions-rokae is not clone-able over anonymous HTTPS)."
             echo "EXCLUDE_ROKAE_FROM_DEB=1" >> "$GITHUB_ENV"
           fi
           for _path in "${_submodules_to_init[@]}"; do
@@ -460,6 +461,7 @@ jobs:
             --exclude "humanoid/Agibot/agibot_a2_description/"
             --exclude "humanoid/FiveAges/fiveages_w1_description/"
             --exclude "humanoid/FiveAges/fiveages_w2_description/"
+            --exclude "humanoid/Ubtech/"
             --exclude "manipulator/Tianji/"
             --exclude "manipulator/Elite/"
             --exclude "manipulator/LeRobot/"
@@ -520,9 +522,9 @@ jobs:
           mkdir -p "$package_root/DEBIAN"
           installed_size="$(du -sk "$package_root" | cut -f1)"
 
-          rokae_ci_note=""
+          private_submodule_skip_note=""
           if [[ "${EXCLUDE_ROKAE_FROM_DEB:-}" == "1" ]]; then
-            rokae_ci_note=" manipulator Rokae (no SUBMODULES_TOKEN in CI),"
+            private_submodule_skip_note+=" manipulator Rokae (no SUBMODULES_TOKEN in CI),"
           fi
 
           cat > "$package_root/DEBIAN/control" <<EOF
@@ -535,7 +537,7 @@ jobs:
           Maintainer: ${GITHUB_REPOSITORY} maintainers <github-actions[bot]@users.noreply.github.com>
           Installed-Size: ${installed_size}
           Description: Robot description ROS packages excluding common assets
-           Curated robots deb. Excludes quadruped/, FiveAges W1 & W2, manipulator Tianji (private submodule in default CI),${rokae_ci_note} humanoid Booster & RobotEra & Agibot A2, manipulator Elite/LeRobot/OpenArm/Ragtime-Lab. Installed into ${INSTALL_PREFIX} without shared prefix setup files.
+           Curated robots deb. Excludes quadruped/, FiveAges W1 & W2, humanoid Ubtech, manipulator Tianji (private submodule in default CI),${private_submodule_skip_note} humanoid Booster & RobotEra & Agibot A2, manipulator Elite/LeRobot/OpenArm/Ragtime-Lab. Installed into ${INSTALL_PREFIX} without shared prefix setup files.
           EOF
 
           if [[ ! -d "${package_root}${install_prefix}/share" ]]; then
