@@ -44,7 +44,7 @@ jobs:
       OCS2_DEB_FILE_PREFIX: ocs2-ros2-jazzy-mobile-manipulator
       INSTALL_PREFIX: /opt/ros/jazzy
       DEFAULT_ROS_DISTRO: jazzy
-      PREFERRED_ARMS_RELEASE_REPO: fiveages/arms_ros2_control
+      PREFERRED_ARMS_RELEASE_REPO: fiveages-sim/arms_ros2_control
       FALLBACK_ARMS_RELEASE_REPO: YangLuo-Bionics/arms_ros2_control
       PREFERRED_OCS2_RELEASE_REPO: legubiao/ocs2_ros2
       FALLBACK_OCS2_RELEASE_REPO: YangLuo-Bionics/ocs2_ros2
@@ -68,45 +68,39 @@ jobs:
         run: |
           set -eo pipefail
 
-          resolve_release_source() {
+          resolve_dependency_release_tag() {
             local requested_tag="$1"
             local primary_repo="$2"
             local fallback_repo="$3"
             local dependency_name="$4"
-            local resolved_repo=""
-            local resolved_tag=""
 
             if [[ -n "${requested_tag:-}" && "${requested_tag}" != [vV]* ]]; then
               requested_tag="v${requested_tag}"
             fi
 
             if [[ -n "${requested_tag:-}" ]]; then
-              if gh release view "$requested_tag" --repo "$primary_repo" --json tagName >/dev/null 2>&1; then
-                resolved_repo="$primary_repo"
-                resolved_tag="$requested_tag"
-              elif gh release view "$requested_tag" --repo "$fallback_repo" --json tagName >/dev/null 2>&1; then
-                resolved_repo="$fallback_repo"
-                resolved_tag="$requested_tag"
-              else
-                echo "Unable to find release tag ${requested_tag} for ${dependency_name} in ${primary_repo} or ${fallback_repo}." >&2
-                exit 1
+              if gh release view "$requested_tag" --repo "$primary_repo" --json tagName >/dev/null 2>&1 \
+                || gh release view "$requested_tag" --repo "$fallback_repo" --json tagName >/dev/null 2>&1; then
+                printf '%s\n' "$requested_tag"
+                return 0
               fi
-            else
-              resolved_tag="$(gh release view --repo "$primary_repo" --json tagName --jq .tagName 2>/dev/null || true)"
-              if [[ -n "${resolved_tag}" ]]; then
-                resolved_repo="$primary_repo"
-              else
-                resolved_tag="$(gh release view --repo "$fallback_repo" --json tagName --jq .tagName 2>/dev/null || true)"
-                if [[ -n "${resolved_tag}" ]]; then
-                  resolved_repo="$fallback_repo"
-                else
-                  echo "Unable to find any published release for ${dependency_name} in ${primary_repo} or ${fallback_repo}." >&2
-                  exit 1
-                fi
-              fi
+              echo "Unable to find release tag ${requested_tag} for ${dependency_name} in ${primary_repo} or ${fallback_repo}." >&2
+              exit 1
             fi
 
-            printf '%s\n%s\n' "$resolved_repo" "$resolved_tag"
+            local resolved_tag=""
+            resolved_tag="$(gh release view --repo "$primary_repo" --json tagName --jq .tagName 2>/dev/null || true)"
+            if [[ -n "${resolved_tag}" ]]; then
+              printf '%s\n' "$resolved_tag"
+              return 0
+            fi
+            resolved_tag="$(gh release view --repo "$fallback_repo" --json tagName --jq .tagName 2>/dev/null || true)"
+            if [[ -n "${resolved_tag}" ]]; then
+              printf '%s\n' "$resolved_tag"
+              return 0
+            fi
+            echo "Unable to find any published release for ${dependency_name} in ${primary_repo} or ${fallback_repo}." >&2
+            exit 1
           }
 
           if [[ -n "${INPUT_TAG:-}" ]]; then
@@ -131,48 +125,26 @@ jobs:
           fi
 
           ros_distro="${INPUT_ROS_DISTRO:-$DEFAULT_ROS_DISTRO}"
-          mapfile -t ocs2_release_info < <(
-            resolve_release_source \
-              "${INPUT_OCS2_TAG:-}" \
-              "$PREFERRED_OCS2_RELEASE_REPO" \
-              "$FALLBACK_OCS2_RELEASE_REPO" \
-              "ocs2_ros2"
-          )
-          ocs2_repo="${ocs2_release_info[0]}"
-          ocs2_tag="${ocs2_release_info[1]}"
+          ocs2_tag="$(resolve_dependency_release_tag \
+            "${INPUT_OCS2_TAG:-}" \
+            "$PREFERRED_OCS2_RELEASE_REPO" \
+            "$FALLBACK_OCS2_RELEASE_REPO" \
+            "ocs2_ros2")"
 
-          mapfile -t arms_release_info < <(
-            resolve_release_source \
-              "${INPUT_ARMS_TAG:-}" \
-              "$PREFERRED_ARMS_RELEASE_REPO" \
-              "$FALLBACK_ARMS_RELEASE_REPO" \
-              "arms_ros2_control"
-          )
-          arms_repo="${arms_release_info[0]}"
-          arms_tag="${arms_release_info[1]}"
-
-          ocs2_version="${ocs2_tag#v}"
-          ocs2_version="${ocs2_version#V}"
-          ocs2_version="$(printf '%s' "$ocs2_version" | sed 's/-/~/g')"
-
-          arms_version="${arms_tag#v}"
-          arms_version="${arms_version#V}"
-          arms_version="$(printf '%s' "$arms_version" | sed 's/-/~/g')"
+          arms_tag="$(resolve_dependency_release_tag \
+            "${INPUT_ARMS_TAG:-}" \
+            "$PREFERRED_ARMS_RELEASE_REPO" \
+            "$FALLBACK_ARMS_RELEASE_REPO" \
+            "arms_ros2_control")"
 
           deb_file="${DEB_FILE_PREFIX}_${version}_amd64.deb"
-          ocs2_deb_file="${OCS2_DEB_FILE_PREFIX}_${ocs2_version}_amd64.deb"
-          arms_deb_file="${ARMS_DEB_FILE_PREFIX}_${arms_version}_amd64.deb"
 
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "ros_distro=$ros_distro" >> "$GITHUB_OUTPUT"
           echo "deb_file=$deb_file" >> "$GITHUB_OUTPUT"
-          echo "ocs2_repo=$ocs2_repo" >> "$GITHUB_OUTPUT"
           echo "ocs2_tag=$ocs2_tag" >> "$GITHUB_OUTPUT"
-          echo "ocs2_deb_file=$ocs2_deb_file" >> "$GITHUB_OUTPUT"
-          echo "arms_repo=$arms_repo" >> "$GITHUB_OUTPUT"
           echo "arms_tag=$arms_tag" >> "$GITHUB_OUTPUT"
-          echo "arms_deb_file=$arms_deb_file" >> "$GITHUB_OUTPUT"
 
       - name: Initialize repository submodules
         shell: bash
@@ -268,12 +240,8 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          OCS2_RELEASE_REPO: ${{ steps.meta.outputs.ocs2_repo }}
           OCS2_TAG: ${{ steps.meta.outputs.ocs2_tag }}
-          OCS2_DEB_FILE: ${{ steps.meta.outputs.ocs2_deb_file }}
-          ARMS_RELEASE_REPO: ${{ steps.meta.outputs.arms_repo }}
           ARMS_TAG: ${{ steps.meta.outputs.arms_tag }}
-          ARMS_DEB_FILE: ${{ steps.meta.outputs.arms_deb_file }}
         run: |
           set -eo pipefail
 
@@ -281,31 +249,85 @@ jobs:
           rm -rf "$deps_dir"
           mkdir -p "$deps_dir"
 
-          gh release download "$OCS2_TAG" \
-            --repo "$OCS2_RELEASE_REPO" \
-            --pattern "$OCS2_DEB_FILE" \
-            --dir "$deps_dir"
+          try_download() {
+            local tag="$1" repo="$2" label="$3"
+            shift 3
+            local p
+            for p in "$@"; do
+              if gh release download "$tag" --repo "$repo" --pattern "$p" --dir "$deps_dir" 2>/dev/null; then
+                return 0
+              fi
+            done
+            echo "No asset matched any pattern for ${label} (${repo}@${tag}). Published assets:" >&2
+            gh release view "$tag" --repo "$repo" --json assets --jq '.assets[].name' >&2 || true
+            return 1
+          }
 
-          gh release download "$ARMS_TAG" \
-            --repo "$ARMS_RELEASE_REPO" \
-            --pattern "$ARMS_DEB_FILE" \
-            --dir "$deps_dir"
+          try_download_from_repos() {
+            local tag="$1" label="$2" primary="$3" fallback="$4"
+            shift 4
+            local repo
+            for repo in "$primary" "$fallback"; do
+              if ! gh release view "$tag" --repo "$repo" --json tagName >/dev/null 2>&1; then
+                continue
+              fi
+              if try_download "$tag" "$repo" "$label" "$@"; then
+                return 0
+              fi
+            done
+            echo "Could not download ${label} from ${primary} or ${fallback} @ ${tag} (no matching asset)." >&2
+            for repo in "$primary" "$fallback"; do
+              if gh release view "$tag" --repo "$repo" --json tagName >/dev/null 2>&1; then
+                echo "Assets on ${repo}@${tag}:" >&2
+                gh release view "$tag" --repo "$repo" --json assets --jq '.assets[].name' >&2 || true
+              fi
+            done
+            return 1
+          }
+
+          try_download_from_repos "$OCS2_TAG" "ocs2" "$PREFERRED_OCS2_RELEASE_REPO" "$FALLBACK_OCS2_RELEASE_REPO" \
+            "${OCS2_DEB_FILE_PREFIX}_*_amd64.deb" \
+            "*${OCS2_DEB_FILE_PREFIX}*_amd64.deb" \
+            "*ocs2*jazzy*mobile-manipulator*_amd64.deb"
+
+          try_download_from_repos "$ARMS_TAG" "arms" "$PREFERRED_ARMS_RELEASE_REPO" "$FALLBACK_ARMS_RELEASE_REPO" \
+            "${ARMS_DEB_FILE_PREFIX}_*_amd64.deb" \
+            "*${ARMS_DEB_FILE_PREFIX}*_amd64.deb" \
+            "*arms*ros2*control*jazzy*_amd64.deb"
+
+          resolve_one_deb() {
+            local dir="$1" prefix="$2" label="$3"
+            shopt -s nullglob
+            local matches=("$dir/${prefix}"_*_amd64.deb)
+            if [[ ${#matches[@]} -eq 0 ]]; then
+              matches=("$dir"/*"${prefix}"*_amd64.deb)
+            fi
+            if [[ ${#matches[@]} -ne 1 ]]; then
+              echo "Expected exactly one ${label} .deb in ${dir}, got ${#matches[@]}: ${matches[*]}" >&2
+              ls -la "$dir" >&2 || true
+              exit 1
+            fi
+            printf '%s\n' "${matches[0]}"
+          }
+
+          ocs2_path="$(resolve_one_deb "$deps_dir" "$OCS2_DEB_FILE_PREFIX" "OCS2")"
+          arms_path="$(resolve_one_deb "$deps_dir" "$ARMS_DEB_FILE_PREFIX" "arms")"
+          {
+            echo "OCS2_DEB_PATH=$ocs2_path"
+            echo "ARMS_DEB_PATH=$arms_path"
+          } >> "$GITHUB_ENV"
 
       - name: Install dependency files into ROS prefix
         shell: bash
-        env:
-          OCS2_DEB_FILE: ${{ steps.meta.outputs.ocs2_deb_file }}
-          ARMS_DEB_FILE: ${{ steps.meta.outputs.arms_deb_file }}
         run: |
           set -eo pipefail
 
-          deps_dir="${RUNNER_TEMP}/dependency-debs"
           extract_root="${RUNNER_TEMP}/dependency-extract"
           rm -rf "$extract_root"
           mkdir -p "$extract_root/ocs2" "$extract_root/arms"
 
-          dpkg-deb -x "$deps_dir/$OCS2_DEB_FILE" "$extract_root/ocs2"
-          dpkg-deb -x "$deps_dir/$ARMS_DEB_FILE" "$extract_root/arms"
+          dpkg-deb -x "$OCS2_DEB_PATH" "$extract_root/ocs2"
+          dpkg-deb -x "$ARMS_DEB_PATH" "$extract_root/arms"
 
           sudo rsync -a "$extract_root/ocs2${INSTALL_PREFIX}/" "${INSTALL_PREFIX}/"
           sudo rsync -a "$extract_root/arms${INSTALL_PREFIX}/" "${INSTALL_PREFIX}/"
