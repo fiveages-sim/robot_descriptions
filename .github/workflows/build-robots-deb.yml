@@ -2,6 +2,11 @@ name: Build Robots Deb
 
 # Robots deb 依赖 ocs2 + arms 的 release，建议在 common tag 打完、arms release 就绪后再手动触发，
 # 避免与 Build Common Deb 共用 push tag（否则同一 v* tag 会同时跑 common + robots 两个 workflow）。
+#
+# 打包范围：侧重经常维护的机型与轮式人形（如 FiveAges 等）。以下路径不参与 rsync / 不进 deb：
+# - quadruped/ 整目录
+# - humanoid/Booster/、humanoid/RobotEra/、humanoid/Agibot/agibot_a2_description/
+# - manipulator/Elite/、manipulator/LeRobot/、manipulator/OpenArm/、manipulator/Ragtime-Lab/
 on:
   workflow_dispatch:
     inputs:
@@ -376,7 +381,14 @@ jobs:
             --exclude ".git/" \
             --exclude ".github/" \
             --exclude "common/" \
-            --exclude "humanoid/Unitree/" \
+            --exclude "quadruped/" \
+            --exclude "humanoid/Booster/" \
+            --exclude "humanoid/RobotEra/" \
+            --exclude "humanoid/Agibot/agibot_a2_description/" \
+            --exclude "manipulator/Elite/" \
+            --exclude "manipulator/LeRobot/" \
+            --exclude "manipulator/OpenArm/" \
+            --exclude "manipulator/Ragtime-Lab/" \
             "${GITHUB_WORKSPACE}/" "${source_root}/"
 
           if grep -R --include package.xml -n "<name>robot_common_launch</name>" "${source_root}" > /dev/null 2>&1; then
@@ -438,7 +450,7 @@ jobs:
           Maintainer: ${GITHUB_REPOSITORY} maintainers <github-actions[bot]@users.noreply.github.com>
           Installed-Size: ${installed_size}
           Description: Robot description ROS packages excluding common assets
-           Prebuilt ROS packages from robot_descriptions outside common/, installed into ${INSTALL_PREFIX} while excluding shared prefix setup files.
+           Curated robots deb: wheel-humanoid focus and actively maintained models. Excludes quadruped/, humanoid Booster & RobotEra & Agibot A2, manipulator Elite/LeRobot/OpenArm/Ragtime-Lab. Installed into ${INSTALL_PREFIX} without shared prefix setup files.
           EOF
 
           if [[ ! -d "${package_root}${install_prefix}/share" ]]; then

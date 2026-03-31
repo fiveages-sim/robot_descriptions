@@ -66,13 +66,13 @@
 ```bash
 wget https://github.com/YangLuo-Bionics/ocs2_ros2/releases/download/v0.1.3/ocs2-ros2-jazzy-mobile-manipulator_0.1.3_amd64.deb
 wget https://github.com/YangLuo-Bionics/robot_descriptions/releases/download/v0.1.3/robot-descriptions-jazzy-common_0.1.3_amd64.deb
-wget https://github.com/YangLuo-Bionics/arms_ros2_control/releases/download/v0.1.3/arms-ros2-control-jazzy_0.1.3_amd64.deb
-wget https://github.com/YangLuo-Bionics/robot_descriptions/releases/download/v0.1.3/robot-descriptions-jazzy-robots_0.1.3_amd64.deb
+wget https://github.com/YangLuo-Bionics/arms_ros2_control/releases/download/v0.3.0/arms-ros2-control-jazzy_0.3.0_amd64.deb
+wget https://github.com/YangLuo-Bionics/robot_descriptions/releases/download/v0.2.0/robot-descriptions-jazzy-robots_0.2.0_amd64.deb
 
 sudo dpkg -i ocs2-ros2-jazzy-mobile-manipulator_0.1.3_amd64.deb
 sudo dpkg -i robot-descriptions-jazzy-common_0.1.3_amd64.deb
-sudo dpkg -i arms-ros2-control-jazzy_0.1.3_amd64.deb
-sudo dpkg -i robot-descriptions-jazzy-robots_0.1.3_amd64.deb
+sudo dpkg -i arms-ros2-control-jazzy_0.3.0_amd64.deb
+sudo dpkg -i robot-descriptions-jazzy-robots_0.2.0_amd64.deb
 ```
 
 如果安装过程中提示缺少系统依赖，可执行：
