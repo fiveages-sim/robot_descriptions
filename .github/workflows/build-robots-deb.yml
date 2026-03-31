@@ -1,0 +1,549 @@
+name: Build Robots Deb
+
+# Robots deb 依赖 ocs2 + arms 的 release，建议在 common tag 打完、arms release 就绪后再手动触发，
+# 避免与 Build Common Deb 共用 push tag（否则同一 v* tag 会同时跑 common + robots 两个 workflow）。
+#
+# 打包范围：以下路径不参与 rsync / 不进 deb（子模块也不初始化 w1/w2，见 Initialize 步骤）：
+# - quadruped/ 整目录
+# - humanoid/FiveAges/fiveages_w1_description/、humanoid/FiveAges/fiveages_w2_description/
+# - humanoid/Booster/、humanoid/RobotEra/、humanoid/Agibot/agibot_a2_description/
+# - manipulator/Elite/、manipulator/LeRobot/、manipulator/OpenArm/、manipulator/Ragtime-Lab/
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to upload the deb asset to
+        required: false
+        type: string
+      ros_distro:
+        description: ROS distro used in the install path
+        required: false
+        default: jazzy
+        type: string
+      ocs2_release_tag:
+        description: Release tag used to fetch the ocs2_ros2 bundle (optional; leave blank to use the latest release, preferring the upstream repo and falling back to this fork)
+        required: false
+        type: string
+      arms_release_tag:
+        description: Release tag used to fetch the arms_ros2_control bundle (optional; leave blank to use the latest release, preferring the upstream repo and falling back to this fork)
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-robots-deb:
+    runs-on: ubuntu-24.04
+    env:
+      PACKAGE_NAME: robot-descriptions-jazzy-robots
+      DEB_FILE_PREFIX: robot-descriptions-jazzy-robots
+      COMMON_PACKAGE_NAME: robot-descriptions-jazzy-common
+      ARMS_PACKAGE_NAME: arms-ros2-control-jazzy
+      OCS2_PACKAGE_NAME: ocs2-ros2-jazzy-mobile-manipulator
+      ARMS_DEB_FILE_PREFIX: arms-ros2-control-jazzy
+      OCS2_DEB_FILE_PREFIX: ocs2-ros2-jazzy-mobile-manipulator
+      INSTALL_PREFIX: /opt/ros/jazzy
+      DEFAULT_ROS_DISTRO: jazzy
+      PREFERRED_ARMS_RELEASE_REPO: fiveages-sim/arms_ros2_control
+      FALLBACK_ARMS_RELEASE_REPO: YangLuo-Bionics/arms_ros2_control
+      PREFERRED_OCS2_RELEASE_REPO: legubiao/ocs2_ros2
+      FALLBACK_OCS2_RELEASE_REPO: YangLuo-Bionics/ocs2_ros2
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: false
+
+      - name: Resolve release metadata
+        id: meta
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+          INPUT_ROS_DISTRO: ${{ github.event.inputs.ros_distro }}
+          INPUT_OCS2_TAG: ${{ github.event.inputs.ocs2_release_tag }}
+          INPUT_ARMS_TAG: ${{ github.event.inputs.arms_release_tag }}
+        run: |
+          set -eo pipefail
+
+          resolve_dependency_release_tag() {
+            local requested_tag="$1"
+            local primary_repo="$2"
+            local fallback_repo="$3"
+            local dependency_name="$4"
+
+            if [[ -n "${requested_tag:-}" && "${requested_tag}" != [vV]* ]]; then
+              requested_tag="v${requested_tag}"
+            fi
+
+            if [[ -n "${requested_tag:-}" ]]; then
+              if gh release view "$requested_tag" --repo "$primary_repo" --json tagName >/dev/null 2>&1 \
+                || gh release view "$requested_tag" --repo "$fallback_repo" --json tagName >/dev/null 2>&1; then
+                printf '%s\n' "$requested_tag"
+                return 0
+              fi
+              echo "Unable to find release tag ${requested_tag} for ${dependency_name} in ${primary_repo} or ${fallback_repo}." >&2
+              exit 1
+            fi
+
+            local resolved_tag=""
+            resolved_tag="$(gh release view --repo "$primary_repo" --json tagName --jq .tagName 2>/dev/null || true)"
+            if [[ -n "${resolved_tag}" ]]; then
+              printf '%s\n' "$resolved_tag"
+              return 0
+            fi
+            resolved_tag="$(gh release view --repo "$fallback_repo" --json tagName --jq .tagName 2>/dev/null || true)"
+            if [[ -n "${resolved_tag}" ]]; then
+              printf '%s\n' "$resolved_tag"
+              return 0
+            fi
+            echo "Unable to find any published release for ${dependency_name} in ${primary_repo} or ${fallback_repo}." >&2
+            exit 1
+          }
+
+          if [[ -n "${INPUT_TAG:-}" ]]; then
+            tag="$INPUT_TAG"
+          elif [[ "${GITHUB_REF_TYPE:-}" == "tag" ]]; then
+            tag="${GITHUB_REF_NAME}"
+          else
+            echo "A release tag is required for workflow_dispatch." >&2
+            exit 1
+          fi
+          if [[ "${tag}" != [vV]* ]]; then
+            tag="v${tag}"
+          fi
+
+          version="${tag#v}"
+          version="${version#V}"
+          version="$(printf '%s' "$version" | sed 's/-/~/g')"
+
+          if [[ -z "$version" ]]; then
+            echo "Unable to derive a package version from tag: $tag" >&2
+            exit 1
+          fi
+
+          ros_distro="${INPUT_ROS_DISTRO:-$DEFAULT_ROS_DISTRO}"
+          ocs2_tag="$(resolve_dependency_release_tag \
+            "${INPUT_OCS2_TAG:-}" \
+            "$PREFERRED_OCS2_RELEASE_REPO" \
+            "$FALLBACK_OCS2_RELEASE_REPO" \
+            "ocs2_ros2")"
+
+          arms_tag="$(resolve_dependency_release_tag \
+            "${INPUT_ARMS_TAG:-}" \
+            "$PREFERRED_ARMS_RELEASE_REPO" \
+            "$FALLBACK_ARMS_RELEASE_REPO" \
+            "arms_ros2_control")"
+
+          deb_file="${DEB_FILE_PREFIX}_${version}_amd64.deb"
+
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "ros_distro=$ros_distro" >> "$GITHUB_OUTPUT"
+          echo "deb_file=$deb_file" >> "$GITHUB_OUTPUT"
+          echo "ocs2_tag=$ocs2_tag" >> "$GITHUB_OUTPUT"
+          echo "arms_tag=$arms_tag" >> "$GITHUB_OUTPUT"
+
+      - name: Initialize repository submodules
+        shell: bash
+        env:
+          SUBMODULES_TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
+        run: |
+          set -eo pipefail
+
+          if [[ ! -f .gitmodules ]]; then
+            exit 0
+          fi
+
+          if [[ -z "${SUBMODULES_TOKEN:-}" ]]; then
+            echo "::notice::SUBMODULES_TOKEN is empty: cloning submodules over anonymous HTTPS. Required only if any submodule repo is private (see README.deb.md)."
+          fi
+
+          while IFS=$'\t' read -r path url; do
+            [[ -n "${path:-}" ]] || continue
+            resolved_url="$url"
+
+            if [[ -n "${SUBMODULES_TOKEN:-}" ]]; then
+              resolved_url="${resolved_url/git@github.com:/https://x-access-token:${SUBMODULES_TOKEN}@github.com/}"
+              resolved_url="${resolved_url/https:\/\/github.com\//https://x-access-token:${SUBMODULES_TOKEN}@github.com/}"
+            else
+              resolved_url="${resolved_url/git@github.com:/https://github.com/}"
+            fi
+
+            git submodule set-url "$path" "$resolved_url"
+          done < <(
+            git config --file .gitmodules --get-regexp '^submodule\..*\.path$' \
+              | while read -r key path; do
+                  name="${key#submodule.}"
+                  name="${name%.path}"
+                  url="$(git config --file .gitmodules --get "submodule.${name}.url")"
+                  printf '%s\t%s\n' "$path" "$url"
+                done
+          )
+
+          # Do not init FiveAges W1/W2 (out of packaging scope; private fa-w1/fa-w2 repos not needed in CI).
+          _submodules_to_init=(
+            common
+            manipulator/Dobot
+            manipulator/Tianji
+            manipulator/Rokae
+            quadruped
+            manipulator/ARX
+            humanoid/Ubtech
+          )
+          for _path in "${_submodules_to_init[@]}"; do
+            git submodule update --init --recursive --depth 1 "$_path"
+          done
+
+      - name: Validate workspace payload
+        shell: bash
+        run: |
+          set -eo pipefail
+
+          if [[ ! -d common ]]; then
+            echo "common submodule directory is missing." >&2
+            exit 1
+          fi
+
+          if [[ ! -f common/robot_common_launch/package.xml ]]; then
+            echo "robot_common_launch/package.xml is missing from common." >&2
+            exit 1
+          fi
+
+      - name: Install system tools
+        shell: bash
+        run: |
+          set -eo pipefail
+
+          sudo apt-get update
+          sudo apt-get install -y curl gnupg lsb-release software-properties-common
+          sudo add-apt-repository universe
+
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
+            | sudo gpg --dearmor -o /etc/apt/keyrings/ros-archive-keyring.gpg
+
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME}") main" \
+            | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+          sudo apt-get update
+          sudo apt-get install -y \
+            python3-rosdep \
+            python3-colcon-core \
+            python3-colcon-common-extensions \
+            python3-vcstool \
+            python3-pip \
+            python3-catkin-pkg-modules \
+            fakeroot \
+            dpkg-dev \
+            rsync \
+            build-essential \
+            cmake \
+            ros-${{ steps.meta.outputs.ros_distro }}-ament-cmake \
+            ros-${{ steps.meta.outputs.ros_distro }}-ament-cmake-core \
+            ros-${{ steps.meta.outputs.ros_distro }}-ament-package \
+            ros-${{ steps.meta.outputs.ros_distro }}-ros-base
+
+          sudo rosdep init || true
+          rosdep update
+
+          source "/opt/ros/${{ steps.meta.outputs.ros_distro }}/setup.bash"
+          python3 -c "import ament_package; print('ament_package ready:', ament_package.__file__)"
+
+      - name: Download dependency debs
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OCS2_TAG: ${{ steps.meta.outputs.ocs2_tag }}
+          ARMS_TAG: ${{ steps.meta.outputs.arms_tag }}
+        run: |
+          set -eo pipefail
+
+          deps_dir="${RUNNER_TEMP}/dependency-debs"
+          rm -rf "$deps_dir"
+          mkdir -p "$deps_dir"
+
+          try_download() {
+            local tag="$1" repo="$2" label="$3"
+            shift 3
+            local p
+            for p in "$@"; do
+              if gh release download "$tag" --repo "$repo" --pattern "$p" --dir "$deps_dir" 2>/dev/null; then
+                return 0
+              fi
+            done
+            echo "No asset matched any pattern for ${label} (${repo}@${tag}). Published assets:" >&2
+            gh release view "$tag" --repo "$repo" --json assets --jq '.assets[].name' >&2 || true
+            return 1
+          }
+
+          try_download_from_repos() {
+            local tag="$1" label="$2" primary="$3" fallback="$4"
+            shift 4
+            local repo
+            for repo in "$primary" "$fallback"; do
+              if ! gh release view "$tag" --repo "$repo" --json tagName >/dev/null 2>&1; then
+                continue
+              fi
+              if try_download "$tag" "$repo" "$label" "$@"; then
+                return 0
+              fi
+            done
+            echo "Could not download ${label} from ${primary} or ${fallback} @ ${tag} (no matching asset)." >&2
+            for repo in "$primary" "$fallback"; do
+              if gh release view "$tag" --repo "$repo" --json tagName >/dev/null 2>&1; then
+                echo "Assets on ${repo}@${tag}:" >&2
+                gh release view "$tag" --repo "$repo" --json assets --jq '.assets[].name' >&2 || true
+              fi
+            done
+            return 1
+          }
+
+          try_download_from_repos "$OCS2_TAG" "ocs2" "$PREFERRED_OCS2_RELEASE_REPO" "$FALLBACK_OCS2_RELEASE_REPO" \
+            "${OCS2_DEB_FILE_PREFIX}_*_amd64.deb" \
+            "*${OCS2_DEB_FILE_PREFIX}*_amd64.deb" \
+            "*ocs2*jazzy*mobile-manipulator*_amd64.deb"
+
+          # Same tag can receive assets from multiple workflows minutes apart (e.g. gripper-common before arms bundle). Retry instead of widening patterns.
+          arms_ok=0
+          for _attempt in $(seq 1 8); do
+            if try_download_from_repos "$ARMS_TAG" "arms" "$PREFERRED_ARMS_RELEASE_REPO" "$FALLBACK_ARMS_RELEASE_REPO" \
+              "${ARMS_DEB_FILE_PREFIX}_*_amd64.deb" \
+              "*${ARMS_DEB_FILE_PREFIX}*_amd64.deb" \
+              "*arms*ros2*control*jazzy*_amd64.deb"; then
+              arms_ok=1
+              break
+            fi
+            if [[ "$_attempt" -lt 8 ]]; then
+              echo "Arms bundle deb not found yet (try ${_attempt}/8). Releases often upload gripper-common and main bundle at different times; sleeping 45s before retry." >&2
+              sleep 45
+            fi
+          done
+          if [[ "$arms_ok" -ne 1 ]]; then
+            echo "Could not download arms bundle after 8 attempts (~5 min)." >&2
+            for _repo in "$PREFERRED_ARMS_RELEASE_REPO" "$FALLBACK_ARMS_RELEASE_REPO"; do
+              if ! gh release view "$ARMS_TAG" --repo "$_repo" --json tagName >/dev/null 2>&1; then
+                continue
+              fi
+              _assets="$(gh release view "$ARMS_TAG" --repo "$_repo" --json assets --jq '.assets[].name' 2>/dev/null || true)"
+              if echo "$_assets" | grep -qE 'gripper_hardware|gripper.hardware' && ! echo "$_assets" | grep -qF "${ARMS_DEB_FILE_PREFIX}"; then
+                echo "" >&2
+                echo "This release has gripper-hardware-common .deb(s) but not ${ARMS_DEB_FILE_PREFIX}_*.deb." >&2
+                echo "Robots deb CI needs the **Bundle arms deb** (workflow: release-arms-ros2-control-deb), not the separate gripper-common deb." >&2
+                echo "Upload arms-ros2-control-jazzy_*.deb to ${_repo}@${ARMS_TAG}, or use a tag whose release includes it." >&2
+                break
+              fi
+            done
+            exit 1
+          fi
+
+          resolve_one_deb() {
+            local dir="$1" prefix="$2" label="$3"
+            shopt -s nullglob
+            local matches=("$dir/${prefix}"_*_amd64.deb)
+            if [[ ${#matches[@]} -eq 0 ]]; then
+              matches=("$dir"/*"${prefix}"*_amd64.deb)
+            fi
+            if [[ ${#matches[@]} -ne 1 ]]; then
+              echo "Expected exactly one ${label} .deb in ${dir}, got ${#matches[@]}: ${matches[*]}" >&2
+              ls -la "$dir" >&2 || true
+              exit 1
+            fi
+            printf '%s\n' "${matches[0]}"
+          }
+
+          ocs2_path="$(resolve_one_deb "$deps_dir" "$OCS2_DEB_FILE_PREFIX" "OCS2")"
+          arms_path="$(resolve_one_deb "$deps_dir" "$ARMS_DEB_FILE_PREFIX" "arms")"
+          {
+            echo "OCS2_DEB_PATH=$ocs2_path"
+            echo "ARMS_DEB_PATH=$arms_path"
+          } >> "$GITHUB_ENV"
+
+      - name: Install dependency files into ROS prefix
+        shell: bash
+        run: |
+          set -eo pipefail
+
+          extract_root="${RUNNER_TEMP}/dependency-extract"
+          rm -rf "$extract_root"
+          mkdir -p "$extract_root/ocs2" "$extract_root/arms"
+
+          dpkg-deb -x "$OCS2_DEB_PATH" "$extract_root/ocs2"
+          dpkg-deb -x "$ARMS_DEB_PATH" "$extract_root/arms"
+
+          sudo rsync -a "$extract_root/ocs2${INSTALL_PREFIX}/" "${INSTALL_PREFIX}/"
+          sudo rsync -a "$extract_root/arms${INSTALL_PREFIX}/" "${INSTALL_PREFIX}/"
+
+      - name: Install external ROS dependencies
+        shell: bash
+        env:
+          ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
+        run: |
+          set -eo pipefail
+          source "/opt/ros/${ROS_DISTRO}/setup.bash"
+
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
+          export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
+
+          rosdep install \
+            --from-paths . \
+            --ignore-src \
+            --rosdistro "${ROS_DISTRO}" \
+            --reinstall \
+            -r \
+            -y \
+            --skip-keys "ocs2_arm_controller basic_joint_controller adaptive_gripper_controller unitree_ros2_control"
+
+      - name: Build common underlay
+        shell: bash
+        env:
+          ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
+        run: |
+          set -eo pipefail
+          source "/opt/ros/${ROS_DISTRO}/setup.bash"
+
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
+          export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
+
+          underlay_root="${RUNNER_TEMP}/robot-descriptions-common-underlay"
+          rm -rf "$underlay_root"
+          mkdir -p "$underlay_root"
+
+          colcon --log-base "${underlay_root}/log" build \
+            --base-paths "${GITHUB_WORKSPACE}/common" \
+            --build-base "${underlay_root}/build" \
+            --install-base "${underlay_root}/install" \
+            --merge-install
+
+          if [[ ! -f "${underlay_root}/install/setup.bash" ]]; then
+            echo "Common underlay setup.bash was not generated." >&2
+            exit 1
+          fi
+
+      - name: Build robots install space
+        shell: bash
+        env:
+          ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
+        run: |
+          set -eo pipefail
+          source "/opt/ros/${ROS_DISTRO}/setup.bash"
+          source "${RUNNER_TEMP}/robot-descriptions-common-underlay/install/setup.bash"
+
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
+          export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
+
+          source_root="${RUNNER_TEMP}/robot-descriptions-robots-src"
+          build_root="${RUNNER_TEMP}/colcon-robots"
+          package_root="${RUNNER_TEMP}/deb-build/package"
+          install_prefix="${INSTALL_PREFIX}"
+          install_root="${package_root}${install_prefix}"
+
+          rm -rf "$source_root" "$build_root" "$package_root"
+          mkdir -p "$source_root" "$build_root" "$package_root"
+
+          rsync -a \
+            --exclude ".git/" \
+            --exclude ".github/" \
+            --exclude "common/" \
+            --exclude "quadruped/" \
+            --exclude "humanoid/Booster/" \
+            --exclude "humanoid/RobotEra/" \
+            --exclude "humanoid/Agibot/agibot_a2_description/" \
+            --exclude "humanoid/FiveAges/fiveages_w1_description/" \
+            --exclude "humanoid/FiveAges/fiveages_w2_description/" \
+            --exclude "manipulator/Elite/" \
+            --exclude "manipulator/LeRobot/" \
+            --exclude "manipulator/OpenArm/" \
+            --exclude "manipulator/Ragtime-Lab/" \
+            "${GITHUB_WORKSPACE}/" "${source_root}/"
+
+          if grep -R --include package.xml -n "<name>robot_common_launch</name>" "${source_root}" > /dev/null 2>&1; then
+            echo "common packages leaked into the robots source tree." >&2
+            exit 1
+          fi
+
+          colcon --log-base "${build_root}/log" build \
+            --base-paths "${source_root}" \
+            --build-base "${build_root}/build" \
+            --install-base "${install_root}" \
+            --merge-install
+
+          python3 -c "import sys; exec('''import os\ninstall_root = sys.argv[1]\nruntime_prefix = sys.argv[2]\nfor dirpath, _, filenames in os.walk(install_root):\n    for filename in filenames:\n        path = os.path.join(dirpath, filename)\n        try:\n            with open(path, 'r', encoding='utf-8') as f:\n                content = f.read()\n        except Exception:\n            continue\n        if install_root not in content:\n            continue\n        with open(path, 'w', encoding='utf-8') as f:\n            f.write(content.replace(install_root, runtime_prefix))''')" "$install_root" "$install_prefix"
+
+          rm -f \
+            "${install_root}/setup.bash" \
+            "${install_root}/setup.sh" \
+            "${install_root}/setup.zsh" \
+            "${install_root}/setup.ps1" \
+            "${install_root}/local_setup.bash" \
+            "${install_root}/local_setup.sh" \
+            "${install_root}/local_setup.zsh" \
+            "${install_root}/local_setup.ps1" \
+            "${install_root}/_local_setup_util.py" \
+            "${install_root}/_local_setup_util_sh.py" \
+            "${install_root}/_local_setup_util_ps1.py" \
+            "${install_root}/.colcon_install_layout" \
+            "${install_root}/COLCON_IGNORE"
+
+          if [[ ! -d "${install_root}/share/ament_index/resource_index/packages" ]]; then
+            echo "ament index was not generated in the robots install space." >&2
+            exit 1
+          fi
+
+      - name: Build deb package
+        id: build
+        shell: bash
+        env:
+          ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
+          VERSION: ${{ steps.meta.outputs.version }}
+          DEB_FILE: ${{ steps.meta.outputs.deb_file }}
+        run: |
+          set -eo pipefail
+
+          package_root="${RUNNER_TEMP}/deb-build/package"
+          install_prefix="${INSTALL_PREFIX}"
+
+          mkdir -p "$package_root/DEBIAN"
+          installed_size="$(du -sk "$package_root" | cut -f1)"
+
+          cat > "$package_root/DEBIAN/control" <<EOF
+          Package: ${PACKAGE_NAME}
+          Version: ${VERSION}
+          Section: misc
+          Priority: optional
+          Architecture: amd64
+          Depends: ros-${ROS_DISTRO}-ros-base, ${COMMON_PACKAGE_NAME}, ${ARMS_PACKAGE_NAME}
+          Maintainer: ${GITHUB_REPOSITORY} maintainers <github-actions[bot]@users.noreply.github.com>
+          Installed-Size: ${installed_size}
+          Description: Robot description ROS packages excluding common assets
+           Curated robots deb. Excludes quadruped/, FiveAges W1 & W2, humanoid Booster & RobotEra & Agibot A2, manipulator Elite/LeRobot/OpenArm/Ragtime-Lab. Installed into ${INSTALL_PREFIX} without shared prefix setup files.
+          EOF
+
+          if [[ ! -d "${package_root}${install_prefix}/share" ]]; then
+            echo "No packages were installed into the robots package root." >&2
+            exit 1
+          fi
+
+          dpkg-deb --root-owner-group --build "$package_root" "$DEB_FILE"
+
+          echo "deb_path=${GITHUB_WORKSPACE}/${DEB_FILE}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload deb to release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.meta.outputs.tag }}
+          DEB_PATH: ${{ steps.build.outputs.deb_path }}
+        run: |
+          set -eo pipefail
+
+          if ! gh release view "$TAG" > /dev/null 2>&1; then
+            gh release create "$TAG" \
+              --title "$TAG" \
+              --notes "Automated release for Debian packages."
+          fi
+
+          gh release upload "$TAG" "$DEB_PATH" --clobber
