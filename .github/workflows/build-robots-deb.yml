@@ -147,21 +147,6 @@ jobs:
           echo "ocs2_tag=$ocs2_tag" >> "$GITHUB_OUTPUT"
           echo "arms_tag=$arms_tag" >> "$GITHUB_OUTPUT"
 
-      # Without a PAT, private fiveages-sim submodules clone as anonymous HTTPS and fail with
-      # "could not read Username for 'https://github.com'".
-      - name: Check submodule token
-        shell: bash
-        env:
-          SUBMODULES_TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
-        run: |
-          set -eo pipefail
-          if [[ -z "${SUBMODULES_TOKEN}" ]]; then
-            echo "::error::Repository secret SUBMODULES_TOKEN is not set (or is empty)." >&2
-            echo "Build Robots Deb clones many submodules; several are private under fiveages-sim." >&2
-            echo "Create a classic PAT with **repo** read (or a fine-grained PAT with Contents read on those submodule repos), add it as Actions secret SUBMODULES_TOKEN on **this** repo. See README.deb.md." >&2
-            exit 1
-          fi
-
       - name: Initialize repository submodules
         shell: bash
         env:
@@ -171,6 +156,10 @@ jobs:
 
           if [[ ! -f .gitmodules ]]; then
             exit 0
+          fi
+
+          if [[ -z "${SUBMODULES_TOKEN:-}" ]]; then
+            echo "::notice::SUBMODULES_TOKEN is empty: cloning submodules over anonymous HTTPS. Required only if any submodule repo is private (see README.deb.md)."
           fi
 
           while IFS=$'\t' read -r path url; do
