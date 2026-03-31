@@ -108,37 +108,13 @@ source /opt/ros/jazzy/setup.bash
 
 因为这些 deb 也安装在 `/opt/ros/jazzy` 下，所以不再需要像旧版 `/opt/fa/...` 方案那样额外 source 每个独立前缀。
 
-## Workflow 中依赖包的获取策略
+## CI（Build Robots Deb）
 
-对于需要下载其他 deb 作为依赖的 workflow，目前采用以下策略：
+拉取依赖 deb 时：**优先上游 release**，否则回退 fork；若填写了依赖 tag，同样先上游再回退。
 
-- 优先从上游仓库的最新 release 获取
-- 如果上游仓库没有 release，再回退到当前 fork 仓库的 release
-- 如果手动指定了某个依赖 tag，则优先在上游仓库查找该 tag，找不到再回退到当前 fork 仓库
+**Build Robots Deb** 为 **手动触发**。建议打完 `common`、release 上已有 **主 arms bundle**（`arms-ros2-control-jazzy_*.deb`）后再跑。同一 tag 上若先上传了 gripper-common、后上传主 bundle，workflow 会对 arms **做多次重试**；仍失败可在 release 齐备后 **Re-run**。
 
-`robot-descriptions-jazzy-robots` 的 CI 仅支持 **手动触发**（`workflow_dispatch`），避免与 `common` 打同一 `v*` tag 时两条 workflow 一起跑。打完 `common`、发布好 `arms` 后，再在 Actions 里单独运行 **Build Robots Deb**，并填入 `v0.1.3` 等 tag 与依赖 release tag。
-
-`arms_ros2_control` 在同一 tag 上可能由 **不同 workflow 先后上传** 多个 `.deb`（例如先 `arms_gripper_hardware_common_*`，几分钟后才是 `arms-ros2-control-jazzy_*`）。若在主 bundle 还没出现在 release 上时就开跑，会短暂报「找不到 arms 包」。**Build Robots Deb** 已对 arms 下载做 **多次重试（间隔约 45s）**；若仍失败，等 release 上两个 deb 都齐后再 **Re-run job** 即可，一般**不必**改 glob 条件。
-
-**`SUBMODULES_TOKEN`（按需）**  
-Workflow **不会**强制要求配置；未设置时用匿名 `https://github.com/...` 克隆子模块，**全部公开仓即可通过**。
-
-当前 **Build Robots Deb** 会初始化的子模块对应仓库大致为（**W1/W2、manipulator/Tianji** 默认不进 deb、也不在 CI 里 `submodule update`，因对应仓常为私有或需单独授权）：
-
-| 路径 | `.gitmodules` 中的远程 |
-|------|-------------------------|
-| `common` | `fiveages-sim/robot-descriptions-common` |
-| `manipulator/Dobot` | `fiveages-sim/robot-descriptions-dobot` |
-| `manipulator/Rokae` | `fiveages-sim/robot-descriptions-rokae`（**常为私有**：未配置 `SUBMODULES_TOKEN` 时 CI **不** init、deb **不含** `rokae_ar5_description` 等） |
-| `quadruped` | `fiveages-sim/robot-descriptions-quadruped` |
-| `manipulator/ARX` | `fiveages-sim/robot-descriptions-arx` |
-| `humanoid/Ubtech` | `fiveages-sim/robot-descriptions-ubtech` |
-
-要把 **Tianji（M6 等）** 打进 deb，需改 workflow：恢复对 `manipulator/Tianji` 的 init/rsync，并配置能读 `robot-descriptions-tianji` 的 **`SUBMODULES_TOKEN`**。
-
-要把 **Rokae** 打进 deb，在仓库 **Actions secrets** 中配置可读 `robot-descriptions-rokae` 的 **`SUBMODULES_TOKEN`**（与 Tianji 相同用法）；未配置时流水线会跳过 Rokae 子模块并继续打包其余机型。
-
-其余路径**任一为私有**时，同样要在跑 Actions 的仓库配置 **`SUBMODULES_TOKEN`**（Settings → Secrets → Actions）：Classic PAT 勾选 **`repo`**，或 Fine-grained **Contents: Read**。若克隆失败并报 `could not read Username for 'https://github.com'`，即缺 token 或权限不足。Fork **不会继承** 上游 secret。
+子模块由 **`.github/workflows/build-robots-deb.yml`** 决定初始化与 rsync 范围（例如 W1/W2、**humanoid/Ubtech**、Tianji、quadruped 等默认不进了 deb）。**Ubtech** 仍可在主仓库 **`.gitmodules`** 里保留：本地需要时可 `git submodule update --init humanoid/Ubtech`，但 **Build Robots Deb** 不会克隆该路径也不会把它打进 robots deb。若某路径为**私有仓**导致匿名克隆报 `could not read Username for 'https://github.com'`，在仓库 **Settings → Secrets → Actions** 配置可读的 **`SUBMODULES_TOKEN`**；Fork **不继承** upstream secret。当前无 token 时 **Rokae** 子模块会被跳过，deb 不含对应描述包；要把 Tianji 等纳入打包需在 workflow 里改 init/rsync 并配 token。
 
 ## 备注
 
