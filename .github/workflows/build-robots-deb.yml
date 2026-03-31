@@ -8,6 +8,7 @@ name: Build Robots Deb
 # - humanoid/FiveAges/fiveages_w1_description/、humanoid/FiveAges/fiveages_w2_description/
 # - humanoid/Booster/、humanoid/RobotEra/、humanoid/Agibot/agibot_a2_description/
 # - manipulator/Tianji/（子模块常为私有；无 SUBMODULES_TOKEN 时 CI 不初始化、不进 deb）
+# - manipulator/Rokae/（robot-descriptions-rokae 常为私有；无 SUBMODULES_TOKEN 时同上）
 # - manipulator/Elite/、manipulator/LeRobot/、manipulator/OpenArm/、manipulator/Ragtime-Lab/
 on:
   workflow_dispatch:
@@ -189,11 +190,16 @@ jobs:
           _submodules_to_init=(
             common
             manipulator/Dobot
-            manipulator/Rokae
             quadruped
             manipulator/ARX
             humanoid/Ubtech
           )
+          if [[ -n "${SUBMODULES_TOKEN:-}" ]]; then
+            _submodules_to_init+=(manipulator/Rokae)
+          else
+            echo "::notice::Skipping manipulator/Rokae submodule init (SUBMODULES_TOKEN empty; fiveages-sim/robot-descriptions-rokae is private over anonymous HTTPS). Configure SUBMODULES_TOKEN to ship Rokae in the deb."
+            echo "EXCLUDE_ROKAE_FROM_DEB=1" >> "$GITHUB_ENV"
+          fi
           for _path in "${_submodules_to_init[@]}"; do
             git submodule update --init --recursive --depth 1 "$_path"
           done
@@ -444,22 +450,26 @@ jobs:
           rm -rf "$source_root" "$build_root" "$package_root"
           mkdir -p "$source_root" "$build_root" "$package_root"
 
-          rsync -a \
-            --exclude ".git/" \
-            --exclude ".github/" \
-            --exclude "common/" \
-            --exclude "quadruped/" \
-            --exclude "humanoid/Booster/" \
-            --exclude "humanoid/RobotEra/" \
-            --exclude "humanoid/Agibot/agibot_a2_description/" \
-            --exclude "humanoid/FiveAges/fiveages_w1_description/" \
-            --exclude "humanoid/FiveAges/fiveages_w2_description/" \
-            --exclude "manipulator/Tianji/" \
-            --exclude "manipulator/Elite/" \
-            --exclude "manipulator/LeRobot/" \
-            --exclude "manipulator/OpenArm/" \
-            --exclude "manipulator/Ragtime-Lab/" \
-            "${GITHUB_WORKSPACE}/" "${source_root}/"
+          rsync_excludes=(
+            --exclude ".git/"
+            --exclude ".github/"
+            --exclude "common/"
+            --exclude "quadruped/"
+            --exclude "humanoid/Booster/"
+            --exclude "humanoid/RobotEra/"
+            --exclude "humanoid/Agibot/agibot_a2_description/"
+            --exclude "humanoid/FiveAges/fiveages_w1_description/"
+            --exclude "humanoid/FiveAges/fiveages_w2_description/"
+            --exclude "manipulator/Tianji/"
+            --exclude "manipulator/Elite/"
+            --exclude "manipulator/LeRobot/"
+            --exclude "manipulator/OpenArm/"
+            --exclude "manipulator/Ragtime-Lab/"
+          )
+          if [[ "${EXCLUDE_ROKAE_FROM_DEB:-}" == "1" ]]; then
+            rsync_excludes+=(--exclude "manipulator/Rokae/")
+          fi
+          rsync -a "${rsync_excludes[@]}" "${GITHUB_WORKSPACE}/" "${source_root}/"
 
           if grep -R --include package.xml -n "<name>robot_common_launch</name>" "${source_root}" > /dev/null 2>&1; then
             echo "common packages leaked into the robots source tree." >&2
@@ -510,6 +520,11 @@ jobs:
           mkdir -p "$package_root/DEBIAN"
           installed_size="$(du -sk "$package_root" | cut -f1)"
 
+          rokae_ci_note=""
+          if [[ "${EXCLUDE_ROKAE_FROM_DEB:-}" == "1" ]]; then
+            rokae_ci_note=" manipulator Rokae (no SUBMODULES_TOKEN in CI),"
+          fi
+
           cat > "$package_root/DEBIAN/control" <<EOF
           Package: ${PACKAGE_NAME}
           Version: ${VERSION}
@@ -520,7 +535,7 @@ jobs:
           Maintainer: ${GITHUB_REPOSITORY} maintainers <github-actions[bot]@users.noreply.github.com>
           Installed-Size: ${installed_size}
           Description: Robot description ROS packages excluding common assets
-           Curated robots deb. Excludes quadruped/, FiveAges W1 & W2, manipulator Tianji (private submodule in default CI), humanoid Booster & RobotEra & Agibot A2, manipulator Elite/LeRobot/OpenArm/Ragtime-Lab. Installed into ${INSTALL_PREFIX} without shared prefix setup files.
+           Curated robots deb. Excludes quadruped/, FiveAges W1 & W2, manipulator Tianji (private submodule in default CI),${rokae_ci_note} humanoid Booster & RobotEra & Agibot A2, manipulator Elite/LeRobot/OpenArm/Ragtime-Lab. Installed into ${INSTALL_PREFIX} without shared prefix setup files.
           EOF
 
           if [[ ! -d "${package_root}${install_prefix}/share" ]]; then
