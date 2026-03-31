@@ -129,12 +129,14 @@ Workflow **不会**强制要求配置；未设置时用匿名 `https://github.co
 |------|-------------------------|
 | `common` | `fiveages-sim/robot-descriptions-common` |
 | `manipulator/Dobot` | `fiveages-sim/robot-descriptions-dobot` |
-| `manipulator/Rokae` | `fiveages-sim/robot-descriptions-rokae` |
+| `manipulator/Rokae` | `fiveages-sim/robot-descriptions-rokae`（**常为私有**：未配置 `SUBMODULES_TOKEN` 时 CI **不** init、deb **不含** `rokae_ar5_description` 等） |
 | `quadruped` | `fiveages-sim/robot-descriptions-quadruped` |
 | `manipulator/ARX` | `fiveages-sim/robot-descriptions-arx` |
 | `humanoid/Ubtech` | `fiveages-sim/robot-descriptions-ubtech` |
 
 要把 **Tianji（M6 等）** 打进 deb，需改 workflow：恢复对 `manipulator/Tianji` 的 init/rsync，并配置能读 `robot-descriptions-tianji` 的 **`SUBMODULES_TOKEN`**。
+
+要把 **Rokae** 打进 deb，在仓库 **Actions secrets** 中配置可读 `robot-descriptions-rokae` 的 **`SUBMODULES_TOKEN`**（与 Tianji 相同用法）；未配置时流水线会跳过 Rokae 子模块并继续打包其余机型。
 
 其余路径**任一为私有**时，同样要在跑 Actions 的仓库配置 **`SUBMODULES_TOKEN`**（Settings → Secrets → Actions）：Classic PAT 勾选 **`repo`**，或 Fine-grained **Contents: Read**。若克隆失败并报 `could not read Username for 'https://github.com'`，即缺 token 或权限不足。Fork **不会继承** 上游 secret。
 
