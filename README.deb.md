@@ -123,19 +123,20 @@ source /opt/ros/jazzy/setup.bash
 **`SUBMODULES_TOKEN`（按需）**  
 Workflow **不会**强制要求配置；未设置时用匿名 `https://github.com/...` 克隆子模块，**全部公开仓即可通过**。
 
-当前 **Build Robots Deb** 会初始化的子模块（W1/W2 已排除）对应仓库大致为：
+当前 **Build Robots Deb** 会初始化的子模块对应仓库大致为（**W1/W2、manipulator/Tianji** 默认不进 deb、也不在 CI 里 `submodule update`，因对应仓常为私有或需单独授权）：
 
 | 路径 | `.gitmodules` 中的远程 |
 |------|-------------------------|
 | `common` | `fiveages-sim/robot-descriptions-common` |
 | `manipulator/Dobot` | `fiveages-sim/robot-descriptions-dobot` |
-| `manipulator/Tianji` | `fiveages-sim/robot-descriptions-tianji` |
 | `manipulator/Rokae` | `fiveages-sim/robot-descriptions-rokae` |
 | `quadruped` | `fiveages-sim/robot-descriptions-quadruped` |
 | `manipulator/ARX` | `fiveages-sim/robot-descriptions-arx` |
 | `humanoid/Ubtech` | `fiveages-sim/robot-descriptions-ubtech` |
 
-其中**任一为私有**时，须在跑 Actions 的仓库配置 **`SUBMODULES_TOKEN`**（Settings → Secrets → Actions）：Classic PAT 勾选 **`repo`**，或 Fine-grained 对上述仓库 **Contents: Read**。若克隆失败并报 `could not read Username for 'https://github.com'`，即缺 token 或 PAT 权限不足。Fork **不会继承** 上游 secret。
+要把 **Tianji（M6 等）** 打进 deb，需改 workflow：恢复对 `manipulator/Tianji` 的 init/rsync，并配置能读 `robot-descriptions-tianji` 的 **`SUBMODULES_TOKEN`**。
+
+其余路径**任一为私有**时，同样要在跑 Actions 的仓库配置 **`SUBMODULES_TOKEN`**（Settings → Secrets → Actions）：Classic PAT 勾选 **`repo`**，或 Fine-grained **Contents: Read**。若克隆失败并报 `could not read Username for 'https://github.com'`，即缺 token 或权限不足。Fork **不会继承** 上游 secret。
 
 ## 备注
 
