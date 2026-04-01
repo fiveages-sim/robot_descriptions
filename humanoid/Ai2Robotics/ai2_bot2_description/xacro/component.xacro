@@ -9,7 +9,7 @@
     - arms (arms only, like FiveAges W2): no body, no chassis, no ego; base_link exists for RViz fixed frame
     - left_arm / right_arm: root = base_link, both arms only, no body/chassis/ego
 -->
-<robot name="Ai2_Bot2_Arms" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Ai2_Bot2" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- component.launch.py default should show the base -->
   <xacro:arg name="type" default="base"/>
