@@ -67,3 +67,10 @@ ros2 launch ocs2_arm_controller demo.launch.py robot:=aidal hardware:=isaac
 source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=aidal hardware:=isaac type:=eg2-4c2
 ```
+
+## 4. Navigation (Isaac Sim Ground Truth Odom)
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_common_launch navigation_isaac_gt.launch.py robot:=aidal
+```

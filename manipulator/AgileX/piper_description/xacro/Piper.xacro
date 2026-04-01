@@ -19,7 +19,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/visual/base_link.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/base_link.glb"/>
         </geometry>
       </visual>
       <collision>
@@ -37,7 +37,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/visual/link1.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/link1.glb"/>
         </geometry>
       </visual>
       <collision>
@@ -62,7 +62,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find piper_description)/meshes/visual/link2.obj"/>
+          <mesh filename="file://$(find piper_description)/meshes/visual/link2.glb"/>
         </geometry>
       </visual>
       <collision>
