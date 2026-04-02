@@ -262,6 +262,13 @@
 			<child link="lidar_link"/>
 		</joint>
 
+		<link name="lidar_frame"/>
+		<joint name="lidar_frame_joint" type="fixed">
+			<origin xyz="0 0 0.06"/>
+			<parent link="lidar_link"/>
+			<child link="lidar_frame"/>
+		</joint>
+
 		<link name="chassis_camera">
 			<visual>
 				<geometry>
