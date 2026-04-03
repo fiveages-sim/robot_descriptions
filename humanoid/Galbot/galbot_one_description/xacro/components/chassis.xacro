@@ -104,5 +104,12 @@
       <child link="chassis_lidar"/>
       <origin xyz="0.222 0 0.22772"/>
     </joint>
+
+    <link name="chassis_lidar_frame"/>
+    <joint name="chassis_lidar_frame_joint" type="fixed">
+      <origin xyz="0 0 0.012"/>
+      <parent link="chassis_lidar"/>
+      <child link="chassis_lidar_frame"/>
+    </joint>
   </xacro:macro>
 </robot>
