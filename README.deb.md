@@ -108,13 +108,13 @@ source /opt/ros/jazzy/setup.bash
 
 因为这些 deb 也安装在 `/opt/ros/jazzy` 下，所以不再需要像旧版 `/opt/fa/...` 方案那样额外 source 每个独立前缀。
 
-## CI（Build Robots Deb）
+## CI
 
-拉取依赖 deb 时：**优先上游 release**，否则回退 fork；若填写了依赖 tag，同样先上游再回退。
+**`robot-descriptions-jazzy-common`**：在子仓库 [fiveages-sim/robot-descriptions-common](https://github.com/fiveages-sim/robot-descriptions-common) 运行 **`.github/workflows/build-common-deb.yml`**（`push` `v*` tag 或 **workflow_dispatch**），在同一 tag 的 release 上上传 `robot-descriptions-jazzy-common_*.deb`。
 
-**Build Robots Deb** 为 **手动触发**。建议打完 `common`、release 上已有 **主 arms bundle**（`arms-ros2-control-jazzy_*.deb`）后再跑。同一 tag 上若先上传了 gripper-common、后上传主 bundle，workflow 会对 arms **做多次重试**；仍失败可在 release 齐备后 **Re-run**。
+**Build Robots Deb**：主仓库 **`.github/workflows/build-robots-deb.yml`**，**`push` `v*` tag** 或 **workflow_dispatch**。会从 release 拉取 **ocs2**、**common deb**、**arms** 并解压到 `/opt/ros/jazzy` 再编译 robots。未填 `common_release_tag` 时：若 common 仓库上存在与 robots **同名 tag** 的 release 则用之，否则用 common 仓库的 **latest**。common / arms 的 asset 若晚几分钟上传，workflow 会 **重试**。
 
-子模块由 **`.github/workflows/build-robots-deb.yml`** 决定初始化与 rsync 范围（例如 W1/W2、**humanoid/Ubtech**、Tianji、quadruped 等默认不进了 deb）。**Ubtech** 仍可在主仓库 **`.gitmodules`** 里保留：本地需要时可 `git submodule update --init humanoid/Ubtech`，但 **Build Robots Deb** 不会克隆该路径也不会把它打进 robots deb。若某路径为**私有仓**导致匿名克隆报 `could not read Username for 'https://github.com'`，在仓库 **Settings → Secrets → Actions** 配置可读的 **`SUBMODULES_TOKEN`**；Fork **不继承** upstream secret。当前无 token 时 **Rokae** 子模块会被跳过，deb 不含对应描述包；要把 Tianji 等纳入打包需在 workflow 里改 init/rsync 并配 token。
+子模块 init/rsync 仍由 robots workflow 决定（W1/W2、Ubtech、Tianji、quadruped 等）；CI **不再编译** 主仓里的 `common` 子模块。私有子模块需 **`SUBMODULES_TOKEN`**；无 token 时 **Rokae** 会被跳过。
 
 ## 备注
 

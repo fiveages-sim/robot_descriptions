@@ -1,7 +1,7 @@
 name: Build Robots Deb
 
-# Robots deb 依赖 ocs2 + arms 的 release，建议在 common tag 打完、arms release 就绪后再手动触发，
-# 避免与 Build Common Deb 共用 push tag（否则同一 v* tag 会同时跑 common + robots 两个 workflow）。
+# Robots deb 依赖 ocs2 + arms + robot-descriptions-common（.common deb 在子仓库 fiveages-sim/robot-descriptions-common 的 release 上发布，见该仓 .github/workflows/build-common-deb.yml）。
+# 可 push v* tag 到本仓库触发，或 workflow_dispatch；建议 common / arms 的对应 tag release _asset 已就绪后再跑 robots。
 #
 # 打包范围：以下路径不参与 rsync / 不进 deb（子模块也不初始化 w1/w2，见 Initialize 步骤）：
 # - quadruped/ 整目录
@@ -12,6 +12,9 @@ name: Build Robots Deb
 # - humanoid/Ubtech/（子模块仍在 .gitmodules 供本地克隆；本 workflow 不 init、rsync 排除，不进 deb）
 # - manipulator/Elite/、manipulator/LeRobot/、manipulator/OpenArm/、manipulator/Ragtime-Lab/
 on:
+  push:
+    tags:
+      - "v*"
   workflow_dispatch:
     inputs:
       tag:
@@ -22,6 +25,10 @@ on:
         description: ROS distro used in the install path
         required: false
         default: jazzy
+        type: string
+      common_release_tag:
+        description: Release tag to fetch robot-descriptions-jazzy-common .deb (optional; default = same as robots tag if that release exists on common repo, else latest common release)
+        required: false
         type: string
       ocs2_release_tag:
         description: Release tag used to fetch the ocs2_ros2 bundle (optional; leave blank to use the latest release, preferring the upstream repo and falling back to this fork)
@@ -46,8 +53,11 @@ jobs:
       OCS2_PACKAGE_NAME: ocs2-ros2-jazzy-mobile-manipulator
       ARMS_DEB_FILE_PREFIX: arms-ros2-control-jazzy
       OCS2_DEB_FILE_PREFIX: ocs2-ros2-jazzy-mobile-manipulator
+      COMMON_DEB_FILE_PREFIX: robot-descriptions-jazzy-common
       INSTALL_PREFIX: /opt/ros/jazzy
       DEFAULT_ROS_DISTRO: jazzy
+      PREFERRED_COMMON_RELEASE_REPO: fiveages-sim/robot-descriptions-common
+      FALLBACK_COMMON_RELEASE_REPO: YangLuo-Bionics/robot-descriptions-common
       PREFERRED_ARMS_RELEASE_REPO: fiveages-sim/arms_ros2_control
       FALLBACK_ARMS_RELEASE_REPO: YangLuo-Bionics/arms_ros2_control
       PREFERRED_OCS2_RELEASE_REPO: legubiao/ocs2_ros2
@@ -67,6 +77,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           INPUT_TAG: ${{ github.event.inputs.tag }}
           INPUT_ROS_DISTRO: ${{ github.event.inputs.ros_distro }}
+          INPUT_COMMON_TAG: ${{ github.event.inputs.common_release_tag }}
           INPUT_OCS2_TAG: ${{ github.event.inputs.ocs2_release_tag }}
           INPUT_ARMS_TAG: ${{ github.event.inputs.arms_release_tag }}
         run: |
@@ -141,12 +152,32 @@ jobs:
             "$FALLBACK_ARMS_RELEASE_REPO" \
             "arms_ros2_control")"
 
+          if [[ -n "${INPUT_COMMON_TAG:-}" ]]; then
+            common_tag="$(resolve_dependency_release_tag \
+              "${INPUT_COMMON_TAG}" \
+              "$PREFERRED_COMMON_RELEASE_REPO" \
+              "$FALLBACK_COMMON_RELEASE_REPO" \
+              "robot_descriptions_common")"
+          else
+            if gh release view "$tag" --repo "$PREFERRED_COMMON_RELEASE_REPO" --json tagName >/dev/null 2>&1 \
+              || gh release view "$tag" --repo "$FALLBACK_COMMON_RELEASE_REPO" --json tagName >/dev/null 2>&1; then
+              common_tag="$tag"
+            else
+              common_tag="$(resolve_dependency_release_tag \
+                "" \
+                "$PREFERRED_COMMON_RELEASE_REPO" \
+                "$FALLBACK_COMMON_RELEASE_REPO" \
+                "robot_descriptions_common")"
+            fi
+          fi
+
           deb_file="${DEB_FILE_PREFIX}_${version}_amd64.deb"
 
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "ros_distro=$ros_distro" >> "$GITHUB_OUTPUT"
           echo "deb_file=$deb_file" >> "$GITHUB_OUTPUT"
+          echo "common_tag=$common_tag" >> "$GITHUB_OUTPUT"
           echo "ocs2_tag=$ocs2_tag" >> "$GITHUB_OUTPUT"
           echo "arms_tag=$arms_tag" >> "$GITHUB_OUTPUT"
 
@@ -190,7 +221,6 @@ jobs:
           # Do not init FiveAges W1/W2 (out of packaging scope; private fa-w1/fa-w2 repos not needed in CI).
           # Do not init humanoid/Ubtech: keep submodule in repo for developers, but exclude from robots deb (see rsync below).
           _submodules_to_init=(
-            common
             manipulator/Dobot
             quadruped
             manipulator/ARX
@@ -204,21 +234,6 @@ jobs:
           for _path in "${_submodules_to_init[@]}"; do
             git submodule update --init --recursive --depth 1 "$_path"
           done
-
-      - name: Validate workspace payload
-        shell: bash
-        run: |
-          set -eo pipefail
-
-          if [[ ! -d common ]]; then
-            echo "common submodule directory is missing." >&2
-            exit 1
-          fi
-
-          if [[ ! -f common/robot_common_launch/package.xml ]]; then
-            echo "robot_common_launch/package.xml is missing from common." >&2
-            exit 1
-          fi
 
       - name: Install system tools
         shell: bash
@@ -264,6 +279,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          COMMON_TAG: ${{ steps.meta.outputs.common_tag }}
           OCS2_TAG: ${{ steps.meta.outputs.ocs2_tag }}
           ARMS_TAG: ${{ steps.meta.outputs.arms_tag }}
         run: |
@@ -314,6 +330,25 @@ jobs:
             "*${OCS2_DEB_FILE_PREFIX}*_amd64.deb" \
             "*ocs2*jazzy*mobile-manipulator*_amd64.deb"
 
+          common_ok=0
+          for _attempt in $(seq 1 8); do
+            if try_download_from_repos "$COMMON_TAG" "robot-descriptions-common" "$PREFERRED_COMMON_RELEASE_REPO" "$FALLBACK_COMMON_RELEASE_REPO" \
+              "${COMMON_DEB_FILE_PREFIX}_*_amd64.deb" \
+              "*${COMMON_DEB_FILE_PREFIX}*_amd64.deb" \
+              "*robot*descriptions*jazzy*common*_amd64.deb"; then
+              common_ok=1
+              break
+            fi
+            if [[ "$_attempt" -lt 8 ]]; then
+              echo "Common deb not found yet (try ${_attempt}/8; tag ${COMMON_TAG}). If you just pushed this repo tag, run robot-descriptions-common Build Common Deb first or wait for upload. Sleeping 45s." >&2
+              sleep 45
+            fi
+          done
+          if [[ "$common_ok" -ne 1 ]]; then
+            echo "Could not download ${COMMON_DEB_FILE_PREFIX} after 8 attempts. Ensure fiveages-sim/robot-descriptions-common has a release at ${COMMON_TAG} with the common .deb asset." >&2
+            exit 1
+          fi
+
           # Same tag can receive assets from multiple workflows minutes apart (e.g. gripper-common before arms bundle). Retry instead of widening patterns.
           arms_ok=0
           for _attempt in $(seq 1 8); do
@@ -363,9 +398,11 @@ jobs:
           }
 
           ocs2_path="$(resolve_one_deb "$deps_dir" "$OCS2_DEB_FILE_PREFIX" "OCS2")"
+          common_path="$(resolve_one_deb "$deps_dir" "$COMMON_DEB_FILE_PREFIX" "common")"
           arms_path="$(resolve_one_deb "$deps_dir" "$ARMS_DEB_FILE_PREFIX" "arms")"
           {
             echo "OCS2_DEB_PATH=$ocs2_path"
+            echo "COMMON_DEB_PATH=$common_path"
             echo "ARMS_DEB_PATH=$arms_path"
           } >> "$GITHUB_ENV"
 
@@ -376,12 +413,14 @@ jobs:
 
           extract_root="${RUNNER_TEMP}/dependency-extract"
           rm -rf "$extract_root"
-          mkdir -p "$extract_root/ocs2" "$extract_root/arms"
+          mkdir -p "$extract_root/ocs2" "$extract_root/common" "$extract_root/arms"
 
           dpkg-deb -x "$OCS2_DEB_PATH" "$extract_root/ocs2"
+          dpkg-deb -x "$COMMON_DEB_PATH" "$extract_root/common"
           dpkg-deb -x "$ARMS_DEB_PATH" "$extract_root/arms"
 
           sudo rsync -a "$extract_root/ocs2${INSTALL_PREFIX}/" "${INSTALL_PREFIX}/"
+          sudo rsync -a "$extract_root/common${INSTALL_PREFIX}/" "${INSTALL_PREFIX}/"
           sudo rsync -a "$extract_root/arms${INSTALL_PREFIX}/" "${INSTALL_PREFIX}/"
 
       - name: Install external ROS dependencies
@@ -404,32 +443,6 @@ jobs:
             -y \
             --skip-keys "ocs2_arm_controller basic_joint_controller adaptive_gripper_controller unitree_ros2_control"
 
-      - name: Build common underlay
-        shell: bash
-        env:
-          ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
-        run: |
-          set -eo pipefail
-          source "/opt/ros/${ROS_DISTRO}/setup.bash"
-
-          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
-          export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
-
-          underlay_root="${RUNNER_TEMP}/robot-descriptions-common-underlay"
-          rm -rf "$underlay_root"
-          mkdir -p "$underlay_root"
-
-          colcon --log-base "${underlay_root}/log" build \
-            --base-paths "${GITHUB_WORKSPACE}/common" \
-            --build-base "${underlay_root}/build" \
-            --install-base "${underlay_root}/install" \
-            --merge-install
-
-          if [[ ! -f "${underlay_root}/install/setup.bash" ]]; then
-            echo "Common underlay setup.bash was not generated." >&2
-            exit 1
-          fi
-
       - name: Build robots install space
         shell: bash
         env:
@@ -437,7 +450,6 @@ jobs:
         run: |
           set -eo pipefail
           source "/opt/ros/${ROS_DISTRO}/setup.bash"
-          source "${RUNNER_TEMP}/robot-descriptions-common-underlay/install/setup.bash"
 
           ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
           export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
