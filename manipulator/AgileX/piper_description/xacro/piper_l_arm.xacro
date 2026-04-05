@@ -25,6 +25,14 @@
                     </geometry>
                 </collision>
             </xacro:if>
+            <xacro:if value="${collider == 'simple'}">
+                <collision>
+                    <origin xyz="-0.0035 0 0.045"/>
+                    <geometry>
+                        <cylinder length="0.07" radius="0.04"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
         </link>
 
         <link name="${prefix}link1">
@@ -74,6 +82,26 @@
                     </geometry>
                 </collision>
             </xacro:if>
+            <xacro:if value="${collider == 'simple'}">
+                <collision name="simple_link2_1">
+                    <origin xyz="0 0 0" rpy="0 0 0"/>
+                    <geometry>
+                        <cylinder length="0.095" radius="0.032"/>
+                    </geometry>
+                </collision>
+                <collision name="simple_link2_2">
+                    <origin xyz="0.34 0 0" rpy="0 0 0"/>
+                    <geometry>
+                        <cylinder length="0.095" radius="0.032"/>
+                    </geometry>
+                </collision>
+                <collision name="simple_link2_3">
+                    <origin xyz="0.15 -0.02 0" rpy="0 0 -${PI/18}"/>
+                    <geometry>
+                        <box size="0.264 0.05 0.05"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
         </link>
         <joint name="${prefix}joint2" type="revolute">
             <origin xyz="0 0 0" rpy="1.5708 -0.1745 3.1416"/>
@@ -99,6 +127,20 @@
                 <collision>
                     <geometry>
                         <mesh filename="file://$(find piper_description)/meshes/piper_l/link3.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+            <xacro:if value="${collider == 'simple'}">
+                <collision name="simple_link3_1">
+                    <origin xyz="-0.005 -0.252 0" rpy="-${PI/2} 0 ${PI/32}"/>
+                    <geometry>
+                        <cylinder length="0.051" radius="0.032"/>
+                    </geometry>
+                </collision>
+                <collision name="simple_link3_2">
+                    <origin xyz="-0.016 -0.13 0" rpy="0 0 ${(17/32)*PI}"/>
+                    <geometry>
+                        <box size="0.17 0.038 0.045"/>
                     </geometry>
                 </collision>
             </xacro:if>
@@ -130,6 +172,14 @@
                     </geometry>
                 </collision>
             </xacro:if>
+            <xacro:if value="${collider == 'simple'}">
+                <collision name="simple_link4">
+                    <origin xyz="-0.005 0 0" rpy="-${PI/2} 0 0"/>
+                    <geometry>
+                        <cylinder length="0.05" radius="0.0315"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
         </link>
         <joint name="${prefix}joint4" type="revolute">
             <origin xyz="0 -0.3215 0" rpy="1.5708 0 0.0"/>
@@ -155,6 +205,14 @@
                 <collision>
                     <geometry>
                         <mesh filename="file://$(find piper_description)/meshes/piper_l/link5.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+            <xacro:if value="${collider == 'simple'}">
+                <collision name="simple_link5_1">
+                    <origin xyz="0 -0.065 0" rpy="${PI/2} 0 0"/>
+                    <geometry>
+                        <cylinder length="0.06" radius="0.03145"/>
                     </geometry>
                 </collision>
             </xacro:if>

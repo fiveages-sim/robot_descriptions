@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="piper_interfaces" params="name type">
+        <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+        <xacro:macro name="standard_joint" params="joint_name initial_pos:=''">
+            <joint name="${prefix}${joint_name}">
+                <command_interface name="position"/>
+                <xacro:if value="${initial_pos != ''}">
+                    <state_interface name="position">
+                        <param name="initial_value">${initial_pos}</param>
+                    </state_interface>
+                </xacro:if>
+                <xacro:unless value="${initial_pos != ''}">
+                    <state_interface name="position"/>
+                </xacro:unless>
+                <state_interface name="velocity"/>
+
+                <xacro:if value="${type != 'piper_l'}">
+                    <state_interface name="effort"/>
+                </xacro:if>
+            </joint>
+        </xacro:macro>
+
+        <xacro:standard_joint joint_name="joint1"/>
+
+        <xacro:if value="${type == 'piper_l'}">
+            <xacro:standard_joint joint_name="joint2" initial_pos="0.25"/>
+        </xacro:if>
+        <xacro:unless value="${type == 'piper_l'}">
+            <xacro:standard_joint joint_name="joint2" initial_pos="0.255"/>
+        </xacro:unless>
+
+        <xacro:if value="${type == 'piper_l'}">
+            <xacro:standard_joint joint_name="joint3" initial_pos="-0.3"/>
+        </xacro:if>
+        <xacro:unless value="${type == 'piper_l'}">
+            <xacro:standard_joint joint_name="joint3" initial_pos="-0.2"/>
+        </xacro:unless>
+
+        <xacro:standard_joint joint_name="joint4"/>
+        <xacro:standard_joint joint_name="joint5"/>
+        <xacro:standard_joint joint_name="joint6"/>
+
+        <xacro:if value="${type == 'piper' or type == 'slave' or type == 'master'}">
+            <joint name="${prefix}gripper_joint">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+                <state_interface name="effort"/>
+            </joint>
+        </xacro:if>
+
+        <xacro:if value="${type == 'piper_l' or type == 'piper_x' or type == 'piper_x_naked'}">
+            <joint name="${prefix}joint7">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+        </xacro:if>
+
+    </xacro:macro>
+</robot>

@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 
 <robot name="piper" xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:arg name="collider" default="convex"/>
+    <xacro:arg name="collider" default="simple"/>
     <xacro:arg name="type" default="piper"/>
     <xacro:arg name="style" default="slave"/>
 
-    <xacro:if value="${'$(arg type)' == 'piper'}">
+    <xacro:if value="${'$(arg type)' == 'master'}">
         <xacro:include filename="$(find piper_description)/xacro/piper_arm.xacro"/>
-        <xacro:if value="${'$(arg style)' == 'master'}">
-            <xacro:piper_arm name="" collider="$(arg collider)" is_master="true"/>
-        </xacro:if>
-        <xacro:if value="${'$(arg style)' == 'slave'}">
-            <xacro:piper_arm name="" collider="$(arg collider)" is_master="false"/>
-        </xacro:if>
+        <xacro:piper_arm name="" collider="$(arg collider)" is_master="true"/>
+    </xacro:if>
+
+    <xacro:if value="${'$(arg type)' == 'slave' or '$(arg type)' == 'piper'}">
+        <xacro:include filename="$(find piper_description)/xacro/piper_arm.xacro"/>
+        <xacro:piper_arm name="" collider="$(arg collider)" is_master="false"/>
     </xacro:if>
 
     <xacro:if value="${'$(arg type)' == 'piper_x'}">

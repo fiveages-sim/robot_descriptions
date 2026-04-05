@@ -16,11 +16,27 @@
                     <mesh filename="file://$(find piper_description)/meshes/piper/link6.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find piper_description)/meshes/piper/link6.glb"/>
-                </geometry>
-            </collision>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/piper/link6.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+            <xacro:if value="${collider == 'simple'}">
+                <collision name="simple_link6_1">
+                    <origin xyz="0 0 0.025" rpy="0 0 0"/>
+                    <geometry>
+                        <cylinder length="0.04" radius="0.03015"/>
+                    </geometry>
+                </collision>
+                <collision name="simple_link6_2">
+                    <origin xyz="0 0 0.06" rpy="0 ${PI/2} 0"/>
+                    <geometry>
+                        <box size="0.01 0.178 0.015"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
         </link>
 
         <joint name="${prefix}joint6" type="revolute">
@@ -43,11 +59,21 @@
                     <mesh filename="file://$(find piper_description)/meshes/gripper/gripper.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find piper_description)/meshes/gripper/gripper.glb"/>
-                </geometry>
-            </collision>
+            <xacro:if value="${collider == 'simple'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/gripper/gripper.glb"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+            <xacro:if value="${collider == 'simple'}">
+                <collision name="simple_link7">
+                    <origin xyz="0 -0.0125 -0.03" rpy="${PI/2} 0 ${PI/2}"/>
+                    <geometry>
+                        <box size="0.0231 0.07 0.037"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
         </link>
 
         <joint name="${prefix}gripper_joint" type="prismatic">
@@ -70,11 +96,21 @@
                     <mesh filename="file://$(find piper_description)/meshes/gripper/gripper.glb" scale="1 -1 1"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find piper_description)/meshes/gripper/gripper.glb" scale="1 -1 1"/>
-                </geometry>
-            </collision>
+            <xacro:if value="${collider == 'convex'}">
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/gripper/gripper.glb" scale="1 -1 1"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
+            <xacro:if value="${collider == 'simple'}">
+                <collision name="simple_link8">
+                    <origin xyz="0 0.0125 -0.03" rpy="${PI/2} 0 ${PI/2}"/>
+                    <geometry>
+                        <box size="0.0231 0.07 0.037"/>
+                    </geometry>
+                </collision>
+            </xacro:if>
         </link>
 
         <joint name="${prefix}joint8" type="prismatic">
@@ -93,6 +129,6 @@
             <origin xyz="0 0 0.1358" rpy="0 -1.57 0"/>
         </joint>
 
-<!--        <xacro:piper_camera prefix="${prefix}" parent_link="${prefix}link6" camera="${camera}" collider="${collider}" arm_type="piper"/>-->
+        <xacro:piper_camera prefix="${prefix}" parent_link="${prefix}link6" camera="${camera}" collider="${collider}" arm_type="piper"/>
     </xacro:macro>
 </robot>
