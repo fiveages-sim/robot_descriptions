@@ -31,6 +31,9 @@ ocs2_arm_controller:
       - right_wrist_pitch_joint
       - right_wrist_yaw_joint
 
+    left_ee_name: "left_hand_base"
+    right_ee_name: "right_hand_base"
+
     default_gains: [ 60.0,2.0 ]
     ocs2_gains: [ 100.0,4.0 ]
 
@@ -46,6 +49,10 @@ ocs2_arm_controller:
       - effort
 
     robot_name: unitree_g1
+    home_duration: 5.0
+    movel_trajectory_duration: 6.0
+    movej_interpolation_type: doubles
+    home_interpolation_type: doubles
 
     # Control parameters
     # home_pos: [left_shoulder_pitch, left_shoulder_roll, left_shoulder_yaw, left_elbow, left_wrist_roll, left_wrist_pitch, left_wrist_yaw,
