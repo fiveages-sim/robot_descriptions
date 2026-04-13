@@ -27,7 +27,7 @@ on:
         default: jazzy
         type: string
       common_release_tag:
-        description: Release tag to fetch robot-descriptions-jazzy-common .deb (optional; default = same as robots tag if that release exists on common repo, else latest common release)
+        description: Release tag to fetch ros-jazzy-robot-descriptions-common .deb (optional; default = same as robots tag if that release exists on common repo, else latest common release)
         required: false
         type: string
       ocs2_release_tag:
@@ -46,14 +46,14 @@ jobs:
   build-robots-deb:
     runs-on: ubuntu-24.04
     env:
-      PACKAGE_NAME: robot-descriptions-jazzy-robots
-      DEB_FILE_PREFIX: robot-descriptions-jazzy-robots
-      COMMON_PACKAGE_NAME: robot-descriptions-jazzy-common
-      ARMS_PACKAGE_NAME: arms-ros2-control-jazzy
-      OCS2_PACKAGE_NAME: ocs2-ros2-jazzy-mobile-manipulator
-      ARMS_DEB_FILE_PREFIX: arms-ros2-control-jazzy
-      OCS2_DEB_FILE_PREFIX: ocs2-ros2-jazzy-mobile-manipulator
-      COMMON_DEB_FILE_PREFIX: robot-descriptions-jazzy-common
+      PACKAGE_NAME: ros-jazzy-robot-descriptions-robots
+      DEB_FILE_PREFIX: ros-jazzy-robot-descriptions-robots
+      COMMON_PACKAGE_NAME: ros-jazzy-robot-descriptions-common
+      ARMS_PACKAGE_NAME: ros-jazzy-arms-ros2-control
+      OCS2_PACKAGE_NAME: ros-jazzy-ocs2-ros2-mobile-manipulator
+      ARMS_DEB_FILE_PREFIX: ros-jazzy-arms-ros2-control
+      OCS2_DEB_FILE_PREFIX: ros-jazzy-ocs2-ros2-mobile-manipulator
+      COMMON_DEB_FILE_PREFIX: ros-jazzy-robot-descriptions-common
       INSTALL_PREFIX: /opt/ros/jazzy
       DEFAULT_ROS_DISTRO: jazzy
       PREFERRED_COMMON_RELEASE_REPO: fiveages-sim/robot-descriptions-common
@@ -375,7 +375,7 @@ jobs:
                 echo "" >&2
                 echo "This release has gripper-hardware-common .deb(s) but not ${ARMS_DEB_FILE_PREFIX}_*.deb." >&2
                 echo "Robots deb CI needs the **Bundle arms deb** (workflow: release-arms-ros2-control-deb), not the separate gripper-common deb." >&2
-                echo "Upload arms-ros2-control-jazzy_*.deb to ${_repo}@${ARMS_TAG}, or use a tag whose release includes it." >&2
+                echo "Upload ros-jazzy-arms-ros2-control_*.deb to ${_repo}@${ARMS_TAG}, or use a tag whose release includes it." >&2
                 break
               fi
             done
