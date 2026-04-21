@@ -58,30 +58,30 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=agibot_g1
 * Mock Components
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=agibot_g1
+  ros2 launch ocs2_arm_controller full_body.launch.py robot:=agibot_g1
   ```
 
 * Gazebo
   ```bash
   # 120S Gripper
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=agibot_g1 hardware:=gz world:=warehouse
+  ros2 launch ocs2_arm_controller full_body.launch.py robot:=agibot_g1 hardware:=gz world:=warehouse
   ```
   ```bash
   # Omni Picker
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=agibot_g1 hardware:=gz type:=omni-picker world:=warehouse
+  ros2 launch ocs2_arm_controller full_body.launch.py robot:=agibot_g1 hardware:=gz type:=omni-picker world:=warehouse
   ```
 * Isaac Sim
   ```bash
   # 120S Gripper
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=agibot_g1 hardware:=isaac
+  ros2 launch ocs2_arm_controller full_body.launch.py robot:=agibot_g1 hardware:=isaac
   ```
   ```bash
   # Omni Picker
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=agibot_g1 hardware:=isaac type:=omni-picker
+  ros2 launch ocs2_arm_controller full_body.launch.py robot:=agibot_g1 hardware:=isaac type:=omni-picker
   ```
 ### 4. Navigation
 * Gazebo Simulation

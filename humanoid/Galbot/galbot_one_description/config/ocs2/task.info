@@ -291,10 +291,10 @@ jointVelocityLimits
     }
     arm
     {
-      (0,0)   -1.0    ; leg_joint1
-      (1,0)   -1.0    ; leg_joint2
-      (2,0)   -1.0    ; leg_joint3
-      (3,0)   -1.0    ; leg_joint4
+      (0,0)   -1.0    ; body_joint1
+      (1,0)   -1.0    ; body_joint2
+      (2,0)   -1.0    ; body_joint3
+      (3,0)   -1.0    ; body_joint4
       (4,0)   -1.5708 ; left_joint1
       (5,0)   -1.5708 ; left_joint2
       (6,0)   -1.5708 ; left_joint3
@@ -335,10 +335,10 @@ jointVelocityLimits
     }
     arm
     {
-      (0,0)   1.0     ; leg_joint1
-      (1,0)   1.0     ; leg_joint2
-      (2,0)   1.0     ; leg_joint3
-      (3,0)   1.0     ; leg_joint4
+      (0,0)   1.0     ; body_joint1
+      (1,0)   1.0     ; body_joint2
+      (2,0)   1.0     ; body_joint3
+      (3,0)   1.0     ; body_joint4
       (4,0)   1.5708  ; left_joint1
       (5,0)   1.5708  ; left_joint2
       (6,0)   1.5708  ; left_joint3

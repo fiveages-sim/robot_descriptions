@@ -25,10 +25,10 @@ ocs2_wbc_controller:
     info_file_name: fixed_base
 
     joints:
-      - leg_joint1
-      - leg_joint2
-      - leg_joint3
-      - leg_joint4
+      - body_joint1
+      - body_joint2
+      - body_joint3
+      - body_joint4
       - left_joint1
       - left_joint2
       - left_joint3

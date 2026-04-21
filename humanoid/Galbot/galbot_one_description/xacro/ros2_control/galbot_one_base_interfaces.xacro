@@ -3,22 +3,22 @@
 
 	<xacro:macro name="galbot_one_base_interfaces">
 		<!-- Leg joints -->
-		<joint name="leg_joint1">
+		<joint name="body_joint1">
 			<command_interface name="position"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>
 		</joint>
-		<joint name="leg_joint2">
+		<joint name="body_joint2">
 			<command_interface name="position"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>
 		</joint>
-		<joint name="leg_joint3">
+		<joint name="body_joint3">
 			<command_interface name="position"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>
 		</joint>
-		<joint name="leg_joint4">
+		<joint name="body_joint4">
 			<command_interface name="position"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>

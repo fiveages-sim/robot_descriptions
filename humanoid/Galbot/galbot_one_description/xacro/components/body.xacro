@@ -38,7 +38,7 @@
 	</link>
 
 	<!-- omni_chassis_leg_mount_link and its joint come from chassis.xacro -->
-	<joint name="leg_joint" type="fixed">
+	<joint name="body_joint" type="fixed">
 		<origin rpy="${PI/2} 0 0"/>
 		<parent link="omni_chassis_leg_mount_link"/>
 		<child link="leg_base_link"/>
@@ -84,7 +84,7 @@
 		</xacro:if>
 	</link>
 
-	<joint name="leg_joint1" type="revolute">
+	<joint name="body_joint1" type="revolute">
 		<origin rpy="-${PI} 0 2.756573021" xyz="0 0 -0.087"/>
 		<parent link="leg_base_link"/>
 		<child link="leg_link1"/>
@@ -112,7 +112,7 @@
 		</xacro:if>
 	</link>
 
-	<joint name="leg_joint2" type="revolute">
+	<joint name="body_joint2" type="revolute">
 		<origin rpy="-${PI} 0 2.756573021" xyz="0.45 0 0"/>
 		<parent link="leg_link1"/>
 		<child link="leg_link2"/>
@@ -140,7 +140,7 @@
 		</xacro:if>
 	</link>
 
-	<joint name="leg_joint3" type="revolute">
+	<joint name="body_joint3" type="revolute">
 		<origin rpy="-${PI} 0 -${PI}" xyz="0.39 0 0"/>
 		<parent link="leg_link2"/>
 		<child link="leg_link3"/>
@@ -168,7 +168,7 @@
 		</xacro:if>
 	</link>
 
-	<joint name="leg_joint4" type="revolute">
+	<joint name="body_joint4" type="revolute">
 		<origin rpy="${PI/2} 0 -${PI}"/>
 		<parent link="leg_link3"/>
 		<child link="leg_link4"/>
