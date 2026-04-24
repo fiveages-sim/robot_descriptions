@@ -52,7 +52,9 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=unitree_g
 * Mock Components
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1
+  ros2 launch ocs2_arm_controller split_body.launch.py robot:=unitree_g1
+  #ros2 launch ocs2_arm_controller demo.launch.py robot:=unitree_g1
+
   ```
 * Mock Components
   ```bash

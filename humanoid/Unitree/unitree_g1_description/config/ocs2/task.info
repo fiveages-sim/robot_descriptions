@@ -5,20 +5,20 @@ model_information {
   ; motion joints in the URDF to consider fixed
   removeJoints {
     ; Leg joints - Left leg
-    [0] "left_hip_pitch_joint"
-    [1] "left_hip_roll_joint"
-    [2] "left_hip_yaw_joint"
-    [3] "left_knee_joint"
-    [4] "left_ankle_pitch_joint"
-    [5] "left_ankle_roll_joint"
+    [0] "one_hip_pitch_joint"
+    [1] "one_hip_roll_joint"
+    [2] "one_hip_yaw_joint"
+    [3] "one_knee_joint"
+    [4] "one_ankle_pitch_joint"
+    [5] "one_ankle_roll_joint"
 
     ; Leg joints - Right leg
-    [6] "right_hip_pitch_joint"
-    [7] "right_hip_roll_joint"
-    [8] "right_hip_yaw_joint"
-    [9] "right_knee_joint"
-    [10] "right_ankle_pitch_joint"
-    [11] "right_ankle_roll_joint"
+    [6] "two_hip_pitch_joint"
+    [7] "two_hip_roll_joint"
+    [8] "two_hip_yaw_joint"
+    [9] "two_knee_joint"
+    [10] "two_ankle_pitch_joint"
+    [11] "two_ankle_roll_joint"
 
     ; Waist/Torso joints
     [12] "waist_yaw_joint"
@@ -122,22 +122,22 @@ initialState
   arm
   {
     ; Left arm joints (7 joints)
-    (0,0)   0.0      ; left_shoulder_pitch_joint
-    (1,0)   0.0      ; left_shoulder_roll_joint
-    (2,0)   0.0      ; left_shoulder_yaw_joint
-    (3,0)   0.0      ; left_elbow_joint
-    (4,0)   0.0      ; left_wrist_roll_joint
-    (5,0)   0.0      ; left_wrist_pitch_joint
-    (6,0)   0.0      ; left_wrist_yaw_joint
+    (0,0)   0.0      ; left_joint1
+    (1,0)   0.0      ; left_joint2
+    (2,0)   0.0      ; left_joint3
+    (3,0)   0.0      ; left_joint4
+    (4,0)   0.0      ; left_joint5
+    (5,0)   0.0      ; left_joint6
+    (6,0)   0.0      ; left_joint7
     
     ; Right arm joints (7 joints)
-    (7,0)   0.0      ; right_shoulder_pitch_joint
-    (8,0)   0.0      ; right_shoulder_roll_joint
-    (9,0)   0.0      ; right_shoulder_yaw_joint
-    (10,0)  0.0      ; right_elbow_joint
-    (11,0)  0.0      ; right_wrist_roll_joint
-    (12,0)  0.0      ; right_wrist_pitch_joint
-    (13,0)  0.0      ; right_wrist_yaw_joint
+    (7,0)   0.0      ; right_joint1
+    (8,0)   0.0      ; right_joint2
+    (9,0)   0.0      ; right_joint3
+    (10,0)  0.0      ; right_joint4
+    (11,0)  0.0      ; right_joint5
+    (12,0)  0.0      ; right_joint6
+    (13,0)  0.0      ; right_joint7
   }
 }
 
@@ -182,22 +182,22 @@ inputCost
       scaling 1e-3
 
       ; Left arm joints (7 joints)
-      (0,0)   0.11      ; left_shoulder_pitch_joint
-      (1,0)   0.11      ; left_shoulder_roll_joint
-      (2,0)   0.11      ; left_shoulder_yaw_joint
-      (3,0)   0.11      ; left_elbow_joint
-      (4,0)   0.11      ; left_wrist_roll_joint
-      (5,0)   0.11      ; left_wrist_pitch_joint
-      (6,0)   0.11      ; left_wrist_yaw_joint
+      (0,0)   0.11      ; left_joint1
+      (1,0)   0.11      ; left_joint2
+      (2,0)   0.11      ; left_joint3
+      (3,0)   0.11      ; left_joint4
+      (4,0)   0.11      ; left_joint5
+      (5,0)   0.11      ; left_joint6
+      (6,0)   0.11      ; left_joint7
       
       ; Right arm joints (7 joints)
-      (7,0)   0.11      ; right_shoulder_pitch_joint
-      (8,0)   0.11      ; right_shoulder_roll_joint
-      (9,0)   0.11      ; right_shoulder_yaw_joint
-      (10,0)  0.11      ; right_elbow_joint
-      (11,0)  0.11      ; right_wrist_roll_joint
-      (12,0)  0.11      ; right_wrist_pitch_joint
-      (13,0)  0.11      ; right_wrist_yaw_joint
+      (7,0)   0.11      ; right_joint1
+      (8,0)   0.11      ; right_joint2
+      (9,0)   0.11      ; right_joint3
+      (10,0)  0.11      ; right_joint4
+      (11,0)  0.11      ; right_joint5
+      (12,0)  0.11      ; right_joint6
+      (13,0)  0.11      ; right_joint7
     }
   }
 }
@@ -328,22 +328,22 @@ jointVelocityLimits
     arm
     {
       ; Left arm joints (7 joints)
-      (0,0)  -0.9         ; left_shoulder_pitch_joint [rad/s]
-      (1,0)  -0.9         ; left_shoulder_roll_joint [rad/s]
-      (2,0)  -0.9         ; left_shoulder_yaw_joint [rad/s]
-      (3,0)  -0.9         ; left_elbow_joint [rad/s]
-      (4,0)  -0.9         ; left_wrist_roll_joint [rad/s]
-      (5,0)  -0.9         ; left_wrist_pitch_joint [rad/s]
-      (6,0)  -0.9         ; left_wrist_yaw_joint [rad/s]
+      (0,0)  -0.9         ; left_joint1 [rad/s]
+      (1,0)  -0.9         ; left_joint2 [rad/s]
+      (2,0)  -0.9         ; left_joint3 [rad/s]
+      (3,0)  -0.9         ; left_joint4 [rad/s]
+      (4,0)  -0.9         ; left_joint5 [rad/s]
+      (5,0)  -0.9         ; left_joint6 [rad/s]
+      (6,0)  -0.9         ; left_joint7 [rad/s]
       
       ; Right arm joints (7 joints)
-      (7,0)  -0.9         ; right_shoulder_pitch_joint [rad/s]
-      (8,0)  -0.9         ; right_shoulder_roll_joint [rad/s]
-      (9,0)  -0.9         ; right_shoulder_yaw_joint [rad/s]
-      (10,0) -0.9         ; right_elbow_joint [rad/s]
-      (11,0) -0.9         ; right_wrist_roll_joint [rad/s]
-      (12,0) -0.9         ; right_wrist_pitch_joint [rad/s]
-      (13,0) -0.9         ; right_wrist_yaw_joint [rad/s]
+      (7,0)  -0.9         ; right_joint1 [rad/s]
+      (8,0)  -0.9         ; right_joint2 [rad/s]
+      (9,0)  -0.9         ; right_joint3 [rad/s]
+      (10,0) -0.9         ; right_joint4 [rad/s]
+      (11,0) -0.9         ; right_joint5 [rad/s]
+      (12,0) -0.9         ; right_joint6 [rad/s]
+      (13,0) -0.9         ; right_joint7 [rad/s]
     }
   }
 
@@ -381,22 +381,22 @@ jointVelocityLimits
     arm
     {
       ; Left arm joints (7 joints)
-      (0,0)  0.9          ; left_shoulder_pitch_joint [rad/s]
-      (1,0)  0.9          ; left_shoulder_roll_joint [rad/s]
-      (2,0)  0.9          ; left_shoulder_yaw_joint [rad/s]
-      (3,0)  0.9          ; left_elbow_joint [rad/s]
-      (4,0)  0.9          ; left_wrist_roll_joint [rad/s]
-      (5,0)  0.9          ; left_wrist_pitch_joint [rad/s]
-      (6,0)  0.9          ; left_wrist_yaw_joint [rad/s]
+      (0,0)  0.9          ; left_joint1 [rad/s]
+      (1,0)  0.9          ; left_joint2 [rad/s]
+      (2,0)  0.9          ; left_joint3 [rad/s]
+      (3,0)  0.9          ; left_joint4 [rad/s]
+      (4,0)  0.9          ; left_joint5 [rad/s]
+      (5,0)  0.9          ; left_joint6 [rad/s]
+      (6,0)  0.9          ; left_joint7 [rad/s]
       
       ; Right arm joints (7 joints)
-      (7,0)  0.9          ; right_shoulder_pitch_joint [rad/s]
-      (8,0)  0.9          ; right_shoulder_roll_joint [rad/s]
-      (9,0)  0.9          ; right_shoulder_yaw_joint [rad/s]
-      (10,0) 0.9          ; right_elbow_joint [rad/s]
-      (11,0) 0.9          ; right_wrist_roll_joint [rad/s]
-      (12,0) 0.9          ; right_wrist_pitch_joint [rad/s]
-      (13,0) 0.9          ; right_wrist_yaw_joint [rad/s]
+      (7,0)  0.9          ; right_joint1 [rad/s]
+      (8,0)  0.9          ; right_joint2 [rad/s]
+      (9,0)  0.9          ; right_joint3 [rad/s]
+      (10,0) 0.9          ; right_joint4 [rad/s]
+      (11,0) 0.9          ; right_joint5 [rad/s]
+      (12,0) 0.9          ; right_joint6 [rad/s]
+      (13,0) 0.9          ; right_joint7 [rad/s]
     }
   }
 }

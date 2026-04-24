@@ -35,7 +35,7 @@
 		</link>
 
 		<!-- Shoulder Pitch Joint -->
-		<joint name="${prefix}shoulder_pitch_joint" type="revolute">
+		<joint name="${prefix}joint1" type="revolute">
 			<origin xyz="0.0039563 ${direction*0.10022} 0.24778"
 							rpy="${direction*0.27931} 5.4949E-05 ${direction*-0.00019159}"/>
 			<parent link="torso_link"/>
@@ -67,7 +67,7 @@
 		</link>
 
 		<!-- Shoulder Roll Joint -->
-		<joint name="${prefix}shoulder_roll_joint" type="revolute">
+		<joint name="${prefix}joint2" type="revolute">
 			<origin xyz="0 ${direction*0.038} -0.013831" rpy="${direction*-0.27925} 0 0"/>
 			<parent link="${prefix}shoulder_pitch_link"/>
 			<child link="${prefix}shoulder_roll_link"/>
@@ -105,7 +105,7 @@
 		</link>
 
 		<!-- Shoulder Yaw Joint -->
-		<joint name="${prefix}shoulder_yaw_joint" type="revolute">
+		<joint name="${prefix}joint3" type="revolute">
 			<origin xyz="0 ${direction*0.00624} -0.1032"/>
 			<parent link="${prefix}shoulder_roll_link"/>
 			<child link="${prefix}shoulder_yaw_link"/>
@@ -136,7 +136,7 @@
 		</link>
 
 		<!-- Elbow Joint -->
-		<joint name="${prefix}elbow_joint" type="revolute">
+		<joint name="${prefix}joint4" type="revolute">
 			<origin xyz="0.015783 0 -0.080518"/>
 			<parent link="${prefix}shoulder_yaw_link"/>
 			<child link="${prefix}elbow_link"/>
@@ -161,7 +161,7 @@
 		</link>
 
 		<!-- Wrist Roll Joint -->
-		<joint name="${prefix}wrist_roll_joint" type="revolute">
+		<joint name="${prefix}joint5" type="revolute">
 			<origin xyz="0.100 ${direction*0.00188791} -0.010"/>
 			<axis xyz="1 0 0"/>
 			<parent link="${prefix}elbow_link"/>
@@ -198,7 +198,7 @@
 		</link>
 
 		<!-- Wrist Pitch Joint -->
-		<joint name="${prefix}wrist_pitch_joint" type="revolute">
+		<joint name="${prefix}joint6" type="revolute">
 			<origin xyz="0.038 0 0"/>
 			<axis xyz="0 1 0"/>
 			<parent link="${prefix}wrist_roll_link"/>
@@ -223,7 +223,7 @@
 		</link>
 
 		<!-- Wrist Yaw Joint -->
-		<joint name="${prefix}wrist_yaw_joint" type="revolute">
+		<joint name="${prefix}joint7" type="revolute">
 			<origin xyz="0.046 0 0"/>
 			<axis xyz="0 0 1"/>
 			<parent link="${prefix}wrist_pitch_link"/>

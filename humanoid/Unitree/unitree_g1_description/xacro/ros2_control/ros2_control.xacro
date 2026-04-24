@@ -35,7 +35,7 @@
       </hardware>
 
       <!-- Left Leg Joints (6 DOF) -->
-      <joint name="left_hip_pitch_joint">
+      <joint name="one_hip_pitch_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -46,7 +46,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_hip_roll_joint">
+      <joint name="one_hip_roll_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -57,7 +57,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_hip_yaw_joint">
+      <joint name="one_hip_yaw_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -68,7 +68,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_knee_joint">
+      <joint name="one_knee_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -79,7 +79,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_ankle_pitch_joint">
+      <joint name="one_ankle_pitch_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -90,7 +90,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_ankle_roll_joint">
+      <joint name="one_ankle_roll_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -102,7 +102,7 @@
       </joint>
 
       <!-- Right Leg Joints (6 DOF) -->
-      <joint name="right_hip_pitch_joint">
+      <joint name="two_hip_pitch_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -113,7 +113,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_hip_roll_joint">
+      <joint name="two_hip_roll_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -124,7 +124,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_hip_yaw_joint">
+      <joint name="two_hip_yaw_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -135,7 +135,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_knee_joint">
+      <joint name="two_knee_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -146,7 +146,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_ankle_pitch_joint">
+      <joint name="two_ankle_pitch_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -157,7 +157,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_ankle_roll_joint">
+      <joint name="two_ankle_roll_joint">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -203,7 +203,7 @@
       </joint>
 
       <!-- Left Arm Joints (7 DOF) -->
-      <joint name="left_shoulder_pitch_joint">
+      <joint name="left_joint1">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -214,7 +214,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_shoulder_roll_joint">
+      <joint name="left_joint2">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -225,7 +225,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_shoulder_yaw_joint">
+      <joint name="left_joint3">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -236,7 +236,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_elbow_joint">
+      <joint name="left_joint4">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -247,7 +247,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_wrist_roll_joint">
+      <joint name="left_joint5">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -258,7 +258,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_wrist_pitch_joint">
+      <joint name="left_joint6">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -269,7 +269,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="left_wrist_yaw_joint">
+      <joint name="left_joint7">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -281,7 +281,7 @@
       </joint>
 
       <!-- Right Arm Joints (7 DOF) -->
-      <joint name="right_shoulder_pitch_joint">
+      <joint name="right_joint1">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -292,7 +292,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_shoulder_roll_joint">
+      <joint name="right_joint2">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -303,7 +303,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_shoulder_yaw_joint">
+      <joint name="right_joint3">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -314,7 +314,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_elbow_joint">
+      <joint name="right_joint4">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -325,7 +325,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_wrist_roll_joint">
+      <joint name="right_joint5">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -336,7 +336,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_wrist_pitch_joint">
+      <joint name="right_joint6">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>
@@ -347,7 +347,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="right_wrist_yaw_joint">
+      <joint name="right_joint7">
         <command_interface name="position"/>
         <command_interface name="velocity"/>
         <command_interface name="effort"/>

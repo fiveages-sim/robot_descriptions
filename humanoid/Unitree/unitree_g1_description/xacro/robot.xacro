@@ -10,10 +10,10 @@
 
 	<!-- Legs using modular macro -->
 	<!-- Left leg (direction = 1) -->
-	<xacro:UnitreeG1Leg name="left" direction="1"/>
+	<xacro:UnitreeG1Leg name="one" direction="1"/>
 
 	<!-- Right leg (direction = -1 for mirroring) -->
-	<xacro:UnitreeG1Leg name="right" direction="-1"/>
+	<xacro:UnitreeG1Leg name="two" direction="-1"/>
 
 	<!-- Body using modular macro -->
 	<xacro:UnitreeG1Body/>
