@@ -1,0 +1,264 @@
+<?xml version="1.0"?>
+<robot name="aubo_i16">
+  <dh_type type="modified"/>
+  <safety_para singularity_consistent="0.02 0.01 10 0.2 0.045 10"/>
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0002 0.0045 0.0193" rpy="0 0 0" />
+      <mass value="1.0247" />
+      <inertia ixx="0.0035" ixy="0.0000" ixz="0.0000" iyy="0.003" iyz="0.0001" izz="0.0061" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/visual/link0.DAE" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/collision/link0.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <link name="shoulder_Link">
+    <inertial>
+      <origin xyz="0.0000 0.0042 -0.0278" rpy="0 0 0" />
+      <mass value="11.1649" />
+      <inertia ixx="0.0511" ixy="0.0000" ixz="0.0000" iyy="0.0498" iyz="0.0002" izz="0.0311" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/visual/link1.DAE" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/collision/link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="shoulder_joint" type="revolute">
+    <origin xyz="0 0 0.163" rpy="-8.7138E-17 -4.3534E-32 3.1416" />
+    <parent link="base_link" />
+    <child link="shoulder_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.05" upper="3.05" effort="267" start_stop="411" velocity="3.1416" />
+    <property inertia="4.9" damping="0" stiffness="0" offset="0" motor_constant="8.75" ratio="101"/>
+  </joint>
+
+
+  <link name="upperArm_Link">
+    <inertial>
+      <origin xyz="0.1664 0.0000 -0.0142" rpy="0 0 0" />
+      <mass value="18.7946" />
+      <inertia ixx="0.0657" ixy="0.0000" ixz="-0.0149" iyy="1.4279" iyz="0.0000" izz="1.4077" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/visual/link2.DAE" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/collision/link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="upperArm_joint" type="revolute">
+    <origin xyz="0 0.191 0" rpy="-1.5708 -1.5708 0" />
+    <parent link="shoulder_Link" />
+    <child link="upperArm_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.05" upper="3.05" effort="267" start_stop="411" velocity="3.1416" />
+    <property inertia="4.9" damping="0" stiffness="0" offset="0" motor_constant="8.75" ratio="101"/>
+  </joint>
+
+
+  <link name="foreArm_Link">
+    <inertial>
+      <origin xyz="0.282 0.0000 0.1059" rpy="0 0 0" />
+      <mass value="3.9474" />
+      <inertia ixx="0.05" ixy="0.0000" ixz="0.1161" iyy="0.4363" iyz="0.0000" izz="0.3908" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/visual/link3.DAE" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/collision/link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="foreArm_joint" type="revolute">
+    <origin xyz="0.480 0 0" rpy="3.1416 -4.5954E-17 -8.4328E-17" />
+    <parent link="upperArm_Link" />
+    <child link="foreArm_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.05" upper="3.05" effort="133" start_stop="207" velocity="4.6600" />
+    <property inertia="2.0" damping="0" stiffness="0" offset="0" motor_constant="8.72" ratio="101"/>
+  </joint>
+
+
+  <link name="wrist1_Link">
+    <inertial>
+      <origin xyz="0.0000 0.0155 -0.0013" rpy="0 0 0" />
+      <mass value="2.5692" />
+      <inertia ixx="0.0042" ixy="0.0000" ixz="0.0000" iyy="0.0022" iyz="0.0000" izz="0.0041" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/visual/link4.DAE" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/collision/link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="wrist1_joint" type="revolute">
+    <origin xyz="0.370 0 0" rpy="-3.1416 -1.4294E-15 1.5708" />
+    <parent link="foreArm_Link" />
+    <child link="wrist1_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.05" upper="3.05" effort="49" start_stop="66" velocity="3.1416" />
+    <property inertia="0" damping="0" stiffness="0" offset="0" motor_constant="8.81" ratio="101"/>
+  </joint>
+
+
+  <link name="wrist2_Link">
+    <inertial>
+      <origin xyz="0.0000 -0.0155 -0.0013" rpy="0 0 0" />
+      <mass value="2.5692" />
+      <inertia ixx="0.0042" ixy="0.0000" ixz="0.0000" iyy="0.0022" iyz="0.0000" izz="0.0041" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/visual/link5.DAE" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/collision/link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="wrist2_joint" type="revolute">
+    <origin xyz="0 0.1175 0" rpy="-1.5708 -7.0777E-16 -7.4101E-16" />
+    <parent link="wrist1_Link" />
+    <child link="wrist2_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.05" upper="3.05" effort="49" start_stop="66" velocity="3.1416" />
+    <property inertia="0" damping="0" stiffness="0" offset="0" motor_constant="8.814" ratio="101"/>
+  </joint>
+
+
+  <link name="wrist3_Link">
+    <inertial>
+      <origin xyz="0.0000 -0.0004 -0.017" rpy="0 0 0" />
+      <mass value="0.203" />
+      <inertia ixx="0.0042" ixy="0.0000" ixz="0.0000" iyy="0.0002" iyz="0.0000" izz="0.0002" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/visual/link6.DAE" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aubo_i16_description/meshes/collision/link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="wrist3_joint" type="revolute">
+    <origin xyz="0 -0.1035 0" rpy="1.5708 0 6.7283E-16" />
+    <parent link="wrist2_Link" />
+    <child link="wrist3_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.05" upper="3.05" effort="49" start_stop="66" velocity="3.1416" />
+    <property inertia="0" damping="0" stiffness="0" offset="0" motor_constant="8.814" ratio="101"/>
+  </joint>
+
+  <link name="ft_sensor_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.20" />
+      <inertia ixx="0.00008" ixy="0.0" ixz="0.0" iyy="0.00008" iyz="0.0" izz="0.00012" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.035" length="0.038" />
+      </geometry>
+      <material name="ft_sensor_gray">
+        <color rgba="0.65 0.68 0.72 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.035" length="0.038" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="ft_sensor_joint" type="fixed">
+    <parent link="wrist3_Link" />
+    <child link="ft_sensor_link" />
+    <origin xyz="0 0 0.019" rpy="0 0 0" />
+  </joint>
+
+  <link name="ft_sensor_frame" />
+
+  <joint name="ft_sensor_frame_joint" type="fixed">
+    <parent link="ft_sensor_link" />
+    <child link="ft_sensor_frame" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="tcp" />
+
+  <joint name="tcp_joint" type="fixed">
+    <parent link="ft_sensor_link" />
+    <child link="tcp" />
+    <origin xyz="0 0 0.019" rpy="0 0 0" />
+  </joint>
+
+  <link name="world" />
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link = "base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+</robot>

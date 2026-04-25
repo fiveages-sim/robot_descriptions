@@ -1,0 +1,25 @@
+<package format="2">
+  <name>aubo_i16_description</name>
+  <version>0.1.0</version>
+  <description>
+    <p>URDF description package scaffold for the AUBO i16 manipulator.</p>
+    <p>This package is prepared for meshes, URDF/Xacro files, and robot-specific configuration.</p>
+  </description>
+
+  <maintainer email="todo@example.com">TODO</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>changingtek_description</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
