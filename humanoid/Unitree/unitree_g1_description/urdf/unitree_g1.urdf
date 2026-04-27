@@ -13,12 +13,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_pitch.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_pitch.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_pitch.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_pitch.obj" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -39,12 +39,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_roll.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_roll.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_roll.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_roll.obj"/>
       </geometry>
     </collision>
   </link>
@@ -65,12 +65,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_yaw.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_yaw.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_yaw.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_yaw.obj" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -91,12 +91,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/knee.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/knee.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/knee.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/knee.obj" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -117,12 +117,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/ankle_pitch.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/ankle_pitch.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/ankle_pitch.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/ankle_pitch.obj"/>
       </geometry>
     </collision>
   </link>
@@ -143,7 +143,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/ankle_roll.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/ankle_roll.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -188,12 +188,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_pitch.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_pitch.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_pitch.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_pitch.obj" scale="1 -1 1"/>
       </geometry>
     </collision>
   </link>
@@ -214,12 +214,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_roll.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_roll.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_roll.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_roll.obj"/>
       </geometry>
     </collision>
   </link>
@@ -240,12 +240,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_yaw.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_yaw.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/hip_yaw.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/hip_yaw.obj" scale="1 -1 1"/>
       </geometry>
     </collision>
   </link>
@@ -266,12 +266,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/knee.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/knee.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/knee.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/knee.obj" scale="1 -1 1"/>
       </geometry>
     </collision>
   </link>
@@ -292,12 +292,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/ankle_pitch.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/ankle_pitch.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/ankle_pitch.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/ankle_pitch.obj"/>
       </geometry>
     </collision>
   </link>
@@ -318,7 +318,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/leg/ankle_roll.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/leg/ankle_roll.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -372,7 +372,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/body/pelvis.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/body/pelvis.obj"/>
       </geometry>
     </visual>
   </link>
@@ -386,7 +386,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/body/waist_yaw.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/body/waist_yaw.obj"/>
       </geometry>
     </visual>
   </link>
@@ -406,7 +406,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/body/waist_roll.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/body/waist_roll.obj"/>
       </geometry>
     </visual>
   </link>
@@ -427,7 +427,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/body/torso.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/body/torso.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -458,7 +458,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/body/logo.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/body/logo.obj"/>
       </geometry>
     </visual>
   </link>
@@ -476,12 +476,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/body/head.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/body/head.obj"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/body/head.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/body/head.obj"/>
       </geometry>
     </collision>
   </link>
@@ -531,7 +531,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/shoulder_pitch.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/shoulder_pitch.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -558,7 +558,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/shoulder_roll.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/shoulder_roll.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -585,7 +585,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/shoulder_yaw.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/shoulder_yaw.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -618,7 +618,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/elbow.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/elbow.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -645,7 +645,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/wrist_roll.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/wrist_roll.obj"/>
       </geometry>
     </visual>
   </link>
@@ -666,7 +666,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/wrist_pitch.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/wrist_pitch.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -699,7 +699,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/wrist_yaw.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/wrist_yaw.obj"/>
       </geometry>
     </visual>
   </link>
@@ -726,7 +726,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/shoulder_pitch.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/shoulder_pitch.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -753,7 +753,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/shoulder_roll.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/shoulder_roll.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -780,7 +780,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/shoulder_yaw.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/shoulder_yaw.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -813,7 +813,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/elbow.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/elbow.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -840,7 +840,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/wrist_roll.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/wrist_roll.obj"/>
       </geometry>
     </visual>
   </link>
@@ -861,7 +861,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/wrist_pitch.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/wrist_pitch.obj"/>
       </geometry>
     </visual>
     <collision>
@@ -894,7 +894,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/wrist_yaw.obj"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/wrist_yaw.obj"/>
       </geometry>
     </visual>
   </link>
@@ -915,7 +915,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/hand.obj" scale="1 1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/hand.obj" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
@@ -934,7 +934,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="file:///home/lina/ros2_ws/install/unitree_g1_description/share/unitree_g1_description/meshes/arm/hand.obj" scale="1 -1 1"/>
+        <mesh filename="package://unitree_g1_description/meshes/arm/hand.obj" scale="1 -1 1"/>
       </geometry>
     </visual>
     <collision>
