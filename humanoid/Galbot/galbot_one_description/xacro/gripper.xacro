@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-
-<robot name="Hitbot Gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:arg name="collider" default="convex"/>
-  <xacro:property name="PI" value="3.141592653589793"/>
-  <xacro:include filename="$(find galbot_one_description)/xacro/components/gripper.xacro"/>
-  <xacro:Gripper name=""/>
-</robot>
-
