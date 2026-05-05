@@ -31,3 +31,6 @@
 [submodule "humanoid/Ubtech"]
 	path = humanoid/Ubtech
 	url = git@github.com:fiveages-sim/robot-descriptions-ubtech.git
+[submodule "humanoid/Galbot"]
+	path = humanoid/Galbot
+	url = git@github.com:fiveages-sim/robot-descriptions-galbot.git
