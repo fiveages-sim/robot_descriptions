@@ -31,3 +31,7 @@
 [submodule "humanoid/Ubtech"]
 	path = humanoid/Ubtech
 	url = git@github.com:fiveages-sim/robot-descriptions-ubtech.git
+[submodule "humanoid/FiveAges/fiveages_body_description"]
+	path = humanoid/FiveAges/fiveages_body_description
+	url = git@github.com:fiveages-sim/fa-body-description.git
+	branch = main
