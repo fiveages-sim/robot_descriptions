@@ -1,0 +1,283 @@
+name: Build Common Deb
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to upload the deb asset to
+        required: false
+        type: string
+      ros_distro:
+        description: ROS distro used in the install path
+        required: false
+        default: jazzy
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-common-deb:
+    runs-on: ubuntu-24.04
+    env:
+      PACKAGE_NAME: robot-descriptions-jazzy-common
+      DEB_FILE_PREFIX: robot-descriptions-jazzy-common
+      INSTALL_PREFIX: /opt/ros/jazzy
+      DEFAULT_ROS_DISTRO: jazzy
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: false
+
+      - name: Resolve release metadata
+        id: meta
+        shell: bash
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+          INPUT_ROS_DISTRO: ${{ github.event.inputs.ros_distro }}
+        run: |
+          set -eo pipefail
+
+          if [[ -n "${INPUT_TAG:-}" ]]; then
+            tag="$INPUT_TAG"
+          elif [[ "${GITHUB_REF_TYPE:-}" == "tag" ]]; then
+            tag="${GITHUB_REF_NAME}"
+          else
+            echo "A release tag is required for workflow_dispatch." >&2
+            exit 1
+          fi
+          if [[ "${tag}" != [vV]* ]]; then
+            tag="v${tag}"
+          fi
+
+          version="${tag#v}"
+          version="${version#V}"
+          version="$(printf '%s' "$version" | sed 's/-/~/g')"
+
+          if [[ -z "$version" ]]; then
+            echo "Unable to derive a package version from tag: $tag" >&2
+            exit 1
+          fi
+
+          ros_distro="${INPUT_ROS_DISTRO:-$DEFAULT_ROS_DISTRO}"
+          deb_file="${DEB_FILE_PREFIX}_${version}_amd64.deb"
+
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "ros_distro=$ros_distro" >> "$GITHUB_OUTPUT"
+          echo "deb_file=$deb_file" >> "$GITHUB_OUTPUT"
+
+      - name: Initialize common submodule
+        shell: bash
+        env:
+          SUBMODULES_TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
+        run: |
+          set -eo pipefail
+
+          common_url="$(git config --file .gitmodules --get submodule.common.url)"
+          if [[ -z "$common_url" ]]; then
+            echo "Unable to resolve the common submodule URL." >&2
+            exit 1
+          fi
+
+          # Support both public submodules and private submodules accessed via PAT.
+          if [[ -n "${SUBMODULES_TOKEN:-}" ]]; then
+            common_url="${common_url/git@github.com:/https://x-access-token:${SUBMODULES_TOKEN}@github.com/}"
+            common_url="${common_url/https:\/\/github.com\//https://x-access-token:${SUBMODULES_TOKEN}@github.com/}"
+          else
+            common_url="${common_url/git@github.com:/https://github.com/}"
+          fi
+
+          git submodule set-url common "$common_url"
+          git submodule update --init --depth 1 common
+
+      - name: Validate common payload
+        shell: bash
+        run: |
+          set -eo pipefail
+
+          if [[ ! -d common ]]; then
+            echo "common submodule directory is missing." >&2
+            exit 1
+          fi
+
+          if [[ -z "$(ls -A common)" ]]; then
+            echo "common submodule is empty." >&2
+            exit 1
+          fi
+
+          if [[ ! -f common/robot_common_launch/package.xml ]]; then
+            echo "robot_common_launch/package.xml is missing from common." >&2
+            exit 1
+          fi
+
+      - name: Install system tools
+        shell: bash
+        run: |
+          set -eo pipefail
+
+          sudo apt-get update
+          sudo apt-get install -y curl gnupg lsb-release software-properties-common
+          sudo add-apt-repository universe
+
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
+            | sudo gpg --dearmor -o /etc/apt/keyrings/ros-archive-keyring.gpg
+
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME}") main" \
+            | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+          sudo apt-get update
+          sudo apt-get install -y \
+            python3-rosdep \
+            python3-colcon-core \
+            python3-colcon-common-extensions \
+            python3-vcstool \
+            python3-pip \
+            python3-catkin-pkg-modules \
+            fakeroot \
+            dpkg-dev \
+            rsync \
+            build-essential \
+            cmake \
+            ros-${{ steps.meta.outputs.ros_distro }}-ament-cmake \
+            ros-${{ steps.meta.outputs.ros_distro }}-ament-cmake-core \
+            ros-${{ steps.meta.outputs.ros_distro }}-ament-package \
+            ros-${{ steps.meta.outputs.ros_distro }}-ros-base
+
+          sudo rosdep init || true
+          rosdep update
+
+          source "/opt/ros/${{ steps.meta.outputs.ros_distro }}/setup.bash"
+          python3 -c "import ament_package; print('ament_package ready:', ament_package.__file__)"
+
+      - name: Install common ROS dependencies
+        shell: bash
+        env:
+          ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
+        run: |
+          set -eo pipefail
+          source "/opt/ros/${ROS_DISTRO}/setup.bash"
+
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
+          export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
+
+          rosdep install \
+            --from-paths common \
+            --ignore-src \
+            --rosdistro "${ROS_DISTRO}" \
+            --reinstall \
+            -r \
+            -y
+
+          python3 -c "import os, ament_package; print('PYTHONPATH=', os.environ.get('PYTHONPATH', '')); print('ament_package ready:', ament_package.__file__)"
+
+      - name: Build common install space
+        shell: bash
+        env:
+          ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
+        run: |
+          set -eo pipefail
+          source "/opt/ros/${ROS_DISTRO}/setup.bash"
+
+          ros_python_path="/opt/ros/${ROS_DISTRO}/lib/python$(python3 -c 'import sys; print(str(sys.version_info.major) + "." + str(sys.version_info.minor))')/site-packages"
+          export PYTHONPATH="${ros_python_path}:${PYTHONPATH:-}"
+
+          python3 -c "import os, ament_package; print('Build PYTHONPATH=', os.environ.get('PYTHONPATH', '')); print('ament_package ready:', ament_package.__file__)"
+
+          build_root="${RUNNER_TEMP}/colcon-common"
+          package_root="${RUNNER_TEMP}/deb-build/package"
+          install_prefix="${INSTALL_PREFIX}"
+          install_root="${package_root}${install_prefix}"
+
+          rm -rf "$build_root" "$package_root"
+          mkdir -p "$build_root" "$package_root"
+
+          colcon --log-base "${build_root}/log" build \
+            --base-paths "${GITHUB_WORKSPACE}/common" \
+            --build-base "${build_root}/build" \
+            --install-base "${install_root}" \
+            --merge-install
+
+          python3 -c "import sys; exec('''import os\ninstall_root = sys.argv[1]\nruntime_prefix = sys.argv[2]\nfor dirpath, _, filenames in os.walk(install_root):\n    for filename in filenames:\n        path = os.path.join(dirpath, filename)\n        try:\n            with open(path, 'r', encoding='utf-8') as f:\n                content = f.read()\n        except Exception:\n            continue\n        if install_root not in content:\n            continue\n        with open(path, 'w', encoding='utf-8') as f:\n            f.write(content.replace(install_root, runtime_prefix))''')" "$install_root" "$install_prefix"
+
+          rm -f \
+            "${install_root}/setup.bash" \
+            "${install_root}/setup.sh" \
+            "${install_root}/setup.zsh" \
+            "${install_root}/setup.ps1" \
+            "${install_root}/local_setup.bash" \
+            "${install_root}/local_setup.sh" \
+            "${install_root}/local_setup.zsh" \
+            "${install_root}/local_setup.ps1" \
+            "${install_root}/_local_setup_util.py" \
+            "${install_root}/_local_setup_util_sh.py" \
+            "${install_root}/_local_setup_util_ps1.py" \
+            "${install_root}/.colcon_install_layout" \
+            "${install_root}/COLCON_IGNORE"
+
+          if [[ ! -d "${install_root}/share/ament_index/resource_index/packages" ]]; then
+            echo "ament index was not generated in the install space." >&2
+            exit 1
+          fi
+
+      - name: Build deb package
+        id: build
+        shell: bash
+        env:
+          ROS_DISTRO: ${{ steps.meta.outputs.ros_distro }}
+          VERSION: ${{ steps.meta.outputs.version }}
+          DEB_FILE: ${{ steps.meta.outputs.deb_file }}
+        run: |
+          set -eo pipefail
+
+          package_root="${RUNNER_TEMP}/deb-build/package"
+          install_prefix="${INSTALL_PREFIX}"
+
+          mkdir -p "$package_root/DEBIAN"
+          installed_size="$(du -sk "$package_root" | cut -f1)"
+
+          cat > "$package_root/DEBIAN/control" <<EOF
+          Package: ${PACKAGE_NAME}
+          Version: ${VERSION}
+          Section: misc
+          Priority: optional
+          Architecture: amd64
+          Depends: ros-${ROS_DISTRO}-ros-base
+          Maintainer: ${GITHUB_REPOSITORY} maintainers <github-actions[bot]@users.noreply.github.com>
+          Installed-Size: ${installed_size}
+          Description: Shared robot_descriptions common ROS packages
+           Prebuilt ROS packages from robot_descriptions/common installed into ${INSTALL_PREFIX} while excluding shared prefix setup files.
+          EOF
+
+          if [[ ! -d "${package_root}${install_prefix}/share/robot_common_launch" ]]; then
+            echo "robot_common_launch was not installed into the package root." >&2
+            exit 1
+          fi
+
+          dpkg-deb --root-owner-group --build "$package_root" "$DEB_FILE"
+
+          echo "deb_path=${GITHUB_WORKSPACE}/${DEB_FILE}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload deb to release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.meta.outputs.tag }}
+          DEB_PATH: ${{ steps.build.outputs.deb_path }}
+        run: |
+          set -eo pipefail
+
+          if ! gh release view "$TAG" > /dev/null 2>&1; then
+            gh release create "$TAG" \
+              --title "$TAG" \
+              --notes "Automated release for Debian packages."
+          fi
+
+          gh release upload "$TAG" "$DEB_PATH" --clobber
