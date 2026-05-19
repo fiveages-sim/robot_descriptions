@@ -224,11 +224,11 @@
 		</joint>
 
 		<link name="chassis_panel">
-			<!--      <visual>-->
-			<!--        <geometry>-->
-			<!--          <mesh filename="file://$(find aidal_description)/meshes/woosh_agv/panel.glb"/>-->
-			<!--        </geometry>-->
-			<!--      </visual>-->
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find aidal_description)/meshes/woosh_agv/panel.glb"/>
+				</geometry>
+			</visual>
 		</link>
 		<joint name="chassis_panel_joint" type="fixed">
 			<origin xyz="-0.0524 0.1771 0.2463" rpy="1.5708 -1.5708 0"/>
@@ -237,11 +237,11 @@
 		</joint>
 
 		<link name="charge_port">
-			<!--      <visual>-->
-			<!--        <geometry>-->
-			<!--          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/charge_port.glb"/>-->
-			<!--        </geometry>-->
-			<!--      </visual>-->
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/charge_port.glb"/>
+				</geometry>
+			</visual>
 		</link>
 		<joint name="charge_port" type="fixed">
 			<origin xyz="0.283736 0 0.056555"/>
@@ -250,16 +250,36 @@
 		</joint>
 
 		<link name="lidar_link">
-			<!--      <visual>-->
-			<!--        <geometry>-->
-			<!--          <mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>-->
-			<!--        </geometry>-->
-			<!--      </visual>-->
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>
+				</geometry>
+			</visual>
 		</link>
 		<joint name="lidar_joint" type="fixed">
 			<origin xyz="0.260985 0 0.126476" rpy="0 0 1.5708"/>
 			<parent link="base_link"/>
 			<child link="lidar_link"/>
+		</joint>
+
+		<link name="lidar_frame"/>
+		<joint name="lidar_frame_joint" type="fixed">
+			<origin xyz="0 0 0.06"/>
+			<parent link="lidar_link"/>
+			<child link="lidar_frame"/>
+		</joint>
+
+		<link name="chassis_camera">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_DW.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="chassis_camera" type="fixed">
+			<origin xyz="0.315 0 0.104" rpy="1.5708 0 1.5708"/>
+			<parent link="base_link"/>
+			<child link="chassis_camera"/>
 		</joint>
 
 	</xacro:macro>

@@ -89,9 +89,14 @@ ros2 launch ocs2_arm_controller demo.launch.py robot:=ai2_bot2 hardware:=isaac
 * With Inspire EG2 Gripper
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=ai2_bot2 type:=inspire hardware:=isaac
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=ai2_bot2 type:=inspire hardware:=isaac
 ```
 
-https://github.com/user-attachments/assets/ba05a717-cc46-4093-aa56-1ad4ea8a5264
+## 4. Navigation (Isaac Sim Ground Truth Odom)
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_common_launch navigation_isaac_gt.launch.py robot:=ai2_bot2
+```
 
 

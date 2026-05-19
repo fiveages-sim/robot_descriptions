@@ -9,7 +9,10 @@ controller_manager:
     diff_drive_controller:
       type: diff_drive_controller/DiffDriveController
 
-    ocs2_arm_controller:
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    ocs2_wbc_controller:
       type: ocs2_arm_controller/Ocs2ArmController
 
     left_gripper_controller:
@@ -37,7 +40,7 @@ diff_drive_controller:
     angular.z.max_velocity: 5.0
     enable_odom_tf: false
 
-ocs2_arm_controller:
+ocs2_wbc_controller:
   ros__parameters:
     # Joint configuration
     update_rate: 100  # Hz
@@ -74,6 +77,28 @@ ocs2_arm_controller:
     rest_pos: [ 0.1, 0.0,
                 0.0, 1.480, 0.0, -1.480, 0.0, 1.740, 0.0,
                 0.0, 1.480, 0.0, -1.480, 0.0, 1.740, 0.0 ]
+
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    # 头部关节
+    joints:
+      - head_joint1
+      - head_joint2
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_1: [0.0, 0.0]           # 正视前方
+    home_2: [0.0, -0.1]          # 低头
+
+    home_duration: 5.0
+    movej_duration: 5.0
+    hold_position_threshold: 0.1
 
 left_gripper_controller:
   ros__parameters:

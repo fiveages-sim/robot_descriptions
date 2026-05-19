@@ -38,7 +38,9 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Zerith        | [H1](humanoid/Zerith/zerith_h1_description)          | Yes     | <img src="humanoid/.images/zerith_h1.png" width="200">                                                                                                                                                                        |
 | Ai2 Robotics  | [Bot2](humanoid/Ai2robotics/ai2_bot2_description)    | Yes     | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                         |
 | XSquare Robot | [Quanta X1](humanoid/X2Robot/quanta_x1_description)  | Yes     | <img src="humanoid/.images/x2robot_quanta_x1.png" width="200">                                                                                                                                                                |
-| Galbot        | [Galbot One](humanoid/Galbot/galbot_one_description) | Yes    | <img src="humanoid/.images/galbot_one.png" width="200">                                                                                                                                                                       |
+
+> **Galbot** wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1) live in the [`humanoid/Galbot`](humanoid/Galbot/) submodule. Initialize it from [Submodules](#submodules) below; see the [Galbot README](humanoid/Galbot/README.md) for models and launch commands.
+
 ## Mobile Manipulators
 
 | Brand          | Model                                                       | Repaint | Images                                                                                                                                                                                                                                                  |
@@ -82,6 +84,7 @@ This repository uses git submodules to manage shared components and specific rob
 | Tianji M6 | `manipulator/Tianji` | [robot-descriptions-tianji](https://github.com/fiveages-sim/robot-descriptions-tianji) | M6-CCS and M6-SRS manipulator arms |
 | Rokae AR5 | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | 6-DOF industrial robot arm |
 | ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
+| Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) for build and demo commands |
 
 ### Using Submodules
 
@@ -109,6 +112,9 @@ git submodule update --init manipulator/Rokae
 
 # For ARX robots
 git submodule update --init manipulator/ARX
+
+# For Galbot robots
+git submodule update --init humanoid/Galbot
 ```
 
 **Update submodules to latest version:**

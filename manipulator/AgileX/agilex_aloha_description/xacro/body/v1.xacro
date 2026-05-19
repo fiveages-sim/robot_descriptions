@@ -143,14 +143,14 @@
 	</joint>
 
 	<joint name="fl_base_joint" type="fixed">
-		<origin xyz="0.233 0.3 0.7775"/>
+		<origin xyz="0.233 0.3 0.775"/>
 		<parent link="base_footprint"/>
 		<child link="left_base_link"/>
 		<axis xyz="0.0 0.0 1.0"/>
 	</joint>
 
 	<joint name="fr_base_joint" type="fixed">
-		<origin xyz="0.233 -0.3 0.7775"/>
+		<origin xyz="0.233 -0.3 0.775"/>
 		<parent link="base_footprint"/>
 		<child link="right_base_link"/>
 		<axis xyz="0.0 0.0 1.0"/>

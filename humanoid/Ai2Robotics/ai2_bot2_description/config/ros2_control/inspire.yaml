@@ -91,23 +91,23 @@ ocs2_wbc_controller:
       -0.0002
     ]
     home_2: [
+      -1.2868,
+      2.7576,
+      -1.5708,
+      -0.0300,
+      0.8333,
       0.0,
       0.0,
+      -1.7800,
+      0.0,
+      -0.6410,
+      0.0,
+      -0.8333,
       0.0,
       0.0,
+      -1.7800,
       0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
+      -0.6410,
       0.0
     ]
 
@@ -147,8 +147,20 @@ ocs2_arm_controller:
       0.0, -0.0003, 0.0, 0.0, 0.0, 0.0, -0.0002
     ]
     home_2: [
-      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+      0.8333,
+      0.0,
+      0.0,
+      -1.7800,
+      0.0,
+      -0.6410,
+      0.0,
+      -0.8333,
+      0.0,
+      0.0,
+      -1.7800,
+      0.0,
+      -0.6410,
+      0.0
     ]
 
 
@@ -195,3 +207,12 @@ body_joint_controller:
     home_duration: 3.0
     movej_duration: 3.0
     hold_position_threshold: 0.05
+
+
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_joint

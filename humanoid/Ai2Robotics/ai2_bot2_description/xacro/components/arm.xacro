@@ -364,9 +364,9 @@
                 </geometry>
             </visual>
             <visual>
-                <origin xyz="-0.13322 -0.0005 0.044651" rpy="0 -1.5708 -1.5708"/>
+                <origin xyz="-0.13322 -0.0005 0.044651" rpy="0 0 3.1415"/>
                 <geometry>
-                    <mesh filename="file://$(find sensor_models)/meshes/d405.glb"/>
+                    <mesh filename="file://$(find sensor_models)/meshes/realsense/d405.glb"/>
                 </geometry>
             </visual>
         </link>

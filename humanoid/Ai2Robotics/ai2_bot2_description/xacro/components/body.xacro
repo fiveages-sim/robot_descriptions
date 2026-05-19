@@ -125,9 +125,6 @@
         <geometry>
           <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link4.glb" />
         </geometry>
-        <material name="">
-          <color rgba="1 1 1 1" />
-        </material>
       </visual>
       <collision>
         <geometry>
@@ -141,6 +138,32 @@
       <child link="body_link4" />
       <axis xyz="0 0 1" />
       <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="10" />
+    </joint>
+
+    <link name="front_camera">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="front_camera" type="fixed">
+      <origin xyz="0.1067 0 0.1805" rpy="-1.95477 0 -1.5708"/>
+      <parent link="body_link4"/>
+      <child link="front_camera"/>
+    </joint>
+
+    <link name="back_camera">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="back_camera" type="fixed">
+      <origin xyz="-0.1682 0 0.308" rpy="-2.0595 0 1.5708"/>
+      <parent link="body_link4"/>
+      <child link="back_camera"/>
     </joint>
 
     <!-- head: head_link1 (neck), head_joint1, head_link2 (head), head_joint2 -->
@@ -179,15 +202,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/head_pitch.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/head2.glb" />
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1" />
-        </material>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/head_pitch.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/head2.glb" />
         </geometry>
       </collision>
     </link>
@@ -198,6 +218,19 @@
       <child link="head_link2" />
       <axis xyz="0 0 1" />
       <limit lower="-0.4014" upper="0.38397" effort="1000" velocity="10" />
+    </joint>
+
+    <link name="head_camera">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="head_camera" type="fixed">
+      <origin xyz="0.089 0.0465 0" rpy="0 1.5708 0.5236"/>
+      <parent link="head_link2"/>
+      <child link="head_camera"/>
     </joint>
 
   </xacro:macro>
