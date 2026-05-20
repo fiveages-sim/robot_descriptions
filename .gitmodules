@@ -38,3 +38,7 @@
 	path = humanoid/FiveAges/fiveages_body_description
 	url = git@github.com:fiveages-sim/fa-body-description.git
 	branch = main
+[submodule "humanoid/FiveAges/fiveages_w2r_description"]
+	path = humanoid/FiveAges/fiveages_w2r_description
+	url = git@github.com:fiveages-sim/fa-w2r-description.git
+	branch = main
