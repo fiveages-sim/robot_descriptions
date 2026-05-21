@@ -501,7 +501,7 @@
     <visual>
       <origin rpy="0 -1.5707963267948966 1.5707963267948966" xyz="0.008996 0 0"/>
       <geometry>
-        <mesh filename="package://sensor_models/meshes/d405/d405.obj"/>
+        <mesh filename="package://sensor_models/meshes/realsense/d405.glb"/>
       </geometry>
     </visual>
     <collision>
@@ -772,7 +772,7 @@
     <visual>
       <origin rpy="0 -1.5707963267948966 1.5707963267948966" xyz="0.008996 0 0"/>
       <geometry>
-        <mesh filename="package://sensor_models/meshes/d405/d405.obj"/>
+        <mesh filename="package://sensor_models/meshes/realsense/d405.glb"/>
       </geometry>
     </visual>
     <collision>

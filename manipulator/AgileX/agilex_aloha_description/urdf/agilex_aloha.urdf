@@ -250,12 +250,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://agilex_aloha_description/meshes/aloha_split/mid360.obj"/>
+        <mesh filename="package://sensor_models/meshes/livox/mid360.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://agilex_aloha_description/meshes/aloha_split/mid360.obj"/>
+        <mesh filename="package://sensor_models/meshes/livox/mid360.glb"/>
       </geometry>
     </collision>
   </link>

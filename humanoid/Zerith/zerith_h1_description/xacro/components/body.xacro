@@ -156,7 +156,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find sensor_models)/meshes/d435/d435.obj"/>
+				<mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
 			</geometry>
 			<origin xyz="0.0325 0 0.005" rpy="1.5707963267949 -1.5707963267949 -0"/>
 		</visual>

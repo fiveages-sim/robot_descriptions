@@ -210,7 +210,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://sensor_models/meshes/mid360/mid360.obj"/>
+        <mesh filename="package://sensor_models/meshes/livox/mid360.glb"/>
       </geometry>
     </visual>
   </link>

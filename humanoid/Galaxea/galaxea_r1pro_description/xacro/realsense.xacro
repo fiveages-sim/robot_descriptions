@@ -18,9 +18,9 @@
         </geometry>
       </visual>
       <visual>
-        <origin rpy="${PI/2} ${-PI/2} 0" xyz="0.0325 0 0"/>
+        <origin xyz="0.0325 0 0"/>
         <geometry>
-          <mesh filename="file://$(find sensor_models)/meshes/d435/d435.obj"/>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
         </geometry>
       </visual>
       <collision>

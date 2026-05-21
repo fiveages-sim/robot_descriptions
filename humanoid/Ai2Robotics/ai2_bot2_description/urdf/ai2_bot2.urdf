@@ -373,7 +373,7 @@
   <link name="front_camera">
     <visual>
       <geometry>
-        <mesh filename="package://sensor_models/meshes/d435/d435.obj"/>
+        <mesh filename="package://sensor_models/meshes/realsense/d435.glb"/>
       </geometry>
     </visual>
   </link>
@@ -385,7 +385,7 @@
   <link name="back_camera">
     <visual>
       <geometry>
-        <mesh filename="package://sensor_models/meshes/d435/d435.obj"/>
+        <mesh filename="package://sensor_models/meshes/realsense/d435.glb"/>
       </geometry>
     </visual>
   </link>
@@ -436,7 +436,7 @@
   <link name="head_camera">
     <visual>
       <geometry>
-        <mesh filename="package://sensor_models/meshes/d435/d435.obj"/>
+        <mesh filename="package://sensor_models/meshes/realsense/d435.glb"/>
       </geometry>
     </visual>
   </link>

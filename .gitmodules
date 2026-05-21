@@ -34,8 +34,8 @@
 [submodule "humanoid/Galbot"]
 	path = humanoid/Galbot
 	url = git@github.com:fiveages-sim/robot-descriptions-galbot.git
-[submodule "humanoid/FiveAges/fiveages_w2_components"]
-	path = humanoid/FiveAges/fiveages_w2_components
+[submodule "humanoid/FiveAges/fiveages_w2_common_description"]
+	path = humanoid/FiveAges/fiveages_w2_common_description
 	url = git@github.com:fiveages-sim/fa-w2-components.git
 	branch = main
 [submodule "humanoid/FiveAges/fiveages_w2r_description"]
