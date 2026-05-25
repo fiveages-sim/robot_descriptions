@@ -2,7 +2,11 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:property name="PI" value="3.1415926535897931"/>
 
-    <xacro:macro name="Chassis">
+    <xacro:macro name="Chassis" params="enable_wheel_joints:='true'">
+        <xacro:property name="wheel_joints_enabled"
+                        value="${str(enable_wheel_joints).lower() in ['true', '1', 'yes', 'on']}"/>
+        <xacro:property name="steering_joint_type" value="${'revolute' if wheel_joints_enabled else 'fixed'}"/>
+        <xacro:property name="driving_joint_type" value="${'continuous' if wheel_joints_enabled else 'fixed'}"/>
 
         <!-- Base Link -->
         <link name="base_link">
@@ -33,18 +37,20 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj"/>
+                    <mesh filename="file://$(find galaxea_r1_description)/meshes/steer.glb"/>
                 </geometry>
             </visual>
         </link>
 
         <!-- Steer Motor Joint 1: Base to Steer Motor 1 -->
-        <joint name="steer_joint1" type="revolute">
+        <joint name="steer_joint1" type="${steering_joint_type}">
             <origin xyz="0.21516 0.28 0.12375"/>
             <parent link="base_link"/>
             <child link="steer_motor_link1"/>
-            <axis xyz="0 0 1"/>
-            <limit lower="${-PI/2}" upper="${PI/2}" effort="44" velocity="${PI}"/>
+            <xacro:if value="${wheel_joints_enabled}">
+                <axis xyz="0 0 1"/>
+                <limit lower="${-PI/2}" upper="${PI/2}" effort="44" velocity="${PI}"/>
+            </xacro:if>
         </joint>
 
         <!-- Wheel Motor Link 1 -->
@@ -57,7 +63,7 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel_motor.obj"/>
+                    <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel.glb"/>
                 </geometry>
             </visual>
             <collision>
@@ -69,11 +75,13 @@
         </link>
 
         <!-- Wheel Motor Joint 1: Steer Motor 1 to Wheel Motor 1 -->
-        <joint name="wheel_joint1" type="continuous">
+        <joint name="wheel_joint1" type="${driving_joint_type}">
             <origin xyz="0 0 -0.09525" rpy="0 0 ${PI}"/>
             <parent link="steer_motor_link1"/>
             <child link="wheel_motor_link1"/>
-            <axis xyz="0 -1 0"/>
+            <xacro:if value="${wheel_joints_enabled}">
+                <axis xyz="0 -1 0"/>
+            </xacro:if>
         </joint>
 
         <!-- Steer Motor Link 2 -->
@@ -87,24 +95,20 @@
             <visual>
                 <origin rpy="0 0 ${PI}"/>
                 <geometry>
-                    <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj"/>
+                    <mesh filename="file://$(find galaxea_r1_description)/meshes/steer.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <origin rpy="0 0 ${PI}"/>
-                <geometry>
-                    <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj"/>
-                </geometry>
-            </collision>
         </link>
 
         <!-- Steer Motor Joint 2: Base to Steer Motor 2 -->
-        <joint name="steer_joint2" type="revolute">
+        <joint name="steer_joint2" type="${steering_joint_type}">
             <origin xyz="0.21516 -0.28 0.12375"/>
             <parent link="base_link"/>
             <child link="steer_motor_link2"/>
-            <axis xyz="0 0 1"/>
-            <limit lower="${-PI/2}" upper="${PI/2}" effort="44" velocity="${PI}"/>
+            <xacro:if value="${wheel_joints_enabled}">
+                <axis xyz="0 0 1"/>
+                <limit lower="${-PI/2}" upper="${PI/2}" effort="44" velocity="${PI}"/>
+            </xacro:if>
         </joint>
 
         <!-- Wheel Motor Link 2 -->
@@ -117,7 +121,7 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel_motor.obj"/>
+                    <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel.glb"/>
                 </geometry>
             </visual>
             <collision>
@@ -129,11 +133,13 @@
         </link>
 
         <!-- Wheel Motor Joint 2: Steer Motor 2 to Wheel Motor 2 -->
-        <joint name="wheel_joint2" type="continuous">
+        <joint name="wheel_joint2" type="${driving_joint_type}">
             <origin xyz="0 0 -0.09525"/>
             <parent link="steer_motor_link2"/>
             <child link="wheel_motor_link2"/>
-            <axis xyz="0 1 0"/>
+            <xacro:if value="${wheel_joints_enabled}">
+                <axis xyz="0 1 0"/>
+            </xacro:if>
         </joint>
 
         <!-- Steer Motor Link 3 -->
@@ -146,23 +152,20 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj"/>
+                    <mesh filename="file://$(find galaxea_r1_description)/meshes/steer.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find galaxea_r1_description)/meshes/steer_motor.obj"/>
-                </geometry>
-            </collision>
         </link>
 
         <!-- Steer Motor Joint 3: Base to Steer Motor 3 -->
-        <joint name="steer_joint3" type="revolute">
+        <joint name="steer_joint3" type="${steering_joint_type}">
             <origin xyz="-0.28084 0 0.12375"/>
             <parent link="base_link"/>
             <child link="steer_motor_link3"/>
-            <axis xyz="0 0 1"/>
-            <limit lower="${-PI/2}" upper="${PI/2}" effort="44" velocity="${PI}"/>
+            <xacro:if value="${wheel_joints_enabled}">
+                <axis xyz="0 0 1"/>
+                <limit lower="${-PI/2}" upper="${PI/2}" effort="44" velocity="${PI}"/>
+            </xacro:if>
         </joint>
 
         <!-- Wheel Motor Link 3 -->
@@ -175,7 +178,7 @@
             </inertial>
             <visual>
                 <geometry>
-                    <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel_motor.obj"/>
+                    <mesh filename="file://$(find galaxea_r1_description)/meshes/wheel.glb"/>
                 </geometry>
             </visual>
             <collision>
@@ -187,11 +190,13 @@
         </link>
 
         <!-- Wheel Motor Joint 3: Steer Motor 3 to Wheel Motor 3 -->
-        <joint name="wheel_joint3" type="continuous">
+        <joint name="wheel_joint3" type="${driving_joint_type}">
             <origin xyz="0 0 -0.09525" rpy="0 0 ${PI}"/>
             <parent link="steer_motor_link3"/>
             <child link="wheel_motor_link3"/>
-            <axis xyz="0 -1 0"/>
+            <xacro:if value="${wheel_joints_enabled}">
+                <axis xyz="0 -1 0"/>
+            </xacro:if>
         </joint>
 
         <link name="left_lidar">

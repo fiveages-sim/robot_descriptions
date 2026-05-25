@@ -13,12 +13,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/base_link.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/chassis.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/base_link.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/chassis.glb"/>
       </geometry>
     </collision>
   </link>
@@ -31,22 +31,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/steer_motor.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/steer.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/steer_motor.obj"/>
-      </geometry>
-    </collision>
   </link>
   <!-- Steer Motor Joint 1: Base to Steer Motor 1 -->
-  <joint name="steer_motor_joint1" type="revolute">
+  <joint name="steer_joint1" type="fixed">
     <origin xyz="0.21516 0.28 0.12375"/>
     <parent link="base_link"/>
     <child link="steer_motor_link1"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="44" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="3.141592653589793"/>
   </joint>
   <!-- Wheel Motor Link 1 -->
   <link name="wheel_motor_link1">
@@ -57,21 +50,21 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/wheel_motor.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/wheel.glb"/>
       </geometry>
     </visual>
     <collision>
+      <origin rpy="1.5707963267948966 0 0"/>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/wheel_motor.obj"/>
+        <cylinder length="0.048" radius="0.07"/>
       </geometry>
     </collision>
   </link>
   <!-- Wheel Motor Joint 1: Steer Motor 1 to Wheel Motor 1 -->
-  <joint name="wheel_motor_joint1" type="continuous">
+  <joint name="wheel_joint1" type="fixed">
     <origin rpy="0 0 3.141592653589793" xyz="0 0 -0.09525"/>
     <parent link="steer_motor_link1"/>
     <child link="wheel_motor_link1"/>
-    <axis xyz="0 1 0"/>
   </joint>
   <!-- Steer Motor Link 2 -->
   <link name="steer_motor_link2">
@@ -83,23 +76,15 @@
     <visual>
       <origin rpy="0 0 3.141592653589793"/>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/steer_motor.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/steer.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <origin rpy="0 0 3.141592653589793"/>
-      <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/steer_motor.obj"/>
-      </geometry>
-    </collision>
   </link>
   <!-- Steer Motor Joint 2: Base to Steer Motor 2 -->
-  <joint name="steer_motor_joint2" type="revolute">
+  <joint name="steer_joint2" type="fixed">
     <origin xyz="0.21516 -0.28 0.12375"/>
     <parent link="base_link"/>
     <child link="steer_motor_link2"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="44" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="3.141592653589793"/>
   </joint>
   <!-- Wheel Motor Link 2 -->
   <link name="wheel_motor_link2">
@@ -110,21 +95,21 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/wheel_motor.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/wheel.glb"/>
       </geometry>
     </visual>
     <collision>
+      <origin rpy="1.5707963267948966 0 0"/>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/wheel_motor.obj"/>
+        <cylinder length="0.048" radius="0.07"/>
       </geometry>
     </collision>
   </link>
   <!-- Wheel Motor Joint 2: Steer Motor 2 to Wheel Motor 2 -->
-  <joint name="wheel_motor_joint2" type="continuous">
+  <joint name="wheel_joint2" type="fixed">
     <origin xyz="0 0 -0.09525"/>
     <parent link="steer_motor_link2"/>
     <child link="wheel_motor_link2"/>
-    <axis xyz="0 1 0"/>
   </joint>
   <!-- Steer Motor Link 3 -->
   <link name="steer_motor_link3">
@@ -135,22 +120,15 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/steer_motor.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/steer.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/steer_motor.obj"/>
-      </geometry>
-    </collision>
   </link>
   <!-- Steer Motor Joint 3: Base to Steer Motor 3 -->
-  <joint name="steer_motor_joint3" type="revolute">
+  <joint name="steer_joint3" type="fixed">
     <origin xyz="-0.28084 0 0.12375"/>
     <parent link="base_link"/>
     <child link="steer_motor_link3"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="44" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="3.141592653589793"/>
   </joint>
   <!-- Wheel Motor Link 3 -->
   <link name="wheel_motor_link3">
@@ -161,21 +139,105 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/wheel_motor.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/wheel.glb"/>
       </geometry>
     </visual>
     <collision>
+      <origin rpy="1.5707963267948966 0 0"/>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/wheel_motor.obj"/>
+        <cylinder length="0.048" radius="0.07"/>
       </geometry>
     </collision>
   </link>
   <!-- Wheel Motor Joint 3: Steer Motor 3 to Wheel Motor 3 -->
-  <joint name="wheel_motor_joint3" type="continuous">
+  <joint name="wheel_joint3" type="fixed">
     <origin rpy="0 0 3.141592653589793" xyz="0 0 -0.09525"/>
     <parent link="steer_motor_link3"/>
     <child link="wheel_motor_link3"/>
-    <axis xyz="0 1 0"/>
+  </joint>
+  <link name="left_lidar">
+    <visual>
+      <geometry>
+        <mesh filename="package://sensor_models/meshes/livox/mid360.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="left_lidar_joint" type="fixed">
+    <origin xyz="0.203297 0.26215 0.233685 "/>
+    <parent link="base_link"/>
+    <child link="left_lidar"/>
+  </joint>
+  <link name="right_lidar">
+    <visual>
+      <geometry>
+        <mesh filename="package://sensor_models/meshes/livox/mid360.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="right_lidar_joint" type="fixed">
+    <origin xyz="0.203297 -0.26215 0.233685 "/>
+    <parent link="base_link"/>
+    <child link="right_lidar"/>
+  </joint>
+  <link name="chassis_fl_camera">
+    <visual>
+      <geometry>
+        <mesh filename="package://sensor_models/meshes/usb_camera/camera_02.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="chassis_fl_camera_joint" type="fixed">
+    <origin xyz="0.25625 0.132735 0.205 "/>
+    <parent link="base_link"/>
+    <child link="chassis_fl_camera"/>
+  </joint>
+  <link name="chassis_fr_camera">
+    <visual>
+      <geometry>
+        <mesh filename="package://sensor_models/meshes/usb_camera/camera_02.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="chassis_fr_camera_joint" type="fixed">
+    <origin xyz="0.25625 -0.132735 0.205 "/>
+    <parent link="base_link"/>
+    <child link="chassis_fr_camera"/>
+  </joint>
+  <link name="chassis_right_camera">
+    <visual>
+      <geometry>
+        <mesh filename="package://sensor_models/meshes/usb_camera/camera_02.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="chassis_right_camera_joint" type="fixed">
+    <origin rpy=" 0 0 -1.5707963267948966" xyz="0.02865 -0.32245 0.205 "/>
+    <parent link="base_link"/>
+    <child link="chassis_right_camera"/>
+  </joint>
+  <link name="chassis_left_camera">
+    <visual>
+      <geometry>
+        <mesh filename="package://sensor_models/meshes/usb_camera/camera_02.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="chassis_left_camera_joint" type="fixed">
+    <origin rpy=" 0 0 1.5707963267948966" xyz="0.02865 0.32245 0.205 "/>
+    <parent link="base_link"/>
+    <child link="chassis_left_camera"/>
+  </joint>
+  <link name="chassis_back_camera">
+    <visual>
+      <geometry>
+        <mesh filename="package://sensor_models/meshes/usb_camera/camera_02.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="chassis_back_camera_joint" type="fixed">
+    <origin rpy=" 0 0 3.141592653589793" xyz="-0.314835 0 0.217 "/>
+    <parent link="base_link"/>
+    <child link="chassis_back_camera"/>
   </joint>
   <!-- Torso Link 1 -->
   <link name="torso_link1">
@@ -186,12 +248,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/torso_link1.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/torso_link1.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/torso_link1.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/torso_link1.glb"/>
       </geometry>
     </collision>
   </link>
@@ -212,12 +274,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/torso_link2.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/torso_link2.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/torso_link2.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/torso_link2.glb"/>
       </geometry>
     </collision>
   </link>
@@ -238,12 +300,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/torso_link3.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/torso_link3.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/torso_link3.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/torso_link3.glb"/>
       </geometry>
     </collision>
   </link>
@@ -264,12 +326,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/torso_link4.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/torso_link4.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/torso_link4.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/torso_link4.glb"/>
       </geometry>
     </collision>
   </link>
@@ -290,12 +352,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/zed_link.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/head.glb"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/zed_link.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/head.glb"/>
       </geometry>
     </collision>
   </link>
@@ -565,8 +627,8 @@
     <parent link="torso_link4"/>
     <child link="left_base_link"/>
   </joint>
-  <!-- RealSense Camera Link -->
-  <link name="left_realsense_link">
+  <!-- Hand camera stand link -->
+  <link name="left_hand_camera_stand_link">
     <inertial>
       <origin xyz="0.022169 0.0060171 -0.017353"/>
       <mass value="0.175"/>
@@ -574,26 +636,28 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/camera_stand.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/hand_camera_stand.glb"/>
       </geometry>
     </visual>
+  </link>
+  <!-- Hand camera link -->
+  <link name="left_hand_camera_link">
     <visual>
-      <origin xyz="0.0325 0 0"/>
       <geometry>
         <mesh filename="package://sensor_models/meshes/realsense/d435.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/camera_stand.obj"/>
-      </geometry>
-    </collision>
   </link>
-  <!-- RealSense Joint: Arm 6 to Camera -->
-  <joint name="left_realsense_joint" type="fixed">
+  <joint name="left_hand_camera_joint" type="fixed">
+    <origin xyz="0.0325 0 0"/>
+    <parent link="left_hand_camera_stand_link"/>
+    <child link="left_hand_camera_link"/>
+  </joint>
+  <!-- Hand camera stand joint: Arm 6 to camera stand -->
+  <joint name="left_hand_camera_stand_joint" type="fixed">
     <origin rpy="-2.0071 0.0077831 -1.5707963267948966" xyz="0.098768 0.0021071 0.05055"/>
     <parent link="left_link6"/>
-    <child link="left_realsense_link"/>
+    <child link="left_hand_camera_stand_link"/>
   </joint>
   <!-- Base Link -->
   <link name="right_base_link">
@@ -854,8 +918,8 @@
     <parent link="torso_link4"/>
     <child link="right_base_link"/>
   </joint>
-  <!-- RealSense Camera Link -->
-  <link name="right_realsense_link">
+  <!-- Hand camera stand link -->
+  <link name="right_hand_camera_stand_link">
     <inertial>
       <origin xyz="0.022169 0.0060171 -0.017353"/>
       <mass value="0.175"/>
@@ -863,25 +927,27 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/camera_stand.obj"/>
+        <mesh filename="package://galaxea_r1_description/meshes/hand_camera_stand.glb"/>
       </geometry>
     </visual>
+  </link>
+  <!-- Hand camera link -->
+  <link name="right_hand_camera_link">
     <visual>
-      <origin xyz="0.0325 0 0"/>
       <geometry>
         <mesh filename="package://sensor_models/meshes/realsense/d435.glb"/>
       </geometry>
     </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://galaxea_r1_description/meshes/camera_stand.obj"/>
-      </geometry>
-    </collision>
   </link>
-  <!-- RealSense Joint: Arm 6 to Camera -->
-  <joint name="right_realsense_joint" type="fixed">
+  <joint name="right_hand_camera_joint" type="fixed">
+    <origin xyz="0.0325 0 0"/>
+    <parent link="right_hand_camera_stand_link"/>
+    <child link="right_hand_camera_link"/>
+  </joint>
+  <!-- Hand camera stand joint: Arm 6 to camera stand -->
+  <joint name="right_hand_camera_stand_joint" type="fixed">
     <origin rpy="1.1344 -0.0077831 1.5707963267948966" xyz="0.098762 0.0021071 -0.05055"/>
     <parent link="right_link6"/>
-    <child link="right_realsense_link"/>
+    <child link="right_hand_camera_stand_link"/>
   </joint>
 </robot>

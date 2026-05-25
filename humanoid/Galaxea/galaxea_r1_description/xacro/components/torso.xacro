@@ -13,12 +13,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link1.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link1.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link1.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link1.glb"/>
         </geometry>
       </collision>
     </link>
@@ -41,12 +41,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link2.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link2.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link2.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link2.glb"/>
         </geometry>
       </collision>
     </link>
@@ -69,12 +69,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link3.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link3.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link3.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link3.glb"/>
         </geometry>
       </collision>
     </link>
@@ -97,12 +97,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link4.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link4.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link4.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/torso_link4.glb"/>
         </geometry>
       </collision>
     </link>
@@ -125,12 +125,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/zed_link.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/head.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/zed_link.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/head.glb"/>
         </geometry>
       </collision>
     </link>

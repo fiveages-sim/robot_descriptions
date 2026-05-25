@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="R1" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:arg name="enable_wheel_joints" default="false"/>
   <!-- Include Chassis -->
-  <xacro:include filename="$(find galaxea_r1_description)/xacro/chassis.xacro"/>
-  <xacro:Chassis/>
+  <xacro:include filename="$(find galaxea_r1_description)/xacro/components/chassis.xacro"/>
+  <xacro:Chassis enable_wheel_joints="$(arg enable_wheel_joints)"/>
 
   <!-- Include Torso -->
-  <xacro:include filename="$(find galaxea_r1_description)/xacro/torso.xacro"/>
+  <xacro:include filename="$(find galaxea_r1_description)/xacro/components/torso.xacro"/>
   <xacro:Torso/>
 
   <!-- Include Left Arm -->
@@ -21,7 +22,7 @@
   </joint>
 
   <!-- Include Left RealSense Camera -->
-  <xacro:include filename="$(find galaxea_r1_description)/xacro/realsense.xacro"/>
+  <xacro:include filename="$(find galaxea_r1_description)/xacro/components/realsense.xacro"/>
   <xacro:RealSense side="left"/>
 
   <!-- Include Right Arm -->

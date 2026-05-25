@@ -21,10 +21,16 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_r1
 ![Galaxea R1_Down](../../.images/galaxea_r1_down.png)
 
 ### 2.2 Components
-* Base
+* Chassis
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch component.launch.py robot:=galaxea_r1
+  ros2 launch robot_common_launch component.launch.py robot:=galaxea_r1 type:=chassis
+  ```
+
+* Torso
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=galaxea_r1 type:=torso
   ```
 
 ## 3. OCS2 Demo
