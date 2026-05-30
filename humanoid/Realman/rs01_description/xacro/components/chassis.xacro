@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<robot name="rs01_chassis" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find rs01_description)/xacro/macros.xacro"/>
+  <xacro:property name="mesh_path" value="file://$(find rs01_description)/meshes/"/>
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="drive_wheel_y" value="0.1815"/>
+  <xacro:property name="drive_wheel_z" value="0.085"/>
+
+  <xacro:macro name="rs01_chassis" params="joints_movable:=false">
+    <xacro:if value="${joints_movable}">
+      <xacro:property name="wheel_joint_type" value="continuous"/>
+    </xacro:if>
+    <xacro:unless value="${joints_movable}">
+      <xacro:property name="wheel_joint_type" value="fixed"/>
+    </xacro:unless>
+
+    <link name="base_link">
+      <xacro:rs01_inertial mass="45" ixx="1.37392" iyy="1.08364" izz="0.687662"
+                           origin_xyz="-0.000546 -0.000738 0.046"/>
+      <xacro:rs01_mesh mesh="${mesh_path}chassis/chassis.glb"/>
+    </link>
+
+    <!-- Main drive wheels (AIDAL woosh_agv wheel model + simplified collision) -->
+    <link name="wheel_link_R">
+      <xacro:rs01_inertial mass="1.0523" ixx="0.0033125" iyy="0.0018066" izz="0.0018066"
+                           origin_xyz="-0.024898 0 0"/>
+      <xacro:rs01_drive_wheel mirror_scale="-1"/>
+    </link>
+    <joint name="wheel_joint_R" type="${wheel_joint_type}">
+      <origin xyz="0 -${drive_wheel_y} ${drive_wheel_z}" rpy="0 0 ${PI/2}"/>
+      <parent link="base_link"/>
+      <child link="wheel_link_R"/>
+      <xacro:if value="${joints_movable}">
+        <axis xyz="1 0 0"/>
+        <limit effort="100" velocity="10"/>
+      </xacro:if>
+    </joint>
+
+    <link name="wheel_link_L">
+      <xacro:rs01_inertial mass="1.0734" ixx="0.0033996" iyy="0.0019593" izz="0.0019593"
+                           origin_xyz="0.025224 0 0"/>
+      <xacro:rs01_drive_wheel mirror_scale="1"/>
+    </link>
+    <joint name="wheel_joint_L" type="${wheel_joint_type}">
+      <origin xyz="0 ${drive_wheel_y} ${drive_wheel_z}" rpy="0 0 ${PI/2}"/>
+      <parent link="base_link"/>
+      <child link="wheel_link_L"/>
+      <xacro:if value="${joints_movable}">
+        <axis xyz="1 0 0"/>
+        <limit effort="100" velocity="10"/>
+      </xacro:if>
+    </joint>
+
+    <!-- Front-right caster -->
+    <link name="wheel_link_FR1">
+      <xacro:rs01_inertial mass="0.34936" ixx="0.000415237" iyy="0.000294902" izz="0.000293781"
+                           origin_xyz="-0.0022696 0.00002 -0.037388"/>
+      <xacro:rs01_visual_mesh mesh="${mesh_path}chassis/caster.glb"/>
+    </link>
+    <joint name="wheel_joint_FR1" type="${wheel_joint_type}">
+      <origin xyz="0.18 -0.148 0.105" rpy="0 0 ${PI}"/>
+      <parent link="base_link"/>
+      <child link="wheel_link_FR1"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <link name="wheel_link_FR2">
+      <xacro:rs01_inertial mass="0.18035" ixx="0.0001228" iyy="9.6941e-05" izz="9.6941e-05"/>
+      <xacro:rs01_caster_wheel mesh="${mesh_path}chassis/caster_wheel.glb"/>
+    </link>
+    <joint name="wheel_joint_FR2" type="${wheel_joint_type}">
+      <origin xyz="0.022 0 -0.0675" rpy="${PI/2} 0 -${PI}"/>
+      <parent link="wheel_link_FR1"/>
+      <child link="wheel_link_FR2"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- Front-left caster -->
+    <link name="wheel_link_FL1">
+      <xacro:rs01_inertial mass="0.34936" ixx="0.000415232" iyy="0.000294907" izz="0.000293782"
+                           origin_xyz="0.002266 -0.000002 -0.037388"/>
+      <xacro:rs01_visual_mesh mesh="${mesh_path}chassis/caster.glb"/>
+    </link>
+    <joint name="wheel_joint_FL1" type="${wheel_joint_type}">
+      <origin xyz="0.18 0.148 0.105" rpy="0 0 ${PI}"/>
+      <parent link="base_link"/>
+      <child link="wheel_link_FL1"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <link name="wheel_link_FL2">
+      <xacro:rs01_inertial mass="0.18035" ixx="0.0001228" iyy="9.694e-05" izz="9.694e-05"/>
+      <xacro:rs01_caster_wheel mesh="${mesh_path}chassis/caster_wheel.glb"/>
+    </link>
+    <joint name="wheel_joint_FL2" type="${wheel_joint_type}">
+      <origin xyz="0.022 0 -0.0675" rpy="${PI/2} 0 -${PI}"/>
+      <parent link="wheel_link_FL1"/>
+      <child link="wheel_link_FL2"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- Back-right caster -->
+    <link name="wheel_link_BR1">
+      <xacro:rs01_inertial mass="0.34936" ixx="0.000415237" iyy="0.000294902" izz="0.000293781"
+                           origin_xyz="-0.002266 0.00002 -0.037388"/>
+      <xacro:rs01_visual_mesh mesh="${mesh_path}chassis/caster.glb"/>
+    </link>
+    <joint name="wheel_joint_BR1" type="${wheel_joint_type}">
+      <origin xyz="-0.18 -0.148 0.105" rpy="0 0 ${PI}"/>
+      <parent link="base_link"/>
+      <child link="wheel_link_BR1"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <link name="wheel_link_BR2">
+      <xacro:rs01_inertial mass="0.18035" ixx="0.0001228" iyy="9.6941e-05" izz="9.6941e-05"/>
+      <xacro:rs01_caster_wheel mesh="${mesh_path}chassis/caster_wheel.glb"/>
+    </link>
+    <joint name="wheel_joint_BR2" type="${wheel_joint_type}">
+      <origin xyz="0.022 0 -0.0675" rpy="${PI/2} 0 -${PI}"/>
+      <parent link="wheel_link_BR1"/>
+      <child link="wheel_link_BR2"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- Back-left caster -->
+    <link name="wheel_link_BL1">
+      <xacro:rs01_inertial mass="0.34936" ixx="0.000415237" iyy="0.000294902" izz="0.000293781"
+                           origin_xyz="-0.0022696 -0.000021812 -0.037388"/>
+      <xacro:rs01_visual_mesh mesh="${mesh_path}chassis/caster.glb"/>
+    </link>
+    <joint name="wheel_joint_BL1" type="${wheel_joint_type}">
+      <origin xyz="-0.18 0.148 0.105" rpy="0 0 ${PI}"/>
+      <parent link="base_link"/>
+      <child link="wheel_link_BL1"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <link name="wheel_link_BL2">
+      <xacro:rs01_inertial mass="0.18035" ixx="0.0001228" iyy="9.6941e-05" izz="9.6941e-05"/>
+      <xacro:rs01_caster_wheel mesh="${mesh_path}chassis/caster_wheel.glb"/>
+    </link>
+    <joint name="wheel_joint_BL2" type="${wheel_joint_type}">
+      <origin xyz="0.022 0 -0.0675" rpy="${PI/2} 0 -${PI}"/>
+      <parent link="wheel_link_BL1"/>
+      <child link="wheel_link_BL2"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- Deck depth camera -->
+    <link name="chassis_camera">
+      <xacro:rs01_inertial mass="0.18" ixx="0.000117117" iyy="0.000116311" izz="1.72766e-05"
+                           origin_xyz="-0.034161 -0.000002 -0.012628"/>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="chassis_camera_joint" type="fixed">
+      <origin xyz="0.27285 0 0.131" rpy="-${PI/2} 0 -${PI/2}"/>
+      <parent link="base_link"/>
+      <child link="chassis_camera"/>
+    </joint>
+
+    <link name="chassis_usb_camera">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/usb_camera/camera_01.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="chassis_usb_camera_joint" type="fixed">
+      <origin xyz="0.275 0 0.08" rpy="-${PI/2} 0 -${PI/2}"/>
+      <parent link="base_link"/>
+      <child link="chassis_usb_camera"/>
+    </joint>
+
+    <link name="chassis_lidar">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/2d_lidars/slamtec_rplidar.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="chassis_lidar_joint" type="fixed">
+      <origin xyz="0.238 0 0.218871"/>
+      <parent link="base_link"/>
+      <child link="chassis_lidar"/>
+    </joint>
+
+  </xacro:macro>
+
+</robot>

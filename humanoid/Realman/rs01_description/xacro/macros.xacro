@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="rs01_drive_wheel" params="mirror_scale:='1'">
+    <xacro:property name="wheel_mesh" value="file://$(find aidal_description)/meshes/woosh_agv/wheel.glb"/>
+    <visual>
+      <geometry>
+        <mesh filename="${wheel_mesh}" scale="${mirror_scale} 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 ${PI/2} 0"/>
+      <geometry>
+        <cylinder radius="0.085" length="0.034"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+  <xacro:macro name="rs01_visual_mesh" params="mesh">
+    <visual>
+      <geometry>
+        <mesh filename="${mesh}"/>
+      </geometry>
+    </visual>
+  </xacro:macro>
+
+  <xacro:macro name="rs01_caster_wheel" params="mesh collision_radius:=0.0375">
+    <visual>
+      <geometry>
+        <mesh filename="${mesh}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="${collision_radius}"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+  <xacro:macro name="rs01_mesh" params="mesh">
+    <visual>
+      <geometry>
+        <mesh filename="${mesh}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="${mesh}"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+  <xacro:macro name="rs01_inertial" params="mass ixx iyy izz origin_xyz:='0 0 0' origin_rpy:='0 0 0'">
+    <inertial>
+      <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+      <mass value="${mass}"/>
+      <inertia ixx="${ixx}" ixy="0" ixz="0" iyy="${iyy}" iyz="0" izz="${izz}"/>
+    </inertial>
+  </xacro:macro>
+
+</robot>

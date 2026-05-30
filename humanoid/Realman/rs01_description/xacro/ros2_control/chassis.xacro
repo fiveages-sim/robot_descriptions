@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="rs01_chassis_interfaces">
+    <xacro:macro name="wheel_interface" params="joint_name">
+      <joint name="${joint_name}">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </xacro:macro>
+    <xacro:wheel_interface joint_name="wheel_joint_R"/>
+    <xacro:wheel_interface joint_name="wheel_joint_L"/>
+    <xacro:wheel_interface joint_name="wheel_joint_FR1"/>
+    <xacro:wheel_interface joint_name="wheel_joint_FR2"/>
+    <xacro:wheel_interface joint_name="wheel_joint_FL1"/>
+    <xacro:wheel_interface joint_name="wheel_joint_FL2"/>
+    <xacro:wheel_interface joint_name="wheel_joint_BR1"/>
+    <xacro:wheel_interface joint_name="wheel_joint_BR2"/>
+    <xacro:wheel_interface joint_name="wheel_joint_BL1"/>
+    <xacro:wheel_interface joint_name="wheel_joint_BL2"/>
+  </xacro:macro>
+
+</robot>

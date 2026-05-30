@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<robot name="rs01_ee" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:include filename="$(find changingtek_description)/xacro/AG2F120S.xacro"/>
+  <xacro:include filename="$(find inspire_description)/xacro/EG2-4C2.xacro"/>
+
+  <xacro:macro name="rs01_ee" params="type:='AG2F120S'">
+    <xacro:property name="gripper_type_norm" value="${str(type).upper()}"/>
+
+    <xacro:if value="${gripper_type_norm == 'EMPTY'}">
+      <link name="left_eef"/>
+      <link name="right_eef"/>
+      <joint name="left_ee_fix" type="fixed">
+        <parent link="left_ee"/>
+        <child link="left_eef"/>
+      </joint>
+      <joint name="right_ee_fix" type="fixed">
+        <parent link="right_ee"/>
+        <child link="right_eef"/>
+      </joint>
+    </xacro:if>
+
+    <xacro:if value="${gripper_type_norm == 'AG2F120S'}">
+      <xacro:AG2F120S name="left"/>
+      <xacro:AG2F120S name="right"/>
+      <!-- Mount from rm75 ee to AG2F120S base (aligned with MuJoCo rtool/ltool on Link_7) -->
+      <joint name="left_gripper_fix" type="fixed">
+        <parent link="left_ee"/>
+        <child link="left_gripper_base"/>
+        <origin rpy="0 0 ${PI/2}"/>
+      </joint>
+      <joint name="right_gripper_fix" type="fixed">
+        <parent link="right_ee"/>
+        <child link="right_gripper_base"/>
+        <origin rpy="0 0 ${PI/2}"/>
+      </joint>
+      <link name="left_eef"/>
+      <link name="right_eef"/>
+      <joint name="left_eef_fix" type="fixed">
+        <parent link="left_gripper_center"/>
+        <child link="left_eef"/>
+      </joint>
+      <joint name="right_eef_fix" type="fixed">
+        <parent link="right_gripper_center"/>
+        <child link="right_eef"/>
+      </joint>
+    </xacro:if>
+
+    <xacro:if value="${gripper_type_norm == 'EG2-4C2'}">
+      <xacro:Gripper name="left"/>
+      <joint name="left_gripper_fix" type="fixed">
+        <parent link="left_ee"/>
+        <child link="left_gripper_base"/>
+        <origin xyz="0 0 0.004" rpy="0 0 ${PI/2}"/>
+      </joint>
+      <xacro:Gripper name="right"/>
+      <joint name="right_gripper_fix" type="fixed">
+        <parent link="right_ee"/>
+        <child link="right_gripper_base"/>
+        <origin xyz="0 0 0.004" rpy="0 0 ${PI/2}"/>
+      </joint>
+    </xacro:if>
+  </xacro:macro>
+</robot>
