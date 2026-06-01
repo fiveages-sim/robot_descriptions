@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot name="MOZ1_component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="chassis"/>
+
+  <material name="black_color">
+    <color rgba="0.1 0.1 0.1 1.0"/>
+  </material>
+  <material name="dark_gray">
+    <color rgba="0.216 0.220 0.224 1.0"/>
+  </material>
+  <material name="light_gray">
+    <color rgba="0.392 0.400 0.404 1.0"/>
+  </material>
+  <xacro:include filename="$(find moz1_description)/xacro/components/chassis.xacro"/>
+  <xacro:include filename="$(find moz1_description)/xacro/components/body.xacro"/>
+  <xacro:include filename="$(find moz1_description)/xacro/components/arm.xacro"/>
+  <xacro:include filename="$(find moz1_description)/xacro/components/head.xacro"/>
+  <xacro:include filename="$(find moz1_description)/xacro/components/omni_gripper.xacro"/>
+
+  <xacro:if value="${'$(arg type)' == 'wheel'}">
+    <xacro:include filename="$(find component_models)/xacro/omniwheel_10.xacro"/>
+    <xacro:wheel wheel_name="wheel" enable_passive_wheels="true"/>
+  </xacro:if>
+
+  <!-- Chassis module: drive joints only (empty wheel links), no wheel mesh. -->
+  <xacro:if value="${'$(arg type)' == 'chassis'}">
+    <xacro:Moz1Chassis enable_wheel_joints="true"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <link name="base_link"/>
+    <xacro:Moz1Body parent_link="base_link"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left_arm'}">
+    <link name="waist03"/>
+    <xacro:Moz1Arm parent_link="waist03" direction="1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right_arm'}">
+    <link name="waist03"/>
+    <xacro:Moz1Arm parent_link="waist03" direction="-1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'arm'}">
+    <link name="waist03"/>
+    <xacro:Moz1Arm parent_link="waist03" direction="1"/>
+    <xacro:Moz1Arm parent_link="waist03" direction="-1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'head'}">
+    <link name="waist03"/>
+    <xacro:Moz1Head parent_link="waist03"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'gripper'}">
+    <link name="left07"/>
+    <xacro:Moz1OmniGripper side="left"/>
+    <link name="right07"/>
+    <xacro:Moz1OmniGripper side="right"/>
+  </xacro:if>
+</robot>

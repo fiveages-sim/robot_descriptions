@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.141592653589793"/>
+
+	<xacro:macro name="Moz1Head" params="parent_link:=waist03">
+		<!-- head21: mount on ROS waist03; mesh yaw -90° for CAD alignment. -->
+		<link name="head21">
+			<inertial>
+				<origin xyz="-0.0024550600000000002 0.010183999999999999 0.00271658"/>
+				<mass value="0.56836442"/>
+				<inertia
+						ixx="0.00020270831472221217"
+						ixy="1.4810435380197595e-05"
+						ixz="-3.8139369153069795e-05"
+						iyy="0.00022947986632296087"
+						iyz="-1.702417152539538e-05"
+						izz="0.00016737702037794176"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/head1.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="Head-0" type="fixed">
+			<origin xyz="0 0 0.096" rpy="0 0 ${PI/2}"/>
+			<parent link="${parent_link}"/>
+			<child link="head21"/>
+		</joint>
+
+		<link name="head22">
+			<inertial>
+				<origin xyz="0.00787245 -1.155e-05 0.0024877099999999997"/>
+				<mass value="0.55596678"/>
+				<inertia
+						ixx="0.0001749492136407707"
+						ixy="2.2055227882178706e-07"
+						ixz="-1.5568260566904574e-05"
+						iyy="0.00017461298586781933"
+						iyz="-4.025378433937612e-09"
+						izz="0.00014202362389233189"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/head2.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="Head-1" type="revolute">
+			<origin xyz="0 0 0.103"/>
+			<parent link="head21"/>
+			<child link="head22"/>
+			<axis xyz="1 0 0"/>
+			<limit lower="${-3/180*PI}" upper="${50/180*PI}" effort="0" velocity="${114.6/180*PI}"/>
+		</joint>
+
+		<link name="head23">
+			<inertial>
+				<origin xyz="0.0015001 2.027e-05 0.03197392"/>
+				<mass value="0.55994701"/>
+				<inertia
+						ixx="0.0001400482695891373"
+						ixy="2.973676148360729e-09"
+						ixz="2.658276940997533e-09"
+						iyy="0.00016536845089398658"
+						iyz="-3.029080172831184e-07"
+						izz="0.00016662972117074569"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/head3.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/head3.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="Head-2" type="revolute">
+			<origin xyz="0 0 0.04"/>
+			<parent link="head22"/>
+			<child link="head23"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="${-65/180*PI}" upper="${65/180*PI}" effort="0" velocity="${114.6/180*PI}"/>
+		</joint>
+
+		<link name="head_camera">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/336L.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="Camera-0" type="fixed">
+			<origin xyz="0.0475 -0.06195 0.0371" rpy="${-PI/2} 0 ${PI}"/>
+			<parent link="head23"/>
+			<child link="head_camera"/>
+		</joint>
+	</xacro:macro>
+</robot>

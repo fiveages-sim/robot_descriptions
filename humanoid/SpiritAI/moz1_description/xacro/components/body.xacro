@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.141592653589793"/>
+
+	<xacro:macro name="Moz1Body" params="parent_link:=base_link">
+		<!-- leg01: link frame yaw +90° (REP-103); mesh rotated back for display (same as base_link). -->
+		<link name="leg01">
+			<inertial>
+				<origin xyz="0.00163202 -0.00617037 0.06844628"/>
+				<mass value="5.01910066"/>
+				<inertia
+						ixx="0.028107434659770565"
+						ixy="3.927318307773573e-05"
+						ixz="-0.0004500321419833755"
+						iyy="0.028062430896977783"
+						iyz="-0.001620048685169323"
+						izz="0.00925350712118246"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body1.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body1.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		
+		<joint name="body_joint1" type="revolute">
+			<origin xyz="-0.1114 0 0.1875"/>
+			<parent link="${parent_link}"/>
+			<child link="leg01"/>
+			<axis xyz="-1 0 0"/>
+			<limit lower="${-30/180*PI}" upper="${30/180*PI}" effort="0" velocity="${65/180*PI}"/>
+		</joint>
+
+		<!-- leg02: link frame yaw +90° (REP-103); mesh rotated back for display (same as leg01). -->
+		<link name="leg02">
+			<inertial>
+				<origin xyz="0.00241472 -0.00881747 0.16017954"/>
+				<mass value="5.9319879"/>
+				<inertia
+						ixx="0.10395431"
+						ixy="0.00017743"
+						ixz="0.00055247"
+						iyy="0.08923107"
+						iyz="-0.00061262"
+						izz="0.02756185"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body2.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body2.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="body_joint2" type="revolute">
+			<origin xyz="0 0 0.122"/>
+			<parent link="leg01"/>
+			<child link="leg02"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="0" velocity="${65/180*PI}"/>
+		</joint>
+
+		<!-- leg03: link frame yaw +90° (REP-103); mesh rotated back for display (same as leg01). -->
+		<link name="leg03">
+			<inertial>
+				<origin xyz="0.00063508 -0.009383 0.16973626"/>
+				<mass value="6.15146643"/>
+				<inertia
+						ixx="0.14141280477871998"
+						ixy="5.2496315577319166e-05"
+						ixz="7.317588495429005e-05"
+						iyy="0.13156277307149797"
+						iyz="-0.004764347247159576"
+						izz="0.024235249607062838"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body3.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body3.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		
+		<joint name="body_joint3" type="revolute">
+			<origin xyz="0 0 0.285"/>
+			<parent link="leg02"/>
+			<child link="leg03"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="${-145/180*PI}" upper="${1/180*PI}" effort="0" velocity="${65/180*PI}"/>
+		</joint>
+
+		<!-- waist01: link frame yaw +90° (REP-103). -->
+		<link name="waist01">
+			<inertial>
+				<origin xyz="-0.0057512 -0.00217777 0.06814781"/>
+				<mass value="5.02420522"/>
+				<inertia
+						ixx="0.028739349709173627"
+						ixy="-6.563711943734891e-05"
+						ixz="-0.0014690247829827023"
+						iyy="0.029000945791350378"
+						iyz="0.000693133583819683"
+						izz="0.010353219665116972"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body4.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body4.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="body_joint4" type="revolute">
+			<origin xyz="0 0 0.318"/>
+			<parent link="leg03"/>
+			<child link="waist01"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="${-10/180*PI}" upper="${80/180*PI}" effort="0" velocity="${65/180*PI}"/>
+		</joint>
+
+		<!-- waist02: link frame yaw +90° (REP-103). -->
+		<link name="waist02">
+			<inertial>
+				<origin xyz="-0.0093749 0 0.07131262"/>
+				<mass value="3.22036562"/>
+				<inertia
+						ixx="0.016636603579758467"
+						ixy="-5.97e-06"
+						ixz="0.002337221188355194"
+						iyy="0.021660529670841488"
+						iyz="2.1e-07"
+						izz="0.010649176091083021"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body5.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body5.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="body_joint5" type="revolute">
+			<origin xyz="0 0 0.12"/>
+			<parent link="waist01"/>
+			<child link="waist02"/>
+			<axis xyz="-1 0 0"/>
+			<limit lower="${-30/180*PI}" upper="${30/180*PI}" effort="0" velocity="${65/180*PI}"/>
+		</joint>
+
+		<!-- waist03: link frame yaw +90° (REP-103). -->
+		<link name="waist03">
+			<inertial>
+				<origin xyz="-0.00326024 0.00888336 0.16681874"/>
+				<mass value="10.86382027"/>
+				<inertia
+						ixx="0.10789179"
+						ixy="-0.00036211"
+						ixz="-0.00057521"
+						iyy="0.07787646"
+						iyz="-0.00006444"
+						izz="0.05721664"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body6.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/body6.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="body_joint6" type="revolute">
+			<origin xyz="0 0 0.335"/>
+			<parent link="waist02"/>
+			<child link="waist03"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="${-180/180*PI}" upper="${180/180*PI}" effort="0" velocity="${65/180*PI}"/>
+		</joint>
+	</xacro:macro>
+</robot>

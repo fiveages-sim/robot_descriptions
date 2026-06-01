@@ -39,6 +39,7 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Zerith        | [H1](humanoid/Zerith/zerith_h1_description)          | Yes     | <img src="humanoid/.images/zerith_h1.png" width="200">                                                                                                                                                                        |
 | Ai2 Robotics  | [Bot2](humanoid/Ai2Robotics/ai2_bot2_description)    | Yes     | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                         |
 | XSquare Robot | [Quanta X1](humanoid/X2Robot/quanta_x1_description)  | Yes     | <img src="humanoid/.images/x2robot_quanta_x1.png" width="200">                                                                                                                                                                |
+| Spirit AI     | [MOZ 1](humanoid/SpiritAI/moz1_description)          | Yes     | <img src="humanoid/.images/spiritai_moz1.png" width="200">                                                                                                                                                                    |
 
 > **Galbot** wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1) live in the [`humanoid/Galbot`](humanoid/Galbot/) submodule. Initialize it from [Submodules](#submodules) below; see the [Galbot README](humanoid/Galbot/README.md) for models and launch commands.
 

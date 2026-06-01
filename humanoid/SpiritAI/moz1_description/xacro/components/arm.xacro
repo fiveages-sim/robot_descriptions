@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.141592653589793"/>
+	<xacro:include filename="$(find moz1_description)/xacro/components/omni_gripper.xacro"/>
+
+	<!-- direction:=1 left arm, direction:=-1 right arm (mirror mount & asymmetric limits). -->
+	<xacro:macro name="Moz1Arm" params="parent_link:=waist03 direction:=1">
+		<xacro:if value="${direction == 1}">
+			<xacro:property name="prefix" value="left"/>
+		</xacro:if>
+		<xacro:unless value="${direction == 1}">
+			<xacro:property name="prefix" value="right"/>
+		</xacro:unless>
+
+		<link name="${prefix}01">
+			<xacro:if value="${direction == 1}">
+			<inertial>
+				<origin xyz="0.054749450000000005 0.00276998 0.00022292000000000001"/>
+				<mass value="2.2636205"/>
+				<inertia ixx="0.002926269230241444" ixy="0.00018073090128662935" ixz="6.873083601620018e-06" iyy="0.006088409913996264" iyz="-2.57749308626563e-07" izz="0.005938954117902412"/>
+			</inertial>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+			<inertial>
+				<origin xyz="0.0547406 0.00275389 0.00021783"/>
+				<mass value="2.26440537"/>
+				<inertia ixx="0.002928129507342756" ixy="0.00018094181676374702" ixz="6.9189022603106986e-06" iyy="0.006091016484625338" iyz="2.8162882660487866e-07" izz="0.005943080883625134"/>
+			</inertial>
+			</xacro:unless>
+
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link1.glb"/>
+				</geometry>
+			</visual>
+
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link1.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		
+		<link name="${prefix}02">
+			<xacro:if value="${direction == 1}">
+			<inertial>
+				<origin xyz="-0.0007589000000000001 -0.008950010000000001 -0.059092799999999994"/>
+				<mass value="1.70151449"/>
+				<inertia ixx="0.00996780527386167" ixy="-1.8356963063619418e-05" ixz="0.0001417046878354494" iyy="0.008316431190972131" iyz="-0.000918258941791869" izz="0.0036685141790974815"/>
+			</inertial>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+			<inertial>
+				<origin xyz="-0.00080565 -0.008946609999999999 -0.05910909"/>
+				<mass value="1.70300256"/>
+				<inertia ixx="0.00997433427479084" ixy="-2.0044963750150546e-05" ixz="0.0001469509091651043" iyy="0.008320390345880332" iyz="-0.0009217019903858824" izz="0.003673103186619226"/>
+			</inertial>
+			</xacro:unless>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link2.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link2.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<link name="${prefix}03">
+			<xacro:if value="${direction == 1}">
+			<inertial>
+				<origin xyz="0.00354184 0.00051786 -0.12291618"/>
+				<mass value="2.16228797"/>
+				<inertia ixx="0.012350936002402987" ixy="-9.866019429335053e-06" ixz="-0.0006460491367171733" iyy="0.012533720778781045" iyz="-7.56307736666682e-06" izz="0.0026359150160152668"/>
+			</inertial>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+			<inertial>
+				<origin xyz="0.00357305 -0.000532 -0.1229175"/>
+				<mass value="2.16234468"/>
+				<inertia ixx="0.012351015408661417" ixy="8.920320130520968e-06" ixz="-0.0006409090326253552" iyy="0.012533401427894685" iyz="1.0209718827525237e-05" izz="0.002635582028351848"/>
+			</inertial>
+			</xacro:unless>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link3.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link3.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<link name="${prefix}04">
+			<xacro:if value="${direction == 1}">
+			<inertial>
+				<origin xyz="-0.017389810000000002 7.621e-05 -0.05687889"/>
+				<mass value="1.06370626"/>
+				<inertia ixx="0.004364892684267085" ixy="-3.3029411200298014e-07" ixz="-0.0009144657857989085" iyy="0.004516488247510417" iyz="1.3608902935532258e-06" izz="0.0010309632073077905"/>
+			</inertial>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+			<inertial>
+				<origin xyz="-0.01740539 6.063e-05 -0.05687889"/>
+				<mass value="1.06370626"/>
+				<inertia ixx="0.004364894952053942" ixy="-6.17482701906049e-07" ixz="-0.000913848413679417" iyy="0.004515911602543754" iyz="1.978262413044641e-06" izz="0.0010303888301279843"/>
+			</inertial>
+			</xacro:unless>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link4.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link4.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="${prefix}05">
+			<xacro:if value="${direction == 1}">
+			<inertial>
+				<origin xyz="0.00156708 -0.00511158 -0.09883365000000001"/>
+				<mass value="1.6289911"/>
+				<inertia ixx="0.007388575032625348" ixy="7.878633755778001e-06" ixz="0.0002620285264041154" iyy="0.007426497341332737" iyz="0.0004956800352268241" izz="0.0017983369349761683"/>
+			</inertial>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+			<inertial>
+				<origin xyz="0.00161137 0.005111030000000001 -0.09883264"/>
+				<mass value="1.62900972"/>
+				<inertia ixx="0.007388747043587482" ixy="-6.166133761273098e-06" ixz="0.000259359492337112" iyy="0.007426461312592853" iyz="-0.0004952775881890876" izz="0.001798166240262274"/>
+			</inertial>
+			</xacro:unless>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link5.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link5.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="${prefix}06">
+			<xacro:if value="${direction == 1}">
+			<inertial>
+				<origin xyz="0.011664770000000001 0.01053484 -0.05012905"/>
+				<mass value="0.92138002"/>
+				<inertia ixx="0.002565426812191393" ixy="-0.00011463515254769551" ixz="-0.0004366587103248787" iyy="0.002649844910861245" iyz="0.00047010219007499125" izz="0.0008913533305148756"/>
+			</inertial>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+			<inertial>
+				<origin xyz="0.01160714 -0.010529120000000001 -0.050108849999999996"/>
+				<mass value="0.92044274"/>
+				<inertia ixx="0.0025629807633314283" ixy="0.00011563004089375697" ixz="-0.00043665169115375893" iyy="0.0026473859335554755" iyz="-0.0004701075176864529" izz="0.0008907202467415567"/>
+			</inertial>
+			</xacro:unless>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link6.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link6.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="${prefix}07">
+			<xacro:if value="${direction == 1}">
+			<inertial>
+				<origin xyz="-0.0050796999999999995 -3.6429999999999995e-05 -0.00136032"/>
+				<mass value="0.68822603"/>
+				<inertia ixx="0.0007339455446568354" ixy="5.5264138431595e-07" ixz="3.4143460859915713e-06" iyy="0.0007152579194629082" iyz="8.589395592508866e-08" izz="0.0006805805480547413"/>
+			</inertial>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+			<inertial>
+				<origin xyz="-0.005132520000000001 -4.9619999999999996e-05 -0.0013123"/>
+				<mass value="0.68915397"/>
+				<inertia ixx="0.0007353514895880473" ixy="9.044892699777397e-07" ixz="2.118268218294795e-06" iyy="0.0007178789676814138" iyz="1.1512482542528579e-07" izz="0.0006822440845001905"/>
+			</inertial>
+			</xacro:unless>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link7.glb" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/arm/link7.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix}_joint1" type="revolute">
+			<origin xyz="0 ${direction*0.1257} 0" rpy="0 0 ${direction*PI/2}"/>
+			<parent link="${parent_link}"/>
+			<child link="${prefix}01"/>
+			<axis xyz="1 0 0"/>
+			<xacro:if value="${direction == 1}">
+				<limit lower="${-180/180*PI}" upper="${120/180*PI}" effort="0" velocity="${210/180*PI}"/>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+				<limit lower="${-120/180*PI}" upper="${180/180*PI}" effort="0" velocity="${210/180*PI}"/>
+			</xacro:unless>
+		</joint>
+		<joint name="${prefix}_joint2" type="revolute">
+			<origin xyz="0.079 0 0"/>
+			<parent link="${prefix}01"/>
+			<child link="${prefix}02"/>
+			<axis xyz="0 1 0"/>
+			<xacro:if value="${direction == 1}">
+				<limit lower="${-170/180*PI}" upper="${9/180*PI}" effort="0" velocity="${210/180*PI}"/>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+				<limit lower="${-170/180*PI}" upper="${9/180*PI}" effort="0" velocity="${210/180*PI}"/>
+			</xacro:unless>
+		</joint>
+		<joint name="${prefix}_joint3" type="revolute">
+			<origin xyz="0 0 -0.113"/>
+			<parent link="${prefix}02"/>
+			<child link="${prefix}03"/>
+			<axis xyz="0 0 1"/>
+			<xacro:if value="${direction == 1}">
+				<limit lower="${-175/180*PI}" upper="${175/180*PI}" effort="0" velocity="${240/180*PI}"/>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+				<limit lower="${-175/180*PI}" upper="${175/180*PI}" effort="0" velocity="${240/180*PI}"/>
+			</xacro:unless>
+		</joint>
+		<joint name="${prefix}_joint4" type="revolute">
+			<origin xyz="0 0 -0.187"/>
+			<parent link="${prefix}03"/>
+			<child link="${prefix}04"/>
+			<axis xyz="1 0 0"/>
+			<xacro:if value="${direction == 1}">
+				<limit lower="${-129/180*PI}" upper="${10/180*PI}" effort="0" velocity="${240/180*PI}"/>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+				<limit lower="${-10/180*PI}" upper="${129/180*PI}" effort="0" velocity="${240/180*PI}"/>
+			</xacro:unless>
+		</joint>
+		<joint name="${prefix}_joint5" type="revolute">
+			<origin xyz="0 0 -0.101"/>
+			<parent link="${prefix}04"/>
+			<child link="${prefix}05"/>
+			<axis xyz="0 0 1"/>
+			<xacro:if value="${direction == 1}">
+				<limit lower="${-175/180*PI}" upper="${175/180*PI}" effort="0" velocity="${300/180*PI}"/>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+				<limit lower="${-175/180*PI}" upper="${175/180*PI}" effort="0" velocity="${300/180*PI}"/>
+			</xacro:unless>
+		</joint>
+		<joint name="${prefix}_joint6" type="revolute">
+			<origin xyz="0 0 -0.159"/>
+			<parent link="${prefix}05"/>
+			<child link="${prefix}06"/>
+			<axis xyz="0 1 0"/>
+			<xacro:if value="${direction == 1}">
+				<limit lower="${-95/180*PI}" upper="${95/180*PI}" effort="0" velocity="${300/180*PI}"/>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+				<limit lower="${-95/180*PI}" upper="${95/180*PI}" effort="0" velocity="${300/180*PI}"/>
+			</xacro:unless>
+		</joint>
+		<joint name="${prefix}_joint7" type="revolute">
+			<origin xyz="0 0 -0.0905"/>
+			<parent link="${prefix}06"/>
+			<child link="${prefix}07"/>
+			<axis xyz="1 0 0"/>
+			<xacro:if value="${direction == 1}">
+				<limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="0" velocity="${300/180*PI}"/>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+				<limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="0" velocity="${300/180*PI}"/>
+			</xacro:unless>
+		</joint>
+		<xacro:Moz1OmniGripper direction="${direction}"/>
+	</xacro:macro>
+</robot>
