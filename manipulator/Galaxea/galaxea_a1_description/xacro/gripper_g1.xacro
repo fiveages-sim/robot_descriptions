@@ -19,12 +19,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/gripper_link.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/gripper_base.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/gripper_link.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/gripper_base.glb"/>
         </geometry>
       </collision>
     </link>
@@ -43,12 +43,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.glb"/>
         </geometry>
       </collision>
     </link>
@@ -75,12 +75,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.obj" scale="1 -1 -1"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.glb" scale="1 -1 -1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.obj" scale="1 -1 -1"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/finger.glb" scale="1 -1 -1"/>
         </geometry>
       </collision>
     </link>

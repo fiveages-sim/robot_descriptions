@@ -18,7 +18,6 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_r1
 ```
 
 ![Galaxea R1](../../.images/galaxea_r1.png)
-![Galaxea R1_Down](../../.images/galaxea_r1_down.png)
 
 ### 2.2 Components
 * Chassis
