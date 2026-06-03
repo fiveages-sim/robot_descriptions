@@ -3,6 +3,9 @@
   <!-- Full robot viz: fixed wheel joints + omniwheel_10 mesh (same as galbot_foxtrot). -->
   <xacro:arg name="enable_wheel_joints" default="false"/>
   <xacro:arg name="type" default="omni_gripper"/>
+  <!-- false: ros2_control; OCS2 planning injects eef_fixed_joints:=true via robot_common_launch -->
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+  <xacro:property name="eef_fixed" value="$(arg eef_fixed_joints)"/>
 
   <material name="black_color">
     <color rgba="0.1 0.1 0.1 1.0"/>
@@ -20,7 +23,7 @@
 
   <xacro:Moz1Chassis enable_wheel_joints="$(arg enable_wheel_joints)"/>
   <xacro:Moz1Body parent_link="base_link"/>
-  <xacro:Moz1Arm parent_link="waist03" direction="1"/>
-  <xacro:Moz1Arm parent_link="waist03" direction="-1"/>
+  <xacro:Moz1Arm parent_link="waist03" direction="1" kinematic_only="${eef_fixed}"/>
+  <xacro:Moz1Arm parent_link="waist03" direction="-1" kinematic_only="${eef_fixed}"/>
   <xacro:Moz1Head parent_link="waist03"/>
 </robot>

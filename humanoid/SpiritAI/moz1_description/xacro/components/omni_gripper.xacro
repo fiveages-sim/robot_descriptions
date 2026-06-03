@@ -2,8 +2,8 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:include filename="$(find agibot_omni_description)/xacro/omni_picker.xacro"/>
 
-  <!-- Agibot omni-picker on MOZ1 flange; tool frame (eef) on gripper_base. -->
-  <xacro:macro name="Moz1OmniGripper" params="direction:=1 side:=''">
+  <!-- Omni-picker + OCS2 eeFrame (left/right_eef) from agibot_omni_description; TCP z=0.14 on gripper_base. -->
+  <xacro:macro name="Moz1OmniGripper" params="direction:=1 side:='' kinematic_only:=false">
     <xacro:if value="${side != ''}">
       <xacro:property name="gripper_side" value="${side}"/>
     </xacro:if>
@@ -24,19 +24,12 @@
       <xacro:property name="gripper_rpy_z" value="0"/>
     </xacro:unless>
 
-    <xacro:omni-picker name="${gripper_side}"/>
+    <xacro:omni-picker name="${gripper_side}" kinematic_only="${kinematic_only}"/>
 
     <joint name="${ee_mount_joint}" type="fixed">
       <origin xyz="-0.01 0.001 -0.05" rpy="0 -3.14 ${gripper_rpy_z}"/>
       <parent link="${gripper_side}07"/>
       <child link="${gripper_side}_gripper_base"/>
-    </joint>
-
-    <link name="${gripper_side}_eef"/>
-    <joint name="${gripper_side}_eef_joint" type="fixed">
-      <origin xyz="0.0 0 0.14"/>
-      <parent link="${gripper_side}_gripper_base"/>
-      <child link="${gripper_side}_eef"/>
     </joint>
   </xacro:macro>
 </robot>

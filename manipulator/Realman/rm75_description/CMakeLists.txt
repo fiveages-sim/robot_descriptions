@@ -4,7 +4,7 @@ project(rm75_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-		DIRECTORY meshes xacro urdf config
+		DIRECTORY meshes xacro config
 		DESTINATION share/${PROJECT_NAME}/
 )
 

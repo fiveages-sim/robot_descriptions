@@ -6,6 +6,9 @@
 <robot name="Agibot G1" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:arg name="type" default="AG2F120S"/>
+	<!-- false: ros2_control / 可视化默认可驱动夹爪；OCS2 planning 由 robot_common_launch 注入 eef_fixed_joints:=true -->
+	<xacro:arg name="eef_fixed_joints" default="false"/>
+	<xacro:property name="eef_fixed" value="$(arg eef_fixed_joints)"/>
 
 	<!-- Include the base robot structure -->
 	<xacro:include filename="$(find agibot_g1_description)/xacro/g1_base.xacro"/>
@@ -42,8 +45,8 @@
 	<xacro:if value="${'$(arg type)' == 'AG2F120S'}">
 		<!-- Include gripper -->
 		<xacro:include filename="$(find changingtek_description)/xacro/AG2F120S.xacro"/>
-		<xacro:AG2F120S name="left"/>
-		<xacro:AG2F120S name="right"/>
+		<xacro:AG2F120S name="left" kinematic_only="${eef_fixed}"/>
+		<xacro:AG2F120S name="right" kinematic_only="${eef_fixed}"/>
 
 		<!-- Gripper joints -->
 		<joint name="ee_left_joint" type="fixed">
@@ -65,8 +68,8 @@
 
 	<xacro:if value="${'$(arg type)' == 'omni-picker'}">
 		<xacro:include filename="$(find agibot_omni_description)/xacro/omni_picker.xacro"/>
-		<xacro:omni-picker name="left"/>
-		<xacro:omni-picker name="right"/>
+		<xacro:omni-picker name="left" kinematic_only="${eef_fixed}"/>
+		<xacro:omni-picker name="right" kinematic_only="${eef_fixed}"/>
 
 		<!-- Gripper joints -->
 		<joint name="ee_left_joint" type="fixed">

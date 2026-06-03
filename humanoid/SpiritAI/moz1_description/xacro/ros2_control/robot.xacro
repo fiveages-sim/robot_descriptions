@@ -3,6 +3,7 @@
 
   <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
   <xacro:arg name="enable_wheel_joints" default="false"/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
   <xacro:arg name="gazebo" default="false"/>
 
   <xacro:include filename="$(find moz1_description)/xacro/robot.xacro"/>

@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-	<xacro:macro name="omni-picker" params="name">
+	<xacro:macro name="omni-picker" params="name kinematic_only:=false">
 		<xacro:property name="mesh_path" value="file://$(find agibot_omni_description)/meshes/omni_picker"/>
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 		<xacro:property name="PI" value="3.1415926535897931"/>
+		<xacro:property name="joint_type" value="${kinematic_only and 'fixed' or 'revolute'}"/>
 
 		<link name="${prefix}gripper_base">
 			<inertial>
@@ -42,12 +43,14 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}gripper_joint" type="revolute">
+		<joint name="${prefix}gripper_joint" type="${joint_type}">
 			<origin xyz="0 -0.0195 0.0565" rpy="-2.9951 -${PI/2} -0.15964"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}narrow1_Link"/>
-			<axis xyz="0 0 1"/>
-			<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 0 1"/>
+				<limit lower="0" upper="1" effort="50" velocity="${PI}"/>
+			</xacro:unless>
 		</joint>
 
 		<link name="${prefix}narrow2_Link">
@@ -74,13 +77,15 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}narrow2_joint" type="revolute">
+		<joint name="${prefix}narrow2_joint" type="${joint_type}">
 			<origin xyz="0.030852 0.018551 0"/>
 			<parent link="${prefix}narrow1_Link"/>
 			<child link="${prefix}narrow2_Link"/>
-			<axis xyz="0 0 -1"/>
-			<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="0.02" offset="0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 0 -1"/>
+				<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="0.02" offset="0"/>
+			</xacro:unless>
 		</joint>
 
 		<link name="${prefix}narrow3_Link">
@@ -107,13 +112,15 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}narrow3_joint" type="revolute">
+		<joint name="${prefix}narrow3_joint" type="${joint_type}">
 			<origin xyz="0.018118 -0.01574 0"/>
 			<parent link="${prefix}narrow2_Link"/>
 			<child link="${prefix}narrow3_Link"/>
-			<axis xyz="0 0 -1"/>
-			<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="0.4" offset="0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 0 -1"/>
+				<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="0.4" offset="0"/>
+			</xacro:unless>
 		</joint>
 
 		<link name="${prefix}narrow4_Link"/>
@@ -149,13 +156,15 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}narrow_loop_joint" type="revolute">
+		<joint name="${prefix}narrow_loop_joint" type="${joint_type}">
 			<origin xyz="0 -0.021633 0.07387" rpy="-2.9951 -${PI/2} -0.15964"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}narrow_loop_Link"/>
-			<axis xyz="0 0 1"/>
-			<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1.5" offset="0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 0 1"/>
+				<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="1.5" offset="0"/>
+			</xacro:unless>
 		</joint>
 
 		<link name="${prefix}wide1_Link">
@@ -182,13 +191,15 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}wide1_joint" type="revolute">
+		<joint name="${prefix}wide1_joint" type="${joint_type}">
 			<origin xyz="0 0.0195 0.0565" rpy="-2.9951 -${PI/2} -0.15964"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}wide1_Link"/>
-			<axis xyz="0 0 -1"/>
-			<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 0 -1"/>
+				<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+			</xacro:unless>
 		</joint>
 
 		<link name="${prefix}wide2_Link">
@@ -215,13 +226,15 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}wide2_joint" type="revolute">
+		<joint name="${prefix}wide2_joint" type="${joint_type}">
 			<origin xyz="0.030852 -0.018551 0"/>
 			<parent link="${prefix}wide1_Link"/>
 			<child link="${prefix}wide2_Link"/>
-			<axis xyz="0 0 1"/>
-			<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="0.02" offset="0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 0 1"/>
+				<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="0.02" offset="0"/>
+			</xacro:unless>
 		</joint>
 
 		<link name="${prefix}wide3_Link">
@@ -248,13 +261,15 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}wide3_joint" type="revolute">
+		<joint name="${prefix}wide3_joint" type="${joint_type}">
 			<origin xyz="0.018118 0.01574 0"/>
 			<parent link="${prefix}wide2_Link"/>
 			<child link="${prefix}wide3_Link"/>
-			<axis xyz="0 0 1"/>
-			<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="0.4" offset="0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 0 1"/>
+				<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="0.4" offset="0"/>
+			</xacro:unless>
 		</joint>
 
 		<link name="${prefix}wide4_Link"/>
@@ -288,13 +303,30 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}wide_loop_joint" type="revolute">
+		<joint name="${prefix}wide_loop_joint" type="${joint_type}">
 			<origin xyz="0 0.021633 0.07387" rpy="-2.9951 -${PI/2} -0.15964"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}wide_loop_Link"/>
-			<axis xyz="0 0 -1"/>
-			<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1.5" offset="0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 0 -1"/>
+				<limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="1.5" offset="0"/>
+			</xacro:unless>
+		</joint>
+
+		<!-- OCS2 eeFrame (fixed_base.info); TCP offset aligned with MOZ1 omni mount -->
+		<link name="${prefix}gripper_center"/>
+		<joint name="${prefix}gripper_center_joint" type="fixed">
+			<origin xyz="0 0 0.14" rpy="0 0 0"/>
+			<parent link="${prefix}gripper_base"/>
+			<child link="${prefix}gripper_center"/>
+		</joint>
+
+		<link name="${prefix}eef"/>
+		<joint name="${prefix}eef_joint" type="fixed">
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<parent link="${prefix}gripper_center"/>
+			<child link="${prefix}eef"/>
 		</joint>
 
 	</xacro:macro>

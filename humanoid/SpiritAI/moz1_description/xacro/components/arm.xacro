@@ -4,7 +4,7 @@
 	<xacro:include filename="$(find moz1_description)/xacro/components/omni_gripper.xacro"/>
 
 	<!-- direction:=1 left arm, direction:=-1 right arm (mirror mount & asymmetric limits). -->
-	<xacro:macro name="Moz1Arm" params="parent_link:=waist03 direction:=1">
+	<xacro:macro name="Moz1Arm" params="parent_link:=waist03 direction:=1 kinematic_only:=false">
 		<xacro:if value="${direction == 1}">
 			<xacro:property name="prefix" value="left"/>
 		</xacro:if>
@@ -283,6 +283,6 @@
 				<limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="0" velocity="${300/180*PI}"/>
 			</xacro:unless>
 		</joint>
-		<xacro:Moz1OmniGripper direction="${direction}"/>
+		<xacro:Moz1OmniGripper direction="${direction}" kinematic_only="${kinematic_only}"/>
 	</xacro:macro>
 </robot>

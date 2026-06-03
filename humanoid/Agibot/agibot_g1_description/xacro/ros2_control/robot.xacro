@@ -5,7 +5,8 @@
 <!-- =================================================================================== -->
 <robot name="genie" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<!-- Include the base robot structure -->
+	<!-- 夹爪由 adaptive_gripper_controller 控制，与 OCS2 分离；勿对 ros2_control 使用 eef_fixed_joints -->
+	<xacro:arg name="eef_fixed_joints" default="false"/>
 	<xacro:include filename="$(find agibot_g1_description)/xacro/robot.xacro"/>
 
 	<!-- Import modular interface components -->
@@ -41,7 +42,7 @@
 		<!-- 右臂接口 -->
 		<xacro:g1_arm_interfaces name="right"/>
 
-		<!-- 夹爪接口 - 参考CR5的模块化设计 -->
+		<!-- 夹爪接口 → adaptive_gripper_controller（不归 ocs2_wbc_controller） -->
 		<xacro:if value="${'$(arg type)' == 'AG2F120S'}">
 			<xacro:include filename="$(find changingtek_description)/xacro/ros2_control/AG2F120S.xacro"/>
 			<xacro:ag2f120s_interfaces name="left"/>

@@ -39,8 +39,8 @@
 			</xacro:if>
 		</hardware>
 
-		<!-- 机械臂接口 -->
-		<xacro:rm65_interfaces name=""/>
+		<!-- 7-DOF (joint7) when enable_joint3:=true; 6-DOF (type:=65) omits joint7 -->
+		<xacro:rm65_interfaces name="" enable_joint3="${enable_joint3}"/>
 
 		<!-- 夹爪接口定义 -->
 		<xacro:if value="${selected_gripper_type == 'eg2-4c2'}">

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- RM65机械臂接口定义宏 -->
+  <!-- RM75 7-DOF: enable_joint3:=true adds joint7; RM65 6-DOF (type:=65) leaves it false -->
   <xacro:macro name="rm65_interfaces" params="name enable_joint3:=false">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
     

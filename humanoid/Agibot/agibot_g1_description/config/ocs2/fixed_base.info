@@ -8,6 +8,8 @@ model_information {
     [1]  "head_joint2"
     [2]  "left_wheel_joint"
     [3]  "right_wheel_joint"
+    [4]  "left_gripper_joint"
+    [5]  "right_gripper_joint"
   }
 
   ; base frame of the robot (from URDF)
