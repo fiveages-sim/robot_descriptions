@@ -4,12 +4,7 @@ project(rs01_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY xacro config urdf
-  DESTINATION share/${PROJECT_NAME}/
-)
-
-install(
-  DIRECTORY meshes
+  DIRECTORY xacro config meshes
   DESTINATION share/${PROJECT_NAME}/
 )
 

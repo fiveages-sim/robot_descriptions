@@ -111,7 +111,7 @@
 				</geometry>
 			</collision>
 		</link>
-		<joint name="torso_joint_1" type="revolute">
+		<joint name="body_joint1" type="revolute">
 			<origin rpy="-1.5708 1.5708 0" xyz="0 0 0.12"/>
 			<parent link="base_link"/>
 			<child link="torso_link_1"/>
@@ -141,7 +141,7 @@
 				</geometry>
 			</collision>
 		</link>
-		<joint name="torso_joint_2" type="revolute">
+		<joint name="body_joint2" type="revolute">
 			<origin xyz="-0.38 0 0"/>
 			<parent link="torso_link_1"/>
 			<child link="torso_link_2"/>
@@ -169,7 +169,7 @@
 				</geometry>
 			</collision>
 		</link>
-		<joint name="torso_joint_3" type="revolute">
+		<joint name="body_joint3" type="revolute">
 			<origin xyz="-0.390 0 0"/>
 			<parent link="torso_link_2"/>
 			<child link="torso_link_3"/>
@@ -192,7 +192,7 @@
 				</geometry>
 			</visual>
 		</link>
-		<joint name="torso_joint_4" type="revolute">
+		<joint name="body_joint4" type="revolute">
 			<origin rpy="1.5708 0 -1.5708" xyz="0 0 0"/>
 			<parent link="torso_link_3"/>
 			<child link="torso_link_4"/>
@@ -233,8 +233,8 @@
 			<origin xyz="0 0 0.1229"/>
 		</joint>
 
-		<!-- 头部连杆1 -->
-		<link name="head_link_1">
+		<!-- 头部连杆1（head_joint1） -->
+		<link name="head_link1">
 			<inertial>
 				<origin xyz="0.00003191 -0.00038566 -0.02579910"/>
 				<mass value="0.13910581"/>
@@ -247,15 +247,15 @@
 				</geometry>
 			</visual>
 		</link>
-		<joint name="head_joint_1" type="revolute">
+		<joint name="head_joint1" type="revolute">
 			<parent link="head_base_link"/>
-			<child link="head_link_1"/>
+			<child link="head_link1"/>
 			<axis xyz="0 0 1"/>
 			<limit effort="100" lower="-1.57" upper="1.57" velocity="4.0"/>
 		</joint>
 
-		<!-- 头部连杆2 -->
-		<link name="head_link_2">
+		<!-- 头部连杆2（head_joint2） -->
+		<link name="head_link2">
 			<inertial>
 				<origin xyz="0.00705824 -0.14472601 -0.00061724"/>
 				<mass value="0.97012447"/>
@@ -275,10 +275,10 @@
 			</collision>
 		</link>
 
-		<joint name="head_joint_2" type="revolute">
+		<joint name="head_joint2" type="revolute">
 			<origin rpy="-1.5708 0 0" xyz="0 0 0"/>
-			<parent link="head_link_1"/>
-			<child link="head_link_2"/>
+			<parent link="head_link1"/>
+			<child link="head_link2"/>
 			<axis xyz="0 0 1"/>
 			<limit effort="100" lower="-1.22" upper="1.22" velocity="4.0"/>
 		</joint>

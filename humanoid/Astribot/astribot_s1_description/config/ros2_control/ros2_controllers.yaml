@@ -25,24 +25,24 @@ ocs2_wbc_controller:
     mpc_frequency: 50
     info_file_name: fixed_base
     joints:
-      - torso_joint_1
-      - torso_joint_2
-      - torso_joint_3
-      - torso_joint_4
-      - left_joint_1
-      - left_joint_2
-      - left_joint_3
-      - left_joint_4
-      - left_joint_5
-      - left_joint_6
-      - left_joint_7
-      - right_joint_1
-      - right_joint_2
-      - right_joint_3
-      - right_joint_4
-      - right_joint_5
-      - right_joint_6
-      - right_joint_7
+      - body_joint1
+      - body_joint2
+      - body_joint3
+      - body_joint4
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
 
     command_interfaces:
       - position
@@ -66,8 +66,8 @@ head_joint_controller:
 
     # 头部关节
     joints:
-      - head_joint_1
-      - head_joint_2
+      - head_joint1
+      - head_joint2
 
     command_interfaces:
       - position

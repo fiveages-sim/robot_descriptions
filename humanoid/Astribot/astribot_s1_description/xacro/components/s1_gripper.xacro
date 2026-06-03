@@ -5,9 +5,10 @@
 <!-- =================================================================================== -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:macro name="Gripper" params="name">
+	<xacro:macro name="Gripper" params="name kinematic_only:=false">
 
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<xacro:property name="finger_joint_type" value="${kinematic_only and 'fixed' or 'revolute'}"/>
 
 		<!-- 夹爪基座 -->
 		<link name="${prefix}gripper_base">
@@ -49,12 +50,14 @@
 			</visual>
 		</link>
 
-		<joint name="${prefix}gripper_joint" type="revolute">
+		<joint name="${prefix}gripper_joint" type="${finger_joint_type}">
 			<origin xyz="0.0145 0 0.0510999999999999"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}gripper_L1"/>
-			<axis xyz="0 -1 0"/>
-			<limit lower="0" upper="1" effort="10" velocity="1"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 -1 0"/>
+				<limit lower="0" upper="1" effort="10" velocity="1"/>
+			</xacro:unless>
 		</joint>
 
 		<!-- 夹爪左侧手指 L2 -->
@@ -77,13 +80,15 @@
 			</visual>
 		</link>
 
-		<joint name="${prefix}gripper_joint_L2" type="revolute">
+		<joint name="${prefix}gripper_joint_L2" type="${finger_joint_type}">
 			<origin xyz="0.0325 0 0.0510999999999999"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}gripper_L2"/>
-			<axis xyz="0 -1 0"/>
-			<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 -1 0"/>
+				<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
+			</xacro:unless>
 		</joint>
 
 		<!-- 夹爪左侧手指 L11 (末端) -->
@@ -111,13 +116,15 @@
 			</collision>
 		</link>
 
-		<joint name="${prefix}gripper_joint_L11" type="revolute">
+		<joint name="${prefix}gripper_joint_L11" type="${finger_joint_type}">
 			<origin xyz="0.0412500000000001 0 0.036379080527138"/>
 			<parent link="${prefix}gripper_L1"/>
 			<child link="${prefix}gripper_L11"/>
-			<axis xyz="0 1 0"/>
-			<limit effort="10" velocity="1" lower="-1.57" upper="1.57"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 1 0"/>
+				<limit effort="10" velocity="1" lower="-1.57" upper="1.57"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
+			</xacro:unless>
 		</joint>
 
 		<!-- 夹爪右侧手指 R1 -->
@@ -140,13 +147,15 @@
 			</visual>
 		</link>
 
-		<joint name="${prefix}gripper_joint_R1" type="revolute">
+		<joint name="${prefix}gripper_joint_R1" type="${finger_joint_type}">
 			<origin xyz="-0.0144999999999999 0 0.0510999999999939"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}gripper_R1"/>
-			<axis xyz="0 1 0"/>
-			<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 1 0"/>
+				<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
+			</xacro:unless>
 		</joint>
 
 		<!-- 夹爪右侧手指 R2 -->
@@ -168,14 +177,15 @@
 				</geometry>
 			</visual>
 		</link>
-		<joint name="${prefix}gripper_joint_R2" type="revolute">
+		<joint name="${prefix}gripper_joint_R2" type="${finger_joint_type}">
 			<origin xyz="-0.0325 0 0.0510999999999999"/>
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}gripper_R2"/>
-			<axis xyz="0 1 0"/>
-			<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
-			
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 1 0"/>
+				<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
+			</xacro:unless>
 		</joint>
 
 		<!-- 夹爪右侧手指 R11 (末端) -->
@@ -202,13 +212,15 @@
 				</geometry>
 			</collision>
 		</link>
-		<joint name="${prefix}gripper_joint_R11" type="revolute">
+		<joint name="${prefix}gripper_joint_R11" type="${finger_joint_type}">
 			<origin xyz="-0.0412499999999999 0 0.0363790805271382"/>
 			<parent link="${prefix}gripper_R1"/>
 			<child link="${prefix}gripper_R11"/>
-			<axis xyz="0 -1 0"/>
-			<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
+			<xacro:unless value="${kinematic_only}">
+				<axis xyz="0 -1 0"/>
+				<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+				<mimic joint="${prefix}gripper_joint" multiplier="1.0" offset="0.0"/>
+			</xacro:unless>
 		</joint>
 
 		<link name="${prefix}gripper_center"/>

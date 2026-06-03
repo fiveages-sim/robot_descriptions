@@ -6,7 +6,7 @@ controller_manager:
     arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
-    hand_controller:
+    gripper_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
 
     joint_state_broadcaster:
@@ -31,7 +31,7 @@ arm_controller:
       - joint5
       - joint6
 
-hand_controller:
+gripper_controller:
   ros__parameters:
     joint: gripper_joint
     force_feedback_ratio: 0.1
