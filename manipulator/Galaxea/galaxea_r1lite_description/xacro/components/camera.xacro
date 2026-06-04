@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
 	<xacro:macro name="camera" params="name">
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
@@ -11,7 +13,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1lite_description)/meshes/visual/camera_stand.obj"/>
+					<mesh filename="file://$(find galaxea_r1lite_description)/meshes/visual/camera_stand.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -25,7 +27,6 @@
 			<parent link="${prefix}gripper_base"/>
 			<child link="${prefix}camera_stand"/>
 		</joint>
-
 
 		<link name="${prefix}camera">
 			<visual>

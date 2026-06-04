@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="PI" value="3.1415926535897931"/>
+
+    <xacro:macro name="Torso">
+
+        <link name="torso_link1">
+            <inertial>
+                <origin xyz="0.00321196798398059 0.0116566745256909 0.100697975240297"/>
+                <mass value="4.807"/>
+                <inertia ixx="0.00310511493924453" ixy="3.89455548949465E-06" ixz="-0.000112029811012738" iyy="0.00326868759782864" iyz="4.14882596510336E-05" izz="0.000354993987137864"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find galaxea_r1lite_description)/meshes/visual/torso1.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="file://$(find galaxea_r1lite_description)/meshes/collision/torso1.stl"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="torso_joint1" type="revolute">
+            <origin xyz="0.091831 0 0.14865"/>
+            <parent link="base_link"/>
+            <child link="torso_link1"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="${-PI/2}" upper="0.436333" effort="100" velocity="2.5"/>
+        </joint>
+
+        <link name="torso_link2">
+            <inertial>
+                <origin xyz="0.00627300956924463 0.00536087570300695 0.184118796618929"/>
+                <mass value="2.779"/>
+                <inertia ixx="0.0309540761907757" ixy="-5.57959685881806E-07" ixz="0.000297952176364751" iyy="0.032517017639908" iyz="9.00096610164517E-07" izz="0.00185256464591929"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find galaxea_r1lite_description)/meshes/visual/torso2.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="file://$(find galaxea_r1lite_description)/meshes/collision/torso2.stl"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="torso_joint2" type="revolute">
+            <origin xyz="0 0 0.35"/>
+            <parent link="torso_link1"/>
+            <child link="torso_link2"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="-2.705262" upper="2.705262" effort="100" velocity="2.5"/>
+        </joint>
+
+        <link name="torso_link3">
+            <inertial>
+                <origin xyz="-0.0416383086406449 0.000484599582373232 0.051111008977659"/>
+                <mass value="5.833"/>
+                <inertia ixx="0.00647219350010978" ixy="-4.51460802718021E-07" ixz="-1.28687447342324E-05" iyy="0.0054231706909373" iyz="-1.67510995383755E-07" izz="0.00845061936347779"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh filename="file://$(find galaxea_r1lite_description)/meshes/visual/torso3.glb"/>
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="file://$(find galaxea_r1lite_description)/meshes/collision/torso3.stl"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="torso_joint3" type="revolute">
+            <origin xyz="9.6485E-05 0 0.35"/>
+            <parent link="torso_link2"/>
+            <child link="torso_link3"/>
+            <axis xyz="0 -1 0"/>
+            <limit lower="${-PI/2}" upper="${PI/2}" effort="100" velocity="2.5"/>
+        </joint>
+
+        <link name="camera_head_left_link"/>
+        <joint name="camera_head_left_joint" type="fixed">
+            <origin xyz="0.054947 0.03149 0.63214" rpy="${-2*PI/3} 4.1972E-05 ${-PI/2}"/>
+            <parent link="torso_link3"/>
+            <child link="camera_head_left_link"/>
+        </joint>
+
+        <link name="camera_head_right_link"/>
+        <joint name="camera_head_right_joint" type="fixed">
+            <origin xyz="0.054943 -0.03351 0.63214" rpy="${-2*PI/3} 4.1972E-05 ${-PI/2}"/>
+            <parent link="torso_link3"/>
+            <child link="camera_head_right_link"/>
+        </joint>
+
+        <joint name="left_arm_base_joint" type="fixed">
+            <origin xyz="0 0.335 0.12306"/>
+            <parent link="torso_link3"/>
+            <child link="left_base_link"/>
+        </joint>
+
+        <joint name="right_arm_base_joint" type="fixed">
+            <origin xyz="0 -0.335 0.12306"/>
+            <parent link="torso_link3"/>
+            <child link="right_base_link"/>
+        </joint>
+
+    </xacro:macro>
+</robot>

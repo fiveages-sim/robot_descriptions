@@ -14,7 +14,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/camera_stand.obj"/>
+          <mesh filename="file://$(find galaxea_r1_description)/meshes/hand_camera_stand.glb"/>
         </geometry>
       </visual>
       <visual>
@@ -23,11 +23,6 @@
           <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find galaxea_r1_description)/meshes/camera_stand.obj"/>
-        </geometry>
-      </collision>
     </link>
 
     <!-- RealSense Joint: Arm 7 to Camera -->

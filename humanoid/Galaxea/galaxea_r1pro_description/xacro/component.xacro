@@ -1,15 +1,26 @@
 <?xml version="1.0" ?>
 <!-- =================================================================================== -->
-<!-- |    Complete Robot Description for Agibot G1                                     | -->
-<!-- |    This file includes the base robot structure and both arms                    | -->
+<!-- |    Component descriptions for Galaxea R1 Pro                                    | -->
 <!-- =================================================================================== -->
-<robot name="A2_Arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Galaxea_R1_Pro" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="PI" value="3.1415926535897931"/>
 	<xacro:arg name="type" default="arms"/>
+	<xacro:arg name="enable_wheel_joints" default="true"/>
+
+	<xacro:if value="${'$(arg type)' == 'chassis'}">
+		<xacro:include filename="$(find galaxea_r1_description)/xacro/components/chassis.xacro"/>
+		<xacro:Chassis enable_wheel_joints="$(arg enable_wheel_joints)"/>
+	</xacro:if>
+
+	<xacro:if value="${'$(arg type)' == 'torso'}">
+		<xacro:include filename="$(find galaxea_r1_description)/xacro/components/torso.xacro"/>
+		<link name="base_link"/>
+		<xacro:Torso/>
+	</xacro:if>
 
 	<xacro:if value="${'$(arg type)' == 'arms'}">
 		<link name="torso_link4"/>
-		<xacro:include filename="pro_arm.xacro"/>
+		<xacro:include filename="$(find galaxea_r1pro_description)/xacro/components/pro_arm.xacro"/>
 		<xacro:Arm name="left"/>
 		<xacro:Arm name="right" direction="-1"/>
 	</xacro:if>

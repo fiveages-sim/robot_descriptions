@@ -14,15 +14,11 @@
 								 izz="0.0010201"/>
 			</inertial>
 			<visual>
+				<origin rpy="0 ${PI/2} ${PI/2 * direction}"/>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/base.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1/base.glb"/>
 				</geometry>
 			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/base.obj" scale="1 ${direction} 1"/>
-				</geometry>
-			</collision>
 		</link>
 
 		<!-- Arm Link 1 -->
@@ -35,12 +31,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link1.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link1.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link1.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link1.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</collision>
 		</link>
@@ -55,12 +51,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link2.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link2.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link2.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link2.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</collision>
 		</link>
@@ -75,12 +71,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link3.obj"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link3.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link3.obj"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link3.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -95,12 +91,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link4.obj"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link4.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link4.obj"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link4.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -115,12 +111,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link5.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link5.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link5.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link5.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</collision>
 		</link>
@@ -135,12 +131,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link6.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link6.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link6.obj" scale="1 ${direction} 1"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link6.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</collision>
 		</link>
@@ -155,12 +151,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link7.obj"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link7.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/pro_arm/link7.obj"/>
+					<mesh filename="file://$(find galaxea_r1pro_description)/meshes/a2_arm/link7.glb"/>
 				</geometry>
 			</collision>
 		</link>
