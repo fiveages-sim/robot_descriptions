@@ -41,8 +41,6 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | XSquare Robot | [Quanta X1](humanoid/X2Robot/quanta_x1_description)  | Yes     | <img src="humanoid/.images/x2robot_quanta_x1.png" width="200">                                                                                                                                                                |
 | Spirit AI     | [MOZ 1](humanoid/SpiritAI/moz1_description)          | Yes     | <img src="humanoid/.images/spiritai_moz1.png" width="200">                                                                                                                                                                    |
 
-> **Galbot** wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1) live in the [`humanoid/Galbot`](humanoid/Galbot/) submodule. Initialize it from [Submodules](#submodules) below; see the [Galbot README](humanoid/Galbot/README.md) for models and launch commands.
-
 ## Mobile Manipulators
 
 | Brand          | Model                                                       | Repaint | Images                                                                                                                                                                                                                                                  |
@@ -87,6 +85,7 @@ This repository uses git submodules to manage shared components and specific rob
 | Rokae AR5 | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | 6-DOF industrial robot arm |
 | ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
 | Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) for build and demo commands |
+| Agibot G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | Agibot G2 humanoid description (private submodule) |
 
 ### Using Submodules
 
@@ -117,6 +116,9 @@ git submodule update --init manipulator/ARX
 
 # For Galbot robots
 git submodule update --init humanoid/Galbot
+
+# For Agibot G2 (private)
+git submodule update --init humanoid/Agibot/agibot_g2_description
 ```
 
 **Update submodules to latest version:**
