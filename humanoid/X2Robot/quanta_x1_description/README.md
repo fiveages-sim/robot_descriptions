@@ -19,7 +19,13 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=quanta_x1
 
 ![Quanta X1](../../.images/x2robot_quanta_x1.png)
 
-### 2.2 Component
+### 2.2 OCS2 fixed-base dual-arm control
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch ocs2_arm_controller demo.launch.py robot:=quanta_x1
+```
+
+### 2.3 Component
 * Base
   ```bash
   source ~/ros2_ws/install/setup.bash

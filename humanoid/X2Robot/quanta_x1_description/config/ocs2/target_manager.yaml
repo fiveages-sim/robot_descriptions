@@ -1,0 +1,13 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.01
+    angular_scale: 0.005
+
+    vr_thumbstick_linear_scale: 0.005
+    vr_thumbstick_angular_scale: 0.05
+
+    marker_fixed_frame: base_link
+    reference_link: head_pitch_link
+
+    enable_vr: false
+    enable_head_control: false

@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:include filename="$(find quanta_x1_description)/xacro/ros2_control/base_ros2_control.xacro"/>
 	<xacro:include filename="$(find quanta_x1_description)/xacro/components/swivel.xacro"/>
-	<xacro:macro name="QuantaX1Base">
+	<xacro:macro name="QuantaX1Base" params="enable_ros2_control:=false">
 		<link name="base_link"/>
 		<joint name="chassis_base_joint" type="fixed">
 			<parent link="base_link"/>
@@ -403,7 +403,9 @@
 			<child link="imu_link"/>
 			
 		</joint>
-		<xacro:QuantaX1BaseRos2Control/>
+		<xacro:if value="${enable_ros2_control}">
+			<xacro:QuantaX1BaseRos2Control/>
+		</xacro:if>
 
 		<link name="2d_laser_base">
 			<inertial>

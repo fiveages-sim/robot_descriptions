@@ -1,12 +1,13 @@
 <?xml version="1.0" ?>
 <robot name="Quanta X1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="enable_ros2_control" default="false"/>
   <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:include filename="$(find quanta_x1_description)/xacro/components/base.xacro"/>
   <xacro:include filename="$(find quanta_x1_description)/xacro/components/arm.xacro"/>
 
-  <xacro:QuantaX1Base/>
-  <xacro:QuantaX1SingleArm name="left"/>
-  <xacro:QuantaX1SingleArm name="right"/>
+  <xacro:QuantaX1Base enable_ros2_control="$(arg enable_ros2_control)"/>
+  <xacro:QuantaX1SingleArm name="left" enable_ros2_control="$(arg enable_ros2_control)"/>
+  <xacro:QuantaX1SingleArm name="right" enable_ros2_control="$(arg enable_ros2_control)"/>
 
   <joint name="left_connector" type="fixed">
     <parent link="left_frame_link"/>
