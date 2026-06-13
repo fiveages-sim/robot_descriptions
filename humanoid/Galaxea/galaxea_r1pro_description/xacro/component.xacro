@@ -2,7 +2,7 @@
 <!-- =================================================================================== -->
 <!-- |    Component descriptions for Galaxea R1 Pro                                    | -->
 <!-- =================================================================================== -->
-<robot name="Galaxea_R1_Pro" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="A2 Arms" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="PI" value="3.1415926535897931"/>
 	<xacro:arg name="type" default="arms"/>
 	<xacro:arg name="enable_wheel_joints" default="true"/>

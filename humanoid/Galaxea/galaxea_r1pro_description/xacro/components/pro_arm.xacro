@@ -181,8 +181,13 @@
 			<origin xyz="0.025012 ${direction*0.081265} 0" />
 			<parent link="${prefix}link1"/>
 			<child link="${prefix}link2"/>
-			<axis xyz="${direction} 0 0"/>
-			<limit lower="-0.1745" upper="${PI}" effort="55" velocity="7.1209"/>
+			<axis xyz="1 0 0"/>
+			<xacro:if value="${direction == 1}">
+				<limit lower="-0.1745" upper="${PI}" effort="55" velocity="7.1209"/>
+			</xacro:if>
+			<xacro:unless value="${direction == 1}">
+				<limit lower="${-PI}" upper="0.1745" effort="55" velocity="7.1209"/>
+			</xacro:unless>
 		</joint>
 
 		<joint name="${prefix}joint3" type="revolute">
@@ -198,7 +203,7 @@
 			<parent link="${prefix}link3"/>
 			<child link="${prefix}link4"/>
 			<axis xyz="0 1 0"/>
-			<limit lower="-2.0944" upper="0.3491" effort="25" velocity="8.3776"/>
+			<limit lower="-1.7453" upper="0.3491" effort="25" velocity="8.3776"/>
 		</joint>
 
 		<joint name="${prefix}joint5" type="revolute">

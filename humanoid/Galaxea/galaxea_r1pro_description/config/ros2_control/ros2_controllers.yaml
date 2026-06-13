@@ -1,11 +1,16 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 1000  # Hz
+    update_rate: 100  # Hz
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+    # 全身控制器 - OCS2 轮式人形 WBC（支持底盘移动）
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
+
+    # 分体控制器 - 仅用于 split_body 模式
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
 
@@ -15,11 +20,17 @@ controller_manager:
     right_hand_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
 
-ocs2_arm_controller:
+ocs2_wbc_controller:
   ros__parameters:
-    # Joint configuration
+    use_tf_for_base: true
+    tf_topic: /tf
+    world_frame: world
+    base_frame: base_link
     update_rate: 100  # Hz
-    info_file_name: fixed_base
+    mpc_frequency: 50
+    info_file_name: humanoid
+    # 关节顺序须与 humanoid.info 的 arm 状态向量一致：
+    # [torso_joint1~4 | left_joint1~7 | right_joint1~7]
     joints:
       - torso_joint1
       - torso_joint2
@@ -45,15 +56,69 @@ ocs2_arm_controller:
     state_interfaces:
       - position
 
+    home_duration: 5.0
     robot_name: galaxea_r1pro
 
-    # Control parameters
-    home_pos: [ 0.0, 0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    rest_pos: [ 1.833, -2.792, -0.913, 0.0,
-                0.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0 ]
+    cartesian_defaults:
+      frame_id: torso_link4
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    home_1: [ 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+    home_2: [ 1.833, -2.792, -0.913, 0.0,
+              0.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0 ]
+
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: task
+    joints:
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    home_duration: 5.0
+    robot_name: galaxea_r1pro
+
+    cartesian_defaults:
+      frame_id: torso_link4
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    home_1: [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+    home_2: [ 0.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, -2.0, 0.0, 0.0, 0.0 ]
 
 left_hand_controller:
   ros__parameters:
