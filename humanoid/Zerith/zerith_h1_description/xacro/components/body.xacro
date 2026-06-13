@@ -154,12 +154,6 @@
 			<inertia ixx="6.97e-06" ixy="3e-08" ixz="1.8e-07"
 					iyy="4.688e-05" iyz="-4e-08" izz="4.697e-05"/>
 		</inertial>
-		<visual>
-			<geometry>
-				<mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
-			</geometry>
-			<origin xyz="0.0325 0 0.005" rpy="1.5707963267949 -1.5707963267949 -0"/>
-		</visual>
 	</link>
 
 	<joint name="neck_camera_joint" type="fixed">
@@ -169,4 +163,17 @@
 		<child link="neck_camera_link"/>
 	</joint>
 
+	<link name="head_camera">
+		<visual>
+			<geometry>
+				<mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+			</geometry>
+		</visual>
+	</link>
+
+	<joint name="head_camera_joint" type="fixed">
+		<origin xyz="0.0325 0 0.005"/>
+		<parent link="neck_camera_link"/>
+		<child link="head_camera"/>
+	</joint>
 </robot>
