@@ -46,3 +46,7 @@
 	path = humanoid/FiveAges/fiveages_w2r_description
 	url = git@github.com:fiveages-sim/fa-w2r-description.git
 	branch = main
+[submodule "humanoid/FiveAges/fiveages_s2_description"]
+	path = humanoid/FiveAges/fiveages_s2_description
+	url = git@github.com:fiveages-sim/fa-s2-description.git
+	branch = main
