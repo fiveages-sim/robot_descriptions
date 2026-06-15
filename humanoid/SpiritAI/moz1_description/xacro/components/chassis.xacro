@@ -24,7 +24,6 @@
 				<geometry>
 					<mesh filename="file://$(find moz1_description)//meshes/chassis.glb"/>
 				</geometry>
-				<material name="dark_gray"/>
 			</visual>
 			<collision>
 				<origin xyz="0 0 0.06"/>

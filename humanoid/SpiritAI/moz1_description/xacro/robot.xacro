@@ -7,15 +7,6 @@
   <xacro:arg name="eef_fixed_joints" default="false"/>
   <xacro:property name="eef_fixed" value="$(arg eef_fixed_joints)"/>
 
-  <material name="black_color">
-    <color rgba="0.1 0.1 0.1 1.0"/>
-  </material>
-  <material name="dark_gray">
-    <color rgba="0.216 0.220 0.224 1.0"/>
-  </material>
-  <material name="light_gray">
-    <color rgba="0.392 0.400 0.404 1.0"/>
-  </material>
   <xacro:include filename="$(find moz1_description)/xacro/components/chassis.xacro"/>
   <xacro:include filename="$(find moz1_description)/xacro/components/body.xacro"/>
   <xacro:include filename="$(find moz1_description)/xacro/components/arm.xacro"/>
