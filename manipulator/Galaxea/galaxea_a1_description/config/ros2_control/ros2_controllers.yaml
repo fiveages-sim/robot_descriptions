@@ -58,5 +58,5 @@ ocs2_arm_controller:
     robot_name: galaxea_a1
 
     # Control parameters
-    home_1: [0.0, 0.2, -0.2, 0.0, 0.0, 0.0]
+    home_1: [0.0, 0.2, -0.2, 1.5708, 0.0, -1.5708]
     home_2: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
