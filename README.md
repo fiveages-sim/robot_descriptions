@@ -60,6 +60,7 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Realman        | [RM65&75](manipulator/Realman/rm75_description)          | Yes     | <img src="manipulator/.images/realman_rm65.png" width="200">                                                                                                                                                                                                                                                                                                                          |
 | Elite          | [EC Series](manipulator/Elite/elite_ec_description)      | Yes     | <img src="manipulator/.images/elite_ec66.png" width="200">                                                                                                                                                                                                                                                                                                                            |
 | OpenArm        | [OpenArm](manipulator/OpenArm/openarm_description)       | Yes     | <img src="manipulator/.images/openarm_single.png" width="200" style="object-fit: cover; object-position: center;">     <img src="manipulator/.images/openarm_bimanual.png" width="200" style="object-fit: cover; object-position: center;">                                                                                                                                           |
+| HighTorque     | [Panthera HT](manipulator/HighTorque/panthera_ht_description) | No      |                                                                                                                                                                                                                                                                                                                                                                                       |
 
 ## Leg Humanoid Robots
 
@@ -86,6 +87,7 @@ This repository uses git submodules to manage shared components and specific rob
 | ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
 | Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) for build and demo commands |
 | Agibot G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | Agibot G2 humanoid description (private submodule) |
+| Panthera HT | `manipulator/HighTorque/panthera_ht_description` | [panthera_ht_description](https://github.com/fiveages-sim/panthera_ht_description) | HighTorque Panthera HT manipulator description |
 
 ### Using Submodules
 
@@ -119,6 +121,9 @@ git submodule update --init humanoid/Galbot
 
 # For Agibot G2 (private)
 git submodule update --init humanoid/Agibot/agibot_g2_description
+
+# For Panthera HT
+git submodule update --init manipulator/HighTorque/panthera_ht_description
 ```
 
 **Update submodules to latest version:**

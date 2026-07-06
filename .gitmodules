@@ -50,3 +50,7 @@
 	path = humanoid/FiveAges/fiveages_s2_description
 	url = git@github.com:fiveages-sim/fa-s2-description.git
 	branch = main
+[submodule "manipulator/HighTorque/panthera_ht_description"]
+	path = manipulator/HighTorque/panthera_ht_description
+	url = git@github.com:fiveages-sim/panthera_ht_description.git
+	branch = main
