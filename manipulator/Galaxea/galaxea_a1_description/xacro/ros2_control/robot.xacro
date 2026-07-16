@@ -27,7 +27,7 @@
       </xacro:if>
     </hardware>
 
-    <xacro:galaxea_a1_interfaces name=""/>
+    <xacro:galaxea_a1_interfaces name="" include_gripper="${'$(arg type)' != 'z'}"/>
   </ros2_control>
 
   <xacro:arg name="gazebo" default="false" />
@@ -42,6 +42,9 @@
         </xacro:if>
         <xacro:if value="${'$(arg type)' == 'y'}">
           <parameters>$(find galaxea_a1_description)/config/ros2_control/y.yaml</parameters>
+        </xacro:if>
+        <xacro:if value="${'$(arg type)' == 'z'}">
+          <parameters>$(find galaxea_a1_description)/config/ros2_control/z.yaml</parameters>
         </xacro:if>
       </plugin>
     </gazebo>

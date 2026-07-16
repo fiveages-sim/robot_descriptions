@@ -14,6 +14,9 @@
   <xacro:if value="${'$(arg type)' == 'y'}">
     <xacro:include filename="$(find galaxea_a1_description)/xacro/a1_y.xacro"/>
   </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'z'}">
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/a1_z.xacro"/>
+  </xacro:if>
 
   <xacro:Arm name=""/>
 </robot>
