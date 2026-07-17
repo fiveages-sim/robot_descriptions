@@ -22,10 +22,6 @@ controller_manager:
 
 ocs2_wbc_controller:
   ros__parameters:
-    use_tf_for_base: true
-    tf_topic: /tf
-    world_frame: world
-    base_frame: base_link
     update_rate: 100  # Hz
     mpc_frequency: 50
     info_file_name: humanoid
