@@ -27,7 +27,7 @@
       </xacro:if>
     </hardware>
 
-    <xacro:galaxea_a1_interfaces name="" include_gripper="${'$(arg type)' != 'z'}"/>
+    <xacro:galaxea_a1_interfaces name=""/>
   </ros2_control>
 
   <xacro:arg name="gazebo" default="false" />

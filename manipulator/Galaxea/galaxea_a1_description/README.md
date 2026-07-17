@@ -18,7 +18,7 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
   ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_a1
   ```
 
-  ![A1X](../../.images/galaxea_a1.png)
+  ![A1](../../.images/galaxea_a1.png)
 
 * A1 X
   ```bash
@@ -42,13 +42,18 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
   ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_a1 type:=z
   ```
 
-  A1Z currently ships with the flange (`link6`) only; gripper will be added later.
-
 * G1 Gripper
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch gripper.launch.py gripper:=galaxea_a1
   ```
+
+* G1Z Gripper
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch gripper.launch.py gripper:=galaxea_a1 type:=g1z
+  ```
+
 
 ## 3. OCS2 Demo
 
@@ -79,15 +84,17 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
   ```
 
 ### 3.2 OCS2 Arm Controller Demo
+
 * A1
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1
   ```
-   ```bash
+  ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=isaac
   ```
+
 * A1 X
   ```bash
   source ~/ros2_ws/install/setup.bash
@@ -107,6 +114,7 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
   ```
 
 ### 3.3 ROS2 Control Isaac Sim
+
 * A1 X
   ```bash
   source ~/ros2_ws/install/setup.bash

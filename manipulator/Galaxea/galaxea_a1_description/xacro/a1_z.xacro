@@ -221,12 +221,14 @@
       <limit lower="-2.007" upper="2.007" effort="3.5" velocity="10.47"/>
     </joint>
 
-    <!-- Flange TCP placeholder for OCS2 (eeFrame). Replace when gripper is added. -->
-    <link name="${prefix}gripper_center"/>
-    <joint name="${prefix}gripper_center_joint" type="fixed">
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper_g1z.xacro"/>
+    <xacro:Gripper name="${name}"/>
+
+    <!-- Mount on flange (link6) at identity. -->
+    <joint name="${prefix}gripper_base_joint" type="fixed">
       <origin xyz="0 0 0"/>
       <parent link="${prefix}link6"/>
-      <child link="${prefix}gripper_center"/>
+      <child link="${prefix}gripper_base"/>
     </joint>
   </xacro:macro>
 </robot>

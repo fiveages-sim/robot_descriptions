@@ -1,7 +1,15 @@
 <?xml version="1.0"?>
 
-<robot name="Galaxea_G1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Galaxea_Gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper_g1.xacro"/>
+  <xacro:arg name="type" default="g1"/>
+
+  <xacro:if value="${'$(arg type)' == 'g1'}">
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper_g1.xacro"/>
+  </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'g1z'}">
+    <xacro:include filename="$(find galaxea_a1_description)/xacro/gripper_g1z.xacro"/>
+  </xacro:if>
+
   <xacro:Gripper name=""/>
 </robot>
