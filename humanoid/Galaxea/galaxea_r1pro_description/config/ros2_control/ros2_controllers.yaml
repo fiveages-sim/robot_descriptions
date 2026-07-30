@@ -1,7 +1,7 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Hz
+    update_rate: 500  # Hz
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -22,9 +22,9 @@ controller_manager:
 
 ocs2_wbc_controller:
   ros__parameters:
-    update_rate: 100  # Hz
-    mpc_frequency: 50
-    info_file_name: humanoid
+    update_rate: 500  # Hz
+    mpc_frequency: 100
+    info_file_name: fixed_base
     # 关节顺序须与 humanoid.info 的 arm 状态向量一致：
     # [torso_joint1~4 | left_joint1~7 | right_joint1~7]
     joints:
