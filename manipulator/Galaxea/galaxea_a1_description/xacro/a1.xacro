@@ -19,12 +19,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/base_link.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/base.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/base_link.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/base.glb"/>
         </geometry>
       </collision>
     </link>
@@ -44,12 +44,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link1.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link1.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link1.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link1.glb"/>
         </geometry>
       </collision>
     </link>
@@ -78,12 +78,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link2.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link2.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link2.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link2.glb"/>
         </geometry>
       </collision>
     </link>
@@ -112,12 +112,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link3.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link3.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link3.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link3.glb"/>
         </geometry>
       </collision>
     </link>
@@ -146,12 +146,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link4.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link4.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link4.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link4.glb"/>
         </geometry>
       </collision>
     </link>
@@ -180,12 +180,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link5.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link5.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link5.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link5.glb"/>
         </geometry>
       </collision>
     </link>
@@ -214,12 +214,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link6.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link6.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/visual/link6.obj"/>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/a1/link6.glb"/>
         </geometry>
       </collision>
     </link>

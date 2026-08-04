@@ -4,8 +4,15 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot name="A1Lite" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="PI" value="3.1415926535897931"/>
-	<xacro:include filename="$(find galaxea_r1lite_description)/xacro/chassis.xacro"/>
-	<xacro:include filename="$(find galaxea_r1lite_description)/xacro/camera.xacro"/>
+	<xacro:arg name="enable_wheel_joints" default="false"/>
+
+	<xacro:include filename="$(find galaxea_r1lite_description)/xacro/components/chassis.xacro"/>
+	<xacro:Chassis enable_wheel_joints="$(arg enable_wheel_joints)"/>
+
+	<xacro:include filename="$(find galaxea_r1lite_description)/xacro/components/torso.xacro"/>
+	<xacro:Torso/>
+
+	<xacro:include filename="$(find galaxea_r1lite_description)/xacro/components/camera.xacro"/>
 
 	<xacro:arg name="type" default="x"/>
 
@@ -18,7 +25,6 @@
 
 	<xacro:Arm name="left"/>
 	<xacro:camera name="left"/>
-
 
 	<xacro:Arm name="right"/>
 	<xacro:camera name="right"/>

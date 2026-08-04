@@ -4,12 +4,12 @@ model_information {
 
   ; motion joints in the URDF to consider fixed
   removeJoints {
-    [0]  "steer_motor_joint1"
-    [1]  "steer_motor_joint2"
-    [2]  "steer_motor_joint3"
-    [3]  "wheel_motor_joint1"
-    [4]  "wheel_motor_joint2"
-    [5]  "wheel_motor_joint3"
+    [0]  "steer_joint1"
+    [1]  "steer_joint2"
+    [2]  "steer_joint3"
+    [3]  "wheel_joint1"
+    [4]  "wheel_joint2"
+    [5]  "wheel_joint3"
 
     [6]  "left_gripper_joint"
     [7]  "left_gripper_joint2"

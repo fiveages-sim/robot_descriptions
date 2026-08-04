@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- direction:=1 left (left_joint*), direction:=-1 right (right_joint*). -->
+  <xacro:macro name="moz1_arm_interfaces" params="direction:=1">
+    <xacro:if value="${direction == 1}">
+      <xacro:property name="arm_side" value="left"/>
+    </xacro:if>
+    <xacro:unless value="${direction == 1}">
+      <xacro:property name="arm_side" value="right"/>
+    </xacro:unless>
+
+    <xacro:macro name="arm_joint_iface" params="idx initial_value:=0.0">
+      <joint name="${arm_side}_joint${idx}">
+        <command_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">${initial_value}</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+    </xacro:macro>
+
+    <xacro:arm_joint_iface idx="1"/>
+    <xacro:arm_joint_iface idx="2"/>
+    <xacro:arm_joint_iface idx="3"/>
+    <xacro:arm_joint_iface idx="4"/>
+    <xacro:arm_joint_iface idx="5"/>
+    <xacro:arm_joint_iface idx="6"/>
+    <xacro:arm_joint_iface idx="7"/>
+  </xacro:macro>
+
+</robot>

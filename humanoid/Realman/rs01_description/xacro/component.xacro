@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot name="RS01 Component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="type" default="chassis"/>
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:if value="${'$(arg type)' == 'chassis'}">
+    <xacro:include filename="$(find rs01_description)/xacro/components/chassis.xacro"/>
+    <xacro:rs01_chassis joints_movable="true"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <link name="base_link"/>
+    <xacro:include filename="$(find rs01_description)/xacro/components/body.xacro"/>
+    <xacro:rs01_body/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left'}">
+    <link name="left_base_link"/>
+    <xacro:include filename="$(find rm75_description)/xacro/arm.xacro"/>
+    <xacro:rm75 name="left" use_base_link="false" ee_type="aidal"/>
+    <joint name="left_arm_root_joint" type="fixed">
+      <origin xyz="0 0 0.191" rpy="-${PI/2} 0 0"/>
+      <parent link="left_base_link"/>
+      <child link="left_arm_root"/>
+    </joint>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right'}">
+    <link name="right_base_link"/>
+    <xacro:include filename="$(find rm75_description)/xacro/arm.xacro"/>
+    <xacro:rm75 name="right" use_base_link="false" ee_type="aidal"/>
+    <joint name="right_arm_root_joint" type="fixed">
+      <origin xyz="0 0 0.191" rpy="-${PI/2} 0 ${PI}"/>
+      <parent link="right_base_link"/>
+      <child link="right_arm_root"/>
+    </joint>
+  </xacro:if>
+
+</robot>

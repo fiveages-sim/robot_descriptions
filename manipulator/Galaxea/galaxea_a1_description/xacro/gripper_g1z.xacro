@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Galaxea G1Z gripper. G1 layout; axis signs flipped vs G1 after 穿模. -->
+  <xacro:macro name="Gripper" params="name">
+
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <link name="${prefix}gripper_base">
+      <inertial>
+        <origin xyz="0.04156509 0.00002475 -0.00009217"/>
+        <mass value="0.55665538"/>
+        <inertia
+            ixx="0.00030053"
+            ixy="0.00030053"
+            ixz="-0.00000170"
+            iyy="0.00037247"
+            iyz="-0.00000005"
+            izz="0.00041454"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/g1z/gripper_base.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/g1z/gripper_base.glb"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}finger1">
+      <inertial>
+        <origin xyz="0.02727101 -0.02205781 0.00984327"/>
+        <mass value="0.13786800"/>
+        <inertia
+            ixx="0.00008183"
+            ixy="0.00004615"
+            ixz="-0.00002398"
+            iyy="0.00011048"
+            iyz="0.00002070"
+            izz="0.00014642"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/g1z/finger_right.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/g1z/finger_right.glb"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}gripper_joint" type="prismatic">
+      <origin xyz="0.0727 0.025 -0.018"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}finger1"/>
+      <!-- axis sign flipped vs G1 after observed 穿模 (q↑ was closing) -->
+      <axis xyz="0 -1 0"/>
+      <limit lower="0" upper="0.05" effort="10" velocity="0.25"/>
+    </joint>
+
+    <link name="${prefix}finger2">
+      <inertial>
+        <origin xyz="0.02727101 0.02205781 -0.00976829"/>
+        <mass value="0.13786800"/>
+        <inertia
+            ixx="0.00008166"
+            ixy="-0.00004615"
+            ixz="0.00002382"
+            iyy="0.00011031"
+            iyz="0.00002050"
+            izz="0.00014642"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/g1z/finger_left.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find galaxea_a1_description)/meshes/gripper/g1z/finger_left.glb"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}gripper_joint2" type="prismatic">
+      <origin xyz="0.0727 -0.025 0.018"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}finger2"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0" upper="0.05" effort="10" velocity="0.25"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+    </joint>
+
+    <link name="${prefix}gripper_center"/>
+
+    <joint name="${prefix}gripper_center_joint" type="fixed">
+      <origin xyz="0.0727 0 0"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}gripper_center"/>
+    </joint>
+
+  </xacro:macro>
+</robot>

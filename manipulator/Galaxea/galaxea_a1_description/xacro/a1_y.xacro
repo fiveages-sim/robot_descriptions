@@ -21,12 +21,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link3.obj"/>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link3.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link3.obj"/>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link3.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -53,12 +53,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link4.obj"/>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link4.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link4.obj"/>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link4.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -85,12 +85,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link5.obj"/>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link5.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link5.obj"/>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/a1_y/link5.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -117,12 +117,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link6.obj"/>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link6.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link6.obj"/>
+					<mesh filename="file://$(find galaxea_a1_description)/meshes/a1_xy/link6.glb"/>
 				</geometry>
 			</collision>
 		</link>

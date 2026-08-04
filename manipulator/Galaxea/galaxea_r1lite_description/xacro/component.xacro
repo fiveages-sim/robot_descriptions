@@ -1,28 +1,44 @@
 <?xml version="1.0" ?>
 <!-- =================================================================================== -->
-<!-- |    Complete Robot Description for Agibot G1                                     | -->
-<!-- |    This file includes the base robot structure and both arms                    | -->
+<!-- |    Component descriptions for Galaxea R1 Lite                                   | -->
 <!-- =================================================================================== -->
 <robot name="Galaxea_R1_Lite" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="PI" value="3.1415926535897931"/>
 	<xacro:arg name="type" default="base"/>
+	<xacro:arg name="enable_wheel_joints" default="true"/>
+
+	<xacro:if value="${'$(arg type)' == 'chassis'}">
+		<xacro:include filename="$(find galaxea_r1lite_description)/xacro/components/chassis.xacro"/>
+		<xacro:Chassis enable_wheel_joints="$(arg enable_wheel_joints)"/>
+	</xacro:if>
+
+	<xacro:if value="${'$(arg type)' == 'torso'}">
+		<xacro:include filename="$(find galaxea_r1lite_description)/xacro/components/torso.xacro"/>
+		<link name="base_link"/>
+		<xacro:Torso/>
+		<link name="left_base_link"/>
+		<link name="right_base_link"/>
+	</xacro:if>
 
 	<xacro:if value="${'$(arg type)' == 'base'}">
-		<xacro:include filename="$(find galaxea_r1lite_description)/xacro/chassis.xacro"/>
+		<xacro:include filename="$(find galaxea_r1lite_description)/xacro/components/chassis.xacro"/>
+		<xacro:include filename="$(find galaxea_r1lite_description)/xacro/components/torso.xacro"/>
+		<xacro:Chassis enable_wheel_joints="$(arg enable_wheel_joints)"/>
+		<xacro:Torso/>
 		<link name="left_base_link"/>
 		<link name="right_base_link"/>
 	</xacro:if>
 
 	<xacro:if value="${'$(arg type)' == 'a1x'}">
 		<xacro:include filename="$(find galaxea_a1_description)/xacro/a1_x.xacro"/>
-		<xacro:include filename="$(find galaxea_r1lite_description)/xacro/camera.xacro"/>
+		<xacro:include filename="$(find galaxea_r1lite_description)/xacro/components/camera.xacro"/>
 		<xacro:Arm name=""/>
 		<xacro:camera name=""/>
 	</xacro:if>
 
 	<xacro:if value="${'$(arg type)' == 'a1y'}">
 		<xacro:include filename="$(find galaxea_a1_description)/xacro/a1_y.xacro"/>
-		<xacro:include filename="$(find galaxea_r1lite_description)/xacro/camera.xacro"/>
+		<xacro:include filename="$(find galaxea_r1lite_description)/xacro/components/camera.xacro"/>
 		<xacro:Arm name=""/>
 		<xacro:camera name=""/>
 	</xacro:if>

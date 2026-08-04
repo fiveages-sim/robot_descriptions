@@ -32,14 +32,14 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Agibot        | [G1](humanoid/Agibot/agibot_g1_description)          | No      | <img src="humanoid/Agibot/.images/agibot_g1.png" width="180"> <img src="humanoid/Agibot/.images/agibot_g1_omnipicker.png" width="180">                                                                                        |
 | Airbot        | [MMK2](humanoid/Airbot/airbot_mmk2_description)      | Yes     | <img src="humanoid/.images/airbot_mmk2.png" width="200">                                                                                                                                                                      |
 | Astribot      | [S1](humanoid/Astribot/astribot_s1_description)      | Yes     | <img src="humanoid/.images/astribot_s1_revo2.png" width="200"><img src="humanoid/.images/astribot_s1.png" width="200">                                                                                                        |
-| Galaxea       | [R1](humanoid/Galaxea/galaxea_r1_description)        | Yes     | <img src="humanoid/.images/galaxea_r1_down.png" width="180">     <img src="humanoid/.images/galaxea_r1.png" width="160">                                                                                                      |
+| Galaxea       | [R1](humanoid/Galaxea/galaxea_r1_description)        | Yes     | <img src="humanoid/.images/galaxea_r1.png" width="200">                                                                                                                                                                       |
 | Galaxea       | [R1 Pro](humanoid/Galaxea/galaxea_r1pro_description) | Yes     | <img src="humanoid/.images/galaxea_r1_pro.png" width="200">                                                                                                                                                                   |
 | Realman       | [AIDAL](humanoid/Realman/aidal_description)          | Yes     | <img src="humanoid/.images/realman_aidal.png" width="200">                                                                                                                                                                    |
+| Realman       | [RS-01](humanoid/Realman/rs01_description)           | Yes     | <img src="humanoid/.images/realman_rs01.png" width="200">                                                                                                                                                                     |
 | Zerith        | [H1](humanoid/Zerith/zerith_h1_description)          | Yes     | <img src="humanoid/.images/zerith_h1.png" width="200">                                                                                                                                                                        |
-| Ai2 Robotics  | [Bot2](humanoid/Ai2robotics/ai2_bot2_description)    | Yes     | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                         |
+| Ai2 Robotics  | [Bot2](humanoid/Ai2Robotics/ai2_bot2_description)    | Yes     | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                         |
 | XSquare Robot | [Quanta X1](humanoid/X2Robot/quanta_x1_description)  | Yes     | <img src="humanoid/.images/x2robot_quanta_x1.png" width="200">                                                                                                                                                                |
-
-> **Galbot** wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1) live in the [`humanoid/Galbot`](humanoid/Galbot/) submodule. Initialize it from [Submodules](#submodules) below; see the [Galbot README](humanoid/Galbot/README.md) for models and launch commands.
+| Spirit AI     | [MOZ 1](humanoid/SpiritAI/moz1_description)          | Yes     | <img src="humanoid/.images/spiritai_moz1.png" width="200">                                                                                                                                                                    |
 
 ## Mobile Manipulators
 
@@ -60,6 +60,7 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Realman        | [RM65&75](manipulator/Realman/rm75_description)          | Yes     | <img src="manipulator/.images/realman_rm65.png" width="200">                                                                                                                                                                                                                                                                                                                          |
 | Elite          | [EC Series](manipulator/Elite/elite_ec_description)      | Yes     | <img src="manipulator/.images/elite_ec66.png" width="200">                                                                                                                                                                                                                                                                                                                            |
 | OpenArm        | [OpenArm](manipulator/OpenArm/openarm_description)       | Yes     | <img src="manipulator/.images/openarm_single.png" width="200" style="object-fit: cover; object-position: center;">     <img src="manipulator/.images/openarm_bimanual.png" width="200" style="object-fit: cover; object-position: center;">                                                                                                                                           |
+| HighTorque     | [Panthera HT](manipulator/HighTorque/panthera_ht_description) | No      |                                                                                                                                                                                                                                                                                                                                                                                       |
 
 ## Leg Humanoid Robots
 
@@ -85,6 +86,8 @@ This repository uses git submodules to manage shared components and specific rob
 | Rokae AR5 | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | 6-DOF industrial robot arm |
 | ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
 | Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) for build and demo commands |
+| Agibot G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | Agibot G2 humanoid description (private submodule) |
+| Panthera HT | `manipulator/HighTorque/panthera_ht_description` | [panthera_ht_description](https://github.com/fiveages-sim/panthera_ht_description) | HighTorque Panthera HT manipulator description |
 
 ### Using Submodules
 
@@ -115,6 +118,12 @@ git submodule update --init manipulator/ARX
 
 # For Galbot robots
 git submodule update --init humanoid/Galbot
+
+# For Agibot G2 (private)
+git submodule update --init humanoid/Agibot/agibot_g2_description
+
+# For Panthera HT
+git submodule update --init manipulator/HighTorque/panthera_ht_description
 ```
 
 **Update submodules to latest version:**

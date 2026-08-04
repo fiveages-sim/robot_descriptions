@@ -1,7 +1,8 @@
 name: Build Robots Deb
 
-# Robots deb 依赖 ocs2 + arms 的 release，建议在 common tag 打完、arms release 就绪后再手动触发，
-# 避免与 Build Common Deb 共用 push tag（否则同一 v* tag 会同时跑 common + robots 两个 workflow）。
+# Robots deb 依赖 ocs2 + arms 的 release。common deb 仅在子模块仓库
+# fiveages-sim/robot-descriptions-common（common/.github/workflows/build-common-deb.yml）打 tag 构建；
+# 本 monorepo 不再包含 Build Common Deb workflow。建议在 common、arms release 就绪后手动触发本 workflow。
 #
 # 打包范围：以下路径不参与 rsync / 不进 deb（子模块也不初始化 w1/w2，见 Initialize 步骤）：
 # - quadruped/ 整目录
@@ -36,13 +37,13 @@ jobs:
   build-robots-deb:
     runs-on: ubuntu-24.04
     env:
-      PACKAGE_NAME: robot-descriptions-jazzy-robots
-      DEB_FILE_PREFIX: robot-descriptions-jazzy-robots
-      COMMON_PACKAGE_NAME: robot-descriptions-jazzy-common
-      ARMS_PACKAGE_NAME: arms-ros2-control-jazzy
-      OCS2_PACKAGE_NAME: ocs2-ros2-jazzy-mobile-manipulator
-      ARMS_DEB_FILE_PREFIX: arms-ros2-control-jazzy
-      OCS2_DEB_FILE_PREFIX: ocs2-ros2-jazzy-mobile-manipulator
+      PACKAGE_NAME: ros-jazzy-robot-descriptions-robots
+      DEB_FILE_PREFIX: ros-jazzy-robot-descriptions-robots
+      COMMON_PACKAGE_NAME: ros-jazzy-robot-descriptions-common
+      ARMS_PACKAGE_NAME: ros-jazzy-arms-ros2-control
+      OCS2_PACKAGE_NAME: ros-jazzy-ocs2
+      ARMS_DEB_FILE_PREFIX: ros-jazzy-arms-ros2-control
+      OCS2_DEB_FILE_PREFIX: ros-jazzy-ocs2
       INSTALL_PREFIX: /opt/ros/jazzy
       DEFAULT_ROS_DISTRO: jazzy
       PREFERRED_ARMS_RELEASE_REPO: fiveages-sim/arms_ros2_control
@@ -316,7 +317,9 @@ jobs:
           try_download_from_repos "$OCS2_TAG" "ocs2" "$PREFERRED_OCS2_RELEASE_REPO" "$FALLBACK_OCS2_RELEASE_REPO" \
             "${OCS2_DEB_FILE_PREFIX}_*_amd64.deb" \
             "*${OCS2_DEB_FILE_PREFIX}*_amd64.deb" \
-            "*ocs2*jazzy*mobile-manipulator*_amd64.deb"
+            "ros-jazzy-ocs2-ros2-mobile-manipulator_*_amd64.deb" \
+            "*ocs2*jazzy*mobile-manipulator*_amd64.deb" \
+            "ocs2-ros2-jazzy-mobile-manipulator_*_amd64.deb"
 
           # Same tag can receive assets from multiple workflows minutes apart (e.g. gripper-common before arms bundle). Retry instead of widening patterns.
           arms_ok=0
@@ -324,7 +327,8 @@ jobs:
             if try_download_from_repos "$ARMS_TAG" "arms" "$PREFERRED_ARMS_RELEASE_REPO" "$FALLBACK_ARMS_RELEASE_REPO" \
               "${ARMS_DEB_FILE_PREFIX}_*_amd64.deb" \
               "*${ARMS_DEB_FILE_PREFIX}*_amd64.deb" \
-              "*arms*ros2*control*jazzy*_amd64.deb"; then
+              "*arms*ros2*control*jazzy*_amd64.deb" \
+              "arms-ros2-control-jazzy_*_amd64.deb"; then
               arms_ok=1
               break
             fi
@@ -344,7 +348,7 @@ jobs:
                 echo "" >&2
                 echo "This release has gripper-hardware-common .deb(s) but not ${ARMS_DEB_FILE_PREFIX}_*.deb." >&2
                 echo "Robots deb CI needs the **Bundle arms deb** (workflow: release-arms-ros2-control-deb), not the separate gripper-common deb." >&2
-                echo "Upload arms-ros2-control-jazzy_*.deb to ${_repo}@${ARMS_TAG}, or use a tag whose release includes it." >&2
+                echo "Upload ros-jazzy-arms-ros2-control_*.deb (or legacy arms-ros2-control-jazzy_*.deb) to ${_repo}@${ARMS_TAG}, or use a tag whose release includes it." >&2
                 break
               fi
             done
@@ -527,6 +531,7 @@ jobs:
           Priority: optional
           Architecture: amd64
           Depends: ros-${ROS_DISTRO}-ros-base, ${COMMON_PACKAGE_NAME}, ${ARMS_PACKAGE_NAME}
+          Provides: robot-descriptions-jazzy-robots
           Maintainer: ${GITHUB_REPOSITORY} maintainers <github-actions[bot]@users.noreply.github.com>
           Installed-Size: ${installed_size}
           Description: Robot description ROS packages excluding common assets

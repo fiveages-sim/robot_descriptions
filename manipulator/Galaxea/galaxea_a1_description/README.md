@@ -1,6 +1,6 @@
 # Galaxea A1 Description
 
-This package contains the description files for Galaxea A1, A1X and A1Y manipulator. I got the origin URDF files from
+This package contains the description files for Galaxea A1, A1X, A1Y and A1Z manipulator. I got the origin URDF files from
 the [Galaxea URDF](https://github.com/userguide-galaxea/URDF).
 
 ## 1. Build
@@ -18,7 +18,7 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
   ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_a1
   ```
 
-  ![A1X](../../.images/galaxea_a1.png)
+  ![A1](../../.images/galaxea_a1.png)
 
 * A1 X
   ```bash
@@ -36,11 +36,24 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
 
   ![A1Y](../../.images/galaxea_a1y.png)
 
+* A1 Z
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_a1 type:=z
+  ```
+
 * G1 Gripper
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch gripper.launch.py gripper:=galaxea_a1
   ```
+
+* G1Z Gripper
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch gripper.launch.py gripper:=galaxea_a1 type:=g1z
+  ```
+
 
 ## 3. OCS2 Demo
 
@@ -64,16 +77,24 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
   ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_a1 type:=y
   ```
 
+* A1 Z
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_a1 type:=z
+  ```
+
 ### 3.2 OCS2 Arm Controller Demo
+
 * A1
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1
   ```
-   ```bash
+  ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=isaac
   ```
+
 * A1 X
   ```bash
   source ~/ros2_ws/install/setup.bash
@@ -86,9 +107,22 @@ colcon build --packages-up-to galaxea_a1_description --symlink-install
   ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=gz type:=y world:=dart
   ```
 
+* A1 Z
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=gz type:=z
+  ```
+
 ### 3.3 ROS2 Control Isaac Sim
+
 * A1 X
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=isaac type:=x
+  ```
+
+* A1 Z
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_a1 hardware:=isaac type:=z
   ```

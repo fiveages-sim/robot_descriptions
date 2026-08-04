@@ -5,22 +5,21 @@
   <xacro:macro name="astribot_s1_arm_interfaces" params="name">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
-    <!-- 手臂关节接口定义 -->
-    <joint name="${prefix}joint_1">
+    <joint name="${prefix}joint1">
       <command_interface name="position"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
-    <joint name="${prefix}joint_2">
+    <joint name="${prefix}joint2">
       <command_interface name="position"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
-    <joint name="${prefix}joint_3">
+    <joint name="${prefix}joint3">
       <command_interface name="position"/>
       <state_interface name="position">
         <param name="initial_value">${-1.5708 if name == 'left' else 1.5708}</param>
@@ -29,7 +28,7 @@
       <state_interface name="effort"/>
     </joint>
 
-    <joint name="${prefix}joint_4">
+    <joint name="${prefix}joint4">
       <command_interface name="position"/>
       <state_interface name="position">
         <param name="initial_value">1.5708</param>
@@ -38,21 +37,21 @@
       <state_interface name="effort"/>
     </joint>
 
-    <joint name="${prefix}joint_5">
+    <joint name="${prefix}joint5">
       <command_interface name="position"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
-    <joint name="${prefix}joint_6">
+    <joint name="${prefix}joint6">
       <command_interface name="position"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
-    <joint name="${prefix}joint_7">
+    <joint name="${prefix}joint7">
       <command_interface name="position"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>

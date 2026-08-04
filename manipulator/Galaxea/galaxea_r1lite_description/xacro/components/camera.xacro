@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
+	<xacro:macro name="camera" params="name">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+		<link name="${prefix}camera_stand">
+			<inertial>
+				<origin xyz="0.00904707172594749 0.0155186578138565 -0.00819594831521042"/>
+				<mass value="0.1"/>
+				<inertia ixx="2.78082944930657E-05" ixy="-4.06196131154851E-10" ixz="1.50543456329152E-08" iyy="2.18951425070333E-05" iyz="-3.73269688187078E-06" izz="2.07706210423581E-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find galaxea_r1lite_description)/meshes/visual/camera_stand.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find galaxea_r1lite_description)/meshes/collision/camera.stl"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix}camera_stand_joint" type="fixed">
+			<origin xyz="-0.019206 0.009 0.074757" rpy="-2.268 0 ${-PI/2}"/>
+			<parent link="${prefix}gripper_base"/>
+			<child link="${prefix}camera_stand"/>
+		</joint>
+
+		<link name="${prefix}camera">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/realsense/d405.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${prefix}camera_joint" type="fixed">
+			<origin xyz="0.008996 0 0"/>
+			<parent link="${prefix}camera_stand"/>
+			<child link="${prefix}camera"/>
+		</joint>
+
+	</xacro:macro>
+</robot>

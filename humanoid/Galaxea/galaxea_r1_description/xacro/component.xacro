@@ -5,15 +5,19 @@
 <!-- =================================================================================== -->
 <robot name="Galaxea_R1" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="PI" value="3.1415926535897931"/>
-	<xacro:arg name="type" default="base"/>
+	<xacro:arg name="type" default="chassis"/>
+	<xacro:arg name="enable_wheel_joints" default="true"/>
 
-	<xacro:if value="${'$(arg type)' == 'base'}">
+	<xacro:if value="${'$(arg type)' == 'chassis'}">
 		<!-- Include Chassis -->
-		<xacro:include filename="$(find galaxea_r1_description)/xacro/chassis.xacro"/>
-		<xacro:Chassis/>
+		<xacro:include filename="$(find galaxea_r1_description)/xacro/components/chassis.xacro"/>
+		<xacro:Chassis enable_wheel_joints="$(arg enable_wheel_joints)"/>
+	</xacro:if>
 
+	<xacro:if value="${'$(arg type)' == 'torso'}">
 		<!-- Include Torso -->
-		<xacro:include filename="$(find galaxea_r1_description)/xacro/torso.xacro"/>
+		<xacro:include filename="$(find galaxea_r1_description)/xacro/components/torso.xacro"/>
+		<link name="base_link"/>
 		<xacro:Torso/>
 	</xacro:if>
 </robot>

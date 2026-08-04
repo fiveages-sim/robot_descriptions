@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.141592653589793"/>
+	<xacro:include filename="$(find component_models)/xacro/angellun_200.xacro"/>
+
+	<!-- enable_wheel_joints:=true  -> empty wheel links + continuous drive joints (control / chassis module)
+	     enable_wheel_joints:=false -> omniwheel_10 mesh + fixed joints (full robot visualization) -->
+	<xacro:macro name="Moz1Chassis" params="enable_wheel_joints:=false">
+		<!-- base_link: REP-103 (x forward, y left, z up); chassis mesh rotated from CAD. -->
+		<link name="base_link">
+			<inertial>
+				<origin xyz="-0.03634 0.00718 0.03333"/>
+				<mass value="60.64"/>
+				<inertia
+						ixx="1.63486351"
+						ixy="0.05906676"
+						ixz="-0.0809264"
+						iyy="1.86830738"
+						iyz="0.02042256"
+						izz="2.82299198"/>
+			</inertial>
+			<visual>
+				<origin rpy="0 0 -${PI/2}"/>
+				<geometry>
+					<mesh filename="file://$(find moz1_description)//meshes/chassis.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 0.06"/>
+				<geometry>
+					<box size="0.6 0.6 0.26"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<xacro:if value="${enable_wheel_joints}">
+			<link name="wheel_1"/>
+			<link name="wheel_2"/>
+			<link name="wheel_3"/>
+			<link name="wheel_4"/>
+		</xacro:if>
+		<xacro:unless value="${enable_wheel_joints}">
+			<xacro:wheel wheel_name="wheel_1" enable_passive_wheels="false"/>
+			<xacro:wheel wheel_name="wheel_2" enable_passive_wheels="false"/>
+			<xacro:wheel wheel_name="wheel_3" enable_passive_wheels="false"/>
+			<xacro:wheel wheel_name="wheel_4" enable_passive_wheels="false"/>
+		</xacro:unless>
+
+		<xacro:property name="wheel_joint_type" value="fixed"/>
+		<xacro:if value="${enable_wheel_joints}">
+			<xacro:property name="wheel_joint_type" value="continuous"/>
+		</xacro:if>
+
+		<!-- Wheel layout / axis: same as galbot_foxtrot (omniwheel_10, axis x, yaw at corners). -->
+		<joint name="wheel1_joint" type="${wheel_joint_type}">
+			<origin rpy="0 0 ${-3*PI/4}" xyz="0.2423 0.2423 0"/>
+			<parent link="base_link"/>
+			<child link="wheel_1"/>
+			<xacro:if value="${enable_wheel_joints}">
+				<axis xyz="1 0 0"/>
+			</xacro:if>
+		</joint>
+
+		<joint name="wheel2_joint" type="${wheel_joint_type}">
+			<origin rpy="0 0 ${-PI/4}" xyz="-0.2423 0.2423 0"/>
+			<parent link="base_link"/>
+			<child link="wheel_2"/>
+			<xacro:if value="${enable_wheel_joints}">
+				<axis xyz="1 0 0"/>
+			</xacro:if>
+		</joint>
+
+		<joint name="wheel3_joint" type="${wheel_joint_type}">
+			<origin rpy="0 0 ${PI/4}" xyz="-0.2423 -0.2423 0"/>
+			<parent link="base_link"/>
+			<child link="wheel_3"/>
+			<xacro:if value="${enable_wheel_joints}">
+				<axis xyz="1 0 0"/>
+			</xacro:if>
+		</joint>
+
+		<joint name="wheel4_joint" type="${wheel_joint_type}">
+			<origin rpy="0 0 ${3*PI/4}" xyz="0.2423 -0.2423 0"/>
+			<parent link="base_link"/>
+			<child link="wheel_4"/>
+			<xacro:if value="${enable_wheel_joints}">
+				<axis xyz="1 0 0"/>
+			</xacro:if>
+		</joint>
+
+		<link name="lidar_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="lidar_joint" type="fixed">
+			<origin xyz="0.2522 0 0.1919"/>
+			<parent link="base_link"/>
+			<child link="lidar_link"/>
+		</joint>
+	</xacro:macro>
+</robot>

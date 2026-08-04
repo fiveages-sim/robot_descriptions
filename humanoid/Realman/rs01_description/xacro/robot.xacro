@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot name="Realman_RS01" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="type" default="AG2F120S"/>
+  <xacro:arg name="joints_movable" default="false"/>
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:property name="type_arg" value="$(arg type)"/>
+  <xacro:property name="selected_gripper_type" value="AG2F120S"/>
+  <xacro:if value="${type_arg == 'empty'}">
+    <xacro:property name="selected_gripper_type" value="EMPTY"/>
+  </xacro:if>
+  <xacro:if value="${type_arg == 'eg2-4c2'}">
+    <xacro:property name="selected_gripper_type" value="EG2-4C2"/>
+  </xacro:if>
+
+  <xacro:include filename="$(find rs01_description)/xacro/components/chassis.xacro"/>
+  <xacro:rs01_chassis joints_movable="$(arg joints_movable)"/>
+
+  <xacro:include filename="$(find rs01_description)/xacro/components/body.xacro"/>
+  <xacro:rs01_body/>
+
+  <xacro:include filename="$(find rm75_description)/xacro/arm.xacro"/>
+  <xacro:rm75 name="left" use_base_link="false" ee_type="fb_camera"/>
+  <xacro:rm75 name="right" use_base_link="false" ee_type="fb_camera"/>
+
+  <xacro:include filename="$(find rs01_description)/xacro/ee.xacro"/>
+  <xacro:rs01_ee type="${selected_gripper_type}"/>
+
+  <!-- Mount RM75 arms onto RS-01 shoulder bases (from MuJoCo R/L_Link_0 -> Link_1 offset) -->
+  <joint name="left_arm_root_joint" type="fixed">
+    <origin xyz="0 0 0.191" rpy="-${PI/2} 0 0"/>
+    <parent link="left_base_link"/>
+    <child link="left_arm_root"/>
+  </joint>
+
+  <joint name="right_arm_root_joint" type="fixed">
+    <origin xyz="0 0 0.191" rpy="-${PI/2} 0 0"/>
+    <parent link="right_base_link"/>
+    <child link="right_arm_root"/>
+  </joint>
+
+</robot>

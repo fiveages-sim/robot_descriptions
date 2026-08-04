@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="rs01_body_interfaces">
+    <xacro:macro name="body_joint_interface" params="joint_name">
+      <joint name="${joint_name}">
+        <command_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+    </xacro:macro>
+
+    <xacro:body_joint_interface joint_name="body_joint1"/>
+    <xacro:body_joint_interface joint_name="body_joint2"/>
+    <xacro:body_joint_interface joint_name="body_joint3"/>
+    <xacro:body_joint_interface joint_name="body_joint4"/>
+    <xacro:body_joint_interface joint_name="body_joint5"/>
+    <xacro:body_joint_interface joint_name="head_joint1"/>
+    <xacro:body_joint_interface joint_name="head_joint2"/>
+  </xacro:macro>
+
+</robot>

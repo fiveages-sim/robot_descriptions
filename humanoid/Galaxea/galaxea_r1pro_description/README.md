@@ -19,7 +19,17 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=galaxea_r1pro
 ![Galaxea R1 Pro](../../.images/galaxea_r1_pro.png)
 
 ### 2.2 Components
-* A2 Pro Arms
+* Chassis
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=galaxea_r1pro type:=chassis
+  ```
+* Torso
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=galaxea_r1pro type:=torso
+  ```
+* A2 Pro Arms (default)
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch component.launch.py robot:=galaxea_r1pro
@@ -38,7 +48,7 @@ ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=galaxea_r
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_r1pro
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=galaxea_r1pro
 ```
 
 ```bash
@@ -48,5 +58,5 @@ ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_r1pro hardware:=gz
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_arm_controller demo.launch.py robot:=galaxea_r1pro hardware:=isaac
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=galaxea_r1pro hardware:=isaac
 ```

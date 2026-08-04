@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<robot name="rs01_body" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find rs01_description)/xacro/macros.xacro"/>
+  <xacro:property name="mesh_path" value="file://$(find rs01_description)/meshes/"/>
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:macro name="rs01_body">
+    <!-- 5-DOF torso chain -->
+    <link name="leg_link_1">
+      <xacro:rs01_inertial mass="9.521" ixx="0.167222" iyy="0.159142" izz="0.030386"
+                           origin_xyz="0.13063 -0.0016996 -0.0011396"/>
+      <xacro:rs01_mesh mesh="${mesh_path}body_link1.glb"/>
+    </link>
+    <joint name="body_joint1" type="revolute">
+      <origin xyz="-0.1 0 0.315" rpy="-${PI/2} -${PI/2} 0"/>
+      <parent link="base_link"/>
+      <child link="leg_link_1"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="1.57" effort="2500" velocity="3.14"/>
+    </joint>
+
+    <link name="leg_link_2">
+      <xacro:rs01_inertial mass="2.65" ixx="0.0319716" iyy="0.0215144" izz="0.0176693"
+                           origin_xyz="0.138787 0.006096 -0.000103"/>
+      <xacro:rs01_mesh mesh="${mesh_path}body_link2.glb"/>
+    </link>
+    <joint name="body_joint2" type="revolute">
+      <origin xyz="0.265 0 0" rpy="0 0 0"/>
+      <parent link="leg_link_1"/>
+      <child link="leg_link_2"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-${3/4*PI}" upper="${PI/2}" effort="6500" velocity="3.14"/>
+    </joint>
+
+    <link name="leg_link_3">
+      <xacro:rs01_inertial mass="4.948" ixx="0.0247649" iyy="0.018237" izz="0.0158156"
+                           origin_xyz="0.02253 0.000208 -0.007"/>
+      <xacro:rs01_mesh mesh="${mesh_path}body_link3.glb"/>
+    </link>
+    <joint name="body_joint3" type="revolute">
+      <origin xyz="0.265 0 0" rpy="0 0 0"/>
+      <parent link="leg_link_2"/>
+      <child link="leg_link_3"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.5708" upper="1.5708" effort="9000" velocity="3.14"/>
+    </joint>
+
+    <link name="leg_link_4">
+      <xacro:rs01_inertial mass="4.907" ixx="0.0184258" iyy="0.0168672" izz="0.0110771"
+                           origin_xyz="-0.000178 0.00615 -0.007147"/>
+      <xacro:rs01_mesh mesh="${mesh_path}body_link4.glb"/>
+    </link>
+    <joint name="body_joint4" type="revolute">
+      <origin xyz="0.121 0 0" rpy="-${PI/2} -${PI/2} 0"/>
+      <parent link="leg_link_3"/>
+      <child link="leg_link_4"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="-1.5708" upper="1.5708" effort="2500" velocity="3.14"/>
+    </joint>
+
+    <link name="torso_link">
+      <xacro:rs01_inertial mass="8.482" ixx="0.165989" iyy="0.159068" izz="0.046317"
+                           origin_xyz="0.0001 0.015107 -0.138016"/>
+      <xacro:rs01_mesh mesh="${mesh_path}body_link5.glb"/>
+    </link>
+    <joint name="body_joint5" type="revolute">
+      <origin xyz="0 0.4064 0" rpy="-${PI/2} 0 0"/>
+      <parent link="leg_link_4"/>
+      <child link="torso_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.5708" upper="1.5708" effort="2500" velocity="3.14"/>
+    </joint>
+
+    <!-- Head -->
+    <link name="head_link_1">
+      <xacro:rs01_inertial mass="1.09" ixx="0.000673825" iyy="0.000672673" izz="0.000381198"
+                           origin_xyz="-0.000053 -0.000427 -0.071859"/>
+      <xacro:rs01_mesh mesh="${mesh_path}head_link1.glb"/>
+    </link>
+    <joint name="head_joint1" type="revolute">
+      <origin xyz="0 0 0.16396" rpy="0 0 -${PI/2}"/>
+      <parent link="torso_link"/>
+      <child link="head_link_1"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.57" upper="1.57" effort="2500" velocity="3.14"/>
+    </joint>
+
+    <link name="head_link_2">
+      <xacro:rs01_inertial mass="1.778" ixx="0.00707454" iyy="0.00489924" izz="0.00282493"
+                           origin_xyz="0.030538 0.01056 -0.000077"/>
+      <xacro:rs01_mesh mesh="${mesh_path}head_link2.glb"/>
+    </link>
+    <joint name="head_joint2" type="revolute">
+      <origin rpy="0 -1.570375 -1.570947"/>
+      <parent link="head_link_1"/>
+      <child link="head_link_2"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-0.4" upper="0.4" effort="2500" velocity="3.14"/>
+    </joint>
+
+    <link name="head_camera_link">
+      <xacro:rs01_inertial mass="0.18" ixx="0.000117117" iyy="0.000116311" izz="1.72766e-05"
+                           origin_xyz="-0.034161 -0.000002 -0.012628"/>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="head_camera_joint" type="fixed">
+      <origin xyz="0.075558 0.07805 0" rpy="0 ${PI/2} ${PI/2}"/>
+      <parent link="head_link_2"/>
+      <child link="head_camera_link"/>
+    </joint>
+
+    <!-- Body depth camera -->
+    <link name="body_camera_link">
+      <xacro:rs01_inertial mass="0.18" ixx="0.000117117" iyy="0.000116311" izz="1.72766e-05"
+                           origin_xyz="-0.034161 -0.000002 -0.012628"/>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="body_camera_joint" type="fixed">
+      <origin xyz="0 -0.1099 -0.0644" rpy="${PI/2} ${PI} 0"/>
+      <parent link="torso_link"/>
+      <child link="body_camera_link"/>
+    </joint>
+
+    <!-- Arm mounting bases (R/L_Link_0 equivalent) -->
+    <link name="right_base_link">
+      <xacro:rs01_inertial mass="0.16408" ixx="0.00024997" iyy="0.00015503" izz="0.00015461"
+                           origin_xyz="0.000003 0 0.063004"/>
+    </link>
+    <joint name="right_arm_mount" type="fixed">
+      <origin rpy="0 ${PI/2} ${PI}"/>
+      <parent link="torso_link"/>
+      <child link="right_base_link"/>
+    </joint>
+
+    <link name="left_base_link">
+      <xacro:rs01_inertial mass="0.16408" ixx="0.00024997" iyy="0.00015503" izz="0.00015461"
+                           origin_xyz="-0.000003 0 0.063004"/>
+    </link>
+    <joint name="left_arm_mount" type="fixed">
+      <origin rpy="-${PI} -${PI/2} 0"/>
+      <parent link="torso_link"/>
+      <child link="left_base_link"/>
+    </joint>
+  </xacro:macro>
+
+</robot>

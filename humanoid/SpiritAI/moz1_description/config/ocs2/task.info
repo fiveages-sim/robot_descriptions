@@ -1,0 +1,401 @@
+; OCS2 Wheel Humanoid Configuration
+; ==================================
+
+;=============================================================================
+; Model Information
+;=============================================================================
+
+model_information
+{
+    manipulatorModelType    1
+
+    ; Frame definitions (aligned with MobileManipulatorInterface)
+    baseFrame                       "base_link"
+    eeFrame                         "left_eef"
+    eeFrame1                        "right_eef"
+
+    ; Joints to remove (fixed joints, mimic joints detected automatically)
+    removeJoints
+    {
+        [0]  "Head-1"
+        [1]  "Head-2"
+        [2]  "left_gripper_joint"
+        [3]  "right_gripper_joint"
+    }
+}
+
+;=============================================================================
+; Model Settings
+;=============================================================================
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+;=============================================================================
+; Initial State
+;=============================================================================
+
+initialState
+{
+
+    base
+    {
+        wheelBasedMobileManipulator
+        {
+            (0,0) 0.0   ; x
+            (1,0) 0.0   ; y
+            (2,0) 0.0   ; yaw
+        }
+    }
+
+    arm
+    {
+    (0,0)   0.0      ; LegWaist-0
+    (1,0)   0.0      ; LegWaist-1
+    (2,0)   0.0      ; LegWaist-2
+    (3,0)   0.0      ; LegWaist-3
+    (4,0)   0.0      ; LegWaist-4
+    (5,0)   0.0      ; LegWaist-5
+    (6,0)   0.0      ; LeftArm-0
+    (7,0)   0.0      ; LeftArm-1
+    (8,0)   0.0      ; LeftArm-2
+    (9,0)   0.0      ; LeftArm-3
+    (10,0)   0.0     ; LeftArm-4
+    (11,0)   0.0     ; LeftArm-5
+    (12,0)   0.0     ; LeftArm-6
+    (13,0)   0.0     ; RightArm-0
+    (14,0)   0.0     ; RightArm-1
+    (15,0)   0.0     ; RightArm-2
+    (16,0)   0.0     ; RightArm-3
+    (17,0)   0.0     ; RightArm-4
+    (18,0)   0.0     ; RightArm-5
+    (19,0)   0.0     ; RightArm-6
+    }
+}
+
+;=============================================================================
+; Initial Mode Schedule
+;=============================================================================
+
+initialModeSchedule
+{
+    ; No switching events initially
+    eventTimes
+    {
+    }
+    
+    ; Start in HM_DUAL_RELATIVE_MOBILE_BASE
+    modeSequence
+    {
+        [0]     HM_DUAL_RELATIVE_MOBILE_BASE
+    }
+}
+
+;=============================================================================
+; DDP Settings
+;=============================================================================
+
+ddp
+{
+    algorithm                       SLQ
+
+    nThreads                        4
+    threadPriority                  50
+
+    maxNumIterations                10
+    minRelCost                      1e-3
+    constraintTolerance             5e-3
+
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            10000
+    timeStep                        0.01
+    backwardPassIntegratorType      ODE45
+
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+
+    preComputeRiccatiTerms          true
+
+    useFeedbackPolicy               true
+
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-5
+    }
+}
+
+;=============================================================================
+; MPC Settings
+;=============================================================================
+
+mpc
+{
+    timeHorizon                     1.0
+    solutionTimeWindow              -1
+    coldStart                       false
+
+    debugPrint                      false
+
+    mpcDesiredFrequency             100
+    mrtDesiredFrequency             400
+}
+
+;=============================================================================
+; Rollout Settings
+;=============================================================================
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        0.01
+    integratorType                  ODE45
+    maxNumStepsPerSecond            10000
+    checkNumericalStability         false
+}
+
+;=============================================================================
+; Input Cost
+;=============================================================================
+
+inputCost
+{
+    R
+    {
+        ; Base input cost (2 DOF for WheelBasedMobileManipulator: v_linear, omega)
+        base
+        {
+            wheelBasedMobileManipulator
+            {
+                scaling 1e-2
+
+                (0,0)   1.0     ; linear velocity
+                (1,1)   1.0     ; angular velocity (yaw rate)
+            }
+        }
+
+        ; Arm joint input costs (20-DOF: 6 LegWaist + 7 left + 7 right)
+        arm
+        {
+            scaling 1e-3
+
+             (0,0)   1.0       ; LegWaist-0
+             (1,0)   1.0       ; LegWaist-1
+             (2,0)   1.0       ; LegWaist-2
+             (3,0)   1.0       ; LegWaist-3
+             (4,0)   1.0       ; LegWaist-4
+             (5,0)   1.0       ; LegWaist-5
+             (6,0)   0.11      ; LeftArm-0
+             (7,0)   0.11      ; LeftArm-1
+             (8,0)   0.11      ; LeftArm-2
+             (9,0)   0.11      ; LeftArm-3
+             (10,0)  0.11      ; LeftArm-4
+             (11,0)  0.11      ; LeftArm-5
+             (12,0)  0.11      ; LeftArm-6
+             (13,0)  0.11      ; RightArm-0
+             (14,0)  0.11      ; RightArm-1
+             (15,0)  0.11      ; RightArm-2
+             (16,0)  0.11      ; RightArm-3
+             (17,0)  0.11      ; RightArm-4
+             (18,0)  0.11      ; RightArm-5
+             (19,0)  0.11      ; RightArm-6
+        }
+    }
+}
+
+;=============================================================================
+; End Effector Constraint
+;=============================================================================
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+;=============================================================================
+; Body Relative Constraint (torso link: waist03, arm/head mount)
+;=============================================================================
+
+bodyRelative
+{
+  activate                   true
+  bodyLinkName               "waist03"
+  rollTolerance              0.1
+  pitchTolerance             0.1
+  muRoll                     20.0
+  muPitch                    20.0
+  muPositionX                0.0
+  muPositionY                0.0
+}
+
+;=============================================================================
+; Body Constraint (Mode-Aware)
+;=============================================================================
+
+bodyConstraint
+{
+    activate                        true
+    
+    ; Penalty weights
+    muPosition                      0.5
+    muOrientation                   1.0
+}
+
+;=============================================================================
+; Bimanual Coupling Constraint
+;=============================================================================
+
+bimanualCoupling
+{
+    activate                        true
+    
+    ; Higher weights to enforce rigid coupling
+    muPosition                      5.0
+    muOrientation                   5.0
+    
+    ; Note: Relative pose is captured automatically when switching to COUPLED mode
+}
+
+;=============================================================================
+; Joint Position Limits
+;=============================================================================
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-2
+    delta                           1e-3
+}
+
+;=============================================================================
+; Joint Velocity Limits
+;=============================================================================
+
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-3
+
+    lowerBound
+    {
+        base
+        {
+            wheelBasedMobileManipulator
+            {
+                (0,0)  -1.0     ; linear velocity
+                (1,0)  -1.5     ; angular velocity (yaw rate)
+            }
+        }
+
+        arm
+        {
+            (0,0)  -1.134      ; LegWaist-0  65 deg/s
+            (1,0)  -1.134      ; LegWaist-1  65 deg/s
+            (2,0)  -1.134      ; LegWaist-2  65 deg/s
+            (3,0)  -1.134      ; LegWaist-3  65 deg/s
+            (4,0)  -1.134      ; LegWaist-4  65 deg/s
+            (5,0)  -1.134      ; LegWaist-5  65 deg/s
+            (6,0)  -3.665      ; LeftArm-0   210 deg/s
+            (7,0)  -3.665      ; LeftArm-1   210 deg/s
+            (8,0)  -4.189      ; LeftArm-2   240 deg/s
+            (9,0)  -4.189      ; LeftArm-3   240 deg/s
+            (10,0) -5.236      ; LeftArm-4   300 deg/s
+            (11,0) -5.236      ; LeftArm-5   300 deg/s
+            (12,0) -5.236      ; LeftArm-6   300 deg/s
+            (13,0) -3.665      ; RightArm-0  210 deg/s
+            (14,0) -3.665      ; RightArm-1  210 deg/s
+            (15,0) -4.189      ; RightArm-2  240 deg/s
+            (16,0) -4.189      ; RightArm-3  240 deg/s
+            (17,0) -5.236      ; RightArm-4  300 deg/s
+            (18,0) -5.236      ; RightArm-5  300 deg/s
+            (19,0) -5.236      ; RightArm-6  300 deg/s
+        }
+    }
+
+    upperBound
+    {
+        base
+        {
+            wheelBasedMobileManipulator
+            {
+                (0,0)   1.0     ; linear velocity
+                (1,0)   1.5     ; angular velocity (yaw rate)
+            }
+        }
+
+        arm
+        {
+            (0,0)  1.134       ; LegWaist-0  65 deg/s
+            (1,0)  1.134       ; LegWaist-1  65 deg/s
+            (2,0)  1.134       ; LegWaist-2  65 deg/s
+            (3,0)  1.134       ; LegWaist-3  65 deg/s
+            (4,0)  1.134       ; LegWaist-4  65 deg/s
+            (5,0)  1.134       ; LegWaist-5  65 deg/s
+            (6,0)  3.665       ; LeftArm-0   210 deg/s
+            (7,0)  3.665       ; LeftArm-1   210 deg/s
+            (8,0)  4.189       ; LeftArm-2   240 deg/s
+            (9,0)  4.189       ; LeftArm-3   240 deg/s
+            (10,0) 5.236       ; LeftArm-4   300 deg/s
+            (11,0) 5.236       ; LeftArm-5   300 deg/s
+            (12,0) 5.236       ; LeftArm-6   300 deg/s
+            (13,0) 3.665       ; RightArm-0  210 deg/s
+            (14,0) 3.665       ; RightArm-1  210 deg/s
+            (15,0) 4.189       ; RightArm-2  240 deg/s
+            (16,0) 4.189       ; RightArm-3  240 deg/s
+            (17,0) 5.236       ; RightArm-4  300 deg/s
+            (18,0) 5.236       ; RightArm-5  300 deg/s
+            (19,0) 5.236       ; RightArm-6  300 deg/s
+        }
+    }
+}
+
+;=============================================================================
+; Self Collision
+;=============================================================================
+
+selfCollision
+{
+    activate                        false
+    mu                              1e-2
+    delta                           1e-3
+    minimumDistance                 0.02
+
+    ; Collision link pairs to check
+    collisionLinkPairs
+    {
+    }
+
+    ; Collision object pairs (by index)
+    collisionObjectPairs
+    {
+          [0] "waist03, left04",
+          [1] "waist03, left05",
+          [2] "waist03, left07",
+          [3] "waist03, right04",
+          [4] "waist03, right05",
+          [5] "waist03, right07",
+          [6] "waist03, right03",
+          [7] "waist03, left03",
+    }
+}
+

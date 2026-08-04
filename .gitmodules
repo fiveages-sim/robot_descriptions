@@ -34,6 +34,10 @@
 [submodule "humanoid/Galbot"]
 	path = humanoid/Galbot
 	url = git@github.com:fiveages-sim/robot-descriptions-galbot.git
+[submodule "humanoid/Agibot/agibot_g2_description"]
+	path = humanoid/Agibot/agibot_g2_description
+	url = git@github.com:fiveages-sim/agibot-g2-description.git
+	branch = main
 [submodule "humanoid/FiveAges/fiveages_w2_common_description"]
 	path = humanoid/FiveAges/fiveages_w2_common_description
 	url = git@github.com:fiveages-sim/fa-w2-components.git
@@ -42,3 +46,10 @@
 	path = humanoid/FiveAges/fiveages_w2r_description
 	url = git@github.com:fiveages-sim/fa-w2r-description.git
 	branch = main
+[submodule "humanoid/FiveAges/fiveages_s2_description"]
+	path = humanoid/FiveAges/fiveages_s2_description
+	url = git@github.com:fiveages-sim/fa-s2-description.git
+	branch = main
+[submodule "manipulator/HighTorque"]
+	path = manipulator/HighTorque
+	url = git@github.com:fiveages-sim/robot-descriptions-ht.git

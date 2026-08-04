@@ -1,0 +1,12 @@
+/**:
+  ros__parameters:
+    # Interactive marker 固定坐标系（须为 URDF/TF 中存在的 frame；S1 仅有 base_link）
+    marker_fixed_frame: base_link
+
+    # VR 头显参考 link（与 xacro head_link2 一致）
+    reference_link: head_link2
+
+    enable_vr: false
+
+    # 头部由 head_joint_controller 控制；OCS2 规划在 fixed_base.info 的 removeJoints 中剔除 head_joint1/2
+    enable_head_control: false
