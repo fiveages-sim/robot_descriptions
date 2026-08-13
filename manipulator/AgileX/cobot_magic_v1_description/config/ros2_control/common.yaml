@@ -1,0 +1,149 @@
+# Common controller defaults for Cobot Magic V1 (Mobile Aloha V1).
+#
+# 双臂 + Tracer 底盘；箱体/相机架固定，无腰 / 升降 / 头。
+#
+#   demo:
+#     - 仅双臂：ocs2_arm_controller（task_arm，规划 topology:=dual，根 arm_base）
+#   full_body:
+#     - 底盘 SE(2) + 双臂：ocs2_wbc_controller（task.info，[left×6 | right×6]）
+#
+# Demo 规划 URDF：同一包 robot.xacro + topology:=dual，勿再另建 arms 包。
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
+
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+ocs2_arm_controller:
+  ros__parameters:
+    # Demo 双臂：规划用本包 task_arm + topology:=dual（根 arm_base）
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    future_time_offset: 1.0
+    robot_name: cobot_magic_v1
+    info_file_name: task_arm
+
+    joints:
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+
+    command_interfaces:
+      - position
+      - velocity
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+      - effort
+
+    home_duration: 3.0
+    home_interpolation_type: linear
+    hold_first_check_position_threshold: 0.15
+    hold_position_threshold: 0.15
+
+    cartesian_defaults:
+      frame_id: arm_base
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    home_1: [0.0, 0.594, 0.306, 0.331, 0.0, 0.0, 0.0, 0.594, 0.306, 0.331, 0.0, 0.0]
+    home_2: [0.0, 1.30, 0.60, 0.60, 0.0, 0.0, 0.0, 1.30, 0.60, 0.60, 0.0, 0.0]
+    home_3: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+ocs2_wbc_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    robot_name: cobot_magic_v1
+    info_file_name: task
+    left_ee_frame: left_gripper_center
+    right_ee_frame: right_gripper_center
+    fsm_default_humanoid_mode: HM_DUAL_IDLE
+
+    # [left 1–6 | right 1–6]
+    joints:
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+
+    command_interfaces:
+      - position
+      - velocity
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+      - effort
+
+    home_duration: 5.0
+    hold_first_check_position_threshold: 0.15
+    hold_position_threshold: 0.15
+
+    waist_lifting_enabled: false
+
+    cartesian_defaults:
+      frame_id: base_footprint
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    # [left×6 | right×6]
+    home_1: [0.0, 0.594, 0.306, 0.331, 0.0, 0.0, 0.0, 0.594, 0.306, 0.331, 0.0, 0.0]
+    home_2: [0.0, 1.30, 0.60, 0.60, 0.0, 0.0, 0.0, 1.30, 0.60, 0.60, 0.0, 0.0]
+    home_3: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    use_effort_interface: true
+    force_feedback_ratio: 0.0
+    force_threshold: 1.0
+
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    use_effort_interface: true
+    force_feedback_ratio: 0.0
+    force_threshold: 1.0

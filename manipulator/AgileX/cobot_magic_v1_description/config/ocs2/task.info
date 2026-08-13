@@ -1,0 +1,403 @@
+; OCS2 Wheel Humanoid Configuration - Cobot Magic V1
+; ==================================================
+; full_body → ocs2_wbc_controller (info_file_name:=task).
+;
+; 双臂 + 底盘，无身体 DOF（无腰 / 升降 / 头）：
+;   State (3 + 12): [base x,y,yaw | left×6 | right×6]
+;   Input (2 + 12): [vx, omega | left×6 | right×6]
+; 双臂 demo 用同包 task_arm.info + topology:=dual（见 common.yaml）。
+
+;=============================================================================
+; Model Information
+;=============================================================================
+
+model_information
+{
+    ; 1 = WheelBasedMobileManipulator（虚拟 SE(2) 底盘）
+    manipulatorModelType    1
+
+    ; Pinocchio 根坐标系（Tracer URDF root）
+    baseFrame               "base_footprint"
+
+    ; 双臂末端
+    eeFrame                 "left_gripper_center"
+    eeFrame1                "right_gripper_center"
+
+    ; 无身体 DOF；WBC 仍要求该字段，与底盘同框
+    bodyFrame               "base_footprint"
+
+    ; 夹爪 + mimic；轮关节默认 fixed（enable_wheel_joints:=false）
+    removeJoints
+    {
+        [0]   "left_gripper_joint"
+        [1]   "right_gripper_joint"
+        [2]   "left_joint8"
+        [3]   "right_joint8"
+    }
+}
+
+;=============================================================================
+; Model Settings
+;=============================================================================
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+;=============================================================================
+; Initial State
+; 总维度 = 3（底盘）+ 12（6 左臂 + 6 右臂）= 15
+;=============================================================================
+
+initialState
+{
+    base
+    {
+        wheelBasedMobileManipulator
+        {
+            (0,0)  0.0   ; x [m]
+            (1,0)  0.0   ; y [m]
+            (2,0)  0.0   ; yaw [rad]
+        }
+    }
+
+    arm
+    {
+        (0,0)   0.0     ; left_joint1
+        (1,0)   0.0     ; left_joint2
+        (2,0)   0.0     ; left_joint3
+        (3,0)   0.0     ; left_joint4
+        (4,0)   0.0     ; left_joint5
+        (5,0)   0.0     ; left_joint6
+        (6,0)   0.0     ; right_joint1
+        (7,0)   0.0     ; right_joint2
+        (8,0)   0.0     ; right_joint3
+        (9,0)   0.0     ; right_joint4
+        (10,0)  0.0     ; right_joint5
+        (11,0)  0.0     ; right_joint6
+    }
+}
+
+;=============================================================================
+; Initial Mode Schedule
+;=============================================================================
+
+initialModeSchedule
+{
+    eventTimes
+    {
+    }
+
+    ; 默认：锁定底盘 + 双臂独立
+    ; 无定位 TF 时 WBC 也会强制 baseLocked；有 TF 后再 BASE_UNLOCK
+    modeSequence
+    {
+        [0]     HM_DUAL_IDLE
+    }
+}
+
+;=============================================================================
+; DDP Settings
+;=============================================================================
+
+ddp
+{
+    algorithm                       SLQ
+
+    nThreads                        5
+    threadPriority                  50
+
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+
+    preComputeRiccatiTerms          true
+
+    useFeedbackPolicy               false
+
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+;=============================================================================
+; MPC Settings
+;=============================================================================
+
+mpc
+{
+    timeHorizon                     1.0     ; [s]
+    solutionTimeWindow              0.2     ; [s]
+    coldStart                       false
+
+    debugPrint                      false
+
+    mpcDesiredFrequency             100     ; [Hz]
+    mrtDesiredFrequency             500     ; [Hz]
+}
+
+;=============================================================================
+; Rollout Settings
+;=============================================================================
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+;=============================================================================
+; Body Tracking — 无身体 DOF，关闭
+;=============================================================================
+
+bodyTrackingEE
+{
+    activate  false
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+;=============================================================================
+; Input Cost
+; 总输入维度 = 2（底盘）+ 12（关节）= 14
+;=============================================================================
+
+inputCost
+{
+    R
+    {
+        base
+        {
+            wheelBasedMobileManipulator
+            {
+                scaling 1e-2
+
+                (0,0)   5.0     ; 线速度 vx [m/s]
+                (1,1)   5.0     ; 角速度 omega [rad/s]
+            }
+        }
+
+        arm
+        {
+            scaling 1e-3
+
+            (0,0)   1.0     ; left_joint1
+            (1,0)   1.0     ; left_joint2
+            (2,0)   1.0     ; left_joint3
+            (3,0)   1.0     ; left_joint4
+            (4,0)   0.5     ; left_joint5
+            (5,0)   0.5     ; left_joint6
+            (6,0)   1.0     ; right_joint1
+            (7,0)   1.0     ; right_joint2
+            (8,0)   1.0     ; right_joint3
+            (9,0)   1.0     ; right_joint4
+            (10,0)  0.5     ; right_joint5
+            (11,0)  0.5     ; right_joint6
+        }
+    }
+}
+
+;=============================================================================
+; End Effector Constraint
+;=============================================================================
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      20.0
+    muOrientation                   10.0
+}
+
+;=============================================================================
+; Body Relative — 关闭
+;=============================================================================
+
+bodyRelative
+{
+    activate                        false
+}
+
+;=============================================================================
+; Bimanual Coupling Constraint
+;=============================================================================
+
+bimanualCoupling
+{
+    activate                        true
+    muPosition                      50.0
+    muOrientation                   25.0
+}
+
+;=============================================================================
+; Waist Lock — 关闭
+;=============================================================================
+
+waistLock
+{
+    activate                        false
+    numJoints                       0
+}
+
+;=============================================================================
+; Head Coupling — 关闭
+;=============================================================================
+
+headCoupling
+{
+    activate                        false
+}
+
+;=============================================================================
+; Custom Joint Lock — 关闭
+;=============================================================================
+
+customJointLock
+{
+    activate                        false
+}
+
+;=============================================================================
+; Arm Lock Constraint
+;=============================================================================
+
+armLock
+{
+    activate                        true
+    leftNumJoints                   6       ; left_joint1~6
+    rightNumJoints                  6       ; right_joint1~6
+}
+
+;=============================================================================
+; Joint Position Limits
+;=============================================================================
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+;=============================================================================
+; Joint Velocity Limits
+; 输入布局：[base(2) | left(6) | right(6)]
+;=============================================================================
+
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-2
+
+    lowerBound
+    {
+        base
+        {
+            wheelBasedMobileManipulator
+            {
+                (0,0)  -0.3     ; 线速度下界 [m/s]
+                (1,0)  -0.3     ; 角速度下界 [rad/s]
+            }
+        }
+
+        arm
+        {
+            (0,0)  -1.57        ; left_joint1 [rad/s]
+            (1,0)  -1.57        ; left_joint2 [rad/s]
+            (2,0)  -1.57        ; left_joint3 [rad/s]
+            (3,0)  -1.57        ; left_joint4 [rad/s]
+            (4,0)  -1.57        ; left_joint5 [rad/s]
+            (5,0)  -1.57        ; left_joint6 [rad/s]
+            (6,0)  -1.57        ; right_joint1 [rad/s]
+            (7,0)  -1.57        ; right_joint2 [rad/s]
+            (8,0)  -1.57        ; right_joint3 [rad/s]
+            (9,0)  -1.57        ; right_joint4 [rad/s]
+            (10,0) -1.57        ; right_joint5 [rad/s]
+            (11,0) -1.57        ; right_joint6 [rad/s]
+        }
+    }
+
+    upperBound
+    {
+        base
+        {
+            wheelBasedMobileManipulator
+            {
+                (0,0)   0.3     ; 线速度上界 [m/s]
+                (1,0)   0.3     ; 角速度上界 [rad/s]
+            }
+        }
+
+        arm
+        {
+            (0,0)  1.57         ; left_joint1 [rad/s]
+            (1,0)  1.57         ; left_joint2 [rad/s]
+            (2,0)  1.57         ; left_joint3 [rad/s]
+            (3,0)  1.57         ; left_joint4 [rad/s]
+            (4,0)  1.57         ; left_joint5 [rad/s]
+            (5,0)  1.57         ; left_joint6 [rad/s]
+            (6,0)  1.57         ; right_joint1 [rad/s]
+            (7,0)  1.57         ; right_joint2 [rad/s]
+            (8,0)  1.57         ; right_joint3 [rad/s]
+            (9,0)  1.57         ; right_joint4 [rad/s]
+            (10,0) 1.57         ; right_joint5 [rad/s]
+            (11,0) 1.57         ; right_joint6 [rad/s]
+        }
+    }
+}
+
+;=============================================================================
+; Self Collision
+;=============================================================================
+
+selfCollision
+{
+    activate                        true
+
+    mu                              1e-3
+    delta                           1e-2
+    minimumDistance                 0.02
+
+    collisionObjectPairs
+    {
+    }
+
+    ; 臂 ↔ 箱体
+    collisionLinkPairs
+    {
+        [0] "left_link8, body_link",
+        [1] "right_link7, body_link",
+        [2] "left_link3, body_link",
+        [3] "right_link3, body_link",
+    }
+}

@@ -1,0 +1,23 @@
+# Isaac (TopicBasedSystem): claim position-only — vel/effort 在 Isaac 中不可靠。
+
+ocs2_arm_controller:
+  ros__parameters:
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+ocs2_wbc_controller:
+  ros__parameters:
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+left_gripper_controller:
+  ros__parameters:
+    use_effort_interface: false
+
+right_gripper_controller:
+  ros__parameters:
+    use_effort_interface: false

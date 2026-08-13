@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:macro name="Tracer" params="enable_wheel_joints:=false">
+		<xacro:property name="PI" value="3.1415926535897931"/>
+		<xacro:property name="caster_height" value="0.0413"/>
+		<xacro:property name="wheel_joint_type" value="fixed"/>
+		<xacro:if value="${enable_wheel_joints}">
+			<xacro:property name="wheel_joint_type" value="continuous"/>
+		</xacro:if>
+
+		<link name="base_footprint"/>
+
+		<joint name="base_joint" type="fixed">
+			<origin xyz="0 0 0.143"/>
+			<parent link="base_footprint"/>
+			<child link="base_link"/>
+			<axis/>
+		</joint>
+
+		<link name="base_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/tracer_base_link.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/tracer_base_link.glb"/>
+				</geometry>
+			</collision>
+		</link>
+		<link name="inertial_link">
+			<inertial>
+				<mass value="132.3898489950015"/>
+				<origin xyz="0.015 0.0231316650320557 0"/>
+				<inertia ixx="0.185196122711036"
+								 ixy="4.30144213829512E-08"
+								 ixz="5.81037523686401E-08"
+								 iyy="0.364893736238929"
+								 iyz="-0.000386720198091934"
+								 izz="0.223868521722778"/>
+			</inertial>
+		</link>
+
+		<joint name="inertial_joint" type="fixed">
+			<parent link="base_link"/>
+			<child link="inertial_link"/>
+		</joint>
+
+		<link name="right_wheel_link">
+			<inertial>
+				<mass value="6"/>
+				<inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/tracer_wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin rpy="${PI/2} 0 0"/>
+				<geometry>
+					<cylinder radius="0.0607" length="0.0588"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="right_wheel" type="${wheel_joint_type}">
+			<parent link="base_link"/>
+			<child link="right_wheel_link"/>
+			<origin xyz="0 -0.17 -0.082"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+
+		<link name="left_wheel_link">
+			<inertial>
+				<mass value="6"/>
+				<inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/tracer_wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin rpy="${PI/2} 0 0"/>
+				<geometry>
+					<cylinder radius="0.0607" length="0.0588"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="left_wheel" type="${wheel_joint_type}">
+			<parent link="base_link"/>
+			<child link="left_wheel_link"/>
+			<origin xyz="0 0.17 -0.082"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+
+		<link name="fl_castor_link">
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/castor_joint.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="fl_castor_wheel" type="${wheel_joint_type}">
+			<parent link="base_link"/>
+			<child link="fl_castor_link"/>
+			<origin xyz="0.19 0.17 -${caster_height}" rpy="-${PI/2} 0 0"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+
+		<link name="fr_castor_link">
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/castor_joint.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="fr_castor_wheel" type="${wheel_joint_type}">
+			<origin xyz="0.18955 -0.17 -${caster_height}" rpy="-${PI/2} 0 0"/>
+			<parent link="base_link"/>
+			<child link="fr_castor_link"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+
+		<link name="rr_castor_link">
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/castor_joint.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="rr_castor_wheel" type="${wheel_joint_type}">
+			<origin xyz="-0.18955 -0.17 -${caster_height}" rpy="-${PI/2} 0 0"/>
+			<parent link="base_link"/>
+			<child link="rr_castor_link"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+
+		<link name="rl_castor_link">
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/castor_joint.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="rl_castor_wheel" type="${wheel_joint_type}">
+			<origin xyz="-0.18955 0.17 -${caster_height}" rpy="-${PI/2} 0 0"/>
+			<parent link="base_link"/>
+			<child link="rl_castor_link"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+
+		<link name="fl_wheel_link">
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="0.3131" ixy="0" ixz="0" iyy="0.3131" iyz="0" izz="0.1361"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/castor.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder radius="0.0375" length="0.0534"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="fl_wheel" type="${wheel_joint_type}">
+			<parent link="fl_castor_link"/>
+			<child link="fl_wheel_link"/>
+			<dynamics damping="0.0" friction="0.0"/>
+			<origin xyz="-0.022 0.06385 0"/>
+			<axis xyz="0 0 1"/>
+		</joint>
+
+		<link name="fr_wheel_link">
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="0.3131" ixy="0" ixz="0" iyy="0.3131" iyz="0" izz="0.1361"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/castor.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder radius="0.0375" length="0.0534"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="fr_wheel" type="${wheel_joint_type}">
+			<parent link="fr_castor_link"/>
+			<child link="fr_wheel_link"/>
+			<dynamics damping="0.0" friction="0.0"/>
+			<origin xyz="-0.022 0.06385 0"/>
+			<axis xyz="0 0 1"/>
+		</joint>
+
+		<link name="rr_wheel_link">
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="0.3131" ixy="0" ixz="0" iyy="0.3131" iyz="0" izz="0.1361"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/castor.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder radius="0.0375" length="0.0534"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="rr_wheel" type="${wheel_joint_type}">
+			<parent link="rr_castor_link"/>
+			<child link="rr_wheel_link"/>
+			<dynamics damping="0.0" friction="0.0"/>
+			<origin xyz="-0.022 0.06385 0"/>
+			<axis xyz="0 0 1"/>
+		</joint>
+
+		<link name="rl_wheel_link">
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="0.3131" ixy="0" ixz="0" iyy="0.3131" iyz="0" izz="0.1361"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/tracer/castor.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder radius="0.0375" length="0.0534"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="rl_wheel" type="${wheel_joint_type}">
+			<parent link="rl_castor_link"/>
+			<child link="rl_wheel_link"/>
+			<dynamics damping="0.0" friction="0.0"/>
+			<origin xyz="-0.022 0.06385 0"/>
+			<axis xyz="0 0 1"/>
+		</joint>
+	</xacro:macro>
+</robot>

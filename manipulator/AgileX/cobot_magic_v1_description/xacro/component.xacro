@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<robot name="Cobot_Magic_V1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:arg name="type" default="tracer"/>
+
+	<xacro:if value="${'$(arg type)' == 'tracer'}">
+		<xacro:include filename="$(find cobot_magic_v1_description)/xacro/components/tracer.xacro"/>
+		<xacro:Tracer enable_wheel_joints="true"/>
+	</xacro:if>
+
+	<xacro:if value="${'$(arg type)' == 'body'}">
+		<link name="base_footprint"/>
+		<xacro:include filename="$(find cobot_magic_v1_description)/xacro/components/body.xacro"/>
+		<xacro:Body parent="base_footprint"/>
+	</xacro:if>
+</robot>

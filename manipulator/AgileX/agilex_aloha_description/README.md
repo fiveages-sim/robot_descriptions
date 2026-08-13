@@ -11,19 +11,11 @@ colcon build --packages-up-to agilex_aloha_description --symlink-install
 ```
 
 ## 2. Visualize the robot
+> **Cobot Magic V1**（原 Mobile Aloha V1）已拆到独立包
+> [`cobot_magic_v1_description`](../cobot_magic_v1_description/README.md)：
+> `ros2 launch robot_common_launch manipulator.launch.py robot:=cobot_magic_v1`
+
 ### 2.1 Full Robot
-* Aloha V1
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch manipulator.launch.py robot:=agilex_aloha type:=v1
-  ```
-  ![v1 x5](../../.images/agilex_aloha_v1.png)
-* Aloha V1 with X5 Arm
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch manipulator.launch.py robot:=agilex_aloha type:=v1_x5
-  ```
-  ![v1 x5](../../.images/agilex_aloha_v1_x5.png)
 * Aloha Split
   ```bash
   source ~/ros2_ws/install/setup.bash
@@ -66,11 +58,6 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=agilex_aloha type:=
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch component.launch.py robot:=agilex_aloha type:=tracer_v2
-  ```
-* V1 Body
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch component.launch.py robot:=agilex_aloha type:=body_v1
   ```
 * V2 Body
   ```bash

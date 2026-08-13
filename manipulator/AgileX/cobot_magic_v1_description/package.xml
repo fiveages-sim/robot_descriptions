@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>cobot_magic_v1_description</name>
+  <version>1.0.0</version>
+  <description>
+    <p>URDF Description package for AgileX Cobot Magic V1 (Mobile Aloha V1)</p>
+    <p>Tracer chassis + dual ARX arms (R5/X5). Full-body WBC and dual-arm demo
+      in the same package (no split-body: there is no movable torso).
+    </p>
+  </description>
+  <author>TODO</author>
+  <maintainer email="TODO@email.com"/>
+
+  <license>BSD</license>
+  <depend>arx5_description</depend>
+  <depend>sensor_models</depend>
+  <exec_depend>robot_common_launch</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

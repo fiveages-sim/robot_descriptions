@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<robot name="cobot_magic_v1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- topology:
+       full (default) = Tracer 底盘 + 躯干 + 双臂（全身 / 真机 / 可视化）
+       dual           = 仅双臂，根在 arm_base（demo OCS2 规划）
+       全身 Pinocchio / WBC 关节序须为：left×6 | right×6（无升降、无头） -->
+  <xacro:arg name="topology" default="full"/>
+  <xacro:arg name="type" default="r5"/>
+  <xacro:arg name="enable_wheel_joints" default="false"/>
+
+  <xacro:property name="topology_arg" value="$(arg topology)"/>
+  <xacro:property name="type_arg" value="$(arg type)"/>
+  <xacro:property name="selected_arm_type" value="r5"/>
+  <xacro:if value="${type_arg == 'x5'}">
+    <xacro:property name="selected_arm_type" value="x5"/>
+  </xacro:if>
+
+  <!-- 臂座相对 arm_base（full 时 arm_base ≡ base_footprint） -->
+  <xacro:property name="left_arm_xyz" value="0.233 0.3 0.775"/>
+  <xacro:property name="right_arm_xyz" value="0.233 -0.3 0.775"/>
+
+  <!-- ===== dual：仅双臂（demo 规划，根 = arm_base） ===== -->
+  <xacro:if value="${topology_arg == 'dual'}">
+    <link name="arm_base"/>
+    <link name="body_link"/>
+    <joint name="arm_base_body" type="fixed">
+      <parent link="arm_base"/>
+      <child link="body_link"/>
+      <origin xyz="0 0 0"/>
+    </joint>
+
+    <xacro:if value="${selected_arm_type == 'x5'}">
+      <xacro:include filename="$(find arx5_description)/xacro/X5.xacro"/>
+      <xacro:X5 name="left" camera="d435"/>
+      <xacro:X5 name="right" camera="d435"/>
+    </xacro:if>
+    <xacro:if value="${selected_arm_type == 'r5'}">
+      <xacro:include filename="$(find arx5_description)/xacro/R5.xacro"/>
+      <xacro:R5 name="left" camera="d435" style="agilex"/>
+      <xacro:R5 name="right" camera="d435" style="agilex"/>
+    </xacro:if>
+
+    <joint name="arm_left_fixed" type="fixed">
+      <parent link="arm_base"/>
+      <child link="left_base_link"/>
+      <origin xyz="${left_arm_xyz}"/>
+    </joint>
+    <joint name="arm_right_fixed" type="fixed">
+      <parent link="arm_base"/>
+      <child link="right_base_link"/>
+      <origin xyz="${right_arm_xyz}"/>
+    </joint>
+  </xacro:if>
+
+  <!-- ===== full：整机（底盘 → 躯干 → 双臂） ===== -->
+  <xacro:unless value="${topology_arg == 'dual'}">
+    <xacro:include filename="$(find cobot_magic_v1_description)/xacro/components/tracer.xacro"/>
+    <xacro:include filename="$(find cobot_magic_v1_description)/xacro/components/body.xacro"/>
+    <xacro:Tracer enable_wheel_joints="$(arg enable_wheel_joints)"/>
+    <xacro:Body parent="base_footprint"/>
+
+    <link name="arm_base"/>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="arm_base"/>
+      <origin xyz="0 0 0"/>
+    </joint>
+
+    <xacro:if value="${selected_arm_type == 'x5'}">
+      <xacro:include filename="$(find arx5_description)/xacro/X5.xacro"/>
+      <xacro:X5 name="left" camera="d435"/>
+      <xacro:X5 name="right" camera="d435"/>
+    </xacro:if>
+    <xacro:if value="${selected_arm_type == 'r5'}">
+      <xacro:include filename="$(find arx5_description)/xacro/R5.xacro"/>
+      <xacro:R5 name="left" camera="d435" style="agilex"/>
+      <xacro:R5 name="right" camera="d435" style="agilex"/>
+    </xacro:if>
+
+    <joint name="arm_left_fixed" type="fixed">
+      <parent link="arm_base"/>
+      <child link="left_base_link"/>
+      <origin xyz="${left_arm_xyz}"/>
+    </joint>
+    <joint name="arm_right_fixed" type="fixed">
+      <parent link="arm_base"/>
+      <child link="right_base_link"/>
+      <origin xyz="${right_arm_xyz}"/>
+    </joint>
+  </xacro:unless>
+</robot>

@@ -9,16 +9,6 @@
     <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_split.xacro"/>
   </xacro:if>
 
-  <xacro:if value="${'$(arg type)' == 'v1'}">
-    <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_v1.xacro"/>
-    <xacro:aloha_v1/>
-  </xacro:if>
-
-  <xacro:if value="${'$(arg type)' == 'v1_x5'}">
-    <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_v1.xacro"/>
-    <xacro:aloha_v1 arm="x5"/>
-  </xacro:if>
-
   <xacro:if value="${'$(arg type)' == 'v2'}">
     <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_v2.xacro"/>
     <xacro:aloha_v2/>
