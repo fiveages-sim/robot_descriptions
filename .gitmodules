@@ -14,12 +14,12 @@
 	path = manipulator/Rokae
 	url = git@github.com:fiveages-sim/robot-descriptions-rokae.git
 	branch = main
-[submodule "humanoid/FiveAges/fiveages_w1_description"]
-	path = humanoid/FiveAges/fiveages_w1_description
+[submodule "humanoid/FiveAges/Gen1/fiveages_w1_description"]
+	path = humanoid/FiveAges/Gen1/fiveages_w1_description
 	url = git@github.com:fiveages-sim/fa-w1-description.git
 	branch = main
-[submodule "humanoid/FiveAges/fiveages_w2_description"]
-	path = humanoid/FiveAges/fiveages_w2_description
+[submodule "humanoid/FiveAges/Gen2/fiveages_w2_description"]
+	path = humanoid/FiveAges/Gen2/fiveages_w2_description
 	url = git@github.com:fiveages-sim/fa-w2-description.git
 	branch = main
 [submodule "quadruped"]
@@ -38,16 +38,16 @@
 	path = humanoid/Agibot/agibot_g2_description
 	url = git@github.com:fiveages-sim/agibot-g2-description.git
 	branch = main
-[submodule "humanoid/FiveAges/fiveages_w2_common_description"]
-	path = humanoid/FiveAges/fiveages_w2_common_description
+[submodule "humanoid/FiveAges/Gen2/fiveages_w2_common_description"]
+	path = humanoid/FiveAges/Gen2/fiveages_w2_common_description
 	url = git@github.com:fiveages-sim/fa-w2-components.git
 	branch = main
-[submodule "humanoid/FiveAges/fiveages_w2r_description"]
-	path = humanoid/FiveAges/fiveages_w2r_description
+[submodule "humanoid/FiveAges/Gen2/fiveages_w2r_description"]
+	path = humanoid/FiveAges/Gen2/fiveages_w2r_description
 	url = git@github.com:fiveages-sim/fa-w2r-description.git
 	branch = main
-[submodule "humanoid/FiveAges/fiveages_s2_description"]
-	path = humanoid/FiveAges/fiveages_s2_description
+[submodule "humanoid/FiveAges/Gen2/fiveages_s2_description"]
+	path = humanoid/FiveAges/Gen2/fiveages_s2_description
 	url = git@github.com:fiveages-sim/fa-s2-description.git
 	branch = main
 [submodule "manipulator/HighTorque"]
