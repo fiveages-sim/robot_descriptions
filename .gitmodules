@@ -53,3 +53,7 @@
 [submodule "manipulator/HighTorque"]
 	path = manipulator/HighTorque
 	url = git@github.com:fiveages-sim/robot-descriptions-ht.git
+[submodule "humanoid/FiveAges/Gen3/fiveages_wce3_description"]
+	path = humanoid/FiveAges/Gen3/fiveages_wce3_description
+	url = git@github.com:fiveages-sim/fa-wce3-description.git
+	branch = main
