@@ -57,3 +57,7 @@
 	path = humanoid/FiveAges/Gen3/fiveages_wce3_description
 	url = git@github.com:fiveages-sim/fa-wce3-description.git
 	branch = main
+[submodule "manipulator/Fairino"]
+	path = manipulator/Fairino
+	url = git@github.com:fiveages-sim/robot-descriptions-fairino.git
+	branch = main
