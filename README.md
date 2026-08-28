@@ -40,6 +40,7 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Ai2 Robotics  | [Bot2](humanoid/Ai2Robotics/ai2_bot2_description)    | Yes     | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                         |
 | XSquare Robot | [Quanta X1](humanoid/X2Robot/quanta_x1_description)  | Yes     | <img src="humanoid/.images/x2robot_quanta_x1.png" width="200">                                                                                                                                                                |
 | Spirit AI     | [MOZ 1](humanoid/SpiritAI/moz1_description)          | Yes     | <img src="humanoid/.images/spiritai_moz1.png" width="200">                                                                                                                                                                    |
+| Gento         | [Skye](humanoid/Gento/gento_skye_description) / [Luna](humanoid/Gento/gento_luna_description) | No | Linkhou S2 v2 + Tianji M6-CCS / M6S Lite |
 
 ## Mobile Manipulators
 
@@ -87,6 +88,7 @@ This repository uses git submodules to manage shared components and specific rob
 | Fairino ART7 | `manipulator/Fairino` | [robot-descriptions-fairino](https://github.com/fiveages-sim/robot-descriptions-fairino) | ART7 dual-arm manipulator |
 | ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
 | Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) for build and demo commands |
+| Gento Robots | `humanoid/Gento` | [robot-descriptions-gento](https://github.com/fiveages-sim/robot-descriptions-gento) | Gento wheel humanoids (Skye, Luna); Linkhou S2 v2 + Tianji M6-CCS / M6S Lite |
 | Agibot G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | Agibot G2 humanoid description (private submodule) |
 | Panthera HT | `manipulator/HighTorque/panthera_ht_description` | [panthera_ht_description](https://github.com/fiveages-sim/panthera_ht_description) | HighTorque Panthera HT manipulator description |
 

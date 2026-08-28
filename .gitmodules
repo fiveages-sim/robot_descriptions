@@ -61,3 +61,7 @@
 	path = manipulator/Fairino
 	url = git@github.com:fiveages-sim/robot-descriptions-fairino.git
 	branch = main
+[submodule "humanoid/Gento"]
+	path = humanoid/Gento
+	url = git@github.com:fiveages-sim/robot-descriptions-gento.git
+	branch = main
