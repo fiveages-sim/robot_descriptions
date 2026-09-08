@@ -11,16 +11,18 @@ git clone https://github.com/fiveages-sim/robot_descriptions
 # Navigate to the repository directory
 cd robot_descriptions
 
-# Initialize and update all top-level submodules
+# Initialize and update all submodules
 git submodule init
 git submodule update
-# FiveAges bodies only (skip nested arms/ — vendor arms are manipulator/Tianji|Rokae)
-./humanoid/FiveAges/scripts/init-sim.sh
 ```
 
-Prefer **not** using `git clone --recursive`. The FiveAges umbrella nests vendor-arm repos under `arms/`; a recursive clone would duplicate `manipulator/Tianji` and `manipulator/Rokae` and break colcon (`m6_ccs_description` / `ar5_ccs_description` twice). See [FiveAges](#fiveages) below.
+Or clone the repository with all submodules in one command:
 
-> **Note**: This repository uses git submodules. Initialize the ones you need (see [Submodules](#submodules)). For FiveAges, only init `common/` + `robot/` inside the umbrella — never `arms/`.
+```bash
+git clone --recursive https://github.com/fiveages-sim/robot_descriptions
+```
+
+> **Note**: This repository uses git submodules. Make sure to initialize them to access all robot descriptions and components. See the [Submodules](#submodules) section below for details about more robots.
 
 ## Wheel Humanoid Robots
 
@@ -71,17 +73,6 @@ Prefer **not** using `git clone --recursive`. The FiveAges umbrella nests vendor
 | EngineAI | [PM01](humanoid/EngineAI/pm01_description/)          | Yes     | <img src="humanoid/.images/engineai_pm01.png" width="200" style="object-fit: cover; object-position: center;">                                                                                                          |
 | RobotEra | [xbot](humanoid/RobotEra/xbot_description)           | Yes     | <img src="humanoid/.images/robotera_xbot.png" width="140">                                                                                                                                                              |
 
-## FiveAges
-
-[robot-descriptions-fiveages](https://github.com/fiveages-sim/robot-descriptions-fiveages) is nested at `humanoid/FiveAges` (`common/` + `robot/` + optional `arms/`). Vendor arms in simulation stay at `manipulator/Tianji` and `manipulator/Rokae` — **do not** initialize `humanoid/FiveAges/arms/`.
-
-```bash
-git submodule update --init humanoid/FiveAges
-./humanoid/FiveAges/scripts/init-sim.sh
-# W1 (not in the umbrella):
-git submodule update --init humanoid/FiveAges_w1
-```
-
 ## Submodules
 
 This repository uses git submodules to manage shared components and specific robot descriptions independently:
@@ -89,12 +80,10 @@ This repository uses git submodules to manage shared components and specific rob
 | Name | Path | Repository | Description |
 |------|------|------------|-------------|
 | Common Components | `common` | [robot-descriptions-common](https://github.com/fiveages-sim/robot-descriptions-common) | Shared grippers, dexterous hands, camera models, and launch utilities |
-| FiveAges | `humanoid/FiveAges` | [robot-descriptions-fiveages](https://github.com/fiveages-sim/robot-descriptions-fiveages) | W2 / W2R / S2 / WCE3 umbrella; init with `scripts/init-sim.sh` (skip `arms/`) |
-| FiveAges W1 | `humanoid/FiveAges_w1` | [fa-w1-description](https://github.com/fiveages-sim/fa-w1-description) | W1 description (not part of the umbrella) |
 | Quadruped Robots | `quadruped` | [robot-descriptions-quadruped](https://github.com/fiveages-sim/robot-descriptions-quadruped) | Quadruped robot descriptions including Unitree, Deep Robotics, MagicLab, and ZsiBot |
 | Dobot CR5 | `manipulator/Dobot` | [robot-descriptions-dobot](https://github.com/fiveages-sim/robot-descriptions-dobot) | 6-DOF collaborative robot arm with real hardware integration |
-| Tianji M6 | `manipulator/Tianji` | [robot-descriptions-tianji](https://github.com/fiveages-sim/robot-descriptions-tianji) | M6-CCS and M6-SRS manipulator arms (unique copy for sim; do not also init FiveAges `arms/tianji`) |
-| Rokae AR5 | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | 6-DOF industrial robot arm (unique copy for sim; do not also init FiveAges `arms/rokae`) |
+| Tianji M6 | `manipulator/Tianji` | [robot-descriptions-tianji](https://github.com/fiveages-sim/robot-descriptions-tianji) | M6-CCS and M6-SRS manipulator arms |
+| Rokae AR5 | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | 6-DOF industrial robot arm |
 | ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
 | Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) for build and demo commands |
 | Agibot G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | Agibot G2 humanoid description (private submodule) |
@@ -102,13 +91,10 @@ This repository uses git submodules to manage shared components and specific rob
 
 ### Using Submodules
 
-**Initialize all top-level submodules (still skip FiveAges `arms/`):**
+**Initialize all submodules:**
 ```bash
-git submodule update --init
-./humanoid/FiveAges/scripts/init-sim.sh
+git submodule update --init --recursive
 ```
-
-Avoid `git submodule update --init --recursive` — it would clone `humanoid/FiveAges/arms/` and duplicate Tianji/Rokae.
 
 **Initialize a specific submodule:**
 ```bash
@@ -129,13 +115,6 @@ git submodule update --init manipulator/Rokae
 
 # For ARX robots
 git submodule update --init manipulator/ARX
-
-# For FiveAges (W2 / W2R / S2 / WCE3) — skip arms/
-git submodule update --init humanoid/FiveAges
-./humanoid/FiveAges/scripts/init-sim.sh
-
-# For FiveAges W1
-git submodule update --init humanoid/FiveAges_w1
 
 # For Galbot robots
 git submodule update --init humanoid/Galbot
