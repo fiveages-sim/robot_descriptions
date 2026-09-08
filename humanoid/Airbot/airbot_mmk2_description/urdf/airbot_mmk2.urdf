@@ -38,11 +38,12 @@
       </geometry>
     </collision>
   </link>
-  <joint name="lft_wheel_joint" type="continuous">
+  <joint name="lft_wheel_joint" type="revolute">
     <origin rpy="1.5708 1.5708 0" xyz="0 0.16325 0.08401"/>
     <parent link="base_link"/>
     <child link="lft_wheel_link"/>
     <axis xyz="0 0 -1"/>
+    <limit effort="6.5" lower="-6.28" upper="6.28" velocity="0.7"/>
   </joint>
   <link name="rgt_wheel_link">
     <inertial>
@@ -66,7 +67,7 @@
     <parent link="base_link"/>
     <child link="rgt_wheel_link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="6.5" lower="-3.1416" upper="3.1416" velocity="0.7"/>
+    <limit effort="6.5" lower="-6.28" upper="6.28" velocity="0.7"/>
   </joint>
   <link name="rgt_behind_wheel_link">
     <inertial>
