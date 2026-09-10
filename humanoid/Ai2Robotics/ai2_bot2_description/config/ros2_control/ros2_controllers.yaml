@@ -1,4 +1,6 @@
-# This config file is used by ros2_control
+# Shared by empty-hand and type:=inspire (same OCS2 eef frames / task.info / split.info).
+# Launch type:=inspire only changes the generated URDF; this file stays the controller config.
+
 controller_manager:
   ros__parameters:
     update_rate: 50  # Hz
@@ -6,13 +8,13 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    # full_body.launch.py
-    ocs2_wbc_controller:
-      type: ocs2_arm_controller/Ocs2ArmController
-
-    # split_body.launch.py
+    # 双臂控制器
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
+
+    # 全身控制器 — OCS2 轮式人形 WBC（头/腰纳入同一套 MPC）
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
 
     head_joint_controller:
       type: basic_joint_controller/BasicJointController
@@ -20,12 +22,77 @@ controller_manager:
     body_joint_controller:
       type: basic_joint_controller/BasicJointController
 
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 50  # Hz
+    mpc_frequency: 25
+    joints:
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: ai2_bot2
+    info_file_name: split
+    home_duration: 2.0
+    movel_trajectory_duration: 6.0
+    movel_duration: 2.0
+    movel_sample_interval: 0.04
+    movel_max_linear_velocity: 0.3
+    movel_max_linear_acceleration: 1.0
+    movel_max_linear_jerk: 2.0
+    movel_max_angular_velocity: 1.0
+    movel_max_angular_acceleration: 2.0
+    movel_max_angular_jerk: 4.0
+    movel_auto_extend_duration: true
+    movej_interpolation_type: doubles
+    home_interpolation_type: doubles
+
+    cartesian_defaults:
+      frame_id: arm_base
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    home_1: [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+    home_2: [ 0.8333, -1.5708, -1.5708, -1.7800, 1.5708, -0.6410, 0.0,
+              -0.7375, -1.5708, 1.5708, -1.7800, -1.5708, 0.6410, 0.0 ]
+
 ocs2_wbc_controller:
   ros__parameters:
-    # Joint configuration
     update_rate: 50  # Hz
     mpc_frequency: 25
     info_file_name: task
+    fsm_default_humanoid_mode: HM_DUAL_CUSTOM_LOCK_FIXED_BASE
+    # 关节顺序须与 task.info 的 arm 状态向量一致：
+    # [body_joint1~4 | left_joint1~7 | right_joint1~7 | head_joint1~2]
     joints:
       - body_joint1
       - body_joint2
@@ -45,6 +112,8 @@ ocs2_wbc_controller:
       - right_joint5
       - right_joint6
       - right_joint7
+      - head_joint1
+      - head_joint2
 
     command_interfaces:
       - position
@@ -53,101 +122,40 @@ ocs2_wbc_controller:
 
     robot_name: ai2_bot2
     home_duration: 2.0
+    movej_interpolation_type: doubles
+    movej_trajectory_blend_ratio: 0.1
 
-    # Control parameters
-    home_1: [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      -0.0003,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      -0.0002,
-      0.0,
-      -0.0003,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      -0.0002
-    ]
-    # Control parameters
-    home_2: [
-      -1.2868,
-      2.7576,
-      -1.5708,
-      -0.0300,
-      0.8333,
-      0.0,
-      0.0,
-      -1.7800,
-      0.0,
-      -0.6410,
-      0.0,
-      -0.8333,
-      0.0,
-      0.0,
-      -1.7800,
-      0.0,
-      -0.6410,
-      0.0
-    ]
+    waist_lifting_enabled: true
+    waist_lifting_duration: 3.0
+    waist_lifting_type: three_joint
+    waist_l1: 0.38704
+    waist_l2: 0.27
+    # j1/j2/j3 同向，正转为前倾；不要抄 W2 的 [1, -1, 1]
+    waist_rotation_direction: [ 1.0, 1.0, 1.0 ]
+    waist_angle_offset: [ 0.0, 0.0, 0.0 ]
+    waist_lifting_default_parameter: [ 0.02, 0.5, 1.0 ]
+    waist_turning_default_parameter: [ 0.2, 0.5, 1.0 ]
+    waist_phi_default_parameter: [ 0.2, 0.5, 1.0 ]
 
+    cartesian_defaults:
+      frame_id: arm_base
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
 
-ocs2_arm_controller:
-  ros__parameters:
-    update_rate: 50  # Hz
-    mpc_frequency: 25
-    info_file_name: split
-    joints:
-      - left_joint1
-      - left_joint2
-      - left_joint3
-      - left_joint4
-      - left_joint5
-      - left_joint6
-      - left_joint7
-      - right_joint1
-      - right_joint2
-      - right_joint3
-      - right_joint4
-      - right_joint5
-      - right_joint6
-      - right_joint7
-
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-
-    robot_name: ai2_bot2
-    home_duration: 2.0
-
-    home_1: [
-      0.0, -0.0003, 0.0, 0.0, 0.0, 0.0, -0.0002,
-      0.0, -0.0003, 0.0, 0.0, 0.0, 0.0, -0.0002
-    ]
-    home_2: [
-      0.8333,
-      0.0,
-      0.0,
-      -1.7800,
-      0.0,
-      -0.6410,
-      0.0,
-      -0.8333,
-      0.0,
-      0.0,
-      -1.7800,
-      0.0,
-      -0.6410,
-      0.0
-    ]
-
+    # [body x4 | left x7 | right x7 | head x2]；腰部前 4 维与 body_joint_controller 一致
+    home_1: [ 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0 ]
+    home_2: [ -1.2868, 2.7576, -1.5708, -0.0300,
+              0.8333, -1.5708, -1.5708, -1.7800, 1.5708, -0.6410, 0.0,
+              -0.7375, -1.5708, 1.5708, -1.7800, -1.5708, 0.6410, 0.0,
+              0.0, 0.0 ]
 
 head_joint_controller:
   ros__parameters:
@@ -163,13 +171,12 @@ head_joint_controller:
       - position
       - velocity
 
-    home_1: [ 0.0, 0.0 ]
-    home_2: [ 0.0, -0.1 ]
-
     home_duration: 2.0
     movej_duration: 2.0
     hold_position_threshold: 0.1
 
+    home_1: [ 0.0, 0.0 ]
+    home_2: [ 0.0, -0.1 ]
 
 body_joint_controller:
   ros__parameters:
@@ -187,17 +194,34 @@ body_joint_controller:
       - position
       - velocity
 
-    home_1: [ 0.0, 0.0, 0.0, 0.0 ]
-
     home_duration: 3.0
     movej_duration: 3.0
     hold_position_threshold: 0.05
+    movej_interpolation_type: doubles
+    home_interpolation_type: doubles
+
+    home_1: [ 0.0, 0.0, 0.0, 0.0 ]
+    home_2: [ -1.2868, 2.7576, -1.5708, -0.0300 ]
+
+    waist_lifting_enabled: true
+    waist_lifting_duration: 3.0
+    waist_lifting_type: three_joint
+    waist_l1: 0.38704
+    waist_l2: 0.27
+    # j1/j2/j3 同向，正转为前倾；不要抄 W2 的 [1, -1, 1]
+    waist_rotation_direction: [1.0, 1.0, 1.0]
+    waist_angle_offset: [0.0, 0.0, 0.0]
+    waist_lifting_default_parameter: [0.02, 0.5, 1.0]
+    waist_turning_default_parameter: [0.2, 0.5, 1.0]
+    waist_phi_default_parameter: [0.2, 0.5, 1.0]
 
 
 left_gripper_controller:
   ros__parameters:
     joint: left_gripper_joint
+    use_effort_interface: false
 
 right_gripper_controller:
   ros__parameters:
     joint: right_gripper_joint
+    use_effort_interface: false

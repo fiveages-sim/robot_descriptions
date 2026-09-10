@@ -7,7 +7,7 @@
     - base (default)
     - base (full body, no gripper): base_link from chassis, body, ego on body_link4, arms on body_link4
     - arms (arms only, like FiveAges W2): no body, no chassis, no ego; base_link exists for RViz fixed frame
-    - left_arm / right_arm: root = base_link, both arms only, no body/chassis/ego
+    - left_arm / right_arm: single arm, unprefixed (base_link / link1.. / joint1..)
 -->
 <robot name="Ai2_Bot2" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
@@ -15,9 +15,12 @@
   <xacro:arg name="type" default="base"/>
   <!-- Lock chassis joints by default for visualization (like W2) -->
   <xacro:arg name="chassis_joints_movable" default="false"/>
+  <!-- Isaac asset import: hide rm75 / sensor_models meshes that Isaac already provides. -->
+  <xacro:arg name="isaac" default="true"/>
 
-  <!-- Root link: type=base and type=chassis get base_link from chassis; others need a placeholder for RViz -->
-  <xacro:if value="${'$(arg type)' != 'base' and '$(arg type)' != 'chassis'}">
+  <!-- Root link: type=base/chassis get base_link from chassis; left/right_arm use the arm root;
+       other non-chassis types need a placeholder for RViz. -->
+  <xacro:if value="${'$(arg type)' != 'base' and '$(arg type)' != 'chassis' and '$(arg type)' != 'left_arm' and '$(arg type)' != 'right_arm'}">
     <link name="base_link"/>
   </xacro:if>
 
@@ -29,8 +32,8 @@
       <child link="arm_base"/>
     </joint>
     <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
-    <xacro:Ai2Bot2Arm name="left" parent_link="arm_base" direction="1"/>
-    <xacro:Ai2Bot2Arm name="right" parent_link="arm_base" direction="-1"/>
+    <xacro:Ai2Bot2Arm name="left" parent_link="arm_base" direction="1" isaac="$(arg isaac)"/>
+    <xacro:Ai2Bot2Arm name="right" parent_link="arm_base" direction="-1" isaac="$(arg isaac)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'base'}">
@@ -38,25 +41,31 @@
     <xacro:include filename="$(find ai2_bot2_description)/xacro/components/body.xacro"/>
     <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
     <xacro:Ai2Bot2Chassis joints_movable="$(arg chassis_joints_movable)"/>
-    <xacro:Ai2Bot2Body parent_link="base_link"/>
+    <xacro:Ai2Bot2Body parent_link="base_link" isaac="$(arg isaac)"/>
+    <link name="arm_base"/>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="body_link4"/>
+      <child link="arm_base"/>
+    </joint>
     <link name="ego"></link>
     <joint name="ego_joint" type="fixed">
       <origin xyz="-0.061 0 0.3255"/>
       <parent link="body_link4" />
       <child link="ego" />
     </joint>
-    <xacro:Ai2Bot2Arm name="left" parent_link="body_link4" direction="1"/>
-    <xacro:Ai2Bot2Arm name="right" parent_link="body_link4" direction="-1"/>
+    <xacro:Ai2Bot2Arm name="left" parent_link="arm_base" direction="1" isaac="$(arg isaac)"/>
+    <xacro:Ai2Bot2Arm name="right" parent_link="arm_base" direction="-1" isaac="$(arg isaac)"/>
+    <xacro:Ai2Bot2Head parent_link="body_link4" isaac="$(arg isaac)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'left_arm'}">
     <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
-    <xacro:Ai2Bot2Arm name="left" parent_link="base_link" direction="1"/>
+    <xacro:Ai2Bot2Arm direction="1" standalone="true" isaac="$(arg isaac)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'right_arm'}">
     <xacro:include filename="$(find ai2_bot2_description)/xacro/components/arm.xacro"/>
-    <xacro:Ai2Bot2Arm name="right" parent_link="base_link" direction="-1"/>
+    <xacro:Ai2Bot2Arm direction="-1" standalone="true" isaac="$(arg isaac)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'chassis'}">
@@ -66,7 +75,8 @@
 
   <xacro:if value="${'$(arg type)' == 'body'}">
     <xacro:include filename="$(find ai2_bot2_description)/xacro/components/body.xacro"/>
-    <xacro:Ai2Bot2Body parent_link="base_link"/>
+    <xacro:Ai2Bot2Body parent_link="base_link" isaac="$(arg isaac)"/>
+    <xacro:Ai2Bot2Head parent_link="body_link4" isaac="$(arg isaac)"/>
   </xacro:if>
 
 </robot>

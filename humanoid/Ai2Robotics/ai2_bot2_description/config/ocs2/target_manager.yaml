@@ -10,7 +10,7 @@
     vr_update_rate: 500.0
 
     # Fixed frame for end-effector markers (must exist in TF / URDF)
-    # For Ai2 Bot2, base frame in task.info is "base_link"
+    # Full-body: base_link. Split-body launch uses split.info baseFrame (arm_base).
     marker_fixed_frame: base_link
 #
 #    # Whether to enable VR input handling (can be left true; has no effect if VR is not running)

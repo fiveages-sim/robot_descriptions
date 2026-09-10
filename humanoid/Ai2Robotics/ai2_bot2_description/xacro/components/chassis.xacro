@@ -31,7 +31,7 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/chassis.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/chassis.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -46,7 +46,7 @@
 		<link name="driven_fl_link_v">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/driven_v.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -61,7 +61,7 @@
 		<link name="driven_fl_link_h">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/driven_h.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -81,7 +81,7 @@
 		<link name="driven_rl_link_v">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/driven_v.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -95,7 +95,7 @@
 		<link name="driven_rl_link_h">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/driven_h.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -115,7 +115,7 @@
 		<link name="driven_fr_link_v">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/driven_v.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -129,7 +129,7 @@
 		<link name="driven_fr_link_h">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/driven_h.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -149,7 +149,7 @@
 		<link name="driven_rr_link_v">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_v.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/driven_v.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -163,7 +163,7 @@
 		<link name="driven_rr_link_h">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/driven_h.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/driven_h.glb"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -239,7 +239,7 @@
 		<link name="charge_port">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/chassis/charge_port.glb"/>
+					<mesh filename="file://$(find ai2_bot2_description)/meshes/chassis/charge_port.glb"/>
 				</geometry>
 			</visual>
 		</link>
@@ -257,7 +257,7 @@
 			</visual>
 		</link>
 		<joint name="lidar_joint" type="fixed">
-			<origin xyz="0.260985 0 0.126476" rpy="0 0 1.5708"/>
+			<origin xyz="0.260985 0 0.126476" />
 			<parent link="base_link"/>
 			<child link="lidar_link"/>
 		</joint>

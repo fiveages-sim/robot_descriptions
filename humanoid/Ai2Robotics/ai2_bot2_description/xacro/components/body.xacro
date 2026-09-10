@@ -4,10 +4,12 @@
   <!--
     Ai2-Bot2 body: lower-body chain (body_link1..3, body_joint1..3) + torso (waist_yaw_torso_link, body_joint4).
     Chain: parent_link -> body_link1 -> body_link2 -> body_link3 -> waist_yaw_torso_link.
-    Use <xacro:Ai2Bot2Body parent_link="base_link"/> then attach head/arms to waist_yaw_torso_link.
+    Use <xacro:Ai2Bot2Body parent_link="base_link"/> then attach arms / head to body_link4.
+    Head is a separate macro so Pinocchio order can be body → arms → head.
+    isaac:=true hides sensor_models camera meshes (Isaac asset import).
   -->
 
-  <xacro:macro name="Ai2Bot2Body" params="parent_link">
+  <xacro:macro name="Ai2Bot2Body" params="parent_link isaac:=false">
 
     <!-- body_link1 (ankle/calf) -->
     <link name="body_link1">
@@ -24,12 +26,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link1.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/link1.glb" />
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link1.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/link1.glb" />
         </geometry>
       </collision>
     </link>
@@ -57,12 +59,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link2.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/link2.glb" />
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link2.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/link2.glb" />
         </geometry>
       </collision>
     </link>
@@ -90,12 +92,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link3.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/link3.glb" />
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link3.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/link3.glb" />
         </geometry>
       </collision>
     </link>
@@ -123,12 +125,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link4.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/link4.glb" />
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/link4.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/link4.glb" />
         </geometry>
       </collision>
     </link>
@@ -141,11 +143,13 @@
     </joint>
 
     <link name="front_camera">
-      <visual>
-        <geometry>
-          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
-        </geometry>
-      </visual>
+      <xacro:unless value="${isaac}">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
     </link>
     <joint name="front_camera" type="fixed">
       <origin xyz="0.1067 0 0.1805" rpy="-1.95477 0 -1.5708"/>
@@ -154,11 +158,13 @@
     </joint>
 
     <link name="back_camera">
-      <visual>
-        <geometry>
-          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
-        </geometry>
-      </visual>
+      <xacro:unless value="${isaac}">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
     </link>
     <joint name="back_camera" type="fixed">
       <origin xyz="-0.1682 0 0.308" rpy="-2.0595 0 1.5708"/>
@@ -166,7 +172,10 @@
       <child link="back_camera"/>
     </joint>
 
-    <!-- head: head_link1 (neck), head_joint1, head_link2 (head), head_joint2 -->
+  </xacro:macro>
+
+  <!-- Instantiate after the arms so Pinocchio q is body×4, left×7, right×7, head×2. -->
+  <xacro:macro name="Ai2Bot2Head" params="parent_link:='body_link4' isaac:=false">
     <link name="head_link1">
       <inertial>
         <origin xyz="-1.4269E-12 0.0053202 0.055582" />
@@ -182,7 +191,7 @@
     </link>
     <joint name="head_joint1" type="revolute">
       <origin xyz="-0.041 0 0.46874" />
-      <parent link="body_link4" />
+      <parent link="${parent_link}" />
       <child link="head_link1" />
       <axis xyz="0 0 1" />
       <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="10" />
@@ -202,12 +211,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/head2.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/head2.glb" />
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find ai2_bot2_description)/meshes/Visual/body/head2.glb" />
+          <mesh filename="file://$(find ai2_bot2_description)/meshes/body/head2.glb" />
         </geometry>
       </collision>
     </link>
@@ -221,18 +230,19 @@
     </joint>
 
     <link name="head_camera">
-      <visual>
-        <geometry>
-          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
-        </geometry>
-      </visual>
+      <xacro:unless value="${isaac}">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
     </link>
     <joint name="head_camera" type="fixed">
       <origin xyz="0.089 0.0465 0" rpy="0 1.5708 0.5236"/>
       <parent link="head_link2"/>
       <child link="head_camera"/>
     </joint>
-
   </xacro:macro>
 
 </robot>

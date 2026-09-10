@@ -1,7 +1,6 @@
-; Split-body OCS2 config — arms only (14 DOF), body joints fixed.
-; body_joint1-4 are added to removeJoints so Pinocchio locks them;
-; only the 14 arm joints enter the OCS2 state / input space.
-; Body joints are still controlled by body_joint_controller separately.
+; Split-body OCS2 config — arms only (14 DOF).
+; Body, head, chassis and gripper joints are locked via removeJoints
+; so the same file works with and without type:=inspire.
 model_information {
 
   manipulatorModelType     0
@@ -13,11 +12,33 @@ model_information {
     [3]  "body_joint2"
     [4]  "body_joint3"
     [5]  "body_joint4"
+    [6]  "driven_fl_joint_v"
+    [7]  "driven_fl_joint_h"
+    [8]  "driven_rl_joint_v"
+    [9]  "driven_rl_joint_h"
+    [10] "driven_fr_joint_v"
+    [11] "driven_fr_joint_h"
+    [12] "driven_rr_joint_v"
+    [13] "driven_rr_joint_h"
+    [14] "driving_left_joint"
+    [15] "driving_right_joint"
+    [16] "left_gripper_joint"
+    [17] "right_gripper_joint"
+    [18] "left_left_inner_joint"
+    [19] "left_right_inner_joint"
+    [20] "left_right_outer_joint"
+    [21] "left_left_pad_joint"
+    [22] "left_right_pad_joint"
+    [23] "right_left_inner_joint"
+    [24] "right_right_inner_joint"
+    [25] "right_right_outer_joint"
+    [26] "right_left_pad_joint"
+    [27] "right_right_pad_joint"
   }
 
-  baseFrame                       "base_link"
-  eeFrame                         "left_ee"
-  eeFrame1                        "right_ee"
+  baseFrame                       "arm_base"
+  eeFrame                         "left_eef"
+  eeFrame1                        "right_eef"
 }
 
 model_settings
@@ -186,7 +207,7 @@ finalEndEffector
 bodyRelative
 {
   activate                   true
-  bodyLinkName               "base_link"
+  bodyLinkName               "arm_base"
   rollTolerance              0.1
   pitchTolerance             0.1
   muRoll                     20.0
