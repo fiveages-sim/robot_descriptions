@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+  Component-wise description for Rokae INEX, used by
+  robot_descriptions/common/robot_common_launch/visualize/component.launch.py
+
+  Supported types (arg "type"):
+    - base (default): chassis + body + ego-less arms + head
+    - arms: arms only; base_link exists for RViz fixed frame
+    - left_arm / right_arm: single arm, unprefixed (base_link / link1.. / joint1..)
+    - chassis / body
+-->
+<robot name="Rokae_INEX" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="type" default="base"/>
+  <xacro:arg name="collider" default="simple"/>
+  <xacro:arg name="skin" default="default"/>
+  <xacro:arg name="chassis_joints_movable" default="false"/>
+  <xacro:arg name="isaac" default="false"/>
+
+  <xacro:if value="${'$(arg type)' != 'base' and '$(arg type)' != 'chassis' and '$(arg type)' != 'left_arm' and '$(arg type)' != 'right_arm'}">
+    <link name="base_link"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'arms'}">
+    <link name="arm_base"/>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="arm_base"/>
+    </joint>
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/arm.xacro"/>
+    <xacro:RokaeInexArm name="left" parent_link="arm_base" direction="1"
+                        collider="$(arg collider)" skin="$(arg skin)"/>
+    <xacro:RokaeInexArm name="right" parent_link="arm_base" direction="-1"
+                        collider="$(arg collider)" skin="$(arg skin)"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'base'}">
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/chassis.xacro"/>
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/body.xacro"/>
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/arm.xacro"/>
+    <xacro:RokaeInexChassis
+        joints_movable="$(arg chassis_joints_movable)"
+        collider="$(arg collider)"
+        isaac="$(arg isaac)"/>
+    <xacro:RokaeInexBody parent_link="base_link" collider="$(arg collider)"/>
+    <link name="arm_base"/>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="body_link4"/>
+      <child link="arm_base"/>
+    </joint>
+    <xacro:RokaeInexArm name="left" parent_link="arm_base" direction="1"
+                        collider="$(arg collider)" skin="$(arg skin)"/>
+    <xacro:RokaeInexArm name="right" parent_link="arm_base" direction="-1"
+                        collider="$(arg collider)" skin="$(arg skin)"/>
+    <xacro:RokaeInexHead parent_link="body_link4" collider="$(arg collider)"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left_arm'}">
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/arm.xacro"/>
+    <xacro:RokaeInexArm direction="1" standalone="true"
+                        collider="$(arg collider)" skin="$(arg skin)"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right_arm'}">
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/arm.xacro"/>
+    <xacro:RokaeInexArm direction="-1" standalone="true"
+                        collider="$(arg collider)" skin="$(arg skin)"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'chassis'}">
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/chassis.xacro"/>
+    <xacro:RokaeInexChassis joints_movable="true" collider="$(arg collider)" isaac="$(arg isaac)"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/body.xacro"/>
+    <xacro:RokaeInexBody parent_link="base_link" collider="$(arg collider)"/>
+    <xacro:RokaeInexHead parent_link="body_link4" collider="$(arg collider)"/>
+  </xacro:if>
+
+</robot>

@@ -1,0 +1,250 @@
+# Common controller defaults for Rokae INEX (aligned with WCE3 ros2_control).
+#
+#   demo:
+#     - 仅双臂：ocs2_arm_controller（split.info，规划 topology:=dual，根 arm_base）
+#   full_body:
+#     - 4 腰 + 双臂 7+7 + 2 头：ocs2_wbc_controller（task.info）
+#
+# Demo 规划 URDF：同一包 robot.xacro + topology:=dual。
+# 腰 home：body_joint2 = -(body_joint1 + body_joint3)
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
+
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    body_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    left_hand_controller:
+      type: basic_joint_controller/BasicJointController
+
+    right_hand_controller:
+      type: basic_joint_controller/BasicJointController
+
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: split
+    joints:
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: rokae_inex
+    robot_type: dual
+    home_duration: 5.0
+    movel_trajectory_duration: 6.0
+    movel_duration: 2.0
+    movel_sample_interval: 0.04
+    movel_max_linear_velocity: 0.3
+    movel_max_linear_acceleration: 1.0
+    movel_max_linear_jerk: 2.0
+    movel_max_angular_velocity: 1.0
+    movel_max_angular_acceleration: 2.0
+    movel_max_angular_jerk: 4.0
+    movel_auto_extend_duration: true
+    movej_interpolation_type: doubles
+    home_interpolation_type: doubles
+
+    hold_position_threshold: 0.01
+
+    cartesian_defaults:
+      frame_id: arm_base
+      ik_type: DLS
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    home_1: [ 0.16, 1.32, -1.43, 1.1, -0.29, 0.49, -0.02,
+             -0.16, 1.32,  1.43, 1.1,  0.29, 0.49,  0.02 ]
+
+ocs2_wbc_controller:
+  ros__parameters:
+    movej_max_velocity: 1.2
+    use_tf_for_base: true
+    tf_topic: /tf
+    world_frame: world
+    base_frame: base_footprint
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: task
+    fsm_default_humanoid_mode: HM_DUAL_RELATIVE_MOBILE_BASE
+    # 关节顺序须与 task.info 的 arm 状态向量一致：
+    # [body_joint1~4 | left_joint1~7 | right_joint1~7 | head_joint1~2]
+    # 底盘 x,y,yaw 是虚拟状态，不在 joints 列表中
+    joints:
+      - body_joint1
+      - body_joint2
+      - body_joint3
+      - body_joint4
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+      - head_joint1
+      - head_joint2
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: rokae_inex
+    home_duration: 5.0
+    movej_interpolation_type: doubles
+    movej_trajectory_blend_ratio: 0.1
+
+    waist_lifting_enabled: true
+    waist_lifting_duration: 3.0
+    waist_lifting_type: three_joint
+    waist_l1: 0.410
+    waist_l2: 0.480
+    # params/body_params.yaml transmission numerator [1, -1, 1, 1]
+    waist_rotation_direction: [ 1.0, -1.0, 1.0 ]
+    waist_angle_offset: [ 0.0, 0.0, 0.0 ]
+    waist_lifting_default_parameter: [ 0.02, 0.5, 1.0 ]
+    waist_turning_default_parameter: [ 0.2, 0.5, 1.0 ]
+    waist_phi_default_parameter: [ 0.2, 0.5, 1.0 ]
+    waist_turning_direction: 1.0
+
+    hold_position_threshold: 0.01
+
+    cartesian_defaults:
+      frame_id: arm_base
+      ik_type: DLS
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    # body home: joint2 = -(joint1 + joint3)
+    home_1: [ -0.9, 1.8, -0.9, 0.0,
+              0.16, 1.32, -1.43, 1.1, -0.29, 0.49, -0.02,
+             -0.16, 1.32,  1.43, 1.1,  0.29, 0.49,  0.02,
+              0.0, 0.0 ]
+    home_2: [ -1.2, 2.4, -1.2, 0.0,
+              0.0, 1.57, -1.57, 2.5, 0.0, 0.0, 0.0,
+              0.0, 1.57,  1.57, 2.5, 0.0, 0.0, 0.0,
+              0.0, 0.0 ]
+
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joints:
+      - head_joint1
+      - head_joint2
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_duration: 5.0
+    movej_duration: 5.0
+    hold_position_threshold: 0.1
+
+    home_1: [ 0.0, 0.0 ]
+    home_2: [ 0.0, 0.0 ]
+    home_3: [ 0.0, 0.0 ]
+    home_4: [ 0.0, 0.0 ]
+
+body_joint_controller:
+  ros__parameters:
+    movej_max_velocity: 1.2
+    update_rate: 100  # Hz
+
+    joints:
+      - body_joint1
+      - body_joint2
+      - body_joint3
+      - body_joint4
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_duration: 5.0
+    movej_duration: 5.0
+    hold_position_threshold: 0.1
+    movej_interpolation_type: doubles
+    home_interpolation_type: doubles
+
+    # joint2 = -(joint1 + joint3)
+    home_1: [ -0.9, 1.8, -0.9, 0.0 ]
+    home_2: [ -1.2, 2.4, -1.2, 0.0 ]
+
+    waist_lifting_enabled: true
+    waist_lifting_duration: 3.0
+    waist_lifting_type: three_joint
+    waist_l1: 0.410
+    waist_l2: 0.480
+    waist_rotation_direction: [ 1.0, -1.0, 1.0 ]
+    waist_angle_offset: [ 0.0, 0.0, 0.0 ]
+    waist_lifting_default_parameter: [ 0.02, 0.5, 1.0 ]
+    waist_turning_default_parameter: [ 0.2, 0.5, 1.0 ]
+    waist_phi_default_parameter: [ 0.2, 0.5, 1.0 ]
+    waist_turning_direction: 1.0
+
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    use_effort_interface: false
+
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    use_effort_interface: false

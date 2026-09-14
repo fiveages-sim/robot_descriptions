@@ -1,0 +1,7 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.01
+    angular_scale: 0.005
+    vr_update_rate: 500.0
+    marker_fixed_frame: base_link
+    head_link_name: head_link2

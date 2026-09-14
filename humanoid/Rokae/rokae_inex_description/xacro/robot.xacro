@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Rokae INEX Full Robot (visualization)                                         | -->
+<!-- |    Used by robot_common_launch humanoid.launch.py (xacro_filename=robot.xacro)   | -->
+<!-- |    Structure : base_link (chassis) -> body_link1..4;                             | -->
+<!-- |    arm_base coincides with body_link4; head after arms.                          | -->
+<!-- |    topology:=dual : split-body planning tree rooted at arm_base.                 | -->
+<!-- =================================================================================== -->
+<robot name="Rokae_INEX" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="type" default=""/>
+  <xacro:arg name="left_type" default=""/>
+  <xacro:arg name="right_type" default=""/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+  <xacro:arg name="left_tcp_offset_xyz" default="0 0 0"/>
+  <xacro:arg name="left_tcp_offset_rpy" default="0 0 0"/>
+  <xacro:arg name="right_tcp_offset_xyz" default="0 0 0"/>
+  <xacro:arg name="right_tcp_offset_rpy" default="0 0 0"/>
+  <xacro:arg name="topology" default="full"/>
+  <xacro:arg name="collider" default="simple"/>
+  <xacro:arg name="skin" default="default"/>
+  <xacro:arg name="chassis_joints_movable" default="false"/>
+  <xacro:arg name="isaac" default="false"/>
+  <xacro:property name="topology_arg" value="$(arg topology)"/>
+  <xacro:property name="type_arg" value="$(arg type)"/>
+  <xacro:property name="left_type_arg" value="$(arg left_type)"/>
+  <xacro:property name="right_type_arg" value="$(arg right_type)"/>
+  <xacro:property name="effective_left_type" value="${left_type_arg if left_type_arg != '' else type_arg}"/>
+  <xacro:property name="effective_right_type" value="${right_type_arg if right_type_arg != '' else type_arg}"/>
+
+  <material name="metal_dark">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  <xacro:include filename="$(find ar5_ccs_description)/xacro/eef_type_resolver.xacro"/>
+  <xacro:set_side_eef_types side="left" type_key="${effective_left_type}"/>
+  <xacro:set_side_eef_types side="right" type_key="${effective_right_type}"/>
+  <xacro:include filename="$(find rokae_inex_description)/xacro/components/arm.xacro"/>
+
+  <!-- Split-body OCS2: dual-arm tree, root coinciding with arm_base. -->
+  <xacro:if value="${topology_arg == 'dual'}">
+    <link name="base_link"/>
+    <!-- Same chest box as body_link4 simple collider, in arm_base (= body_link4). -->
+    <link name="arm_base">
+      <xacro:if value="${'$(arg collider)' == 'simple'}">
+        <collision>
+          <origin xyz="-0.008 0 0.045"/>
+          <geometry>
+            <box size="0.21 0.35 0.34"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    </link>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="arm_base"/>
+    </joint>
+    <xacro:RokaeInexArm name="left" parent_link="arm_base" direction="1"
+                        collider="$(arg collider)" skin="$(arg skin)" add_eef="false"/>
+    <xacro:RokaeInexArm name="right" parent_link="arm_base" direction="-1"
+                        collider="$(arg collider)" skin="$(arg skin)" add_eef="false"/>
+  </xacro:if>
+
+  <xacro:unless value="${topology_arg == 'dual'}">
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/chassis.xacro"/>
+    <xacro:include filename="$(find rokae_inex_description)/xacro/components/body.xacro"/>
+
+    <xacro:RokaeInexChassis
+        joints_movable="$(arg chassis_joints_movable)"
+        collider="$(arg collider)"
+        isaac="$(arg isaac)"/>
+    <xacro:RokaeInexBody parent_link="base_link" collider="$(arg collider)"/>
+
+    <link name="arm_base"/>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="body_link4"/>
+      <child link="arm_base"/>
+    </joint>
+
+    <xacro:RokaeInexArm name="left" parent_link="arm_base" direction="1"
+                        collider="$(arg collider)" skin="$(arg skin)" add_eef="false"/>
+    <xacro:RokaeInexArm name="right" parent_link="arm_base" direction="-1"
+                        collider="$(arg collider)" skin="$(arg skin)" add_eef="false"/>
+    <xacro:RokaeInexHead parent_link="body_link4" collider="$(arg collider)"/>
+  </xacro:unless>
+
+  <link name="left_tcp_offset"/>
+  <joint name="left_tcp_offset_joint" type="fixed">
+    <parent link="left_tcp"/>
+    <child link="left_tcp_offset"/>
+    <origin xyz="$(arg left_tcp_offset_xyz)" rpy="$(arg left_tcp_offset_rpy)"/>
+  </joint>
+  <link name="right_tcp_offset"/>
+  <joint name="right_tcp_offset_joint" type="fixed">
+    <parent link="right_tcp"/>
+    <child link="right_tcp_offset"/>
+    <origin xyz="$(arg right_tcp_offset_xyz)" rpy="$(arg right_tcp_offset_rpy)"/>
+  </joint>
+
+  <xacro:include filename="$(find ar5_ccs_description)/xacro/eefs.xacro"/>
+  <xacro:EndEffectors
+      eef_fixed_joints="$(arg eef_fixed_joints)"
+      left_hand_type="${left_hand_type}"
+      left_gripper_type="${left_gripper_type}"
+      left_gripper_pad="${left_gripper_pad}"
+      right_hand_type="${right_hand_type}"
+      right_gripper_type="${right_gripper_type}"
+      right_gripper_pad="${right_gripper_pad}"/>
+
+</robot>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--
+    Rokae INEX arm wrapper around AR5_CCS_V2.
+    Passes collider/skin through so launch collider:=simple|convex and
+    skin:=default|fiveages match ar5_ccs_description.
+    Usage: <xacro:RokaeInexArm name="left" parent_link="arm_base" direction="1"/>
+           standalone:=true makes ${prefix}base_link the URDF root (no joint0).
+    Mount poses are the original Chest_link offsets from wheel_robot.urdf.
+  -->
+
+  <xacro:include filename="$(find ar5_ccs_description)/xacro/arm_ccs_v2.xacro"/>
+
+  <xacro:macro name="RokaeInexArm" params="name:='' parent_link:='' direction:=1 collider:='simple' skin:='default' add_eef:=true standalone:=false">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <xacro:AR5_CCS_V2 name="${name}" direction="${direction}" collider="${collider}" skin="${skin}"/>
+
+    <xacro:unless value="${standalone}">
+      <joint name="${prefix}joint0" type="fixed">
+        <xacro:if value="${direction == 1}">
+          <origin xyz="0.0 0.0775 0.1429" rpy="-1.57 1.57 0"/>
+        </xacro:if>
+        <xacro:if value="${direction == -1}">
+          <origin xyz="0.0 -0.0775 0.1429" rpy="1.57 1.57 0"/>
+        </xacro:if>
+        <parent link="${parent_link}"/>
+        <child link="${prefix}base_link"/>
+      </joint>
+    </xacro:unless>
+
+    <xacro:if value="${add_eef}">
+      <link name="${prefix}eef"/>
+      <joint name="${prefix}eef_joint" type="fixed">
+        <parent link="${prefix}tcp"/>
+        <child link="${prefix}eef"/>
+      </joint>
+    </xacro:if>
+  </xacro:macro>
+
+</robot>

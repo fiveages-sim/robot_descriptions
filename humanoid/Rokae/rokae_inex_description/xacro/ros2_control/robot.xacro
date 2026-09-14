@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rokae_inex">
+
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
+  <xacro:arg name="arm_hardware_driver" default="inex"/>
+  <xacro:arg name="arm_ctrl_mode" default="position"/>
+  <xacro:arg name="inex_state_timeout_ms" default="50"/>
+  <xacro:arg name="inex_command_hold_timeout_ms" default="20"/>
+  <xacro:arg name="inex_command_fault_timeout_ms" default="200"/>
+  <xacro:arg name="left_arm_cpu_affinity" default="2"/>
+  <xacro:arg name="right_arm_cpu_affinity" default="3"/>
+  <xacro:arg name="left_load_mass" default=""/>
+  <xacro:arg name="left_load_cog" default=""/>
+  <xacro:arg name="left_load_inertia" default=""/>
+  <xacro:arg name="right_load_mass" default=""/>
+  <xacro:arg name="right_load_cog" default=""/>
+  <xacro:arg name="right_load_inertia" default=""/>
+  <xacro:arg name="usb_left_port" default="/dev/ttyUSB0"/>
+  <xacro:arg name="usb_right_port" default="/dev/ttyUSB2"/>
+  <xacro:arg name="usb_baudrate" default="115200"/>
+  <xacro:arg name="left_ee_rw_rate" default=""/>
+  <xacro:arg name="right_ee_rw_rate" default=""/>
+  <xacro:arg name="left_ee_can_interface" default="can0"/>
+  <xacro:arg name="right_ee_can_interface" default="can1"/>
+  <xacro:arg name="left_ee_rs485_channel" default="1"/>
+  <xacro:arg name="right_ee_rs485_channel" default="1"/>
+  <xacro:arg name="left_ee_modbus_slave_id" default="1"/>
+  <xacro:arg name="right_ee_modbus_slave_id" default="1"/>
+  <xacro:arg name="left_read_tactile" default="false"/>
+  <xacro:arg name="right_read_tactile" default="false"/>
+  <xacro:arg name="left_ee_drive_type" default="none"/>
+  <xacro:arg name="right_ee_drive_type" default="none"/>
+  <xacro:arg name="gazebo" default="false"/>
+
+  <xacro:property name="arm_driver" value="$(arg arm_hardware_driver)"/>
+  <xacro:property name="is_real_hardware" value="${'$(arg ros2_control_hardware_type)' == 'real'}"/>
+  <xacro:property name="left_drive_type" value="$(arg left_ee_drive_type)"/>
+  <xacro:property name="right_drive_type" value="$(arg right_ee_drive_type)"/>
+  <xacro:property name="rokae_ctrl_mode" value="${'JOINT_IMPEDANCE' if '$(arg arm_ctrl_mode)' == 'joint_impedance' else 'POSITION'}"/>
+
+  <!-- Hardware URDF is always full topology; demo planning uses topology:=dual separately. -->
+  <xacro:include filename="$(find rokae_inex_description)/xacro/robot.xacro"/>
+  <xacro:include filename="$(find rokae_inex_description)/xacro/ros2_control/interfaces.xacro"/>
+  <xacro:include filename="$(find robot_common_launch)/xacro/ros2_control/simulation_hardware.xacro"/>
+  <xacro:include filename="$(find ar5_ccs_description)/xacro/ros2_control/end_effector_interfaces.xacro"/>
+  <xacro:include filename="$(find ar5_ccs_description)/xacro/ros2_control/inex_hardware.xacro"/>
+  <xacro:include filename="$(find ar5_ccs_description)/xacro/ros2_control/external_ee_systems.xacro"/>
+  <!-- Force evaluation so unsupported hardware/drive combinations fail during xacro expansion. -->
+  <xacro:property name="validated_hardware_type" value="${1 if '$(arg ros2_control_hardware_type)' in ('mock_components', 'gz', 'isaac', 'real') else 0}"/>
+  <xacro:property name="validated_arm_driver" value="${1 if arm_driver == 'inex' else 0}"/>
+  <xacro:property name="validated_left_drive" value="${1 if left_drive_type == 'none' or (left_drive_type == 'inex_rs485' and (left_gripper_type == 'ag2f90_d' or left_hand_type in ('linkerhand_o6', 'linkerhand_l6', 'linkerhand_o7'))) or (left_drive_type == 'inex_can' and left_hand_type in ('linkerhand_o6', 'linkerhand_l6', 'linkerhand_o7')) or (left_drive_type in ('usb', 'usb_rs485') and (left_hand_type in ('linkerhand_o6', 'linkerhand_l6', 'linkerhand_o7', 'freedom_v1', 'freedom_v2', 'inspire_e2', 'inspire_f2', 'xhand1', 'theohand_std16a') or left_gripper_type in ('rg75', 'ag2f90_d'))) or (left_drive_type == 'usb_can' and left_hand_type in ('linkerhand_o6', 'linkerhand_l6', 'linkerhand_o7', 'freedom_v1', 'inspire_e2', 'inspire_f2')) else 0}"/>
+  <xacro:property name="validated_right_drive" value="${1 if right_drive_type == 'none' or (right_drive_type == 'inex_rs485' and (right_gripper_type == 'ag2f90_d' or right_hand_type in ('linkerhand_o6', 'linkerhand_l6', 'linkerhand_o7'))) or (right_drive_type == 'inex_can' and right_hand_type in ('linkerhand_o6', 'linkerhand_l6', 'linkerhand_o7')) or (right_drive_type in ('usb', 'usb_rs485') and (right_hand_type in ('linkerhand_o6', 'linkerhand_l6', 'linkerhand_o7', 'freedom_v1', 'freedom_v2', 'inspire_e2', 'inspire_f2', 'xhand1', 'theohand_std16a') or right_gripper_type in ('rg75', 'ag2f90_d'))) or (right_drive_type == 'usb_can' and right_hand_type in ('linkerhand_o6', 'linkerhand_l6', 'linkerhand_o7', 'freedom_v1', 'inspire_e2', 'inspire_f2')) else 0}"/>
+  <xacro:property name="configuration_validated" value="${validated_hardware_type + validated_arm_driver + validated_left_drive + validated_right_drive}"/>
+  <xacro:property name="validation_guard" value="${(1,)[0 if configuration_validated == 4 else 1]}"/>
+  <xacro:if value="${validation_guard > 0}"/>
+
+  <xacro:if value="${is_real_hardware}">
+    <ros2_control name="ar5_left_system" type="system">
+      <hardware>
+        <xacro:inex_side_hardware_block
+          side="left" robot_mode="2"
+          cpu_affinity="$(arg left_arm_cpu_affinity)"
+          ctrl_mode="${rokae_ctrl_mode}"
+          state_timeout_ms="$(arg inex_state_timeout_ms)"
+          command_hold_timeout_ms="$(arg inex_command_hold_timeout_ms)"
+          command_fault_timeout_ms="$(arg inex_command_fault_timeout_ms)"
+          gripper_pad="${left_gripper_pad}"
+          payload_end_effector_type="${left_gripper_type if left_gripper_type != '' else left_hand_type}"
+          load_mass="$(arg left_load_mass)" load_cog="$(arg left_load_cog)" load_inertia="$(arg left_load_inertia)"/>
+      </hardware>
+      <xacro:ar5_interfaces name="left"/>
+    </ros2_control>
+
+    <ros2_control name="ar5_right_system" type="system">
+      <hardware>
+        <xacro:inex_side_hardware_block
+          side="right" robot_mode="2"
+          cpu_affinity="$(arg right_arm_cpu_affinity)"
+          ctrl_mode="${rokae_ctrl_mode}"
+          state_timeout_ms="$(arg inex_state_timeout_ms)"
+          command_hold_timeout_ms="$(arg inex_command_hold_timeout_ms)"
+          command_fault_timeout_ms="$(arg inex_command_fault_timeout_ms)"
+          gripper_pad="${right_gripper_pad}"
+          payload_end_effector_type="${right_gripper_type if right_gripper_type != '' else right_hand_type}"
+          load_mass="$(arg right_load_mass)" load_cog="$(arg right_load_cog)" load_inertia="$(arg right_load_inertia)"/>
+      </hardware>
+      <xacro:ar5_interfaces name="right"/>
+    </ros2_control>
+
+    <xacro:external_ee_systems
+        usb_left_port="$(arg usb_left_port)"
+        usb_right_port="$(arg usb_right_port)"
+        usb_baudrate="$(arg usb_baudrate)"
+        left_ee_rw_rate="$(arg left_ee_rw_rate)"
+        right_ee_rw_rate="$(arg right_ee_rw_rate)"
+        left_ee_can_interface="$(arg left_ee_can_interface)"
+        right_ee_can_interface="$(arg right_ee_can_interface)"
+        left_ee_rs485_channel="$(arg left_ee_rs485_channel)"
+        right_ee_rs485_channel="$(arg right_ee_rs485_channel)"
+        left_ee_modbus_slave_id="$(arg left_ee_modbus_slave_id)"
+        right_ee_modbus_slave_id="$(arg right_ee_modbus_slave_id)"
+        left_read_tactile="$(arg left_read_tactile)"
+        right_read_tactile="$(arg right_read_tactile)"/>
+  </xacro:if>
+
+  <xacro:unless value="${is_real_hardware}">
+    <ros2_control name="rokae_inex_system" type="system">
+      <hardware>
+        <xacro:simulation_hardware_plugin hardware_type="$(arg ros2_control_hardware_type)"/>
+      </hardware>
+      <xacro:inex_body_head_interfaces/>
+      <xacro:dual_arm_ee_block mode="sim"/>
+    </ros2_control>
+  </xacro:unless>
+
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find rokae_inex_description)/config/ros2_control/common.yaml</parameters>
+        <parameters>$(find rokae_inex_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+
+</robot>

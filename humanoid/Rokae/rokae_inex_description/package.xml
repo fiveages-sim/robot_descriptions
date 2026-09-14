@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>rokae_inex_description</name>
+  <version>1.0.0</version>
+  <description>
+    <p>URDF Description package for Rokae INEX wheel humanoid.</p>
+    <p>Chassis + 4-DOF torso + 2-DOF head + dual AR5 CCS V2 arms.
+      Full-body WBC and dual-arm demo in the same package.
+    </p>
+  </description>
+  <author>nerv</author>
+  <maintainer email="Arinffy@outlook.com">nerv</maintainer>
+
+  <license>BSD</license>
+  <depend>ar5_ccs_description</depend>
+  <exec_depend>robot_common_launch</exec_depend>
+  <exec_depend>jodell_description</exec_depend>
+  <exec_depend>changingtek_description</exec_depend>
+  <exec_depend>linkerhand_description</exec_depend>
+  <exec_depend>freedom_description</exec_depend>
+  <exec_depend>inspire_description</exec_depend>
+  <exec_depend>xhand1_description</exec_depend>
+  <exec_depend>theohand_description</exec_depend>
+  <exec_depend>inex_ros2_control</exec_depend>
+  <exec_depend>modbus_ros2_control</exec_depend>
+  <exec_depend>can_ros2_control</exec_depend>
+  <exec_depend>ocs2_arm_controller</exec_depend>
+  <exec_depend>ocs2_wbc_controller</exec_depend>
+  <exec_depend>basic_joint_controller</exec_depend>
+  <exec_depend>adaptive_gripper_controller</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

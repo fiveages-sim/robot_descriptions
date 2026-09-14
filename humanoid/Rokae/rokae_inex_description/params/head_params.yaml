@@ -1,0 +1,21 @@
+# 头部参数（逻辑 head；HW 通道为 extend）
+# 有效轴数与 robot_model.yaml groups.head.dof 对齐（本机 2）
+
+mech:
+  motor:
+    AXIS_NUM: 2
+    ENCODER_RESOLUTION: [262144, 262144]
+    RATED_TORQUE: [0.6942, 0.6942]
+    TORQUE_OVERLOAD_FACTOR: [1.0, 1.0]
+    PEAK_TORQUE: [1.7107, 1.7107]
+    ENCODER_ZERO_OFFSET: [0, 0]
+  transmission:
+    REDUCTION_RATIO_NUMERATOR: [1, 1]
+    REDUCTION_RATIO_DENOMINATOR: [1, 1]
+
+safety:
+  enabled: false
+  debounce_ticks: 5
+  joint_vel_limit_position_rad_s:  [1.88, 1.88]
+  joint_vel_limit_impedance_rad_s: [1.88, 1.88]
+  joint_vel_limit_dragging_rad_s:  [1.88, 1.88]

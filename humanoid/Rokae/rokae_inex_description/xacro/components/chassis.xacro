@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--
+    Rokae INEX chassis: base_footprint + base_link + 4 swerve modules
+    (steer Z, wheel Y). Origins from chassis.glb: steer = largest horizontal
+    circle, wheel = tire AABB center (small nearby parts joined into wheel.glb).
+    Use <xacro:RokaeInexChassis/> then attach body to base_link.
+  -->
+
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:macro name="RokaeInexSwerveModule" params="prefix xyz rpy:='0 0 0'">
+    <link name="${prefix}_steer">
+      <inertial>
+        <mass value="1.2"/>
+        <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find rokae_inex_description)/meshes/chassis/steer.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${prefix}_steer_joint" type="${steer_joint_type}">
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <parent link="base_link"/>
+      <child link="${prefix}_steer"/>
+      <xacro:if value="${wheel_joints_enabled}">
+        <axis xyz="0 0 1"/>
+        <limit lower="-${PI}" upper="${PI}" effort="50" velocity="${PI}"/>
+      </xacro:if>
+    </joint>
+
+    <link name="${prefix}_wheel">
+      <inertial>
+        <mass value="1.5"/>
+        <inertia ixx="0.004" ixy="0" ixz="0" iyy="0.006" iyz="0" izz="0.004"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find rokae_inex_description)/meshes/chassis/wheel.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="${PI/2} 0 0"/>
+        <geometry>
+          <cylinder radius="0.075" length="0.0575"/>
+        </geometry>
+      </collision>
+    </link>
+    <!-- Wheel AABB center relative to steer circle; same offset on all four corners. -->
+    <joint name="${prefix}_wheel_joint" type="${wheel_joint_type}">
+      <origin xyz="0 0.00325 -0.1055"/>
+      <parent link="${prefix}_steer"/>
+      <child link="${prefix}_wheel"/>
+      <xacro:if value="${wheel_joints_enabled}">
+        <axis xyz="0 1 0"/>
+      </xacro:if>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="RokaeInexChassis" params="isaac:=false joints_movable:=false collider:='simple'">
+    <xacro:property name="wheel_joints_enabled"
+                    value="${str(joints_movable).lower() in ['true', '1', 'yes', 'on']}"
+                    scope="parent"/>
+    <xacro:property name="steer_joint_type" value="${'revolute' if wheel_joints_enabled else 'fixed'}"
+                    scope="parent"/>
+    <xacro:property name="wheel_joint_type" value="${'continuous' if wheel_joints_enabled else 'fixed'}"
+                    scope="parent"/>
+
+    <link name="base_footprint"/>
+    <joint name="base_footprint_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+    </joint>
+
+    <link name="base_link">
+      <inertial>
+        <mass value="95.89211"/>
+        <inertia ixx="4.053262" ixy="-0.00943858" ixz="0.00873843"
+                 iyy="3.97799150" iyz="0.08870018" izz="5.84347866"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find rokae_inex_description)/meshes/chassis/chassis.glb"/>
+        </geometry>
+      </visual>
+      <xacro:if value="${collider == 'simple'}">
+        <!-- AABB after glTF node +90° X (Y-up → ROS Z-up). Do not use raw accessor min/max. -->
+        <collision>
+          <origin xyz="-0.128 0 0"/>
+          <geometry>
+            <box size="0.68 0.64 0.40"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find rokae_inex_description)/meshes/chassis/chassis.glb"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    </link>
+
+    <!-- Steer origins: largest horizontal circle in base_link (ROS Z-up). -->
+    <xacro:RokaeInexSwerveModule prefix="fl" xyz="0.075 0.21725 -0.0395"/>
+    <xacro:RokaeInexSwerveModule prefix="fr" xyz="0.075 -0.21875 -0.0395" rpy="0 0 ${PI}"/>
+    <xacro:RokaeInexSwerveModule prefix="rl" xyz="-0.331 0.21725 -0.0395"/>
+    <xacro:RokaeInexSwerveModule prefix="rr" xyz="-0.331 -0.21875 -0.0395" rpy="0 0 ${PI}"/>
+
+    <link name="3d_lidar">
+      <!-- inertial from S2_3DURDF YLD_Link -->
+      <inertial>
+        <origin xyz="-0.0440891839567841 -5.1873280670911E-10 -0.0315237882031307"/>
+        <mass value="0.0117156542424497"/>
+        <inertia
+                ixx="3.67951096550954E-07"
+                ixy="5.15239039992179E-14"
+                ixz="-7.72651115285907E-09"
+                iyy="6.52014762336772E-07"
+                iyz="2.14985023980089E-14"
+                izz="5.88939528438811E-07"/>
+      </inertial>
+      <xacro:unless value="${isaac}">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
+    </link>
+    <joint name="3d_lidar_joint" type="fixed">
+      <origin xyz="0.1429 -0.0007 0.19343" rpy="0 ${PI*12/180} 0"/>
+      <parent link="base_link"/>
+      <child link="3d_lidar_base"/>
+    </joint>
+
+    <link name="3d_lidar_base"/>
+    <joint name="3d_lidar_mount_joint" type="fixed">
+      <origin xyz="0 0 -0.02085" rpy="0 0 0"/>
+      <parent link="3d_lidar_base"/>
+      <child link="3d_lidar"/>
+    </joint>
+
+    <link name="rl_lidar_link">
+      <xacro:unless value="${isaac}">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
+    </link>
+    <joint name="rl_lidar_joint" type="fixed">
+      <origin xyz="-0.37516 0.26149  0.13488" rpy="0 ${PI} ${-PI*45/180}"/>
+      <parent link="base_link"/>
+      <child link="rl_lidar_link"/>
+    </joint>
+
+    <link name="fr_lidar_link">
+      <xacro:unless value="${isaac}">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/orbbec/ms500.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
+    </link>
+    <joint name="fr_lidar_joint" type="fixed">
+      <origin xyz="0.11911 -0.26281  0.13488" rpy="0 ${PI} ${PI*135/180}"/>
+      <parent link="base_link"/>
+      <child link="fr_lidar_link"/>
+    </joint>
+
+  </xacro:macro>
+
+</robot>

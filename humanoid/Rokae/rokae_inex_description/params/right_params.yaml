@@ -1,0 +1,62 @@
+# 右臂参数配置 (AR5-5_0.8R-W4C5C11)
+
+mech:
+  motor:
+    AXIS_NUM: 7
+    ENCODER_RESOLUTION: [262144, 262144, 262144, 262144, 262144, 262144, 262144]  # 编码器分辨率
+    RATED_TORQUE: [1, 1, 0.45, 0.45, 0.2, 0.2, 0.2]                                 # 额定力矩（W4C5C11）
+    TORQUE_OVERLOAD_FACTOR: [0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9]                     # 过载系数
+    PEAK_TORQUE: [3, 3, 1.35, 1.35, 0.5, 0.5, 0.5]                                  # 峰值扭矩（W4C5C11）
+    ENCODER_ZERO_OFFSET: [0, 0, 0, 0, 0, 0, 0]                                     # 编码器零点偏移
+
+  transmission:
+    REDUCTION_RATIO_NUMERATOR: [120, -120, 100, 100, 100, -100, -100]               # 减速比分子
+    REDUCTION_RATIO_DENOMINATOR: [1, 1, 1, 1, 1, 1, 1]                              # 减速比分母
+
+  joint_sensor:
+    SENSOR_BIAS: [2500, 2500, 2500, 2500, 2500, 2500, 2500]                         # 传感器零点
+    SENSOR_AMPLIFY: [1, 1, 1, 1, 1, 1, 1]                                            # 放大系数
+    SENSOR_ANALOG_TO_TORQUE_HIGH: [110, 110, 70, 70, 25, 25, 25]                     # 传感器量程
+    SENSOR_ANALOG_TO_TORQUE_LOW: [2.25, -2.25, 2.25, 2.25, 2.25, -2.25, -2.25]      # 传感器线性系数
+
+control:
+  common:
+    SWITCH_THRESHOLD_OF_TORQUE_CONTROL: [25.0, 25.0, 20.0, 25.0, 15.0, 15.0, 10.0]  # 力控开启误差阈值
+    TORQUE_CMD_LIMIT: [99.0, 99.0, 63.0, 63.0, 22.5, 22.5, 22.5]                      # 力矩指令限幅 (SENSOR_HIGH×90%)
+    JOINT_COUPLING_SUPPORT: true                                                      # J6/J7 耦合软限位（须 soft 同时达 ±60°/±90° 才启用）
+    JOINT_COUPLING_VERTICE_X: [23, 60, 60, 23, -23, -60, -60, -17]                    # 耦合多边形顶点 X (deg, q6)
+    JOINT_COUPLING_VERTICE_Y: [90, 49, -49, -90, -90, -49, 49, 90]                    # 耦合多边形顶点 Y (deg, q7)
+
+  dragging:
+    CTRL_BANDWIDTH_SERVO_EXEC_DRAG: [15.0, 15.0, 15.0, 15.0, 10.0, 10.0, 10.0]     # 拖动伺服带宽
+    CTRL_ZETA_SERVO_EXEC_DRAG: [0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7]                   # 拖动伺服阻尼比
+    FRICTION_COF_DRAG: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]                          # 拖动摩擦力补偿
+    ROTATION_STIFFNESS_OF_TRANSLATION_DRAGGING: [300, 300, 300]                      # 拖动仅平移刚度
+    ROTATION_DAMPING_OF_TRANSLATION_DRAGGING: [5, 5, 5]                              # 拖动仅平移阻尼
+    TRANSLATION_STIFFNESS_OF_ROTATION_DRAGGING: [2000, 2000, 2000]                   # 拖动仅旋转刚度
+    TRANSLATION_DAMPING_OF_ROTATION_DRAGGING: [10.0, 10.0, 10.0]                     # 拖动仅旋转阻尼
+    VIRTUAL_DAMPING_REST: [10.0, 10.0, 8.0, 8.0, 4.0, 4.0, 4.0]                     # 静止区虚拟阻尼 (Nm·s/rad)
+    VIRTUAL_DAMPING_MOTION: [1.5, 1.5, 1.2, 1.2, 0.6, 0.6, 0.6]                     # 拖动区虚拟阻尼 (Nm·s/rad)
+    VIRTUAL_DAMPING_VEL_LOW: 0.03                                                     # 静止速度阈值 (rad/s)
+    VIRTUAL_DAMPING_VEL_HIGH: 0.20                                                    # 拖动速度阈值 (rad/s)
+
+  impedance:
+    CTRL_BANDWIDTH_SERVO_EXEC_IMPE: [15.0, 15.0, 15.0, 15.0, 10.0, 10.0, 10.0]     # 阻抗伺服带宽
+    CTRL_ZETA_SERVO_EXEC_IMPE: [0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7]                  # 阻抗伺服阻尼比
+    FRICTION_COF_IMPED: [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4]                          # 阻抗摩擦力补偿
+    JOINT_CTRL_DAMP_ZETA: [0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7]
+    CART_CTRL_DAMP_ZETA: [0.7, 0.7, 0.7, 0.7, 0.7, 0.7]
+    JOINT_IMPEDANCE_STIFFNESS: [100, 100, 100, 100, 50, 50, 50]            # 关节阻抗刚度
+    JOINT_IMPEDANCE_DAMPING: [10, 10, 10, 10.0, 10.0, 10.0, 10.0]              # 关节阻抗阻尼(没用)
+    CARTESIAN_IMPEDANCE_STIFFNESS: [100, 100, 100, 50, 50, 50]              # 笛卡尔阻抗刚度
+    CARTESIAN_IMPEDANCE_DAMPING: [10, 10, 10, 10.0, 10.0, 10.0]                # 笛卡尔阻抗阻尼
+    NULLSPACE_IMPEDANCE_STIFFNESS: [4.0]                                             # 零空间阻抗刚度
+
+# 运行安全阈值（反馈速度 rad/s；按 ControlMode 分套：位置最松）
+# 本期 Controller 仅判定并发布 controller/safety_status，不直接驱动 HW 停机
+safety:
+  enabled: false
+  debounce_ticks: 5
+  joint_vel_limit_position_rad_s:  [3.05, 3.05, 4.71, 5.23, 4.18, 4.18, 4.18]
+  joint_vel_limit_impedance_rad_s: [3.0, 3.0, 3.0, 3.5, 3.5, 3.5, 4.0]
+  joint_vel_limit_dragging_rad_s:  [4.5, 4.5, 5.0, 5.0, 5.0, 5.0, 5.0]

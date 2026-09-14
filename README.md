@@ -40,7 +40,7 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Ai2 Robotics  | [Bot2](humanoid/Ai2Robotics/ai2_bot2_description)    | Yes     | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                         |
 | XSquare Robot | [Quanta X1](humanoid/X2Robot/quanta_x1_description)  | Yes     | <img src="humanoid/.images/x2robot_quanta_x1.png" width="200">                                                                                                                                                                |
 | Spirit AI     | [MOZ 1](humanoid/SpiritAI/moz1_description)          | Yes     | <img src="humanoid/.images/spiritai_moz1.png" width="200">                                                                                                                                                                    |
-| Gento         | [Skye](humanoid/Gento/gento_skye_description) / [Luna](humanoid/Gento/gento_luna_description) | No | Linkhou S2 v2 + Tianji M6-CCS / M6S Lite |
+| Rokae         | [INEX](humanoid/Rokae/rokae_inex_description/) | Yes     | <img src="humanoid/.images/rokae_inex.png" width="200"> |
 
 ## Mobile Manipulators
 
@@ -84,7 +84,7 @@ This repository uses git submodules to manage shared components and specific rob
 | Quadruped Robots | `quadruped` | [robot-descriptions-quadruped](https://github.com/fiveages-sim/robot-descriptions-quadruped) | Quadruped robot descriptions including Unitree, Deep Robotics, MagicLab, and ZsiBot |
 | Dobot CR5 | `manipulator/Dobot` | [robot-descriptions-dobot](https://github.com/fiveages-sim/robot-descriptions-dobot) | 6-DOF collaborative robot arm with real hardware integration |
 | Tianji Robots | `manipulator/Tianji` | [robot-descriptions-tianji](https://github.com/fiveages-sim/robot-descriptions-tianji) | Tianji robot descriptions including M6-CCS, M6-SRS, M20S-CCS, and Marvin Pro |
-| Rokae Robots | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | Rokae robot descriptions including AR5-SRS and AR5-CCS |
+| Rokae Robots | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | Rokae arm descriptions (AR5-SRS, AR5-CCS). Wheel humanoid INEX lives in `humanoid/Rokae` |
 | Fairino ART7 | `manipulator/Fairino` | [robot-descriptions-fairino](https://github.com/fiveages-sim/robot-descriptions-fairino) | ART7 dual-arm manipulator |
 | ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
 | Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) for build and demo commands |

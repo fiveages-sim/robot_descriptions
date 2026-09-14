@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--
+    Rokae INEX body: calf / thigh / waist / chest (body_joint1..4) + head (head_joint1..2).
+    Chain: parent_link -> body_link1 -> body_link2 -> body_link3 -> body_link4.
+    Simple collision boxes use AABB after glTF node xforms (chassis +90° X,
+    body 180° X/Y). Raw accessor min/max is Y-up / unrotated and will not match RViz.
+    Position limits are placeholders pending CAD review.
+    Velocities from params/body_params.yaml and params/head_params.yaml.
+  -->
+
+  <xacro:macro name="inex_mesh_or_box" params="collider mesh xyz size">
+    <xacro:if value="${collider == 'simple'}">
+      <collision>
+        <origin xyz="${xyz}"/>
+        <geometry>
+          <box size="${size}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+    <xacro:if value="${collider == 'convex'}">
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="RokaeInexBody" params="parent_link collider:='simple'">
+
+    <!-- body_link1 (calf) -->
+    <link name="body_link1">
+      <inertial>
+        <origin xyz="-0.00482 -0.00232 0.19437" rpy="0 0 0"/>
+        <mass value="22.687"/>
+        <inertia ixx="0.39927562" ixy="-0.00005938" ixz="0.01154258"
+                 iyy="0.34053244" iyz="0.000093" izz="0.14771095"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find rokae_inex_description)/meshes/body/calf.glb"/>
+        </geometry>
+      </visual>
+      <xacro:inex_mesh_or_box
+          collider="${collider}"
+          mesh="file://$(find rokae_inex_description)/meshes/body/calf.glb"
+          xyz="0 0.005 0.205" size="0.16 0.20 0.57"/>
+    </link>
+    <joint name="body_joint1" type="revolute">
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <parent link="${parent_link}"/>
+      <child link="body_link1"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.1416" upper="3.1416" effort="1000" velocity="1.88"/>
+    </joint>
+
+    <!-- body_link2 (thigh) -->
+    <link name="body_link2">
+      <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <mass value="11.3150"/>
+        <inertia ixx="0.31740298" ixy="-0.00000159" ixz="-0.00251509"
+                 iyy="0.31022871" iyz="0.00088199" izz="0.05201494"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find rokae_inex_description)/meshes/body/thigh.glb"/>
+        </geometry>
+      </visual>
+      <xacro:inex_mesh_or_box
+          collider="${collider}"
+          mesh="file://$(find rokae_inex_description)/meshes/body/thigh.glb"
+          xyz="0 0.006 0.24" size="0.16 0.24 0.64"/>
+    </link>
+    <joint name="body_joint2" type="revolute">
+      <origin xyz="0.0 0.0 0.410" rpy="0 0 0"/>
+      <parent link="body_link1"/>
+      <child link="body_link2"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.1416" upper="3.1416" effort="1000" velocity="1.88"/>
+    </joint>
+
+    <!-- body_link3 (waist) -->
+    <link name="body_link3">
+      <inertial>
+        <origin xyz="0.00182 -0.00191 -0.04703" rpy="0 0 0"/>
+        <mass value="4.0810"/>
+        <inertia ixx="0.03025474" ixy="0.00" ixz="0.00003578"
+                 iyy="0.002931724" iyz="-0.00023878" izz="0.01106011"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find rokae_inex_description)/meshes/body/waist.glb"/>
+        </geometry>
+      </visual>
+      <xacro:inex_mesh_or_box
+          collider="${collider}"
+          mesh="file://$(find rokae_inex_description)/meshes/body/waist.glb"
+          xyz="0 0.008 0.067" size="0.16 0.15 0.29"/>
+    </link>
+    <joint name="body_joint3" type="revolute">
+      <origin xyz="0.0 0.0 0.480" rpy="0 0 0"/>
+      <parent link="body_link2"/>
+      <child link="body_link3"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.1416" upper="3.1416" effort="1000" velocity="1.88"/>
+    </joint>
+
+    <!-- body_link4 (chest / torso yaw) -->
+    <link name="body_link4">
+      <inertial>
+        <origin xyz="-0.01823000 0.00000000 -0.00004400" rpy="0 0 0"/>
+        <mass value="6.6170"/>
+        <inertia ixx="0.06221010" ixy="-0.0004554" ixz="-0.00038971"
+                 iyy="0.04578598" iyz="-0.00001806" izz="0.05582511"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find rokae_inex_description)/meshes/body/chest.glb"/>
+        </geometry>
+      </visual>
+      <xacro:inex_mesh_or_box
+          collider="${collider}"
+          mesh="file://$(find rokae_inex_description)/meshes/body/chest.glb"
+          xyz="-0.008 0 0.045" size="0.21 0.35 0.34"/>
+    </link>
+    <joint name="body_joint4" type="revolute">
+      <origin xyz="0.0 0.0 0.2112" rpy="0 0 0"/>
+      <parent link="body_link3"/>
+      <child link="body_link4"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="2.40"/>
+    </joint>
+
+  </xacro:macro>
+
+  <!-- Instantiate after the arms so Pinocchio q is body×4, left×7, right×7, head×2. -->
+  <xacro:macro name="RokaeInexHead" params="parent_link:='body_link4' collider:='simple'">
+
+    <link name="head_link1">
+      <inertial>
+        <origin xyz="-0.01005 0.00242 0.15798" rpy="0 0 0"/>
+        <mass value="0.8130"/>
+        <inertia ixx="0.00285752" ixy="0.00005303" ixz="0.00041693"
+                 iyy="0.00290386" iyz="-0.00015525" izz="0.00042511"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find rokae_inex_description)/meshes/body/neck.glb"/>
+        </geometry>
+      </visual>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find rokae_inex_description)/meshes/body/neck.glb"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    </link>
+    <joint name="head_joint1" type="revolute">
+      <origin xyz="0.0 0.0 0.098" rpy="0 0 0"/>
+      <parent link="${parent_link}"/>
+      <child link="head_link1"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="1.88"/>
+    </joint>
+
+    <link name="head_link2">
+      <inertial>
+        <origin xyz="0.015142 -0.014282 0.0012873" rpy="0 0 0"/>
+        <mass value="1.425"/>
+        <inertia ixx="0.00640332" ixy="-0.00002489" ixz="-0.00030574"
+                 iyy="0.00483754" iyz="0.00000400" izz="0.00534238"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find rokae_inex_description)/meshes/body/head.glb"/>
+        </geometry>
+      </visual>
+      <xacro:inex_mesh_or_box
+          collider="${collider}"
+          mesh="file://$(find rokae_inex_description)/meshes/body/head.glb"
+          xyz="-0.010 0 0.023" size="0.14 0.19 0.17"/>
+    </link>
+    <joint name="head_joint2" type="revolute">
+      <origin xyz="0.03 0 0.207" rpy="0 0 0"/>
+      <parent link="head_link1"/>
+      <child link="head_link2"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.1416" upper="3.1416" effort="1000" velocity="1.88"/>
+    </joint>
+
+    <!-- Optical frame for HEAD_GAZE (+Z look-ahead). Pose is a placeholder until CAD. -->
+    <link name="head_camera"/>
+    <joint name="head_camera_joint" type="fixed">
+      <origin xyz="0.07 0 0.03" rpy="0 -1.5708 0"/>
+      <parent link="head_link2"/>
+      <child link="head_camera"/>
+    </joint>
+
+  </xacro:macro>
+
+</robot>

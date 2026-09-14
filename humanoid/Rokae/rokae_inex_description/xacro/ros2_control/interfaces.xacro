@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="inex_joint_interfaces" params="name">
+    <joint name="${name}">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="inex_body_head_interfaces">
+    <xacro:inex_joint_interfaces name="body_joint1"/>
+    <xacro:inex_joint_interfaces name="body_joint2"/>
+    <xacro:inex_joint_interfaces name="body_joint3"/>
+    <xacro:inex_joint_interfaces name="body_joint4"/>
+    <xacro:inex_joint_interfaces name="head_joint1"/>
+    <xacro:inex_joint_interfaces name="head_joint2"/>
+  </xacro:macro>
+
+</robot>
