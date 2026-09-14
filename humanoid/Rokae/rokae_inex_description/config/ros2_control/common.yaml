@@ -147,8 +147,8 @@ ocs2_wbc_controller:
     waist_lifting_type: three_joint
     waist_l1: 0.410
     waist_l2: 0.480
-    # params/body_params.yaml transmission numerator [1, -1, 1, 1]
-    waist_rotation_direction: [ 1.0, -1.0, 1.0 ]
+    # URDF body_joint1~3 均为 +Y，与规划器物理角同号
+    waist_rotation_direction: [ 1.0, 1.0, 1.0 ]
     waist_angle_offset: [ 0.0, 0.0, 0.0 ]
     waist_lifting_default_parameter: [ 0.02, 0.5, 1.0 ]
     waist_turning_default_parameter: [ 0.2, 0.5, 1.0 ]
@@ -232,7 +232,7 @@ body_joint_controller:
     waist_lifting_type: three_joint
     waist_l1: 0.410
     waist_l2: 0.480
-    waist_rotation_direction: [ 1.0, -1.0, 1.0 ]
+    waist_rotation_direction: [ 1.0, 1.0, 1.0 ]
     waist_angle_offset: [ 0.0, 0.0, 0.0 ]
     waist_lifting_default_parameter: [ 0.02, 0.5, 1.0 ]
     waist_turning_default_parameter: [ 0.2, 0.5, 1.0 ]

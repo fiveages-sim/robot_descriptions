@@ -97,6 +97,6 @@ USB 口用 `hardware_usb_left_port` / `hardware_usb_right_port`，CAN 用 `hardw
   整机默认锁轮（`chassis_joints_movable:=false`）；`type:=chassis` 可视化时解锁。
 - 腰 `body_joint1..3` 为 pitch（轴 `0 1 0`），`body_joint4` 为 yaw（轴 `0 0 1`）。
 - 头 `head_joint1` yaw、`head_joint2` pitch。
-- 减速方向来自 `params/body_params.yaml`：`[1, -1, 1, 1]`，写入 `waist_rotation_direction`。
+- 腰升降规划器：URDF `body_joint1~3` 均为 `+Y`，`waist_rotation_direction` 为 `[1, 1, 1]`。
 - 连杆长度：`waist_l1=0.410`（小腿）、`waist_l2=0.480`（大腿）。
 - 双臂安装于 `body_link4` / `arm_base`：左 `xyz="0 0.0775 0.1429" rpy="-1.57 1.57 0"`，右镜像。

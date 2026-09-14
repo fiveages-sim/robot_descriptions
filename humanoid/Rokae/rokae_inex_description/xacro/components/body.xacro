@@ -7,7 +7,6 @@
     Simple collision boxes use AABB after glTF node xforms (chassis +90° X,
     body 180° X/Y). Raw accessor min/max is Y-up / unrotated and will not match RViz.
     Position limits are placeholders pending CAD review.
-    Velocities from params/body_params.yaml and params/head_params.yaml.
   -->
 
   <xacro:macro name="inex_mesh_or_box" params="collider mesh xyz size">

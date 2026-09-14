@@ -237,11 +237,11 @@ customJointLock
             [1] 1                   ; body_joint2
             [2] 2                   ; body_joint3
         }
-        ; params/body_params.yaml transmission [1, -1, 1]
+        ; URDF body_joint1~3 均为 +Y，与规划器物理角同号
         rotationDirection
         {
             (0,0)   1.0
-            (1,0)  -1.0
+            (1,0)   1.0
             (2,0)   1.0
         }
         angleOffset
@@ -407,7 +407,8 @@ headCoupling
     headJointIndex                  21
 
     ; 耦合系数：u_body4 - alpha * u_head1 = 0
-    alpha                           1.0
+    ; body_joint4 与 head_joint1 均为 +Z；alpha=-1 使头相对胸腔反向偏航，保持朝底盘/世界前方
+    alpha                           -1.0
 
     ; 需要锁定的其他腰部关节（body_joint1~3）
     lockedWaistJoints
