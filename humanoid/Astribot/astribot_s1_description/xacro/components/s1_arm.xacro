@@ -150,9 +150,6 @@
 				<geometry>
 					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_arm/link5.glb"/>
 				</geometry>
-				<material name="">
-					<color rgba="0.698039215686274 0.698039215686274 0.698039215686274 1"/>
-				</material>
 			</visual>
 			<collision>
 				<origin xyz="0 0 0.14"/>

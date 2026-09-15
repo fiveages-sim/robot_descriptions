@@ -5,7 +5,7 @@
 <!-- =================================================================================== -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:macro name="Base" params="enable_wheel_joints:='true'">
+	<xacro:macro name="Base" params="enable_wheel_joints:='true' isaac:=false">
 		<!-- Base link (底盘基础连杆) -->
 		<link name="base_link">
 			<inertial>
@@ -89,6 +89,86 @@
 			</xacro:if>
 		</joint>
 
+		<link name="fl_lidar">
+			<!-- inertial from S2_3DURDF YLD_Link -->
+			<inertial>
+				<origin xyz="-0.0440891839567841 -5.1873280670911E-10 -0.0315237882031307"/>
+				<mass value="0.0117156542424497"/>
+				<inertia
+						ixx="3.67951096550954E-07"
+						ixy="5.15239039992179E-14"
+						ixz="-7.72651115285907E-09"
+						iyy="6.52014762336772E-07"
+						iyz="2.14985023980089E-14"
+						izz="5.88939528438811E-07"/>
+			</inertial>
+			<xacro:unless value="${isaac}">
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
+					</geometry>
+				</visual>
+			</xacro:unless>
+		</link>
+		<joint name="fl_lidar_joint" type="fixed">
+			<origin xyz="0.17399 0.16891 0.0597" />
+			<parent link="base_link"/>
+			<child link="fl_lidar"/>
+		</joint>
+
+		<link name="rr_lidar">
+			<!-- inertial from S2_3DURDF YLD_Link -->
+			<inertial>
+				<origin xyz="-0.0440891839567841 -5.1873280670911E-10 -0.0315237882031307"/>
+				<mass value="0.0117156542424497"/>
+				<inertia
+						ixx="3.67951096550954E-07"
+						ixy="5.15239039992179E-14"
+						ixz="-7.72651115285907E-09"
+						iyy="6.52014762336772E-07"
+						iyz="2.14985023980089E-14"
+						izz="5.88939528438811E-07"/>
+			</inertial>
+			<xacro:unless value="${isaac}">
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
+					</geometry>
+				</visual>
+			</xacro:unless>
+		</link>
+		<joint name="rr_lidar_joint" type="fixed">
+			<origin xyz="-0.17957 -0.17466 0.14362"  rpy="0 0 ${PI}" />
+			<parent link="base_link"/>
+			<child link="rr_lidar"/>
+		</joint>
+
+		<!-- Ultrasonic sensors C1-C8 (mesh: sensor_models/ultrasonic_03, origin = outer-face circle) -->
+		<xacro:macro name="astribot_ultrasonic" params="name xyz rpy">
+			<link name="${name}">
+				<xacro:unless value="${isaac}">
+					<visual>
+						<geometry>
+							<mesh filename="file://$(find sensor_models)/meshes/ultrasonic/ultrasonic_03.glb"/>
+						</geometry>
+					</visual>
+				</xacro:unless>
+			</link>
+			<joint name="${name}_joint" type="fixed">
+				<origin xyz="${xyz}" rpy="${rpy}"/>
+				<parent link="base_link"/>
+				<child link="${name}"/>
+			</joint>
+		</xacro:macro>
+		<xacro:astribot_ultrasonic name="ultrasonic_c1" xyz="0.28374913 -0.12873359 0.02026958" rpy="1.40431778 0.02868544 1.62266583"/>
+		<xacro:astribot_ultrasonic name="ultrasonic_c2" xyz="0.12977453 -0.28310611 0.05628103" rpy="-1.25579677 -0.01326278 3.12623520"/>
+		<xacro:astribot_ultrasonic name="ultrasonic_c3" xyz="-0.12865779 -0.27341227 0.11774913" rpy="-1.40030526 0.05319742 2.56913165"/>
+		<xacro:astribot_ultrasonic name="ultrasonic_c4" xyz="-0.27264161 -0.19961814 0.11701791" rpy="1.50622852 0.09425214 -1.01682828"/>
+		<xacro:astribot_ultrasonic name="ultrasonic_c5" xyz="-0.27253755 0.19968408 0.11733165" rpy="-1.41112704 0.04522913 1.01101617"/>
+		<xacro:astribot_ultrasonic name="ultrasonic_c6" xyz="-0.12868858 0.27347962 0.11748791" rpy="1.49883288 0.09863409 -2.57452670"/>
+		<xacro:astribot_ultrasonic name="ultrasonic_c7" xyz="0.12990424 0.28315572 0.05605944" rpy="1.35379071 0.02135683 -3.13552145"/>
+		<xacro:astribot_ultrasonic name="ultrasonic_c8" xyz="0.28362270 0.12870185 0.02079986" rpy="-1.28691460 -0.00038371 -1.62933103"/>
+
 		<!-- 躯干连杆1 -->
 		<link name="torso_link_1">
 			<inertial>
@@ -100,9 +180,6 @@
 				<geometry>
 					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_torso/link1.glb"/>
 				</geometry>
-				<material name="">
-					<color rgba="0.89804 0.91765 0.92941 1"/>
-				</material>
 			</visual>
 			<collision>
 				<origin rpy="0 1.57 0" xyz="-0.15 0 0"/>
@@ -130,9 +207,6 @@
 				<geometry>
 					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_torso/link2.glb"/>
 				</geometry>
-				<material name="">
-					<color rgba="0.89804 0.91765 0.92941 1"/>
-				</material>
 			</visual>
 			<collision>
 				<origin rpy="0 1.57 -0.25" xyz="-0.15 0.03 0"/>

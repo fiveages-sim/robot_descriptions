@@ -3,11 +3,12 @@
 <!-- |    Complete Robot Description for Astribot S1                                   | -->
 <!-- |    OCS2 planning: eef_fixed_joints + chassis_joints_movable (robot_common_launch)| -->
 <!-- =================================================================================== -->
-<robot name="Astribot S1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="S1" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:arg name="eef_fixed_joints" default="false"/>
 	<xacro:arg name="chassis_joints_movable" default="false"/>
 	<xacro:arg name="type" default="gripper"/>
+	<xacro:arg name="isaac" default="false"/>
 
 	<!-- Include the base robot structure (chassis, torso and head) -->
 	<xacro:include filename="$(find astribot_s1_description)/xacro/components/base.xacro"/>
@@ -15,7 +16,7 @@
 	<!-- Include the arm macro -->
 	<xacro:include filename="$(find astribot_s1_description)/xacro/components/s1_arm.xacro"/>
 
-	<xacro:Base enable_wheel_joints="$(arg chassis_joints_movable)"/>
+	<xacro:Base enable_wheel_joints="$(arg chassis_joints_movable)" isaac="$(arg isaac)"/>
 
 	<!-- =================================================================================== -->
 	<!-- Generate Left and Right Arms Using Macro                                          -->
