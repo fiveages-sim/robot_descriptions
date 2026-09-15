@@ -65,3 +65,7 @@
 	path = humanoid/Gento
 	url = git@github.com:fiveages-sim/robot-descriptions-gento.git
 	branch = main
+[submodule "humanoid/FiveAges/Gen2/fiveages_s2r_description"]
+	path = humanoid/FiveAges/Gen2/fiveages_s2r_description
+	url = git@github.com:fiveages-sim/fa-s2r-description.git
+	branch = main
