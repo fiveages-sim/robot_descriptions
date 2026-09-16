@@ -4,8 +4,8 @@ model_information {
 
   ; motion joints in the URDF to consider fixed
   removeJoints {
-    [0]  "Head-1"
-    [1]  "Head-2"
+    [0]  "head_joint1"
+    [1]  "head_joint2"
     [2]  "wheel1_joint"
     [3]  "wheel2_joint"
     [4]  "wheel3_joint"
@@ -231,7 +231,7 @@ finalEndEffector
     }
 }
 
-; Torso / shoulder link (body_joint6 child; left_joint1 / right_joint1 / Head-0 parent)
+; Torso / shoulder link (body_joint6 child; left_joint1 / right_joint1 / head_fixed_joint parent)
 bodyRelative
 {
   activate                   true

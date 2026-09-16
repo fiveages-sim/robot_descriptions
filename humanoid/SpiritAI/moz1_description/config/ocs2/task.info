@@ -17,8 +17,8 @@ model_information
     ; Joints to remove (fixed joints, mimic joints detected automatically)
     removeJoints
     {
-        [0]  "Head-1"
-        [1]  "Head-2"
+        [0]  "head_joint1"
+        [1]  "head_joint2"
         [2]  "left_gripper_joint"
         [3]  "right_gripper_joint"
     }

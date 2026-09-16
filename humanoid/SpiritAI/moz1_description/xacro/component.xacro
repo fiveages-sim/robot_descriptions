@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
-<robot name="MOZ1_component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="MOZ1" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="type" default="chassis"/>
+  <!-- Isaac asset import: hide sensor_models meshes that Isaac already provides. -->
+  <xacro:arg name="isaac" default="false"/>
   <xacro:include filename="$(find moz1_description)/xacro/components/chassis.xacro"/>
   <xacro:include filename="$(find moz1_description)/xacro/components/body.xacro"/>
   <xacro:include filename="$(find moz1_description)/xacro/components/arm.xacro"/>
@@ -22,6 +24,15 @@
     <xacro:Moz1Body parent_link="base_link"/>
   </xacro:if>
 
+  <!-- Upper body: 6-DoF torso + head + dual arms (no chassis/gripper). -->
+  <xacro:if value="${'$(arg type)' == 'upper_body'}">
+    <link name="base_link"/>
+    <xacro:Moz1Body parent_link="base_link"/>
+    <xacro:Moz1Head parent_link="waist03" isaac="$(arg isaac)"/>
+    <xacro:Moz1Arm parent_link="waist03" direction="1" enable_gripper="false"/>
+    <xacro:Moz1Arm parent_link="waist03" direction="-1" enable_gripper="false"/>
+  </xacro:if>
+
   <xacro:if value="${'$(arg type)' == 'left_arm'}">
     <link name="waist03"/>
     <xacro:Moz1Arm parent_link="waist03" direction="1"/>
@@ -40,7 +51,7 @@
 
   <xacro:if value="${'$(arg type)' == 'head'}">
     <link name="waist03"/>
-    <xacro:Moz1Head parent_link="waist03"/>
+    <xacro:Moz1Head parent_link="waist03" isaac="$(arg isaac)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'gripper'}">

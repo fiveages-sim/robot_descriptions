@@ -47,6 +47,20 @@ colcon build --packages-up-to moz1_description agibot_omni_description component
   ros2 launch robot_common_launch component.launch.py robot:=moz1 type:=body
   ```
 
+* Upper body (torso + head + dual arms, no chassis/gripper)
+
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=moz1 type:=upper_body
+  ```
+
+  Hide the Orbbec 336L mesh for Isaac asset import (`xacro_isaac:=true`):
+
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ros2 launch robot_common_launch component.launch.py robot:=moz1 type:=upper_body xacro_isaac:=true
+  ```
+
 * Head
 
   ```bash

@@ -91,8 +91,8 @@ head_joint_controller:
   ros__parameters:
     update_rate: 100
     joints:
-      - Head-1
-      - Head-2
+      - head_joint1
+      - head_joint2
     command_interfaces:
       - position
     state_interfaces:

@@ -2,9 +2,10 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="PI" value="3.141592653589793"/>
 
-	<xacro:macro name="Moz1Head" params="parent_link:=waist03">
-		<!-- head21: mount on ROS waist03; mesh yaw -90° for CAD alignment. -->
-		<link name="head21">
+	<!-- isaac:=true hides sensor_models camera meshes (Isaac asset import). -->
+	<xacro:macro name="Moz1Head" params="parent_link:=waist03 isaac:=false">
+		<!-- head_base_link: mount on ROS waist03; mesh yaw -90° for CAD alignment. -->
+		<link name="head_base_link">
 			<inertial>
 				<origin xyz="-0.0024550600000000002 0.010183999999999999 0.00271658"/>
 				<mass value="0.56836442"/>
@@ -23,13 +24,13 @@
 			</visual>
 		</link>
 
-		<joint name="Head-0" type="fixed">
+		<joint name="head_fixed_joint" type="fixed">
 			<origin xyz="0 0 0.096" rpy="0 0 ${PI/2}"/>
 			<parent link="${parent_link}"/>
-			<child link="head21"/>
+			<child link="head_base_link"/>
 		</joint>
 
-		<link name="head22">
+		<link name="head_link1">
 			<inertial>
 				<origin xyz="0.00787245 -1.155e-05 0.0024877099999999997"/>
 				<mass value="0.55596678"/>
@@ -47,15 +48,15 @@
 				</geometry>
 			</visual>
 		</link>
-		<joint name="Head-1" type="revolute">
+		<joint name="head_joint1" type="revolute">
 			<origin xyz="0 0 0.103"/>
-			<parent link="head21"/>
-			<child link="head22"/>
+			<parent link="head_base_link"/>
+			<child link="head_link1"/>
 			<axis xyz="1 0 0"/>
 			<limit lower="${-3/180*PI}" upper="${50/180*PI}" effort="0" velocity="${114.6/180*PI}"/>
 		</joint>
 
-		<link name="head23">
+		<link name="head_link2">
 			<inertial>
 				<origin xyz="0.0015001 2.027e-05 0.03197392"/>
 				<mass value="0.55994701"/>
@@ -78,25 +79,27 @@
 				</geometry>
 			</collision>
 		</link>
-		<joint name="Head-2" type="revolute">
+		<joint name="head_joint2" type="revolute">
 			<origin xyz="0 0 0.04"/>
-			<parent link="head22"/>
-			<child link="head23"/>
+			<parent link="head_link1"/>
+			<child link="head_link2"/>
 			<axis xyz="0 0 1"/>
 			<limit lower="${-65/180*PI}" upper="${65/180*PI}" effort="0" velocity="${114.6/180*PI}"/>
 		</joint>
 
 		<link name="head_camera">
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find sensor_models)/meshes/orbbec/336L.glb"/>
-				</geometry>
-			</visual>
+			<xacro:unless value="${isaac}">
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find sensor_models)/meshes/orbbec/336L.glb"/>
+					</geometry>
+				</visual>
+			</xacro:unless>
 		</link>
 
-		<joint name="Camera-0" type="fixed">
+		<joint name="head_camera_joint" type="fixed">
 			<origin xyz="0.0475 -0.06195 0.0371" rpy="${-PI/2} 0 ${PI}"/>
-			<parent link="head23"/>
+			<parent link="head_link2"/>
 			<child link="head_camera"/>
 		</joint>
 	</xacro:macro>
