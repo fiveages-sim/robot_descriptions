@@ -1,6 +1,9 @@
 <?xml version="1.0" ?>
 <!-- =================================================================================== -->
 <!-- |    Complete Robot Description for Astribot S1                                   | -->
+<!-- |    Structure : base_footprint -> base_link -> torso -> torso_end_effector;      | -->
+<!-- |    arm_base coincides with torso_end_effector; head after torso.                | -->
+<!-- |    topology:=dual : split-body planning tree rooted at arm_base.                | -->
 <!-- |    OCS2 planning: eef_fixed_joints + chassis_joints_movable (robot_common_launch)| -->
 <!-- =================================================================================== -->
 <robot name="S1" xmlns:xacro="http://www.ros.org/wiki/xacro">
@@ -9,73 +12,101 @@
 	<xacro:arg name="chassis_joints_movable" default="false"/>
 	<xacro:arg name="type" default="gripper"/>
 	<xacro:arg name="isaac" default="false"/>
-
-	<!-- Include the base robot structure (chassis, torso and head) -->
-	<xacro:include filename="$(find astribot_s1_description)/xacro/components/base.xacro"/>
-
-	<!-- Include the arm macro -->
-	<xacro:include filename="$(find astribot_s1_description)/xacro/components/s1_arm.xacro"/>
-
-	<xacro:Base enable_wheel_joints="$(arg chassis_joints_movable)" isaac="$(arg isaac)"/>
-
-	<!-- =================================================================================== -->
-	<!-- Generate Left and Right Arms Using Macro                                          -->
-	<!-- =================================================================================== -->
-	<xacro:S1Arm name="left"/>
-	<xacro:S1Arm name="right" direction="-1"/>
-
-	<!-- =================================================================================== -->
-	<!-- Arms Connection to Torso                                                          -->
-	<!-- =================================================================================== -->
-	<joint name="left_base_fixed_joint" type="fixed">
-		<parent link="torso_end_effector"/>
-		<child link="left_base_link"/>
-		<origin rpy="0 -1.22173 -1.5707963" xyz="0 0.06449 0.02348"/>
-	</joint>
-
-	<joint name="right_base_fixed_joint" type="fixed">
-		<parent link="torso_end_effector"/>
-		<child link="right_base_link"/>
-		<origin rpy="0 -1.22173 1.5707963" xyz="0 -0.06449 0.02348"/>
-	</joint>
-
+	<xacro:arg name="topology" default="full"/>
+	<xacro:property name="topology_arg" value="$(arg topology)"/>
 	<xacro:property name="type_arg" value="$(arg type)"/>
 	<xacro:property name="eef_fixed" value="$(arg eef_fixed_joints)"/>
 
-	<!-- OCS2 planning: freeze EEF actuation in URDF (eeFrame = left/right_link7 in .info) -->
-	<xacro:if value="${type_arg == 'gripper'}">
-		<xacro:include filename="$(find astribot_s1_description)/xacro/components/s1_gripper.xacro"/>
-		<xacro:Gripper name="left" kinematic_only="${eef_fixed}"/>
-		<xacro:Gripper name="right" kinematic_only="${eef_fixed}"/>
+	<xacro:include filename="$(find astribot_s1_description)/xacro/components/s1_arm.xacro"/>
 
-		<joint name="left_gripper_fixed_joint" type="fixed">
-			<origin xyz="0 -0.045 0" rpy="1.5708 0 0"/>
+	<xacro:macro name="AstribotS1ArmsAndEefs" params="arm_parent">
+		<xacro:S1Arm name="left"/>
+		<xacro:S1Arm name="right" direction="-1"/>
+
+		<joint name="left_base_fixed_joint" type="fixed">
+			<parent link="${arm_parent}"/>
+			<child link="left_base_link"/>
+			<origin rpy="0 -1.22173 -1.5707963" xyz="0 0.06449 0.02348"/>
+		</joint>
+		<joint name="right_base_fixed_joint" type="fixed">
+			<parent link="${arm_parent}"/>
+			<child link="right_base_link"/>
+			<origin rpy="0 -1.22173 1.5707963" xyz="0 -0.06449 0.02348"/>
+		</joint>
+
+		<link name="left_eef"/>
+		<joint name="left_eef_joint" type="fixed">
 			<parent link="left_link7"/>
-			<child link="left_gripper_base"/>
+			<child link="left_eef"/>
+		</joint>
+		<link name="right_eef"/>
+		<joint name="right_eef_joint" type="fixed">
+			<parent link="right_link7"/>
+			<child link="right_eef"/>
 		</joint>
 
-		<joint name="right_gripper_fixed_joint" type="fixed">
-			<origin xyz="0 -0.045 0" rpy="1.5708 0 0"/>
-			<parent link="right_link7"/>
-			<child link="right_gripper_base"/>
+		<xacro:if value="${type_arg == 'gripper'}">
+			<xacro:include filename="$(find astribot_s1_description)/xacro/components/s1_gripper.xacro"/>
+			<xacro:Gripper name="left" kinematic_only="${eef_fixed}"/>
+			<xacro:Gripper name="right" kinematic_only="${eef_fixed}"/>
+
+			<joint name="left_gripper_fixed_joint" type="fixed">
+				<origin xyz="0 -0.045 0" rpy="1.5708 0 0"/>
+				<parent link="left_link7"/>
+				<child link="left_gripper_base"/>
+			</joint>
+			<joint name="right_gripper_fixed_joint" type="fixed">
+				<origin xyz="0 -0.045 0" rpy="1.5708 0 0"/>
+				<parent link="right_link7"/>
+				<child link="right_gripper_base"/>
+			</joint>
+		</xacro:if>
+
+		<xacro:if value="${type_arg == 'revo2'}">
+			<xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
+			<xacro:BrainCoHand name="left_hand" direction="1" fixed_joints="${eef_fixed}"/>
+			<xacro:BrainCoHand name="right_hand" direction="-1" fixed_joints="${eef_fixed}"/>
+
+			<joint name="left_gripper_fixed_joint" type="fixed">
+				<origin xyz="0 -0.048 0" rpy="1.5708 3.1416 0"/>
+				<parent link="left_link7"/>
+				<child link="left_hand_hand_base"/>
+			</joint>
+			<joint name="right_gripper_fixed_joint" type="fixed">
+				<origin xyz="0 -0.048 0" rpy="1.5708 0 0"/>
+				<parent link="right_link7"/>
+				<child link="right_hand_hand_base"/>
+			</joint>
+		</xacro:if>
+	</xacro:macro>
+
+	<!-- Split-body OCS2: dual-arm tree, root coinciding with arm_base (= torso_end_effector). -->
+	<xacro:if value="${topology_arg == 'dual'}">
+		<link name="base_link"/>
+		<link name="arm_base">
+			<collision>
+				<origin xyz="0 0 -0.175"/>
+				<geometry>
+					<box size="0.22 0.32 0.34"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="arm_base_joint" type="fixed">
+			<parent link="base_link"/>
+			<child link="arm_base"/>
 		</joint>
+		<xacro:AstribotS1ArmsAndEefs arm_parent="arm_base"/>
 	</xacro:if>
 
-	<xacro:if value="${type_arg == 'revo2'}">
-		<xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
-		<xacro:BrainCoHand name="left_hand" direction="1" fixed_joints="${eef_fixed}"/>
-		<xacro:BrainCoHand name="right_hand" direction="-1"  fixed_joints="${eef_fixed}"/>
+	<xacro:unless value="${topology_arg == 'dual'}">
+		<xacro:include filename="$(find astribot_s1_description)/xacro/components/base.xacro"/>
+		<xacro:Base enable_wheel_joints="$(arg chassis_joints_movable)" isaac="$(arg isaac)"/>
 
-		<joint name="left_gripper_fixed_joint" type="fixed">
-			<origin xyz="0 -0.048 0" rpy="1.5708 3.1416 0"/>
-			<parent link="left_link7"/>
-			<child link="left_hand_hand_base"/>
+		<link name="arm_base"/>
+		<joint name="arm_base_joint" type="fixed">
+			<parent link="torso_end_effector"/>
+			<child link="arm_base"/>
 		</joint>
-
-		<joint name="right_gripper_fixed_joint" type="fixed">
-			<origin xyz="0 -0.048 0" rpy="1.5708 0 0"/>
-			<parent link="right_link7"/>
-			<child link="right_hand_hand_base"/>
-		</joint>
-	</xacro:if>
+		<xacro:AstribotS1ArmsAndEefs arm_parent="arm_base"/>
+	</xacro:unless>
 </robot>

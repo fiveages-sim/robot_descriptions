@@ -6,6 +6,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:macro name="Base" params="enable_wheel_joints:='true' isaac:=false">
+		<link name="base_footprint"/>
 		<!-- Base link (底盘基础连杆) -->
 		<link name="base_link">
 			<inertial>
@@ -24,6 +25,10 @@
 				</geometry>
 			</collision>
 		</link>
+		<joint name="base_footprint_joint" type="fixed">
+			<parent link="base_footprint"/>
+			<child link="base_link"/>
+		</joint>
 
 		<xacro:include filename="$(find component_models)/xacro/angellun_160.xacro"/>
 		<!-- 根据enable_wheel_joints参数决定使用轮子宏还是空link -->
@@ -265,6 +270,12 @@
 					<mesh filename="file://$(find astribot_s1_description)/meshes/s1_torso/link4.glb"/>
 				</geometry>
 			</visual>
+			<collision>
+				<origin xyz="0 0 0.17"/>
+				<geometry>
+					<box size="0.22 0.32 0.34"/>
+				</geometry>
+			</collision>
 		</link>
 		<joint name="body_joint4" type="revolute">
 			<origin rpy="1.5708 0 -1.5708" xyz="0 0 0"/>
@@ -355,6 +366,15 @@
 			<child link="head_link2"/>
 			<axis xyz="0 0 1"/>
 			<limit effort="100" lower="-1.22" upper="1.22" velocity="4.0"/>
+		</joint>
+
+		<!-- Optical frame for HEAD_GAZE (+Z look-ahead). Placeholder: S1 CAD has no
+		     head camera TF; pose is the head_link2 collision sphere along -Y. -->
+		<link name="head_camera"/>
+		<joint name="head_camera_joint" type="fixed">
+			<origin xyz="0 -0.16 0" rpy="1.5708 0 0"/>
+			<parent link="head_link2"/>
+			<child link="head_camera"/>
 		</joint>
 
 	</xacro:macro>

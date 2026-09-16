@@ -5,9 +5,9 @@
 <!-- =================================================================================== -->
 <robot name="astribot_whole_body" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<!-- Include the base robot structure -->
-	<!-- Type argument will be inherited by robot.xacro -->
+	<!-- Hardware URDF is always full topology; demo planning uses topology:=dual separately. -->
 	<xacro:arg name="type" default="gripper"/>
+	<xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
 	<xacro:include filename="$(find astribot_s1_description)/xacro/robot.xacro"/>
 
 	<!-- Import modular interface components -->

@@ -1,12 +1,23 @@
 /**:
   ros__parameters:
-    # Interactive marker 固定坐标系（须为 URDF/TF 中存在的 frame；S1 仅有 base_link）
-    marker_fixed_frame: base_link
+    # 手柄/键盘 → */twist 上限（满杆），与 FiveAges W2 / arms_target_manager 默认一致
+    linear_scale: 0.1
+    angular_scale: 0.25
 
-    # VR 头显参考 link（与 xacro head_link2 一致）
-    reference_link: head_link2
-
-    enable_vr: false
-
-    # 头部由 head_joint_controller 控制；OCS2 规划在 fixed_base.info 的 removeJoints 中剔除 head_joint1/2
+    marker_fixed_frame: base_footprint
+    enable_vr: true
+    vr_follow_frame: base_footprint
     enable_head_control: false
+    enable_wbc_head_tracking_marker: false
+
+    head_joint_to_rpy_mapping:
+      head_joint1: "head_yaw"
+      head_joint2: "head_pitch"
+
+    head_rpy_axis_direction:
+      head_yaw: 1.0
+      head_pitch: 1.0
+      head_roll: 1.0
+
+    head_link_name: "head_link2"
+    reference_link: "head_link2"

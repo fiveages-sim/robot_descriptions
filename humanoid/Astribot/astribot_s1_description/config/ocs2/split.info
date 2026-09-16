@@ -1,0 +1,243 @@
+; Split-body OCS2 config — arms only (14 DOF).
+; Body, head and gripper joints are locked via removeJoints when present;
+; topology:=dual generates arms-only so those names are simply unused.
+model_information {
+
+  manipulatorModelType     0
+
+  removeJoints {
+    [0]  "head_joint1"
+    [1]  "head_joint2"
+    [2]  "body_joint1"
+    [3]  "body_joint2"
+    [4]  "body_joint3"
+    [5]  "body_joint4"
+    [6]  "left_gripper_joint"
+    [7]  "right_gripper_joint"
+  }
+
+  baseFrame                       "arm_base"
+  eeFrame                         "left_eef"
+  eeFrame1                        "right_eef"
+}
+
+model_settings
+{
+  usePreComputation               true
+  recompileLibraries              true
+}
+
+ddp
+{
+  algorithm                       SLQ
+  nThreads                        3
+  threadPriority                  50
+  maxNumIterations                1
+  minRelCost                      0.1
+  constraintTolerance             1e-3
+  displayInfo                     false
+  displayShortSummary             false
+  checkNumericalStability         false
+  debugPrintRollout               false
+  debugCaching                    false
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  maxNumStepsPerSecond            100000
+  timeStep                        1e-3
+  backwardPassIntegratorType      ODE45
+  constraintPenaltyInitialValue   20.0
+  constraintPenaltyIncreaseRate   2.0
+  preComputeRiccatiTerms          true
+  useFeedbackPolicy               false
+  strategy                        LINE_SEARCH
+  lineSearch
+  {
+    minStepLength                 1e-2
+    maxStepLength                 1.0
+    hessianCorrectionStrategy     DIAGONAL_SHIFT
+    hessianCorrectionMultiple     1e-3
+  }
+}
+
+rollout
+{
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  timeStep                        1e-2
+  integratorType                  ODE45
+  maxNumStepsPerSecond            100000
+  checkNumericalStability         false
+}
+
+mpc
+{
+  timeHorizon                     1.0
+  solutionTimeWindow              0.2
+  coldStart                       false
+  debugPrint                      false
+  mpcDesiredFrequency             100
+  mrtDesiredFrequency             400
+}
+
+initialState
+{
+  arm
+  {
+    (0,0)   0.0      ; left_joint1
+    (1,0)   0.0      ; left_joint2
+    (2,0)   0.0      ; left_joint3
+    (3,0)   0.0      ; left_joint4
+    (4,0)   0.0      ; left_joint5
+    (5,0)   0.0      ; left_joint6
+    (6,0)   0.0      ; left_joint7
+    (7,0)   0.0      ; right_joint1
+    (8,0)   0.0      ; right_joint2
+    (9,0)   0.0      ; right_joint3
+    (10,0)  0.0      ; right_joint4
+    (11,0)  0.0      ; right_joint5
+    (12,0)  0.0      ; right_joint6
+    (13,0)  0.0      ; right_joint7
+  }
+}
+
+inputCost
+{
+  R
+  {
+    arm
+    {
+      scaling 1e-3
+      (0,0)   1.0
+      (1,0)   1.0
+      (2,0)   1.0
+      (3,0)   1.0
+      (4,0)   1.0
+      (5,0)   1.0
+      (6,0)   1.0
+      (7,0)   1.0
+      (8,0)   1.0
+      (9,0)   1.0
+      (10,0)  1.0
+      (11,0)  1.0
+      (12,0)  1.0
+      (13,0)  1.0
+    }
+  }
+}
+
+endEffector
+{
+  dualArmMode      true
+  leftArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+  rightArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+}
+
+finalEndEffector
+{
+  dualArmMode      true
+  leftArm
+  {
+    muPosition      5.0
+    muOrientation   2.5
+  }
+  rightArm
+  {
+    muPosition      5.0
+    muOrientation   2.5
+  }
+}
+
+bodyRelative
+{
+  activate                   true
+  bodyLinkName               "arm_base"
+  rollTolerance              0.1
+  pitchTolerance             0.1
+  muRoll                     20.0
+  muPitch                    20.0
+  muPositionX                0.0
+  muPositionY                0.0
+}
+
+selfCollision
+{
+  activate  true
+  collisionObjectPairs {}
+  collisionLinkPairs
+  {
+    [0] "arm_base, left_link3",
+    [1] "arm_base, left_link4",
+    [2] "arm_base, left_link5",
+    [3] "arm_base, left_link7",
+    [4] "arm_base, right_link3",
+    [5] "arm_base, right_link4",
+    [6] "arm_base, right_link5",
+    [7] "arm_base, right_link7",
+  }
+  minimumDistance  0.01
+  mu      1e-3
+  delta   1e-2
+}
+
+jointPositionLimits
+{
+  activate  true
+  mu      0.001
+  delta   1e-3
+}
+
+jointVelocityLimits
+{
+  mu      0.01
+  delta   1e-3
+
+  lowerBound
+  {
+    arm
+    {
+      (0,0)  -1.07
+      (1,0)  -1.07
+      (2,0)  -1.07
+      (3,0)  -1.07
+      (4,0)  -1.07
+      (5,0)  -1.07
+      (6,0)  -1.07
+      (7,0)  -1.07
+      (8,0)  -1.07
+      (9,0)  -1.07
+      (10,0) -1.07
+      (11,0) -1.07
+      (12,0) -1.07
+      (13,0) -1.07
+    }
+  }
+
+  upperBound
+  {
+    arm
+    {
+      (0,0)  1.07
+      (1,0)  1.07
+      (2,0)  1.07
+      (3,0)  1.07
+      (4,0)  1.07
+      (5,0)  1.07
+      (6,0)  1.07
+      (7,0)  1.07
+      (8,0)  1.07
+      (9,0)  1.07
+      (10,0) 1.07
+      (11,0) 1.07
+      (12,0) 1.07
+      (13,0) 1.07
+    }
+  }
+}
