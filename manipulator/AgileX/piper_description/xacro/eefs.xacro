@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find piper_description)/xacro/components/gripper.xacro"/>
+  <xacro:include filename="$(find piper_description)/xacro/components/camera.xacro"/>
+
+  <xacro:macro name="PiperEndEffectors" params="name type:='gripper' camera_type:='false' arms:='piper' direction:=1 fixed_joints:='false'">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:property name="hand_name" value="${name + '_hand' if name else 'hand'}"/>
+    <xacro:property name="ee_type" value="${type if type else 'gripper'}"/>
+    <xacro:property name="cam_key" value="${str(camera_type).lower()}"/>
+    <xacro:property name="gripper_rpy" value="${'0 0 1.5707963' if arms == 'x' else '0 0 0'}"/>
+    <xacro:property name="use_gripper" value="${ee_type == 'gripper'}"/>
+    <xacro:property name="use_revo1" value="${ee_type == 'revo1'}"/>
+    <xacro:property name="use_revo2" value="${ee_type == 'revo2'}"/>
+    <xacro:property name="use_revo" value="${use_revo1 or use_revo2}"/>
+    <xacro:property name="use_none" value="${ee_type == 'none'}"/>
+    <xacro:property name="use_dabai" value="${cam_key == 'dabai'}"/>
+    <xacro:property name="camera_parent" value="${prefix + 'gripper_base' if (use_dabai and use_gripper) else prefix + 'link6'}"/>
+
+    <xacro:if value="${use_gripper}">
+      <xacro:agx_gripper
+          prefix="${prefix}"
+          parent_link="${prefix}tcp"
+          rpy="${gripper_rpy}"
+          housing="true"/>
+    </xacro:if>
+
+    <xacro:if value="${use_revo}">
+      <link name="${prefix}flange_link">
+        <inertial>
+          <origin xyz="0.001151691 0.000782428 0.004798051"/>
+          <mass value="0.04"/>
+          <inertia ixx="9.935389e-06" ixy="0.0" ixz="0.0" iyy="1.0508003e-05" iyz="0.0" izz="1.9652873e-05"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find piper_description)/meshes/gripper/flange.glb"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find piper_description)/meshes/gripper/flange.glb"/>
+          </geometry>
+        </collision>
+      </link>
+      <joint name="${prefix}flange_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="${gripper_rpy}"/>
+        <parent link="${prefix}tcp"/>
+        <child link="${prefix}flange_link"/>
+      </joint>
+      <xacro:if value="${use_revo1}">
+        <xacro:BrainCoHand name="${hand_name}" direction="${direction}" fixed_joints="${fixed_joints}"/>
+      </xacro:if>
+      <xacro:if value="${use_revo2}">
+        <xacro:BrainCoHand name="${hand_name}" use_flange="false" direction="${direction}" fixed_joints="${fixed_joints}"/>
+      </xacro:if>
+      <joint name="${prefix}hand_base_joint" type="fixed">
+        <!-- 默认掌心朝中间。Revo1 手指沿 +Y、掌心沿 +Z：Rx(π/2) 让手指沿法兰 +Z，左手 Rz(0)、右手 Rz(π) 使掌心朝内。Revo2 手指已沿 +Z，左手 Rz(-π/2)、右手 Rz(+π/2) -->
+        <xacro:if value="${use_revo1}">
+          <origin xyz="0 0 0.0105" rpy="1.5707963 0 ${0.0 if float(direction) > 0 else 3.1415926}"/>
+        </xacro:if>
+        <xacro:if value="${use_revo2}">
+          <origin xyz="0 0 0.0105" rpy="0 0 ${-1.5707963 if float(direction) > 0 else 1.5707963}"/>
+        </xacro:if>
+        <parent link="${prefix}flange_link"/>
+        <child link="${hand_name}_hand_base"/>
+      </joint>
+      <link name="${prefix}gripper_center"/>
+      <joint name="${prefix}gripper_center_fixed" type="fixed">
+        <parent link="${prefix}tcp"/>
+        <child link="${prefix}gripper_center"/>
+      </joint>
+    </xacro:if>
+
+    <xacro:if value="${use_none}">
+      <link name="${prefix}gripper_center"/>
+      <joint name="${prefix}gripper_center_fixed" type="fixed">
+        <parent link="${prefix}tcp"/>
+        <child link="${prefix}gripper_center"/>
+      </joint>
+    </xacro:if>
+
+    <xacro:agx_wrist_camera prefix="${prefix}" parent_link="${camera_parent}" camera_type="${cam_key}"/>
+  </xacro:macro>
+</robot>

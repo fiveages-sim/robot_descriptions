@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Compatibility wrapper exposing piper_system (dual-arm hardware macros). -->
+  <xacro:include filename="$(find piper_description)/xacro/ros2_control/interfaces.xacro"/>
+  <xacro:include filename="$(find piper_description)/xacro/ros2_control/end_effector_interfaces.xacro"/>
+
   <xacro:macro name="piper_system" params="name ros2_control_hardware_type">
-
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
-
     <ros2_control name="${prefix}piper_system" type="system">
       <hardware>
         <xacro:if value="${ros2_control_hardware_type == 'gz'}">
@@ -18,61 +20,8 @@
           <param name="joint_states_topic">/isaac/joint_states</param>
         </xacro:if>
       </hardware>
-
-      <!-- 关节接口定义 -->
-      <joint name="${prefix}joint1">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint2">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">0.255</param>
-        </state_interface>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint3">
-        <command_interface name="position"/>
-        <state_interface name="position">
-          <param name="initial_value">-0.2</param>
-        </state_interface>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint4">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint5">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}joint6">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
-      <joint name="${prefix}gripper_joint">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
-      </joint>
-
+      <xacro:piper_interfaces name="${name}"/>
+      <xacro:piper_gripper_interfaces name="${name}"/>
     </ros2_control>
   </xacro:macro>
 </robot>

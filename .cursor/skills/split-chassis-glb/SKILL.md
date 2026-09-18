@@ -1,6 +1,6 @@
 ---
 name: split-chassis-glb
-description: Split an assembled chassis GLB into chassis/steer/wheel meshes with joint-ready origins, write swerve xacro, and add simple collision boxes from glTF-node AABBs. Use when splitting 底盘 GLB, steer/wheel, 舵轮, swerve chassis, INEX chassis, 简化碰撞, collider:=simple, selfCollision, or GLB 90° / Y-up AABB mismatch.
+description: Split an assembled chassis GLB into chassis/steer/wheel meshes with joint-ready origins, write swerve xacro, and add simple collision boxes from glTF-node AABBs. Use when splitting 底盘 GLB, steer/wheel, 舵轮, swerve chassis, INEX chassis, 简化碰撞, collider:=simple, selfCollision, WBC 卡住, arm hold, LEFT_ARM_ENABLE, or GLB 90° / Y-up AABB mismatch.
 ---
 
 # Split chassis GLB for swerve xacro
@@ -115,7 +115,7 @@ OCS2 (if this robot plans a holonomic base): `manipulatorModelType 4`, `removeJo
 
 ### 8. Simple collision (required before selfCollision)
 
-Do **not** enable `selfCollision` while visual GLB is the collision mesh. High-poly hpp-fcl is slow and numerically noisy.
+Do **not** enable `selfCollision` until every pair uses `collider:=simple` boxes/cylinders. Visual GLB as collision mesh is forbidden: high-poly hpp-fcl is slow and noisy, MPC policy never settles, and WBC **stalls** (`LEFT_ARM_ENABLE` / mode switch rejected with `arm hold transition in progress`). Keep `selfCollision.activate false` until simple colliders exist.
 
 Pattern (WCE3 / INEX): `collider` arg default `simple`; each link:
 

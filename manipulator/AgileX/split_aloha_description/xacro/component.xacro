@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot name="Split_Aloha" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="ranger_mini"/>
+  <!-- Isaac asset import: hide sensor_models meshes that Isaac already provides. -->
+  <xacro:arg name="isaac" default="false"/>
+
+  <xacro:if value="${'$(arg type)' == 'ranger_mini'}">
+    <xacro:include filename="$(find split_aloha_description)/xacro/components/ranger_mini.xacro"/>
+    <xacro:RangerMini enable_wheel_joints="true"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <link name="base"/>
+    <xacro:include filename="$(find split_aloha_description)/xacro/components/body.xacro"/>
+    <xacro:Body parent="base" isaac="$(arg isaac)"/>
+  </xacro:if>
+</robot>

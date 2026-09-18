@@ -1,16 +1,46 @@
 <?xml version="1.0"?>
-
 <robot name="Piper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="arms" default="piper"/>
+  <xacro:arg name="type" default=""/>
+  <xacro:arg name="camera" default=""/>
+  <xacro:arg name="name" default=""/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
 
-  <xacro:arg name="type" default="slave"/>
+  <xacro:property name="arms_arg" value="$(arg arms)"/>
+  <xacro:property name="type_arg" value="$(arg type)"/>
+  <xacro:property name="camera_arg" value="$(arg camera)"/>
+  <xacro:property name="name_arg" value="$(arg name)"/>
+  <xacro:property name="ee_type" value="${type_arg if type_arg else 'gripper'}"/>
+  <xacro:property name="camera_key" value="${camera_arg if camera_arg != '' else ('true' if (arms_arg == 'piper' and ee_type == 'gripper') else 'none')}"/>
 
-  <xacro:include filename="$(find piper_description)/xacro/Piper.xacro"/>
-  
-  <!-- 根据type参数决定is_master的值 -->
-  <xacro:if value="${'$(arg type)' == 'master'}">
-    <xacro:Piper name="" is_master="true"/>
+  <xacro:if value="${arms_arg == 'piper'}">
+    <xacro:include filename="$(find piper_description)/xacro/Piper.xacro"/>
+    <xacro:Piper name="${name_arg}"/>
   </xacro:if>
-  <xacro:unless value="${'$(arg type)' == 'master'}">
-    <xacro:Piper name="" is_master="false"/>
-  </xacro:unless>
+  <xacro:if value="${arms_arg == 'h'}">
+    <xacro:include filename="$(find piper_description)/xacro/PiperH.xacro"/>
+    <xacro:PiperH name="${name_arg}"/>
+  </xacro:if>
+  <xacro:if value="${arms_arg == 'l'}">
+    <xacro:include filename="$(find piper_description)/xacro/PiperL.xacro"/>
+    <xacro:PiperL name="${name_arg}"/>
+  </xacro:if>
+  <xacro:if value="${arms_arg == 'x'}">
+    <xacro:include filename="$(find piper_description)/xacro/PiperX.xacro"/>
+    <xacro:PiperX name="${name_arg}"/>
+  </xacro:if>
+
+  <xacro:include filename="$(find piper_description)/xacro/eefs.xacro"/>
+  <xacro:if value="${ee_type == 'revo1'}">
+    <xacro:include filename="$(find brainco_description)/xacro/revo1.xacro"/>
+  </xacro:if>
+  <xacro:if value="${ee_type == 'revo2'}">
+    <xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
+  </xacro:if>
+  <xacro:PiperEndEffectors
+      name="${name_arg}"
+      type="${ee_type}"
+      camera_type="${camera_key}"
+      arms="${arms_arg}"
+      fixed_joints="$(arg eef_fixed_joints)"/>
 </robot>

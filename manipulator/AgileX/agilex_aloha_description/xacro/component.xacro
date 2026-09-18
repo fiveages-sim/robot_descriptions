@@ -3,13 +3,9 @@
 <!-- |    Complete Robot Description for Agilex Aloha                                     | -->
 <!-- |    This file includes the base robot structure and both arms                    | -->
 <!-- =================================================================================== -->
-<robot name="Agilex_Aloha_Spilt" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Agilex_Aloha" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:arg name="type" default="ranger_mini"/>
-
-	<xacro:if value="${'$(arg type)' == 'ranger_mini'}">
-		<xacro:include filename="$(find agilex_aloha_description)/xacro/base/ranger_mini.xacro"/>
-	</xacro:if>
+	<xacro:arg name="type" default="tracer"/>
 
 	<xacro:if value="${'$(arg type)' == 'tracer'}">
 		<xacro:include filename="$(find agilex_aloha_description)/xacro/base/tracer.xacro"/>
@@ -24,13 +20,6 @@
 		<link name="left_base_link"/>
 		<link name="right_base_link"/>
 		<xacro:include filename="$(find agilex_aloha_description)/xacro/body/v2.xacro"/>
-	</xacro:if>
-
-	<xacro:if value="${'$(arg type)' == 'body_split'}">
-		<link name="base"/>
-		<link name="left_base_link"/>
-		<link name="right_base_link"/>
-		<xacro:include filename="$(find agilex_aloha_description)/xacro/body/split.xacro"/>
 	</xacro:if>
 
 

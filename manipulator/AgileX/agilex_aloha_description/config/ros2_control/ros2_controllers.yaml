@@ -1,42 +1,8 @@
-# This config file is used by ros2_control
+# Placeholder for Aloha V2 visualization / Gazebo. Split Aloha controllers
+# live in split_aloha_description.
 controller_manager:
   ros__parameters:
-    update_rate: 500  # Hz
+    update_rate: 100  # Hz
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
-
-    ocs2_arm_controller:
-      type: ocs2_arm_controller/Ocs2ArmController
-
-ocs2_arm_controller:
-  ros__parameters:
-    # Joint configuration
-    update_rate: 100  # Hz
-    info_file_name: fixed_base
-    joints:
-      - lifting_joint
-      - left_joint1
-      - left_joint2
-      - left_joint3
-      - left_joint4
-      - left_joint5
-      - left_joint6
-      - right_joint1
-      - right_joint2
-      - right_joint3
-      - right_joint4
-      - right_joint5
-      - right_joint6
-
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-
-    robot_name: agilex_aloha
-
-    # Control parameters
-    home_pos: [ 0.0 ,
-                0.0, 0.255, -0.2, 0.0, 0.0, 0.0,
-                0.0, 0.255, -0.2, 0.0, 0.0, 0.0]

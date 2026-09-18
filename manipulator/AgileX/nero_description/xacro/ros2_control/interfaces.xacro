@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="nero_arm_joint" params="jname initial:=''">
+    <joint name="${jname}">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <xacro:unless value="${initial == ''}">
+          <param name="initial_value">${initial}</param>
+        </xacro:unless>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="nero_interfaces" params="name">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:nero_arm_joint jname="${prefix}joint1"/>
+    <xacro:nero_arm_joint jname="${prefix}joint2"/>
+    <xacro:nero_arm_joint jname="${prefix}joint3"/>
+    <xacro:nero_arm_joint jname="${prefix}joint4"/>
+    <xacro:nero_arm_joint jname="${prefix}joint5"/>
+    <xacro:nero_arm_joint jname="${prefix}joint6"/>
+    <xacro:nero_arm_joint jname="${prefix}joint7"/>
+  </xacro:macro>
+</robot>

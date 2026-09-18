@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Unique Piper parallel gripper. Joint names match AdaptiveGripperController. -->
+  <xacro:macro name="agx_gripper" params="prefix parent_link xyz:='0 0 0' rpy:='0 0 0' housing:='false' travel:='0.05'">
+    <xacro:property name="use_housing" value="${str(housing).lower() in ['1', 'true', 'yes', 'on']}"/>
+    <xacro:property name="finger_travel" value="${float(travel)}"/>
+
+    <xacro:if value="${use_housing}">
+      <link name="${prefix}flange_link">
+        <inertial>
+          <origin xyz="0.001151691 0.000782428 0.004798051"/>
+          <mass value="0.04"/>
+          <inertia ixx="9.935389e-06" ixy="0.0" ixz="0.0" iyy="1.0508003e-05" iyz="0.0" izz="1.9652873e-05"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find piper_description)/meshes/gripper/flange.glb"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find piper_description)/meshes/gripper/flange.glb"/>
+          </geometry>
+        </collision>
+      </link>
+      <joint name="${prefix}flange_joint" type="fixed">
+        <parent link="${parent_link}"/>
+        <child link="${prefix}flange_link"/>
+      </joint>
+
+      <link name="${prefix}gripper_base">
+        <inertial>
+          <origin xyz="-0.000183807162235591 8.05033155577911E-05 0.0321436689908876"/>
+          <mass value="0.45"/>
+          <inertia ixx="0.00092934" ixy="0.00000034" ixz="-0.00000738" iyy="0.00071447" iyz="0.00000005"
+                   izz="0.00039442"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base.glb"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base.glb"/>
+          </geometry>
+        </collision>
+      </link>
+      <joint name="${prefix}gripper_base_joint" type="fixed">
+        <origin xyz="0 0 0.0045" rpy="${rpy}"/>
+        <parent link="${prefix}flange_link"/>
+        <child link="${prefix}gripper_base"/>
+      </joint>
+    </xacro:if>
+
+    <link name="${prefix}gripper_mount"/>
+    <joint name="${prefix}gripper_mount_joint" type="fixed">
+      <xacro:if value="${use_housing}">
+        <parent link="${prefix}gripper_base"/>
+      </xacro:if>
+      <xacro:unless value="${use_housing}">
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+        <parent link="${parent_link}"/>
+      </xacro:unless>
+      <child link="${prefix}gripper_mount"/>
+    </joint>
+
+    <link name="${prefix}link7">
+      <inertial>
+        <origin xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025"/>
+        <mass value="0.025"/>
+        <inertia ixx="0.00007371" ixy="-0.00000113" ixz="0.00000021" iyy="0.00000781" iyz="-0.00001372"
+                 izz="0.0000747"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_pad.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_pad.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}gripper_joint" type="prismatic">
+      <origin xyz="0 0 0.138" rpy="1.5707963 0 0"/>
+      <parent link="${prefix}gripper_mount"/>
+      <child link="${prefix}link7"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="${finger_travel}" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="${prefix}link8">
+      <inertial>
+        <origin xyz="0.000651231850419722 -0.0491929869131991 0.00972258769184024"/>
+        <mass value="0.025"/>
+        <inertia ixx="0.00007371" ixy="-0.00000113" ixz="0.00000021" iyy="0.00000781" iyz="-0.00001372"
+                 izz="0.0000747"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_pad.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_pad.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}joint8" type="prismatic">
+      <origin xyz="0 0 0.138" rpy="1.5707963 0 -3.1415926"/>
+      <parent link="${prefix}gripper_mount"/>
+      <child link="${prefix}link8"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="-1" offset="0"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="${-finger_travel}" upper="0" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="${prefix}gripper_center"/>
+    <joint name="${prefix}gripper_center_fixed" type="fixed">
+      <parent link="${prefix}gripper_mount"/>
+      <child link="${prefix}gripper_center"/>
+      <origin xyz="0 0 0.138" rpy="0 -1.57 0"/>
+    </joint>
+  </xacro:macro>
+</robot>

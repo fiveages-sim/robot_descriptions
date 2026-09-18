@@ -1,23 +1,21 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="AgileX Aloha">
   <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
-
-  <!-- Import Piper ros2_control description -->
-  <xacro:include filename="$(find piper_description)/xacro/ros2_control/piper.ros2_control.xacro" />
-
-  <xacro:arg name="type" default="split"/>
-
-  <xacro:if value="${'$(arg type)' == 'split'}">
-    <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_split.xacro"/>
-    <xacro:include filename="$(find agilex_aloha_description)/xacro/ros2_control/aloha_split.ros2_control.xacro" />
-
-    <xacro:aloha_split_system ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
-    <xacro:piper_system name="left" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
-    <xacro:piper_system name="right" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
-  </xacro:if>
+  <xacro:arg name="type" default="v2"/>
 
   <xacro:if value="${'$(arg type)' == 'v2'}">
     <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_v2.xacro"/>
+    <xacro:aloha_v2/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'v2-1'}">
+    <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_v2.xacro"/>
+    <xacro:aloha_v2 chassis="tracer_v2"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'v2-master'}">
+    <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_v2.xacro"/>
+    <xacro:aloha_v2 chassis="tracer_v2" enable_master="true"/>
   </xacro:if>
 
   <xacro:arg name="gazebo" default="false" />

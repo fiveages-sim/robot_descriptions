@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot name="Nero Component $(arg type)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="ee"/>
+  <xacro:arg name="name" default=""/>
+
+  <xacro:if value="${'$(arg type)' == 'ee'}">
+    <xacro:include filename="$(find nero_description)/xacro/Nero.xacro"/>
+    <xacro:Nero name="$(arg name)"/>
+  </xacro:if>
+</robot>

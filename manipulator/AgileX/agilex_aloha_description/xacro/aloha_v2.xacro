@@ -3,6 +3,7 @@
 
 	<xacro:macro name="aloha_v2" params="chassis:=tracer enable_master:=false">
 		<xacro:include filename="$(find piper_description)/xacro/Piper.xacro"/>
+		<xacro:include filename="$(find piper_description)/xacro/eefs.xacro"/>
 		<xacro:include filename="$(find agilex_aloha_description)/xacro/body/v2.xacro"/>
 
 		<xacro:if value="${chassis == 'tracer'}">
@@ -14,11 +15,14 @@
 		</xacro:if>
 
 		<xacro:Piper name="left"/>
+		<xacro:PiperEndEffectors name="left" type="gripper" camera_type="true" arms="piper"/>
 		<xacro:Piper name="right"/>
+		<xacro:PiperEndEffectors name="right" type="gripper" camera_type="true" arms="piper"/>
 
 		<!--***************************** back-left ****************************** -->
 		<xacro:if value="${enable_master}">
-			<xacro:Piper name="bl" is_master="true"/>
+			<xacro:Piper name="bl"/>
+			<xacro:PiperEndEffectors name="bl" type="gripper" camera_type="false" arms="piper"/>
 			<joint name="bl_base_joint" type="fixed">
 				<origin xyz="-0.379 0.3075 0.733"/>
 				<parent link="body_Link"/>
@@ -29,7 +33,8 @@
 
 		<!--***************************** back-right ****************************** -->
 		<xacro:if value="${enable_master}">
-			<xacro:Piper name="br" is_master="true"/>
+			<xacro:Piper name="br"/>
+			<xacro:PiperEndEffectors name="br" type="gripper" camera_type="false" arms="piper"/>
 			<joint name="br_base_joint" type="fixed">
 				<origin xyz="-0.379 -0.3075 0.733"/>
 				<parent link="body_Link"/>

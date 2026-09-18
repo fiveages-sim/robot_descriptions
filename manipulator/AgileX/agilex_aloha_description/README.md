@@ -3,6 +3,16 @@
 This package contains the description files for AgileX's Mobile Aloha2 manipulator. The origin models can be found
 at [mobile aloha sim](https://github.com/agilexrobotics/mobile_aloha_sim/tree/v2.0.0)
 
+> **Cobot Magic V1**（原 Mobile Aloha V1）已拆到独立包
+> [`cobot_magic_v1_description`](../cobot_magic_v1_description/README.md)：
+> `ros2 launch robot_common_launch manipulator.launch.py robot:=cobot_magic_v1`
+>
+> **Split Aloha**（Ranger Mini + 升降）已拆到独立包
+> [`split_aloha_description`](../split_aloha_description/README.md)：
+> `ros2 launch robot_common_launch manipulator.launch.py robot:=split_aloha`
+
+本包仅保留 **Aloha V2**（Tracer 底盘 + 固定躯干 + 双 Piper）。
+
 ## 1. Build
 
 ```bash
@@ -11,23 +21,13 @@ colcon build --packages-up-to agilex_aloha_description --symlink-install
 ```
 
 ## 2. Visualize the robot
-> **Cobot Magic V1**（原 Mobile Aloha V1）已拆到独立包
-> [`cobot_magic_v1_description`](../cobot_magic_v1_description/README.md)：
-> `ros2 launch robot_common_launch manipulator.launch.py robot:=cobot_magic_v1`
 
 ### 2.1 Full Robot
-* Aloha Split
+
+* Aloha V2 (Tracer V1 Base，默认)
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch manipulator.launch.py robot:=agilex_aloha
-  ```
-  
-  ![split](../../.images/agilex_split_aloha.png)
-
-* Aloha V2 (Tracer V1 Base)
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch manipulator.launch.py robot:=agilex_aloha type:="v2"
   ```
 
   ![aloha2](../../.images/agilex_aloha2.png)
@@ -44,15 +44,10 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=agilex_aloha type:=
 ```
 
 ### 2.2 Component
-* Ranger Mini
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch component.launch.py robot:=agilex_aloha
-  ```
 * Tracer
   ```bash
   source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch component.launch.py robot:=agilex_aloha type:=tracer
+  ros2 launch robot_common_launch component.launch.py robot:=agilex_aloha
   ```
 * Tracer V2
   ```bash
@@ -63,31 +58,4 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=agilex_aloha type:=
   ```bash
   source ~/ros2_ws/install/setup.bash
   ros2 launch robot_common_launch component.launch.py robot:=agilex_aloha type:=body_v2
-  ```
-* Split Body
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch component.launch.py robot:=agilex_aloha type:=body_split
-  ```
-
-## 3. OCS2 Demo
-
-### 3.1 Official OCS2 Mobile Manipulator Demo
-
-* Split Aloha
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch robot_common_launch manipulator_ocs2.launch.py robot_name:=agilex_aloha dual_arm:=true
-  ```
-
-### 3.2 OCS2 Arm Controller Demo
-
-* Split Aloha
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=agilex_aloha
-  ```
-    ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_arm_controller demo.launch.py robot:=agilex_aloha hardware:=gz world:=warehouse
   ```

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot name="Nero" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default=""/>
+  <xacro:arg name="name" default=""/>
+
+  <xacro:property name="type_arg" value="$(arg type)"/>
+  <xacro:property name="name_arg" value="$(arg name)"/>
+  <xacro:property name="ee_type" value="${type_arg if type_arg else 'gripper'}"/>
+
+  <xacro:include filename="$(find nero_description)/xacro/Nero.xacro"/>
+  <xacro:Nero name="${name_arg}"/>
+
+  <xacro:include filename="$(find nero_description)/xacro/eefs.xacro"/>
+  <xacro:NeroEndEffectors name="${name_arg}" type="${ee_type}"/>
+</robot>

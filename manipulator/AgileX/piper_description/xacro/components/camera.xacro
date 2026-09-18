@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="agx_wrist_camera" params="prefix parent_link camera_type:='true'">
+    <xacro:property name="cam" value="${str(camera_type).lower()}"/>
+    <xacro:property name="use_dabai" value="${cam == 'dabai'}"/>
+    <!-- xacro coerces the string true to boolean True; accept both. -->
+    <xacro:property name="use_tf" value="${cam in [True, '1', 'true', 'yes', 'on', 'dabai']}"/>
+
+    <xacro:if value="${use_dabai}">
+      <link name="${prefix}camera_stand">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find piper_description)/meshes/camera_stand/dabai.glb"/>
+          </geometry>
+        </visual>
+      </link>
+      <joint name="${prefix}camera_stand_joint" type="fixed">
+        <parent link="${parent_link}"/>
+        <child link="${prefix}camera_stand"/>
+      </joint>
+    </xacro:if>
+
+    <xacro:if value="${use_tf}">
+      <link name="${prefix}camera">
+        <xacro:if value="${use_dabai}">
+          <visual>
+            <geometry>
+              <mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_Agilex.glb"/>
+            </geometry>
+          </visual>
+        </xacro:if>
+      </link>
+      <joint name="${prefix}camera_fixed" type="fixed">
+        <origin xyz="-0.073 0 0.041" rpy="-0.3463 0 -1.5708"/>
+        <xacro:if value="${use_dabai}">
+          <parent link="${prefix}camera_stand"/>
+        </xacro:if>
+        <xacro:unless value="${use_dabai}">
+          <parent link="${parent_link}"/>
+        </xacro:unless>
+        <child link="${prefix}camera"/>
+      </joint>
+    </xacro:if>
+  </xacro:macro>
+</robot>

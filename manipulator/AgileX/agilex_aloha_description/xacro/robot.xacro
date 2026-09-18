@@ -2,13 +2,9 @@
 
 <robot name="AgileX Aloha" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:arg name="type" default="split"/>
-  
-  <!-- 根据type参数决定机器人类型 -->
-  <xacro:if value="${'$(arg type)' == 'split'}">
-    <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_split.xacro"/>
-  </xacro:if>
+  <xacro:arg name="type" default="v2"/>
 
+  <!-- 根据type参数决定机器人类型 -->
   <xacro:if value="${'$(arg type)' == 'v2'}">
     <xacro:include filename="$(find agilex_aloha_description)/xacro/aloha_v2.xacro"/>
     <xacro:aloha_v2/>

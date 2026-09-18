@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot name="Piper_L" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="camera"/>
+  <xacro:arg name="name" default=""/>
+  <xacro:property name="prefix" value="${'$(arg name)' + '_' if '$(arg name)' else ''}"/>
+
+  <xacro:if value="${'$(arg type)' == 'camera'}">
+    <xacro:include filename="$(find piper_description)/xacro/components/camera.xacro"/>
+    <link name="${prefix}link6"/>
+    <xacro:agx_wrist_camera prefix="${prefix}" parent_link="${prefix}link6" camera_type="true"/>
+  </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'dabai'}">
+    <xacro:include filename="$(find piper_description)/xacro/components/camera.xacro"/>
+    <link name="${prefix}link6"/>
+    <xacro:agx_wrist_camera prefix="${prefix}" parent_link="${prefix}link6" camera_type="dabai"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'piper_ee'}">
+    <xacro:include filename="$(find piper_description)/xacro/Piper.xacro"/>
+    <xacro:Piper name="$(arg name)"/>
+  </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'h_ee'}">
+    <xacro:include filename="$(find piper_description)/xacro/PiperH.xacro"/>
+    <xacro:PiperH name="$(arg name)"/>
+  </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'l_ee'}">
+    <xacro:include filename="$(find piper_description)/xacro/PiperL.xacro"/>
+    <xacro:PiperL name="$(arg name)"/>
+  </xacro:if>
+  <xacro:if value="${'$(arg type)' == 'x_ee'}">
+    <xacro:include filename="$(find piper_description)/xacro/PiperX.xacro"/>
+    <xacro:PiperX name="$(arg name)"/>
+  </xacro:if>
+</robot>

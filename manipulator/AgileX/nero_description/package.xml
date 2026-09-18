@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>nero_description</name>
+  <version>1.0.0</version>
+  <description>
+    <p>URDF Description package for AgileX Nero</p>
+    <p>7-DOF arm sharing the Piper parallel gripper fingers via piper_description</p>
+  </description>
+  <author>TODO</author>
+  <maintainer email="TODO@email.com"/>
+  <license>MIT</license>
+
+  <exec_depend>robot_common_launch</exec_depend>
+  <exec_depend>piper_description</exec_depend>
+  <exec_depend>brainco_description</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

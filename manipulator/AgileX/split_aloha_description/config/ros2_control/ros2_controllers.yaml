@@ -1,0 +1,6 @@
+# Overlays merged on top of common.yaml for split_aloha.
+
+ocs2_wbc_controller:
+  ros__parameters:
+    home_3: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_4: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
