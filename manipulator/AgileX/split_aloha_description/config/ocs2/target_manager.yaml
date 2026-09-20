@@ -7,4 +7,4 @@
 
     # Demo 用（task_arm baseFrame=arm_base）。全身 launch 会覆盖为 world。
     marker_fixed_frame: arm_base
-    vr_follow_frame: world
+    vr_follow_frame: base_link
