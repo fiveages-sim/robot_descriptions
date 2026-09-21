@@ -9,6 +9,8 @@
     Position limits are placeholders pending CAD review.
   -->
 
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
   <xacro:macro name="inex_mesh_or_box" params="collider mesh xyz size">
     <xacro:if value="${collider == 'simple'}">
       <collision>
@@ -188,13 +190,16 @@
       <parent link="head_link1"/>
       <child link="head_link2"/>
       <axis xyz="0 1 0"/>
-      <limit lower="-3.1416" upper="3.1416" effort="1000" velocity="1.88"/>
+      <!-- +Y pitch: +q looks down, -q looks up. ±π let HEAD_GAZE flip over the crown. -->
+      <limit lower="${-PI*45/180}" upper="${PI*45/180}" effort="1000" velocity="1.88"/>
     </joint>
 
-    <!-- Optical frame for HEAD_GAZE (+Z look-ahead). Pose is a placeholder until CAD. -->
+    <!-- ROS optical frame for HEAD_GAZE. Parent head_link2 is X-forward / Z-up.
+         +Z look-ahead = head +X, +X right = head -Y, +Y down = head -Z.
+         xyz from CAD/Isaac on the front face; do not copy Isaac Orient XYZ as URDF rpy. -->
     <link name="head_camera"/>
     <joint name="head_camera_joint" type="fixed">
-      <origin xyz="0.07 0 0.03" rpy="0 -1.5708 0"/>
+      <origin xyz="0.05939 0.04733 0.07466" rpy="${-PI/2} 0 ${-PI/2}"/>
       <parent link="head_link2"/>
       <child link="head_camera"/>
     </joint>

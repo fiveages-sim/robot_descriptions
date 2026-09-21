@@ -120,7 +120,7 @@ initialModeSchedule
         [0]
         {
             bodyMode "HM_DUAL_RELATIVE_MOBILE_BASE"
-            headMode "HEAD_DISABLE"
+            headMode "HEAD_GAZE"
         }
     }
 }
@@ -301,25 +301,25 @@ inputCost
             scaling 1e-3
 
             (0,0)   5.0     ; body_joint1 速度惩罚
-            (1,0)   5.0     ; body_joint2 速度惩罚
-            (2,0)   5.0     ; body_joint3 速度惩罚
-            (3,0)   2.0     ; body_joint4 速度惩罚
-            (4,0)   1.0     ; left_joint1 速度惩罚
-            (5,0)   1.0     ; left_joint2 速度惩罚
-            (6,0)   1.0     ; left_joint3 速度惩罚
-            (7,0)   1.0     ; left_joint4 速度惩罚
-            (8,0)   0.5     ; left_joint5 速度惩罚
-            (9,0)   0.5     ; left_joint6 速度惩罚
-            (10,0)  0.5     ; left_joint7 速度惩罚
-            (11,0)  1.0     ; right_joint1 速度惩罚
-            (12,0)  1.0     ; right_joint2 速度惩罚
-            (13,0)  1.0     ; right_joint3 速度惩罚
-            (14,0)  1.0     ; right_joint4 速度惩罚
-            (15,0)  0.5     ; right_joint5 速度惩罚
-            (16,0)  0.5     ; right_joint6 速度惩罚
-            (17,0)  0.5     ; right_joint7 速度惩罚
-            (18,0)  0.5     ; head_joint1 速度惩罚
-            (19,0)  0.5     ; head_joint2 速度惩罚
+            (1,1)   5.0     ; body_joint2 速度惩罚
+            (2,2)   5.0     ; body_joint3 速度惩罚
+            (3,3)   2.0     ; body_joint4 速度惩罚
+            (4,4)   1.0     ; left_joint1 速度惩罚
+            (5,5)   1.0     ; left_joint2 速度惩罚
+            (6,6)   1.0     ; left_joint3 速度惩罚
+            (7,7)   1.0     ; left_joint4 速度惩罚
+            (8,8)   0.5     ; left_joint5 速度惩罚
+            (9,9)   0.5     ; left_joint6 速度惩罚
+            (10,10)  0.5     ; left_joint7 速度惩罚
+            (11,11)  1.0     ; right_joint1 速度惩罚
+            (12,12)  1.0     ; right_joint2 速度惩罚
+            (13,13)  1.0     ; right_joint3 速度惩罚
+            (14,14)  1.0     ; right_joint4 速度惩罚
+            (15,15)  0.5     ; right_joint5 速度惩罚
+            (16,16)  0.5     ; right_joint6 速度惩罚
+            (17,17)  0.5     ; right_joint7 速度惩罚
+            (18,18)  0.5     ; head_joint1 速度惩罚
+            (19,19)  0.5     ; head_joint2 速度惩罚
         }
     }
 }
@@ -465,7 +465,7 @@ jointPositionLimits
 jointVelocityLimits
 {
     mu                              1e-2
-    delta                           1e-2
+    delta                           1e-3
 
     lowerBound
     {
@@ -473,9 +473,9 @@ jointVelocityLimits
         {
             omniWheelBasedMobileManipulator
             {
-                (0,0)  -0.5     ; vx 下界 [m/s]
-                (1,0)  -0.5     ; vy 下界 [m/s]
-                (2,0)  -0.5     ; omega 下界 [rad/s]
+                (0,0)  -0.1     ; vx 下界 [m/s]
+                (1,0)  -0.1     ; vy 下界 [m/s]
+                (2,0)  -0.1     ; omega 下界 [rad/s]
             }
         }
 
@@ -510,9 +510,9 @@ jointVelocityLimits
         {
             omniWheelBasedMobileManipulator
             {
-                (0,0)   0.5     ; vx 上界 [m/s]
-                (1,0)   0.5     ; vy 上界 [m/s]
-                (2,0)   0.5     ; omega 上界 [rad/s]
+                (0,0)   0.1     ; vx 上界 [m/s]
+                (1,0)   0.1     ; vy 上界 [m/s]
+                (2,0)   0.1     ; omega 上界 [rad/s]
             }
         }
 
@@ -575,7 +575,8 @@ selfCollision
 ;=============================================================================
 ; Head Midpoint Gaze Constraint
 ; 头部相机注视双手中点：仅由头部模式 HEAD_GAZE 独立控制，与身体模式无关。
-; fx/fy/cx/cy/width/height 与 WCE3 相同，取自 DEFAULT_HEAD_CAMERA_INTRINSICS。
+; cameraFrame 为 ROS 光学系（+X 右、+Y 下、+Z 朝前）。水平残差走 yaw（head_joint1），
+; 垂直残差走 pitch（head_joint2）。fx/fy/cx/cy/width/height 与 WCE3 相同。
 ;=============================================================================
 
 headMidpointGaze
@@ -591,7 +592,7 @@ headMidpointGaze
     horizontalDeadbandDeg       10.0
     verticalDeadbandDeg         10.0
     muAlignmentHorizontal       1.0
-    muAlignmentVertical         0.0
+    muAlignmentVertical         1.0
     muFront                     1.0
     minDepth                    0.3
 }

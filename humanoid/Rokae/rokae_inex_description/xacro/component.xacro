@@ -9,13 +9,13 @@
     - left_arm / right_arm: single arm, unprefixed (base_link / link1.. / joint1..)
     - chassis / body
 -->
-<robot name="Rokae_INEX" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Inex" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:arg name="type" default="base"/>
   <xacro:arg name="collider" default="simple"/>
   <xacro:arg name="skin" default="default"/>
   <xacro:arg name="chassis_joints_movable" default="false"/>
-  <xacro:arg name="isaac" default="false"/>
+  <xacro:arg name="isaac" default="true"/>
 
   <xacro:if value="${'$(arg type)' != 'base' and '$(arg type)' != 'chassis' and '$(arg type)' != 'left_arm' and '$(arg type)' != 'right_arm'}">
     <link name="base_link"/>
