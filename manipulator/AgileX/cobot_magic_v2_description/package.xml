@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>split_aloha_description</name>
+  <name>cobot_magic_v2_description</name>
   <version>1.0.0</version>
   <description>
-    <p>URDF Description package for AgileX Split Aloha</p>
-    <p>Ranger Mini chassis + lifting torso + dual Piper arms.
-      Full-body WBC and dual-arm demo in the same package.
-    </p>
+    <p>URDF Description package for AgileX Cobot Magic V2 (Mobile Aloha V2)</p>
+    <p>Tracer / Tracer V2 chassis + dual Piper arms (piper/h/l/x) + gripper or BrainCo Revo.</p>
   </description>
   <author>TODO</author>
   <maintainer email="TODO@email.com"/>
@@ -15,7 +13,6 @@
   <depend>piper_description</depend>
   <depend>brainco_description</depend>
   <depend>sensor_models</depend>
-  <depend>cobot_magic_v2_description</depend>
   <exec_depend>robot_common_launch</exec_depend>
 
   <export>

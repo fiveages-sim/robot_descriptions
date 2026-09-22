@@ -68,7 +68,7 @@ RViz Fixed Frame = `world`（不要用 `base_link`）。
 ```bash
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=split_aloha
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=split_aloha hardware:=isaac
-ros2 launch ocs2_arm_controller full_body.launch.py robot:=split_aloha type:=revo2
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=split_aloha type:=revo2 hardware:=isaac arms:=x
 ```
 
 ### 3.2 Demo（双臂）

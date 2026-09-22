@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <robot name="Cobot_Magic_V1" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:arg name="type" default="tracer"/>
+	<!-- Isaac asset import: hide sensor_models meshes that Isaac already provides. -->
+	<xacro:arg name="isaac" default="false"/>
 
 	<xacro:if value="${'$(arg type)' == 'tracer'}">
 		<xacro:include filename="$(find cobot_magic_v1_description)/xacro/components/tracer.xacro"/>
@@ -10,6 +12,6 @@
 	<xacro:if value="${'$(arg type)' == 'body'}">
 		<link name="base_footprint"/>
 		<xacro:include filename="$(find cobot_magic_v1_description)/xacro/components/body.xacro"/>
-		<xacro:Body parent="base_footprint"/>
+		<xacro:Body parent="base_footprint" isaac="$(arg isaac)"/>
 	</xacro:if>
 </robot>

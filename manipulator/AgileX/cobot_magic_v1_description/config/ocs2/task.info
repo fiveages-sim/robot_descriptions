@@ -90,11 +90,15 @@ initialModeSchedule
     {
     }
 
-    ; 默认：锁定底盘 + 双臂独立
-    ; 无定位 TF 时 WBC 也会强制 baseLocked；有 TF 后再 BASE_UNLOCK
+    ; 默认：底盘可动 + 双臂独立（无头、无腰，BODY_FREE）
+    ; 无定位 TF 时 WBC 仍会强制 baseLocked
     modeSequence
     {
-        [0]     HM_DUAL_IDLE
+        [0]
+        {
+            bodyMode "HM_DUAL_BODY_FREE"
+            headMode "HEAD_DISABLE"
+        }
     }
 }
 
@@ -208,17 +212,17 @@ inputCost
             scaling 1e-3
 
             (0,0)   1.0     ; left_joint1
-            (1,0)   1.0     ; left_joint2
-            (2,0)   1.0     ; left_joint3
-            (3,0)   1.0     ; left_joint4
-            (4,0)   0.5     ; left_joint5
-            (5,0)   0.5     ; left_joint6
-            (6,0)   1.0     ; right_joint1
-            (7,0)   1.0     ; right_joint2
-            (8,0)   1.0     ; right_joint3
-            (9,0)   1.0     ; right_joint4
-            (10,0)  0.5     ; right_joint5
-            (11,0)  0.5     ; right_joint6
+            (1,1)   1.0     ; left_joint2
+            (2,2)   1.0     ; left_joint3
+            (3,3)   1.0     ; left_joint4
+            (4,4)   0.5     ; left_joint5
+            (5,5)   0.5     ; left_joint6
+            (6,6)   1.0     ; right_joint1
+            (7,7)   1.0     ; right_joint2
+            (8,8)   1.0     ; right_joint3
+            (9,9)   1.0     ; right_joint4
+            (10,10)  0.5     ; right_joint5
+            (11,11)  0.5     ; right_joint6
         }
     }
 }
@@ -298,6 +302,19 @@ armLock
     rightNumJoints                  6       ; right_joint1~6
 }
 
+; HOME 关节参考：打开后把未排除关节软拉向 controller HOME。
+; 无腰，双臂全部纳入；activateDefault 默认开。
+; excludeJointIndices 是 arm 状态索引（不含底盘 x,y,yaw）。
+homeJointReference
+{
+    activate                        true
+    activateDefault                 true
+    mu                              1e-3
+    excludeJointIndices
+    {
+    }
+}
+
 ;=============================================================================
 ; Joint Position Limits
 ;=============================================================================
@@ -317,7 +334,7 @@ jointPositionLimits
 jointVelocityLimits
 {
     mu                              1e-2
-    delta                           1e-2
+    delta                           1e-3
 
     lowerBound
     {
@@ -382,7 +399,7 @@ jointVelocityLimits
 
 selfCollision
 {
-    activate                        true
+    activate                        false
 
     mu                              1e-3
     delta                           1e-2

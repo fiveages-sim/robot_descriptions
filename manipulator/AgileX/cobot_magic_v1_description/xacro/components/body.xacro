@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 	<xacro:property name="PI" value="3.1415926535897931"/>
-	<xacro:macro name="Body" params="parent:=base_footprint">
+	<xacro:macro name="Body" params="parent:=base_footprint isaac:=false">
+		<!-- isaac:=true hides sensor_models camera / lidar meshes (Isaac asset import). -->
 
 		<link name="body_link">
 			<inertial>
@@ -58,47 +59,24 @@
 			<axis/>
 		</joint>
 
-		<link name="camera_link1">
-			<inertial>
-				<origin xyz="-0.0292387906463559 0.000126439620513119 -0.000724950892729725"/>
-				<mass value="0.0877001598245188"/>
-				<inertia
-						ixx="7.77343248794949E-05"
-						ixy="2.44922634558373E-07"
-						ixz="1.73341747661077E-08"
-						iyy="9.73521513961785E-06"
-						iyz="-2.86133018917868E-09"
-						izz="7.74948757118157E-05"/>
-			</inertial>
+		<!-- 一台可调高度相机：只保留高位安装。
+		     stand 原点=三安装孔中心；pitch 原点=旋转孔。低位参考：0.189667 0 0.743143 -->
+		<link name="camera_stand2">
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/aloha_v1/camera_stand.glb"/>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/aloha_v1/camera_stand_fixed.glb"/>
 				</geometry>
 			</visual>
 		</link>
-
-		<joint name="camera_joint1" type="fixed">
-			<origin xyz="0.071198 0 0.10384" rpy="0 0.26931 0"/>
-			<parent link="camera_base_link"/>
-			<child link="camera_link1"/>
-		</joint>
-
-		<link name="camera1">
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
-				</geometry>
-			</visual>
-		</link>
-		<joint name="camera1_fixed" type="fixed">
-			<origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}"/>
-			<parent link="camera_link1"/>
-			<child link="camera1"/>
+		<joint name="camera_joint2" type="fixed">
+			<origin xyz="0.187901 0 1.263068"/>
+			<parent link="body_link"/>
+			<child link="camera_stand2"/>
 		</joint>
 
 		<link name="camera_link2">
 			<inertial>
-				<origin xyz="-0.0292307474530399 0.000126438461566014 -0.000753459207498031"/>
+				<origin xyz="0.0207658 0.00012644 -0.00075346"/>
 				<mass value="0.0877001605148491"/>
 				<inertia
 						ixx="7.77338961798341E-05"
@@ -110,26 +88,27 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/aloha_v1/camera_stand.glb"/>
+					<mesh filename="file://$(find cobot_magic_v1_description)/meshes/aloha_v1/camera_stand_pitch.glb"/>
 				</geometry>
 			</visual>
 		</link>
-
-		<joint name="camera_joint2" type="fixed">
-			<origin xyz="-0.14 0 0.5" rpy="0 0.011358 0"/>
-			<parent link="camera_link1"/>
+		<joint name="camera_stand2_joint" type="fixed">
+			<origin xyz="0.013337 0 0" rpy="0 0.270534 0"/>
+			<parent link="camera_stand2"/>
 			<child link="camera_link2"/>
 		</joint>
 
 		<link name="camera2">
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
-				</geometry>
-			</visual>
+			<xacro:unless value="${isaac}">
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+					</geometry>
+				</visual>
+			</xacro:unless>
 		</link>
 		<joint name="camera2_fixed" type="fixed">
-			<origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}"/>
+			<origin xyz="0.0499965 0 0" rpy="${-PI/2} 0 ${-PI/2}"/>
 			<parent link="camera_link2"/>
 			<child link="camera2"/>
 		</joint>
@@ -146,11 +125,13 @@
 						iyz="-2.6377E-07"
 						izz="1.7919E-05"/>
 			</inertial>
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
-				</geometry>
-			</visual>
+			<xacro:unless value="${isaac}">
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
+					</geometry>
+				</visual>
+			</xacro:unless>
 		</link>
 
 		<joint name="lidar_joint" type="fixed">

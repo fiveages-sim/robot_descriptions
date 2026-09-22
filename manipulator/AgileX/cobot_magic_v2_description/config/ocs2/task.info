@@ -1,10 +1,10 @@
-; OCS2 Wheel Humanoid Configuration - Split Aloha
-; ==============================================
+; OCS2 Wheel Humanoid Configuration - Cobot Magic V2
+; ==================================================
 ; full_body → ocs2_wbc_controller (info_file_name:=task).
 ;
-; 双臂 + Ranger Mini 全向底盘 + 升降：
-;   State (3 + 13): [base x,y,yaw | lifting | left×6 | right×6]
-;   Input (3 + 13): [vx, vy, omega | lifting | left×6 | right×6]
+; 双 Piper + Tracer 底盘，无身体 DOF（无腰 / 升降 / 头）：
+;   State (3 + 12): [base x,y,yaw | left×6 | right×6]
+;   Input (2 + 12): [vx, omega | left×6 | right×6]
 ; 双臂 demo 用同包 task_arm.info + topology:=dual（见 common.yaml）。
 
 ;=============================================================================
@@ -13,34 +13,28 @@
 
 model_information
 {
-    ; 4 = OmniWheelBasedMobileManipulator（全向底盘 vx, vy, omega）
-    manipulatorModelType    4
+    ; 1 = WheelBasedMobileManipulator（虚拟 SE(2) 底盘）
+    manipulatorModelType    1
 
-    ; Pinocchio 根坐标系（Ranger Mini URDF root）
-    baseFrame               "base_link"
+    ; Pinocchio 根坐标系（Tracer / Tracer V2 URDF root）
+    baseFrame               "base_footprint"
 
     ; 双臂末端
     eeFrame                 "left_gripper_center"
     eeFrame1                "right_gripper_center"
 
-    ; 升降平台 / 臂座
-    bodyFrame               "arm_base"
+    ; 无身体 DOF；WBC 仍要求该字段，与底盘同框
+    bodyFrame               "base_footprint"
 
-    ; 物理舵轮/驱动轮仅可视化（规划 URDF 默认为 fixed）；夹爪 + mimic 不进规划
+    ; 夹爪 + mimic；轮关节默认 fixed；相机关节已是 fixed，列入以免改回活动关节时进规划
     removeJoints
     {
-        [0]   "fl_steering_joint"
-        [1]   "fr_steering_joint"
-        [2]   "rl_steering_joint"
-        [3]   "rr_steering_joint"
-        [4]   "fl_wheel"
-        [5]   "fr_wheel"
-        [6]   "rl_wheel"
-        [7]   "rr_wheel"
-        [8]   "left_gripper_joint"
-        [9]   "right_gripper_joint"
-        [10]  "left_joint8"
-        [11]  "right_joint8"
+        [0]   "left_gripper_joint"
+        [1]   "right_gripper_joint"
+        [2]   "left_joint8"
+        [3]   "right_joint8"
+        [4]   "camera_stand_joint"
+        [5]   "camera_stand2_joint"
     }
 }
 
@@ -56,14 +50,14 @@ model_settings
 
 ;=============================================================================
 ; Initial State
-; 总维度 = 3（底盘）+ 13（lifting + 6 左臂 + 6 右臂）= 16
+; 总维度 = 3（底盘）+ 12（6 左臂 + 6 右臂）= 15
 ;=============================================================================
 
 initialState
 {
     base
     {
-        omniWheelBasedMobileManipulator
+        wheelBasedMobileManipulator
         {
             (0,0)  0.0   ; x [m]
             (1,0)  0.0   ; y [m]
@@ -73,19 +67,18 @@ initialState
 
     arm
     {
-        (0,0)   0.0     ; lifting_joint [m]
-        (1,0)   0.0     ; left_joint1
-        (2,0)   0.255   ; left_joint2
-        (3,0)  -0.2     ; left_joint3
-        (4,0)   0.0     ; left_joint4
-        (5,0)   0.0     ; left_joint5
-        (6,0)   0.0     ; left_joint6
-        (7,0)   0.0     ; right_joint1
-        (8,0)   0.255   ; right_joint2
-        (9,0)  -0.2     ; right_joint3
-        (10,0)  0.0     ; right_joint4
-        (11,0)  0.0     ; right_joint5
-        (12,0)  0.0     ; right_joint6
+        (0,0)   0.0     ; left_joint1
+        (1,0)   0.255   ; left_joint2
+        (2,0)  -0.2     ; left_joint3
+        (3,0)   0.0     ; left_joint4
+        (4,0)   0.0     ; left_joint5
+        (5,0)   0.0     ; left_joint6
+        (6,0)   0.0     ; right_joint1
+        (7,0)   0.255   ; right_joint2
+        (8,0)  -0.2     ; right_joint3
+        (9,0)   0.0     ; right_joint4
+        (10,0)  0.0     ; right_joint5
+        (11,0)  0.0     ; right_joint6
     }
 }
 
@@ -99,8 +92,8 @@ initialModeSchedule
     {
     }
 
-    ; 默认：腰部 FREE（单关节升降不锁腰）+ 双臂独立（无头）
-    ; 无定位 TF 时 WBC 也会强制 baseLocked；有 TF 后再 BASE_UNLOCK
+    ; 默认：底盘可动 + 双臂独立（无头、无腰，BODY_FREE）
+    ; 无定位 TF 时 WBC 仍会强制 baseLocked
     modeSequence
     {
         [0]
@@ -186,19 +179,19 @@ rollout
 }
 
 ;=============================================================================
-; Body Tracking — 升降平台（arm_base）
+; Body Tracking — 无身体 DOF，关闭
 ;=============================================================================
 
 bodyTrackingEE
 {
-    activate  true
+    activate  false
     muPosition 5.0
     muOrientation 5.0
 }
 
 ;=============================================================================
 ; Input Cost
-; 总输入维度 = 3（底盘 vx, vy, omega）+ 13（关节）= 16
+; 总输入维度 = 2（底盘）+ 12（关节）= 14
 ;=============================================================================
 
 inputCost
@@ -207,13 +200,12 @@ inputCost
     {
         base
         {
-            omniWheelBasedMobileManipulator
+            wheelBasedMobileManipulator
             {
                 scaling 1e-2
 
                 (0,0)   5.0     ; 线速度 vx [m/s]
-                (1,1)   5.0     ; 线速度 vy [m/s]
-                (2,2)   5.0     ; 角速度 omega [rad/s]
+                (1,1)   5.0     ; 角速度 omega [rad/s]
             }
         }
 
@@ -221,19 +213,18 @@ inputCost
         {
             scaling 1e-3
 
-            (0,0)   5.0     ; lifting_joint
-            (1,1)   5.0     ; left_joint1
-            (2,2)   5.0     ; left_joint2
-            (3,3)   5.0     ; left_joint3
-            (4,4)   5.0     ; left_joint4
-            (5,5)   2.5     ; left_joint5
-            (6,6)   2.5     ; left_joint6
-            (7,7)   5.0     ; right_joint1
-            (8,8)   5.0     ; right_joint2
-            (9,9)   5.0     ; right_joint3
-            (10,10)  5.0     ; right_joint4
-            (11,11)  2.5     ; right_joint5
-            (12,12)  2.5     ; right_joint6
+            (0,0)   1.0     ; left_joint1
+            (1,1)   1.0     ; left_joint2
+            (2,2)   1.0     ; left_joint3
+            (3,3)   1.0     ; left_joint4
+            (4,4)   0.5     ; left_joint5
+            (5,5)   0.5     ; left_joint6
+            (6,6)   1.0     ; right_joint1
+            (7,7)   1.0     ; right_joint2
+            (8,8)   1.0     ; right_joint3
+            (9,9)   1.0     ; right_joint4
+            (10,10)  0.5     ; right_joint5
+            (11,11)  0.5     ; right_joint6
         }
     }
 }
@@ -275,13 +266,13 @@ bimanualCoupling
 }
 
 ;=============================================================================
-; Waist Lock — 升降 1-DOF
+; Waist Lock — 关闭
 ;=============================================================================
 
 waistLock
 {
-    activate                        true
-    numJoints                       1       ; lifting_joint
+    activate                        false
+    numJoints                       0
 }
 
 ;=============================================================================
@@ -314,7 +305,7 @@ armLock
 }
 
 ; HOME 关节参考：打开后把未排除关节软拉向 controller HOME。
-; 单关节升降 + 双臂全部纳入；activateDefault 默认开。
+; 无腰，双臂全部纳入；activateDefault 默认开。
 ; excludeJointIndices 是 arm 状态索引（不含底盘 x,y,yaw）。
 homeJointReference
 {
@@ -339,41 +330,39 @@ jointPositionLimits
 
 ;=============================================================================
 ; Joint Velocity Limits
-; 输入布局：[base(3) | lifting(1) | left(6) | right(6)]
+; 输入布局：[base(2) | left(6) | right(6)]
 ;=============================================================================
 
 jointVelocityLimits
 {
     mu                              1e-2
-    delta                           1e-3
+    delta                           1e-2
 
     lowerBound
     {
         base
         {
-            omniWheelBasedMobileManipulator
+            wheelBasedMobileManipulator
             {
-                (0,0)  -0.1     ; vx 下界 [m/s]
-                (1,0)  -0.1     ; vy 下界 [m/s]
-                (2,0)  -0.1     ; omega 下界 [rad/s]
+                (0,0)  -0.3     ; 线速度下界 [m/s]
+                (1,0)  -0.3     ; 角速度下界 [rad/s]
             }
         }
 
         arm
         {
-            (0,0)  -0.3         ; lifting_joint [m/s]
-            (1,0)  -1.5708       ; left_joint1 [rad/s]
-            (2,0)  -1.5708       ; left_joint2 [rad/s]
-            (3,0)  -1.5708       ; left_joint3 [rad/s]
-            (4,0)  -1.5708       ; left_joint4 [rad/s]
-            (5,0)  -1.5708       ; left_joint5 [rad/s]
-            (6,0)  -1.5708       ; left_joint6 [rad/s]
-            (7,0)  -1.5708       ; right_joint1 [rad/s]
-            (8,0)  -1.5708       ; right_joint2 [rad/s]
-            (9,0)  -1.5708       ; right_joint3 [rad/s]
-            (10,0) -1.5708       ; right_joint4 [rad/s]
-            (11,0) -1.5708       ; right_joint5 [rad/s]
-            (12,0) -1.5708       ; right_joint6 [rad/s]
+            (0,0)  -1.57        ; left_joint1 [rad/s]
+            (1,0)  -1.57        ; left_joint2 [rad/s]
+            (2,0)  -1.57        ; left_joint3 [rad/s]
+            (3,0)  -1.57        ; left_joint4 [rad/s]
+            (4,0)  -1.57        ; left_joint5 [rad/s]
+            (5,0)  -1.57        ; left_joint6 [rad/s]
+            (6,0)  -1.57        ; right_joint1 [rad/s]
+            (7,0)  -1.57        ; right_joint2 [rad/s]
+            (8,0)  -1.57        ; right_joint3 [rad/s]
+            (9,0)  -1.57        ; right_joint4 [rad/s]
+            (10,0) -1.57        ; right_joint5 [rad/s]
+            (11,0) -1.57        ; right_joint6 [rad/s]
         }
     }
 
@@ -381,29 +370,27 @@ jointVelocityLimits
     {
         base
         {
-            omniWheelBasedMobileManipulator
+            wheelBasedMobileManipulator
             {
-                (0,0)   0.1     ; vx 上界 [m/s]
-                (1,0)   0.1     ; vy 上界 [m/s]
-                (2,0)   0.1     ; omega 上界 [rad/s]
+                (0,0)   0.3     ; 线速度上界 [m/s]
+                (1,0)   0.3     ; 角速度上界 [rad/s]
             }
         }
 
         arm
         {
-            (0,0)   0.3         ; lifting_joint [m/s]
-            (1,0)   1.5708       ; left_joint1 [rad/s]
-            (2,0)   1.5708       ; left_joint2 [rad/s]
-            (3,0)   1.5708       ; left_joint3 [rad/s]
-            (4,0)   1.5708       ; left_joint4 [rad/s]
-            (5,0)   1.5708       ; left_joint5 [rad/s]
-            (6,0)   1.5708       ; left_joint6 [rad/s]
-            (7,0)   1.5708       ; right_joint1 [rad/s]
-            (8,0)   1.5708       ; right_joint2 [rad/s]
-            (9,0)   1.5708       ; right_joint3 [rad/s]
-            (10,0)  1.5708       ; right_joint4 [rad/s]
-            (11,0)  1.5708       ; right_joint5 [rad/s]
-            (12,0)  1.5708       ; right_joint6 [rad/s]
+            (0,0)  1.57         ; left_joint1 [rad/s]
+            (1,0)  1.57         ; left_joint2 [rad/s]
+            (2,0)  1.57         ; left_joint3 [rad/s]
+            (3,0)  1.57         ; left_joint4 [rad/s]
+            (4,0)  1.57         ; left_joint5 [rad/s]
+            (5,0)  1.57         ; left_joint6 [rad/s]
+            (6,0)  1.57         ; right_joint1 [rad/s]
+            (7,0)  1.57         ; right_joint2 [rad/s]
+            (8,0)  1.57         ; right_joint3 [rad/s]
+            (9,0)  1.57         ; right_joint4 [rad/s]
+            (10,0) 1.57         ; right_joint5 [rad/s]
+            (11,0) 1.57         ; right_joint6 [rad/s]
         }
     }
 }
@@ -424,14 +411,12 @@ selfCollision
     {
     }
 
-    ; 臂 ↔ 箱体 / 升降台
+    ; 臂 ↔ 躯干（OBJ 碰撞未简化前不要打开）
     collisionLinkPairs
     {
-        [0] "left_link6, box_link",
-        [1] "right_link6, box_link",
-        [2] "left_link3, box_link",
-        [3] "right_link3, box_link",
-        [4] "left_link3, lifting_link",
-        [5] "right_link3, lifting_link",
+        [0] "left_link6, body_Link",
+        [1] "right_link6, body_Link",
+        [2] "left_link3, body_Link",
+        [3] "right_link3, body_Link",
     }
 }

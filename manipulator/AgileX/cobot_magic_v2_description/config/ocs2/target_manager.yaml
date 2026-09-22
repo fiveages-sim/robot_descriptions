@@ -1,0 +1,10 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.3
+    angular_scale: 0.5
+    enable_vr: true
+    enable_head_control: false
+
+    # Demo 用（task_arm baseFrame=arm_base）。全身 launch 会覆盖为 world。
+    marker_fixed_frame: arm_base
+    vr_follow_frame: arm_base

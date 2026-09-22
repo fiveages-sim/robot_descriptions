@@ -1,8 +1,0 @@
-# Placeholder for Aloha V2 visualization / Gazebo. Split Aloha controllers
-# live in split_aloha_description.
-controller_manager:
-  ros__parameters:
-    update_rate: 100  # Hz
-
-    joint_state_broadcaster:
-      type: joint_state_broadcaster/JointStateBroadcaster

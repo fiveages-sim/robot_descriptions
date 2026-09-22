@@ -118,20 +118,35 @@
       <limit lower="0.0" upper="0.8" effort="1000" velocity="10.0"/>
     </joint>
 
-    <link name="top_camera_support">
+    <!-- 顶置相机支架：网格直接用 cobot_magic_v2 的 camera_stand / camera_stand2。
+         stand2 孔对齐原 top_camera_support（0.11048 0 0.29448）；
+         stand 原点 = 孔位 − (0.028 0 0)。lift_link.glb 内嵌的 camera stand 需自行删掉。 -->
+    <link name="camera_stand">
       <visual>
         <geometry>
-          <mesh filename="file://$(find split_aloha_description)/meshes/aloha_split/camera_support.glb"/>
+          <mesh filename="file://$(find cobot_magic_v2_description)/meshes/aloha_v2/camera_stand.glb"/>
         </geometry>
       </visual>
     </link>
-
-    <joint name="top_camera_support_joint" type="fixed">
-      <origin xyz="0.11048 0 0.29448"/>
+    <joint name="camera_stand_joint" type="fixed">
+      <origin xyz="0.08248 0 0.29448"/>
       <parent link="lifting_link"/>
-      <child link="top_camera_support"/>
+      <child link="camera_stand"/>
     </joint>
 
+    <link name="camera_stand2">
+      <visual>
+        <origin rpy="${PI/2} 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find cobot_magic_v2_description)/meshes/aloha_v2/camera_stand2.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="camera_stand2_joint" type="fixed">
+      <origin xyz="0.028 0 0"/>
+      <parent link="camera_stand"/>
+      <child link="camera_stand2"/>
+    </joint>
 
     <link name="top_camera_link">
       <inertial>
@@ -156,7 +171,7 @@
 
     <joint name="top_camera_joint" type="fixed">
       <origin xyz="0.05158 0 0.000526" rpy="${-PI/2} 0 ${-PI/2}"/>
-      <parent link="top_camera_support"/>
+      <parent link="camera_stand2"/>
       <child link="top_camera_link"/>
     </joint>
   </xacro:macro>

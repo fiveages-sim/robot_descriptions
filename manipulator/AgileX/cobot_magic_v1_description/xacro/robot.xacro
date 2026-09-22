@@ -8,6 +8,8 @@
   <xacro:arg name="topology" default="full"/>
   <xacro:arg name="type" default="r5"/>
   <xacro:arg name="enable_wheel_joints" default="false"/>
+  <!-- Isaac asset import: hide sensor_models meshes that Isaac already provides. -->
+  <xacro:arg name="isaac" default="false"/>
 
   <xacro:property name="topology_arg" value="$(arg topology)"/>
   <xacro:property name="type_arg" value="$(arg type)"/>
@@ -58,7 +60,7 @@
     <xacro:include filename="$(find cobot_magic_v1_description)/xacro/components/tracer.xacro"/>
     <xacro:include filename="$(find cobot_magic_v1_description)/xacro/components/body.xacro"/>
     <xacro:Tracer enable_wheel_joints="$(arg enable_wheel_joints)"/>
-    <xacro:Body parent="base_footprint"/>
+    <xacro:Body parent="base_footprint" isaac="$(arg isaac)"/>
 
     <link name="arm_base"/>
     <joint name="arm_base_joint" type="fixed">
