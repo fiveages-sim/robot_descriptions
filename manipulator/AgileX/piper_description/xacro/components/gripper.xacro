@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- Unique Piper parallel gripper. Joint names match AdaptiveGripperController. -->
-  <xacro:macro name="agx_gripper" params="prefix parent_link xyz:='0 0 0' rpy:='0 0 0' housing:='false' travel:='0.05'">
+  <xacro:macro name="agx_gripper" params="prefix parent_link xyz:='0 0 0' rpy:='0 0 0' housing:='false' travel:='0.05' finger_link:='link7' finger_mimic_link:='link8'">
     <xacro:property name="use_housing" value="${str(housing).lower() in ['1', 'true', 'yes', 'on']}"/>
     <xacro:property name="finger_travel" value="${float(travel)}"/>
 
@@ -65,7 +65,7 @@
       <child link="${prefix}gripper_mount"/>
     </joint>
 
-    <link name="${prefix}link7">
+    <link name="${prefix}${finger_link}">
       <inertial>
         <origin xyz="0.00065123185041968 -0.0491929869131989 0.00972258769184025"/>
         <mass value="0.025"/>
@@ -86,12 +86,12 @@
     <joint name="${prefix}gripper_joint" type="prismatic">
       <origin xyz="0 0 0.138" rpy="1.5707963 0 0"/>
       <parent link="${prefix}gripper_mount"/>
-      <child link="${prefix}link7"/>
+      <child link="${prefix}${finger_link}"/>
       <axis xyz="0 0 1"/>
       <limit lower="0" upper="${finger_travel}" effort="10" velocity="1"/>
     </joint>
 
-    <link name="${prefix}link8">
+    <link name="${prefix}${finger_mimic_link}">
       <inertial>
         <origin xyz="0.000651231850419722 -0.0491929869131991 0.00972258769184024"/>
         <mass value="0.025"/>
@@ -112,7 +112,7 @@
     <joint name="${prefix}joint8" type="prismatic">
       <origin xyz="0 0 0.138" rpy="1.5707963 0 -3.1415926"/>
       <parent link="${prefix}gripper_mount"/>
-      <child link="${prefix}link8"/>
+      <child link="${prefix}${finger_mimic_link}"/>
       <mimic joint="${prefix}gripper_joint" multiplier="-1" offset="0"/>
       <axis xyz="0 0 -1"/>
       <limit lower="${-finger_travel}" upper="0" effort="10" velocity="1"/>

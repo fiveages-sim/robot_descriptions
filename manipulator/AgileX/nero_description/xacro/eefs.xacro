@@ -1,112 +1,114 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:include filename="$(find piper_description)/xacro/components/gripper.xacro"/>
-  <xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
+    <xacro:include filename="$(find piper_description)/xacro/components/gripper.xacro"/>
+    <xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
 
-  <xacro:macro name="NeroEndEffectors" params="name type:='gripper'">
-    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
-    <xacro:property name="hand_name" value="${name + '_hand' if name else 'hand'}"/>
-    <xacro:property name="ee_type" value="${type if type else 'gripper'}"/>
-    <xacro:property name="use_gripper" value="${ee_type == 'gripper'}"/>
-    <xacro:property name="use_revo2" value="${ee_type == 'revo2'}"/>
-    <xacro:property name="use_none" value="${ee_type == 'none'}"/>
+    <xacro:macro name="NeroEndEffectors" params="name type:='gripper'">
+        <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+        <xacro:property name="hand_name" value="${name + '_hand' if name else 'hand'}"/>
+        <xacro:property name="ee_type" value="${type if type else 'gripper'}"/>
+        <xacro:property name="use_gripper" value="${ee_type == 'gripper'}"/>
+        <xacro:property name="use_revo2" value="${ee_type == 'revo2'}"/>
+        <xacro:property name="use_none" value="${ee_type == 'none'}"/>
 
-    <xacro:if value="${use_gripper}">
-      <link name="${prefix}gripper_flange">
-        <inertial>
-          <origin xyz="0.000253201 -0.000322696 -0.010082901" rpy="0 0 0"/>
-          <mass value="0.04771096"/>
-          <inertia ixx="3.614107e-05" ixy="0" ixz="0" iyy="1.7824164e-05" iyz="0" izz="2.695944e-05"/>
-        </inertial>
-        <visual>
-          <geometry>
-            <mesh filename="file://$(find nero_description)/meshes/gripper/dae/gripper_flange.dae"/>
-          </geometry>
-        </visual>
-        <collision>
-          <geometry>
-            <mesh filename="file://$(find nero_description)/meshes/gripper/gripper_flange.stl"/>
-          </geometry>
-        </collision>
-      </link>
-      <joint name="${prefix}gripper_flange_joint" type="fixed">
-        <origin xyz="0.031 0 -0.0235" rpy="-1.5708 0 -1.5708"/>
-        <parent link="${prefix}tcp"/>
-        <child link="${prefix}gripper_flange"/>
-      </joint>
+        <xacro:if value="${use_gripper}">
+            <link name="${prefix}gripper_flange">
+                <inertial>
+                    <origin xyz="0.000253201 -0.000322696 -0.010082901"/>
+                    <mass value="0.04771096"/>
+                    <inertia ixx="3.614107e-05" ixy="0" ixz="0" iyy="1.7824164e-05" iyz="0" izz="2.695944e-05"/>
+                </inertial>
+                <visual>
+                    <geometry>
+                        <mesh filename="file://$(find nero_description)/meshes/flange_gripper.glb"/>
+                    </geometry>
+                </visual>
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find nero_description)/meshes/flange_gripper.glb"/>
+                    </geometry>
+                </collision>
+            </link>
+            <joint name="${prefix}gripper_flange_joint" type="fixed">
+                <origin xyz="0.031 0 -0.0235" rpy="-1.5708 0 -1.5708"/>
+                <parent link="${prefix}tcp"/>
+                <child link="${prefix}gripper_flange"/>
+            </joint>
 
-      <link name="${prefix}gripper_base">
-        <inertial>
-          <origin xyz="-0.000183807162235591 8.05033155577911E-05 0.0321436689908876"/>
-          <mass value="0.45"/>
-          <inertia ixx="0.00092934" ixy="0.00000034" ixz="-0.00000738" iyy="0.00071447" iyz="0.00000005"
-                   izz="0.00039442"/>
-        </inertial>
-        <visual>
-          <geometry>
-            <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base.glb"/>
-          </geometry>
-        </visual>
-        <collision>
-          <geometry>
-            <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base.glb"/>
-          </geometry>
-        </collision>
-      </link>
-      <joint name="${prefix}gripper_base_joint" type="fixed">
-        <origin xyz="0 0 0.006"/>
-        <parent link="${prefix}gripper_flange"/>
-        <child link="${prefix}gripper_base"/>
-      </joint>
+            <link name="${prefix}gripper_base">
+                <inertial>
+                    <origin xyz="-0.000183807162235591 8.05033155577911E-05 0.0321436689908876"/>
+                    <mass value="0.45"/>
+                    <inertia ixx="0.00092934" ixy="0.00000034" ixz="-0.00000738" iyy="0.00071447" iyz="0.00000005"
+                             izz="0.00039442"/>
+                </inertial>
+                <visual>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base.glb"/>
+                    </geometry>
+                </visual>
+                <collision>
+                    <geometry>
+                        <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base.glb"/>
+                    </geometry>
+                </collision>
+            </link>
+            <joint name="${prefix}gripper_base_joint" type="fixed">
+                <origin xyz="0 0 0.006"/>
+                <parent link="${prefix}gripper_flange"/>
+                <child link="${prefix}gripper_base"/>
+            </joint>
 
-      <xacro:agx_gripper
-          prefix="${prefix}"
-          parent_link="${prefix}gripper_base"
-          xyz="0 0 0"/>
-    </xacro:if>
+            <xacro:agx_gripper
+                    prefix="${prefix}"
+                    parent_link="${prefix}gripper_base"
+                    xyz="0 0 0"
+                    finger_link="gripper_link7"
+                    finger_mimic_link="gripper_link8"/>
+        </xacro:if>
 
-    <xacro:if value="${use_revo2}">
-      <link name="${prefix}revo2_flange">
-        <inertial>
-          <origin xyz="0.000253201 -0.000322696 -0.010082901" rpy="0 0 0"/>
-          <mass value="0.04771096"/>
-          <inertia ixx="3.614107e-05" ixy="0" ixz="0" iyy="1.7824164e-05" iyz="0" izz="2.695944e-05"/>
-        </inertial>
-        <visual>
-          <geometry>
-            <mesh filename="file://$(find nero_description)/meshes/nero/dae/revo2_flange.dae"/>
-          </geometry>
-        </visual>
-        <collision>
-          <geometry>
-            <mesh filename="file://$(find nero_description)/meshes/nero/revo2_flange.stl"/>
-          </geometry>
-        </collision>
-      </link>
-      <joint name="${prefix}revo2_flange_joint" type="fixed">
-        <origin xyz="0.031 0 -0.0235" rpy="-1.5708 0 -1.5708"/>
-        <parent link="${prefix}tcp"/>
-        <child link="${prefix}revo2_flange"/>
-      </joint>
-      <xacro:BrainCoHand name="${hand_name}" use_flange="false"/>
-      <joint name="${prefix}hand_base_joint" type="fixed">
-        <origin xyz="0 0 0.012" rpy="0 0 3.1415926"/>
-        <parent link="${prefix}revo2_flange"/>
-        <child link="${hand_name}_hand_base"/>
-      </joint>
-      <link name="${prefix}gripper_center"/>
-      <joint name="${prefix}gripper_center_fixed" type="fixed">
-        <parent link="${prefix}tcp"/>
-        <child link="${prefix}gripper_center"/>
-      </joint>
-    </xacro:if>
+        <xacro:if value="${use_revo2}">
+            <link name="${prefix}revo2_flange">
+                <inertial>
+                    <origin xyz="0.000253201 -0.000322696 -0.010082901"/>
+                    <mass value="0.04771096"/>
+                    <inertia ixx="3.614107e-05" ixy="0" ixz="0" iyy="1.7824164e-05" iyz="0" izz="2.695944e-05"/>
+                </inertial>
+                <visual>
+                    <geometry>
+                      <mesh filename="file://$(find nero_description)/meshes/flange_revo2.glb"/>
+                    </geometry>
+                </visual>
+                <collision>
+                    <geometry>
+                      <mesh filename="file://$(find nero_description)/meshes/flange_revo2.glb"/>
+                    </geometry>
+                </collision>
+            </link>
+            <joint name="${prefix}revo2_flange_joint" type="fixed">
+                <origin xyz="0.031 0 -0.0235" rpy="-1.5708 0 -1.5708"/>
+                <parent link="${prefix}tcp"/>
+                <child link="${prefix}revo2_flange"/>
+            </joint>
+            <xacro:BrainCoHand name="${hand_name}" use_flange="false"/>
+            <joint name="${prefix}hand_base_joint" type="fixed">
+                <origin xyz="0 0 0.012" rpy="0 0 3.1415926"/>
+                <parent link="${prefix}revo2_flange"/>
+                <child link="${hand_name}_hand_base"/>
+            </joint>
+            <link name="${prefix}gripper_center"/>
+            <joint name="${prefix}gripper_center_fixed" type="fixed">
+                <parent link="${prefix}tcp"/>
+                <child link="${prefix}gripper_center"/>
+            </joint>
+        </xacro:if>
 
-    <xacro:if value="${use_none}">
-      <link name="${prefix}gripper_center"/>
-      <joint name="${prefix}gripper_center_fixed" type="fixed">
-        <parent link="${prefix}tcp"/>
-        <child link="${prefix}gripper_center"/>
-      </joint>
-    </xacro:if>
-  </xacro:macro>
+        <xacro:if value="${use_none}">
+            <link name="${prefix}gripper_center"/>
+            <joint name="${prefix}gripper_center_fixed" type="fixed">
+                <parent link="${prefix}tcp"/>
+                <child link="${prefix}gripper_center"/>
+            </joint>
+        </xacro:if>
+    </xacro:macro>
 </robot>
