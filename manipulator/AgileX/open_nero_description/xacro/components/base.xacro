@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:include filename="$(find open_nero_description)/xacro/components/d435.xacro"/>
+
+  <!-- Open Nero fixed workstation + overhead camera stand.
+       isaac:=true hides sensor_models camera meshes (Isaac asset import). -->
+  <xacro:macro name="open_nero_base" params="isaac:=false collider:='simple'">
+    <link name="base_link">
+      <inertial>
+        <origin xyz="-0.0592395620981769 -0.068642440505388 0.0562764736144042" rpy="0 0 0"/>
+        <mass value="4.46524857458863"/>
+        <inertia
+          ixx="0.0608289280191989"
+          ixy="-2.54649959130438E-06"
+          ixz="1.11851948046933E-07"
+          iyy="0.0218722514454004"
+          iyz="-0.000689477252402357"
+          izz="0.0680524540174318"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find open_nero_description)/meshes/base.glb"/>
+        </geometry>
+      </visual>
+      <xacro:if value="${collider == 'simple'}">
+        <!-- Middle pillar only; ignore the wider footplate in base.glb. -->
+        <collision>
+          <origin xyz="0 0 0.33"/>
+          <geometry>
+            <cylinder radius="0.06" length="0.66"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find open_nero_description)/meshes/base.glb"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    </link>
+
+    <!-- Alias frame used by OCS2 (same pose as base_link). -->
+    <link name="arm_base"/>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="arm_base"/>
+    </joint>
+
+    <!-- Reuse cobot_magic_v2 camera_stand2. Link frame matches camera_link2 / stand2:
+         X-forward (look), Z-up. Mesh +90° about X so the disk stands in XZ. -->
+    <link name="top_camera_stand_link">
+      <inertial>
+        <origin xyz="0.0166419912756578 0 -0.0192874146389437" rpy="0 0 0"/>
+        <mass value="0.00531091408330161"/>
+        <inertia
+          ixx="4.65820593908766E-06"
+          ixy="0"
+          ixz="-4.18608407788093E-08"
+          iyy="9.5244387196321E-07"
+          iyz="0"
+          izz="4.06661561438356E-06"/>
+      </inertial>
+      <visual>
+        <origin rpy="${PI/2} 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find cobot_magic_v2_description)/meshes/aloha_v2/camera_stand2.glb"/>
+        </geometry>
+      </visual>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <origin rpy="${PI/2} 0 0"/>
+          <geometry>
+            <mesh filename="file://$(find cobot_magic_v2_description)/meshes/aloha_v2/camera_stand2.glb"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    </link>
+    <!-- Vendor boom tilt was rpy(0, -0.5445, 0) with X along the arm. Add +π/2 pitch
+         so +X is the look direction (same convention as camera_link2). -->
+    <joint name="top_camera_stand_joint" type="fixed">
+      <origin xyz="0.067 0 0.642" rpy="0 ${PI/2 - 0.5445} 0"/>
+      <parent link="base_link"/>
+      <child link="top_camera_stand_link"/>
+    </joint>
+
+    <!-- Optical camera on the X-forward stand. 0.06 clears stand2's +X=0.030
+         face by the D435 body depth (front at origin, body extends -Z optical). -->
+    <joint name="top_camera_joint" type="fixed">
+      <parent link="top_camera_stand_link"/>
+      <child link="top_d435_camera"/>
+      <origin xyz="0.055 0 0" rpy="${-PI/2} 0 ${-PI/2}"/>
+    </joint>
+    <link name="top_d435_camera">
+      <xacro:open_nero_d435_visual isaac="${isaac}"/>
+    </link>
+  </xacro:macro>
+</robot>

@@ -2,14 +2,22 @@
 <robot name="Nero" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="type" default=""/>
   <xacro:arg name="name" default=""/>
+  <xacro:arg name="collider" default="simple"/>
+  <xacro:arg name="direction" default=""/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
 
   <xacro:property name="type_arg" value="$(arg type)"/>
   <xacro:property name="name_arg" value="$(arg name)"/>
   <xacro:property name="ee_type" value="${type_arg if type_arg else 'gripper'}"/>
 
   <xacro:include filename="$(find nero_description)/xacro/Nero.xacro"/>
-  <xacro:Nero name="${name_arg}"/>
+  <xacro:Nero name="${name_arg}" collider="$(arg collider)"/>
 
   <xacro:include filename="$(find nero_description)/xacro/eefs.xacro"/>
-  <xacro:NeroEndEffectors name="${name_arg}" type="${ee_type}"/>
+  <xacro:NeroEndEffectors
+      name="${name_arg}"
+      type="${ee_type}"
+      collider="$(arg collider)"
+      direction="$(arg direction)"
+      fixed_joints="$(arg eef_fixed_joints)"/>
 </robot>

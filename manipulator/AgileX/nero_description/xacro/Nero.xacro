@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="Nero" params="name">
+    <xacro:property name="PI" value="3.1415926535897931"/>
+
+    <xacro:macro name="nero_collision" params="collider mesh xyz:='0 0 0' rpy:='0 0 0' primitive:='box' radius:='0' length:='0' size:='0 0 0'">
+        <xacro:if value="${collider == 'simple'}">
+            <collision>
+                <origin xyz="${xyz}" rpy="${rpy}"/>
+                <geometry>
+                    <xacro:if value="${primitive == 'cylinder'}">
+                        <cylinder radius="${radius}" length="${length}"/>
+                    </xacro:if>
+                    <xacro:if value="${primitive == 'box'}">
+                        <box size="${size}"/>
+                    </xacro:if>
+                </geometry>
+            </collision>
+        </xacro:if>
+        <xacro:if value="${collider == 'convex'}">
+            <collision>
+                <geometry>
+                    <mesh filename="${mesh}"/>
+                </geometry>
+            </collision>
+        </xacro:if>
+    </xacro:macro>
+
+    <xacro:macro name="Nero" params="name collider:='simple'">
         <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
         <link name="${prefix}base_link">
@@ -15,11 +40,10 @@
                     <mesh filename="file://$(find nero_description)/meshes/base_link.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/base_link.glb"/>
-                </geometry>
-            </collision>
+            <xacro:nero_collision
+                    collider="${collider}"
+                    mesh="file://$(find nero_description)/meshes/base_link.glb"
+                    primitive="cylinder" xyz="-0.0145 0 0.043" radius="0.055" length="0.086"/>
         </link>
         <link name="${prefix}link1">
             <inertial>
@@ -33,11 +57,10 @@
                     <mesh filename="file://$(find nero_description)/meshes/link1.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/link1.glb"/>
-                </geometry>
-            </collision>
+            <xacro:nero_collision
+                    collider="${collider}"
+                    mesh="file://$(find nero_description)/meshes/link1.glb"
+                    primitive="box" xyz="0 -0.002 -0.0135" size="0.072 0.0775 0.087"/>
         </link>
         <joint name="${prefix}joint1" type="revolute">
             <origin xyz="0 0 0.138"/>
@@ -58,11 +81,10 @@
                     <mesh filename="file://$(find nero_description)/meshes/link2.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/link2.glb"/>
-                </geometry>
-            </collision>
+            <xacro:nero_collision
+                    collider="${collider}"
+                    mesh="file://$(find nero_description)/meshes/link2.glb"
+                    primitive="cylinder" xyz="0.0033 -0.0977 0" rpy="${PI/2} 0 0" radius="0.047" length="0.262"/>
         </link>
         <joint name="${prefix}joint2" type="revolute">
             <origin  rpy="1.5707963  3.1415926 0"/>
@@ -83,11 +105,10 @@
                     <mesh filename="file://$(find nero_description)/meshes/link3.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/link3.glb"/>
-                </geometry>
-            </collision>
+            <xacro:nero_collision
+                    collider="${collider}"
+                    mesh="file://$(find nero_description)/meshes/link3.glb"
+                    primitive="cylinder" xyz="0 0.002 -0.089" radius="0.040" length="0.235"/>
         </link>
         <joint name="${prefix}joint3" type="revolute">
             <origin xyz="0 -0.31 0" rpy="-1.5707963  0 3.1415926926"/>
@@ -108,11 +129,10 @@
                     <mesh filename="file://$(find nero_description)/meshes/link4.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/link4.glb"/>
-                </geometry>
-            </collision>
+            <xacro:nero_collision
+                    collider="${collider}"
+                    mesh="file://$(find nero_description)/meshes/link4.glb"
+                    primitive="cylinder" xyz="0 -0.0365 0" rpy="${PI/2} 0 0" radius="0.040" length="0.135"/>
         </link>
         <joint name="${prefix}joint4" type="revolute">
             <origin  rpy="-1.5707963  0 3.1415926926"/>
@@ -133,11 +153,10 @@
                     <mesh filename="file://$(find nero_description)/meshes/link5.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/link5.glb"/>
-                </geometry>
-            </collision>
+            <xacro:nero_collision
+                    collider="${collider}"
+                    mesh="file://$(find nero_description)/meshes/link5.glb"
+                    primitive="cylinder" xyz="0 0 -0.082" radius="0.035" length="0.189"/>
         </link>
         <joint name="${prefix}joint5" type="revolute">
             <origin xyz="0 -0.27001 0" rpy="1.5707963  -1.5707963  0"/>
@@ -158,11 +177,10 @@
                     <mesh filename="file://$(find nero_description)/meshes/link6.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/link6.glb"/>
-                </geometry>
-            </collision>
+            <xacro:nero_collision
+                    collider="${collider}"
+                    mesh="file://$(find nero_description)/meshes/link6.glb"
+                    primitive="box" xyz="-0.0012 -0.0021 0" size="0.047 0.051 0.053"/>
         </link>
         <joint name="${prefix}joint6" type="revolute">
             <origin  rpy="1.5707963  -1.5707963  0"/>
@@ -183,11 +201,10 @@
                     <mesh filename="file://$(find nero_description)/meshes/link7.glb"/>
                 </geometry>
             </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="file://$(find nero_description)/meshes/link7.glb"/>
-                </geometry>
-            </collision>
+            <xacro:nero_collision
+                    collider="${collider}"
+                    mesh="file://$(find nero_description)/meshes/link7.glb"
+                    primitive="box" xyz="0 0 -0.0047" size="0.027 0.027 0.010"/>
         </link>
         <joint name="${prefix}joint7" type="revolute">
             <origin xyz="0 -0.0235 0" rpy="1.5707963 0 0"/>

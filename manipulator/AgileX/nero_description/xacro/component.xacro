@@ -2,9 +2,10 @@
 <robot name="Nero Component $(arg type)" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="type" default="ee"/>
   <xacro:arg name="name" default=""/>
+  <xacro:arg name="collider" default="simple"/>
 
   <xacro:if value="${'$(arg type)' == 'ee'}">
     <xacro:include filename="$(find nero_description)/xacro/Nero.xacro"/>
-    <xacro:Nero name="$(arg name)"/>
+    <xacro:Nero name="$(arg name)" collider="$(arg collider)"/>
   </xacro:if>
 </robot>

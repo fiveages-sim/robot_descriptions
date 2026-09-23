@@ -1,0 +1,10 @@
+/**:
+  ros__parameters:
+    # 线性控制缩放因子：映射到 */twist 的线速度上限 (m/s，满杆)
+    linear_scale: 0.1
+
+    # 角度控制缩放因子：映射到 */twist 的角速度上限 (rad/s，满杆)
+    angular_scale: 0.25
+    
+    # 是否启用VR输入处理
+    enable_vr: true

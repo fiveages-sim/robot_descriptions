@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot name="Nero Gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="collider" default="simple"/>
   <xacro:include filename="$(find nero_description)/xacro/eefs.xacro"/>
   <link name="tcp"/>
-  <xacro:NeroEndEffectors name="" type="gripper"/>
+  <xacro:NeroEndEffectors name="" type="gripper" collider="$(arg collider)"/>
 </robot>

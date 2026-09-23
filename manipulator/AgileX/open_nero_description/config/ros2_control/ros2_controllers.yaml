@@ -1,0 +1,18 @@
+# Dual-arm Open Nero with Nero parallel grippers
+controller_manager:
+  ros__parameters:
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    use_effort_interface: false
+
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    use_effort_interface: false

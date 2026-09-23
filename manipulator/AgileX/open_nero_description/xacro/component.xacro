@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+  Component-wise description for Open Nero, used by
+  robot_descriptions/common/robot_common_launch/launch/visualize/component.launch.py
+
+  Supported types (arg "type"):
+    - body (default): workstation + overhead camera (no arms / EEF)
+
+  Isaac asset import: hide sensor_models camera meshes with isaac:=true
+  (launch: xacro_isaac:=true). Independent of hardware:=isaac.
+-->
+<robot name="Open_Nero" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="body"/>
+  <xacro:arg name="collider" default="simple"/>
+  <xacro:arg name="isaac" default="true"/>
+
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <xacro:include filename="$(find open_nero_description)/xacro/components/base.xacro"/>
+    <xacro:open_nero_base isaac="$(arg isaac)" collider="$(arg collider)"/>
+  </xacro:if>
+</robot>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- sensor_models d435.glb is already optical-aligned; sit it on the camera frame. -->
+  <xacro:macro name="open_nero_d435_visual" params="isaac:=false">
+    <xacro:unless value="${isaac}">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+        </geometry>
+      </visual>
+    </xacro:unless>
+  </xacro:macro>
+</robot>

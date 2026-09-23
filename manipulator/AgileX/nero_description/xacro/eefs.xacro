@@ -3,13 +3,15 @@
     <xacro:include filename="$(find piper_description)/xacro/components/gripper.xacro"/>
     <xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
 
-    <xacro:macro name="NeroEndEffectors" params="name type:='gripper'">
+    <xacro:macro name="NeroEndEffectors" params="name type:='gripper' collider:='simple' direction:='' fixed_joints:='false'">
         <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
         <xacro:property name="hand_name" value="${name + '_hand' if name else 'hand'}"/>
         <xacro:property name="ee_type" value="${type if type else 'gripper'}"/>
         <xacro:property name="use_gripper" value="${ee_type == 'gripper'}"/>
         <xacro:property name="use_revo2" value="${ee_type == 'revo2'}"/>
         <xacro:property name="use_none" value="${ee_type == 'none'}"/>
+        <!-- direction=1 左手，-1 右手。未传时按 name==right 推断（对齐 Piper / Open Nero）。 -->
+        <xacro:property name="hand_direction" value="${float(direction) if str(direction) != '' else (-1.0 if name == 'right' else 1.0)}"/>
 
         <xacro:if value="${use_gripper}">
             <link name="${prefix}gripper_flange">
@@ -23,11 +25,21 @@
                         <mesh filename="file://$(find nero_description)/meshes/flange_gripper.glb"/>
                     </geometry>
                 </visual>
-                <collision>
-                    <geometry>
-                        <mesh filename="file://$(find nero_description)/meshes/flange_gripper.glb"/>
-                    </geometry>
-                </collision>
+                <xacro:if value="${collider == 'simple'}">
+                    <collision>
+                        <origin xyz="0 0 -0.018"/>
+                        <geometry>
+                            <box size="0.044 0.055 0.060"/>
+                        </geometry>
+                    </collision>
+                </xacro:if>
+                <xacro:if value="${collider == 'convex'}">
+                    <collision>
+                        <geometry>
+                            <mesh filename="file://$(find nero_description)/meshes/flange_gripper.glb"/>
+                        </geometry>
+                    </collision>
+                </xacro:if>
             </link>
             <joint name="${prefix}gripper_flange_joint" type="fixed">
                 <origin xyz="0.031 0 -0.0235" rpy="-1.5708 0 -1.5708"/>
@@ -47,11 +59,21 @@
                         <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base.glb"/>
                     </geometry>
                 </visual>
-                <collision>
-                    <geometry>
-                        <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base.glb"/>
-                    </geometry>
-                </collision>
+                <xacro:if value="${collider == 'simple'}">
+                    <collision>
+                        <origin xyz="-0.0048 0 0.0325"/>
+                        <geometry>
+                            <box size="0.075 0.164 0.065"/>
+                        </geometry>
+                    </collision>
+                </xacro:if>
+                <xacro:if value="${collider == 'convex'}">
+                    <collision>
+                        <geometry>
+                            <mesh filename="file://$(find piper_description)/meshes/gripper/gripper_base.glb"/>
+                        </geometry>
+                    </collision>
+                </xacro:if>
             </link>
             <joint name="${prefix}gripper_base_joint" type="fixed">
                 <origin xyz="0 0 0.006"/>
@@ -79,18 +101,28 @@
                       <mesh filename="file://$(find nero_description)/meshes/flange_revo2.glb"/>
                     </geometry>
                 </visual>
-                <collision>
-                    <geometry>
-                      <mesh filename="file://$(find nero_description)/meshes/flange_revo2.glb"/>
-                    </geometry>
-                </collision>
+                <xacro:if value="${collider == 'simple'}">
+                    <collision>
+                        <origin xyz="0 0 -0.018"/>
+                        <geometry>
+                            <box size="0.044 0.055 0.060"/>
+                        </geometry>
+                    </collision>
+                </xacro:if>
+                <xacro:if value="${collider == 'convex'}">
+                    <collision>
+                        <geometry>
+                          <mesh filename="file://$(find nero_description)/meshes/flange_revo2.glb"/>
+                        </geometry>
+                    </collision>
+                </xacro:if>
             </link>
             <joint name="${prefix}revo2_flange_joint" type="fixed">
                 <origin xyz="0.031 0 -0.0235" rpy="-1.5708 0 -1.5708"/>
                 <parent link="${prefix}tcp"/>
                 <child link="${prefix}revo2_flange"/>
             </joint>
-            <xacro:BrainCoHand name="${hand_name}" use_flange="false"/>
+            <xacro:BrainCoHand name="${hand_name}" use_flange="false" direction="${hand_direction}" fixed_joints="${fixed_joints}"/>
             <joint name="${prefix}hand_base_joint" type="fixed">
                 <origin xyz="0 0 0.012" rpy="0 0 3.1415926"/>
                 <parent link="${prefix}revo2_flange"/>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<robot name="Open_Nero" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="collider" default="simple"/>
+  <xacro:arg name="isaac" default="false"/>
+
+  <!-- type / left_type / right_type: Nero end-effector keys -->
+  <xacro:arg name="type" default="gripper"/>
+  <xacro:arg name="left_type" default=""/>
+  <xacro:arg name="right_type" default=""/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+  <xacro:property name="type_arg" value="$(arg type)"/>
+  <xacro:property name="left_type_arg" value="$(arg left_type)"/>
+  <xacro:property name="right_type_arg" value="$(arg right_type)"/>
+  <xacro:property name="effective_left_type" value="${left_type_arg if left_type_arg != '' else type_arg}"/>
+  <xacro:property name="effective_right_type" value="${right_type_arg if right_type_arg != '' else type_arg}"/>
+
+  <xacro:include filename="$(find nero_description)/xacro/Nero.xacro"/>
+  <xacro:include filename="$(find nero_description)/xacro/eefs.xacro"/>
+  <xacro:include filename="$(find open_nero_description)/xacro/components/base.xacro"/>
+  <xacro:include filename="$(find open_nero_description)/xacro/components/cameras.xacro"/>
+
+  <xacro:open_nero_base isaac="$(arg isaac)" collider="$(arg collider)"/>
+  <xacro:Nero name="left" collider="$(arg collider)"/>
+  <xacro:Nero name="right" collider="$(arg collider)"/>
+  <xacro:NeroEndEffectors name="left" type="${effective_left_type}" collider="$(arg collider)" direction="1" fixed_joints="$(arg eef_fixed_joints)"/>
+  <xacro:NeroEndEffectors name="right" type="${effective_right_type}" collider="$(arg collider)" direction="-1" fixed_joints="$(arg eef_fixed_joints)"/>
+
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="arm_mount_x" value="-0.002"/>
+  <xacro:property name="arm_mount_y" value="0.1"/>
+  <xacro:property name="arm_mount_z" value="0.59"/>
+
+  <joint name="left_arm_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_base_link"/>
+    <origin xyz="${arm_mount_x} ${arm_mount_y} ${arm_mount_z}" rpy="${-PI/2} ${-PI/2} 0"/>
+  </joint>
+  <joint name="right_arm_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_base_link"/>
+    <origin xyz="${arm_mount_x} ${-arm_mount_y} ${arm_mount_z}" rpy="${PI/2} ${-PI/2} 0"/>
+  </joint>
+
+  <xacro:if value="${effective_left_type == 'gripper'}">
+    <xacro:open_nero_wrist_camera prefix="left_" isaac="$(arg isaac)"/>
+  </xacro:if>
+  <xacro:if value="${effective_right_type == 'gripper'}">
+    <xacro:open_nero_wrist_camera prefix="right_" isaac="$(arg isaac)"/>
+  </xacro:if>
+</robot>

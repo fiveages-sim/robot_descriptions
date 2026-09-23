@@ -16,10 +16,12 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=nero
 ```
 
+默认 `collider:=simple`（连杆圆柱 / box）。看原网格碰撞：`collider:=convex`。
+
 | 场景 | 参数 |
 |------|------|
 | 裸腕 | `type:=none` |
-| Revo2 | `type:=revo2` |
+| Revo2 | `type:=revo2`（默认左手；右手 `direction:=-1` 或 `name:=right`） |
 | 仅夹爪 | `ros2 launch robot_common_launch gripper.launch.py gripper:=nero` |
 
 ### 2.1 Component
@@ -32,6 +34,8 @@ ros2 launch robot_common_launch component.launch.py robot:=nero type:=ee
 ```
 
 ## 3. OCS2 Demo
+
+规划 URDF 默认 `collider:=simple`，并打开 `selfCollision`（`base_link` 对 `link3/5/7/gripper_base`）。
 
 ```bash
 source ~/ros2_ws/install/setup.bash

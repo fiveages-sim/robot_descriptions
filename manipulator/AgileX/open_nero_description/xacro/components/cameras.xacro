@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <!-- Wrist D435 on Nero gripper_base. Stand mesh is not in-tree; keep the TF. -->
+  <xacro:macro name="open_nero_wrist_camera" params="prefix isaac:=false">
+    <link name="${prefix}camera_stand_link">
+      <inertial>
+        <origin xyz="0 0 0"/>
+        <mass value="0.2"/>
+        <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.0002" iyz="0" izz="0.0001"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}camera_stand_joint" type="fixed">
+      <origin xyz="0.034 0.001 0.022" rpy="0 0 3.14"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}camera_stand_link"/>
+    </joint>
+
+    <link name="${prefix}d435_camera">
+      <inertial>
+        <mass value="0.072"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="0.003881243" ixy="0" ixz="0" iyy="0.000498940" iyz="0" izz="0.003879257"/>
+      </inertial>
+      <xacro:open_nero_d435_visual isaac="${isaac}"/>
+    </link>
+    <!-- Vendor screw pose; only rpy is composed to the optical frame. -->
+    <joint name="${prefix}d435_camera_joint" type="fixed">
+      <origin xyz="-0.031 -0.028 0.0018" rpy="${1.22 - PI/2} 0 ${-PI/2}"/>
+      <parent link="${prefix}camera_stand_link"/>
+      <child link="${prefix}d435_camera"/>
+    </joint>
+  </xacro:macro>
+</robot>

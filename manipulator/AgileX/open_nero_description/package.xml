@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>open_nero_description</name>
+    <version>0.1.0</version>
+    <description>
+        URDF description for AgileX Open Nero (fixed workstation + dual Nero arms + cameras).
+        Reuses nero_description arm kinematics and end-effectors.
+    </description>
+    <author>TODO</author>
+    <maintainer email="TODO@email.com"/>
+    <license>MIT</license>
+
+    <exec_depend>robot_common_launch</exec_depend>
+    <exec_depend>nero_description</exec_depend>
+    <exec_depend>cobot_magic_v2_description</exec_depend>
+    <exec_depend>sensor_models</exec_depend>
+    <exec_depend>brainco_description</exec_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>
