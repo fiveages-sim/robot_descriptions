@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot name="Taku" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="chassis"/>
+  <xacro:arg name="enable_wheel_joints" default="true"/>
+  <xacro:arg name="isaac" default="false"/>
+  <xacro:arg name="side" default="left"/>
+
+  <xacro:include filename="$(find taku_description)/xacro/components/chassis.xacro"/>
+  <xacro:include filename="$(find taku_description)/xacro/components/body.xacro"/>
+  <xacro:include filename="$(find taku_description)/xacro/components/head.xacro"/>
+  <xacro:include filename="$(find taku_description)/xacro/components/arm.xacro"/>
+  <xacro:include filename="$(find taku_description)/xacro/components/gripper.xacro"/>
+
+  <!-- Swerve chassis: 4 steering + 4 drive joints, lidars, IMU frame. -->
+  <xacro:if value="${'$(arg type)' == 'chassis'}">
+    <xacro:TakuChassis enable_wheel_joints="$(arg enable_wheel_joints)" isaac="$(arg isaac)"/>
+  </xacro:if>
+
+  <!-- Folding lift + waist. -->
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <link name="agv_base"/>
+    <xacro:TakuBody parent_link="agv_base"/>
+  </xacro:if>
+
+  <!-- Upper body: folding lift + waist + head + dual arms (no chassis/gripper). -->
+  <xacro:if value="${'$(arg type)' == 'upper_body'}">
+    <link name="agv_base"/>
+    <xacro:TakuBody parent_link="agv_base"/>
+    <xacro:TakuHead parent_link="torso_body_link"/>
+    <xacro:TakuArm parent_link="torso_body_link" direction="1" enable_gripper="false"/>
+    <xacro:TakuArm parent_link="torso_body_link" direction="-1" enable_gripper="false"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'head'}">
+    <link name="torso_body_link"/>
+    <xacro:TakuHead parent_link="torso_body_link"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'arm'}">
+    <link name="torso_body_link"/>
+    <xacro:TakuArm parent_link="torso_body_link" direction="1"/>
+    <xacro:TakuArm parent_link="torso_body_link" direction="-1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left_arm'}">
+    <link name="torso_body_link"/>
+    <xacro:TakuArm parent_link="torso_body_link" direction="1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right_arm'}">
+    <link name="torso_body_link"/>
+    <xacro:TakuArm parent_link="torso_body_link" direction="-1"/>
+  </xacro:if>
+
+  <!-- Single gripper (one root link keeps the URDF valid); side:=left|right. -->
+  <xacro:if value="${'$(arg type)' == 'gripper'}">
+    <link name="$(arg side)_wrist_roll_link"/>
+    <xacro:TakuGripper side="$(arg side)"/>
+  </xacro:if>
+</robot>

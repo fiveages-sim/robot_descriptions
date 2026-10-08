@@ -74,3 +74,21 @@
 ## 不要把这些当 Dyna 的真值
 
 单关节、其余关节为 0 的扫描会漏掉「别的关节摆开之后才出现的」干涉，也会把「手臂在零位时手已经靠近腰」误看成腕关节限位（腕 roll 的正向已按这个原因放宽）。整数角度是人为收到的。质量和惯量是别的机器人按长度比缩放的，密度、电机和配重都没有。
+
+## Lidars (sensor_models)
+
+| Frame (link / joint) | Sensor | Pose in `agv_base` (xyz, rpy) | sensor_models mesh | Visual offset in lidar frame |
+|---|---|---|---|---|
+| `lidar_front_left` / `lidar_front_left_frame` | RoboSense Airy | `0.292236 0.227959 0.301378`, `-0.616837 -0.603562 -1.94305` | `meshes/robosense/airy.glb` | `0 0 0.042` |
+| `lidar_front_right` / `lidar_front_right_frame` | RoboSense Airy | `0.292236 -0.227959 0.301378`, `0.613474 -0.606997 1.94896` | `meshes/robosense/airy.glb` | `0 0 0.042` |
+| `lidar_back` / `lidar_back_frame` | Livox MID-360 | `-0.3275 0 0.24995`, `0 0 1.5708` | `meshes/livox/mid360.glb` | `0 0 0.029` |
+
+Frame poses are unchanged from `dvt1_kin.json`. The front-lidar z axes point forward, outward and up, `[0.707, ±0.221, 0.672]` in `agv_base`. The rear-lidar z axis points straight up.
+
+The base GLB already contains the sensor domes. Within 9 cm of each frame, the base mesh has an axisymmetric dome centred on the frame z axis, with an xy axis offset of 1.3 mm or less. Dome tops are at z = 0.0629 m (front) and 0.0618 m (back) in the lidar frames.
+
+Each sensor mesh was fitted to its dome by a 1-mm grid search along z, followed by a ±6 mm xy search. Front: Airy at dz = 0.042, median surface error 0.4 mm, p90 1.5 mm. Back: MID-360 at dz = 0.029, median 0.4 mm, p90 0.8 mm. xy correction is 0 for all three.
+
+Dyna's lidar frames therefore sit at the sensor mounting face, not at the sensor_models mesh origin. The frames are kept, and only the visual is offset. Yaw about the sensor axis cannot be checked, because only the rotationally symmetric dome is visible.
+
+sensor_models ships meshes only, no xacro macros. Every other robot in this repo inlines `<link><visual><mesh filename="file://$(find sensor_models)/meshes/...glb"/></visual></link>` plus a fixed joint. Taku follows the same pattern.

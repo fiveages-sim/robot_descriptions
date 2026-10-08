@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.141592653589793"/>
+  <!-- INFERRED, NOT AN OFFICIAL DYNA SPEC. Kinematics from public dvt1_kin.json; limits from mesh self-collision sweep
+       snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md. -->
+
+  <!-- Folding lift (folding_low / folding_high) + waist pitch / yaw. -->
+  <xacro:macro name="TakuBody" params="parent_link:=agv_base">
+
+    <!-- inertia: Galaxea R1 torso_link1 5.72 kg、关节间距 0.40 m；Taku folding_low→high 间距 0.450 m，k=1.125 -->
+    <link name="folding_lower_joint_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/folding_lower_joint_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/folding_lower_joint_link.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0.118880 -0.042443 0.088858" rpy="0 0 0"/>
+        <mass value="8.138869"/>
+        <inertia ixx="0.1967614" ixy="0" ixz="0" iyy="0.19325134" iyz="0" izz="0.014620213"/>
+      </inertial>
+    </link>
+    <joint name="folding_low_joint" type="revolute">
+      <origin xyz="-0.125 -0.000199 0.17"/>
+      <parent link="${parent_link}"/>
+      <child link="folding_lower_joint_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="${-70/180*PI}" upper="${90/180*PI}" effort="100" velocity="2.5"/>
+    </joint>
+
+    <!-- inertia: Galaxea R1 torso_link2 3.50 kg、间距 0.30 m；Taku folding_high→waist 间距 0.450 m，k=1.500 -->
+    <link name="folding_to_waist_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/folding_to_waist_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/folding_to_waist_link.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="-0.170796 -0.001667 0.099736" rpy="0 0 0"/>
+        <mass value="11.812500"/>
+        <inertia ixx="0.19805259" ixy="0" ixz="0" iyy="0.20939006" iyz="0" izz="0.014059828"/>
+      </inertial>
+    </link>
+    <joint name="folding_high_joint" type="revolute">
+      <origin xyz="0.327498 0.0 0.308618"/>
+      <parent link="folding_lower_joint_link"/>
+      <child link="folding_to_waist_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="0" upper="${150/180*PI}" effort="100" velocity="2.5"/>
+    </joint>
+
+    <link name="torso_waist_pitch_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/torso_waist_pitch_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/torso_waist_pitch_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="waist_pitch_joint" type="revolute">
+      <origin xyz="-0.401053 0.0 0.204099"/>
+      <parent link="folding_to_waist_link"/>
+      <child link="torso_waist_pitch_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="${-90/180*PI}" upper="${80/180*PI}" effort="100" velocity="2.5"/>
+    </joint>
+
+    <link name="torso_body_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/torso_body_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/torso_body_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="waist_yaw_joint" type="revolute">
+      <origin xyz="-0.007 0.0 0.172"/>
+      <parent link="torso_waist_pitch_link"/>
+      <child link="torso_body_link"/>
+      <axis xyz="0.0 0.0 1.0"/>
+      <limit lower="${-45/180*PI}" upper="${45/180*PI}" effort="100" velocity="2.5"/>
+    </joint>
+  </xacro:macro>
+</robot>

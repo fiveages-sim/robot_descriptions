@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="taku_joint_iface" params="name initial_value:=0.0">
+    <joint name="${name}">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">${initial_value}</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Folding lift + waist -->
+  <xacro:macro name="taku_body_interfaces">
+    <xacro:taku_joint_iface name="folding_low_joint"/>
+    <xacro:taku_joint_iface name="folding_high_joint"/>
+    <xacro:taku_joint_iface name="waist_pitch_joint"/>
+    <xacro:taku_joint_iface name="waist_yaw_joint"/>
+  </xacro:macro>
+
+  <xacro:macro name="taku_head_interfaces">
+    <xacro:taku_joint_iface name="head_yaw_joint"/>
+    <xacro:taku_joint_iface name="head_pitch_joint"/>
+    <xacro:taku_joint_iface name="head_roll_joint"/>
+  </xacro:macro>
+
+  <!-- direction:=1 left (left_*_joint), direction:=-1 right (right_*_joint). -->
+  <xacro:macro name="taku_arm_interfaces" params="direction:=1">
+    <xacro:property name="arm_side" value="${'left' if direction == 1 else 'right'}"/>
+    <xacro:taku_joint_iface name="${arm_side}_shoulder_pitch_joint"/>
+    <xacro:taku_joint_iface name="${arm_side}_shoulder_roll_joint"/>
+    <xacro:taku_joint_iface name="${arm_side}_shoulder_yaw_joint"/>
+    <xacro:taku_joint_iface name="${arm_side}_elbow_joint"/>
+    <xacro:taku_joint_iface name="${arm_side}_wrist_yaw_joint"/>
+    <xacro:taku_joint_iface name="${arm_side}_wrist_pitch_joint"/>
+    <xacro:taku_joint_iface name="${arm_side}_wrist_roll_joint"/>
+  </xacro:macro>
+
+  <!-- Two independent prismatic jaws per gripper (front: [-0.0345, 0], rear: [0, 0.0345]). -->
+  <xacro:macro name="taku_gripper_interfaces" params="side:=left">
+    <xacro:taku_joint_iface name="${side}_gripper_front_joint"/>
+    <xacro:taku_joint_iface name="${side}_gripper_rear_joint"/>
+  </xacro:macro>
+
+</robot>

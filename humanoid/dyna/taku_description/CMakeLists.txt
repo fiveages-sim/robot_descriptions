@@ -4,7 +4,7 @@ project(taku_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY meshes urdf
+  DIRECTORY config meshes xacro
   DESTINATION share/${PROJECT_NAME}/
 )
 

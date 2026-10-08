@@ -1,11 +1,17 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>taku_description</name>
-  <version>0.0.0</version>
-  <description>Inferred URDF for the Dyna Taku / DVT1 body. Joint limits and inertias are NOT official Dyna specifications.</description>
+  <version>0.1.0</version>
+  <description>
+    <p>Inferred URDF/xacro description for the Dyna Taku / DVT1 wheeled dual-arm robot.</p>
+    <p>Kinematics come from Dyna's public dvt1_kin.json; joint limits and inertias are inferred and are NOT official Dyna specifications.</p>
+  </description>
   <maintainer email="biao876990970@hotmail.com">Huang Zhenbiao</maintainer>
   <license>TODO</license>
+
   <exec_depend>robot_common_launch</exec_depend>
+  <exec_depend>sensor_models</exec_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>

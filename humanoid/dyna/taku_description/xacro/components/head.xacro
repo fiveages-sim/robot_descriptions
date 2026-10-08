@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.141592653589793"/>
+  <!-- INFERRED, NOT AN OFFICIAL DYNA SPEC. Kinematics from public dvt1_kin.json; limits from mesh self-collision sweep
+       snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md. -->
+
+  <!-- Head yaw / pitch / roll + stereo head camera frames. effort/velocity 0: no reference robot. -->
+  <xacro:macro name="TakuHead" params="parent_link:=torso_body_link">
+
+    <link name="head_yaw_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/head_yaw_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/head_yaw_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="head_yaw_joint" type="revolute">
+      <origin xyz="0.0 0.0 0.363"/>
+      <parent link="${parent_link}"/>
+      <child link="head_yaw_link"/>
+      <axis xyz="0.0 0.0 1.0"/>
+      <limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="0" velocity="0"/>
+    </joint>
+
+    <link name="head_pitch_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/head_pitch_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/head_pitch_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="head_pitch_joint" type="revolute">
+      <origin xyz="0.0 0.0 0.0415"/>
+      <parent link="head_yaw_link"/>
+      <child link="head_pitch_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="0" upper="${45/180*PI}" effort="0" velocity="0"/>
+    </joint>
+
+    <link name="head_roll_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/head_roll_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/head_roll_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="head_roll_joint" type="revolute">
+      <origin xyz="0.002 0.0 0.0"/>
+      <parent link="head_pitch_link"/>
+      <child link="head_roll_link"/>
+      <axis xyz="1.0 0.0 0.0"/>
+      <limit lower="${-30/180*PI}" upper="${30/180*PI}" effort="0" velocity="0"/>
+    </joint>
+
+    <link name="head_camera_base_frame"/>
+    <joint name="head_camera_base_frame_joint" type="fixed">
+      <origin xyz="0.043 0.025 0.0485" rpy="-1.5708 0.0 -1.5708"/>
+      <parent link="head_roll_link"/>
+      <child link="head_camera_base_frame"/>
+    </joint>
+
+    <link name="head_camera_left_optical_center_frame"/>
+    <joint name="head_camera_left_optical_center_joint" type="fixed">
+      <origin xyz="-0.005 0.01 0.033203"/>
+      <parent link="head_camera_base_frame"/>
+      <child link="head_camera_left_optical_center_frame"/>
+    </joint>
+
+    <link name="head_camera_right_optical_center_frame"/>
+    <joint name="head_camera_right_optical_center_joint" type="fixed">
+      <origin xyz="0.055 0.01 0.033203"/>
+      <parent link="head_camera_base_frame"/>
+      <child link="head_camera_right_optical_center_frame"/>
+    </joint>
+  </xacro:macro>
+</robot>

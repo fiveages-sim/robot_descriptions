@@ -1,11 +1,51 @@
-# taku_description
+# Taku Description
 
-Inferred description of the Dyna Taku / DVT1 mobile manipulator, built so it can sit next to the other robots in this repo.
+This package contains an **inferred** description of the Dyna Taku / DVT1 wheeled dual-arm robot (4-module swerve chassis, folding lift + waist, 3-DoF head, dual 7-DoF arms, two-jaw grippers).
 
-**These limits and inertias are not official Dyna specs.** Kinematics (`xyz` / `rpy` / axis / tree) are taken from the public `dvt1_kin.json` on https://www.dyna.co/dyna-2.1 . Meshes are per-link GLBs split from the public damping GLB (photo_black/white/gray/green materials kept) (`dvt1_body.glb.txt`), except `head_yaw_link` and `head_pitch_link`, which exist only in the coarser body GLB.
+> **Not official Dyna specs.** Kinematics (tree / `xyz` / `rpy` / axes) come from the public `dvt1_kin.json` on https://www.dyna.co/dyna-2.1 . Joint limits come from a mesh self-collision sweep snapped to integer degrees that still contain the recorded trajectory ranges. Inertias are scaled from OpenArm v1, Galaxea R1 and Agilex Ranger Mini. Links without a usable reference (waist, torso, head, gripper jaws) have no `<inertial>`. Evidence and sources are in [`doc/taku_params.md`](doc/taku_params.md).
 
-- Joint limits: mesh self-collision sweep, then snapped to integer degrees that still contain recorded trajectory ranges. Wheel spin and steering had no resolved stop and are `continuous`.
-- Inertias: scaled from public OpenArm v1, Galaxea R1 (`r1_v2_1_0.urdf`), and Agilex Ranger Mini on this branch. Links with no usable analog have no `<inertial>`.
-- `effort` / `velocity` on limited joints are copied from the reference robot that supplied the inertia, or set to 0 when no reference exists (head).
+Meshes are per-link GLBs split from Dyna's public viewer GLB. The front lidars use RoboSense Airy and the rear lidar uses Livox MID-360 meshes from [`sensor_models`](../../../common/sensor_models).
 
-See `doc/taku_params.md` for the evidence table. Same text is also at `/workspace/dyna-probe/taku_params.md` in the probe workspace.
+## 1. Build
+
+```bash
+cd ~/ros2_ws
+colcon build --packages-up-to taku_description sensor_models --symlink-install
+```
+
+## 2. Visualize the robot
+
+### 2.1. Full robot
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_common_launch humanoid.launch.py robot:=taku
+```
+
+The 8 steering and drive joints are fixed by default (`enable_wheel_joints:=false`), as in the other wheeled robots in this repo.
+
+### 2.2. Component modules
+
+Use `ros2 launch robot_common_launch component.launch.py robot:=taku type:=<type>` with one of these types:
+
+| `type`       | Content                                                                 |
+|--------------|-------------------------------------------------------------------------|
+| `chassis`    | swerve chassis with steering and drive joints enabled, lidars, IMU frame |
+| `body`       | folding lift (`folding_low/high_joint`) + waist pitch / yaw              |
+| `upper_body` | body + head + dual arms, no chassis and no grippers                      |
+| `head`       | head yaw / pitch / roll + stereo camera frames                           |
+| `arm`        | both arms with grippers                                                  |
+| `left_arm` / `right_arm` | one arm with its gripper                                     |
+| `gripper`    | one gripper (`side:=left` or `side:=right`)                              |
+
+Hide the sensor_models lidar meshes for an Isaac asset import with `xacro_isaac:=true`.
+
+## 3. Files
+
+* `xacro/robot.xacro`: full robot
+* `xacro/component.xacro`: component modules selected by `type`
+* `xacro/components/`: `chassis.xacro` (`TakuChassis`, `TakuSwerveModule`), `body.xacro` (`TakuBody`), `head.xacro` (`TakuHead`), `arm.xacro` (`TakuArm`, `direction:=1` left / `-1` right), `gripper.xacro` (`TakuGripper`)
+* `xacro/ros2_control/`: `robot.xacro` (mock / gz / isaac hardware), `interfaces.xacro`
+* `config/ros2_control/ros2_controllers.yaml`: joint state broadcaster plus position controllers for the body, head, arms and grippers. All home poses are the zero pose.
+
+No OCS2 config yet. The MPC weights cannot be inferred from public data.

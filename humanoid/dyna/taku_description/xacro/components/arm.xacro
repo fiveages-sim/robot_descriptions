@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.141592653589793"/>
+  <!-- INFERRED, NOT AN OFFICIAL DYNA SPEC. Kinematics from public dvt1_kin.json; limits from mesh self-collision sweep
+       snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md. -->
+  <xacro:include filename="$(find taku_description)/xacro/components/gripper.xacro"/>
+
+  <!-- direction:=1 left arm, direction:=-1 right arm (mirrored mount, asymmetric shoulder roll limits,
+       per-side mesh centroids). Inertias scaled from OpenArm v1. -->
+  <xacro:macro name="TakuArm" params="parent_link:=torso_body_link direction:=1 enable_gripper:=true">
+    <xacro:if value="${direction == 1}">
+      <xacro:property name="prefix" value="left"/>
+    </xacro:if>
+    <xacro:unless value="${direction == 1}">
+      <xacro:property name="prefix" value="right"/>
+    </xacro:unless>
+
+    <!-- inertia: OpenArm v1 openarm_*_link1 / joint1，m=1.1417 kg，Lref=0.0671 m，Lt=0.085 m，k=1.267 -->
+    <link name="${prefix}_shoulder_pitch_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_shoulder_pitch_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_shoulder_pitch_link.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="${'-0.000981 0.075822 0.005254' if direction == 1 else '-0.000842 -0.075907 0.004881'}" rpy="0 0 0"/>
+        <mass value="2.320819"/>
+        <inertia ixx="0.0051115313" ixy="0" ixz="0" iyy="0.0041525076" iyz="0" izz="0.0033141773"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_shoulder_pitch_joint" type="revolute">
+      <origin xyz="${'0.0 0.105 0.243' if direction == 1 else '0.0 -0.105 0.243'}"/>
+      <parent link="${parent_link}"/>
+      <child link="${prefix}_shoulder_pitch_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="${-150/180*PI}" upper="${90/180*PI}" effort="40" velocity="16.754666"/>
+    </joint>
+
+    <!-- inertia: OpenArm v1 openarm_*_link2 / joint2，m=0.2775 kg，Lref=0.0727 m，Lt=0.125 m，k=1.719 -->
+    <link name="${prefix}_shoulder_roll_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_shoulder_roll_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_shoulder_roll_link.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="${'0.002703 0.004865 -0.055426' if direction == 1 else '-0.012506 -0.004710 -0.056977'}" rpy="0 0 0"/>
+        <mass value="1.410554"/>
+        <inertia ixx="0.0053947641" ixy="0" ixz="0" iyy="0.0056502265" iyz="0" izz="0.00348631"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_shoulder_roll_joint" type="revolute">
+      <origin xyz="${'0.0 0.085 0.0' if direction == 1 else '0.0 -0.085 0.0'}"/>
+      <parent link="${prefix}_shoulder_pitch_link"/>
+      <child link="${prefix}_shoulder_roll_link"/>
+      <axis xyz="1.0 0.0 0.0"/>
+      <limit lower="${-15/180*PI if direction == 1 else -100/180*PI}" upper="${90/180*PI if direction == 1 else 15/180*PI}" effort="40" velocity="16.754666"/>
+    </joint>
+
+    <!-- inertia: OpenArm v1 openarm_*_link3 / joint3，m=1.0739 kg，Lref=0.1569 m，Lt=0.126 m，k=0.803 -->
+    <link name="${prefix}_shoulder_yaw_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_shoulder_yaw_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_shoulder_yaw_link.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="${'0.003237 0.000051 -0.062399' if direction == 1 else '0.003254 0.000051 -0.062398'}" rpy="0 0 0"/>
+        <mass value="0.556169"/>
+        <inertia ixx="0.0014602196" ixy="0" ixz="0" iyy="0.0014425179" iyz="0" izz="0.0002207697"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_shoulder_yaw_joint" type="revolute">
+      <origin xyz="0.0 0.0 -0.125"/>
+      <parent link="${prefix}_shoulder_roll_link"/>
+      <child link="${prefix}_shoulder_yaw_link"/>
+      <axis xyz="0.0 0.0 1.0"/>
+      <limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="27" velocity="5.445426"/>
+    </joint>
+
+    <!-- inertia: OpenArm v1 openarm_*_link4 / joint4，m=0.6349 kg，Lref=0.1006 m，Lt=0.103 m，k=1.024 -->
+    <link name="${prefix}_elbow_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_elbow_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_elbow_link.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="-0.006362 -0.000276 -0.029897" rpy="0 0 0"/>
+        <mass value="0.681433"/>
+        <inertia ixx="0.00070094552" ixy="0" ixz="0" iyy="0.00057493285" iyz="0" izz="0.00037578781"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_elbow_joint" type="revolute">
+      <origin xyz="0.015 0.0 -0.125"/>
+      <parent link="${prefix}_shoulder_yaw_link"/>
+      <child link="${prefix}_elbow_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="${-135/180*PI}" upper="${20/180*PI}" effort="27" velocity="5.445426"/>
+    </joint>
+
+    <!-- inertia: OpenArm v1 openarm_*_link5 / joint5，m=0.6157 kg，Lref=0.1262 m，Lt=0.1525 m，k=1.208 -->
+    <link name="${prefix}_wrist_yaw_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_wrist_yaw_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_wrist_yaw_link.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0.009133 0.000721 -0.088197" rpy="0 0 0"/>
+        <mass value="1.086427"/>
+        <inertia ixx="0.0010899155" ixy="0" ixz="0" iyy="0.0011466014" iyz="0" izz="0.00083482886"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_wrist_yaw_joint" type="revolute">
+      <origin xyz="-0.01 0.0 -0.1025"/>
+      <parent link="${prefix}_elbow_link"/>
+      <child link="${prefix}_wrist_yaw_link"/>
+      <axis xyz="0.0 0.0 1.0"/>
+      <limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="7" velocity="20.943946"/>
+    </joint>
+
+    <!-- inertia: OpenArm v1 openarm_*_link6 / joint6，m=0.4752 kg，Lref=0.0375 m，Lt=0.0285 m，k=0.760 -->
+    <link name="${prefix}_wrist_pitch_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_wrist_pitch_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_wrist_pitch_link.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="-0.001473 -0.007185 0.007067" rpy="0 0 0"/>
+        <mass value="0.208601"/>
+        <inertia ixx="3.6258013e-05" ixy="0" ixz="0" iyy="3.9807748e-05" iyz="0" izz="4.0314853e-05"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_wrist_pitch_joint" type="revolute">
+      <origin xyz="0.0 0.0 -0.1525"/>
+      <parent link="${prefix}_wrist_yaw_link"/>
+      <child link="${prefix}_wrist_pitch_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="7" velocity="20.943946"/>
+    </joint>
+
+    <!-- inertia: OpenArm v1 openarm_*_link7 / joint7，m=0.466 kg，Lref=0.1025 m，Lt=0.171 m，k=1.668 -->
+    <link name="${prefix}_wrist_roll_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_wrist_roll_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${prefix}_wrist_roll_link.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="${'0.013861 -0.000003 -0.098012' if direction == 1 else '0.012789 0.000005 -0.098962'}" rpy="0 0 0"/>
+        <mass value="2.163728"/>
+        <inertia ixx="0.0082577567" ixy="0" ixz="0" iyy="0.0064226997" iyz="0" izz="0.0044196444"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_wrist_roll_joint" type="revolute">
+      <origin xyz="0.0285 0.0 0.0"/>
+      <parent link="${prefix}_wrist_pitch_link"/>
+      <child link="${prefix}_wrist_roll_link"/>
+      <axis xyz="1.0 0.0 0.0"/>
+      <limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="7" velocity="20.943946"/>
+    </joint>
+
+    <!-- FK target frame (from dvt1_kin.json) and wrist camera frame. -->
+    <link name="${prefix}_ee_fk_target_frame"/>
+    <joint name="${prefix}_gripper_joint_frame" type="fixed">
+      <origin xyz="-0.02852 0.0 -0.088527" rpy="0.0 0.0 -1.5708"/>
+      <parent link="${prefix}_wrist_roll_link"/>
+      <child link="${prefix}_ee_fk_target_frame"/>
+    </joint>
+    <link name="${prefix}_gripper_camera"/>
+    <joint name="${prefix}_gripper_camera_frame" type="fixed">
+      <origin xyz="0.056204 0.0 -0.150766" rpy="2.617994 0.0 -1.570796"/>
+      <parent link="${prefix}_wrist_roll_link"/>
+      <child link="${prefix}_gripper_camera"/>
+    </joint>
+
+    <xacro:if value="${enable_gripper}">
+      <xacro:TakuGripper side="${prefix}"/>
+    </xacro:if>
+  </xacro:macro>
+</robot>

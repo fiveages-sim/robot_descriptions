@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot name="Taku" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Dyna Taku / DVT1. INFERRED description, NOT an official Dyna spec (see doc/taku_params.md). -->
+  <!-- Full robot viz: steering / drive joints fixed by default (repo convention); set true for a driveable chassis. -->
+  <xacro:arg name="enable_wheel_joints" default="false"/>
+  <!-- Isaac asset import: hide sensor_models lidar meshes. -->
+  <xacro:arg name="isaac" default="false"/>
+
+  <xacro:include filename="$(find taku_description)/xacro/components/chassis.xacro"/>
+  <xacro:include filename="$(find taku_description)/xacro/components/body.xacro"/>
+  <xacro:include filename="$(find taku_description)/xacro/components/head.xacro"/>
+  <xacro:include filename="$(find taku_description)/xacro/components/arm.xacro"/>
+
+  <xacro:TakuChassis enable_wheel_joints="$(arg enable_wheel_joints)" isaac="$(arg isaac)"/>
+  <xacro:TakuBody parent_link="agv_base"/>
+  <xacro:TakuHead parent_link="torso_body_link"/>
+  <xacro:TakuArm parent_link="torso_body_link" direction="1"/>
+  <xacro:TakuArm parent_link="torso_body_link" direction="-1"/>
+</robot>

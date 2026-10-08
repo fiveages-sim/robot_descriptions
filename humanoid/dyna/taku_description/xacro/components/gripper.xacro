@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.141592653589793"/>
+  <!-- INFERRED, NOT AN OFFICIAL DYNA SPEC. Kinematics from public dvt1_kin.json; limits from mesh self-collision sweep
+       snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md. -->
+
+  <!-- Parallel two-jaw gripper on ${side}_wrist_roll_link: front jaw (a) and rear jaw (b), each prismatic along y. -->
+  <xacro:macro name="TakuGripper" params="side:=left">
+
+    <link name="${side}_grippera_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${side}_grippera_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${side}_grippera_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${side}_gripper_front_joint" type="prismatic">
+      <origin xyz="-0.028953 -0.023048 -0.166971"/>
+      <parent link="${side}_wrist_roll_link"/>
+      <child link="${side}_grippera_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="-0.0345" upper="0.0" effort="100" velocity="0.25"/>
+    </joint>
+
+    <link name="${side}_gripper_tip_A"/>
+    <joint name="${side}_gripper_tip_A_frame" type="fixed">
+      <origin xyz="0.000433 0.023068 -0.080556"/>
+      <parent link="${side}_grippera_link"/>
+      <child link="${side}_gripper_tip_A"/>
+    </joint>
+
+    <link name="${side}_gripperb_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${side}_gripperb_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${side}_gripperb_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${side}_gripper_rear_joint" type="prismatic">
+      <origin xyz="-0.028088 0.023048 -0.166971"/>
+      <parent link="${side}_wrist_roll_link"/>
+      <child link="${side}_gripperb_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="0.0" upper="0.0345" effort="100" velocity="0.25"/>
+    </joint>
+
+    <link name="${side}_gripper_tip_B"/>
+    <joint name="${side}_gripper_tip_B_frame" type="fixed">
+      <origin xyz="-0.000432 -0.023068 -0.080556"/>
+      <parent link="${side}_gripperb_link"/>
+      <child link="${side}_gripper_tip_B"/>
+    </joint>
+  </xacro:macro>
+</robot>

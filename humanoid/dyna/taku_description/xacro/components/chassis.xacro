@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.141592653589793"/>
+  <!-- INFERRED, NOT AN OFFICIAL DYNA SPEC. Kinematics from public dvt1_kin.json; limits from mesh self-collision sweep
+       snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md. -->
+
+  <!-- One swerve module: steering link (yaw about z) + wheel link (spin about y). -->
+  <xacro:macro name="TakuSwerveModule" params="steer_joint rotate_joint steer_link rotate_link xyz rotate_com wheel_joints_enabled">
+    <xacro:property name="steering_joint_type" value="${'continuous' if wheel_joints_enabled else 'fixed'}"/>
+    <xacro:property name="driving_joint_type" value="${'continuous' if wheel_joints_enabled else 'fixed'}"/>
+    <!-- inertia: Agilex Ranger Mini *_steering_wheel_link 1 kg、轮轴距 0.12 m；Taku 转向节到轮轴 0.1484 m，k=1.237 -->
+    <link name="${steer_link}">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${steer_link}.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${steer_link}.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="-0.003817 -0.000364 -0.085299" rpy="0 0 0"/>
+        <mass value="1.891289"/>
+        <inertia ixx="0.018403104" ixy="0" ixz="0" iyy="0.01840455" iyz="0" izz="0.030269309"/>
+      </inertial>
+    </link>
+    <!-- inertia: Agilex Ranger Mini *_wheel_link 8 kg、半径 0.12 m；Taku 轮胎半径取网格半径 0.0625 m，k=0.521 -->
+    <link name="${rotate_link}">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${rotate_link}.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/${rotate_link}.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="${rotate_com}" rpy="0 0 0"/>
+        <mass value="1.130281"/>
+        <inertia ixx="0.00078453387" ixy="0" ixz="0" iyy="0.00078453387" iyz="0" izz="0.0012417634"/>
+      </inertial>
+    </link>
+    <joint name="${steer_joint}" type="${steering_joint_type}">
+      <origin xyz="${xyz}"/>
+      <parent link="agv_base"/>
+      <child link="${steer_link}"/>
+      <xacro:if value="${wheel_joints_enabled}">
+        <axis xyz="0.0 0.0 1.0"/>
+      </xacro:if>
+    </joint>
+    <joint name="${rotate_joint}" type="${driving_joint_type}">
+      <origin xyz="-0.015 0.0 -0.1484"/>
+      <parent link="${steer_link}"/>
+      <child link="${rotate_link}"/>
+      <xacro:if value="${wheel_joints_enabled}">
+        <axis xyz="0.0 1.0 0.0"/>
+      </xacro:if>
+    </joint>
+  </xacro:macro>
+
+  <!-- enable_wheel_joints:=false turns the 8 steering/drive joints into fixed joints (repo convention for full-robot viz). -->
+  <!-- isaac:=true hides sensor_models lidar meshes (Isaac asset import), same as other packages in this repo. -->
+  <xacro:macro name="TakuChassis" params="enable_wheel_joints:='true' isaac:=false">
+    <xacro:property name="wheel_joints_enabled" value="${str(enable_wheel_joints).lower() in ['true', '1', 'yes', 'on']}"/>
+
+    <!-- inertia: Agilex Ranger Mini base_link 10 kg，轮距线性比 1.108（Taku 0.549×0.409 m / Ranger 0.494×0.370 m），质量×k^3 -->
+    <link name="agv_base">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/agv_base.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/agv_base.glb"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="-0.014461 0.000836 0.198012" rpy="0 0 0"/>
+        <mass value="13.602517"/>
+        <inertia ixx="0.2261088" ixy="0" ixz="0" iyy="0.40362258" iyz="0" izz="0.51517404"/>
+      </inertial>
+    </link>
+
+    <xacro:TakuSwerveModule steer_joint="agv_right_front_steering_joint" rotate_joint="agv_right_front_rotate_joint"
+                            steer_link="right_wheel_steering" rotate_link="right_wheel_rotate"
+                            xyz="0.2745 -0.2045 0.2109" rotate_com="0.000114 0.003440 -0.000229" wheel_joints_enabled="${wheel_joints_enabled}"/>
+
+    <xacro:TakuSwerveModule steer_joint="agv_right_back_steering_joint" rotate_joint="agv_right_back_rotate_joint"
+                            steer_link="right_wheel_steering_2" rotate_link="right_wheel_rotate_2"
+                            xyz="-0.2745 -0.2045 0.2109" rotate_com="0.000114 0.003440 -0.000229" wheel_joints_enabled="${wheel_joints_enabled}"/>
+
+    <xacro:TakuSwerveModule steer_joint="agv_left_front_steering_joint" rotate_joint="agv_left_front_rotate_joint"
+                            steer_link="left_wheel_steering" rotate_link="left_wheel_rotate"
+                            xyz="0.2745 0.2045 0.2109" rotate_com="-0.000114 0.003440 0.000229" wheel_joints_enabled="${wheel_joints_enabled}"/>
+
+    <xacro:TakuSwerveModule steer_joint="agv_left_back_steering_joint" rotate_joint="agv_left_back_rotate_joint"
+                            steer_link="left_wheel_steering_2" rotate_link="left_wheel_rotate_2"
+                            xyz="-0.2745 0.2045 0.2109" rotate_com="0.000114 0.003440 -0.000229" wheel_joints_enabled="${wheel_joints_enabled}"/>
+
+    <!-- Lidars. Frame poses are Dyna's published frames (dvt1_kin.json). The base GLB already contains the sensor
+         domes; sensor_models meshes are offset along the frame z axis so their domes coincide with the base mesh
+         (fitted: median surface error 0.4 mm). Dyna frames therefore sit at the sensor mounting face. -->
+    <!-- RoboSense Airy (front left) -->
+    <link name="lidar_front_left">
+      <xacro:unless value="${isaac}">
+        <visual>
+          <origin xyz="0 0 0.042"/>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/robosense/airy.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
+    </link>
+    <joint name="lidar_front_left_frame" type="fixed">
+      <origin xyz="0.292236 0.227959 0.301378" rpy="-0.616837 -0.603562 -1.94305"/>
+      <parent link="agv_base"/>
+      <child link="lidar_front_left"/>
+    </joint>
+    <!-- RoboSense Airy (front right) -->
+    <link name="lidar_front_right">
+      <xacro:unless value="${isaac}">
+        <visual>
+          <origin xyz="0 0 0.042"/>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/robosense/airy.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
+    </link>
+    <joint name="lidar_front_right_frame" type="fixed">
+      <origin xyz="0.292236 -0.227959 0.301378" rpy="0.613474 -0.606997 1.94896"/>
+      <parent link="agv_base"/>
+      <child link="lidar_front_right"/>
+    </joint>
+    <!-- Livox MID-360 (back) -->
+    <link name="lidar_back">
+      <xacro:unless value="${isaac}">
+        <visual>
+          <origin xyz="0 0 0.029"/>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
+    </link>
+    <joint name="lidar_back_frame" type="fixed">
+      <origin xyz="-0.3275 0.0 0.24995" rpy="0.0 0.0 1.5708"/>
+      <parent link="agv_base"/>
+      <child link="lidar_back"/>
+    </joint>
+
+    <link name="agv_imu_frame"/>
+    <joint name="agv_imu_frame_frame" type="fixed">
+      <origin xyz="-0.1642 0.225 0.178" rpy="0.0 0.0 3.14159"/>
+      <parent link="agv_base"/>
+      <child link="agv_imu_frame"/>
+    </joint>
+  </xacro:macro>
+</robot>
