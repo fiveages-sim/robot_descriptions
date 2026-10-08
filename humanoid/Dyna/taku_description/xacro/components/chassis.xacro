@@ -137,19 +137,9 @@
       <parent link="agv_base"/>
       <child link="lidar_front_right"/>
     </joint>
-    <!-- Livox MID-360 (back).
-         sensor_models mesh origin is 26.15 mm above the flange (mesh z min -0.02615).
-         Galaxea R1 / MOZ1 / Astribot / Cobot Magic / Split Aloha put that origin on the
-         joint, ~10-12 mm under a deck that has a pocket, so the flange hangs in the pocket.
-         Rokae INEX is the only one with an explicit mount offset: mesh origin at
-         z=-0.02085 from 3d_lidar_base, which likewise lands ~10 mm under its deck.
-         Taku's kin frame is the mounting datum but the rear skin is solid and 42.2 mm
-         above it, so the previous +29 mm (origin 13 mm under the skin) drove the flange
-         through the shell. The offset below seats the flange on that skin. -->
     <link name="lidar_back">
       <xacro:unless value="${isaac}">
         <visual>
-          <origin xyz="0 0 0.0683"/>
           <geometry>
             <mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
           </geometry>
@@ -157,7 +147,7 @@
       </xacro:unless>
     </link>
     <joint name="lidar_back_frame" type="fixed">
-      <origin xyz="-0.3275 0.0 0.24995" rpy="0.0 0.0 1.5708"/>
+      <origin xyz="-0.3275 0.0 0.285" rpy="0.0 0.0 ${PI}"/>
       <parent link="agv_base"/>
       <child link="lidar_back"/>
     </joint>
