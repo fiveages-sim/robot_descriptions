@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>taku_description</name>
+  <version>0.0.0</version>
+  <description>Inferred URDF for the Dyna Taku / DVT1 body. Joint limits and inertias are NOT official Dyna specifications.</description>
+  <maintainer email="biao876990970@hotmail.com">Huang Zhenbiao</maintainer>
+  <license>TODO</license>
+  <exec_depend>robot_common_launch</exec_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
