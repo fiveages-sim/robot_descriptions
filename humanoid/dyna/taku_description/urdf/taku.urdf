@@ -3,10 +3,10 @@
 <robot name="taku_dvt1_inferred">
   <link name="agv_base">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/agv_base.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/agv_base.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/agv_base.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/agv_base.glb"/></geometry>
     </collision>
     <!-- Agilex Ranger Mini base_link 10 kg，轮距线性比 1.108（Taku 0.549×0.409 m / Ranger 0.494×0.370 m），质量×k^3 -->
     <inertial>
@@ -17,10 +17,10 @@
   </link>
   <link name="right_wheel_rotate_2">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_wheel_rotate_2.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wheel_rotate_2.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_wheel_rotate_2.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wheel_rotate_2.glb"/></geometry>
     </collision>
     <!-- Agilex Ranger Mini *_wheel_link 8 kg、半径 0.12 m；Taku 轮胎半径取网格半径 0.0625 m，k=0.521 -->
     <inertial>
@@ -31,10 +31,10 @@
   </link>
   <link name="right_wheel_steering_2">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_wheel_steering_2.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wheel_steering_2.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_wheel_steering_2.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wheel_steering_2.glb"/></geometry>
     </collision>
     <!-- Agilex Ranger Mini *_steering_wheel_link 1 kg、轮轴距 0.12 m；Taku 转向节到轮轴 0.1484 m，k=1.237 -->
     <inertial>
@@ -45,10 +45,10 @@
   </link>
   <link name="right_wheel_rotate">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_wheel_rotate.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wheel_rotate.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_wheel_rotate.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wheel_rotate.glb"/></geometry>
     </collision>
     <!-- Agilex Ranger Mini *_wheel_link 8 kg、半径 0.12 m；Taku 轮胎半径取网格半径 0.0625 m，k=0.521 -->
     <inertial>
@@ -59,10 +59,10 @@
   </link>
   <link name="right_wheel_steering">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_wheel_steering.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wheel_steering.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_wheel_steering.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wheel_steering.glb"/></geometry>
     </collision>
     <!-- Agilex Ranger Mini *_steering_wheel_link 1 kg、轮轴距 0.12 m；Taku 转向节到轮轴 0.1484 m，k=1.237 -->
     <inertial>
@@ -73,10 +73,10 @@
   </link>
   <link name="left_wheel_rotate">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_wheel_rotate.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wheel_rotate.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_wheel_rotate.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wheel_rotate.glb"/></geometry>
     </collision>
     <!-- Agilex Ranger Mini *_wheel_link 8 kg、半径 0.12 m；Taku 轮胎半径取网格半径 0.0625 m，k=0.521 -->
     <inertial>
@@ -87,10 +87,10 @@
   </link>
   <link name="left_wheel_steering">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_wheel_steering.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wheel_steering.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_wheel_steering.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wheel_steering.glb"/></geometry>
     </collision>
     <!-- Agilex Ranger Mini *_steering_wheel_link 1 kg、轮轴距 0.12 m；Taku 转向节到轮轴 0.1484 m，k=1.237 -->
     <inertial>
@@ -101,10 +101,10 @@
   </link>
   <link name="left_wheel_rotate_2">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_wheel_rotate_2.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wheel_rotate_2.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_wheel_rotate_2.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wheel_rotate_2.glb"/></geometry>
     </collision>
     <!-- Agilex Ranger Mini *_wheel_link 8 kg、半径 0.12 m；Taku 轮胎半径取网格半径 0.0625 m，k=0.521 -->
     <inertial>
@@ -115,10 +115,10 @@
   </link>
   <link name="left_wheel_steering_2">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_wheel_steering_2.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wheel_steering_2.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_wheel_steering_2.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wheel_steering_2.glb"/></geometry>
     </collision>
     <!-- Agilex Ranger Mini *_steering_wheel_link 1 kg、轮轴距 0.12 m；Taku 转向节到轮轴 0.1484 m，k=1.237 -->
     <inertial>
@@ -129,10 +129,10 @@
   </link>
   <link name="folding_lower_joint_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/folding_lower_joint_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/folding_lower_joint_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/folding_lower_joint_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/folding_lower_joint_link.glb"/></geometry>
     </collision>
     <!-- Galaxea R1 torso_link1 5.72 kg、关节间距 0.40 m；Taku folding_low→high 间距 0.450 m，k=1.125 -->
     <inertial>
@@ -143,10 +143,10 @@
   </link>
   <link name="folding_to_waist_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/folding_to_waist_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/folding_to_waist_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/folding_to_waist_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/folding_to_waist_link.glb"/></geometry>
     </collision>
     <!-- Galaxea R1 torso_link2 3.50 kg、间距 0.30 m；Taku folding_high→waist 间距 0.450 m，k=1.500 -->
     <inertial>
@@ -157,50 +157,50 @@
   </link>
   <link name="torso_waist_pitch_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/torso_waist_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/torso_waist_pitch_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/torso_waist_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/torso_waist_pitch_link.glb"/></geometry>
     </collision>
   </link>
   <link name="torso_body_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/torso_body_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/torso_body_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/torso_body_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/torso_body_link.glb"/></geometry>
     </collision>
   </link>
   <link name="head_yaw_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/head_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/head_yaw_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/head_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/head_yaw_link.glb"/></geometry>
     </collision>
   </link>
   <link name="head_pitch_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/head_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/head_pitch_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/head_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/head_pitch_link.glb"/></geometry>
     </collision>
   </link>
   <link name="head_roll_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/head_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/head_roll_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/head_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/head_roll_link.glb"/></geometry>
     </collision>
   </link>
   <link name="right_shoulder_pitch_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_pitch_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_pitch_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link1 / joint1，m=1.1417 kg，Lref=0.0671 m，Lt=0.085 m，k=1.267 -->
     <inertial>
@@ -211,10 +211,10 @@
   </link>
   <link name="right_shoulder_roll_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_roll_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_roll_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link2 / joint2，m=0.2775 kg，Lref=0.0727 m，Lt=0.125 m，k=1.719 -->
     <inertial>
@@ -225,10 +225,10 @@
   </link>
   <link name="right_shoulder_yaw_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_yaw_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_shoulder_yaw_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link3 / joint3，m=1.0739 kg，Lref=0.1569 m，Lt=0.126 m，k=0.803 -->
     <inertial>
@@ -239,10 +239,10 @@
   </link>
   <link name="right_elbow_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_elbow_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_elbow_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_elbow_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_elbow_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link4 / joint4，m=0.6349 kg，Lref=0.1006 m，Lt=0.103 m，k=1.024 -->
     <inertial>
@@ -253,10 +253,10 @@
   </link>
   <link name="right_wrist_yaw_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_wrist_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wrist_yaw_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_wrist_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wrist_yaw_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link5 / joint5，m=0.6157 kg，Lref=0.1262 m，Lt=0.1525 m，k=1.208 -->
     <inertial>
@@ -267,10 +267,10 @@
   </link>
   <link name="right_wrist_pitch_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_wrist_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wrist_pitch_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_wrist_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wrist_pitch_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link6 / joint6，m=0.4752 kg，Lref=0.0375 m，Lt=0.0285 m，k=0.760 -->
     <inertial>
@@ -281,10 +281,10 @@
   </link>
   <link name="right_wrist_roll_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_wrist_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wrist_roll_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_wrist_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_wrist_roll_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link7 / joint7，m=0.466 kg，Lref=0.1025 m，Lt=0.171 m，k=1.668 -->
     <inertial>
@@ -297,30 +297,30 @@
   </link>
   <link name="right_grippera_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_grippera_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_grippera_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_grippera_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_grippera_link.glb"/></geometry>
     </collision>
   </link>
   <link name="right_gripper_tip_A">
   </link>
   <link name="right_gripperb_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/right_gripperb_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_gripperb_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/right_gripperb_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/right_gripperb_link.glb"/></geometry>
     </collision>
   </link>
   <link name="right_gripper_tip_B">
   </link>
   <link name="left_shoulder_pitch_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_pitch_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_pitch_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link1 / joint1，m=1.1417 kg，Lref=0.0671 m，Lt=0.085 m，k=1.267 -->
     <inertial>
@@ -331,10 +331,10 @@
   </link>
   <link name="left_shoulder_roll_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_roll_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_roll_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link2 / joint2，m=0.2775 kg，Lref=0.0727 m，Lt=0.125 m，k=1.719 -->
     <inertial>
@@ -345,10 +345,10 @@
   </link>
   <link name="left_shoulder_yaw_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_yaw_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_shoulder_yaw_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link3 / joint3，m=1.0739 kg，Lref=0.1569 m，Lt=0.126 m，k=0.803 -->
     <inertial>
@@ -359,10 +359,10 @@
   </link>
   <link name="left_elbow_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_elbow_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_elbow_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_elbow_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_elbow_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link4 / joint4，m=0.6349 kg，Lref=0.1006 m，Lt=0.103 m，k=1.024 -->
     <inertial>
@@ -373,10 +373,10 @@
   </link>
   <link name="left_wrist_yaw_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_wrist_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wrist_yaw_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_wrist_yaw_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wrist_yaw_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link5 / joint5，m=0.6157 kg，Lref=0.1262 m，Lt=0.1525 m，k=1.208 -->
     <inertial>
@@ -387,10 +387,10 @@
   </link>
   <link name="left_wrist_pitch_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_wrist_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wrist_pitch_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_wrist_pitch_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wrist_pitch_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link6 / joint6，m=0.4752 kg，Lref=0.0375 m，Lt=0.0285 m，k=0.760 -->
     <inertial>
@@ -401,10 +401,10 @@
   </link>
   <link name="left_wrist_roll_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_wrist_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wrist_roll_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_wrist_roll_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_wrist_roll_link.glb"/></geometry>
     </collision>
     <!-- OpenArm v1 openarm_*_link7 / joint7，m=0.466 kg，Lref=0.1025 m，Lt=0.171 m，k=1.668 -->
     <inertial>
@@ -417,20 +417,20 @@
   </link>
   <link name="left_grippera_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_grippera_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_grippera_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_grippera_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_grippera_link.glb"/></geometry>
     </collision>
   </link>
   <link name="left_gripper_tip_A">
   </link>
   <link name="left_gripperb_link">
     <visual>
-      <geometry><mesh filename="package://taku_description/meshes/left_gripperb_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_gripperb_link.glb"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://taku_description/meshes/left_gripperb_link.stl"/></geometry>
+      <geometry><mesh filename="package://taku_description/meshes/left_gripperb_link.glb"/></geometry>
     </collision>
   </link>
   <link name="left_gripper_tip_B">
