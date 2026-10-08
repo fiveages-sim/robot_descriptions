@@ -102,9 +102,9 @@
                             steer_link="left_wheel_steering_2" rotate_link="left_wheel_rotate_2"
                             xyz="-0.2745 0.2045 0.2109" rotate_com="0.000114 0.003440 -0.000229" wheel_joints_enabled="${wheel_joints_enabled}"/>
 
-    <!-- Lidars. Frame poses are Dyna's published frames (dvt1_kin.json). The base GLB already contains the sensor
-         domes; sensor_models meshes are offset along the frame z axis so their domes coincide with the base mesh
-         (fitted: median surface error 0.4 mm). Dyna frames therefore sit at the sensor mounting face. -->
+    <!-- Lidars. Frame poses are Dyna's published frames (dvt1_kin.json). The baked domes were removed
+         from agv_base.glb; these visuals are the sensor_models meshes. Airy bottom sits on its frame
+         (mesh z min -0.042). MID-360 is seated on the rear skin, see the note on lidar_back. -->
     <!-- RoboSense Airy (front left) -->
     <link name="lidar_front_left">
       <xacro:unless value="${isaac}">
@@ -137,11 +137,19 @@
       <parent link="agv_base"/>
       <child link="lidar_front_right"/>
     </joint>
-    <!-- Livox MID-360 (back) -->
+    <!-- Livox MID-360 (back).
+         sensor_models mesh origin is 26.15 mm above the flange (mesh z min -0.02615).
+         Galaxea R1 / MOZ1 / Astribot / Cobot Magic / Split Aloha put that origin on the
+         joint, ~10-12 mm under a deck that has a pocket, so the flange hangs in the pocket.
+         Rokae INEX is the only one with an explicit mount offset: mesh origin at
+         z=-0.02085 from 3d_lidar_base, which likewise lands ~10 mm under its deck.
+         Taku's kin frame is the mounting datum but the rear skin is solid and 42.2 mm
+         above it, so the previous +29 mm (origin 13 mm under the skin) drove the flange
+         through the shell. The offset below seats the flange on that skin. -->
     <link name="lidar_back">
       <xacro:unless value="${isaac}">
         <visual>
-          <origin xyz="0 0 0.029"/>
+          <origin xyz="0 0 0.0683"/>
           <geometry>
             <mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
           </geometry>

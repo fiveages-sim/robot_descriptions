@@ -81,13 +81,13 @@
 |---|---|---|---|---|
 | `lidar_front_left` / `lidar_front_left_frame` | RoboSense Airy | `0.292236 0.227959 0.301378`, `-0.616837 -0.603562 -1.94305` | `meshes/robosense/airy.glb` | `0 0 0.042` |
 | `lidar_front_right` / `lidar_front_right_frame` | RoboSense Airy | `0.292236 -0.227959 0.301378`, `0.613474 -0.606997 1.94896` | `meshes/robosense/airy.glb` | `0 0 0.042` |
-| `lidar_back` / `lidar_back_frame` | Livox MID-360 | `-0.3275 0 0.24995`, `0 0 1.5708` | `meshes/livox/mid360.glb` | `0 0 0.029` |
+| `lidar_back` / `lidar_back_frame` | Livox MID-360 | `-0.3275 0 0.24995`, `0 0 1.5708` | `meshes/livox/mid360.glb` | `0 0 0.0683` |
 
 Frame poses are unchanged from `dvt1_kin.json`. The front-lidar z axes point forward, outward and up, `[0.707, ±0.221, 0.672]` in `agv_base`. The rear-lidar z axis points straight up.
 
 The base GLB already contains the sensor domes. Within 9 cm of each frame, the base mesh has an axisymmetric dome centred on the frame z axis, with an xy axis offset of 1.3 mm or less. Dome tops are at z = 0.0629 m (front) and 0.0618 m (back) in the lidar frames.
 
-Each sensor mesh was fitted to its dome by a 1-mm grid search along z, followed by a ±6 mm xy search. Front: Airy at dz = 0.042, median surface error 0.4 mm, p90 1.5 mm. Back: MID-360 at dz = 0.029, median 0.4 mm, p90 0.8 mm. xy correction is 0 for all three.
+Each sensor mesh was fitted to its dome by a 1-mm grid search along z, followed by a ±6 mm xy search. Front: Airy at dz = 0.042, median surface error 0.4 mm, p90 1.5 mm. Back: the kin-frame fit that matched the baked dome was dz = 0.029. That buried the real MID-360 flange in the solid rear skin (the skin is 42 mm above the kin frame; the other robots in this repo only sit ~10 mm under their deck because they have a pocket). The visual is now `0 0 0.0683`, which puts the mesh bottom (z = -0.02615) on the rear skin. xy correction is 0 for all three.
 
 Dyna's lidar frames therefore sit at the sensor mounting face, not at the sensor_models mesh origin. The frames are kept, and only the visual is offset. Yaw about the sensor axis cannot be checked, because only the rotationally symmetric dome is visible.
 
