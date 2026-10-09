@@ -1,0 +1,303 @@
+; OCS2 fixed-base TCP config for Dyna Taku / DVT1 (INFERRED description).
+; Adapted from FiveAges W2 config/ocs2/fixed_base_tcp.info.
+; Head-follow / head-tracking mechanisms (HEAD_GAZE, headCoupling, headTrackingEE,
+; headMidpointGaze, enable_head_control) are intentionally omitted. Head joints are
+; listed in removeJoints so they stay out of the MPC model; use head_joint_controller
+; for direct joint teleop. No official Dyna dynamics — velocity soft-limits are
+; conservative fractions of the inferred URDF velocity tags.
+
+model_information
+{
+    manipulatorModelType    0
+
+    baseFrame               "agv_base"
+    eeFrame                 "left_tcp"
+    eeFrame1                "right_tcp"
+    bodyFrame               "torso_body_link"
+
+    removeJoints
+    {
+        [0]   "agv_right_front_steering_joint"
+        [1]   "agv_right_front_rotate_joint"
+        [2]   "agv_right_back_steering_joint"
+        [3]   "agv_right_back_rotate_joint"
+        [4]   "agv_left_front_steering_joint"
+        [5]   "agv_left_front_rotate_joint"
+        [6]   "agv_left_back_steering_joint"
+        [7]   "agv_left_back_rotate_joint"
+        [8]   "left_gripper_front_joint"
+        [9]   "left_gripper_rear_joint"
+        [10]  "right_gripper_front_joint"
+        [11]  "right_gripper_rear_joint"
+        [12]  "head_yaw_joint"
+        [13]  "head_pitch_joint"
+        [14]  "head_roll_joint"
+    }
+}
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+; State dim = 18: folding(2)+waist(2)+left arm(7)+right arm(7). Head omitted (see removeJoints).
+initialState
+{
+    arm
+    {
+        (0,0)   0.0     ; folding_low_joint
+        (1,0)   0.0     ; folding_high_joint
+        (2,0)   0.0     ; waist_pitch_joint
+        (3,0)   0.0     ; waist_yaw_joint
+        (4,0)   0.0     ; left_shoulder_pitch_joint
+        (5,0)   0.0     ; left_shoulder_roll_joint
+        (6,0)   0.0     ; left_shoulder_yaw_joint
+        (7,0)   0.0     ; left_elbow_joint
+        (8,0)   0.0     ; left_wrist_yaw_joint
+        (9,0)   0.0     ; left_wrist_pitch_joint
+        (10,0)  0.0     ; left_wrist_roll_joint
+        (11,0)  0.0     ; right_shoulder_pitch_joint
+        (12,0)  0.0     ; right_shoulder_roll_joint
+        (13,0)  0.0     ; right_shoulder_yaw_joint
+        (14,0)  0.0     ; right_elbow_joint
+        (15,0)  0.0     ; right_wrist_yaw_joint
+        (16,0)  0.0     ; right_wrist_pitch_joint
+        (17,0)  0.0     ; right_wrist_roll_joint
+    }
+}
+
+initialModeSchedule
+{
+    eventTimes
+    {
+    }
+    modeSequence
+    {
+        [0]
+        {
+            bodyMode "HM_DUAL_CUSTOM_LOCK_FIXED_BASE"
+        }
+    }
+}
+
+ddp
+{
+    algorithm                       SLQ
+    nThreads                        3
+    threadPriority                  50
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+    preComputeRiccatiTerms          true
+    useFeedbackPolicy               false
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+mpc
+{
+    timeHorizon                     1.0
+    solutionTimeWindow              0.2
+    coldStart                       false
+    debugPrint                      false
+    mpcDesiredFrequency             100
+    mrtDesiredFrequency             500
+}
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+bodyTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 0.5
+}
+
+inputCost
+{
+    R
+    {
+        arm
+        {
+            scaling 1e-2
+            (0,0)   8.0
+            (1,1)   8.0
+            (2,2)   2.0
+            (3,3)   2.0
+            (4,4)   1.5
+            (5,5)   1.5
+            (6,6)   1.5
+            (7,7)   1.5
+            (8,8)   1.1
+            (9,9)   1.1
+            (10,10) 1.1
+            (11,11) 1.5
+            (12,12) 1.5
+            (13,13) 1.5
+            (14,14) 1.5
+            (15,15) 1.1
+            (16,16) 1.1
+            (17,17) 1.1
+        }
+    }
+}
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      20.0
+    muOrientation                   10.0
+}
+
+bodyRelative
+{
+    activate                        true
+    xLowerBound                     0.00
+    xUpperBound                     0.25
+    muPosition                      5.0
+    muOrientation                   5.0
+}
+
+bimanualCoupling
+{
+    activate                        true
+    muPosition                      10.0
+    muOrientation                   1.25
+}
+
+waistLock
+{
+    activate                        true
+    numJoints                       4
+}
+
+customJointLock
+{
+    activate                        true
+    lockedJointIndices
+    {
+        [0] 0
+        [1] 1
+    }
+}
+
+armLock
+{
+    activate                        true
+    leftNumJoints                   7
+    rightNumJoints                  7
+}
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+; Soft velocity barriers (inferred; not rated Dyna limits). Arm values ~0.5x URDF tags.
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-3
+    lowerBound
+    {
+        arm
+        {
+            (0,0)  -0.5
+            (1,0)  -0.5
+            (2,0)  -0.5
+            (3,0)  -0.5
+            (4,0)  -8.0
+            (5,0)  -8.0
+            (6,0)  -2.7
+            (7,0)  -2.7
+            (8,0)  -10.0
+            (9,0)  -10.0
+            (10,0) -10.0
+            (11,0) -8.0
+            (12,0) -8.0
+            (13,0) -2.7
+            (14,0) -2.7
+            (15,0) -10.0
+            (16,0) -10.0
+            (17,0) -10.0
+        }
+    }
+    upperBound
+    {
+        arm
+        {
+            (0,0)  0.5
+            (1,0)  0.5
+            (2,0)  0.5
+            (3,0)  0.5
+            (4,0)  8.0
+            (5,0)  8.0
+            (6,0)  2.7
+            (7,0)  2.7
+            (8,0)  10.0
+            (9,0)  10.0
+            (10,0) 10.0
+            (11,0) 8.0
+            (12,0) 8.0
+            (13,0) 2.7
+            (14,0) 2.7
+            (15,0) 10.0
+            (16,0) 10.0
+            (17,0) 10.0
+        }
+    }
+}
+
+selfCollision
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-2
+    minimumDistance                 0.01
+    collisionObjectPairs
+    {
+    }
+    collisionLinkPairs
+    {
+        [0] "torso_body_link, left_elbow_link",
+        [1] "torso_body_link, left_wrist_yaw_link",
+        [2] "torso_body_link, left_wrist_roll_link",
+        [3] "torso_body_link, right_elbow_link",
+        [4] "torso_body_link, right_wrist_yaw_link",
+        [5] "torso_body_link, right_wrist_roll_link",
+    }
+}

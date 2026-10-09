@@ -25,12 +25,15 @@
       </xacro:if>
     </hardware>
 
+    <xacro:if value="$(arg enable_wheel_joints)">
+      <xacro:taku_chassis_interfaces/>
+    </xacro:if>
     <xacro:taku_body_interfaces/>
     <xacro:taku_head_interfaces/>
     <xacro:taku_arm_interfaces direction="1"/>
     <xacro:taku_arm_interfaces direction="-1"/>
-    <xacro:taku_gripper_interfaces side="left"/>
-    <xacro:taku_gripper_interfaces side="right"/>
+    <xacro:taku_dynaclaw_interfaces side="left"/>
+    <xacro:taku_dynaclaw_interfaces side="right"/>
   </ros2_control>
 
   <xacro:if value="$(arg gazebo)">

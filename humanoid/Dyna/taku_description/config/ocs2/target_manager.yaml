@@ -1,0 +1,11 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.1
+    angular_scale: 0.25
+    marker_fixed_frame: agv_base
+    enable_vr: true
+    vr_follow_frame: agv_base
+    # Head follow / head tracking intentionally disabled for Taku.
+    enable_head_control: false
+    enable_wbc_head_tracking_marker: false
+    reference_link: torso_body_link

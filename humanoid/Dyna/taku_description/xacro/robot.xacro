@@ -14,6 +14,6 @@
   <xacro:TakuChassis enable_wheel_joints="$(arg enable_wheel_joints)" isaac="$(arg isaac)"/>
   <xacro:TakuBody parent_link="agv_base"/>
   <xacro:TakuHead parent_link="torso_body_link"/>
-  <xacro:TakuArm parent_link="torso_body_link" direction="1"/>
-  <xacro:TakuArm parent_link="torso_body_link" direction="-1"/>
+  <xacro:TakuArm name="left" parent_link="torso_body_link" direction="1"/>
+  <xacro:TakuArm name="right" parent_link="torso_body_link" direction="-1"/>
 </robot>

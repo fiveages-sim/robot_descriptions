@@ -38,10 +38,25 @@
     <xacro:taku_joint_iface name="${arm_side}_wrist_roll_joint"/>
   </xacro:macro>
 
-  <!-- Two independent prismatic jaws per gripper (front: [-0.0345, 0], rear: [0, 0.0345]). -->
+  <!-- Dynaclaw: two independent prismatic jaws (front: [-0.0345, 0], rear: [0, 0.0345]). -->
   <xacro:macro name="taku_gripper_interfaces" params="side:=left">
     <xacro:taku_joint_iface name="${side}_gripper_front_joint"/>
     <xacro:taku_joint_iface name="${side}_gripper_rear_joint"/>
+  </xacro:macro>
+  <xacro:macro name="taku_dynaclaw_interfaces" params="side:=left">
+    <xacro:taku_gripper_interfaces side="${side}"/>
+  </xacro:macro>
+
+  <!-- Swerve chassis (only when enable_wheel_joints:=true so joints are not fixed). -->
+  <xacro:macro name="taku_chassis_interfaces">
+    <xacro:taku_joint_iface name="agv_right_front_steering_joint"/>
+    <xacro:taku_joint_iface name="agv_right_back_steering_joint"/>
+    <xacro:taku_joint_iface name="agv_left_front_steering_joint"/>
+    <xacro:taku_joint_iface name="agv_left_back_steering_joint"/>
+    <xacro:taku_joint_iface name="agv_right_front_rotate_joint"/>
+    <xacro:taku_joint_iface name="agv_right_back_rotate_joint"/>
+    <xacro:taku_joint_iface name="agv_left_front_rotate_joint"/>
+    <xacro:taku_joint_iface name="agv_left_back_rotate_joint"/>
   </xacro:macro>
 
 </robot>

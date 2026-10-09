@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<robot name="Taku Dynaclaw" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="name" default=""/>
+  <xacro:include filename="$(find taku_description)/xacro/components/dynaclaw.xacro"/>
+  <!-- Unprefixed jaws when name:=""; for a side on a wrist stub use name:=left and provide the parent link. -->
+  <link name="wrist_roll_link"/>
+  <xacro:TakuDynaclaw name="$(arg name)" parent_link="wrist_roll_link"/>
+</robot>

@@ -1,11 +1,22 @@
-# ros2_control configuration for Taku (inferred description; no official Dyna controller data).
-# All home poses are the zero pose, which lies inside every inferred limit.
+# ros2_control for Taku (inferred description; no official Dyna controller data).
+# Layout follows FiveAges W2 (ocs2_arm_controller / ocs2_wbc_controller + basic joint
+# controllers). Head-follow / head-tracking is NOT configured; head uses a plain
+# basic_joint_controller only. All home poses are the zero pose.
 controller_manager:
   ros__parameters:
     update_rate: 100
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
+
+    chassis_joint_controller:
+      type: basic_joint_controller/BasicJointController
 
     body_joint_controller:
       type: basic_joint_controller/BasicJointController
@@ -24,6 +35,118 @@ controller_manager:
 
     right_gripper_controller:
       type: basic_joint_controller/BasicJointController
+
+# Dual-arm MPC (W2-style). Joint order matches left then right 7-DoF arms.
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 100
+    mpc_frequency: 50
+    joints:
+      - left_shoulder_pitch_joint
+      - left_shoulder_roll_joint
+      - left_shoulder_yaw_joint
+      - left_elbow_joint
+      - left_wrist_yaw_joint
+      - left_wrist_pitch_joint
+      - left_wrist_roll_joint
+      - right_shoulder_pitch_joint
+      - right_shoulder_roll_joint
+      - right_shoulder_yaw_joint
+      - right_elbow_joint
+      - right_wrist_yaw_joint
+      - right_wrist_pitch_joint
+      - right_wrist_roll_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+    robot_name: taku
+    info_file_name: fixed_base_tcp
+    home_duration: 5.0
+    cartesian_defaults:
+      frame_id: torso_body_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+# Whole-body MPC (W2 fixed_base_tcp). Order: body(4) | left(7) | right(7).
+# Head is NOT in this list (no head-follow); see config/ocs2/fixed_base_tcp.info.
+ocs2_wbc_controller:
+  ros__parameters:
+    update_rate: 100
+    mpc_frequency: 50
+    info_file_name: fixed_base_tcp
+    joints:
+      - folding_low_joint
+      - folding_high_joint
+      - waist_pitch_joint
+      - waist_yaw_joint
+      - left_shoulder_pitch_joint
+      - left_shoulder_roll_joint
+      - left_shoulder_yaw_joint
+      - left_elbow_joint
+      - left_wrist_yaw_joint
+      - left_wrist_pitch_joint
+      - left_wrist_roll_joint
+      - right_shoulder_pitch_joint
+      - right_shoulder_roll_joint
+      - right_shoulder_yaw_joint
+      - right_elbow_joint
+      - right_wrist_yaw_joint
+      - right_wrist_pitch_joint
+      - right_wrist_roll_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+    robot_name: taku
+    home_duration: 5.0
+    cartesian_defaults:
+      frame_id: torso_body_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+    home_1: [0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+chassis_joint_controller:
+  ros__parameters:
+    update_rate: 100
+    joints:
+      - agv_right_front_steering_joint
+      - agv_right_back_steering_joint
+      - agv_left_front_steering_joint
+      - agv_left_back_steering_joint
+      - agv_right_front_rotate_joint
+      - agv_right_back_rotate_joint
+      - agv_left_front_rotate_joint
+      - agv_left_back_rotate_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
 
 body_joint_controller:
   ros__parameters:

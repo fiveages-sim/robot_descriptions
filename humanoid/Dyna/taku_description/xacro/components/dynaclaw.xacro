@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.141592653589793"/>
+  <!-- INFERRED, NOT AN OFFICIAL DYNA SPEC. Dynaclaw = two prismatic jaws (front/rear).
+       No separate gripper base link exists in dvt1_kin.json; jaws mount on the wrist_roll.
+       Shared jaw meshes under meshes/dynaclaw/ (left≈right within ~0.22 mm). See doc/taku_params.md. -->
+
+  <!-- Astribot-style name-prefixed macro. name:="left"|"right"|"" ; parent_link defaults to ${prefix}wrist_roll_link. -->
+  <xacro:macro name="TakuDynaclaw" params="name:='' parent_link:=''">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:property name="parent" value="${parent_link if parent_link else prefix + 'wrist_roll_link'}"/>
+
+    <link name="${prefix}grippera_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/dynaclaw/grippera_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/dynaclaw/grippera_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}gripper_front_joint" type="prismatic">
+      <origin xyz="-0.028953 -0.023048 -0.166971"/>
+      <parent link="${parent}"/>
+      <child link="${prefix}grippera_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="-0.0345" upper="0.0" effort="100" velocity="0.25"/>
+    </joint>
+
+    <link name="${prefix}gripper_tip_A"/>
+    <joint name="${prefix}gripper_tip_A_frame" type="fixed">
+      <origin xyz="0.000433 0.023068 -0.080556"/>
+      <parent link="${prefix}grippera_link"/>
+      <child link="${prefix}gripper_tip_A"/>
+    </joint>
+
+    <link name="${prefix}gripperb_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/dynaclaw/gripperb_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find taku_description)/meshes/dynaclaw/gripperb_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}gripper_rear_joint" type="prismatic">
+      <origin xyz="-0.028088 0.023048 -0.166971"/>
+      <parent link="${parent}"/>
+      <child link="${prefix}gripperb_link"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit lower="0.0" upper="0.0345" effort="100" velocity="0.25"/>
+    </joint>
+
+    <link name="${prefix}gripper_tip_B"/>
+    <joint name="${prefix}gripper_tip_B_frame" type="fixed">
+      <origin xyz="-0.000432 -0.023068 -0.080556"/>
+      <parent link="${prefix}gripperb_link"/>
+      <child link="${prefix}gripper_tip_B"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Back-compat alias used by older includes. -->
+  <xacro:macro name="TakuGripper" params="side:=left">
+    <xacro:TakuDynaclaw name="${side}"/>
+  </xacro:macro>
+</robot>

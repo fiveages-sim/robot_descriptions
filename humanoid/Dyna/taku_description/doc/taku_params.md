@@ -92,3 +92,10 @@ Each sensor mesh was fitted to its dome by a 1-mm grid search along z, followed 
 Dyna's lidar frames therefore sit at the sensor mounting face, not at the sensor_models mesh origin. The frames are kept, and only the visual is offset. Yaw about the sensor axis cannot be checked, because only the rotationally symmetric dome is visible.
 
 sensor_models ships meshes only, no xacro macros. Every other robot in this repo inlines `<link><visual><mesh filename="file://$(find sensor_models)/meshes/...glb"/></visual></link>` plus a fixed joint. Taku follows the same pattern.
+
+
+## Layout notes (arm / Dynaclaw)
+
+- Arm meshes are under `meshes/arm/{left,right}_*.glb`. Left and right are **not** geometric Y-mirrors (shoulder_roll vertex counts differ; wrist_pitch p95 mirror residual ~60 mm), so both sides are kept. `TakuArm` still shares one macro (`name`, `direction`, `standalone`) like Ai2 Bot2.
+- Dynaclaw jaws are under `meshes/dynaclaw/{grippera,gripperb}_link.glb`, shared by both sides (left≈right within ~0.22 mm, no separate gripper base link in `dvt1_kin.json`). Standalone entry: `xacro/dynaclaw.xacro`.
+- OCS2 `config/ocs2/fixed_base_tcp.info` follows FiveAges W2 fixed-base TCP; head-follow mechanisms are omitted and head joints are in `removeJoints`.
