@@ -1,19 +1,80 @@
 <?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Dyna Taku / DVT1 (INFERRED description, see doc/taku_params.md)              | -->
+<!-- |    Full: chassis -> body -> arm_base(=torso) -> arms; head after arms.          | -->
+<!-- |    topology:=dual : split_body planning tree rooted at arm_base (WCE3/Bot2).    | -->
+<!-- |    collider:=simple (default): arm cylinders + torso/arm_base chest cylinder.   | -->
+<!-- |    OCS2 planning injects eef_fixed_joints + chassis_joints_movable=false.       | -->
+<!-- =================================================================================== -->
 <robot name="Taku" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <!-- Dyna Taku / DVT1. INFERRED description, NOT an official Dyna spec (see doc/taku_params.md). -->
-  <!-- Full robot viz: steering / drive joints fixed by default (repo convention); set true for a driveable chassis. -->
+  <xacro:arg name="topology" default="full"/>
+  <xacro:arg name="collider" default="simple"/>
   <xacro:arg name="enable_wheel_joints" default="false"/>
-  <!-- Isaac asset import: hide sensor_models lidar meshes. -->
+  <!-- Accepted by robot_common_launch planning mappings (alias; Taku uses enable_wheel_joints). -->
+  <xacro:arg name="chassis_joints_movable" default="false"/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
   <xacro:arg name="isaac" default="false"/>
 
-  <xacro:include filename="$(find taku_description)/xacro/components/chassis.xacro"/>
-  <xacro:include filename="$(find taku_description)/xacro/components/body.xacro"/>
-  <xacro:include filename="$(find taku_description)/xacro/components/head.xacro"/>
+  <xacro:property name="topology_arg" value="$(arg topology)"/>
+  <xacro:property name="collider_arg" value="$(arg collider)"/>
+  <!-- Args may arrive as bool True/False (CLI :=true) or string; normalize to 'true'/'false'. -->
+  <xacro:property name="eef_fixed" value="$(arg eef_fixed_joints)"/>
+  <xacro:property name="add_gripper"
+      value="${'false' if eef_fixed in [True, 'true', 'True', 1] else 'true'}"/>
+  <xacro:property name="wheels_movable"
+      value="${'true' if '$(arg enable_wheel_joints)' in ['true', 'True', '1'] or '$(arg chassis_joints_movable)' in ['true', 'True', '1'] else 'false'}"/>
+
   <xacro:include filename="$(find taku_description)/xacro/components/arm.xacro"/>
 
-  <xacro:TakuChassis enable_wheel_joints="$(arg enable_wheel_joints)" isaac="$(arg isaac)"/>
-  <xacro:TakuBody parent_link="base_link"/>
-  <xacro:TakuHead parent_link="torso_body_link"/>
-  <xacro:TakuArm name="left" parent_link="torso_body_link" direction="1"/>
-  <xacro:TakuArm name="right" parent_link="torso_body_link" direction="-1"/>
+  <xacro:macro name="TakuArms" params="parent_link">
+    <xacro:TakuArm name="left" parent_link="${parent_link}" direction="1"
+        enable_gripper="${add_gripper}" collider="$(arg collider)"/>
+    <xacro:TakuArm name="right" parent_link="${parent_link}" direction="-1"
+        enable_gripper="${add_gripper}" collider="$(arg collider)"/>
+  </xacro:macro>
+
+  <!-- Same chest cylinder as torso_body_link simple collider (skill: dual pairs on arm_base). -->
+  <xacro:macro name="TakuArmBaseChestCollision">
+    <xacro:if value="${collider_arg == 'simple'}">
+      <collision>
+        <origin xyz="-0.005 0 0.172"/>
+        <geometry>
+          <cylinder length="0.300" radius="0.100"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+  </xacro:macro>
+
+  <!-- Split-body OCS2: dual-arm tree; arm_base coincides with full-robot torso_body_link. -->
+  <xacro:if value="${topology_arg == 'dual'}">
+    <link name="base_link"/>
+    <link name="arm_base">
+      <xacro:TakuArmBaseChestCollision/>
+    </link>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="arm_base"/>
+    </joint>
+    <xacro:TakuArms parent_link="arm_base"/>
+  </xacro:if>
+
+  <xacro:unless value="${topology_arg == 'dual'}">
+    <xacro:include filename="$(find taku_description)/xacro/components/chassis.xacro"/>
+    <xacro:include filename="$(find taku_description)/xacro/components/body.xacro"/>
+    <xacro:include filename="$(find taku_description)/xacro/components/head.xacro"/>
+
+    <xacro:TakuChassis enable_wheel_joints="${wheels_movable}" isaac="$(arg isaac)"/>
+    <xacro:TakuBody parent_link="base_link" collider="$(arg collider)"/>
+
+    <!-- Coincides with torso_body_link so split FK in arm_base matches live torso TF. -->
+    <link name="arm_base"/>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="torso_body_link"/>
+      <child link="arm_base"/>
+    </joint>
+
+    <!-- Arms before head → Pinocchio DFS: body | left | right | head (W2/Bot2). -->
+    <xacro:TakuArms parent_link="arm_base"/>
+    <xacro:TakuHead parent_link="torso_body_link"/>
+  </xacro:unless>
 </robot>

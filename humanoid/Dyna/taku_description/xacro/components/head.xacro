@@ -10,12 +10,12 @@
     <link name="head_yaw_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/head_yaw_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/head/head_yaw_link.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/head_yaw_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/head/head_yaw_link.glb"/>
         </geometry>
       </collision>
     </link>
@@ -30,12 +30,12 @@
     <link name="head_pitch_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/head_pitch_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/head/head_pitch_link.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/head_pitch_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/head/head_pitch_link.glb"/>
         </geometry>
       </collision>
     </link>
@@ -44,18 +44,18 @@
       <parent link="head_yaw_link"/>
       <child link="head_pitch_link"/>
       <axis xyz="0.0 1.0 0.0"/>
-      <limit lower="0" upper="${45/180*PI}" effort="0" velocity="0"/>
+      <limit lower="${-20/180*PI}" upper="${20/180*PI}" effort="0" velocity="0"/>
     </joint>
 
     <link name="head_roll_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/head_roll_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/head/head_roll_link.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/head_roll_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/head/head_roll_link.glb"/>
         </geometry>
       </collision>
     </link>
@@ -64,7 +64,7 @@
       <parent link="head_pitch_link"/>
       <child link="head_roll_link"/>
       <axis xyz="1.0 0.0 0.0"/>
-      <limit lower="${-30/180*PI}" upper="${30/180*PI}" effort="0" velocity="0"/>
+      <limit lower="${-15/180*PI}" upper="${15/180*PI}" effort="0" velocity="0"/>
     </joint>
 
     <link name="head_camera_base_frame"/>
@@ -86,6 +86,15 @@
       <origin xyz="0.055 0.01 0.033203"/>
       <parent link="head_camera_base_frame"/>
       <child link="head_camera_right_optical_center_frame"/>
+    </joint>
+
+    <!-- Midpoint of the stereo optical centers (same orientation as base = ROS optical).
+         HEAD_GAZE uses this so lateral base offset (y=0.025) does not bias roll. -->
+    <link name="head_camera_mid_optical_frame"/>
+    <joint name="head_camera_mid_optical_joint" type="fixed">
+      <origin xyz="0.025 0.01 0.033203"/>
+      <parent link="head_camera_base_frame"/>
+      <child link="head_camera_mid_optical_frame"/>
     </joint>
   </xacro:macro>
 </robot>

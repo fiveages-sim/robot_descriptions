@@ -4,37 +4,73 @@
   <!-- INFERRED, NOT AN OFFICIAL DYNA SPEC. Kinematics from public dvt1_kin.json; limits from mesh self-collision sweep
        snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md.
 
-       Ai2-bot2 style: one macro for both arms. name:="left"|"right"|"" sets the link/joint prefix;
-       direction:=1/-1 selects the side mesh under meshes/arm/ (left/right are NOT geometric mirrors —
-       shoulder_roll topology and wrist_pitch differ — so each side keeps its own GLB set).
-       standalone:=true omits the torso mount joint so the shoulder_pitch_link is the URDF root. -->
+       Ai2 Bot2 / M6 CCS style: one macro and one mesh set (meshes/arm/*.glb) for both arms.
+       Arm-internal joints, limits, meshes, and inertias are identical. direction:=1 left,
+       -1 right only flips the shoulder_pitch mount (y and rpy z=pi on the right); no mesh scale.
+       standalone:=true mounts the same pitch joint on a world stub (right still gets rpy z=pi).
+
+       collider:=simple (default): cylinders from glTF node-xform AABB (skill split-chassis-glb §8).
+       collider:=convex: same GLB as visual (viz / debug only; do not enable OCS2 selfCollision). -->
   <xacro:include filename="$(find taku_description)/xacro/components/dynaclaw.xacro"/>
 
-  <xacro:macro name="TakuArm" params="name:='' parent_link:=torso_body_link direction:=1 enable_gripper:=true standalone:=false">
+  <!-- Simple cylinder or convex mesh collision for one arm link. -->
+  <xacro:macro name="taku_arm_link_collision" params="collider mesh xyz:='0 0 0' rpy:='0 0 0' length radius">
+    <xacro:if value="${collider == 'convex'}">
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+    <xacro:if value="${collider == 'simple'}">
+      <collision>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+  </xacro:macro>
+
+  <!-- Extra simple cylinder (no convex mesh duplicate). -->
+  <xacro:macro name="taku_arm_simple_cylinder" params="collider xyz:='0 0 0' rpy:='0 0 0' length radius">
+    <xacro:if value="${collider == 'simple'}">
+      <collision>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="TakuArm" params="name:='' parent_link:=torso_body_link direction:=1 enable_gripper:=true standalone:=false collider:='simple'">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
-    <xacro:property name="mesh_side" value="${'left' if direction == 1 else 'right'}"/>
+    <xacro:property name="mesh_dir" value="file://$(find taku_description)/meshes/arm"/>
+    <!-- Mirror only at the shoulder mount (right: -y and yaw 180 deg). -->
+    <xacro:property name="shoulder_mount_xyz" value="${'0.0 0.105 0.243' if direction == 1 else '0.0 -0.105 0.243'}"/>
+    <xacro:property name="shoulder_mount_rpy" value="0 0 ${0.0 if direction == 1 else PI}"/>
 
     <!-- inertia: OpenArm v1 openarm_*_link1 / joint1，m=1.1417 kg，Lref=0.0671 m，Lt=0.085 m，k=1.267 -->
     <link name="${prefix}shoulder_pitch_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_shoulder_pitch_link.glb"/>
+          <mesh filename="${mesh_dir}/shoulder_pitch_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_shoulder_pitch_link.glb"/>
-        </geometry>
-      </collision>
+      <xacro:taku_arm_link_collision collider="${collider}"
+          mesh="${mesh_dir}/shoulder_pitch_link.glb"
+          xyz="0.0 0.0828 0.0" length="0.117" radius="0.055"/>
       <inertial>
-        <origin xyz="${'-0.000981 0.075822 0.005254' if direction == 1 else '-0.000842 -0.075907 0.004881'}" rpy="0 0 0"/>
+        <origin xyz="-0.000981 0.075822 0.005254" rpy="0 0 0"/>
         <mass value="2.320819"/>
         <inertia ixx="0.0051115313" ixy="0" ixz="0" iyy="0.0041525076" iyz="0" izz="0.0033141773"/>
       </inertial>
     </link>
+
     <xacro:unless value="${standalone}">
       <joint name="${prefix}shoulder_pitch_joint" type="revolute">
-        <origin xyz="${'0.0 0.105 0.243' if direction == 1 else '0.0 -0.105 0.243'}"/>
+        <origin xyz="${shoulder_mount_xyz}" rpy="${shoulder_mount_rpy}"/>
         <parent link="${parent_link}"/>
         <child link="${prefix}shoulder_pitch_link"/>
         <axis xyz="0.0 1.0 0.0"/>
@@ -45,7 +81,7 @@
       <!-- Keep the shoulder_pitch joint as a floating root actuator about a world stub. -->
       <link name="${prefix}arm_mount"/>
       <joint name="${prefix}shoulder_pitch_joint" type="revolute">
-        <origin xyz="0 0 0"/>
+        <origin xyz="0 0 0" rpy="${shoulder_mount_rpy}"/>
         <parent link="${prefix}arm_mount"/>
         <child link="${prefix}shoulder_pitch_link"/>
         <axis xyz="0.0 1.0 0.0"/>
@@ -57,68 +93,64 @@
     <link name="${prefix}shoulder_roll_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_shoulder_roll_link.glb"/>
+          <mesh filename="${mesh_dir}/shoulder_roll_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_shoulder_roll_link.glb"/>
-        </geometry>
-      </collision>
+      <xacro:taku_arm_link_collision collider="${collider}"
+          mesh="${mesh_dir}/shoulder_roll_link.glb"
+          xyz="-0.0029 0.0 -0.0514" length="0.178" radius="0.058"/>
       <inertial>
-        <origin xyz="${'0.002703 0.004865 -0.055426' if direction == 1 else '-0.012506 -0.004710 -0.056977'}" rpy="0 0 0"/>
+        <origin xyz="0.002703 0.004865 -0.055426" rpy="0 0 0"/>
         <mass value="1.410554"/>
         <inertia ixx="0.0053947641" ixy="0" ixz="0" iyy="0.0056502265" iyz="0" izz="0.00348631"/>
       </inertial>
     </link>
+
+    <!-- Same origin + limits both arms (+90 deg bake). Old left −15…+90 → −105…0 after bake. -->
     <joint name="${prefix}shoulder_roll_joint" type="revolute">
-      <origin xyz="${'0.0 0.085 0.0' if direction == 1 else '0.0 -0.085 0.0'}"/>
+      <origin xyz="0.0 0.085 0.0" rpy="${PI/2} 0 0"/>
       <parent link="${prefix}shoulder_pitch_link"/>
       <child link="${prefix}shoulder_roll_link"/>
       <axis xyz="1.0 0.0 0.0"/>
-      <limit lower="${-15/180*PI if direction == 1 else -100/180*PI}" upper="${90/180*PI if direction == 1 else 15/180*PI}" effort="40" velocity="16.754666"/>
+      <limit lower="${-95/180*PI}" upper="${0.0}" effort="40" velocity="16.754666"/>
     </joint>
 
     <!-- inertia: OpenArm v1 openarm_*_link3 / joint3，m=1.0739 kg，Lref=0.1569 m，Lt=0.126 m，k=0.803 -->
     <link name="${prefix}shoulder_yaw_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_shoulder_yaw_link.glb"/>
+          <mesh filename="${mesh_dir}/shoulder_yaw_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_shoulder_yaw_link.glb"/>
-        </geometry>
-      </collision>
+      <xacro:taku_arm_link_collision collider="${collider}"
+          mesh="${mesh_dir}/shoulder_yaw_link.glb"
+          xyz="0.0 0.0 -0.0959" length="0.125" radius="0.048"/>
       <inertial>
-        <origin xyz="${'0.003237 0.000051 -0.062399' if direction == 1 else '0.003254 0.000051 -0.062398'}" rpy="0 0 0"/>
+        <origin xyz="0.003237 0.000051 -0.062399" rpy="0 0 0"/>
         <mass value="0.556169"/>
         <inertia ixx="0.0014602196" ixy="0" ixz="0" iyy="0.0014425179" iyz="0" izz="0.0002207697"/>
       </inertial>
     </link>
     <joint name="${prefix}shoulder_yaw_joint" type="revolute">
-      <origin xyz="0.0 0.0 -0.125"/>
+      <origin xyz="0.0 0.0 -0.125" rpy="0 0 ${PI/2}"/>
       <parent link="${prefix}shoulder_roll_link"/>
       <child link="${prefix}shoulder_yaw_link"/>
       <axis xyz="0.0 0.0 1.0"/>
-      <limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="27" velocity="5.445426"/>
+      <limit lower="${-PI}" upper="${PI}" effort="27" velocity="5.445426"/>
     </joint>
 
     <!-- inertia: OpenArm v1 openarm_*_link4 / joint4，m=0.6349 kg，Lref=0.1006 m，Lt=0.103 m，k=1.024 -->
     <link name="${prefix}elbow_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_elbow_link.glb"/>
+          <mesh filename="${mesh_dir}/elbow_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_elbow_link.glb"/>
-        </geometry>
-      </collision>
+      <xacro:taku_arm_link_collision collider="${collider}"
+          mesh="${mesh_dir}/elbow_link.glb"
+          xyz="-0.0101 0.0 -0.0443" length="0.153" radius="0.052"/>
       <inertial>
-        <origin xyz="-0.006362 -0.000276 -0.029897" rpy="0 0 0"/>
+        <origin xyz="-0.006362 -0.000276 -0.029897" />
         <mass value="0.681433"/>
         <inertia ixx="0.00070094552" ixy="0" ixz="0" iyy="0.00057493285" iyz="0" izz="0.00037578781"/>
       </inertial>
@@ -128,23 +160,21 @@
       <parent link="${prefix}shoulder_yaw_link"/>
       <child link="${prefix}elbow_link"/>
       <axis xyz="0.0 1.0 0.0"/>
-      <limit lower="${-135/180*PI}" upper="${20/180*PI}" effort="27" velocity="5.445426"/>
+      <limit lower="${-100/180*PI}" upper="${20/180*PI}" effort="27" velocity="5.445426"/>
     </joint>
 
     <!-- inertia: OpenArm v1 openarm_*_link5 / joint5，m=0.6157 kg，Lref=0.1262 m，Lt=0.1525 m，k=1.208 -->
     <link name="${prefix}wrist_yaw_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_wrist_yaw_link.glb"/>
+          <mesh filename="${mesh_dir}/wrist_yaw_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_wrist_yaw_link.glb"/>
-        </geometry>
-      </collision>
+      <xacro:taku_arm_link_collision collider="${collider}"
+          mesh="${mesh_dir}/wrist_yaw_link.glb"
+          xyz="0.0 0.0 -0.1001" length="0.131" radius="0.049"/>
       <inertial>
-        <origin xyz="0.009133 0.000721 -0.088197" rpy="0 0 0"/>
+        <origin xyz="0.009133 0.000721 -0.088197" />
         <mass value="1.086427"/>
         <inertia ixx="0.0010899155" ixy="0" ixz="0" iyy="0.0011466014" iyz="0" izz="0.00083482886"/>
       </inertial>
@@ -161,14 +191,13 @@
     <link name="${prefix}wrist_pitch_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_wrist_pitch_link.glb"/>
+          <mesh filename="${mesh_dir}/wrist_pitch_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_wrist_pitch_link.glb"/>
-        </geometry>
-      </collision>
+      <!-- Long axis ≈ X → align URDF cylinder (default Z) with rpy Y=pi/2. -->
+      <xacro:taku_arm_link_collision collider="${collider}"
+          mesh="${mesh_dir}/wrist_pitch_link.glb"
+          xyz="-0.0017 0.0 -0.0003" rpy="0 ${PI/2} 0" length="0.075" radius="0.033"/>
       <inertial>
         <origin xyz="-0.001473 -0.007185 0.007067" rpy="0 0 0"/>
         <mass value="0.208601"/>
@@ -180,23 +209,31 @@
       <parent link="${prefix}wrist_yaw_link"/>
       <child link="${prefix}wrist_pitch_link"/>
       <axis xyz="0.0 1.0 0.0"/>
-      <limit lower="${-90/180*PI}" upper="${90/180*PI}" effort="7" velocity="20.943946"/>
+      <limit lower="${-60/180*PI}" upper="${60/180*PI}" effort="7" velocity="20.943946"/>
     </joint>
 
     <!-- inertia: OpenArm v1 openarm_*_link7 / joint7，m=0.466 kg，Lref=0.1025 m，Lt=0.171 m，k=1.668 -->
     <link name="${prefix}wrist_roll_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_wrist_roll_link.glb"/>
+          <mesh filename="${mesh_dir}/wrist_roll_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/arm/${mesh_side}_wrist_roll_link.glb"/>
-        </geometry>
-      </collision>
+      <!-- Proximal wrist housing only; palm/fingers use Dynaclaw jaw boxes (no fat distal disk). -->
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh_dir}/wrist_roll_link.glb"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:taku_arm_simple_cylinder collider="${collider}"
+          xyz="0.028 0.0 -0.010" rpy="0 ${PI/2} 0" length="0.075" radius="0.032"/>
+      <!-- Small flange near gripper mount (z≈-0.167), not a palm-sized disk. -->
+      <xacro:taku_arm_simple_cylinder collider="${collider}"
+          xyz="0.0 0.0 -0.155" length="0.030" radius="0.028"/>
       <inertial>
-        <origin xyz="${'0.013861 -0.000003 -0.098012' if direction == 1 else '0.012789 0.000005 -0.098962'}" rpy="0 0 0"/>
+        <origin xyz="0.013861 -0.000003 -0.098012" rpy="0 0 0"/>
         <mass value="2.163728"/>
         <inertia ixx="0.0082577567" ixy="0" ixz="0" iyy="0.0064226997" iyz="0" izz="0.0044196444"/>
       </inertial>
@@ -229,8 +266,9 @@
       <child link="${prefix}gripper_camera"/>
     </joint>
 
-    <xacro:if value="${enable_gripper}">
-      <xacro:TakuDynaclaw name="${name}" parent_link="${prefix}wrist_roll_link"/>
+    <!-- String "false" is truthy in Python; accept bool/str/int explicitly. -->
+    <xacro:if value="${str(enable_gripper).lower() in ['true', '1']}">
+      <xacro:TakuDynaclaw name="${name}" parent_link="${prefix}wrist_roll_link" collider="${collider}"/>
     </xacro:if>
   </xacro:macro>
 </robot>

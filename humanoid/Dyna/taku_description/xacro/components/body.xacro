@@ -2,23 +2,53 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:property name="PI" value="3.141592653589793"/>
   <!-- INFERRED, NOT AN OFFICIAL DYNA SPEC. Kinematics from public dvt1_kin.json; limits from mesh self-collision sweep
-       snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md. -->
+       snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md.
 
-  <!-- Folding lift (folding_low / folding_high) + waist pitch / yaw. -->
-  <xacro:macro name="TakuBody" params="parent_link:=base_link">
+       collider:=simple — folding: PCA-OBB cylinders (trim end overhang); waist AABB box; torso tight Z-cylinder.
+       collider:=convex — same GLB as visual. -->
+
+  <xacro:macro name="taku_body_collision" params="collider mesh shape:='box' xyz:='0 0 0' rpy:='0 0 0' size:='0.1 0.1 0.1' length:='0.1' radius:='0.05'">
+    <xacro:if value="${collider == 'convex'}">
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+    <xacro:if value="${collider == 'simple'}">
+      <xacro:if value="${shape == 'box'}">
+        <collision>
+          <origin xyz="${xyz}" rpy="${rpy}"/>
+          <geometry>
+            <box size="${size}"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${shape == 'cylinder'}">
+        <collision>
+          <origin xyz="${xyz}" rpy="${rpy}"/>
+          <geometry>
+            <cylinder length="${length}" radius="${radius}"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="TakuBody" params="parent_link:=base_link collider:='simple'">
 
     <!-- inertia: Galaxea R1 torso_link1 5.72 kg、关节间距 0.40 m；Taku folding_low→high 间距 0.450 m，k=1.125 -->
     <link name="folding_lower_joint_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/folding_lower_joint_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/body/folding_lower_joint_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/folding_lower_joint_link.glb"/>
-        </geometry>
-      </collision>
+      <!-- PCA OBB cylinder along folding beam; length trimmed vs full mesh span to cut end gap. -->
+      <xacro:taku_body_collision collider="${collider}"
+          mesh="file://$(find taku_description)/meshes/body/folding_lower_joint_link.glb"
+          shape="cylinder" xyz="0.161 0.0 0.151"
+          rpy="-2.2725 0.0 1.5708" length="0.500" radius="0.088"/>
       <inertial>
         <origin xyz="0.118880 -0.042443 0.088858" rpy="0 0 0"/>
         <mass value="8.138869"/>
@@ -30,21 +60,20 @@
       <parent link="${parent_link}"/>
       <child link="folding_lower_joint_link"/>
       <axis xyz="0.0 1.0 0.0"/>
-      <limit lower="${-70/180*PI}" upper="${90/180*PI}" effort="100" velocity="2.5"/>
+      <limit lower="${-55/180*PI}" upper="${35/180*PI}" effort="100" velocity="2.5"/>
     </joint>
 
     <!-- inertia: Galaxea R1 torso_link2 3.50 kg、间距 0.30 m；Taku folding_high→waist 间距 0.450 m，k=1.500 -->
     <link name="folding_to_waist_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/folding_to_waist_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/body/folding_to_waist_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/folding_to_waist_link.glb"/>
-        </geometry>
-      </collision>
+      <xacro:taku_body_collision collider="${collider}"
+          mesh="file://$(find taku_description)/meshes/body/folding_to_waist_link.glb"
+          shape="cylinder" xyz="-0.203 -0.001 0.106"
+          rpy="1.0887 0.0 -1.5708" length="0.500" radius="0.072"/>
       <inertial>
         <origin xyz="-0.170796 -0.001667 0.099736" rpy="0 0 0"/>
         <mass value="11.812500"/>
@@ -56,40 +85,38 @@
       <parent link="folding_lower_joint_link"/>
       <child link="folding_to_waist_link"/>
       <axis xyz="0.0 1.0 0.0"/>
-      <limit lower="0" upper="${150/180*PI}" effort="100" velocity="2.5"/>
+      <limit lower="${-40/180*PI}" upper="${70/180*PI}" effort="100" velocity="2.5"/>
     </joint>
 
     <link name="torso_waist_pitch_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/torso_waist_pitch_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/body/torso_waist_pitch_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/torso_waist_pitch_link.glb"/>
-        </geometry>
-      </collision>
+      <!-- Waist: AABB box (~92% of mesh extents). -->
+      <xacro:taku_body_collision collider="${collider}"
+          mesh="file://$(find taku_description)/meshes/body/torso_waist_pitch_link.glb"
+          shape="box" xyz="0 0 0.051" size="0.130 0.160 0.210"/>
     </link>
     <joint name="waist_pitch_joint" type="revolute">
       <origin xyz="-0.401053 0.0 0.204099"/>
       <parent link="folding_to_waist_link"/>
       <child link="torso_waist_pitch_link"/>
       <axis xyz="0.0 1.0 0.0"/>
-      <limit lower="${-90/180*PI}" upper="${80/180*PI}" effort="100" velocity="2.5"/>
+      <limit lower="${-115/180*PI}" upper="${60/180*PI}" effort="100" velocity="2.5"/>
     </joint>
 
     <link name="torso_body_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/torso_body_link.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/body/torso_body_link.glb"/>
         </geometry>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/torso_body_link.glb"/>
-        </geometry>
-      </collision>
+      <!-- Tight Z cylinder: under mesh radial p50–p60; length trimmed vs full Z span. -->
+      <xacro:taku_body_collision collider="${collider}"
+          mesh="file://$(find taku_description)/meshes/body/torso_body_link.glb"
+          shape="cylinder" xyz="-0.005 0 0.172" length="0.300" radius="0.100"/>
     </link>
     <joint name="waist_yaw_joint" type="revolute">
       <origin xyz="-0.007 0.0 0.172"/>
@@ -97,6 +124,16 @@
       <child link="torso_body_link"/>
       <axis xyz="0.0 0.0 1.0"/>
       <limit lower="${-45/180*PI}" upper="${45/180*PI}" effort="100" velocity="2.5"/>
+    </joint>
+
+    <!-- Body-tracking EE (OCS2 bodyFrame): ROS X-forward Z-up, coinciding with
+         torso_body_link (folding/waist origins are identity, same as base_link).
+         Dedicated dummy so TRACKING does not use the CAD/collision torso link. -->
+    <link name="torso_tracking_frame"/>
+    <joint name="torso_tracking_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="torso_body_link"/>
+      <child link="torso_tracking_frame"/>
     </joint>
   </xacro:macro>
 </robot>

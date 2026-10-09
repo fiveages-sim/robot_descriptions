@@ -5,7 +5,9 @@
     marker_fixed_frame: base_link
     enable_vr: true
     vr_follow_frame: base_link
-    # Head follow / head tracking intentionally disabled for Taku.
+    # W2-style: no legacy head joint marker. Head follows via OCS2 HEAD_GAZE /
+    # HEAD_TRACKING. full_body.launch.py overrides wbc head marker when WBC is up.
     enable_head_control: false
     enable_wbc_head_tracking_marker: false
+    head_link_name: head_roll_link
     reference_link: torso_body_link

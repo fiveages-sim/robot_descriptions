@@ -25,3 +25,4 @@ Do not put skills in `~/.cursor/skills-cursor/` (Cursor internals).
 | Skill | Use when |
 |-------|----------|
 | [split-chassis-glb](split-chassis-glb/SKILL.md) | Split chassis GLB into `chassis` / `steer` / `wheel`, write swerve xacro, and add `collider:=simple` boxes from glTF-node AABBs |
+| [import-humanoid-ocs2](import-humanoid-ocs2/SKILL.md) | Import a wheeled dual-arm: `task.info` / `fixed_base_tcp.info`, measure `bodyRelative` x, `HEAD_GAZE` / `muUpright`; Taku is a worked example only |

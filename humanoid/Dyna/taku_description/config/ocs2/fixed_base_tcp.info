@@ -1,10 +1,11 @@
 ; OCS2 fixed-base TCP config for Dyna Taku / DVT1 (INFERRED description).
-; Adapted from FiveAges W2 config/ocs2/fixed_base_tcp.info.
-; Head-follow / head-tracking mechanisms (HEAD_GAZE, headCoupling, headTrackingEE,
-; headMidpointGaze, enable_head_control) are intentionally omitted. Head joints are
-; listed in removeJoints so they stay out of the MPC model; use head_joint_controller
-; for direct joint teleop. No official Dyna dynamics — velocity soft-limits are
-; conservative fractions of the inferred URDF velocity tags.
+; Adapted from FiveAges W2 / Ai2 Bot2 wheel-humanoid layout.
+; State / input follows Pinocchio DFS on the planning URDF:
+;   [folding(2)+waist(2) | left arm(7) | right arm(7) | head(3)] = 21
+; Head limits: yaw ±90°, pitch ±20°, roll ±15° (calibrated). No official Dyna dynamics —
+; arm jointVelocityLimits ±1.57 rad/s; folding/waist/head stay conservative.
+; selfCollision uses collider:=simple chest box + arm cylinders (skill
+; split-chassis-glb §8); do not pair against visual GLB collision meshes.
 
 model_information
 {
@@ -13,7 +14,8 @@ model_information
     baseFrame               "base_link"
     eeFrame                 "left_tcp"
     eeFrame1                "right_tcp"
-    bodyFrame               "torso_body_link"
+    bodyFrame               "torso_tracking_frame"
+    headFrame               "head_roll_link"
 
     removeJoints
     {
@@ -25,13 +27,10 @@ model_information
         [5]   "agv_left_front_rotate_joint"
         [6]   "agv_left_back_steering_joint"
         [7]   "agv_left_back_rotate_joint"
-        [8]   "left_gripper_front_joint"
-        [9]   "left_gripper_rear_joint"
-        [10]  "right_gripper_front_joint"
-        [11]  "right_gripper_rear_joint"
-        [12]  "head_yaw_joint"
-        [13]  "head_pitch_joint"
-        [14]  "head_roll_joint"
+        [8]   "left_gripper_joint"
+        [9]   "left_gripper_mimic_joint"
+        [10]  "right_gripper_joint"
+        [11]  "right_gripper_mimic_joint"
     }
 }
 
@@ -41,7 +40,8 @@ model_settings
     recompileLibraries      true
 }
 
-; State dim = 18: folding(2)+waist(2)+left arm(7)+right arm(7). Head omitted (see removeJoints).
+; State dim = 21: body(4)+left(7)+right(7)+head(3).
+; Arm zeros use URDF-baked shoulder roll/yaw (+90 deg in both arms' joint origins).
 initialState
 {
     arm
@@ -51,19 +51,22 @@ initialState
         (2,0)   0.0     ; waist_pitch_joint
         (3,0)   0.0     ; waist_yaw_joint
         (4,0)   0.0     ; left_shoulder_pitch_joint
-        (5,0)   0.0     ; left_shoulder_roll_joint
-        (6,0)   0.0     ; left_shoulder_yaw_joint
+        (5,0)   0.0     ; left_shoulder_roll_joint (URDF origin +90 deg)
+        (6,0)   0.0     ; left_shoulder_yaw_joint (URDF origin +90 deg)
         (7,0)   0.0     ; left_elbow_joint
         (8,0)   0.0     ; left_wrist_yaw_joint
         (9,0)   0.0     ; left_wrist_pitch_joint
         (10,0)  0.0     ; left_wrist_roll_joint
         (11,0)  0.0     ; right_shoulder_pitch_joint
-        (12,0)  0.0     ; right_shoulder_roll_joint
-        (13,0)  0.0     ; right_shoulder_yaw_joint
+        (12,0)  0.0     ; right_shoulder_roll_joint (URDF origin +90 deg)
+        (13,0)  0.0     ; right_shoulder_yaw_joint (URDF origin +90 deg)
         (14,0)  0.0     ; right_elbow_joint
         (15,0)  0.0     ; right_wrist_yaw_joint
         (16,0)  0.0     ; right_wrist_pitch_joint
         (17,0)  0.0     ; right_wrist_roll_joint
+        (18,0)  0.0     ; head_yaw_joint
+        (19,0)  0.0     ; head_pitch_joint
+        (20,0)  0.0     ; head_roll_joint
     }
 }
 
@@ -76,7 +79,8 @@ initialModeSchedule
     {
         [0]
         {
-            bodyMode "HM_DUAL_CUSTOM_LOCK_FIXED_BASE"
+            bodyMode "HM_DUAL_RELATIVE_FIXED_BASE"
+            headMode "HEAD_GAZE"
         }
     }
 }
@@ -137,34 +141,45 @@ bodyTrackingEE
 {
     activate  true
     muPosition 5.0
-    muOrientation 0.5
+    muOrientation 5.0
 }
 
+headTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+; Input layout: [body(4) | left(7) | right(7) | head(3)]
 inputCost
 {
     R
     {
         arm
         {
-            scaling 1e-2
-            (0,0)   8.0
-            (1,1)   8.0
-            (2,2)   2.0
-            (3,3)   2.0
-            (4,4)   1.5
-            (5,5)   1.5
-            (6,6)   1.5
-            (7,7)   1.5
-            (8,8)   1.1
-            (9,9)   1.1
-            (10,10) 1.1
-            (11,11) 1.5
-            (12,12) 1.5
-            (13,13) 1.5
-            (14,14) 1.5
-            (15,15) 1.1
-            (16,16) 1.1
-            (17,17) 1.1
+            scaling 1e-3
+            (0,0)   5.0     ; folding_low
+            (1,1)   5.0     ; folding_high
+            (2,2)   3.0     ; waist_pitch
+            (3,3)   2.0     ; waist_yaw
+            (4,4)   1.5     ; left_shoulder_pitch
+            (5,5)   1.5     ; left_shoulder_roll
+            (6,6)   1.5     ; left_shoulder_yaw
+            (7,7)   1.5     ; left_elbow
+            (8,8)   1.1     ; left_wrist_yaw
+            (9,9)   1.1     ; left_wrist_pitch
+            (10,10) 1.1     ; left_wrist_roll
+            (11,11) 1.5     ; right_shoulder_pitch
+            (12,12) 1.5     ; right_shoulder_roll
+            (13,13) 1.5     ; right_shoulder_yaw
+            (14,14) 1.5     ; right_elbow
+            (15,15) 1.1     ; right_wrist_yaw
+            (16,16) 1.1     ; right_wrist_pitch
+            (17,17) 1.1     ; right_wrist_roll
+            (18,18) 0.1     ; head_yaw
+            (19,19) 0.1     ; head_pitch
+            (20,20) 0.1     ; head_roll
         }
     }
 }
@@ -184,8 +199,11 @@ finalEndEffector
 bodyRelative
 {
     activate                        true
-    xLowerBound                     0.00
-    xUpperBound                     0.25
+    ; Zero-pose torso_tracking_frame is x≈-0.21 in base_link (folding zigzag),
+    ; not Bot2's forward [0, 0.25]. Band around rest so RELATIVE/vertical
+    ; does not yank the torso forward/up.
+    xLowerBound                     -0.35
+    xUpperBound                     -0.05
     muPosition                      5.0
     muOrientation                   5.0
 }
@@ -197,16 +215,67 @@ bimanualCoupling
     muOrientation                   1.25
 }
 
+; Head starts after both arms (URDF declares arms before head under torso / arm_base).
+headInputStart                          18
+
 waistLock
 {
     activate                        true
     numJoints                       4
 }
 
+; Couple waist_yaw (3) with head_yaw (18) when body mode is HEAD_COUPLED.
+headCoupling
+{
+    activate                        true
+    waistJointIndex                 3
+    headJointIndex                  18
+    alpha                           1.0
+    lockedWaistJoints
+    {
+        [0] 0
+        [1] 1
+        [2] 2
+    }
+}
+
 customJointLock
 {
     activate                        true
     lockedJointIndices
+    {
+        [0] 0                       ; folding_low_joint
+        [1] 1                       ; folding_high_joint
+    }
+}
+
+headMidpointGaze
+{
+    activate                    true
+    cameraFrame                 "head_camera_mid_optical_frame"
+    fx                          611.864502
+    fy                          611.478271
+    cx                          638.961182
+    cy                          363.642456
+    width                       1280
+    height                      720
+    horizontalDeadbandDeg       10.0
+    verticalDeadbandDeg         10.0
+    muAlignmentHorizontal       1.0
+    muAlignmentVertical         1.0
+    muFront                     1.0
+    muUpright                   1.0     ; 3-DoF: keep camera +X world-horizontal (gravity-level head)
+    uprightDeadbandDeg          2.0     ; roll deadband; inside the band upright does not act
+    minDepth                    0.3
+}
+
+; Soft pull toward controller HOME (exclude folding_low/high under custom lock).
+homeJointReference
+{
+    activate                        true
+    activateDefault                 true
+    mu                              1e-3
+    excludeJointIndices
     {
         [0] 0
         [1] 1
@@ -227,7 +296,7 @@ jointPositionLimits
     delta                           1e-3
 }
 
-; Soft velocity barriers (inferred; not rated Dyna limits). Arm values ~0.5x URDF tags.
+; Soft velocity barriers. Arms ±1.57 rad/s; folding/waist ±0.5; head ±1.0.
 jointVelocityLimits
 {
     mu                              1e-2
@@ -240,20 +309,23 @@ jointVelocityLimits
             (1,0)  -0.5
             (2,0)  -0.5
             (3,0)  -0.5
-            (4,0)  -8.0
-            (5,0)  -8.0
-            (6,0)  -2.7
-            (7,0)  -2.7
-            (8,0)  -10.0
-            (9,0)  -10.0
-            (10,0) -10.0
-            (11,0) -8.0
-            (12,0) -8.0
-            (13,0) -2.7
-            (14,0) -2.7
-            (15,0) -10.0
-            (16,0) -10.0
-            (17,0) -10.0
+            (4,0)  -1.57
+            (5,0)  -1.57
+            (6,0)  -1.57
+            (7,0)  -1.57
+            (8,0)  -1.57
+            (9,0)  -1.57
+            (10,0) -1.57
+            (11,0) -1.57
+            (12,0) -1.57
+            (13,0) -1.57
+            (14,0) -1.57
+            (15,0) -1.57
+            (16,0) -1.57
+            (17,0) -1.57
+            (18,0) -1.0     ; head_yaw
+            (19,0) -1.0     ; head_pitch
+            (20,0) -1.0     ; head_roll
         }
     }
     upperBound
@@ -264,27 +336,32 @@ jointVelocityLimits
             (1,0)  0.5
             (2,0)  0.5
             (3,0)  0.5
-            (4,0)  8.0
-            (5,0)  8.0
-            (6,0)  2.7
-            (7,0)  2.7
-            (8,0)  10.0
-            (9,0)  10.0
-            (10,0) 10.0
-            (11,0) 8.0
-            (12,0) 8.0
-            (13,0) 2.7
-            (14,0) 2.7
-            (15,0) 10.0
-            (16,0) 10.0
-            (17,0) 10.0
+            (4,0)  1.57
+            (5,0)  1.57
+            (6,0)  1.57
+            (7,0)  1.57
+            (8,0)  1.57
+            (9,0)  1.57
+            (10,0) 1.57
+            (11,0) 1.57
+            (12,0) 1.57
+            (13,0) 1.57
+            (14,0) 1.57
+            (15,0) 1.57
+            (16,0) 1.57
+            (17,0) 1.57
+            (18,0) 1.0
+            (19,0) 1.0
+            (20,0) 1.0
         }
     }
 }
 
+; Chest box + arm cylinders (collider:=simple default). Do not use collider:=convex
+; with activate true — GLB hpp-fcl stalls WBC (skill split-chassis-glb §8).
 selfCollision
 {
-    activate                        true
+    activate                        false
     mu                              1e-3
     delta                           1e-2
     minimumDistance                 0.01

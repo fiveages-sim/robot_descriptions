@@ -1,0 +1,231 @@
+; Dual-arm OCS2 config for Dyna Taku / DVT1 (INFERRED description).
+; Used by ocs2_arm_controller (split_body). Planning URDF: topology:=dual,
+; rooted at arm_base (same mount as torso_body_link on the full robot).
+; State / input = 14: [left(7) | right(7)]. No joint67Coupling (OpenArm-like wrist).
+; selfCollision uses arm_base chest box + arm cylinders (collider:=simple).
+
+model_information
+{
+    manipulatorModelType    0
+
+    baseFrame               "arm_base"
+    eeFrame                 "left_tcp"
+    eeFrame1                "right_tcp"
+
+    removeJoints
+    {
+        [0]   "left_gripper_joint"
+        [1]   "left_gripper_mimic_joint"
+        [2]   "right_gripper_joint"
+        [3]   "right_gripper_mimic_joint"
+    }
+}
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+ddp
+{
+    algorithm                       SLQ
+    nThreads                        3
+    threadPriority                  50
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+    preComputeRiccatiTerms          true
+    useFeedbackPolicy               false
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+mpc
+{
+    timeHorizon                     1.0
+    solutionTimeWindow              0.2
+    coldStart                       false
+    debugPrint                      false
+    mpcDesiredFrequency             100
+    mrtDesiredFrequency             500
+}
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+initialState
+{
+    arm
+    {
+        (0,0)    0.0     ; left_shoulder_pitch_joint
+        (1,0)    0.0     ; left_shoulder_roll_joint
+        (2,0)    0.0     ; left_shoulder_yaw_joint
+        (3,0)    0.0     ; left_elbow_joint
+        (4,0)    0.0     ; left_wrist_yaw_joint
+        (5,0)    0.0     ; left_wrist_pitch_joint
+        (6,0)    0.0     ; left_wrist_roll_joint
+        (7,0)    0.0     ; right_shoulder_pitch_joint
+        (8,0)    0.0     ; right_shoulder_roll_joint
+        (9,0)    0.0     ; right_shoulder_yaw_joint
+        (10,0)   0.0     ; right_elbow_joint
+        (11,0)   0.0     ; right_wrist_yaw_joint
+        (12,0)   0.0     ; right_wrist_pitch_joint
+        (13,0)   0.0     ; right_wrist_roll_joint
+    }
+}
+
+inputCost
+{
+    R
+    {
+        arm
+        {
+            scaling 5e-2
+            (0,0)    0.5     ; left_shoulder_pitch
+            (1,1)    0.5     ; left_shoulder_roll
+            (2,2)    0.5     ; left_shoulder_yaw
+            (3,3)    0.5     ; left_elbow
+            (4,4)    0.1     ; left_wrist_yaw
+            (5,5)    0.1     ; left_wrist_pitch
+            (6,6)    0.1     ; left_wrist_roll
+            (7,7)    0.5     ; right_shoulder_pitch
+            (8,8)    0.5     ; right_shoulder_roll
+            (9,9)    0.5     ; right_shoulder_yaw
+            (10,10)  0.5     ; right_elbow
+            (11,11)  0.1     ; right_wrist_yaw
+            (12,12)  0.1     ; right_wrist_pitch
+            (13,13)  0.1     ; right_wrist_roll
+        }
+    }
+}
+
+endEffector
+{
+    dualArmMode true
+    leftArm
+    {
+        muPosition      100.0
+        muOrientation   50.0
+    }
+    rightArm
+    {
+        muPosition      100.0
+        muOrientation   50.0
+    }
+}
+
+finalEndEffector
+{
+    dualArmMode true
+    leftArm
+    {
+        muPosition      200.0
+        muOrientation   100.0
+    }
+    rightArm
+    {
+        muPosition      200.0
+        muOrientation   100.0
+    }
+}
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+; Soft velocity barriers. All 14 arm joints ±1.57 rad/s.
+jointVelocityLimits
+{
+    mu      1e-2
+    delta   1e-3
+    lowerBound
+    {
+        arm
+        {
+            (0,0)  -1.57
+            (1,0)  -1.57
+            (2,0)  -1.57
+            (3,0)  -1.57
+            (4,0)  -1.57
+            (5,0)  -1.57
+            (6,0)  -1.57
+            (7,0)  -1.57
+            (8,0)  -1.57
+            (9,0)  -1.57
+            (10,0) -1.57
+            (11,0) -1.57
+            (12,0) -1.57
+            (13,0) -1.57
+        }
+    }
+    upperBound
+    {
+        arm
+        {
+            (0,0)   1.57
+            (1,0)   1.57
+            (2,0)   1.57
+            (3,0)   1.57
+            (4,0)   1.57
+            (5,0)   1.57
+            (6,0)   1.57
+            (7,0)   1.57
+            (8,0)   1.57
+            (9,0)   1.57
+            (10,0)  1.57
+            (11,0)  1.57
+            (12,0)  1.57
+            (13,0)  1.57
+        }
+    }
+}
+
+; dual topology: chest box on arm_base + arm cylinders (collider:=simple).
+selfCollision
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-2
+    minimumDistance                 0.01
+    collisionObjectPairs
+    {
+    }
+    collisionLinkPairs
+    {
+        [0] "arm_base, left_elbow_link",
+        [1] "arm_base, left_wrist_yaw_link",
+        [2] "arm_base, left_wrist_roll_link",
+        [3] "arm_base, right_elbow_link",
+        [4] "arm_base, right_wrist_yaw_link",
+        [5] "arm_base, right_wrist_roll_link",
+    }
+}

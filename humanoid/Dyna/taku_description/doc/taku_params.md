@@ -18,19 +18,18 @@
 | `folding_high_joint` | 0° | +150° (+2.6180 rad) | +2.7° … +56.9° | −20° 时上臂已碰到 `base_link`（约 4 mm），0° 间隙 34 mm。正向扫到 +160° 仍 >118 mm，没有见到上止挡，+150° 只是落在已扫过的自由区间里的整数，不是测到的硬限位。 |
 | `waist_pitch_joint` | −90° | +80° | −26.1° … +5.8° | −120°…+60° 对非父连杆都 >60 mm；+90° 才靠近 `folding_lower_joint_link`（约 20 mm），还没撞上。−90°/+80° 是包住观测、且明显落在自由区里的整数，不是硬止挡。 |
 | `waist_yaw_joint` | −45° | +45° | −26.0° … +40.3° | ±40° 对 `folding_to_waist_link` 还有 10–13 mm，±70° 约 2 mm，躯干壳贴上下折叠臂。 |
-| `head_yaw_joint` | −90° | +90° | −45.1° … +47.1° | ±90° 时头壳离肩约 80 mm，外观网格看不到止挡。±90° 只为包住观测。`effort`/`velocity` 填 0，表示没有参考。 |
-| `head_pitch_joint` | 0° | +45° | +0.7° … +30.1° | 头相对躯干的间隙在 −20°…+50° 只有 7–11 mm，且 neck 网格（body GLB）和头壳是套在一起的，分不出机械挡块。0° 是因为记录里俯仰没有过负。证据弱。 |
-| `head_roll_joint` | −30° | +30° | −4.0° … +2.3° | ±30° 时间隙掉到约 4–5 mm（采样噪声量级）。可能偏保守。 |
+| `head_yaw_joint` | −90° | +90° | −45.1° … +47.1° | 实机校准后保持 ±90°。`effort`/`velocity` 填 0，表示没有参考额定值。 |
+| `head_pitch_joint` | −20° | +20° | +0.7° … +30.1° | 实机校准限位 ±20°（旧推断 0…+45°）。 |
+| `head_roll_joint` | −15° | +15° | −4.0° … +2.3° | 实机校准限位 ±15°（旧推断 ±30°）。 |
 | `*_shoulder_pitch_joint` | −150° | +90° | 右 −122°…+27°；左 −128°…+42° | −150°…+140° 单关节扫描没有非父干涉。没有外观止挡。整数区间只包住观测并留在已扫自由区里。力矩/速度借 OpenArm v1 joint1：40 N·m，16.75 rad/s。 |
-| `right_shoulder_roll_joint` | −100° | +15° | −89.5° … +12.7° | 向躯干（正方向）+20° 时距 `torso_waist_pitch_link` 约 2 mm；向外 −40° 仍有 33 mm，观测到 −89° 仍无碰撞。+15° 卡在观测最大值 +12.7° 之上、碰撞之前。 |
-| `left_shoulder_roll_joint` | −15° | +90° | −11.8° … +66.8° | 与右侧镜像：向内为负。左臂没有单独再扫一遍，观测范围落在该区间内。向外没有见到止挡，+90° 只包住 +67° 的观测。 |
-| `*_shoulder_yaw_joint` | −90° | +90° | 右 −45°…+65°；左 −49°…+47° | ±90° 间隙仍约 30 mm。与 OpenArm joint3 的 ±90° 一致，力矩/速度用 OpenArm：27 N·m，5.45 rad/s。 |
+| `*_shoulder_roll_joint` | −105° | 0° | 左旧零位 −11.8°…+66.8°；右 −89.5°…+12.7° | Bot2：左右同一套限位。旧左 −15°…+90°，+90° bake 后 −105°…0°；右臂镜像只在 shoulder 安装（y 与 rpy z=π），臂内 origin/limit 与左相同。 |
+| `*_shoulder_yaw_joint` | −180° | +180° | 左旧 −49°…+47°；右 −45°…+65° | Bot2：左右同一套。+90° bake 进 origin；±180° 包住旧 ±90° 换算后的并集。力矩/速度用 OpenArm joint3：27 N·m，5.45 rad/s。 |
 | `*_elbow_joint` | −135° | +20° | 右 −127°…−15°；左 −123°…−22° | −150° 时小臂碰到 `shoulder_roll_link`（约 5 mm），−110° 仍有 46 mm。+40° 仍自由。−135°/+20° 包住观测。OpenArm 肘是 0…+140°，零位定义不同，只借了力矩/速度（27 N·m，5.45 rad/s），没有借角度。 |
 | `*_wrist_yaw_joint` | −90° | +90° | 右 −80°…+75°；左 −47°…+80° | 单关节 ±90° 没有局部止挡（最近的是远处的底盘，约 34 mm）。借 OpenArm joint5：7 N·m，20.94 rad/s。 |
 | `*_wrist_pitch_joint` | −90° | +90° | 右 −42°…+52°；左 −26°…+47° | −80°…+120° 无干涉。OpenArm joint6 的 ±45° **包不住** 右腕 +52°，所以没有借它的角度。力矩/速度仍用 OpenArm joint6：7 N·m，20.94 rad/s。 |
 | `*_wrist_roll_joint` | −90° | +90° | 右 −58°…+68°；左 −80°…+24° | −70° 时离 `wrist_yaw_link` 约 7 mm，可能是腕壳；+70° 时手在零位姿态下会靠近腰，那是整臂构型干涉，不是腕关节自己的挡块。±90° 包住观测。力矩/速度用 OpenArm joint7。 |
-| `*_gripper_front_joint` | −0.0345 m | 0 | 页面给定，不是轨迹 | 轴为 +Y。查看器（`ego-replay.html` 第 390 行，`08icp6eat.e8r.js`）写 `front = -0.0345 * grip`，`grip∈[0,1]`。0 为合拢。 |
-| `*_gripper_rear_joint` | 0 | +0.0345 m | 同上 | `rear = +0.0345 * grip`。两指张开量最大 0.069 m，与页面 “URDF travel caps the gap at 2 × 0.0345 m” 一致。力矩/速度暂借 Galaxea R1 夹爪 100 N、0.25 m/s，不是这只 Dynaclaw 的数据。 |
+| `*_gripper_joint` | 0 | +0.0345 m | 页面给定，不是轨迹 | 标准命名（`left_gripper_joint` / `right_gripper_joint`）。驱动后指（gripperb），轴 +Y；0 合拢，+0.0345 张开。查看器 `rear = +0.0345 * grip`，`grip∈[0,1]`。力矩/速度暂借 Galaxea R1 夹爪 100 N、0.25 m/s。 |
+| `*_gripper_mimic_joint` | −0.0345 m | 0 | 同上 | 前指（grippera）mimic：`q_front = -q_gripper`。两指张开量最大 0.069 m。 |
 
 `effort` / `velocity` 凡是写了非零值，都是参考机器人 URDF 里的数，不是 Taku 的额定值。头三个关节没有可借的头，URDF 里写成 0。
 
@@ -63,7 +62,7 @@
 - `torso_waist_pitch_link`：按 R1 `torso_link3`（3.4 kg，间距 0.10 m）缩到 0.172 m 会得到约 17 kg，超过该连杆包围盒的实心铝质量（约 16 kg），缩放失效。
 - `head_yaw_link`、`head_pitch_link`、`head_roll_link`：R1 的 `zed_link` 是相机，不是头。
 - `*_grippera_link`、`*_gripperb_link`：OpenArm 指 0.036 kg 小很多，按长度硬缩会超过夹爪包围盒的实心铝质量。
-- 15 个固定坐标系（相机、激光、IMU、指尖、EE 目标）：无质量。
+- 16 个固定坐标系（相机、激光、IMU、指尖、EE 目标、`torso_tracking_frame`）：无质量。
 
 ## 参考文件
 
@@ -94,8 +93,9 @@ Dyna's lidar frames therefore sit at the sensor mounting face, not at the sensor
 sensor_models ships meshes only, no xacro macros. Every other robot in this repo inlines `<link><visual><mesh filename="file://$(find sensor_models)/meshes/...glb"/></visual></link>` plus a fixed joint. Taku follows the same pattern.
 
 
-## Layout notes (arm / Dynaclaw)
+## Layout notes (arm / chassis / Dynaclaw)
 
-- Arm meshes are under `meshes/arm/{left,right}_*.glb`. Left and right are **not** geometric Y-mirrors (shoulder_roll vertex counts differ; wrist_pitch p95 mirror residual ~60 mm), so both sides are kept. `TakuArm` still shares one macro (`name`, `direction`, `standalone`) like Ai2 Bot2.
-- Dynaclaw jaws are under `meshes/dynaclaw/{grippera,gripperb}_link.glb`, shared by both sides (left≈right within ~0.22 mm, no separate gripper base link in `dvt1_kin.json`). Standalone entry: `xacro/dynaclaw.xacro`.
-- OCS2 `config/ocs2/fixed_base_tcp.info` follows FiveAges W2 fixed-base TCP; head-follow mechanisms are omitted and head joints are in `removeJoints`.
+- Arms follow Ai2 Bot2 / M6 CCS: one `TakuArm` macro and one mesh set under `meshes/arm/*.glb` with **no** left/right mesh `scale`. Roll/yaw +90° are baked into the same joint origins; limits and inertias are identical. `direction` only flips the shoulder_pitch mount (`y` and right `rpy z=π`).
+- Swerve modules keep distinct link/joint names, but all four share `meshes/wheel_steering.glb` and `meshes/wheel_rotate.glb` (per-corner GLBs matched within ~0.2 mm).
+- Dynaclaw keeps one jaw mesh, `meshes/dynaclaw/grippera_link.glb`, shared by both sides (left≈right within ~0.22 mm). `gripperb_link` uses that mesh with `rpy="0 0 pi"` (180° about z; 1 mm voxel IoU ≈ 0.998). Actuated joint is `left_/right_gripper_joint` ([0, 0.0345]); opposite jaw is `*_gripper_mimic_joint` with `multiplier="-1"`. No separate gripper base link in `dvt1_kin.json`. Standalone entry: `xacro/dynaclaw.xacro`.
+- OCS2 `config/ocs2/fixed_base_tcp.info` follows FiveAges W2 / Bot2 fixed-base TCP with head in the MPC (21 DoF: body 4 + left 7 + right 7 + head 3). `config/ocs2/task.info` is the 14-DoF dual-arm file for `ocs2_arm_controller` (`topology:=dual`). `bodyFrame` is `torso_tracking_frame` (identity dummy on `torso_body_link`, ROS X-forward Z-up; zero-pose x≈−0.21 m, so `bodyRelative` uses `[−0.35, −0.05]` not Bot2 `[0, 0.25]`). `headMode` defaults to `HEAD_GAZE`; camera frame `head_camera_mid_optical_frame` (midpoint of left/right optical centers); `headMidpointGaze.muUpright` keeps camera +X world-horizontal via `head_roll` only (`uprightDeadbandDeg 2.0`, inactive inside the band). Default `collider:=simple`: folding PCA-OBB cylinders (trimmed), waist AABB box, torso Z-cylinder `r=0.100` `L=0.300`, arm cylinders (wrist_roll split), Dynaclaw jaw boxes; `selfCollision` pairs torso/arm_base ↔ elbow / wrist_yaw / wrist_roll.

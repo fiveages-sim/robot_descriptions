@@ -4,7 +4,9 @@
   <!-- INFERRED, NOT AN OFFICIAL DYNA SPEC. Kinematics from public dvt1_kin.json; limits from mesh self-collision sweep
        snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md. -->
 
-  <!-- One swerve module: steering link (yaw about z) + wheel link (spin about y). -->
+  <!-- One swerve module: steering link (yaw about z) + wheel link (spin about y).
+       All four modules share meshes/chassis/wheel_steering.glb and meshes/chassis/wheel_rotate.glb
+       (per-corner GLBs matched within ~0.2 mm). -->
   <xacro:macro name="TakuSwerveModule" params="steer_joint rotate_joint steer_link rotate_link xyz rotate_com wheel_joints_enabled">
     <xacro:property name="steering_joint_type" value="${'continuous' if wheel_joints_enabled else 'fixed'}"/>
     <xacro:property name="driving_joint_type" value="${'continuous' if wheel_joints_enabled else 'fixed'}"/>
@@ -12,12 +14,12 @@
     <link name="${steer_link}">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/${steer_link}.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/chassis/wheel_steering.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/${steer_link}.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/chassis/wheel_steering.glb"/>
         </geometry>
       </collision>
       <inertial>
@@ -30,12 +32,12 @@
     <link name="${rotate_link}">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/${rotate_link}.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/chassis/wheel_rotate.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/${rotate_link}.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/chassis/wheel_rotate.glb"/>
         </geometry>
       </collision>
       <inertial>
@@ -67,7 +69,7 @@
   <xacro:macro name="TakuChassis" params="enable_wheel_joints:='true' isaac:=false">
     <xacro:property name="wheel_joints_enabled" value="${str(enable_wheel_joints).lower() in ['true', '1', 'yes', 'on']}"/>
 
-    <!-- Root frames: base_footprint --fixed identity--> base_link (Ai2 Bot2 chassis pattern). -->
+    <!-- Root frames: base_footprint linked to base_link by fixed identity (Ai2 Bot2 chassis pattern). -->
     <link name="base_footprint"/>
     <joint name="base_footprint_joint" type="fixed">
       <parent link="base_footprint"/>
@@ -78,12 +80,12 @@
     <link name="base_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/agv_base.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/chassis/agv_base.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find taku_description)/meshes/agv_base.glb"/>
+          <mesh filename="file://$(find taku_description)/meshes/chassis/agv_base.glb"/>
         </geometry>
       </collision>
       <inertial>

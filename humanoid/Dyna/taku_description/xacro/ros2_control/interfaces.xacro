@@ -38,10 +38,9 @@
     <xacro:taku_joint_iface name="${arm_side}_wrist_roll_joint"/>
   </xacro:macro>
 
-  <!-- Dynaclaw: two independent prismatic jaws (front: [-0.0345, 0], rear: [0, 0.0345]). -->
+  <!-- Dynaclaw: one actuated prismatic jaw [0, 0.0345]; opposite jaw is URDF mimic. -->
   <xacro:macro name="taku_gripper_interfaces" params="side:=left">
-    <xacro:taku_joint_iface name="${side}_gripper_front_joint"/>
-    <xacro:taku_joint_iface name="${side}_gripper_rear_joint"/>
+    <xacro:taku_joint_iface name="${side}_gripper_joint"/>
   </xacro:macro>
   <xacro:macro name="taku_dynaclaw_interfaces" params="side:=left">
     <xacro:taku_gripper_interfaces side="${side}"/>

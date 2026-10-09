@@ -12,6 +12,11 @@
   <exec_depend>robot_common_launch</exec_depend>
   <exec_depend>sensor_models</exec_depend>
 
+  <exec_depend>ocs2_arm_controller</exec_depend>
+  <exec_depend>ocs2_wbc_controller</exec_depend>
+  <exec_depend>basic_joint_controller</exec_depend>
+  <exec_depend>adaptive_gripper_controller</exec_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>

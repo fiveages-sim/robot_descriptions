@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot name="Taku" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="type" default="chassis"/>
+  <xacro:arg name="collider" default="simple"/>
   <xacro:arg name="enable_wheel_joints" default="true"/>
   <xacro:arg name="isaac" default="false"/>
   <xacro:arg name="side" default="left"/>
@@ -25,10 +26,10 @@
       <child link="base_link"/>
     </joint>
     <link name="base_link"/>
-    <xacro:TakuBody parent_link="base_link"/>
+    <xacro:TakuBody parent_link="base_link" collider="$(arg collider)"/>
   </xacro:if>
 
-  <!-- Upper body: folding lift + waist + head + dual arms (no chassis/gripper). -->
+  <!-- Upper body: folding lift + waist + arms + head (no chassis/gripper). -->
   <xacro:if value="${'$(arg type)' == 'upper_body'}">
     <link name="base_footprint"/>
     <joint name="base_footprint_joint" type="fixed">
@@ -36,10 +37,15 @@
       <child link="base_link"/>
     </joint>
     <link name="base_link"/>
-    <xacro:TakuBody parent_link="base_link"/>
+    <xacro:TakuBody parent_link="base_link" collider="$(arg collider)"/>
+    <link name="arm_base"/>
+    <joint name="arm_base_joint" type="fixed">
+      <parent link="torso_body_link"/>
+      <child link="arm_base"/>
+    </joint>
+    <xacro:TakuArm name="left" parent_link="arm_base" direction="1" enable_gripper="false" collider="$(arg collider)"/>
+    <xacro:TakuArm name="right" parent_link="arm_base" direction="-1" enable_gripper="false" collider="$(arg collider)"/>
     <xacro:TakuHead parent_link="torso_body_link"/>
-    <xacro:TakuArm name="left" parent_link="torso_body_link" direction="1" enable_gripper="false"/>
-    <xacro:TakuArm name="right" parent_link="torso_body_link" direction="-1" enable_gripper="false"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'head'}">
@@ -47,25 +53,25 @@
     <xacro:TakuHead parent_link="torso_body_link"/>
   </xacro:if>
 
-  <!-- Both arms with Dynaclaw, mounted on a shared torso stub (prefixed left_/right_). -->
+  <!-- Both arms with Dynaclaw, mounted on arm_base (prefixed left_/right_). -->
   <xacro:if value="${'$(arg type)' == 'arm' or '$(arg type)' == 'arms'}">
-    <link name="torso_body_link"/>
-    <xacro:TakuArm name="left" parent_link="torso_body_link" direction="1"/>
-    <xacro:TakuArm name="right" parent_link="torso_body_link" direction="-1"/>
+    <link name="arm_base"/>
+    <xacro:TakuArm name="left" parent_link="arm_base" direction="1" collider="$(arg collider)"/>
+    <xacro:TakuArm name="right" parent_link="arm_base" direction="-1" collider="$(arg collider)"/>
   </xacro:if>
 
-  <!-- Single arm, Ai2-style standalone (unprefixed); mesh side from direction. -->
+  <!-- Single arm, Ai2-style standalone (unprefixed); direction sets mount xyz/rpy only. -->
   <xacro:if value="${'$(arg type)' == 'left_arm'}">
-    <xacro:TakuArm direction="1" standalone="true"/>
+    <xacro:TakuArm direction="1" standalone="true" collider="$(arg collider)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'right_arm'}">
-    <xacro:TakuArm direction="-1" standalone="true"/>
+    <xacro:TakuArm direction="-1" standalone="true" collider="$(arg collider)"/>
   </xacro:if>
 
   <!-- Dynaclaw / gripper: one side per call so check_urdf has a single root. -->
   <xacro:if value="${'$(arg type)' == 'gripper' or '$(arg type)' == 'dynaclaw'}">
     <link name="wrist_roll_link"/>
-    <xacro:TakuDynaclaw name="$(arg side)" parent_link="wrist_roll_link"/>
+    <xacro:TakuDynaclaw name="$(arg side)" parent_link="wrist_roll_link" collider="$(arg collider)"/>
   </xacro:if>
 </robot>
