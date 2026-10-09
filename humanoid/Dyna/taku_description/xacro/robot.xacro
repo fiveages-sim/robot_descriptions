@@ -12,7 +12,7 @@
   <xacro:include filename="$(find taku_description)/xacro/components/arm.xacro"/>
 
   <xacro:TakuChassis enable_wheel_joints="$(arg enable_wheel_joints)" isaac="$(arg isaac)"/>
-  <xacro:TakuBody parent_link="agv_base"/>
+  <xacro:TakuBody parent_link="base_link"/>
   <xacro:TakuHead parent_link="torso_body_link"/>
   <xacro:TakuArm name="left" parent_link="torso_body_link" direction="1"/>
   <xacro:TakuArm name="right" parent_link="torso_body_link" direction="-1"/>

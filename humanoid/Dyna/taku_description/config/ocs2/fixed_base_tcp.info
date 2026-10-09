@@ -10,7 +10,7 @@ model_information
 {
     manipulatorModelType    0
 
-    baseFrame               "agv_base"
+    baseFrame               "base_link"
     eeFrame                 "left_tcp"
     eeFrame1                "right_tcp"
     bodyFrame               "torso_body_link"

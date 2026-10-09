@@ -46,7 +46,7 @@
     </link>
     <joint name="${steer_joint}" type="${steering_joint_type}">
       <origin xyz="${xyz}"/>
-      <parent link="agv_base"/>
+      <parent link="base_link"/>
       <child link="${steer_link}"/>
       <xacro:if value="${wheel_joints_enabled}">
         <axis xyz="0.0 0.0 1.0"/>
@@ -67,8 +67,15 @@
   <xacro:macro name="TakuChassis" params="enable_wheel_joints:='true' isaac:=false">
     <xacro:property name="wheel_joints_enabled" value="${str(enable_wheel_joints).lower() in ['true', '1', 'yes', 'on']}"/>
 
+    <!-- Root frames: base_footprint --fixed identity--> base_link (Ai2 Bot2 chassis pattern). -->
+    <link name="base_footprint"/>
+    <joint name="base_footprint_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+    </joint>
+
     <!-- inertia: Agilex Ranger Mini base_link 10 kg，轮距线性比 1.108（Taku 0.549×0.409 m / Ranger 0.494×0.370 m），质量×k^3 -->
-    <link name="agv_base">
+    <link name="base_link">
       <visual>
         <geometry>
           <mesh filename="file://$(find taku_description)/meshes/agv_base.glb"/>
@@ -118,7 +125,7 @@
     </link>
     <joint name="lidar_front_left_frame" type="fixed">
       <origin xyz="0.292236 0.227959 0.301378" rpy="-0.616837 -0.603562 -1.94305"/>
-      <parent link="agv_base"/>
+      <parent link="base_link"/>
       <child link="lidar_front_left"/>
     </joint>
     <!-- RoboSense Airy (front right) -->
@@ -134,7 +141,7 @@
     </link>
     <joint name="lidar_front_right_frame" type="fixed">
       <origin xyz="0.292236 -0.227959 0.301378" rpy="0.613474 -0.606997 1.94896"/>
-      <parent link="agv_base"/>
+      <parent link="base_link"/>
       <child link="lidar_front_right"/>
     </joint>
     <link name="lidar_back">
@@ -148,14 +155,14 @@
     </link>
     <joint name="lidar_back_frame" type="fixed">
       <origin xyz="-0.3275 0.0 0.285" rpy="0.0 0.0 ${PI}"/>
-      <parent link="agv_base"/>
+      <parent link="base_link"/>
       <child link="lidar_back"/>
     </joint>
 
     <link name="agv_imu_frame"/>
     <joint name="agv_imu_frame_frame" type="fixed">
       <origin xyz="-0.1642 0.225 0.178" rpy="0.0 0.0 3.14159"/>
-      <parent link="agv_base"/>
+      <parent link="base_link"/>
       <child link="agv_imu_frame"/>
     </joint>
   </xacro:macro>

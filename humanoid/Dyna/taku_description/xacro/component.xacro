@@ -19,14 +19,24 @@
 
   <!-- Folding lift + waist. -->
   <xacro:if value="${'$(arg type)' == 'body'}">
-    <link name="agv_base"/>
-    <xacro:TakuBody parent_link="agv_base"/>
+    <link name="base_footprint"/>
+    <joint name="base_footprint_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+    </joint>
+    <link name="base_link"/>
+    <xacro:TakuBody parent_link="base_link"/>
   </xacro:if>
 
   <!-- Upper body: folding lift + waist + head + dual arms (no chassis/gripper). -->
   <xacro:if value="${'$(arg type)' == 'upper_body'}">
-    <link name="agv_base"/>
-    <xacro:TakuBody parent_link="agv_base"/>
+    <link name="base_footprint"/>
+    <joint name="base_footprint_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+    </joint>
+    <link name="base_link"/>
+    <xacro:TakuBody parent_link="base_link"/>
     <xacro:TakuHead parent_link="torso_body_link"/>
     <xacro:TakuArm name="left" parent_link="torso_body_link" direction="1" enable_gripper="false"/>
     <xacro:TakuArm name="right" parent_link="torso_body_link" direction="-1" enable_gripper="false"/>

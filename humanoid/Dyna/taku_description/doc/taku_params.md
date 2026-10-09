@@ -2,7 +2,7 @@
 
 这些数字是从公开网格、`dvt1_kin.json` 和公开参考机器人 URDF **推断**的，用来填一份能加载的 URDF。Dyna 没有发布关节限位、质量或惯量。记录轨迹只是真实限位的下界。
 
-运动学树直接来自 `dvt1_kin.json`：根 `agv_base`，48 个关节（29 转动、15 固定、4 个夹爪平移），49 个连杆。零位身高 1.365 m，足迹约 0.78 × 0.60 m。
+运动学树直接来自 `dvt1_kin.json`：根 `base_footprint` → `base_link`（原公开 kin 根名 `agv_base`，已对齐其他机器人），48 个关节（29 转动、15 固定、4 个夹爪平移）另加 `base_footprint_joint`，连杆相应多一个 `base_footprint`。零位身高 1.365 m，足迹约 0.78 × 0.60 m。
 
 网格：限位扫描用 damping GLB（与 ego-replay GLB 是同一套 715,276 面网格）。`head_yaw_link` / `head_pitch_link` 只在较粗的 body GLB 里有网格。扫描方法：只动一个关节、其余为 0，在子树和**非父**连杆之间做表面点最近距离。父连杆在铰链处本来就贴在一起，不拿来当限位。距离掉到约 5 mm 以下视为干涉。然后把自由区间收到仍包住 `joint_ranges.csv` 观测范围的整数角度。
 
@@ -15,7 +15,7 @@
 | 四个 `*_rotate_joint` | continuous | continuous | 数据绕满 ±180° | 转轴穿过轮胎，±180° 无干涉。不做限位。 |
 | 四个 `*_steering_joint` | continuous | continuous | 数据绕满 ±180° | 非父连杆间隙在 ±180° 始终约 190 mm。外壳没有打到的硬限位。Galaxea R1 转向是 ±90°，但和这套网格、这段轨迹不符，没有借用。 |
 | `folding_low_joint` | −70° (−1.2217 rad) | +90° (+1.5708 rad) | −30.0° … +12.1° | −80° 时下折叠臂距后轮约 5 mm，−100° 约 1 mm；+80° 仍有 36 mm，+100° 前轮约 1 mm。取 −70° / +90°。 |
-| `folding_high_joint` | 0° | +150° (+2.6180 rad) | +2.7° … +56.9° | −20° 时上臂已碰到 `agv_base`（约 4 mm），0° 间隙 34 mm。正向扫到 +160° 仍 >118 mm，没有见到上止挡，+150° 只是落在已扫过的自由区间里的整数，不是测到的硬限位。 |
+| `folding_high_joint` | 0° | +150° (+2.6180 rad) | +2.7° … +56.9° | −20° 时上臂已碰到 `base_link`（约 4 mm），0° 间隙 34 mm。正向扫到 +160° 仍 >118 mm，没有见到上止挡，+150° 只是落在已扫过的自由区间里的整数，不是测到的硬限位。 |
 | `waist_pitch_joint` | −90° | +80° | −26.1° … +5.8° | −120°…+60° 对非父连杆都 >60 mm；+90° 才靠近 `folding_lower_joint_link`（约 20 mm），还没撞上。−90°/+80° 是包住观测、且明显落在自由区里的整数，不是硬止挡。 |
 | `waist_yaw_joint` | −45° | +45° | −26.0° … +40.3° | ±40° 对 `folding_to_waist_link` 还有 10–13 mm，±70° 约 2 mm，躯干壳贴上下折叠臂。 |
 | `head_yaw_joint` | −90° | +90° | −45.1° … +47.1° | ±90° 时头壳离肩约 80 mm，外观网格看不到止挡。±90° 只为包住观测。`effort`/`velocity` 填 0，表示没有参考。 |
@@ -42,7 +42,7 @@
 
 | 连杆 | 质量 kg | Ixx, Iyy, Izz (kg·m²) | 参考 |
 |---|---|---|---|
-| `agv_base` | 13.60 | 0.226, 0.404, 0.515 | Agilex Ranger Mini `base_link` 10 kg（`split_aloha_description/xacro/components/ranger_mini.xacro`，本仓库 `feature/agilex`）。轮距比 k=1.108。Ranger 这 10 kg 本身像简化壳，不是整车。 |
+| `base_link` | 13.60 | 0.226, 0.404, 0.515 | Agilex Ranger Mini `base_link` 10 kg（`split_aloha_description/xacro/components/ranger_mini.xacro`，本仓库 `feature/agilex`）。轮距比 k=1.108。Ranger 这 10 kg 本身像简化壳，不是整车。 |
 | `*_wheel_steering` ×4 | 1.89 | 0.0184, 0.0184, 0.0303 | Ranger `*_steering_wheel_link` 1 kg，轴距 0.12 → 0.1484 m，k=1.237。 |
 | `*_wheel_rotate` ×4 | 1.13 | 0.00078, 0.00078, 0.00124 | Ranger `*_wheel_link` 8 kg、半径 0.12 m → Taku 网格半径 0.0625 m，k=0.521。 |
 | `folding_lower_joint_link` | 8.14 | 0.197, 0.193, 0.0146 | Galaxea R1 `torso_link1` 5.72 kg，关节间距 0.40 m → 0.450 m。文件 `userguide-galaxea/URDF` 的 `R1/urdf/r1_v2_1_0.urdf`。 |
@@ -77,13 +77,13 @@
 
 ## Lidars (sensor_models)
 
-| Frame (link / joint) | Sensor | Pose in `agv_base` (xyz, rpy) | sensor_models mesh | Visual offset in lidar frame |
+| Frame (link / joint) | Sensor | Pose in `base_link` (xyz, rpy) | sensor_models mesh | Visual offset in lidar frame |
 |---|---|---|---|---|
 | `lidar_front_left` / `lidar_front_left_frame` | RoboSense Airy | `0.292236 0.227959 0.301378`, `-0.616837 -0.603562 -1.94305` | `meshes/robosense/airy.glb` | `0 0 0.042` |
 | `lidar_front_right` / `lidar_front_right_frame` | RoboSense Airy | `0.292236 -0.227959 0.301378`, `0.613474 -0.606997 1.94896` | `meshes/robosense/airy.glb` | `0 0 0.042` |
 | `lidar_back` / `lidar_back_frame` | Livox MID-360 | `-0.3275 0 0.24995`, `0 0 1.5708` | `meshes/livox/mid360.glb` | `0 0 0.0683` |
 
-Frame poses are unchanged from `dvt1_kin.json`. The front-lidar z axes point forward, outward and up, `[0.707, ±0.221, 0.672]` in `agv_base`. The rear-lidar z axis points straight up.
+Frame poses are unchanged from `dvt1_kin.json`. The front-lidar z axes point forward, outward and up, `[0.707, ±0.221, 0.672]` in `base_link`. The rear-lidar z axis points straight up.
 
 The base GLB already contains the sensor domes. Within 9 cm of each frame, the base mesh has an axisymmetric dome centred on the frame z axis, with an xy axis offset of 1.3 mm or less. Dome tops are at z = 0.0629 m (front) and 0.0618 m (back) in the lidar frames.
 

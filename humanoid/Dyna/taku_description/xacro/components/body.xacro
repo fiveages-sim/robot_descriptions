@@ -5,7 +5,7 @@
        snapped to integer degrees; inertias scaled from OpenArm v1 / Galaxea R1 / Agilex Ranger Mini. See doc/taku_params.md. -->
 
   <!-- Folding lift (folding_low / folding_high) + waist pitch / yaw. -->
-  <xacro:macro name="TakuBody" params="parent_link:=agv_base">
+  <xacro:macro name="TakuBody" params="parent_link:=base_link">
 
     <!-- inertia: Galaxea R1 torso_link1 5.72 kg、关节间距 0.40 m；Taku folding_low→high 间距 0.450 m，k=1.125 -->
     <link name="folding_lower_joint_link">
