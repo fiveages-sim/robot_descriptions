@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:macro name="QuantaX1Swivel" params="prefix x y z">
+	<!-- Passive swivel casters. Default fixed (viz / planning / arm control);
+	     continuous only when chassis_joints_movable:=true (same idea as W2/Bot2). -->
+	<xacro:macro name="QuantaX1Swivel" params="prefix x y z joints_movable:=false">
+		<xacro:property name="caster_movable" value="${str(joints_movable).lower() in ['true', '1', 'yes', 'on']}"/>
+		<xacro:property name="caster_joint_type" value="${'continuous' if caster_movable else 'fixed'}"/>
+
 		<link name="${prefix}_swivel_link">
 			<visual>
 				<geometry>
@@ -21,10 +26,12 @@
 				</geometry>
 			</visual>
 		</link>
-		<joint name="${prefix}_swivel_yaw" type="continuous">
+		<joint name="${prefix}_swivel_yaw" type="${caster_joint_type}">
 			<parent link="${prefix}_swivel_link"/>
 			<child link="${prefix}_swivel_yaw"/>
-			<axis xyz="0 0 1"/>
+			<xacro:if value="${caster_movable}">
+				<axis xyz="0 0 1"/>
+			</xacro:if>
 		</joint>
 
 		<link name="${prefix}_roller_1">
@@ -39,11 +46,13 @@
 				</geometry>
 			</collision>
 		</link>
-		<joint name="${prefix}_swivel_roller_1" type="continuous">
+		<joint name="${prefix}_swivel_roller_1" type="${caster_joint_type}">
 			<parent link="${prefix}_swivel_yaw"/>
 			<child link="${prefix}_roller_1"/>
-			<axis xyz="0 1 0"/>
 			<origin xyz="0.045295 0.000296 -0.016972"/>
+			<xacro:if value="${caster_movable}">
+				<axis xyz="0 1 0"/>
+			</xacro:if>
 		</joint>
 
 		<link name="${prefix}_roller_2">
@@ -58,11 +67,13 @@
 				</geometry>
 			</collision>
 		</link>
-		<joint name="${prefix}_swivel_roller_2" type="continuous">
+		<joint name="${prefix}_swivel_roller_2" type="${caster_joint_type}">
 			<parent link="${prefix}_swivel_yaw"/>
 			<child link="${prefix}_roller_2"/>
-			<axis xyz="0 1 0"/>
 			<origin xyz="0.012295 0.034228 -0.029472"/>
+			<xacro:if value="${caster_movable}">
+				<axis xyz="0 1 0"/>
+			</xacro:if>
 		</joint>
 
 		<link name="${prefix}_roller_3">
@@ -77,11 +88,13 @@
 				</geometry>
 			</collision>
 		</link>
-		<joint name="${prefix}_swivel_roller_3" type="continuous">
+		<joint name="${prefix}_swivel_roller_3" type="${caster_joint_type}">
 			<parent link="${prefix}_swivel_yaw"/>
 			<child link="${prefix}_roller_3"/>
-			<axis xyz="0 1 0"/>
 			<origin xyz="0.012295 -0.034572 -0.029472"/>
+			<xacro:if value="${caster_movable}">
+				<axis xyz="0 1 0"/>
+			</xacro:if>
 		</joint>
 
 		<link name="${prefix}_roller_4">
@@ -96,11 +109,13 @@
 				</geometry>
 			</collision>
 		</link>
-		<joint name="${prefix}_swivel_roller_4" type="continuous">
+		<joint name="${prefix}_swivel_roller_4" type="${caster_joint_type}">
 			<parent link="${prefix}_swivel_yaw"/>
 			<child link="${prefix}_roller_4"/>
-			<axis xyz="0 1 0"/>
 			<origin xyz="-0.024705 0.000072 -0.039472"/>
+			<xacro:if value="${caster_movable}">
+				<axis xyz="0 1 0"/>
+			</xacro:if>
 		</joint>
 	</xacro:macro>
 </robot>
