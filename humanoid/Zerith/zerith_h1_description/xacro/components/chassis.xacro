@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <!-- =================================================================================== -->
 <!-- |    Chassis Description for Zerith H1                                            | -->
-<!-- |    Parameterized macro: drive_joint_type="continuous" (default) or "fixed"       | -->
+<!-- |    Parameterized macro: joints_movable:=false (default) locks drive wheels       | -->
 <!-- =================================================================================== -->
 <robot name="zerith_h1_chassis" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:macro name="H1Chassis" params="drive_joint_type:=continuous">
+	<!-- joints_movable:=false → drive wheels fixed (W2/Bot2/Quanta). -->
+	<xacro:macro name="H1Chassis" params="joints_movable:=false">
+		<xacro:property name="chassis_movable" value="${str(joints_movable).lower() in ['true', '1', 'yes', 'on']}"/>
+		<xacro:property name="wheel_joint_type" value="${'continuous' if chassis_movable else 'fixed'}"/>
 
 		<link name="base_link">
 			<inertial>
@@ -77,7 +80,7 @@
 				<origin rpy="1.5707963267949 0 0"/>
 			</collision>
 		</link>
-		<joint name="left_wheel_joint" type="${drive_joint_type}">
+		<joint name="left_wheel_joint" type="${wheel_joint_type}">
 			<origin xyz="0.0544 0.1895 -0.0965"/>
 			<parent link="base_link"/>
 			<child link="left_middle_wheel_link"/>
@@ -164,7 +167,7 @@
 				<origin rpy="1.5707963267949 0 0"/>
 			</collision>
 		</link>
-		<joint name="right_wheel_joint" type="${drive_joint_type}">
+		<joint name="right_wheel_joint" type="${wheel_joint_type}">
 			<origin xyz="0.0544 -0.1895 -0.0965"/>
 			<parent link="base_link"/>
 			<child link="right_middle_wheel_link"/>
