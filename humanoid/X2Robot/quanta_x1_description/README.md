@@ -89,12 +89,6 @@ Same convention as FiveAges W2 / Ai2 Bot2 / Galaxea R1 / ARX Lift2S:
 ros2 launch robot_common_launch component.launch.py robot:=quanta_x1 type:=chassis
 ```
 
-
-### 3.6 Collision meshes
-
-- Arm links (`arm_base_link` … `arm_link6`) + gripper fingers / motor: **convex hull** STLs under `meshes/**/collision/`
-- Gripper bracket (`gripper_base_link`) and wrist camera: **CoACD** into **3** convex pieces each (`*_0/1/2.stl`)
-
 ## 4. Layout
 
 | Path | Role |
