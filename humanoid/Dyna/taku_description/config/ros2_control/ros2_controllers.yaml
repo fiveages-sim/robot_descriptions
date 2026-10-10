@@ -1,7 +1,8 @@
 # W2 / Bot2-style ros2_control for Taku (inferred description).
 # No chassis or per-arm basic controllers (skill: wheels stay out of ros2_control;
 # arms are driven by ocs2_arm_controller / ocs2_wbc_controller).
-# Joint order for WBC matches Pinocchio DFS: body(4) | left(7) | right(7) | head(3).
+# Joint order for WBC matches Pinocchio DFS arm segment: body(4) | left(7) | right(7) | head(3).
+# Omni WBC adds virtual base SE(2) in OCS2 only (not listed in joints).
 
 controller_manager:
   ros__parameters:
@@ -71,12 +72,14 @@ ocs2_arm_controller:
              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 
-# Whole-body MPC (full_body). Order: body | left | right | head = 21.
+# Whole-body MPC (full_body). Joints (ros2_control): body | left | right | head = 21.
+# Default .info is omni mobile_base_tcp (virtual SE(2) + 21); switch to fixed_base_tcp via control.patch.
 ocs2_wbc_controller:
   ros__parameters:
     update_rate: 100
     mpc_frequency: 50
-    info_file_name: fixed_base_tcp
+    info_file_name: mobile_base_tcp
+    fsm_default_humanoid_mode: HM_DUAL_RELATIVE_MOBILE_BASE
     joints:
       - folding_low_joint
       - folding_high_joint

@@ -47,7 +47,7 @@ Hide the sensor_models lidar meshes for an Isaac asset import with `xacro_isaac:
 
 ## 3. Control
 
-Default `hardware:=mock_components`. Layout follows W2 / Bot2: no chassis or per-arm basic controllers. Homes are the URDF zero pose. Head limits: yaw ±90°, pitch ±20°, roll ±15°.
+Default `hardware:=mock_components`. Layout follows W2 / Bot2 / Inex: no chassis or per-arm basic controllers; full-body WBC defaults to omni `mobile_base_tcp`. Homes are the URDF zero pose. Head limits: yaw ±90°, pitch ±20°, roll ±15°.
 
 ### 3.1. Split body
 
@@ -65,9 +65,9 @@ ros2 launch ocs2_arm_controller split_body.launch.py robot:=taku hardware:=isaac
 | `head_joint_controller` | `head_yaw/pitch/roll` |
 | `left/right_gripper_controller` | Dynaclaw (`*_gripper_joint`; mimic jaw in URDF) |
 
-### 3.2. Full body
+### 3.2. Full body (omni chassis default)
 
-Whole-body MPC via `ocs2_wbc_controller` (`config/ocs2/fixed_base_tcp.info`, 21 DoF: body 4 + left 7 + right 7 + head 3). Default `headMode` is `HEAD_GAZE`. Grippers same as split body.
+Whole-body MPC via `ocs2_wbc_controller`. Default task file is `config/ocs2/mobile_base_tcp.info`: virtual omni SE(2) (`manipulatorModelType 4`) + 21 arm DoF (body 4 + left 7 + right 7 + head 3). Physical swerve steer/drive stay locked (`chassis_joints_movable:=false` / `removeJoints`); omni motion is planned as base `vx, vy, omega` only. Default mode `HM_DUAL_RELATIVE_MOBILE_BASE` + `HEAD_GAZE` (same bodyRelative / gaze setup as the fixed file). Grippers same as split body.
 
 ```bash
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=taku
@@ -76,8 +76,21 @@ ros2 launch ocs2_arm_controller full_body.launch.py robot:=taku hardware:=isaac
 
 | Controller | Role |
 |------------|------|
-| `ocs2_wbc_controller` | WBC MPC including head, `info_file_name: fixed_base_tcp` |
+| `ocs2_wbc_controller` | WBC MPC including virtual omni base + head, `info_file_name: mobile_base_tcp` |
 | `left/right_gripper_controller` | Dynaclaw |
+
+Omni planning expects TF `world` → `base_footprint` (peers: WCE3 / Inex). Isaac Sim Taku assets on this machine live under `/home/fiveages/libraries/FaSim-Isaac/robots/humanoid/Dyna/Taku/` (import WIP also in `/home/fiveages/taku_isaac_import/`).
+
+To switch back to **fixed-base** WBC (`config/ocs2/fixed_base_tcp.info`, mode `HM_DUAL_RELATIVE_FIXED_BASE`), patch `info_file_name` (and optionally `fsm_default_humanoid_mode`) via `robot.local.yaml` / control patch:
+
+```yaml
+control:
+  patch:
+    ocs2_wbc_controller:
+      ros__parameters:
+        info_file_name: fixed_base_tcp
+        fsm_default_humanoid_mode: HM_DUAL_RELATIVE_FIXED_BASE
+```
 
 Wheel joints are not in either control stack (skill: do not add steer/wheel to ros2_control unless asked). Enable only in the chassis component / with `enable_wheel_joints:=true` for viz.
 
@@ -92,6 +105,6 @@ Default `collider:=simple`: folding PCA-OBB cylinders (trimmed ends), waist AABB
 * `xacro/ros2_control/`: `robot.xacro` (mock / gz / isaac hardware), `interfaces.xacro`
 * `meshes/`: `chassis/`, `body/`, `head/`, `arm/`, `dynaclaw/`
 * `config/ros2_control/ros2_controllers.yaml`: W2-style `ocs2_arm_controller` / `ocs2_wbc_controller`, plus body / head / Dynaclaw grippers
-* `config/ocs2/`: `task.info` (split dual-arm), `fixed_base_tcp.info` (full-body WBC), `target_manager.yaml`
+* `config/ocs2/`: `task.info` (split dual-arm), `mobile_base_tcp.info` (default full-body omni WBC), `fixed_base_tcp.info` (fixed-base WBC), `target_manager.yaml`
 
 No invented official dynamics. Full-body body tracking uses `torso_tracking_frame` (ROS X-forward Z-up dummy on `torso_body_link`). Head modes follow W2 (`HEAD_GAZE` / `headCoupling` / `headTrackingEE` / `headMidpointGaze` on `head_camera_mid_optical_frame`, the stereo midline; `muUpright` keeps camera +X gravity-level via `head_roll` only, with `uprightDeadbandDeg 2.0` so roll does not chatter about zero); `target_manager.yaml` keeps `enable_head_control: false` so the head follows OCS2 rather than a joint-space marker. Split-body teleops the head through `head_joint_controller` (RViz joint panel, not the head marker).

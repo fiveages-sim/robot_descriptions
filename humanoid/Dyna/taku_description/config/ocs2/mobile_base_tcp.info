@@ -1,0 +1,422 @@
+; OCS2 omni mobile-base TCP config for Dyna Taku / DVT1 (INFERRED description).
+; manipulatorModelType 4 = OmniWheelBasedMobileManipulator (virtual SE(2)).
+; Physical swerve steer/drive stay locked via xacro chassis_joints_movable=false
+; and removeJoints fallback; grippers stay out of MPC.
+;
+; Measured Pinocchio DFS on planning URDF after removeJoints (grippers; wheels
+; already fused when fixed):
+;   arm = [folding(2)+waist(2) | left(7) | right(7) | head(3)] = 21
+; Full state/input = 3 (x,y,yaw / vx,vy,omega) + 21 = 24.
+; headInputStart / headCoupling / customJointLock use FULL input indices (+3 base).
+; homeJointReference.excludeJointIndices stay arm-segment indices (no base offset).
+; bodyRelative band kept from fixed_base_tcp (zero-pose torso x≈-0.21 in base).
+
+model_information
+{
+    manipulatorModelType    4
+
+    baseFrame               "base_footprint"
+    eeFrame                 "left_tcp"
+    eeFrame1                "right_tcp"
+    bodyFrame               "torso_tracking_frame"
+    headFrame               "head_roll_link"
+
+    removeJoints
+    {
+        [0]   "agv_right_front_steering_joint"
+        [1]   "agv_right_front_rotate_joint"
+        [2]   "agv_right_back_steering_joint"
+        [3]   "agv_right_back_rotate_joint"
+        [4]   "agv_left_front_steering_joint"
+        [5]   "agv_left_front_rotate_joint"
+        [6]   "agv_left_back_steering_joint"
+        [7]   "agv_left_back_rotate_joint"
+        [8]   "left_gripper_joint"
+        [9]   "left_gripper_mimic_joint"
+        [10]  "right_gripper_joint"
+        [11]  "right_gripper_mimic_joint"
+    }
+}
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+; State dim = 3 + 21. Arm zeros use URDF-baked shoulder roll/yaw (+90 deg).
+initialState
+{
+    base
+    {
+        omniWheelBasedMobileManipulator
+        {
+            (0,0)  0.0   ; x [m]
+            (1,0)  0.0   ; y [m]
+            (2,0)  0.0   ; yaw [rad]
+        }
+    }
+
+    arm
+    {
+        (0,0)   0.0     ; folding_low_joint
+        (1,0)   0.0     ; folding_high_joint
+        (2,0)   0.0     ; waist_pitch_joint
+        (3,0)   0.0     ; waist_yaw_joint
+        (4,0)   0.0     ; left_shoulder_pitch_joint
+        (5,0)   0.0     ; left_shoulder_roll_joint
+        (6,0)   0.0     ; left_shoulder_yaw_joint
+        (7,0)   0.0     ; left_elbow_joint
+        (8,0)   0.0     ; left_wrist_yaw_joint
+        (9,0)   0.0     ; left_wrist_pitch_joint
+        (10,0)  0.0     ; left_wrist_roll_joint
+        (11,0)  0.0     ; right_shoulder_pitch_joint
+        (12,0)  0.0     ; right_shoulder_roll_joint
+        (13,0)  0.0     ; right_shoulder_yaw_joint
+        (14,0)  0.0     ; right_elbow_joint
+        (15,0)  0.0     ; right_wrist_yaw_joint
+        (16,0)  0.0     ; right_wrist_pitch_joint
+        (17,0)  0.0     ; right_wrist_roll_joint
+        (18,0)  0.0     ; head_yaw_joint
+        (19,0)  0.0     ; head_pitch_joint
+        (20,0)  0.0     ; head_roll_joint
+    }
+}
+
+initialModeSchedule
+{
+    eventTimes
+    {
+    }
+    modeSequence
+    {
+        [0]
+        {
+            bodyMode "HM_DUAL_RELATIVE_MOBILE_BASE"
+            headMode "HEAD_GAZE"
+        }
+    }
+}
+
+ddp
+{
+    algorithm                       SLQ
+    nThreads                        3
+    threadPriority                  50
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+    preComputeRiccatiTerms          true
+    useFeedbackPolicy               false
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+mpc
+{
+    timeHorizon                     1.0
+    solutionTimeWindow              0.2
+    coldStart                       false
+    debugPrint                      false
+    mpcDesiredFrequency             100
+    mrtDesiredFrequency             500
+}
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+bodyTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+headTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+; Input layout: [base(3) | body(4) | left(7) | right(7) | head(3)] = 24
+inputCost
+{
+    R
+    {
+        base
+        {
+            omniWheelBasedMobileManipulator
+            {
+                scaling 1e-2
+
+                (0,0)   0.8     ; vx [m/s]
+                (1,1)   0.8     ; vy [m/s]
+                (2,2)   0.8     ; omega [rad/s]
+            }
+        }
+
+        arm
+        {
+            scaling 1e-3
+            (0,0)   5.0     ; folding_low
+            (1,1)   5.0     ; folding_high
+            (2,2)   3.0     ; waist_pitch
+            (3,3)   2.0     ; waist_yaw
+            (4,4)   1.5     ; left_shoulder_pitch
+            (5,5)   1.5     ; left_shoulder_roll
+            (6,6)   1.5     ; left_shoulder_yaw
+            (7,7)   1.5     ; left_elbow
+            (8,8)   1.1     ; left_wrist_yaw
+            (9,9)   1.1     ; left_wrist_pitch
+            (10,10) 1.1     ; left_wrist_roll
+            (11,11) 1.5     ; right_shoulder_pitch
+            (12,12) 1.5     ; right_shoulder_roll
+            (13,13) 1.5     ; right_shoulder_yaw
+            (14,14) 1.5     ; right_elbow
+            (15,15) 1.1     ; right_wrist_yaw
+            (16,16) 1.1     ; right_wrist_pitch
+            (17,17) 1.1     ; right_wrist_roll
+            (18,18) 0.1     ; head_yaw
+            (19,19) 0.1     ; head_pitch
+            (20,20) 0.1     ; head_roll
+        }
+    }
+}
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      20.0
+    muOrientation                   10.0
+}
+
+bodyRelative
+{
+    activate                        true
+    ; Zero-pose torso_tracking_frame is x≈-0.21 in base (folding zigzag).
+    xLowerBound                     -0.35
+    xUpperBound                     -0.05
+    muPosition                      5.0
+    muOrientation                   5.0
+}
+
+bimanualCoupling
+{
+    activate                        true
+    muPosition                      10.0
+    muOrientation                   1.25
+}
+
+; Full input index where head starts: 3 (base) + 18 (body+arms) = 21.
+headInputStart                          21
+
+waistLock
+{
+    activate                        true
+    numJoints                       4
+}
+
+; Couple waist_yaw with head_yaw when body mode is HEAD_COUPLED.
+; Full input indices: waist_yaw=3+3=6, head_yaw=3+18=21.
+headCoupling
+{
+    activate                        true
+    waistJointIndex                 6
+    headJointIndex                  21
+    alpha                           1.0
+    lockedWaistJoints
+    {
+        [0] 3                       ; folding_low (+base)
+        [1] 4                       ; folding_high
+        [2] 5                       ; waist_pitch
+    }
+}
+
+; CUSTOM_LOCK full-input indices (+3 base).
+customJointLock
+{
+    activate                        true
+    lockedJointIndices
+    {
+        [0] 3                       ; folding_low_joint
+        [1] 4                       ; folding_high_joint
+    }
+}
+
+headMidpointGaze
+{
+    activate                    true
+    cameraFrame                 "head_camera_mid_optical_frame"
+    fx                          611.864502
+    fy                          611.478271
+    cx                          638.961182
+    cy                          363.642456
+    width                       1280
+    height                      720
+    horizontalDeadbandDeg       10.0
+    verticalDeadbandDeg         10.0
+    muAlignmentHorizontal       1.0
+    muAlignmentVertical         1.0
+    muFront                     1.0
+    muUpright                   1.0
+    uprightDeadbandDeg          2.0
+    minDepth                    0.3
+}
+
+; excludeJointIndices = arm-segment indices (no base offset).
+homeJointReference
+{
+    activate                        true
+    activateDefault                 true
+    mu                              1e-3
+    excludeJointIndices
+    {
+        [0] 0
+        [1] 1
+    }
+}
+
+armLock
+{
+    activate                        true
+    leftNumJoints                   7
+    rightNumJoints                  7
+}
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+; Soft velocity barriers. Base ±0.5 (WCE3-class); arms ±1.57; folding/waist ±0.5; head ±1.0.
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-3
+    lowerBound
+    {
+        base
+        {
+            omniWheelBasedMobileManipulator
+            {
+                (0,0)  -0.5     ; vx [m/s]
+                (1,0)  -0.5     ; vy [m/s]
+                (2,0)  -0.5     ; omega [rad/s]
+            }
+        }
+        arm
+        {
+            (0,0)  -0.5
+            (1,0)  -0.5
+            (2,0)  -0.5
+            (3,0)  -0.5
+            (4,0)  -1.57
+            (5,0)  -1.57
+            (6,0)  -1.57
+            (7,0)  -1.57
+            (8,0)  -1.57
+            (9,0)  -1.57
+            (10,0) -1.57
+            (11,0) -1.57
+            (12,0) -1.57
+            (13,0) -1.57
+            (14,0) -1.57
+            (15,0) -1.57
+            (16,0) -1.57
+            (17,0) -1.57
+            (18,0) -1.0
+            (19,0) -1.0
+            (20,0) -1.0
+        }
+    }
+    upperBound
+    {
+        base
+        {
+            omniWheelBasedMobileManipulator
+            {
+                (0,0)  0.5
+                (1,0)  0.5
+                (2,0)  0.5
+            }
+        }
+        arm
+        {
+            (0,0)  0.5
+            (1,0)  0.5
+            (2,0)  0.5
+            (3,0)  0.5
+            (4,0)  1.57
+            (5,0)  1.57
+            (6,0)  1.57
+            (7,0)  1.57
+            (8,0)  1.57
+            (9,0)  1.57
+            (10,0) 1.57
+            (11,0) 1.57
+            (12,0) 1.57
+            (13,0) 1.57
+            (14,0) 1.57
+            (15,0) 1.57
+            (16,0) 1.57
+            (17,0) 1.57
+            (18,0) 1.0
+            (19,0) 1.0
+            (20,0) 1.0
+        }
+    }
+}
+
+; Chest box + arm cylinders (collider:=simple). Keep off by default like fixed_base_tcp.
+selfCollision
+{
+    activate                        false
+    mu                              1e-3
+    delta                           1e-2
+    minimumDistance                 0.01
+    collisionObjectPairs
+    {
+    }
+    collisionLinkPairs
+    {
+        [0] "torso_body_link, left_elbow_link",
+        [1] "torso_body_link, left_wrist_yaw_link",
+        [2] "torso_body_link, left_wrist_roll_link",
+        [3] "torso_body_link, right_elbow_link",
+        [4] "torso_body_link, right_wrist_yaw_link",
+        [5] "torso_body_link, right_wrist_roll_link",
+    }
+}
