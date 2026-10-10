@@ -1,7 +1,8 @@
 # Quanta X1 ros2_control controllers
 # Arms: Artixon 6A (6-DOF) × 2
 # Gripper: ARX-style adaptive_gripper_controller on left/right_gripper_joint
-# Body: lift_joint; Head: yaw/pitch (split from OCS2)
+# Split: ocs2_arm_controller (arms) + body (lift) + head
+# Full body: ocs2_wbc_controller (lift + arms + head), info = fixed_base_tcp
 
 controller_manager:
   ros__parameters:
@@ -9,6 +10,9 @@ controller_manager:
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
 
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
@@ -24,6 +28,67 @@ controller_manager:
 
     right_gripper_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
+
+# full_body.launch.py — lift + dual Artixon 6A + head (ARX Lift layout)
+ocs2_wbc_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: fixed_base_tcp
+    robot_name: quanta_x1
+    fsm_default_humanoid_mode: HM_DUAL_BODY_FREE
+
+    # [lift | left×6 | right×6 | head_yaw | head_pitch]
+    joints:
+      - lift_joint
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - head_yaw_joint
+      - head_pitch_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    home_duration: 5.0
+    home_interpolation_type: linear
+    hold_position_threshold: 0.1
+
+    waist_lifting_enabled: true
+    waist_lifting_duration: 3.0
+    waist_lifting_type: single_joint
+    waist_single_joint_direction: 1.0
+    waist_single_joint_offset: 0.0
+    waist_single_joint_pitch_joint: _no_pitch_
+    waist_single_joint_pitch_direction: 1.0
+    waist_single_joint_pitch_offset: 0.0
+    waist_lifting_default_parameter: [0.05, 0.5, 1.0]
+    waist_turning_default_parameter: [0.0, 0.5, 1.0]
+
+    cartesian_defaults:
+      frame_id: base_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    # [lift | left×6 | right×6 | head×2]
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [0.3, 0.0, 0.8, -1.0, 0.0, 0.0, 0.0, 0.0, 0.8, -1.0, 0.0, 0.0, 0.0, 0.0, 0.2]
 
 ocs2_arm_controller:
   ros__parameters:
@@ -64,7 +129,6 @@ ocs2_arm_controller:
       max_angular_acceleration: 1.0
       max_angular_jerk: 5.0
 
-    # left×6 | right×6 — Artixon 6A
     home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     home_2: [0.0, 0.8, -1.0, 0.0, 0.0, 0.0, 0.0, 0.8, -1.0, 0.0, 0.0, 0.0]
 

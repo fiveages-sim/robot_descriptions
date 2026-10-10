@@ -1,0 +1,304 @@
+; Quanta X1 — full-body WBC (ocs2_wbc_controller / full_body.launch.py)
+; =====================================================================
+; Fixed base (chassis wheels/casters locked via chassis_joints_movable:=false).
+; State / input (15): [lift | left×6 | right×6 | head_yaw | head_pitch]
+; Closest peer topology: ARX Lift (lift + dual 6-DOF + head in WBC).
+
+model_information
+{
+    manipulatorModelType    0
+
+    baseFrame               "base_link"
+    eeFrame                 "left_gripper_center"
+    eeFrame1                "right_gripper_center"
+    bodyFrame               "lift_link"
+    headFrame               "head_pitch_link"
+
+    ; Grippers + mimics; chassis joints listed for movable URDF fallback
+    removeJoints
+    {
+        [0]   "left_gripper_joint"
+        [1]   "right_gripper_joint"
+        [2]   "left_gripper_left_joint"
+        [3]   "left_gripper_right_joint"
+        [4]   "right_gripper_left_joint"
+        [5]   "right_gripper_right_joint"
+        [6]   "left_wheel_joint"
+        [7]   "right_wheel_joint"
+        [8]   "fl_swivel_yaw"
+        [9]   "fr_swivel_yaw"
+        [10]  "rl_swivel_yaw"
+        [11]  "rr_swivel_yaw"
+        [12]  "fl_swivel_roller_1"
+        [13]  "fl_swivel_roller_2"
+        [14]  "fl_swivel_roller_3"
+        [15]  "fl_swivel_roller_4"
+        [16]  "fr_swivel_roller_1"
+        [17]  "fr_swivel_roller_2"
+        [18]  "fr_swivel_roller_3"
+        [19]  "fr_swivel_roller_4"
+        [20]  "rl_swivel_roller_1"
+        [21]  "rl_swivel_roller_2"
+        [22]  "rl_swivel_roller_3"
+        [23]  "rl_swivel_roller_4"
+        [24]  "rr_swivel_roller_1"
+        [25]  "rr_swivel_roller_2"
+        [26]  "rr_swivel_roller_3"
+        [27]  "rr_swivel_roller_4"
+    }
+}
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+initialState
+{
+    arm
+    {
+        (0,0)   0.0     ; lift_joint [m]
+        (1,0)   0.0     ; left_joint1
+        (2,0)   0.0     ; left_joint2
+        (3,0)   0.0     ; left_joint3
+        (4,0)   0.0     ; left_joint4
+        (5,0)   0.0     ; left_joint5
+        (6,0)   0.0     ; left_joint6
+        (7,0)   0.0     ; right_joint1
+        (8,0)   0.0     ; right_joint2
+        (9,0)   0.0     ; right_joint3
+        (10,0)  0.0     ; right_joint4
+        (11,0)  0.0     ; right_joint5
+        (12,0)  0.0     ; right_joint6
+        (13,0)  0.0     ; head_yaw_joint
+        (14,0)  0.0     ; head_pitch_joint
+    }
+}
+
+initialModeSchedule
+{
+    eventTimes
+    {
+    }
+
+    modeSequence
+    {
+        [0]     HM_DUAL_BODY_FREE
+    }
+}
+
+ddp
+{
+    algorithm                       SLQ
+    nThreads                        5
+    threadPriority                  50
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+    preComputeRiccatiTerms          true
+    useFeedbackPolicy               false
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+mpc
+{
+    timeHorizon                     1.0
+    solutionTimeWindow              0.2
+    coldStart                       false
+    debugPrint                      false
+    mpcDesiredFrequency             100
+    mrtDesiredFrequency             500
+}
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+bodyTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+headTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+; Input dim = 15 (no virtual SE(2) base)
+inputCost
+{
+    R
+    {
+        arm
+        {
+            scaling 1e-3
+            (0,0)   10.0    ; lift_joint
+            (1,1)   1.0     ; left_joint1
+            (2,2)   1.0
+            (3,3)   1.0
+            (4,4)   1.0
+            (5,5)   0.5
+            (6,6)   0.5
+            (7,7)   1.0     ; right_joint1
+            (8,8)   1.0
+            (9,9)   1.0
+            (10,10) 1.0
+            (11,11) 0.5
+            (12,12) 0.5
+            (13,13) 1.0     ; head_yaw
+            (14,14) 1.0     ; head_pitch
+        }
+    }
+}
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      20.0
+    muOrientation                   10.0
+}
+
+; Single prismatic lift — no body relative pitch/yaw
+bodyRelative
+{
+    activate                        false
+}
+
+bimanualCoupling
+{
+    activate                        true
+    muPosition                      50.0
+    muOrientation                   25.0
+}
+
+; Layout: [lift(1) | left(6) | right(6) | head(2)] → head starts at 13
+headInputStart                          13
+
+waistLock
+{
+    activate                        true
+    numJoints                       1
+}
+
+headCoupling
+{
+    activate                        false
+}
+
+customJointLock
+{
+    activate                        false
+}
+
+armLock
+{
+    activate                        true
+    leftNumJoints                   6
+    rightNumJoints                  6
+}
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-2
+
+    lowerBound
+    {
+        arm
+        {
+            (0,0)  -0.2
+            (1,0)  -4.188
+            (2,0)  -4.188
+            (3,0)  -4.188
+            (4,0)  -6.77
+            (5,0)  -6.77
+            (6,0)  -6.77
+            (7,0)  -4.188
+            (8,0)  -4.188
+            (9,0)  -4.188
+            (10,0) -6.77
+            (11,0) -6.77
+            (12,0) -6.77
+            (13,0) -3.77
+            (14,0) -3.77
+        }
+    }
+
+    upperBound
+    {
+        arm
+        {
+            (0,0)  0.2
+            (1,0)  4.188
+            (2,0)  4.188
+            (3,0)  4.188
+            (4,0)  6.77
+            (5,0)  6.77
+            (6,0)  6.77
+            (7,0)  4.188
+            (8,0)  4.188
+            (9,0)  4.188
+            (10,0) 6.77
+            (11,0) 6.77
+            (12,0) 6.77
+            (13,0) 3.77
+            (14,0) 3.77
+        }
+    }
+}
+
+selfCollision
+{
+    activate                        false
+    mu                              1e-3
+    delta                           1e-2
+    minimumDistance                 0.02
+    collisionObjectPairs
+    {
+    }
+    collisionLinkPairs
+    {
+    }
+}

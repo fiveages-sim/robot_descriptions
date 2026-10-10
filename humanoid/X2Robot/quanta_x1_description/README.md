@@ -38,18 +38,30 @@ ros2 launch robot_common_launch component.launch.py robot:=quanta_x1 type:=arm
 
 Uses `xacro/ros2_control/robot.xacro` with `hardware:=mock_components` (also `gz` / `isaac`).
 
-### 3.1 Dual-arm OCS2 demo
+### 3.1 Full body (全身 WBC)
+
+Lift + dual Artixon 6A + head in one `ocs2_wbc_controller` (ARX Lift layout; chassis fixed).
+OCS2 model: `config/ocs2/fixed_base_tcp.info`.
+
+```bash
+source ~/ros2_ws/install/setup.bash
+export ROS_DOMAIN_ID=42   # pick an unused domain if others are running
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=quanta_x1
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=quanta_x1 hardware:=isaac
+```
+
+### 3.2 Dual-arm OCS2 demo
 
 Artixon 6A dual arms via `ocs2_arm_controller`. Lift / head / grippers are separate controllers.
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-export ROS_DOMAIN_ID=42   # pick an unused domain if others are running
+export ROS_DOMAIN_ID=42
 ros2 launch ocs2_arm_controller demo.launch.py robot:=quanta_x1
 ros2 launch ocs2_arm_controller demo.launch.py robot:=quanta_x1 hardware:=isaac
 ```
 
-### 3.2 Split body (arms + lift + head)
+### 3.3 Split body (arms + lift + head)
 
 ```bash
 source ~/ros2_ws/install/setup.bash
@@ -61,13 +73,13 @@ ros2 launch ocs2_arm_controller split_body.launch.py robot:=quanta_x1
 - Head: `/head_joint_controller/...`
 - Grippers: `/left_gripper_controller`, `/right_gripper_controller` (`adaptive_gripper_controller` on `left_gripper_joint` / `right_gripper_joint`)
 
-### 3.3 End-effector / gripper notes
+### 3.4 End-effector / gripper notes
 
 - Joint names: `left_gripper_joint` / `right_gripper_joint` (mimic finger joints follow)
 - TCP frames: `left_gripper_center` / `right_gripper_center`
 - No separate `type:=` EEF switch: the Artixon 6A gripper is part of the arm xacro (same idea as ARX X5 built-in gripper)
 
-### 3.4 Chassis joints (wheels / swivel casters)
+### 3.5 Chassis joints (wheels / swivel casters)
 
 Same convention as FiveAges W2 / Ai2 Bot2 / Galaxea R1 / ARX Lift2S:
 
@@ -86,4 +98,5 @@ ros2 launch robot_common_launch component.launch.py robot:=quanta_x1 type:=chass
 | `xacro/robot.xacro` | Visualization kinematics |
 | `xacro/ros2_control/robot.xacro` | Hardware plugins + joint interfaces |
 | `config/ros2_control/ros2_controllers.yaml` | Controller manager |
-| `config/ocs2/task.info` | Dual-arm OCS2 model (lift/head/wheels/grippers removed) |
+| `config/ocs2/task.info` | Dual-arm OCS2 model (demo / split arms) |
+| `config/ocs2/fixed_base_tcp.info` | Full-body WBC (lift + arms + head) |
