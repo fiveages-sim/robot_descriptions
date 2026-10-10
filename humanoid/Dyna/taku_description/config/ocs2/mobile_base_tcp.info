@@ -10,6 +10,13 @@
 ; headInputStart / headCoupling / customJointLock use FULL input indices (+3 base).
 ; homeJointReference.excludeJointIndices stay arm-segment indices (no base offset).
 ; bodyRelative band kept from fixed_base_tcp (zero-pose torso x≈-0.21 in base).
+; Chassis damping (vs first mobile draft / WCE3 peers):
+;   - base inputCost.scaling 1e-2 → 1e-1 (effective R for vx/vy/omega 0.008 → 0.08),
+;     so MPC prefers arm/waist over sliding the whole robot.
+;   - mpc.timeHorizon 1.0 → 0.4 s (peer mobile_base_tcp), shorter look-ahead
+;     reduces early aggressive base motion toward distant EE targets.
+; Velocity soft bars stay ±0.5 like WCE3. Mode stays HM_DUAL_RELATIVE_MOBILE_BASE
+; (bodyRelative is torso-vs-base, not world; not swapped to CUSTOM_LOCK).
 
 model_information
 {
@@ -132,12 +139,13 @@ ddp
 
 mpc
 {
-    timeHorizon                     1.0
+    ; Peer mobile_base_tcp (WCE3/W2) uses 0.4 s; 1.0 encouraged early base slides.
+    timeHorizon                     0.4
     solutionTimeWindow              0.2
     coldStart                       false
     debugPrint                      false
     mpcDesiredFrequency             100
-    mrtDesiredFrequency             500
+    mrtDesiredFrequency             400
 }
 
 rollout
@@ -173,7 +181,9 @@ inputCost
         {
             omniWheelBasedMobileManipulator
             {
-                scaling 1e-2
+                ; Match WCE3/W2 mobile_base_tcp: effective R = scaling * diag = 0.08
+                ; (was 1e-2 → 0.008; 10x too cheap → jerky chassis).
+                scaling 1e-1
 
                 (0,0)   0.8     ; vx [m/s]
                 (1,1)   0.8     ; vy [m/s]
