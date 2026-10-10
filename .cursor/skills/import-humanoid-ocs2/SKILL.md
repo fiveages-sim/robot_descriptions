@@ -98,6 +98,15 @@ order; do not claim include-after-arms fixes DFS.
 `manipulatorModelType 0` if the WBC does not plan the chassis (usual). Type 4
 only if this robot actually unlocks an omni base in MPC.
 
+**ATM / launch frame override:** `parse_task_info` must treat modelType **1 and 4**
+as mobile and force `control_base_frame` + `marker_fixed_frame` to `world`. Type 4
+only used to be missed → continuous marker publish (unframed Pose via
+`control_base_frame`) was transformed into `base_footprint` while WBC expects
+world, so streaming targets showed a chassis-pose offset; single-shot PoseStamped
+(uses `left_current_target` frame_id=world) did not. `vr_follow_frame` may stay on
+`base_footprint` (chassis-relative VR before convert-to-world).
+
+
 ## 2. Humanoid mode schedule
 
 Modern `loadHumanoidModeSchedule` requires **structured** entries. A flat string
