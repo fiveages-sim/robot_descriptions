@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<!-- Head on lift_link. Instantiate AFTER both arms so Pinocchio DFS is lift|L6|R6|head×2 (ARX Lift). -->
+	<xacro:macro name="QuantaX1Head">
+		<link name="head_yaw_link">
+			<inertial>
+				<origin xyz="9.85219e-05 -0.00010749 0.056689166"/>
+				<mass value="0.64404227"/>
+				<inertia ixx="0.000486721" ixy="-1.25e-06" ixz="-8.64e-07" iyy="0.000572985" iyz="1.41146e-05"
+								 izz="0.000333911"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/head_yaw.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/collision/head_yaw_link.STL"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="head_yaw_joint" type="revolute">
+			<origin xyz="0.1595 0 0.2245"/>
+			<parent link="lift_link"/>
+			<child link="head_yaw_link"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="9" lower="-1.5708" upper="1.5708" velocity="3.77"/>
+		</joint>
+		<link name="head_pitch_link">
+			<inertial>
+				<origin xyz="2.79439e-05 1.4773183 -0.10496909"/>
+				<mass value="0.59804473"/>
+				<inertia ixx="0.00131549" ixy="-1.93e-06" ixz="-1.23e-06" iyy="0.001827745" iyz="-6.2e-05" izz="0.002283248"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/head_pitch.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/base/collision/head_pitch_link.STL"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="head_pitch_joint" type="revolute">
+			<origin xyz="0 0 0.062"/>
+			<parent link="head_yaw_link"/>
+			<child link="head_pitch_link"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="9" lower="-0.1745" upper="1.2217" velocity="3.77"/>
+		</joint>
+
+		<link name="head_camera_frame_link">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/orbbec/Dabai_DCW2.glb"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="head_camera_connector" type="fixed">
+			<origin xyz="-0.05335 -0.00767 0.0517"/>
+			<parent link="head_pitch_link"/>
+			<child link="head_camera_frame_link"/>
+		</joint>
+
+	</xacro:macro>
+</robot>

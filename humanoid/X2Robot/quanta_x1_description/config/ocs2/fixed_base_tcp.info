@@ -2,6 +2,9 @@
 ; =====================================================================
 ; Fixed base (chassis wheels/casters locked via chassis_joints_movable:=false).
 ; State / input (15): [lift | left×6 | right×6 | head_yaw | head_pitch]
+; Pinocchio DFS must match that order: head.xacro is included AFTER both arms
+; in robot.xacro (same convention as ARX Lift).
+; Frames: base_link / lift_link / left|right_gripper_center / head_pitch_link
 ; Closest peer topology: ARX Lift (lift + dual 6-DOF + head in WBC).
 
 model_information

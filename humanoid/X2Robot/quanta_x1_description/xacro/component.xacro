@@ -15,12 +15,16 @@
 
   <xacro:if value="${'$(arg type)' == 'base'}">
     <xacro:include filename="$(find quanta_x1_description)/xacro/components/base.xacro"/>
+    <xacro:include filename="$(find quanta_x1_description)/xacro/components/head.xacro"/>
     <xacro:QuantaX1Base joints_movable="$(arg chassis_joints_movable)"/>
+    <xacro:QuantaX1Head/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'chassis'}">
     <xacro:include filename="$(find quanta_x1_description)/xacro/components/base.xacro"/>
+    <xacro:include filename="$(find quanta_x1_description)/xacro/components/head.xacro"/>
     <xacro:QuantaX1Base joints_movable="true"/>
+    <xacro:QuantaX1Head/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'arm'}">

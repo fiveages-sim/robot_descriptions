@@ -6,6 +6,7 @@
 
   <xacro:include filename="$(find quanta_x1_description)/xacro/components/base.xacro"/>
   <xacro:include filename="$(find quanta_x1_description)/xacro/components/arm.xacro"/>
+  <xacro:include filename="$(find quanta_x1_description)/xacro/components/head.xacro"/>
 
   <xacro:QuantaX1Base joints_movable="$(arg chassis_joints_movable)"/>
   <xacro:QuantaX1SingleArm name="left"/>
@@ -15,10 +16,13 @@
     <parent link="left_frame_link"/>
     <child link="left_base_link"/>
   </joint>
-  
+
   <joint name="right_connector" type="fixed">
     <parent link="right_frame_link"/>
     <child link="right_base_link"/>
   </joint>
+
+  <!-- Head AFTER arms → Pinocchio DFS: lift | L6 | R6 | head×2 (ARX Lift convention) -->
+  <xacro:QuantaX1Head/>
 
 </robot>

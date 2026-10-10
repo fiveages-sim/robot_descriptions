@@ -1,0 +1,20 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.3
+    angular_scale: 0.5
+    enable_vr: true
+    enable_head_control: false
+
+    # Full-body Fixed Frame (fixed_base_tcp.info baseFrame)
+    marker_fixed_frame: base_link
+    vr_follow_frame: base_link
+
+    # Head joints for optional marker / WBC head tracking (Quanta names)
+    head_joint_to_rpy_mapping:
+      head_yaw_joint: "head_yaw"
+      head_pitch_joint: "head_pitch"
+    head_rpy_axis_direction:
+      head_yaw: 1.0
+      head_pitch: 1.0
+      head_roll: 1.0
+    head_link_name: "head_pitch_link"

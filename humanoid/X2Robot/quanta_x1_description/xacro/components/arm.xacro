@@ -168,6 +168,11 @@
 					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/link6.glb"/>
 				</geometry>
 			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/arm/collision/arm_link6.STL"/>
+				</geometry>
+			</collision>
 		</link>
 
 		<joint name="${prefix}joint6" type="revolute">
@@ -189,9 +194,20 @@
 					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/base.glb"/>
 				</geometry>
 			</visual>
+			<!-- 夹爪支架: CoACD 3 convex pieces -->
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/gripper_base_link.STL"/>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/gripper_base_link_0.stl"/>
+				</geometry>
+			</collision>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/gripper_base_link_1.stl"/>
+				</geometry>
+			</collision>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/gripper_base_link_2.stl"/>
 				</geometry>
 			</collision>
 		</link>
@@ -209,6 +225,11 @@
 					<color rgba="1 1 1 1"/>
 				</material>
 			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/gripper_motor.STL"/>
+				</geometry>
+			</collision>
 		</link>
 
 		<joint name="${prefix}gripper_joint" type="revolute">
@@ -284,6 +305,22 @@
 					<mesh filename="file://$(find sensor_models)/meshes/usb_camera/camera_01.glb"/>
 				</geometry>
 			</visual>
+			<!-- wrist camera: CoACD 3 convex pieces -->
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/gripper_camera_0.stl"/>
+				</geometry>
+			</collision>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/gripper_camera_1.stl"/>
+				</geometry>
+			</collision>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find quanta_x1_description)/meshes/gripper/collision/gripper_camera_2.stl"/>
+				</geometry>
+			</collision>
 		</link>
 
 		<joint name="${prefix}gripper_camera_base_joint" type="fixed">
