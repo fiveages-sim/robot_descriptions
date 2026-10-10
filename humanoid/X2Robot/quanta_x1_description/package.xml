@@ -2,13 +2,12 @@
 <package format="2">
 	<name>quanta_x1_description</name>
 	<version>0.0.0</version>
-	<description>The Ai2 Bot2 description package</description>
+	<description>X2Robot Quanta X1 description (Artixon 6A dual arms + lift chassis)</description>
 
 	<maintainer email="biao876990970@hotmail.com">Huang Zhenbiao</maintainer>
 	<license>TODO</license>
 
 	<exec_depend>robot_common_launch</exec_depend>
-	<depend>rm75_description</depend>
 	<depend>sensor_models</depend>
 
 	<export>

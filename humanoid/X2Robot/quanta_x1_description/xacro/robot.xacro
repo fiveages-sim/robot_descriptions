@@ -1,10 +1,14 @@
 <?xml version="1.0" ?>
 <robot name="Quanta X1" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:property name="PI" value="3.1415926535897931"/>
+  <!-- Lock drive wheels + swivel casters by default (W2/Bot2/Galaxea). Planning URDF keeps this false. -->
+  <xacro:arg name="chassis_joints_movable" default="false"/>
+
   <xacro:include filename="$(find quanta_x1_description)/xacro/components/base.xacro"/>
   <xacro:include filename="$(find quanta_x1_description)/xacro/components/arm.xacro"/>
+  <xacro:include filename="$(find quanta_x1_description)/xacro/components/head.xacro"/>
 
-  <xacro:QuantaX1Base/>
+  <xacro:QuantaX1Base joints_movable="$(arg chassis_joints_movable)"/>
   <xacro:QuantaX1SingleArm name="left"/>
   <xacro:QuantaX1SingleArm name="right"/>
 
@@ -12,10 +16,15 @@
     <parent link="left_frame_link"/>
     <child link="left_base_link"/>
   </joint>
-  
+
   <joint name="right_connector" type="fixed">
     <parent link="right_frame_link"/>
     <child link="right_base_link"/>
   </joint>
+
+  <!-- Head attached to lift_link (sibling of left_/right_frame). Pinocchio 4 DFS
+       orders siblings by name → head_* before left_*/right_*; OCS2/controller
+       joint lists follow that order, not this include position. -->
+  <xacro:QuantaX1Head/>
 
 </robot>

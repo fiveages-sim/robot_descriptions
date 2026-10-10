@@ -1,18 +1,44 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="QuantaX1BaseRos2Control">
-      <ros2_control is_async="true" name="mobile_base" rw_rate="250" type="system">
-        <hardware>
-          <plugin>mock_components/GenericSystem</plugin>
-        </hardware>
-        <joint name="lift_joint">
-          <command_interface name="position"/>
-          <command_interface name="velocity"/>
-          <command_interface name="effort"/>
-          <state_interface name="position"/>
-          <state_interface name="velocity"/>
-          <state_interface name="effort"/>
-        </joint>
-      </ros2_control>
+  <!-- Quanta X1 body interfaces: lift + head only.
+       Drive wheels / swivel casters stay out of ros2_control (W2/Bot2/Galaxea/ARX Lift2S);
+       they are fixed in the URDF unless chassis_joints_movable:=true. -->
+  <xacro:macro name="quanta_x1_base_interfaces" params="iface_mode:=mix">
+    <joint name="lift_joint">
+      <command_interface name="position"/>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <command_interface name="velocity"/>
+        <command_interface name="effort"/>
+      </xacro:if>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </xacro:if>
+    </joint>
+
+    <joint name="head_yaw_joint">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </xacro:if>
+    </joint>
+
+    <joint name="head_pitch_joint">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </xacro:if>
+    </joint>
   </xacro:macro>
 </robot>
