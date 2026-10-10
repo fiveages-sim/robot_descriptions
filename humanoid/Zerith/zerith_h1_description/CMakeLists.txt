@@ -4,7 +4,7 @@ project(zerith_h1_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-        DIRECTORY meshes urdf xacro
+        DIRECTORY meshes urdf xacro config
         DESTINATION share/${PROJECT_NAME}/
 )
 
