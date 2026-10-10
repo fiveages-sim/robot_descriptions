@@ -181,13 +181,11 @@ inputCost
         {
             omniWheelBasedMobileManipulator
             {
-                ; Match WCE3/W2 mobile_base_tcp: effective R = scaling * diag = 0.08
-                ; (was 1e-2 → 0.008; 10x too cheap → jerky chassis).
-                scaling 1e-1
+                scaling 1e-2
 
-                (0,0)   0.8     ; vx [m/s]
-                (1,1)   0.8     ; vy [m/s]
-                (2,2)   0.8     ; omega [rad/s]
+                (0,0)   0.8     ; 线速度 vx [m/s]
+                (1,1)   0.8     ; 线速度 vy [m/s]
+                (2,2)   0.8     ; 角速度 omega [rad/s]
             }
         }
 
