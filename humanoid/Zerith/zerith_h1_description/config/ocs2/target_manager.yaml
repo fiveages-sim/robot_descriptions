@@ -1,0 +1,10 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.3
+    angular_scale: 0.5
+    enable_vr: true
+
+    # Full-body Fixed Frame (fixed_base_tcp.info baseFrame)
+    marker_fixed_frame: base_link
+    vr_follow_frame: base_link
+    head_link_name: "neck_pitch_link"

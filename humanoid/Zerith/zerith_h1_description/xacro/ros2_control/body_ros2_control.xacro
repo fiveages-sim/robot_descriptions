@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Zerith H1 body: lift (body_joint1) + pitch/yaw + head.
+       Drive wheels stay out of ros2_control (peer convention). -->
+  <xacro:macro name="zerith_h1_body_joint" params="jname iface_mode initial:=0.0">
+    <joint name="${jname}">
+      <command_interface name="position"/>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <command_interface name="velocity"/>
+        <command_interface name="effort"/>
+      </xacro:if>
+      <state_interface name="position">
+        <param name="initial_value">${initial}</param>
+      </state_interface>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </xacro:if>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="zerith_h1_body_interfaces" params="iface_mode:=mix">
+    <xacro:zerith_h1_body_joint jname="body_joint1" iface_mode="${iface_mode}" initial="0.0"/>
+    <xacro:zerith_h1_body_joint jname="body_joint2" iface_mode="${iface_mode}" initial="0.0"/>
+    <xacro:zerith_h1_body_joint jname="body_joint3" iface_mode="${iface_mode}" initial="0.0"/>
+    <xacro:zerith_h1_body_joint jname="head_joint1" iface_mode="${iface_mode}" initial="0.0"/>
+    <xacro:zerith_h1_body_joint jname="head_joint2" iface_mode="${iface_mode}" initial="0.0"/>
+  </xacro:macro>
+</robot>

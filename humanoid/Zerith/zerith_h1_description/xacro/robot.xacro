@@ -1,23 +1,19 @@
 <?xml version="1.0"?>
 <!-- =================================================================================== -->
 <!-- |    Complete Robot Description for Zerith H1                                     | -->
-<!-- |    This file includes the chassis, body and arm components                      | -->
+<!-- |    Chassis (wheels locked by default) + body/head + dual 7-DOF arms + grippers  | -->
 <!-- =================================================================================== -->
 <robot name="zerith_h1" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<!-- Include chassis macro -->
+	<!-- Lock drive wheels by default (W2/Bot2/Quanta/Galaxea). Planning URDF keeps this false. -->
+	<xacro:arg name="chassis_joints_movable" default="false"/>
+
 	<xacro:include filename="$(find zerith_h1_description)/xacro/components/chassis.xacro"/>
+	<xacro:H1Chassis joints_movable="$(arg chassis_joints_movable)"/>
 
-	<!-- Generate chassis: drive_joint_type="continuous" (default) or "fixed" -->
-	<xacro:H1Chassis drive_joint_type="continuous"/>
-
-	<!-- Include the body (torso and head/neck) -->
 	<xacro:include filename="$(find zerith_h1_description)/xacro/components/body.xacro"/>
 
-	<!-- Include arm macro -->
 	<xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
-
-	<!-- Generate left and right arms using macro -->
 	<xacro:H1Arm name="left" direction="1"/>
 	<xacro:H1Arm name="right" direction="-1"/>
 

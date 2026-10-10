@@ -1,0 +1,315 @@
+; Zerith H1 — full-body WBC (ocs2_wbc_controller / full_body.launch.py)
+; =====================================================================
+; Fixed base (drive wheels locked via chassis_joints_movable:=false).
+; State / input (19): [body×3 | head×2 | left×7 | right×7]
+; Pinocchio 4.x DFS under body_yaw_link visits siblings by name order
+; (head_* before left_*/right_*), NOT xacro include order — keep OCS2/controller
+; joint lists aligned with that reduced model after removeJoints.
+; Frames: base_link / body_yaw_link / left|right_end_effector_link / neck_pitch_link
+; Peers: Quanta X1 (control layout) + W2/Bot2 (torso DOFs + dual 7-DOF).
+
+model_information
+{
+    manipulatorModelType    0
+
+    baseFrame               "base_link"
+    eeFrame                 "left_end_effector_link"
+    eeFrame1                "right_end_effector_link"
+    bodyFrame               "body_yaw_link"
+    headFrame               "neck_pitch_link"
+
+    ; Grippers + mimics; chassis wheels listed for movable URDF fallback
+    removeJoints
+    {
+        [0]   "left_gripper_joint"
+        [1]   "right_gripper_joint"
+        [2]   "left_jaw_right_finger_joint"
+        [3]   "right_jaw_right_finger_joint"
+        [4]   "left_wheel_joint"
+        [5]   "right_wheel_joint"
+    }
+}
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+initialState
+{
+    arm
+    {
+        (0,0)   0.0     ; body_joint1 lift [m]
+        (1,0)   0.0     ; body_joint2 pitch
+        (2,0)   0.0     ; body_joint3 yaw
+        (3,0)   0.0     ; head_joint1 yaw
+        (4,0)   0.0     ; head_joint2 pitch
+        (5,0)   0.0     ; left_joint1
+        (6,0)   0.0     ; left_joint2
+        (7,0)   0.0     ; left_joint3
+        (8,0)   0.0     ; left_joint4
+        (9,0)   0.0     ; left_joint5
+        (10,0)  0.0     ; left_joint6
+        (11,0)  0.0     ; left_joint7
+        (12,0)  0.0     ; right_joint1
+        (13,0)  0.0     ; right_joint2
+        (14,0)  0.0     ; right_joint3
+        (15,0)  0.0     ; right_joint4
+        (16,0)  0.0     ; right_joint5
+        (17,0)  0.0     ; right_joint6
+        (18,0)  0.0     ; right_joint7
+    }
+}
+
+initialModeSchedule
+{
+    eventTimes
+    {
+    }
+
+    ; Fixed chassis + CUSTOM_LOCK capability; body free (empty lockedJointIndices)
+    modeSequence
+    {
+        [0]
+        {
+            bodyMode "HM_DUAL_CUSTOM_LOCK_FIXED_BASE"
+            headMode "HEAD_DISABLE"
+        }
+    }
+}
+
+ddp
+{
+    algorithm                       SLQ
+    nThreads                        5
+    threadPriority                  50
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+    preComputeRiccatiTerms          true
+    useFeedbackPolicy               false
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+mpc
+{
+    timeHorizon                     1.0
+    solutionTimeWindow              0.2
+    coldStart                       false
+    debugPrint                      false
+    mpcDesiredFrequency             100
+    mrtDesiredFrequency             500
+}
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+bodyTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+headTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+; Input dim = 19 (no virtual SE(2) base)
+inputCost
+{
+    R
+    {
+        arm
+        {
+            scaling 1e-3
+            (0,0)   10.0    ; body_joint1 lift
+            (1,1)   5.0     ; body_joint2 pitch
+            (2,2)   2.0     ; body_joint3 yaw
+            (3,3)   1.0     ; head_joint1
+            (4,4)   1.0     ; head_joint2
+            (5,5)   1.0     ; left_joint1
+            (6,6)   1.0
+            (7,7)   1.0
+            (8,8)   1.0
+            (9,9)   0.5     ; left wrist
+            (10,10) 0.5
+            (11,11) 0.5
+            (12,12) 1.0     ; right_joint1
+            (13,13) 1.0
+            (14,14) 1.0
+            (15,15) 1.0
+            (16,16) 0.5     ; right wrist
+            (17,17) 0.5
+            (18,18) 0.5
+        }
+    }
+}
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      20.0
+    muOrientation                   10.0
+}
+
+; Torso has pitch + yaw relative to base (unlike Quanta single prismatic)
+bodyRelative
+{
+    activate                        true
+    xLowerBound                     0.00
+    xUpperBound                     0.25
+    muPosition                      5.0
+    muOrientation                   5.0
+}
+
+bimanualCoupling
+{
+    activate                        true
+    muPosition                      50.0
+    muOrientation                   25.0
+}
+
+; Layout: [body(3) | head(2) | left(7) | right(7)] → head starts at 3
+headInputStart                          3
+
+waistLock
+{
+    activate                        true
+    numJoints                       3
+}
+
+headCoupling
+{
+    activate                        false
+}
+
+customJointLock
+{
+    activate                        true
+    ; Empty: CUSTOM_LOCKED capability without hard-locking torso/lift
+    lockedJointIndices
+    {
+    }
+}
+
+armLock
+{
+    activate                        true
+    leftNumJoints                   7
+    rightNumJoints                  7
+}
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-2
+
+    lowerBound
+    {
+        arm
+        {
+            (0,0)  -0.2     ; body_joint1 lift [m/s]
+            (1,0)  -1.5     ; body_joint2
+            (2,0)  -1.5     ; body_joint3
+            (3,0)  -3.0     ; head_joint1
+            (4,0)  -3.0     ; head_joint2
+            (5,0)  -4.0     ; left 1-4
+            (6,0)  -4.0
+            (7,0)  -3.5
+            (8,0)  -3.5
+            (9,0)  -8.0     ; left wrist
+            (10,0) -8.0
+            (11,0) -8.0
+            (12,0) -4.0     ; right 1-4
+            (13,0) -4.0
+            (14,0) -3.5
+            (15,0) -3.5
+            (16,0) -8.0     ; right wrist
+            (17,0) -8.0
+            (18,0) -8.0
+        }
+    }
+
+    upperBound
+    {
+        arm
+        {
+            (0,0)  0.2
+            (1,0)  1.5
+            (2,0)  1.5
+            (3,0)  3.0
+            (4,0)  3.0
+            (5,0)  4.0
+            (6,0)  4.0
+            (7,0)  3.5
+            (8,0)  3.5
+            (9,0)  8.0
+            (10,0) 8.0
+            (11,0) 8.0
+            (12,0) 4.0
+            (13,0) 4.0
+            (14,0) 3.5
+            (15,0) 3.5
+            (16,0) 8.0
+            (17,0) 8.0
+            (18,0) 8.0
+        }
+    }
+}
+
+selfCollision
+{
+    activate                        false
+    mu                              1e-3
+    delta                           1e-2
+    minimumDistance                 0.02
+    collisionObjectPairs
+    {
+    }
+    collisionLinkPairs
+    {
+    }
+}

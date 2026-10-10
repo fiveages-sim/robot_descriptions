@@ -1,0 +1,216 @@
+# Zerith H1 ros2_control controllers
+# Body: body_joint1 (lift) + body_joint2 (pitch) + body_joint3 (yaw)
+# Head: head_joint1 (yaw) + head_joint2 (pitch)
+# Arms: 7-DOF × 2; grippers: adaptive_gripper on left/right_gripper_joint
+# Split: ocs2_arm_controller + body + head
+# Full body: ocs2_wbc_controller, info = fixed_base_tcp
+# Pinocchio 4 DFS (expected): [body×3 | head×2 | left×7 | right×7]
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    body_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+# full_body.launch.py — body + dual 7-DOF + head
+ocs2_wbc_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: fixed_base_tcp
+    robot_name: zerith_h1
+    fsm_default_humanoid_mode: HM_DUAL_CUSTOM_LOCK_FIXED_BASE
+
+    # Pinocchio 4 DFS under body_yaw_link: head_* before left_*/right_* by name
+    joints:
+      - body_joint1
+      - body_joint2
+      - body_joint3
+      - head_joint1
+      - head_joint2
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    home_duration: 5.0
+    home_interpolation_type: linear
+    hold_position_threshold: 0.1
+
+    waist_lifting_enabled: true
+    waist_lifting_duration: 3.0
+    waist_lifting_type: single_joint
+    waist_single_joint_direction: 1.0
+    waist_single_joint_offset: 0.0
+    waist_single_joint_pitch_joint: body_joint2
+    waist_single_joint_pitch_direction: 1.0
+    waist_single_joint_pitch_offset: 0.0
+    waist_lifting_default_parameter: [0.05, 0.5, 1.0]
+    waist_turning_default_parameter: [0.2, 0.5, 1.0]
+    waist_absolute_source_frame: base_link
+    waist_absolute_target_frame: body_yaw_link
+
+    cartesian_defaults:
+      frame_id: base_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    # [body×3 | head×2 | left×7 | right×7]
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [0.3, 0.3, 0.0, 0.0, 0.2,
+             0.0, 0.5, 0.0, -1.0, 0.0, 0.0, 0.0,
+             0.0, -0.5, 0.0, -1.0, 0.0, 0.0, 0.0]
+
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: task
+    joints:
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: zerith_h1
+    home_duration: 3.0
+    home_interpolation_type: linear
+    hold_position_threshold: 0.1
+
+    cartesian_defaults:
+      frame_id: body_yaw_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [0.0, 0.5, 0.0, -1.0, 0.0, 0.0, 0.0,
+             0.0, -0.5, 0.0, -1.0, 0.0, 0.0, 0.0]
+
+body_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - body_joint1
+      - body_joint2
+      - body_joint3
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_duration: 3.0
+    movej_duration: 3.0
+    hold_position_threshold: 0.05
+
+    home_1: [0.0, 0.0, 0.0]
+    home_2: [0.3, 0.3, 0.0]
+
+    waist_lifting_enabled: true
+    waist_lifting_duration: 3.0
+    waist_lifting_type: single_joint
+    waist_single_joint_direction: 1.0
+    waist_single_joint_offset: 0.0
+    waist_single_joint_pitch_joint: body_joint2
+    waist_single_joint_pitch_direction: 1.0
+    waist_single_joint_pitch_offset: 0.0
+    waist_lifting_default_parameter: [0.05, 0.5, 1.0]
+    waist_turning_default_parameter: [0.2, 0.5, 1.0]
+    waist_absolute_source_frame: base_link
+    waist_absolute_target_frame: body_yaw_link
+
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - head_joint1
+      - head_joint2
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_1: [0.0, 0.0]
+    home_2: [0.0, 0.2]
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
+
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    use_effort_interface: false
+    force_feedback_ratio: 0.0
+    force_threshold: 1.0
+
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    use_effort_interface: false
+    force_feedback_ratio: 0.0
+    force_threshold: 1.0

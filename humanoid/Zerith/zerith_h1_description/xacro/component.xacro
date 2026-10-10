@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+  Component-wise description for Zerith H1, used by
+  robot_common_launch/launch/visualize/component.launch.py
+
+  Supported types (arg "type"):
+    - base (default): chassis + body/head + arms
+    - chassis: chassis with wheels movable
+    - body: body/head only (needs base_link placeholder)
+    - arms / left_arm / right_arm: arm(s) only
+-->
+<robot name="zerith_h1_component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="base"/>
+  <xacro:arg name="chassis_joints_movable" default="false"/>
+
+  <xacro:if value="${'$(arg type)' != 'base' and '$(arg type)' != 'chassis'}">
+    <link name="base_link"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'base'}">
+    <xacro:include filename="$(find zerith_h1_description)/xacro/components/chassis.xacro"/>
+    <xacro:include filename="$(find zerith_h1_description)/xacro/components/body.xacro"/>
+    <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
+    <xacro:H1Chassis joints_movable="$(arg chassis_joints_movable)"/>
+    <xacro:H1Arm name="left" direction="1"/>
+    <xacro:H1Arm name="right" direction="-1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'chassis'}">
+    <xacro:include filename="$(find zerith_h1_description)/xacro/components/chassis.xacro"/>
+    <xacro:H1Chassis joints_movable="true"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <xacro:include filename="$(find zerith_h1_description)/xacro/components/body.xacro"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'arms'}">
+    <link name="body_yaw_link"/>
+    <joint name="body_yaw_placeholder" type="fixed">
+      <parent link="base_link"/>
+      <child link="body_yaw_link"/>
+    </joint>
+    <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
+    <xacro:H1Arm name="left" direction="1"/>
+    <xacro:H1Arm name="right" direction="-1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left_arm'}">
+    <link name="body_yaw_link"/>
+    <joint name="body_yaw_placeholder" type="fixed">
+      <parent link="base_link"/>
+      <child link="body_yaw_link"/>
+    </joint>
+    <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
+    <xacro:H1Arm name="left" direction="1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right_arm'}">
+    <link name="body_yaw_link"/>
+    <joint name="body_yaw_placeholder" type="fixed">
+      <parent link="base_link"/>
+      <child link="body_yaw_link"/>
+    </joint>
+    <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
+    <xacro:H1Arm name="right" direction="-1"/>
+  </xacro:if>
+</robot>

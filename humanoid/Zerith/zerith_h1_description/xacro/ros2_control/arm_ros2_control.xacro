@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Zerith H1 7-DOF arm + ARX-style adaptive gripper (${prefix}gripper_joint). -->
+  <xacro:macro name="zerith_h1_arm_joint" params="jname iface_mode initial:=''">
+    <joint name="${jname}">
+      <command_interface name="position"/>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <command_interface name="velocity"/>
+        <command_interface name="effort"/>
+      </xacro:if>
+      <state_interface name="position">
+        <xacro:unless value="${initial == ''}">
+          <param name="initial_value">${initial}</param>
+        </xacro:unless>
+      </state_interface>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </xacro:if>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="zerith_h1_arm_interfaces" params="name iface_mode:=mix">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <xacro:zerith_h1_arm_joint jname="${prefix}joint1" iface_mode="${iface_mode}"/>
+    <xacro:zerith_h1_arm_joint jname="${prefix}joint2" iface_mode="${iface_mode}"/>
+    <xacro:zerith_h1_arm_joint jname="${prefix}joint3" iface_mode="${iface_mode}"/>
+    <xacro:zerith_h1_arm_joint jname="${prefix}joint4" iface_mode="${iface_mode}"/>
+    <xacro:zerith_h1_arm_joint jname="${prefix}joint5" iface_mode="${iface_mode}"/>
+    <xacro:zerith_h1_arm_joint jname="${prefix}joint6" iface_mode="${iface_mode}"/>
+    <xacro:zerith_h1_arm_joint jname="${prefix}joint7" iface_mode="${iface_mode}"/>
+
+    <!-- AdaptiveGripperController drives ${prefix}gripper_joint (mimic finger follows). -->
+    <joint name="${prefix}gripper_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </xacro:if>
+    </joint>
+  </xacro:macro>
+</robot>
