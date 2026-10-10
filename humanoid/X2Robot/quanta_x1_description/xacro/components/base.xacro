@@ -1,7 +1,10 @@
 <?xml version="1.0" ?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:include filename="$(find quanta_x1_description)/xacro/components/swivel.xacro"/>
-	<xacro:macro name="QuantaX1Base">
+	<xacro:macro name="QuantaX1Base" params="joints_movable:=false">
+		<!-- Drive / caster joints: fixed for viz & arm control (W2/Bot2/Galaxea); continuous only if movable -->
+		<xacro:property name="chassis_movable" value="${str(joints_movable).lower() in ['true', '1', 'yes', 'on']}"/>
+		<xacro:property name="wheel_joint_type" value="${'continuous' if chassis_movable else 'fixed'}"/>
 		<link name="base_link"/>
 		<joint name="chassis_base_joint" type="fixed">
 			<parent link="base_link"/>
@@ -47,11 +50,13 @@
 			</collision>
 		</link>
 
-		<joint name="right_wheel_joint" type="continuous">
+		<joint name="right_wheel_joint" type="${wheel_joint_type}">
 			<origin xyz="0 -0.208 0.085999"/>
 			<parent link="chassis_base_link"/>
 			<child link="right_wheel_link"/>
-			<axis xyz="0 1 0"/>
+			<xacro:if value="${chassis_movable}">
+				<axis xyz="0 1 0"/>
+			</xacro:if>
 		</joint>
 
 		<link name="left_wheel_link">
@@ -73,11 +78,13 @@
 			</collision>
 		</link>
 
-		<joint name="left_wheel_joint" type="continuous">
+		<joint name="left_wheel_joint" type="${wheel_joint_type}">
 			<origin xyz="0 0.208 0.086001"/>
 			<parent link="chassis_base_link"/>
 			<child link="left_wheel_link"/>
-			<axis xyz="0 1 0"/>
+			<xacro:if value="${chassis_movable}">
+				<axis xyz="0 1 0"/>
+			</xacro:if>
 		</joint>
 
 		<link name="lift_link">
@@ -430,10 +437,10 @@
 			<child link="2d_laser_base"/>
 		</joint>
 
-		<xacro:QuantaX1Swivel prefix="fl" x="0.212205" y="0.172203" z="0.061972"/>
-		<xacro:QuantaX1Swivel prefix="fr" x="0.212205" y="-0.172203" z="0.061972"/>
-		<xacro:QuantaX1Swivel prefix="rl" x="-0.1878" y="0.172203" z="0.061972"/>
-		<xacro:QuantaX1Swivel prefix="rr" x="-0.1878" y="-0.172203" z="0.061972"/>
+		<xacro:QuantaX1Swivel prefix="fl" x="0.212205" y="0.172203" z="0.061972" joints_movable="${joints_movable}"/>
+		<xacro:QuantaX1Swivel prefix="fr" x="0.212205" y="-0.172203" z="0.061972" joints_movable="${joints_movable}"/>
+		<xacro:QuantaX1Swivel prefix="rl" x="-0.1878" y="0.172203" z="0.061972" joints_movable="${joints_movable}"/>
+		<xacro:QuantaX1Swivel prefix="rr" x="-0.1878" y="-0.172203" z="0.061972" joints_movable="${joints_movable}"/>
 
 	</xacro:macro>
 </robot>

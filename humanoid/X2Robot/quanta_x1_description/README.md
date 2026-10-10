@@ -67,6 +67,18 @@ ros2 launch ocs2_arm_controller split_body.launch.py robot:=quanta_x1
 - TCP frames: `left_gripper_center` / `right_gripper_center`
 - No separate `type:=` EEF switch: the Artixon 6A gripper is part of the arm xacro (same idea as ARX X5 built-in gripper)
 
+### 3.4 Chassis joints (wheels / swivel casters)
+
+Same convention as FiveAges W2 / Ai2 Bot2 / Galaxea R1 / ARX Lift2S:
+
+- Default **`chassis_joints_movable:=false`**: drive wheels and swivel casters are **`fixed`** (viz, planning, and control URDFs).
+- Set `chassis_joints_movable:=true` only when you need movable wheel/caster DOFs (e.g. component `type:=chassis`).
+- **Not** in `ros2_control`: no `diff_drive` HI for mock arm stack. Lift is body (`body_joint_controller`), not chassis wheels.
+
+```bash
+ros2 launch robot_common_launch component.launch.py robot:=quanta_x1 type:=chassis
+```
+
 ## 4. Layout
 
 | Path | Role |

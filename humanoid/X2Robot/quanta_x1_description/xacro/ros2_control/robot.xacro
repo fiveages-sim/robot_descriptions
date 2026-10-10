@@ -2,7 +2,8 @@
 <robot name="quanta_x1" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
   <xacro:arg name="gazebo" default="false"/>
-  <xacro:arg name="enable_wheels" default="false"/>
+  <!-- Keep chassis wheels/casters fixed under control (same as viz default). -->
+  <xacro:arg name="chassis_joints_movable" default="false"/>
 
   <xacro:include filename="$(find quanta_x1_description)/xacro/robot.xacro"/>
   <xacro:include filename="$(find quanta_x1_description)/xacro/ros2_control/arm_ros2_control.xacro"/>
@@ -31,10 +32,8 @@
       </xacro:if>
     </hardware>
 
+    <!-- Body = lift + head; wheels/casters are not HI (peer convention). -->
     <xacro:quanta_x1_base_interfaces iface_mode="${sim_iface_mode}"/>
-    <xacro:if value="${'$(arg enable_wheels)' == 'true'}">
-      <xacro:quanta_x1_wheel_interfaces/>
-    </xacro:if>
     <xacro:quanta_x1_arm_interfaces name="left" iface_mode="${sim_iface_mode}"/>
     <xacro:quanta_x1_arm_interfaces name="right" iface_mode="${sim_iface_mode}"/>
   </ros2_control>

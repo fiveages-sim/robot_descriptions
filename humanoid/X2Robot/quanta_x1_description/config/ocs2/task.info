@@ -1,5 +1,6 @@
 ; Quanta X1 — dual Artixon 6A arms (ocs2_arm_controller / demo)
-; Lift / head / wheels / grippers are removed and driven by separate controllers.
+; Dual Artixon 6A arms only. Lift/head via basic_joint controllers; grippers via adaptive_gripper.
+; Chassis wheels/casters default fixed (chassis_joints_movable:=false); listed below for movable URDF.
 model_information {
   manipulatorModelType     0
 

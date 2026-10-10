@@ -1,10 +1,13 @@
 <?xml version="1.0" ?>
 <robot name="Quanta X1" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:property name="PI" value="3.1415926535897931"/>
+  <!-- Lock drive wheels + swivel casters by default (W2/Bot2/Galaxea). Planning URDF keeps this false. -->
+  <xacro:arg name="chassis_joints_movable" default="false"/>
+
   <xacro:include filename="$(find quanta_x1_description)/xacro/components/base.xacro"/>
   <xacro:include filename="$(find quanta_x1_description)/xacro/components/arm.xacro"/>
 
-  <xacro:QuantaX1Base/>
+  <xacro:QuantaX1Base joints_movable="$(arg chassis_joints_movable)"/>
   <xacro:QuantaX1SingleArm name="left"/>
   <xacro:QuantaX1SingleArm name="right"/>
 
