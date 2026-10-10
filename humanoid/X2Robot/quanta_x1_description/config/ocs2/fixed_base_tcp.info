@@ -85,9 +85,15 @@ initialModeSchedule
     {
     }
 
+    ; 默认：躯干/升降自由（BODY_FREE）+ 双臂独立；底盘由 xacro 固定
+    ; 结构化 bodyMode/headMode（与 W2 / Lift2S 现代 WBC loader 一致）
     modeSequence
     {
-        [0]     HM_DUAL_BODY_FREE
+        [0]
+        {
+            bodyMode "HM_DUAL_BODY_FREE"
+            headMode "HEAD_GAZE"
+        }
     }
 }
 
