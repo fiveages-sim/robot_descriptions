@@ -22,7 +22,9 @@
     <child link="right_base_link"/>
   </joint>
 
-  <!-- Head AFTER arms → Pinocchio DFS: lift | L6 | R6 | head×2 (ARX Lift convention) -->
+  <!-- Head attached to lift_link (sibling of left_/right_frame). Pinocchio 4 DFS
+       orders siblings by name → head_* before left_*/right_*; OCS2/controller
+       joint lists follow that order, not this include position. -->
   <xacro:QuantaX1Head/>
 
 </robot>

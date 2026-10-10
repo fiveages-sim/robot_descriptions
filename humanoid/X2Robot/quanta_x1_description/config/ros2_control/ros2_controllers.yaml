@@ -36,11 +36,13 @@ ocs2_wbc_controller:
     mpc_frequency: 50
     info_file_name: fixed_base_tcp
     robot_name: quanta_x1
-    fsm_default_humanoid_mode: HM_DUAL_BODY_FREE
+    fsm_default_humanoid_mode: HM_DUAL_CUSTOM_LOCK_FIXED_BASE
 
-    # [lift | left×6 | right×6 | head_yaw | head_pitch]
+    # Pinocchio 4 DFS: [lift | head_yaw | head_pitch | left×6 | right×6]
     joints:
       - lift_joint
+      - head_yaw_joint
+      - head_pitch_joint
       - left_joint1
       - left_joint2
       - left_joint3
@@ -53,8 +55,6 @@ ocs2_wbc_controller:
       - right_joint4
       - right_joint5
       - right_joint6
-      - head_yaw_joint
-      - head_pitch_joint
 
     command_interfaces:
       - position
@@ -86,9 +86,9 @@ ocs2_wbc_controller:
       max_angular_acceleration: 1.0
       max_angular_jerk: 5.0
 
-    # [lift | left×6 | right×6 | head×2]
+    # [lift | head×2 | left×6 | right×6]
     home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    home_2: [0.3, 0.0, 0.8, -1.0, 0.0, 0.0, 0.0, 0.0, 0.8, -1.0, 0.0, 0.0, 0.0, 0.0, 0.2]
+    home_2: [0.3, 0.0, 0.2, 0.0, 0.8, -1.0, 0.0, 0.0, 0.0, 0.0, 0.8, -1.0, 0.0, 0.0, 0.0]
 
 ocs2_arm_controller:
   ros__parameters:

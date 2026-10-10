@@ -97,5 +97,5 @@ ros2 launch robot_common_launch component.launch.py robot:=quanta_x1 type:=chass
 | `xacro/ros2_control/robot.xacro` | Hardware plugins + joint interfaces |
 | `config/ros2_control/ros2_controllers.yaml` | Controller manager |
 | `config/ocs2/task.info` | Dual-arm OCS2 model (demo / split arms) |
-| `config/ocs2/fixed_base_tcp.info` | Full-body WBC (lift + arms + head); Pinocchio order lift|L|R|head |
+| `config/ocs2/fixed_base_tcp.info` | Full-body WBC (lift + arms + head); Pinocchio 4 order lift|head|L|R |
 | `config/ocs2/target_manager.yaml` | Marker / VR frames (`base_link`, head_pitch_link) |
