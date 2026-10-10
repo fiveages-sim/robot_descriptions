@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:include filename="$(find quanta_x1_description)/xacro/ros2_control/arm_ros2_control.xacro"/>
 	<xacro:macro name="QuantaX1SingleArm" params="name">
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 		<link name="${prefix}base_link">
@@ -179,7 +178,6 @@
 			<limit effort="9" lower="-1.9199" upper="1.9199" velocity="6.77"/>
 		</joint>
 
-		<xacro:QuantaX1ArmRos2Control prefix="${prefix}"/>
 		<link name="${prefix}gripper_base_link">
 			<inertial>
 				<origin xyz="0.04699233 -4.878E-05 0.0039474"/>
@@ -299,6 +297,13 @@
 			<child link="${prefix}gripper_base_link"/>
 		</joint>
 
-		<xacro:QuantaX1ArmGripperRos2Control prefix="${prefix}"/>
+
+		<!-- TCP for OCS2 / cartesian (ARX-style ${prefix}gripper_center) -->
+		<link name="${prefix}gripper_center"/>
+		<joint name="${prefix}gripper_center_fixed" type="fixed">
+			<origin xyz="0.12 0 0"/>
+			<parent link="${prefix}gripper_base_link"/>
+			<child link="${prefix}gripper_center"/>
+		</joint>
 	</xacro:macro>
 </robot>

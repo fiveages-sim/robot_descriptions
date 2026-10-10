@@ -1,0 +1,134 @@
+# Quanta X1 ros2_control controllers
+# Arms: Artixon 6A (6-DOF) × 2
+# Gripper: ARX-style adaptive_gripper_controller on left/right_gripper_joint
+# Body: lift_joint; Head: yaw/pitch (split from OCS2)
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    body_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: task
+    joints:
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: quanta_x1
+    home_duration: 3.0
+    home_interpolation_type: linear
+    hold_position_threshold: 0.1
+
+    cartesian_defaults:
+      frame_id: lift_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    # left×6 | right×6 — Artixon 6A
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [0.0, 0.8, -1.0, 0.0, 0.0, 0.0, 0.0, 0.8, -1.0, 0.0, 0.0, 0.0]
+
+body_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - lift_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_duration: 3.0
+    movej_duration: 3.0
+    hold_position_threshold: 0.05
+
+    home_1: [0.0]
+    home_2: [0.3]
+
+    waist_lifting_enabled: true
+    waist_lifting_duration: 3.0
+    waist_lifting_type: single_joint
+    waist_single_joint_direction: 1.0
+    waist_single_joint_offset: 0.0
+    waist_single_joint_pitch_joint: _no_pitch_
+    waist_single_joint_pitch_direction: 1.0
+    waist_single_joint_pitch_offset: 0.0
+    waist_lifting_default_parameter: [0.05, 0.5, 1.0]
+    waist_turning_default_parameter: [0.0, 0.5, 1.0]
+    waist_absolute_source_frame: base_link
+    waist_absolute_target_frame: lift_link
+
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - head_yaw_joint
+      - head_pitch_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_1: [0.0, 0.0]
+    home_2: [0.0, 0.2]
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
+
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    use_effort_interface: false
+    force_feedback_ratio: 0.0
+    force_threshold: 1.0
+
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    use_effort_interface: false
+    force_feedback_ratio: 0.0
+    force_threshold: 1.0

@@ -1,0 +1,301 @@
+; Quanta X1 — dual Artixon 6A arms (ocs2_arm_controller / demo)
+; Lift / head / wheels / grippers are removed and driven by separate controllers.
+model_information {
+  manipulatorModelType     0
+
+  removeJoints {
+    [0]   "left_wheel_joint"
+    [1]   "right_wheel_joint"
+    [2]   "lift_joint"
+    [3]   "head_yaw_joint"
+    [4]   "head_pitch_joint"
+    [5]   "left_gripper_joint"
+    [6]   "right_gripper_joint"
+    [7]   "left_gripper_left_joint"
+    [8]   "left_gripper_right_joint"
+    [9]   "right_gripper_left_joint"
+    [10]  "right_gripper_right_joint"
+    [11]  "fl_swivel_yaw"
+    [12]  "fr_swivel_yaw"
+    [13]  "rl_swivel_yaw"
+    [14]  "rr_swivel_yaw"
+    [15]  "fl_swivel_roller_1"
+    [16]  "fl_swivel_roller_2"
+    [17]  "fl_swivel_roller_3"
+    [18]  "fl_swivel_roller_4"
+    [19]  "fr_swivel_roller_1"
+    [20]  "fr_swivel_roller_2"
+    [21]  "fr_swivel_roller_3"
+    [22]  "fr_swivel_roller_4"
+    [23]  "rl_swivel_roller_1"
+    [24]  "rl_swivel_roller_2"
+    [25]  "rl_swivel_roller_3"
+    [26]  "rl_swivel_roller_4"
+    [27]  "rr_swivel_roller_1"
+    [28]  "rr_swivel_roller_2"
+    [29]  "rr_swivel_roller_3"
+    [30]  "rr_swivel_roller_4"
+  }
+
+  baseFrame                       "base_link"
+  eeFrame                         "left_gripper_center"
+  eeFrame1                        "right_gripper_center"
+}
+
+model_settings
+{
+  usePreComputation               true
+  recompileLibraries              true
+}
+
+ddp
+{
+  algorithm                       SLQ
+  nThreads                        3
+  threadPriority                  50
+  maxNumIterations                1
+  minRelCost                      0.1
+  constraintTolerance             1e-3
+  displayInfo                     false
+  displayShortSummary             false
+  checkNumericalStability         false
+  debugPrintRollout               false
+  debugCaching                    false
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  maxNumStepsPerSecond            100000
+  timeStep                        1e-3
+  backwardPassIntegratorType      ODE45
+  constraintPenaltyInitialValue   20.0
+  constraintPenaltyIncreaseRate   2.0
+  preComputeRiccatiTerms          true
+  useFeedbackPolicy               false
+  strategy                        LINE_SEARCH
+  lineSearch
+  {
+    minStepLength                 1e-2
+    maxStepLength                 1.0
+    hessianCorrectionStrategy     DIAGONAL_SHIFT
+    hessianCorrectionMultiple     1e-3
+  }
+}
+
+rollout
+{
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  timeStep                        1e-2
+  integratorType                  ODE45
+  maxNumStepsPerSecond            100000
+  checkNumericalStability         false
+}
+
+mpc
+{
+  timeHorizon                     1.0
+  solutionTimeWindow              0.2
+  coldStart                       false
+  debugPrint                      false
+  mpcDesiredFrequency             100
+  mrtDesiredFrequency             400
+}
+
+initialState
+{
+  base
+  {
+    wheelBasedMobileManipulator
+    {
+      (0,0)  0.0
+      (1,0)  0.0
+      (2,0)  0.0
+    }
+  }
+
+  arm
+  {
+    (0,0)   0.0
+    (1,0)   0.0
+    (2,0)   0.0
+    (3,0)   0.0
+    (4,0)   0.0
+    (5,0)   0.0
+    (6,0)   0.0
+    (7,0)   0.0
+    (8,0)   0.0
+    (9,0)   0.0
+    (10,0)  0.0
+    (11,0)  0.0
+  }
+}
+
+inputCost
+{
+  R
+  {
+    base
+    {
+      defaultManipulator {}
+      floatingArmManipulator {}
+      fullyActuatedFloatingArmManipulator
+      {
+        scaling 1e-2
+        (0,0)  5.0
+        (1,1)  5.0
+        (2,2)  5.0
+        (3,3)  5.0
+        (4,4)  5.0
+        (5,5)  5.0
+      }
+      wheelBasedMobileManipulator
+      {
+        scaling 1e-2
+        (0,0)  1.5
+        (1,1)  1.5
+      }
+    }
+    arm
+    {
+      scaling 1e-4
+      (0,0)   1.0
+      (1,0)   1.0
+      (2,0)   1.0
+      (3,0)   1.0
+      (4,0)   1.0
+      (5,0)   1.0
+      (6,0)   1.0
+      (7,0)   1.0
+      (8,0)   1.0
+      (9,0)   1.0
+      (10,0)  1.0
+      (11,0)  1.0
+    }
+  }
+}
+
+endEffector
+{
+  dualArmMode      true
+  leftArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+  rightArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+}
+
+finalEndEffector
+{
+  dualArmMode      true
+  leftArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+  rightArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+}
+
+selfCollision
+{
+  activate  false
+  collisionLinkPairs {}
+  activationDistance 0.1
+  minimumDistance  0.02
+  mu      1e-3
+  delta   1e-2
+}
+
+jointPositionLimits
+{
+  activate  true
+  mu      1e-3
+  delta   1e-3
+}
+
+jointVelocityLimits
+{
+  mu      0.01
+  delta   1e-3
+  lowerBound
+  {
+    base
+    {
+      defaultManipulator {}
+      floatingArmManipulator {}
+      fullyActuatedFloatingArmManipulator
+      {
+        (0,0)  -0.1
+        (1,0)  -0.1
+        (2,0)  -0.1
+        (3,0)  -0.3
+        (4,0)  -0.3
+        (5,0)  -0.3
+      }
+      wheelBasedMobileManipulator
+      {
+        (0,0)  -2.0
+        (1,0)  -2.0
+      }
+    }
+    arm
+    {
+      (0,0)  -4.188
+      (1,0)  -4.188
+      (2,0)  -4.188
+      (3,0)  -6.77
+      (4,0)  -6.77
+      (5,0)  -6.77
+      (6,0)  -4.188
+      (7,0)  -4.188
+      (8,0)  -4.188
+      (9,0)  -6.77
+      (10,0) -6.77
+      (11,0) -6.77
+    }
+  }
+  upperBound
+  {
+    base
+    {
+      defaultManipulator {}
+      floatingArmManipulator {}
+      fullyActuatedFloatingArmManipulator
+      {
+        (0,0)  0.1
+        (1,0)  0.1
+        (2,0)  0.1
+        (3,0)  0.3
+        (4,0)  0.3
+        (5,0)  0.3
+      }
+      wheelBasedMobileManipulator
+      {
+        (0,0)  2.0
+        (1,0)  2.0
+      }
+    }
+    arm
+    {
+      (0,0)  4.188
+      (1,0)  4.188
+      (2,0)  4.188
+      (3,0)  6.77
+      (4,0)  6.77
+      (5,0)  6.77
+      (6,0)  4.188
+      (7,0)  4.188
+      (8,0)  4.188
+      (9,0)  6.77
+      (10,0) 6.77
+      (11,0) 6.77
+    }
+  }
+}
