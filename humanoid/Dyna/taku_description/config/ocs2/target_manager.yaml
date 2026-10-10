@@ -1,13 +1,18 @@
 /**:
   ros__parameters:
+    # Linear / angular scales: map full stick to */twist caps (m/s, rad/s)
     linear_scale: 0.1
     angular_scale: 0.25
-    marker_fixed_frame: base_link
+
+    # Match W2 / WCE3: markers + VR follow chassis footprint (coincides with base_link on Taku)
+    marker_fixed_frame: base_footprint
     enable_vr: true
-    vr_follow_frame: base_link
+    vr_follow_frame: base_footprint
     # W2-style: no legacy head joint marker. Head follows via OCS2 HEAD_GAZE /
     # HEAD_TRACKING. full_body.launch.py overrides wbc head marker when WBC is up.
     enable_head_control: false
     enable_wbc_head_tracking_marker: false
-    head_link_name: head_roll_link
-    reference_link: torso_body_link
+    # Taku last head link (= W2 head_link2 role)
+    head_link_name: "head_roll_link"
+    # VR headset calibration reference (W2: head_link2)
+    reference_link: "head_roll_link"
