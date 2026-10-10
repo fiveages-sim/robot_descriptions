@@ -45,7 +45,6 @@ OCS2 model: `config/ocs2/fixed_base_tcp.info`.
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-export ROS_DOMAIN_ID=42   # pick an unused domain if others are running
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=quanta_x1
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=quanta_x1 hardware:=isaac
 ```
@@ -56,7 +55,6 @@ Artixon 6A dual arms via `ocs2_arm_controller`. Lift / head / grippers are separ
 
 ```bash
 source ~/ros2_ws/install/setup.bash
-export ROS_DOMAIN_ID=42
 ros2 launch ocs2_arm_controller demo.launch.py robot:=quanta_x1
 ros2 launch ocs2_arm_controller demo.launch.py robot:=quanta_x1 hardware:=isaac
 ```
