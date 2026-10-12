@@ -4,7 +4,14 @@
     angular_scale: 0.5
     enable_vr: true
 
-    # Full-body Fixed Frame (fixed_base_tcp.info baseFrame)
+    # split_body / fixed-base: markers in base_link. full_body + WBC: launch overrides
+    # marker_fixed_frame to world (RViz Fixed Frame=world from config/rviz/fullbody.rviz).
     marker_fixed_frame: base_link
     vr_follow_frame: base_link
+    # Only full_body.launch.py turns this on for Ocs2WbcController
+    enable_wbc_head_tracking_marker: false
+
+    # Last head link (yaw -> pitch): W2 head_link2 role. Used to init the HEAD_TRACKING target pose.
     head_link_name: "neck_pitch_link"
+    # VR headset calibration reference (W2: head_link2)
+    reference_link: "neck_pitch_link"

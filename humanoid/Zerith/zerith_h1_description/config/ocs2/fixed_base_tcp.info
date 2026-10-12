@@ -5,7 +5,7 @@
 ; Pinocchio 4.x DFS under body_yaw_link visits siblings by name order
 ; (head_* before left_*/right_*), NOT xacro include order — keep OCS2/controller
 ; joint lists aligned with that reduced model after removeJoints.
-; Frames: base_link / body_yaw_link / left|right_end_effector_link / neck_pitch_link
+; Frames: base_link / body_yaw_link / left|right_end_effector_link / neck_pitch_link (headFrame) / head_camera (gaze)
 ; Peers: Quanta X1 (control layout) + W2/Bot2 (torso DOFs + dual 7-DOF).
 
 model_information
@@ -68,13 +68,15 @@ initialModeSchedule
     {
     }
 
-    ; Fixed chassis + CUSTOM_LOCK capability; body free (empty lockedJointIndices)
+    ; Fixed chassis + CUSTOM_LOCK capability; body free (empty lockedJointIndices).
+    ; HEAD_GAZE: head_joint1/2 (yaw/pitch) keep head_camera looking at the hands' midpoint
+    ; (same preset as W2: HM_DUAL_CUSTOM_LOCK_FIXED_BASE + HEAD_GAZE).
     modeSequence
     {
         [0]
         {
             bodyMode "HM_DUAL_CUSTOM_LOCK_FIXED_BASE"
-            headMode "HEAD_DISABLE"
+            headMode "HEAD_GAZE"
         }
     }
 }
@@ -156,8 +158,8 @@ inputCost
             (0,0)   10.0    ; body_joint1 lift
             (1,1)   5.0     ; body_joint2 pitch
             (2,2)   2.0     ; body_joint3 yaw
-            (3,3)   1.0     ; head_joint1
-            (4,4)   1.0     ; head_joint2
+            (3,3)   0.1     ; head_joint1
+            (4,4)   0.1     ; head_joint2
             (5,5)   1.0     ; left_joint1
             (6,6)   1.0
             (7,7)   1.0
@@ -219,6 +221,28 @@ headCoupling
     activate                        false
 }
 
+; Head gaze (headMode HEAD_GAZE): head_camera looks at the midpoint of both hands.
+; cameraFrame = head_camera (ROS optical: +Z forward, +X right; mounted on neck_pitch_link
+; via neck_camera_link, same convention as W2). Intrinsics are nominal RealSense D435
+; RGB 1280x720 (HFOV 69.4 / VFOV 42.5 deg) — only affect the deadband / alignment angles.
+headMidpointGaze
+{
+    activate                    true
+    cameraFrame                 "head_camera"
+    fx                          923.0
+    fy                          925.0
+    cx                          640.0
+    cy                          360.0
+    width                       1280
+    height                      720
+    horizontalDeadbandDeg       10.0
+    verticalDeadbandDeg         10.0
+    muAlignmentHorizontal       1.0
+    muAlignmentVertical         1.0
+    muFront                     1.0
+    minDepth                    0.3
+}
+
 customJointLock
 {
     activate                        true
@@ -254,8 +278,8 @@ jointVelocityLimits
             (0,0)  -0.2     ; body_joint1 lift [m/s]
             (1,0)  -1.5     ; body_joint2
             (2,0)  -1.5     ; body_joint3
-            (3,0)  -3.0     ; head_joint1
-            (4,0)  -3.0     ; head_joint2
+            (3,0)  -1.5     ; head_joint1
+            (4,0)  -1.5     ; head_joint2
             (5,0)  -4.0     ; left 1-4
             (6,0)  -4.0
             (7,0)  -3.5
@@ -280,8 +304,8 @@ jointVelocityLimits
             (0,0)  0.2
             (1,0)  1.5
             (2,0)  1.5
-            (3,0)  3.0
-            (4,0)  3.0
+            (3,0)  1.5
+            (4,0)  1.5
             (5,0)  4.0
             (6,0)  4.0
             (7,0)  3.5
