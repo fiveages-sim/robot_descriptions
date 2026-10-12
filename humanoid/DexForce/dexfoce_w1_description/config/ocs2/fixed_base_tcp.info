@@ -71,13 +71,13 @@ initialModeSchedule
     }
 
     ; Fixed chassis + CUSTOM_LOCK capability; torso free (empty lockedJointIndices).
-    ; HEAD_DISABLE: no headMidpointGaze camera configured.
+    ; HEAD_GAZE: head yaw/pitch keep head_camera looking at the hands' midpoint (W2/Zerith preset).
     modeSequence
     {
         [0]
         {
             bodyMode "HM_DUAL_CUSTOM_LOCK_FIXED_BASE"
-            headMode "HEAD_DISABLE"
+            headMode "HEAD_GAZE"
         }
     }
 }
@@ -160,8 +160,8 @@ inputCost
             (1,1)    5      ; body_joint2 folding
             (2,2)    5      ; body_joint3 folding
             (3,3)    2      ; body_joint4 waist yaw
-            (4,4)    1      ; head_joint1 yaw
-            (5,5)    1      ; head_joint2 pitch
+            (4,4)    0.1    ; head_joint1 yaw
+            (5,5)    0.1    ; head_joint2 pitch
             (6,6)    1      ; left_joint1
             (7,7)    1
             (8,8)    1
@@ -224,11 +224,44 @@ headCoupling
     activate                        false
 }
 
+; Head gaze (headMode HEAD_GAZE): head_camera looks at the midpoint of both hands.
+; cameraFrame = head_camera (ROS optical: +Z forward, +X right; same convention as W2/Zerith).
+; Intrinsics are nominal RealSense D435 RGB 1280x720 — only affect deadband / alignment angles.
+headMidpointGaze
+{
+    activate                    true
+    cameraFrame                 "head_camera"
+    fx                          923.0
+    fy                          925.0
+    cx                          640.0
+    cy                          360.0
+    width                       1280
+    height                      720
+    horizontalDeadbandDeg       10.0
+    verticalDeadbandDeg         10.0
+    muAlignmentHorizontal       1.0
+    muAlignmentVertical         1.0
+    muFront                     1.0
+    minDepth                    0.3
+}
+
 customJointLock
 {
     activate                        true
     ; Empty: CUSTOM_LOCKED capability without hard-locking the torso
     lockedJointIndices
+    {
+    }
+}
+
+; HOME joint reference (W2/Taku): soft pull of non-excluded joints toward controller HOME (home_1).
+; mu on the order of the joint-limit barriers so it never overrides EE tracking.
+homeJointReference
+{
+    activate                        true
+    activateDefault                 true
+    mu                              1e-3
+    excludeJointIndices
     {
     }
 }

@@ -185,5 +185,14 @@
 			<child link="eyes"/>
 		</joint>
 
+		<!-- head_camera: ROS optical frame (+Z forward, +X right, +Y down) at the `eyes` position on neck2.
+		     Used by OCS2 headMidpointGaze (HEAD_GAZE). `eyes` keeps the vendor orientation. -->
+		<link name="head_camera"/>
+		<joint name="head_camera_joint" type="fixed">
+			<origin xyz="0.085 -0.051 0.0" rpy="3.1416 -1.5708 0"/>
+			<parent link="neck2"/>
+			<child link="head_camera"/>
+		</joint>
+
 	</xacro:macro>
 </robot>

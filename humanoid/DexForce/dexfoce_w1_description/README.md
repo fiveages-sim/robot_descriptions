@@ -52,6 +52,7 @@ Uses `xacro/ros2_control/robot.xacro` with `hardware:=mock_components` (also `gz
 ### 3.1 Full body (全身 WBC)
 
 Body (4 folding / waist joints) + head (2) + dual 7-DOF arms in one `ocs2_wbc_controller` (chassis fixed).
+Head follow is on by default (`headMode HEAD_GAZE`: `head_camera` on `neck2` looks at the hands' midpoint, like W2/Zerith); `homeJointReference` softly pulls joints toward controller `home_1`.
 OCS2 model: `config/ocs2/fixed_base_tcp.info`.
 
 ```bash
