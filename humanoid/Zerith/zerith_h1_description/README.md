@@ -9,7 +9,6 @@ URDF / xacro and control configs for the **Zerith H1** wheeled dual-arm platform
 - Grippers: built-in parallel jaws; control follows the **ARX** pattern (`${prefix}gripper_joint` + `adaptive_gripper_controller`)
 
 Upstream models: [Zerith_Model](https://github.com/inFpZero/Zerith_Model).
-Vendor dump kept under `urdf/` for provenance (not used by launch / OCS2).
 
 ## 1. Build
 
@@ -103,4 +102,3 @@ ros2 launch robot_common_launch component.launch.py robot:=zerith_h1 type:=chass
 | `config/ocs2/task.info` | Dual-arm OCS2 model (demo / split arms) |
 | `config/ocs2/fixed_base_tcp.info` | Full-body WBC (body + arms + head); Pinocchio 4 order body\|head\|L\|R |
 | `config/ocs2/target_manager.yaml` | Marker / VR frames (`base_link`, `neck_pitch_link`) |
-| `urdf/` | Vendor dump (provenance only) |
