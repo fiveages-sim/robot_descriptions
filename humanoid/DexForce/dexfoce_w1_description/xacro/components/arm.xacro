@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
-  Unified arm definition for DexForce W1 robot
-  Supports both Anthropomorphic and Industrial arm types
-  Parameters:
-    - name: prefix for link names (e.g., 'left' or 'right')
-    - direction: 1 for left arm (default), -1 for right arm
-    - arm_type: 'anthropomorphic' or 'industrial' (default: 'anthropomorphic')
+<!--
+  DexForce W1 arm: ONE macro + ONE mesh set (meshes/*/Common/Arm, Anthropomorphic|Industrial link6/7)
+  shared by both sides (like Taku / Ai2 Bot2), selected by name + direction.
+    - name: link/joint prefix ('left' / 'right')
+    - direction: 1 left (default), -1 right
+    - arm_type: 'anthropomorphic' (default) | 'industrial'
+
+  Mirror convention (vendor, kept on purpose): the right arm is the MIRROR image of the left
+  (link3/5 mesh scale y=-1, link4/6 scale z=-1, mirrored COM/inertia products, side-specific
+  joint2/4/6/7 limits and joint4/6 axis sign). Joint origins 2..7 are shared. Measured (Pinocchio):
+  q_right = -q_left gives the exact mirror pose, and the joint-axis chain is also a rigid copy
+  of the left one (signs +,+,+,-,+,-,+), but the link meshes are NOT mirror-symmetric
+  (p95 deviation 2-9 cm), so a Taku-style rotation-only mount (no mesh scale) would change the
+  right arm's geometry/inertia. Do not convert without a vendor right-arm CAD.
 -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:macro name="dexforce_w1_arm" params="name:='' direction:=1 arm_type:='anthropomorphic'">
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
-		<xacro:property name="arm_side" value="${'Left' if direction == 1 else 'Right'}"/>
-		<xacro:property name="arm_prefix" value="${'arml' if direction == 1 else 'armr'}"/>
-		<xacro:property name="mesh_type" value="${arm_type}"/>
-		<xacro:property name="common_arm_path" value="${'LeftArm' if direction == 1 else 'RightArm'}"/>
 
 		<link name="waist_to_${prefix}arm_connector"/>
 		<link name="${prefix}arm_base"/>
