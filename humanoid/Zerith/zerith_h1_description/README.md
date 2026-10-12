@@ -53,6 +53,10 @@ ros2 launch ocs2_arm_controller full_body.launch.py robot:=zerith_h1
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=zerith_h1 hardware:=isaac
 ```
 
+Initial modes: body `HM_DUAL_CUSTOM_LOCK_FIXED_BASE` (fixed-base preset), head `HEAD_GAZE`
+(`head_joint1`/`head_joint2` keep `head_camera` looking at the midpoint of both hands; `headInputStart 3`,
+`headFrame neck_pitch_link`, `headMidpointGaze.cameraFrame head_camera`).
+
 ### 3.2 Dual-arm OCS2 demo
 
 Arms via `ocs2_arm_controller`. Body / head / grippers are separate controllers.
@@ -101,4 +105,5 @@ ros2 launch robot_common_launch component.launch.py robot:=zerith_h1 type:=chass
 | `config/ros2_control/ros2_controllers.yaml` | Controller manager |
 | `config/ocs2/task.info` | Dual-arm OCS2 model (demo / split arms) |
 | `config/ocs2/fixed_base_tcp.info` | Full-body WBC (body + arms + head); Pinocchio 4 order body\|head\|L\|R |
-| `config/ocs2/target_manager.yaml` | Marker / VR frames (`base_link`, `neck_pitch_link`) |
+| `config/ocs2/target_manager.yaml` | Marker / VR frames (`base_link`; head `head_link_name` / `reference_link` = `neck_pitch_link`) |
+| `config/rviz/fullbody.rviz` / `splitbody.rviz` | RViz (Fixed Frame `world` / `base_link`), auto-picked by `full_body` / `split_body` launch |
