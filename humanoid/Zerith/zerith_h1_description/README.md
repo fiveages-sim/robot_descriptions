@@ -56,6 +56,8 @@ ros2 launch ocs2_arm_controller full_body.launch.py robot:=zerith_h1 hardware:=i
 Initial modes: body `HM_DUAL_CUSTOM_LOCK_FIXED_BASE` (fixed-base preset), head `HEAD_GAZE`
 (`head_joint1`/`head_joint2` keep `head_camera` looking at the midpoint of both hands; `headInputStart 3`,
 `headFrame neck_pitch_link`, `headMidpointGaze.cameraFrame head_camera`).
+HOME joint reference (`homeJointReference`, default on, no excluded joints) softly pulls joints toward `home_1`;
+toggle at runtime with `mode_command` `HOME_JOINT_ON` / `HOME_JOINT_OFF`.
 
 ### 3.2 Dual-arm OCS2 demo
 
