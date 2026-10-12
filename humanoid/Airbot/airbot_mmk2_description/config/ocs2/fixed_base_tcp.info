@@ -6,9 +6,9 @@
 ; (head_* before left_*/right_*), NOT xacro include order — keep OCS2/controller
 ; joint lists aligned with that reduced model after removeJoints.
 ; slide_joint: positive = DOWN (axis flipped), range [-0.04, 0.87] m, 0 = highest.
-; Frames: base_link / torso_tracking_frame (ROS-aligned dummy on slide_link) /
-;         left|right_gripper_center / head_pitch_link
-; Closest peer topology: Quanta X1 (lift + dual 6-DOF + head in WBC).
+; Frames: base_link / slide_link / left|right_gripper_center / head_pitch_link
+; Closest peer topology: Quanta X1 (lift + dual 6-DOF + head in WBC), but MMK2
+; disables body TRACKING: single prismatic slide has no useful 6D torso follow.
 
 model_information
 {
@@ -17,7 +17,7 @@ model_information
     baseFrame               "base_link"
     eeFrame                 "left_gripper_center"
     eeFrame1                "right_gripper_center"
-    bodyFrame               "torso_tracking_frame"
+    bodyFrame               "slide_link"
     headFrame               "head_pitch_link"
 
     ; Airbot Play grippers (+ gripper_joint1 follower) and drive wheels (movable URDF fallback)
@@ -66,7 +66,8 @@ initialModeSchedule
     {
     }
 
-    ; Fixed chassis + CUSTOM_LOCK capability; lift free (empty lockedJointIndices).
+    ; Fixed chassis + CUSTOM_LOCK: slide_joint locked (index 0). No body TRACKING —
+    ; single prismatic lift is not useful as a 6D torso follow target.
     ; HEAD_GAZE: head yaw/pitch keep head_camera looking at the hands' midpoint (W2/Zerith preset).
     modeSequence
     {
@@ -130,9 +131,10 @@ rollout
     checkNumericalStability         false
 }
 
+; Disabled: MMK2 body is lift-only (slide_joint). BODY_TRACKING / VR torso follow off.
 bodyTrackingEE
 {
-    activate  true
+    activate  false
     muPosition 5.0
     muOrientation 5.0
 }
@@ -234,14 +236,14 @@ headMidpointGaze
 customJointLock
 {
     activate                        true
-    ; Empty: CUSTOM_LOCKED capability without hard-locking the slide
+    ; Lock the single body DOF (slide_joint = input index 0).
     lockedJointIndices
     {
+        [0] 0                       ; slide_joint
     }
 }
 
-; HOME joint reference (W2/Taku): soft pull of non-excluded joints toward controller HOME (home_1).
-; mu on the order of the joint-limit barriers so it never overrides EE tracking.
+; HOME joint reference: soft pull toward controller home_1. Exclude locked slide (Taku style).
 homeJointReference
 {
     activate                        true
@@ -249,6 +251,7 @@ homeJointReference
     mu                              1e-3
     excludeJointIndices
     {
+        [0] 0                       ; slide_joint (custom-locked)
     }
 }
 
