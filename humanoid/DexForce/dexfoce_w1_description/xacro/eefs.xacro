@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<xacro:macro name="EndEffectors" params="hand_type:='' gripper_type:=''">
+	<xacro:macro name="EndEffectors" params="hand_type:='' gripper_type:='' eef_fixed:=false">
 
 		<!-- Note: 
 		     - gripper_type 不为空时表示使用夹爪（保持原有逻辑）
@@ -44,15 +44,27 @@
 
 		<!-- 灵巧手类型 -->
 		<xacro:if value="${hand_type == 'revo1'}">
+			<!-- OCS2 eeFrame (left_eef/right_eef) must exist for every type; tied to the TCP -->
+			<link name="left_eef"/>
+			<link name="right_eef"/>
+			<joint name="left_eef_joint" type="fixed">
+				<parent link="left_tcp"/>
+				<child link="left_eef"/>
+			</joint>
+			<joint name="right_eef_joint" type="fixed">
+				<parent link="right_tcp"/>
+				<child link="right_eef"/>
+			</joint>
+
 			<xacro:include filename="$(find brainco_description)/xacro/revo1.xacro"/>
-			<xacro:BrainCoHand name="left_hand" direction="1" fixed_joints="false"/>
+			<xacro:BrainCoHand name="left_hand" direction="1" fixed_joints="${eef_fixed}"/>
 			<joint name="left_hand_base_joint" type="fixed">
 				<origin rpy="${PI/2} 0 ${PI}"/>
 				<parent link="left_tcp"/>
 				<child link="left_hand_hand_base"/>
 			</joint>
 
-			<xacro:BrainCoHand name="right_hand" direction="-1" fixed_joints="false"/>
+			<xacro:BrainCoHand name="right_hand" direction="-1" fixed_joints="${eef_fixed}"/>
 			<joint name="right_hand_base_joint" type="fixed">
 				<parent link="right_tcp"/>
 				<child link="right_hand_hand_base"/>

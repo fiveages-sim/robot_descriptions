@@ -1,0 +1,24 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.3
+    angular_scale: 0.5
+    enable_vr: true
+    enable_head_control: false
+
+    # split_body / fixed-base: markers in base_link. full_body + WBC: launch overrides
+    # marker_fixed_frame to world (RViz Fixed Frame=world from config/rviz/fullbody.rviz).
+    marker_fixed_frame: base_link
+    vr_follow_frame: base_link
+
+    # Head joints for optional marker / WBC head tracking (W1 names)
+    head_joint_to_rpy_mapping:
+      head_joint1: "head_yaw"
+      head_joint2: "head_pitch"
+    head_rpy_axis_direction:
+      head_yaw: 1.0
+      head_pitch: 1.0
+      head_roll: 1.0
+    head_link_name: "neck2"
+    # VR headset calibration reference (W2: head_link2)
+    reference_link: "neck2"
+    enable_wbc_head_tracking_marker: false

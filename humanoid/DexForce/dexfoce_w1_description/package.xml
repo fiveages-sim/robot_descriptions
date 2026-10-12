@@ -2,7 +2,7 @@
 <package format="2">
     <name>dexforce_w1_description</name>
     <version>0.0.0</version>
-    <description>The EngineAI pm01_description package</description>
+    <description>URDF/xacro description and control configs for the DexForce W1 humanoid</description>
 
     <maintainer email="biao876990970@hotmail.com">Huang Zhenbiao</maintainer>
     <license>BSD</license>

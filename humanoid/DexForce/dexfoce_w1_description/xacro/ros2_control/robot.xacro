@@ -2,6 +2,8 @@
 <robot name="dexforce_w1" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
+	<!-- Drive wheels are fixed and not part of ros2_control (W2/Bot2/Quanta/Zerith convention) -->
+	<xacro:arg name="chassis_joints_movable" default="false"/>
 
 	<xacro:include filename="$(find dexforce_w1_description)/xacro/robot.xacro"/>
 

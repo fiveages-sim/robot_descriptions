@@ -1,0 +1,238 @@
+# DexForce W1 ros2_control — shared controller defaults (home poses: ros2_controllers.yaml / pro.yaml)
+# Body: body_joint1..4 (folding 3 + waist yaw) | Head: head_joint1..2 | Arms: 7-DOF x 2
+# Grippers (type:=pro_pgc140): adaptive_gripper on left/right_gripper_joint
+# Hands (type:=revo1): basic_joint_controller on left/right_hand_*
+# Split: ocs2_arm_controller (arms, task.info) + body + head
+# Full body: ocs2_wbc_controller, info = fixed_base_tcp
+# Pinocchio 4 DFS (measured): [body x4 | head x2 | left x7 | right x7]
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+    body_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    # type:=revo1 only
+    left_hand_controller:
+      type: basic_joint_controller/BasicJointController
+
+    right_hand_controller:
+      type: basic_joint_controller/BasicJointController
+
+# full_body.launch.py — body + head + dual 7-DOF in one WBC
+ocs2_wbc_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: fixed_base_tcp
+    robot_name: dexforce_w1
+    fsm_default_humanoid_mode: HM_DUAL_CUSTOM_LOCK_FIXED_BASE
+
+    # Pinocchio 4 DFS under waist: head_* before left_*/right_* by name
+    joints:
+      - body_joint1
+      - body_joint2
+      - body_joint3
+      - body_joint4
+      - head_joint1
+      - head_joint2
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    home_interpolation_type: linear
+    hold_position_threshold: 0.1
+
+    cartesian_defaults:
+      frame_id: base_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+# split_body / demo — dual 7-DOF arms only (planning URDF topology:=dual, rooted at waist)
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: task
+    joints:
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - left_joint7
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+      - right_joint7
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: dexforce_w1
+    home_interpolation_type: linear
+    hold_position_threshold: 0.1
+
+    cartesian_defaults:
+      frame_id: waist
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+body_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - body_joint1
+      - body_joint2
+      - body_joint3
+      - body_joint4
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    hold_position_threshold: 0.05
+
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - head_joint1
+      - head_joint2
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_1: [0.0, 0.0]           # 正视前方
+    home_2: [0.0, -0.1]          # 向下看
+    hold_position_threshold: 0.1
+
+# 左手夹爪控制器配置
+left_gripper_controller:
+  ros__parameters:
+    joint: left_gripper_joint
+    use_effort_interface: false
+
+# 右手夹爪控制器配置
+right_gripper_controller:
+  ros__parameters:
+    joint: right_gripper_joint
+    use_effort_interface: false
+
+# 左手灵巧手控制器配置（BrainCo Revo1）
+left_hand_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    target_command_enabled: true
+    movej_interpolation_type: "none"
+    home_interpolation_type: "none"
+
+    # 6个主控关节
+    joints:
+      - left_hand_thumb_joint2
+      - left_hand_thumb_joint1
+      - left_hand_index_joint
+      - left_hand_middle_joint
+      - left_hand_ring_joint
+      - left_hand_pinky_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    # Home 配置
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
+
+# 右手灵巧手控制器配置（BrainCo Revo1）
+right_hand_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    target_command_enabled: true
+    movej_interpolation_type: "none"
+    home_interpolation_type: "none"
+
+    # 6个主控关节
+    joints:
+      - right_hand_thumb_joint2
+      - right_hand_thumb_joint1
+      - right_hand_index_joint
+      - right_hand_middle_joint
+      - right_hand_ring_joint
+      - right_hand_pinky_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    # Home 配置
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1

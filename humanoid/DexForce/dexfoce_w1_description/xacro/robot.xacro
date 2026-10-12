@@ -14,6 +14,14 @@
 	     - pro_pgc140: 工业型（带 PGC_140_50 夹爪）
 	-->
 	<xacro:arg name="type" default="ANTHROPOMORPHIC"/>
+
+	<!-- topology: full (default) | dual = OCS2 split-body planning tree rooted at `waist`
+	     (arms only; set by robot_common_launch for planning_scope=arms) -->
+	<xacro:arg name="topology" default="full"/>
+	<!-- OCS2 planning: robot_common_launch injects eef_fixed_joints:=true and chassis_joints_movable:=false -->
+	<xacro:arg name="eef_fixed_joints" default="false"/>
+	<!-- Drive wheels fixed by default (W2/Bot2/Quanta/Zerith). Planning URDF keeps this false. -->
+	<xacro:arg name="chassis_joints_movable" default="false"/>
 	<xacro:property name="type_arg" value="$(arg type)"/>
 
 	<!-- 默认值 -->
@@ -37,9 +45,14 @@
 	<xacro:include filename="$(find dexforce_w1_description)/xacro/components/body.xacro"/>
 	<xacro:include filename="$(find dexforce_w1_description)/xacro/components/arm.xacro"/>
 
-	<!-- Generate chassis and body (common for both configurations) -->
-	<xacro:dexforce_w1_chassis/>
-	<xacro:dexforce_w1_body/>
+	<!-- Generate chassis and body (common for both configurations); dual topology keeps only `waist` -->
+	<xacro:if value="${'$(arg topology)' == 'dual'}">
+		<link name="waist"/>
+	</xacro:if>
+	<xacro:unless value="${'$(arg topology)' == 'dual'}">
+		<xacro:dexforce_w1_chassis joints_movable="$(arg chassis_joints_movable)"/>
+		<xacro:dexforce_w1_body/>
+	</xacro:unless>
 
 	<!-- Generate arms based on configuration type -->
 	<xacro:dexforce_w1_arm name="left" direction="1" arm_type="${selected_arm_type}"/>
@@ -47,6 +60,7 @@
 
 	<!-- Include and generate end effector frames -->
 	<xacro:include filename="$(find dexforce_w1_description)/xacro/eefs.xacro"/>
-	<xacro:EndEffectors hand_type="${selected_hand_type}" gripper_type="${selected_gripper_type}"/>
+	<xacro:EndEffectors hand_type="${selected_hand_type}" gripper_type="${selected_gripper_type}"
+	                    eef_fixed="$(arg eef_fixed_joints)"/>
 
 </robot>

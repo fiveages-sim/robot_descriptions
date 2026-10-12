@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Chassis definition for DexForce W1 robot
-  Contains base_link, wheels, and wheel joints
+  Contains base_link, wheels, and wheel joints (fixed unless joints_movable:=true)
 -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:macro name="dexforce_w1_chassis">
+	<xacro:macro name="dexforce_w1_chassis" params="joints_movable:=false">
+		<xacro:property name="chassis_movable" value="${str(joints_movable).lower() in ['true', '1', 'yes', 'on']}"/>
+		<xacro:property name="wheel_joint_type" value="${'continuous' if chassis_movable else 'fixed'}"/>
 		<link name="base_link">
 			<inertial>
 				<origin xyz="-6.9481412e-03 -2.8983362e-03  1.0943608e-01"/>
@@ -39,13 +41,13 @@
 			</inertial>
 		</link>
 
-		<joint name="WHEEL_LEFT" type="fixed">
+		<joint name="WHEEL_LEFT" type="${wheel_joint_type}">
 			<origin xyz="0 0.2539 0.053"/>
 			<parent link="base_link"/>
 			<child link="wheel_left"/>
 			<axis xyz="0 1 0"/>
 		</joint>
-		<joint name="WHEEL_RIGHT" type="fixed">
+		<joint name="WHEEL_RIGHT" type="${wheel_joint_type}">
 			<origin xyz="0 -0.2539 0.053"/>
 			<parent link="base_link"/>
 			<child link="wheel_right"/>

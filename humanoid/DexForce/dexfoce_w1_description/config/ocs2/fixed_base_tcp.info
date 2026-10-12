@@ -1,0 +1,322 @@
+; DexForce W1 — full-body WBC (ocs2_wbc_controller / full_body.launch.py)
+; =====================================================================
+; Fixed base (drive wheels locked via chassis_joints_movable:=false).
+; State / input (20): [body x4 | head x2 | left x7 | right x7]
+; Pinocchio 4.x DFS under waist visits siblings by name order
+; (head_* before left_*/right_*), NOT xacro include order — keep OCS2/controller
+; joint lists aligned with that reduced model after removeJoints.
+; Frames: base_link / waist (ROS-aligned at zero pose) / left|right_eef / neck2
+; Peers: Zerith H1 (body + head + dual 7-DOF) + W2/Taku (4-joint folding torso).
+
+model_information
+{
+    manipulatorModelType    0
+
+    baseFrame               "base_link"
+    eeFrame                 "left_eef"
+    eeFrame1                "right_eef"
+    bodyFrame               "waist"
+    headFrame               "neck2"
+
+    ; PGC_140_50 jaws (type:=pro_pgc140) + wheels for movable URDF fallback.
+    ; Revo1 fingers are fixed by xacro in the planning URDF (eef_fixed_joints:=true).
+    removeJoints
+    {
+        [0]   "left_gripper_joint"
+        [1]   "left_finger2_joint"
+        [2]   "right_gripper_joint"
+        [3]   "right_finger2_joint"
+        [4]   "WHEEL_LEFT"
+        [5]   "WHEEL_RIGHT"
+    }
+}
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+initialState
+{
+    arm
+    {
+        (0,0)    0.0    ; body_joint1
+        (1,0)    0.0    ; body_joint2
+        (2,0)    0.0    ; body_joint3
+        (3,0)    0.0    ; body_joint4
+        (4,0)    0.0    ; head_joint1
+        (5,0)    0.0    ; head_joint2
+        (6,0)    0.0    ; left_joint1
+        (7,0)    0.0    ; left_joint2
+        (8,0)    0.0    ; left_joint3
+        (9,0)    0.0    ; left_joint4
+        (10,0)   0.0    ; left_joint5
+        (11,0)   0.0    ; left_joint6
+        (12,0)   0.0    ; left_joint7
+        (13,0)   0.0    ; right_joint1
+        (14,0)   0.0    ; right_joint2
+        (15,0)   0.0    ; right_joint3
+        (16,0)   0.0    ; right_joint4
+        (17,0)   0.0    ; right_joint5
+        (18,0)   0.0    ; right_joint6
+        (19,0)   0.0    ; right_joint7
+    }
+}
+
+initialModeSchedule
+{
+    eventTimes
+    {
+    }
+
+    ; Fixed chassis + CUSTOM_LOCK capability; torso free (empty lockedJointIndices).
+    ; HEAD_DISABLE: no headMidpointGaze camera configured.
+    modeSequence
+    {
+        [0]
+        {
+            bodyMode "HM_DUAL_CUSTOM_LOCK_FIXED_BASE"
+            headMode "HEAD_DISABLE"
+        }
+    }
+}
+
+ddp
+{
+    algorithm                       SLQ
+    nThreads                        5
+    threadPriority                  50
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+    preComputeRiccatiTerms          true
+    useFeedbackPolicy               false
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+mpc
+{
+    timeHorizon                     1.0
+    solutionTimeWindow              0.2
+    coldStart                       false
+    debugPrint                      false
+    mpcDesiredFrequency             100
+    mrtDesiredFrequency             500
+}
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+bodyTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+headTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+; Input dim = 20 (no virtual SE(2) base)
+inputCost
+{
+    R
+    {
+        arm
+        {
+            scaling 1e-3
+            (0,0)    5      ; body_joint1 folding
+            (1,1)    5      ; body_joint2 folding
+            (2,2)    5      ; body_joint3 folding
+            (3,3)    2      ; body_joint4 waist yaw
+            (4,4)    1      ; head_joint1 yaw
+            (5,5)    1      ; head_joint2 pitch
+            (6,6)    1      ; left_joint1
+            (7,7)    1
+            (8,8)    1
+            (9,9)    1
+            (10,10)  0.5    ; left_joint5
+            (11,11)  0.5
+            (12,12)  0.5
+            (13,13)  1      ; right_joint1
+            (14,14)  1
+            (15,15)  1
+            (16,16)  1
+            (17,17)  0.5    ; right_joint5
+            (18,18)  0.5
+            (19,19)  0.5
+        }
+    }
+}
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      20.0
+    muOrientation                   10.0
+}
+
+; Torso folds as a parallelogram: waist stays upright and its x in base_link is ~0
+; in zero / home / rest poses (FK measured: x in [-0.001, 0.032]) -> band centred on 0.
+bodyRelative
+{
+    activate                        true
+    xLowerBound                     -0.15
+    xUpperBound                     0.15
+    muPosition                      5.0
+    muOrientation                   5.0
+}
+
+bimanualCoupling
+{
+    activate                        true
+    muPosition                      50.0
+    muOrientation                   25.0
+}
+
+; Layout: [body(4) | head(2) | left(7) | right(7)] -> head starts at 4 (Pinocchio 4 name-order DFS)
+headInputStart                          4
+
+waistLock
+{
+    activate                        true
+    numJoints                       4
+}
+
+headCoupling
+{
+    activate                        false
+}
+
+customJointLock
+{
+    activate                        true
+    ; Empty: CUSTOM_LOCKED capability without hard-locking the torso
+    lockedJointIndices
+    {
+    }
+}
+
+armLock
+{
+    activate                        true
+    leftNumJoints                   7
+    rightNumJoints                  7
+}
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-2
+
+    lowerBound
+    {
+        arm
+        {
+            (0,0)    -0.5   ; body_joint1
+            (1,0)    -0.5   ; body_joint2
+            (2,0)    -0.5   ; body_joint3
+            (3,0)    -0.5   ; body_joint4
+            (4,0)    -0.87  ; head_joint1
+            (5,0)    -0.87  ; head_joint2
+            (6,0)    -1.07  ; left_joint1
+            (7,0)    -1.07  ; left_joint2
+            (8,0)    -1.07  ; left_joint3
+            (9,0)    -1.07  ; left_joint4
+            (10,0)   -1.07  ; left_joint5
+            (11,0)   -1.07  ; left_joint6
+            (12,0)   -1.07  ; left_joint7
+            (13,0)   -1.07  ; right_joint1
+            (14,0)   -1.07  ; right_joint2
+            (15,0)   -1.07  ; right_joint3
+            (16,0)   -1.07  ; right_joint4
+            (17,0)   -1.07  ; right_joint5
+            (18,0)   -1.07  ; right_joint6
+            (19,0)   -1.07  ; right_joint7
+        }
+    }
+
+    upperBound
+    {
+        arm
+        {
+            (0,0)    0.5    ; body_joint1
+            (1,0)    0.5    ; body_joint2
+            (2,0)    0.5    ; body_joint3
+            (3,0)    0.5    ; body_joint4
+            (4,0)    0.87   ; head_joint1
+            (5,0)    0.87   ; head_joint2
+            (6,0)    1.07   ; left_joint1
+            (7,0)    1.07   ; left_joint2
+            (8,0)    1.07   ; left_joint3
+            (9,0)    1.07   ; left_joint4
+            (10,0)   1.07   ; left_joint5
+            (11,0)   1.07   ; left_joint6
+            (12,0)   1.07   ; left_joint7
+            (13,0)   1.07   ; right_joint1
+            (14,0)   1.07   ; right_joint2
+            (15,0)   1.07   ; right_joint3
+            (16,0)   1.07   ; right_joint4
+            (17,0)   1.07   ; right_joint5
+            (18,0)   1.07   ; right_joint6
+            (19,0)   1.07   ; right_joint7
+        }
+    }
+}
+
+selfCollision
+{
+    activate                        false
+    mu                              1e-3
+    delta                           1e-2
+    minimumDistance                 0.02
+    collisionObjectPairs
+    {
+    }
+    collisionLinkPairs
+    {
+    }
+}

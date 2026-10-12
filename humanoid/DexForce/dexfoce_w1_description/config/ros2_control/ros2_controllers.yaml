@@ -1,173 +1,28 @@
-# This config file is used by ros2_control
-controller_manager:
-  ros__parameters:
-    update_rate: 100  # Hz
-
-    joint_state_broadcaster:
-      type: joint_state_broadcaster/JointStateBroadcaster
-
-    # 全身控制器 - 使用ocs2 arm controller
-    ocs2_arm_controller:
-      type: ocs2_arm_controller/Ocs2ArmController
-
-    # 头部控制器 - 使用basic joint controller
-    head_joint_controller:
-      type: basic_joint_controller/BasicJointController
-
-    # 身体控制器 - 使用basic joint controller
-    body_joint_controller:
-      type: basic_joint_controller/BasicJointController
-
-    # 左手夹爪控制器
-    left_gripper_controller:
-      type: adaptive_gripper_controller/AdaptiveGripperController
-
-    # 右手夹爪控制器
-    right_gripper_controller:
-      type: adaptive_gripper_controller/AdaptiveGripperController
-
-    # 左手灵巧手控制器（当使用 revo1 时）
-    left_hand_controller:
-      type: basic_joint_controller/BasicJointController
-
-    # 右手灵巧手控制器（当使用 revo1 时）
-    right_hand_controller:
-      type: basic_joint_controller/BasicJointController
+# DexForce W1 ros2_control — ANTHROPOMORPHIC / revo1 (default) overlay on common.yaml
+# Arm / body / WBC home poses and durations only; everything else lives in common.yaml.
+# home_1 = working pose (former home_pos), home_2 = folded rest pose (former rest_pos).
+# WBC layout (Pinocchio 4 DFS): [body x4 | head x2 | left x7 | right x7]
 
 ocs2_arm_controller:
   ros__parameters:
-    # Joint configuration
-    update_rate: 100  # Hz
-    mpc_frequency: 50
-    joints:
-      - body_joint1
-      - body_joint2
-      - body_joint3
-      - body_joint4
-      - left_joint1
-      - left_joint2
-      - left_joint3
-      - left_joint4
-      - left_joint5
-      - left_joint6
-      - left_joint7
-      - right_joint1
-      - right_joint2
-      - right_joint3
-      - right_joint4
-      - right_joint5
-      - right_joint6
-      - right_joint7
-
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-
-    robot_name: dexforce_w1
     home_duration: 2.0
+    home_1: [0.04978448403140176, -1.259670418457927, 0.017143960989356215, -1.2284462809312793, -0.3344284774777865, -0.37823581036173337, -0.08182587640356918, -0.021663995239618032, 1.2963002282720757, 0.0036730772504967, 1.208405306146659, 0.29475436529728094, 0.367001605535868, 0.11967288493466821]
+    home_2: [0.0, -1.57, 0.0, -2.35, 0.0, 0.0, 0.0, 0.0, 1.57, 0.0, 2.35, 0.0, 0.0, 0.0]
 
-    # Control parameters
-    home_pos: [ 0.8226576537403151, -1.6487403093780617, 0.8256779111871975, -0.012672635090826726,
-                0.04978448403140176, -1.259670418457927, 0.017143960989356215, -1.2284462809312793, -0.3344284774777865, -0.37823581036173337, -0.08182587640356918,
-                -0.021663995239618032, 1.2963002282720757, 0.0036730772504967, 1.208405306146659, 0.29475436529728094, 0.367001605535868, 0.11967288493466821]
-    rest_pos: [ 1.57, -2.70, 1.13, 0.0,
-                0.0, -1.57, 0.0, -2.35, 0.0, 0.0, 0.0,
-                0.0, 1.57, 0.0,  2.35, 0.0, 0.0, 0.0]
+ocs2_wbc_controller:
+  ros__parameters:
+    home_duration: 2.0
+    home_1: [0.8226576537403151, -1.6487403093780617, 0.8256779111871975, -0.012672635090826726, 0.0, 0.0, 0.04978448403140176, -1.259670418457927, 0.017143960989356215, -1.2284462809312793, -0.3344284774777865, -0.37823581036173337, -0.08182587640356918, -0.021663995239618032, 1.2963002282720757, 0.0036730772504967, 1.208405306146659, 0.29475436529728094, 0.367001605535868, 0.11967288493466821]
+    home_2: [1.57, -2.7, 1.13, 0.0, 0.0, 0.0, 0.0, -1.57, 0.0, -2.35, 0.0, 0.0, 0.0, 0.0, 1.57, 0.0, 2.35, 0.0, 0.0, 0.0]
 
-# 头部关节控制器配置
+body_joint_controller:
+  ros__parameters:
+    home_duration: 2.0
+    movej_duration: 2.0
+    home_1: [0.8226576537403151, -1.6487403093780617, 0.8256779111871975, -0.012672635090826726]
+    home_2: [1.57, -2.7, 1.13, 0.0]
+
 head_joint_controller:
   ros__parameters:
-    update_rate: 100  # Hz
-    
-    # 头部关节
-    joints:
-      - head_joint1
-      - head_joint2
-    
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-
-    home_1: [0.0, 0.0]           # 配置 0: 正视前方
-    home_2: [0.0, -0.1]          # 配置 1: 向下看
-    
     home_duration: 2.0
     movej_duration: 2.0
-    hold_position_threshold: 0.1
-
-# 左手夹爪控制器配置
-left_gripper_controller:
-  ros__parameters:
-    joint: left_gripper_joint
-    use_effort_interface: false
-
-# 右手夹爪控制器配置
-right_gripper_controller:
-  ros__parameters:
-    joint: right_gripper_joint
-    use_effort_interface: false
-
-# 左手灵巧手控制器配置（BrainCo Revo1）
-left_hand_controller:
-  ros__parameters:
-    update_rate: 100  # Hz
-    target_command_enabled: true
-    movej_interpolation_type: "none"
-    home_interpolation_type: "none"
-
-    # 6个主控关节
-    joints:
-      - left_hand_thumb_joint2
-      - left_hand_thumb_joint1
-      - left_hand_index_joint
-      - left_hand_middle_joint
-      - left_hand_ring_joint
-      - left_hand_pinky_joint
-
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-
-    # Home 配置
-    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    home_2: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-
-    home_duration: 2.0
-    movej_duration: 2.0
-    hold_position_threshold: 0.1
-
-# 右手灵巧手控制器配置（BrainCo Revo1）
-right_hand_controller:
-  ros__parameters:
-    update_rate: 100  # Hz
-    target_command_enabled: true
-    movej_interpolation_type: "none"
-    home_interpolation_type: "none"
-
-    # 6个主控关节
-    joints:
-      - right_hand_thumb_joint2
-      - right_hand_thumb_joint1
-      - right_hand_index_joint
-      - right_hand_middle_joint
-      - right_hand_ring_joint
-      - right_hand_pinky_joint
-
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-
-    # Home 配置
-    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    home_2: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-
-    home_duration: 2.0
-    movej_duration: 2.0
-    hold_position_threshold: 0.1
