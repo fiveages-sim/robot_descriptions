@@ -194,6 +194,14 @@
     <limit lower="-0.04" upper="0.87" effort="500" velocity="0.3"/>
   </joint>
 
+  <!-- ROS-aligned (X forward, Y left, Z up) torso frame for OCS2 bodyFrame: slide_link is flipped
+       (rpy π 0 π/2); this fixed rpy is its own inverse, so the frame coincides with base_link axes. -->
+  <link name="torso_tracking_frame"/>
+  <joint name="torso_tracking_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="3.1416 0 1.5708"/>
+    <parent link="slide_link"/>
+    <child link="torso_tracking_frame"/>
+  </joint>
 
   <link name="head_yaw_link">
     <inertial>

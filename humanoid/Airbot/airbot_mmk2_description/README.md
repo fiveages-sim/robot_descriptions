@@ -30,7 +30,8 @@ Uses `xacro/ros2_control/robot.xacro` with `hardware:=mock_components` (also `gz
 ### 3.1 Full body (全身 WBC)
 
 Slide + dual Airbot Play + head in one `ocs2_wbc_controller` (chassis fixed).
-Body follow is off (`bodyTrackingEE` false): the body is lift-only (`slide_joint`), locked by default via `customJointLock`. Head follow is on (`headMode HEAD_GAZE`: `head_camera` on `head_pitch_link` looks at the hands' midpoint, like W2/Zerith); `homeJointReference` softly pulls non-locked joints toward controller `home_1`.
+Lift-only body: no custom joint lock; initial body mode `HM_DUAL_RELATIVE_FIXED_BASE` (falls back to FREE). Body follow (`BODY_TRACKING` on `torso_tracking_frame`) stays available.
+Head follow is on by default (`headMode HEAD_GAZE`: `head_camera` on `head_pitch_link` looks at the hands' midpoint, like W2/Zerith); `homeJointReference` softly pulls joints toward controller `home_1`.
 OCS2 model: `config/ocs2/fixed_base_tcp.info`.
 
 ```bash
@@ -105,6 +106,6 @@ Same convention as FiveAges W2 / Ai2 Bot2 / Quanta X1 / Zerith H1:
 | `config/ros2_control/ros2_controllers.yaml` | Controller manager |
 | `config/rviz/fullbody.rviz` / `splitbody.rviz` | RViz (Fixed Frame `world` / `base_link`), auto-picked by `full_body` / `split_body` launch |
 | `config/ocs2/task.info` | Dual-arm OCS2 model (demo / split arms) |
-| `config/ocs2/fixed_base_tcp.info` | Full-body WBC (slide locked + arms + head; no body TRACKING); Pinocchio 4 order slide\|head\|L\|R |
+| `config/ocs2/fixed_base_tcp.info` | Full-body WBC (slide + arms + head); Pinocchio 4 order slide\|head\|L\|R |
 | `config/ocs2/target_manager.yaml` | Marker / VR frames (`base_link`, `head_pitch_link`) |
 | `config/ocs2/mobile_demo.info` | Official OCS2 mobile-manipulator demo model |

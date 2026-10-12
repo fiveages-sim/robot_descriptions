@@ -63,7 +63,7 @@ ocs2_wbc_controller:
     mpc_frequency: 50
     info_file_name: fixed_base_tcp
     robot_name: airbot_mmk2
-    fsm_default_humanoid_mode: HM_DUAL_CUSTOM_LOCK_FIXED_BASE
+    fsm_default_humanoid_mode: HM_DUAL_RELATIVE_FIXED_BASE
 
     # Pinocchio 4 DFS: [slide | head_yaw | head_pitch | left×6 | right×6]
     joints:
