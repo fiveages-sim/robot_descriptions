@@ -239,6 +239,20 @@ customJointLock
     }
 }
 
+; HOME joint reference (参考关节, W2/Taku/Zerith convention): soft pull of non-excluded joints
+; toward the controller HOME (ocs2_wbc_controller home_1). activateDefault=true → on at
+; startup; runtime toggle via mode_command HOME_JOINT_ON / HOME_JOINT_OFF.
+; customJointLock locks nothing on Quanta → exclude none.
+homeJointReference
+{
+    activate                        true
+    activateDefault                 true
+    mu                              1e-3
+    excludeJointIndices
+    {
+    }
+}
+
 armLock
 {
     activate                        true
