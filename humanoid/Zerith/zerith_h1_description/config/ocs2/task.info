@@ -16,6 +16,14 @@ model_information {
     [8]   "right_gripper_joint"
     [9]   "left_jaw_right_finger_joint"
     [10]  "right_jaw_right_finger_joint"
+    [11]  "left_front_caster_swivel_joint"
+    [12]  "left_front_wheel_joint"
+    [13]  "left_rear_caster_swivel_joint"
+    [14]  "left_rear_wheel_joint"
+    [15]  "right_front_caster_swivel_joint"
+    [16]  "right_front_wheel_joint"
+    [17]  "right_rear_caster_swivel_joint"
+    [18]  "right_rear_wheel_joint"
   }
 
   baseFrame                       "base_link"

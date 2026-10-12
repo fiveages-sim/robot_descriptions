@@ -5,7 +5,56 @@
 <!-- =================================================================================== -->
 <robot name="zerith_h1_chassis" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<!-- joints_movable:=false → drive wheels fixed (W2/Bot2/Quanta). -->
+	<!-- Passive support caster (Quanta X1 swivel / Realman RS01 caster convention):
+	     base_link -> {prefix}_caster_swivel_joint (yaw, axis Z, vertical through the mount)
+	     -> {prefix}_caster_link (fork; no separate mesh in the vendor CAD)
+	     -> {prefix}_wheel_joint (rolling, axis Y through the wheel center) -> {prefix}_wheel_link.
+	     support_wheel.glb is the wheel only (r=0.025, width 0.049, axle along Y, origin at center).
+	     Swivel origin = chassis plate underside (z=-0.148) right above the wheel; the CAD wheel
+	     sits centered under its pocket, so caster_trail defaults to 0 (no visible offset).
+	     Fixed by default; continuous only with chassis_joints_movable:=true. Not in ros2_control. -->
+	<xacro:macro name="H1Caster" params="prefix x y mass ixx iyy izz movable:=false mount_z:=-0.148 wheel_z:=-0.156 caster_trail:=0.0">
+		<xacro:property name="caster_joint_type" value="${'continuous' if movable else 'fixed'}"/>
+		<link name="${prefix}_caster_link">
+			<inertial>
+				<origin xyz="0 0 0"/>
+				<mass value="0.02"/>
+				<inertia ixx="1e-06" ixy="0" ixz="0" iyy="1e-06" iyz="0" izz="1e-06"/>
+			</inertial>
+		</link>
+		<joint name="${prefix}_caster_swivel_joint" type="${caster_joint_type}">
+			<origin xyz="${x} ${y} ${mount_z}"/>
+			<parent link="base_link"/>
+			<child link="${prefix}_caster_link"/>
+			<axis xyz="0 0 1"/>
+		</joint>
+
+		<link name="${prefix}_wheel_link">
+			<inertial>
+				<origin xyz="0.0 0.0 0.0"/>
+				<mass value="${mass}"/>
+				<inertia ixx="${ixx}" ixy="0" ixz="0" iyy="${iyy}" iyz="0" izz="${izz}"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/base/support_wheel.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="0.025"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="${prefix}_wheel_joint" type="${caster_joint_type}">
+			<origin xyz="${-caster_trail} 0 ${wheel_z - mount_z}"/>
+			<parent link="${prefix}_caster_link"/>
+			<child link="${prefix}_wheel_link"/>
+			<axis xyz="0 1 0"/>
+		</joint>
+	</xacro:macro>
+
+	<!-- joints_movable:=false → drive wheels + casters fixed (W2/Bot2/Quanta). -->
 	<xacro:macro name="H1Chassis" params="joints_movable:=false">
 		<xacro:property name="chassis_movable" value="${str(joints_movable).lower() in ['true', '1', 'yes', 'on']}"/>
 		<xacro:property name="wheel_joint_type" value="${'continuous' if chassis_movable else 'fixed'}"/>
@@ -29,34 +78,7 @@
 			</collision>
 		</link>
 
-		<!-- =============================================================================== -->
-		<!-- Left Front Wheel (passive/support)                                              -->
-		<!-- =============================================================================== -->
-		<link name="left_front_wheel_link">
-			<inertial>
-				<origin xyz="0.0 0.0 0.0"/>
-				<mass value="0.16"/>
-				<inertia ixx="6.766e-05" ixy="-0.0" ixz="-0.0"
-						iyy="7.514e-05" iyz="-0.0" izz="6.766e-05"/>
-			</inertial>
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/base/support_wheel.glb"/>
-				</geometry>
-			</visual>
-			<collision>
-				<geometry>
-					<sphere radius="0.025"/>
-				</geometry>
-			</collision>
-		</link>
-		<joint name="left_front_wheel_joint" type="fixed">
-			<origin xyz="0.184 0.148 -0.156"/>
-			<parent link="base_link"/>
-			<child link="left_front_wheel_link"/>
-			<axis xyz="0 0 0"/>
-			<limit effort="0" velocity="0"/>
-		</joint>
+		<xacro:H1Caster prefix="left_front" x="0.184" y="0.148" mass="0.16" ixx="6.766e-05" iyy="7.514e-05" izz="6.766e-05" movable="${chassis_movable}"/>
 
 		<!-- =============================================================================== -->
 		<!-- Left Middle Wheel (drive)                                                       -->
@@ -88,62 +110,9 @@
 			<limit effort="60" velocity="2.3"/>
 		</joint>
 
-		<!-- =============================================================================== -->
-		<!-- Left Rear Wheel (passive/support)                                               -->
-		<!-- =============================================================================== -->
-		<link name="left_rear_wheel_link">
-			<inertial>
-				<origin xyz="0.0 0.0 0.0"/>
-				<mass value="0.12"/>
-				<inertia ixx="4.893e-05" ixy="-0.0" ixz="-0.0"
-						iyy="4.906e-05" iyz="-0.0" izz="4.938e-05"/>
-			</inertial>
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/base/support_wheel.glb"/>
-				</geometry>
-			</visual>
-			<collision>
-				<geometry>
-					<sphere radius="0.025"/>
-				</geometry>
-			</collision>
-		</link>
-		<joint name="left_rear_wheel_joint" type="fixed">
-			<origin xyz="-0.1465 0.151 -0.155"/>
-			<parent link="base_link"/>
-			<child link="left_rear_wheel_link"/>
-			<axis xyz="0 0 0"/>
-			<limit lower="0" upper="0" effort="0" velocity="0"/>
-		</joint>
+		<xacro:H1Caster prefix="left_rear" x="-0.1465" y="0.151" mass="0.12" ixx="4.893e-05" iyy="4.906e-05" izz="4.938e-05" wheel_z="-0.155" movable="${chassis_movable}"/>
 
-		<!-- =============================================================================== -->
-		<!-- Right Front Wheel (passive/support)                                             -->
-		<!-- =============================================================================== -->
-		<link name="right_front_wheel_link">
-			<inertial>
-				<origin xyz="0.0 0.0 0.0"/>
-				<mass value="0.16"/>
-				<inertia ixx="6.766e-05" ixy="-0.0" ixz="-0.0"
-						iyy="7.514e-05" iyz="-0.0" izz="6.766e-05"/>
-			</inertial>
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/base/support_wheel.glb"/>
-				</geometry>
-			</visual>
-			<collision>
-				<geometry>
-					<sphere radius="0.025"/>
-				</geometry>
-			</collision>
-		</link>
-		<joint name="right_front_wheel_joint" type="fixed">
-			<origin xyz="0.184 -0.148 -0.156"/>
-			<parent link="base_link"/>
-			<child link="right_front_wheel_link"/>
-			<axis xyz="0 0 0"/>
-		</joint>
+		<xacro:H1Caster prefix="right_front" x="0.184" y="-0.148" mass="0.16" ixx="6.766e-05" iyy="7.514e-05" izz="6.766e-05" movable="${chassis_movable}"/>
 
 		<!-- =============================================================================== -->
 		<!-- Right Middle Wheel (drive)                                                      -->
@@ -175,32 +144,7 @@
 			<limit effort="60" velocity="2.3"/>
 		</joint>
 
-		<!-- =============================================================================== -->
-		<!-- Right Rear Wheel (passive/support)                                              -->
-		<!-- =============================================================================== -->
-		<link name="right_rear_wheel_link">
-			<inertial>
-				<origin xyz="0.0 0.0 0.0"/>
-				<mass value="0.12"/>
-				<inertia ixx="4.893e-05" ixy="-0.0" ixz="-0.0"
-						iyy="4.906e-05" iyz="-0.0" izz="4.938e-05"/>
-			</inertial>
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/base/support_wheel.glb"/>
-				</geometry>
-			</visual>
-			<collision>
-				<geometry>
-					<sphere radius="0.025"/>
-				</geometry>
-			</collision>
-		</link>
-		<joint name="right_rear_wheel_joint" type="fixed">
-			<origin xyz="-0.1465 -0.151 -0.155"/>
-			<parent link="base_link"/>
-			<child link="right_rear_wheel_link"/>
-		</joint>
+		<xacro:H1Caster prefix="right_rear" x="-0.1465" y="-0.151" mass="0.12" ixx="4.893e-05" iyy="4.906e-05" izz="4.938e-05" wheel_z="-0.155" movable="${chassis_movable}"/>
 
 	</xacro:macro>
 

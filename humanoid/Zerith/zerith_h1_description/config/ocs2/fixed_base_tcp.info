@@ -27,6 +27,14 @@ model_information
         [3]   "right_jaw_right_finger_joint"
         [4]   "left_wheel_joint"
         [5]   "right_wheel_joint"
+        [6]   "left_front_caster_swivel_joint"
+        [7]   "left_front_wheel_joint"
+        [8]   "left_rear_caster_swivel_joint"
+        [9]   "left_rear_wheel_joint"
+        [10]  "right_front_caster_swivel_joint"
+        [11]  "right_front_wheel_joint"
+        [12]  "right_rear_caster_swivel_joint"
+        [13]  "right_rear_wheel_joint"
     }
 }
 
