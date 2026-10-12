@@ -1,4 +1,11 @@
-# This config file is used by ros2_control
+# Airbot MMK2 ros2_control controllers
+# Arms: Airbot Play (6-DOF) x 2; gripper: adaptive_gripper on left/right_gripper_joint
+# Body: slide_joint (prismatic lift, positive = down, [-0.04, 0.87] m); head yaw / pitch
+# Split: ocs2_arm_controller (arms, task.info) + body (slide) + head
+# Full body: ocs2_wbc_controller (slide + arms + head), info = fixed_base_tcp
+# Pinocchio 4 DFS (measured): [slide | head_yaw | head_pitch | left x6 | right x6]
+# Drive wheels are fixed by default; diff_drive_controller needs chassis_joints_movable:=true.
+
 controller_manager:
   ros__parameters:
     update_rate: 1000  # Hz
@@ -9,8 +16,17 @@ controller_manager:
     diff_drive_controller:
       type: diff_drive_controller/DiffDriveController
 
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
+
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
+
+    body_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
 
     left_hand_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
@@ -18,37 +34,91 @@ controller_manager:
     right_hand_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
 
-# 差速驱动控制器配置
+# 差速驱动控制器配置 (chassis_joints_movable:=true)
 diff_drive_controller:
   ros__parameters:
     update_rate: 50  # Hz
-    
+
     # 轮子关节
     left_wheel_names: ["lft_wheel_joint"]
     right_wheel_names: ["rgt_wheel_joint"]
-    
+
     # 轮子间距
     wheel_separation: 0.3265  # 左右轮间距
     wheel_radius: 0.08401     # 轮子半径
-    
+
     # 控制接口
     use_stamped_vel: false
-    
+
     # 限制参数
     linear.x.has_velocity_limits: true
     linear.x.max_velocity: 1.0
     angular.z.has_velocity_limits: true
     angular.z.max_velocity: 1.0
 
-
-ocs2_arm_controller:
+# full_body.launch.py — slide + dual Airbot Play + head
+ocs2_wbc_controller:
   ros__parameters:
-    # Joint configuration
     update_rate: 100  # Hz
     mpc_frequency: 50
-    info_file_name: fixed_base
+    info_file_name: fixed_base_tcp
+    robot_name: airbot_mmk2
+    fsm_default_humanoid_mode: HM_DUAL_CUSTOM_LOCK_FIXED_BASE
+
+    # Pinocchio 4 DFS: [slide | head_yaw | head_pitch | left×6 | right×6]
     joints:
       - slide_joint
+      - head_yaw_joint
+      - head_pitch_joint
+      - left_joint1
+      - left_joint2
+      - left_joint3
+      - left_joint4
+      - left_joint5
+      - left_joint6
+      - right_joint1
+      - right_joint2
+      - right_joint3
+      - right_joint4
+      - right_joint5
+      - right_joint6
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    home_duration: 5.0
+    home_interpolation_type: linear
+    hold_position_threshold: 0.1
+
+    cartesian_defaults:
+      frame_id: base_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    # [slide | head×2 | left×6 | right×6]; home_1 = former home_pos, home_2 = former rest_pos
+    home_1: [0.0,
+             0.0, 0.0,
+             0.0, 0.0, 0.715, 0.0, 0.0, 1.5708,
+             0.0, 0.0, 0.715, 0.0, 0.0, -1.5708]
+    home_2: [0.87,
+             0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+# split_body / demo — dual Airbot Play arms only
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    mpc_frequency: 50
+    info_file_name: task
+    joints:
       - left_joint1
       - left_joint2
       - left_joint3
@@ -68,14 +138,62 @@ ocs2_arm_controller:
       - position
 
     robot_name: airbot_mmk2
+    home_duration: 3.0
+    home_interpolation_type: linear
+    hold_position_threshold: 0.1
 
-    # Control parameters
-    home_pos: [ 0.0,
-                0.0, 0.0, 0.715, 0.0, 0.0, 1.5708,
-                0.0, 0.0, 0.715, 0.0, 0.0, -1.5708, ]
-    rest_pos: [ 0.87,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+    cartesian_defaults:
+      frame_id: base_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    home_1: [0.0, 0.0, 0.715, 0.0, 0.0, 1.5708,
+             0.0, 0.0, 0.715, 0.0, 0.0, -1.5708]
+    home_2: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+             0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+body_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - slide_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_duration: 3.0
+    movej_duration: 3.0
+    hold_position_threshold: 0.05
+
+    home_1: [0.0]
+    home_2: [0.87]
+
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - head_yaw_joint
+      - head_pitch_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+    home_1: [0.0, 0.0]
+    home_2: [0.0, 0.2]
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
 
 left_hand_controller:
   ros__parameters:

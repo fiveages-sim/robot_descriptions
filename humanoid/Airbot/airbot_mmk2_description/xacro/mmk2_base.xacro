@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<robot name="mmk2">
+<robot name="mmk2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Drive wheels are `fixed` unless chassis_joints_movable:=true (set in robot.xacro) -->
+
   <link name="base_link">
     <inertial>
       <origin xyz="-0.0400313721989715 -0.0226608008968248 0.756257223317173"/>
@@ -37,7 +39,7 @@
     </collision>
   </link>
 
-  <joint name="lft_wheel_joint" type="continuous">
+  <joint name="lft_wheel_joint" type="${wheel_joint_type}">
     <origin xyz="0 0.16325 0.08401" rpy="1.5708 1.5708 0"/>
     <parent link="base_link"/>
     <child link="lft_wheel_link"/>
@@ -62,7 +64,7 @@
     </collision>
   </link>
 
-  <joint name="rgt_wheel_joint" type="continuous">
+  <joint name="rgt_wheel_joint" type="${wheel_joint_type}">
     <origin xyz="0 -0.16325 0.08401" rpy="1.5708 1.5708 0"/>
     <parent link="base_link"/>
     <child link="rgt_wheel_link"/>
@@ -192,6 +194,15 @@
     <limit lower="-0.04" upper="0.87" effort="500" velocity="0.3"/>
   </joint>
 
+  <!-- ROS-aligned (X forward, Y left, Z up) torso frame for OCS2 bodyFrame: slide_link is flipped
+       (rpy π 0 π/2); this fixed rpy is its own inverse, so the frame coincides with base_link axes. -->
+  <link name="torso_tracking_frame"/>
+  <joint name="torso_tracking_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="3.1416 0 1.5708"/>
+    <parent link="slide_link"/>
+    <child link="torso_tracking_frame"/>
+  </joint>
+
   <link name="head_yaw_link">
     <inertial>
       <origin xyz="0.0118490941462296 0.000491254783341499 0.0390231494943873"/>
@@ -246,5 +257,13 @@
     <child link="head_pitch_link"/>
     <axis xyz="0 0 1"/>
     <limit lower="-0.16" upper="1.18" effort="2" velocity="0.2"/>
+  </joint>
+  <!-- head_camera: ROS optical frame (+Z forward, +X right, +Y down) on head_pitch_link, in front of
+       the head mesh (nominal; vendor MJCF head cam). Used by OCS2 headMidpointGaze (HEAD_GAZE). -->
+  <link name="head_camera"/>
+  <joint name="head_camera_joint" type="fixed">
+    <origin xyz="0.085 -0.108 0.0" rpy="0 1.5708 0"/>
+    <parent link="head_pitch_link"/>
+    <child link="head_camera"/>
   </joint>
 </robot>

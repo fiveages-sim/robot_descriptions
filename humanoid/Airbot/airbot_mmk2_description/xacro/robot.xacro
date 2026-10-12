@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="mmk2" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  
+
+  <!-- Drive wheels fixed by default (W2/Bot2/Quanta/Zerith). Planning URDF keeps this false.
+       Set true for diff_drive navigation (wheel velocity interfaces + diff_drive_controller). -->
+  <xacro:arg name="chassis_joints_movable" default="false"/>
+  <xacro:property name="wheel_joint_type"
+                  value="${'continuous' if '$(arg chassis_joints_movable)'.lower() in ['true', '1', 'yes', 'on'] else 'fixed'}"/>
+
   <xacro:include filename="$(find airbot_mmk2_description)/xacro/mmk2_base.xacro"/>
 
   <!-- left arm -->

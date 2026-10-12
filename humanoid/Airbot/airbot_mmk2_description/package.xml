@@ -2,9 +2,9 @@
   <name>airbot_mmk2_description</name>
   <version>1.0.0</version>
   <description>
-    <p>URDF Description package for Airbot MMK2 Humanoid</p>
-    <p>This package contains configuration data, 3D models and launch files
-      for Airbot Play manipulator
+    <p>URDF Description package for Airbot MMK2 wheeled dual-arm robot</p>
+    <p>This package contains xacro, meshes and OCS2 / ros2_control configuration
+      for the Airbot MMK2 (slide + head + dual Airbot Play arms)
     </p>
   </description>
   <author>TODO</author>

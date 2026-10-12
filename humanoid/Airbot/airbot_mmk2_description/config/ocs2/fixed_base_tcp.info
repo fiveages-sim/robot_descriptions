@@ -1,0 +1,331 @@
+; Airbot MMK2 — full-body WBC (ocs2_wbc_controller / full_body.launch.py)
+; =====================================================================
+; Fixed base (drive wheels locked via chassis_joints_movable:=false).
+; State / input (15): [slide | head_yaw | head_pitch | left x6 | right x6]
+; Pinocchio 4.x DFS under slide_link visits siblings by name order
+; (head_* before left_*/right_*), NOT xacro include order — keep OCS2/controller
+; joint lists aligned with that reduced model after removeJoints.
+; slide_joint: positive = DOWN (axis flipped), range [-0.04, 0.87] m, 0 = highest.
+; Frames: base_link / torso_tracking_frame (ROS-aligned dummy on slide_link) /
+;         left|right_gripper_center / head_pitch_link
+; Closest peer topology: Quanta X1 (lift + dual 6-DOF + head in WBC).
+
+model_information
+{
+    manipulatorModelType    0
+
+    baseFrame               "base_link"
+    eeFrame                 "left_gripper_center"
+    eeFrame1                "right_gripper_center"
+    bodyFrame               "torso_tracking_frame"
+    headFrame               "head_pitch_link"
+
+    ; Airbot Play grippers (+ gripper_joint1 follower) and drive wheels (movable URDF fallback)
+    removeJoints
+    {
+        [0]   "left_gripper_joint"
+        [1]   "left_gripper_joint1"
+        [2]   "right_gripper_joint"
+        [3]   "right_gripper_joint1"
+        [4]   "lft_wheel_joint"
+        [5]   "rgt_wheel_joint"
+    }
+}
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+initialState
+{
+    arm
+    {
+        (0,0)    0.0    ; slide_joint [m]
+        (1,0)    0.0    ; head_yaw_joint
+        (2,0)    0.0    ; head_pitch_joint
+        (3,0)    0.0    ; left_joint1
+        (4,0)    0.0    ; left_joint2
+        (5,0)    0.0    ; left_joint3
+        (6,0)    0.0    ; left_joint4
+        (7,0)    0.0    ; left_joint5
+        (8,0)    0.0    ; left_joint6
+        (9,0)    0.0    ; right_joint1
+        (10,0)   0.0    ; right_joint2
+        (11,0)   0.0    ; right_joint3
+        (12,0)   0.0    ; right_joint4
+        (13,0)   0.0    ; right_joint5
+        (14,0)   0.0    ; right_joint6
+    }
+}
+
+initialModeSchedule
+{
+    eventTimes
+    {
+    }
+
+    ; Fixed chassis + CUSTOM_LOCK capability; lift free (empty lockedJointIndices).
+    ; HEAD_GAZE: head yaw/pitch keep head_camera looking at the hands' midpoint (W2/Zerith preset).
+    modeSequence
+    {
+        [0]
+        {
+            bodyMode "HM_DUAL_CUSTOM_LOCK_FIXED_BASE"
+            headMode "HEAD_GAZE"
+        }
+    }
+}
+
+ddp
+{
+    algorithm                       SLQ
+    nThreads                        5
+    threadPriority                  50
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+    preComputeRiccatiTerms          true
+    useFeedbackPolicy               false
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+mpc
+{
+    timeHorizon                     1.0
+    solutionTimeWindow              0.2
+    coldStart                       false
+    debugPrint                      false
+    mpcDesiredFrequency             100
+    mrtDesiredFrequency             500
+}
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+bodyTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+headTrackingEE
+{
+    activate  true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+; Input dim = 15 (no virtual SE(2) base)
+inputCost
+{
+    R
+    {
+        arm
+        {
+            scaling 1e-2
+            (0,0)    1.0    ; slide_joint
+            (1,1)    0.1    ; head_yaw_joint
+            (2,2)    0.1    ; head_pitch_joint
+            (3,3)    0.5    ; left_joint1
+            (4,4)    0.5    ; left_joint2
+            (5,5)    0.5    ; left_joint3
+            (6,6)    0.25   ; left_joint4
+            (7,7)    0.25   ; left_joint5
+            (8,8)    0.25   ; left_joint6
+            (9,9)    0.5    ; right_joint1
+            (10,10)  0.5    ; right_joint2
+            (11,11)  0.5    ; right_joint3
+            (12,12)  0.25   ; right_joint4
+            (13,13)  0.25   ; right_joint5
+            (14,14)  0.25   ; right_joint6
+        }
+    }
+}
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      20.0
+    muOrientation                   10.0
+}
+
+; Single prismatic slide — no body relative pitch/yaw
+bodyRelative
+{
+    activate                        false
+}
+
+bimanualCoupling
+{
+    activate                        true
+    muPosition                      50.0
+    muOrientation                   25.0
+}
+
+; Layout: [slide(1) | head(2) | left(6) | right(6)] → head starts at 1 (Pinocchio 4 name-order DFS)
+headInputStart                          1
+
+waistLock
+{
+    activate                        true
+    numJoints                       1
+}
+
+headCoupling
+{
+    activate                        false
+}
+
+; Head gaze (headMode HEAD_GAZE): head_camera looks at the midpoint of both hands.
+; cameraFrame = head_camera (ROS optical: +Z forward, +X right; same convention as W2/Zerith).
+; Intrinsics are nominal RealSense D435 RGB 1280x720 — only affect deadband / alignment angles.
+headMidpointGaze
+{
+    activate                    true
+    cameraFrame                 "head_camera"
+    fx                          923.0
+    fy                          925.0
+    cx                          640.0
+    cy                          360.0
+    width                       1280
+    height                      720
+    horizontalDeadbandDeg       10.0
+    verticalDeadbandDeg         10.0
+    muAlignmentHorizontal       1.0
+    muAlignmentVertical         1.0
+    muFront                     1.0
+    minDepth                    0.3
+}
+
+customJointLock
+{
+    activate                        true
+    ; Empty: CUSTOM_LOCKED capability without hard-locking the slide
+    lockedJointIndices
+    {
+    }
+}
+
+; HOME joint reference (W2/Taku): soft pull of non-excluded joints toward controller HOME (home_1).
+; mu on the order of the joint-limit barriers so it never overrides EE tracking.
+homeJointReference
+{
+    activate                        true
+    activateDefault                 true
+    mu                              1e-3
+    excludeJointIndices
+    {
+    }
+}
+
+armLock
+{
+    activate                        true
+    leftNumJoints                   6
+    rightNumJoints                  6
+}
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-2
+
+    lowerBound
+    {
+        arm
+        {
+            (0,0)    -0.2   ; slide_joint [m/s]
+            (1,0)    -0.2   ; head_yaw_joint [rad/s]
+            (2,0)    -0.2   ; head_pitch_joint [rad/s]
+            (3,0)    -1.57  ; left_joint1 [rad/s]
+            (4,0)    -1.57  ; left_joint2 [rad/s]
+            (5,0)    -1.57  ; left_joint3 [rad/s]
+            (6,0)    -1.57  ; left_joint4 [rad/s]
+            (7,0)    -1.57  ; left_joint5 [rad/s]
+            (8,0)    -1.57  ; left_joint6 [rad/s]
+            (9,0)    -1.57  ; right_joint1 [rad/s]
+            (10,0)   -1.57  ; right_joint2 [rad/s]
+            (11,0)   -1.57  ; right_joint3 [rad/s]
+            (12,0)   -1.57  ; right_joint4 [rad/s]
+            (13,0)   -1.57  ; right_joint5 [rad/s]
+            (14,0)   -1.57  ; right_joint6 [rad/s]
+        }
+    }
+
+    upperBound
+    {
+        arm
+        {
+            (0,0)    0.2    ; slide_joint [m/s]
+            (1,0)    0.2    ; head_yaw_joint [rad/s]
+            (2,0)    0.2    ; head_pitch_joint [rad/s]
+            (3,0)    1.57   ; left_joint1 [rad/s]
+            (4,0)    1.57   ; left_joint2 [rad/s]
+            (5,0)    1.57   ; left_joint3 [rad/s]
+            (6,0)    1.57   ; left_joint4 [rad/s]
+            (7,0)    1.57   ; left_joint5 [rad/s]
+            (8,0)    1.57   ; left_joint6 [rad/s]
+            (9,0)    1.57   ; right_joint1 [rad/s]
+            (10,0)   1.57   ; right_joint2 [rad/s]
+            (11,0)   1.57   ; right_joint3 [rad/s]
+            (12,0)   1.57   ; right_joint4 [rad/s]
+            (13,0)   1.57   ; right_joint5 [rad/s]
+            (14,0)   1.57   ; right_joint6 [rad/s]
+        }
+    }
+}
+
+selfCollision
+{
+    activate                        false
+    mu                              1e-3
+    delta                           1e-2
+    minimumDistance                 0.02
+    collisionObjectPairs
+    {
+    }
+    collisionLinkPairs
+    {
+    }
+}
