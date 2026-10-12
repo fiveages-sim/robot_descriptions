@@ -1,7 +1,9 @@
 <?xml version="1.0" ?>
 <robot name="airbot_play" xmlns:xacro="http://ros.org/wiki/xacro">
-	<xacro:macro name="airbot_play" params="name collider:=convex">
-
+	<xacro:include filename="$(find airbot_play_description)/xacro/gripper.xacro"/>
+	<xacro:include filename="$(find xhand1_description)/xacro/xhand1.xacro"/>
+	<xacro:macro name="airbot_play" params="name collider:=convex type:='' eef_fixed_joints:=false direction:=1">
+		<xacro:property name="PI" value="3.1415926535897931"/>
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
 		<link name="${prefix}base_link">
@@ -12,12 +14,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/visual/arm_base.obj"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/base.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/arm_base.stl"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/base.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -30,12 +32,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/visual/link1.obj"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link1.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link1.stl"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link1.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -57,28 +59,18 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/visual/link2.obj"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link2.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link2_0.stl"/>
-				</geometry>
-			</collision>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link2_1.stl"/>
-				</geometry>
-			</collision>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link2_2.stl"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link2.glb"/>
 				</geometry>
 			</collision>
 		</link>
 
 		<joint name="${prefix}joint2" type="revolute">
-			<origin rpy="1.5708 -2.7549 0"/>
+			<origin rpy="${PI/2} -2.7549 0"/>
 			<parent link="${prefix}link1"/>
 			<child link="${prefix}link2"/>
 			<axis xyz="0 0 1"/>
@@ -93,22 +85,12 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/visual/link3.obj"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link3.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link3_0.stl"/>
-				</geometry>
-			</collision>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link3_1.stl"/>
-				</geometry>
-			</collision>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link3_2.stl"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link3.glb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -129,18 +111,18 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/visual/link4.obj"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link4.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link4.stl"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link4.glb"/>
 				</geometry>
 			</collision>
 		</link>
 
 		<joint name="${prefix}joint4" type="revolute">
-			<origin xyz="0.29015 0 0" rpy="3.1416 -1.5708 0"/>
+			<origin xyz="0.29015 0 0" rpy="${PI} ${-PI/2} 0"/>
 			<parent link="${prefix}link3"/>
 			<child link="${prefix}link4"/>
 			<axis xyz="0 0 1"/>
@@ -155,18 +137,18 @@
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/visual/link5.obj"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link5.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link5.stl"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link5.glb"/>
 				</geometry>
 			</collision>
 		</link>
 
 		<joint name="${prefix}joint5" type="revolute">
-			<origin rpy="1.5708 0 0"/>
+			<origin rpy="${PI/2} 0 0"/>
 			<parent link="${prefix}link4"/>
 			<child link="${prefix}link5"/>
 			<axis xyz="0 0 1"/>
@@ -175,117 +157,54 @@
 
 		<link name="${prefix}link6">
 			<inertial>
-				<origin xyz="-0.0047053 7.3857E-05 -0.12293"/>
-				<mass value="0.53855"/>
-				<inertia ixx="5E-05" ixy="0" ixz="0" iyy="5E-05" iyz="0" izz="3.85E-05"/>
+				<origin xyz="0 0 0"/>
+				<mass value="0"/>
+				<inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
 			</inertial>
 			<visual>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/visual/link6.obj"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link6.glb"/>
 				</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link6_0.stl"/>
-				</geometry>
-			</collision>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link6_1.stl"/>
-				</geometry>
-			</collision>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link6_2.stl"/>
-				</geometry>
-			</collision>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link6_3.stl"/>
-				</geometry>
-			</collision>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/link6_4.stl"/>
+					<mesh filename="file://$(find airbot_play_description)/meshes/link6.glb"/>
 				</geometry>
 			</collision>
 		</link>
 
 		<joint name="${prefix}joint6" type="revolute">
-			<origin xyz="0 0.23645 0" rpy="-1.5708 1.5708 0"/>
+			<origin xyz="0 0.0865 0" rpy="${-PI/2} ${PI/2} 0"/>
 			<parent link="${prefix}link5"/>
 			<child link="${prefix}link6"/>
 			<axis xyz="0 0 1"/>
 			<limit lower="-3.14" upper="3.14" effort="300" velocity="6.28"/>
 		</joint>
 
-		<link name="${prefix}left">
-			<inertial>
-				<origin xyz="-0.049039 -0.0096764 0.00038868"/>
-				<mass value="0.061803"/>
-				<inertia ixx="1.8946E-05" ixy="-1.3168E-06" ixz="-6.5528E-07" iyy="2.7277E-05" iyz="-2.0801E-07"
-								 izz="1.1981E-05"/>
-			</inertial>
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/visual/gripper.obj" scale="1 -1 1"/>
-				</geometry>
-			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/gripper.stl" scale="1 -1 1"/>
-				</geometry>
-			</collision>
-		</link>
-
-		<joint name="${prefix}gripper_joint" type="prismatic">
-			<origin rpy="0 -1.5708 0"/>
-			<parent link="${prefix}link6"/>
-			<child link="${prefix}left"/>
-			<axis xyz="0 1 0"/>
-			<limit lower="0" upper="0.04" effort="50" velocity="0.1"/>
-		</joint>
-
-		<link name="${prefix}right">
-			<inertial>
-				<origin xyz="-0.048742 0.0096369 0.00044322"/>
-				<mass value="0.0626"/>
-				<inertia ixx="1.915E-05" ixy="1.343E-06" ixz="-6.8259E-07" iyy="2.7722E-05" iyz="2.0748E-07"
-								 izz="1.2248E-05"/>
-			</inertial>
-			<visual>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/visual/gripper.obj"/>
-				</geometry>
-			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find airbot_play_description)/meshes/collision/gripper.stl"/>
-				</geometry>
-			</collision>
-		</link>
-
-		<joint name="${prefix}gripper_joint1" type="prismatic">
-			<origin rpy="0 -1.5708 0"/>
-			<parent link="${prefix}link6"/>
-			<child link="${prefix}right"/>
-			<axis xyz="0 -1 0"/>
-			<limit lower="0" upper="0.04" effort="50" velocity="0.1"/>
-			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
-		</joint>
-
-		<link name="${prefix}gripper_center"/>
-
-		<joint name="${prefix}joint_custom_end" type="fixed">
-			<origin xyz="0 0 0.02" rpy="0 -1.5708 0"/>
-			<parent link="${prefix}link6"/>
-			<child link="${prefix}gripper_center"/>
-		</joint>
+		<xacro:if value="${type == 'xhand1'}">
+			<xacro:property name="hand_name" value="${name + '_hand' if name else ''}"/>
+			<xacro:property name="hand_prefix" value="${hand_name + '_' if hand_name else ''}"/>
+			<xacro:XHand1 name="${hand_name}" direction="${float(direction)}" use_flange="false"
+			             fixed_joints="${eef_fixed_joints}"/>
+			<joint name="${prefix}hand_base_joint" type="fixed">
+				<origin xyz="0 0 0.014"/>
+				<parent link="${prefix}link6"/>
+				<child link="${hand_prefix}hand_base"/>
+			</joint>
+			<link name="${prefix}gripper_center"/>
+			<joint name="${prefix}joint_custom_end" type="fixed">
+				<parent link="${hand_prefix}hand_ee_link"/>
+				<child link="${prefix}gripper_center"/>
+			</joint>
+		</xacro:if>
+		<xacro:unless value="${type == 'xhand1'}">
+			<xacro:airbot_play_gripper name="${name}"/>
+		</xacro:unless>
 
 		<link name="${prefix}camera"/>
 
 		<joint name="${prefix}camera_joint" type="fixed">
-			<origin xyz="-0.105 0 -0.111" rpy="0 -1.046 0"/>
+			<origin xyz="-0.109 0 0.025" rpy="0 -1.046 0"/>
 			<parent link="${prefix}link6"/>
 			<child link="${prefix}camera"/>
 		</joint>

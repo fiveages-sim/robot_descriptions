@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Athena2 differential-drive chassis used by MMK2. isaac:=true hides sensor_models visuals. -->
+  <xacro:macro name="athena2" params="joints_movable:=true isaac:=false">
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="wheel_joint_type"
+                    value="${'continuous' if str(joints_movable).lower() in ['true', '1', 'yes', 'on'] else 'fixed'}"/>
+
+    <!-- Inertia is a uniform vertex estimate from chassis.glb (mass 22 kg), not a vendor CAD figure. -->
+    <link name="base_link">
+      <inertial>
+        <origin xyz="0.11614770 0.00013415 0.15735976"/>
+        <mass value="22.0"/>
+        <inertia ixx="0.16526117" ixy="1.80398708e-05" ixz="-3.45084779e-03"
+                 iyy="0.29089107" iyz="-1.10364795e-03" izz="0.33635687"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/chassis.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/chassis.glb"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="chassis_camera">
+      <xacro:unless value="${isaac}">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
+    </link>
+    <joint name="chassis_camera_joint" type="fixed">
+      <origin xyz="0.21432 0 0.1333333" rpy="${-PI*(90-25.4)/180} 0 ${-PI/2}"/>
+      <parent link="base_link"/>
+      <child link="chassis_camera"/>
+    </joint>
+
+    <link name="chassis_lidar">
+      <xacro:unless value="${isaac}">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/slamtec/rplidar_s2.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
+    </link>
+    <joint name="chassis_lidar_joint" type="fixed">
+      <origin xyz="0.11564 0 0.21115"/>
+      <parent link="base_link"/>
+      <child link="chassis_lidar"/>
+    </joint>
+
+    <link name="lft_wheel_link">
+      <inertial>
+        <origin xyz="2.9309E-07 5.2077E-06 -0.029871"/>
+        <mass value="1.1566"/>
+        <inertia ixx="0.0021045" ixy="6.963E-10" ixz="-1.9831E-08" iyy="0.0021045" iyz="-3.5159E-07" izz="0.0035528"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/drive_wheel.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/drive_wheel.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="left_wheel_joint" type="${wheel_joint_type}">
+      <origin xyz="0 0.16325 0.08401" rpy="1.5708 1.5708 0"/>
+      <parent link="base_link"/>
+      <child link="lft_wheel_link"/>
+      <axis xyz="0 0 -1"/>
+    </joint>
+
+    <link name="rgt_wheel_link">
+      <inertial>
+        <origin xyz="2.9312E-07 5.2196E-06 0.029871"/>
+        <mass value="1.1566"/>
+        <inertia ixx="0.0021045" ixy="-8.6762E-11" ixz="1.9824E-08" iyy="0.0021045" iyz="3.5159E-07" izz="0.0035528"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/drive_wheel.glb" scale="1 1 -1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/drive_wheel.glb" scale="1 1 -1"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="right_wheel_joint" type="${wheel_joint_type}">
+      <origin xyz="0 -0.16325 0.08401" rpy="1.5708 1.5708 0"/>
+      <parent link="base_link"/>
+      <child link="rgt_wheel_link"/>
+      <axis xyz="0 0 -1"/>
+    </joint>
+
+    <link name="rgt_behind_wheel_link">
+      <inertial>
+        <origin xyz="0.0098797 -0.26998 -0.044087"/>
+        <mass value="0.15002"/>
+        <inertia ixx="0.00016534" ixy="1.4827E-07" ixz="-2.9264E-07" iyy="0.00014609" iyz="4.0633E-05" izz="9.3638E-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/support_wheel.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/support_wheel.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="rgt_behind_wheel_joint" type="fixed">
+      <origin xyz="-0.1315 0.1 0.097"/>
+      <parent link="base_link"/>
+      <child link="rgt_behind_wheel_link"/>
+    </joint>
+
+    <link name="lft_behind_wheel_link">
+      <inertial>
+        <origin xyz="-0.01012 -0.26998 -0.044087"/>
+        <mass value="0.15002"/>
+        <inertia ixx="0.00016534" ixy="1.4827E-07" ixz="-2.9264E-07" iyy="0.00014609" iyz="4.0633E-05" izz="9.3638E-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/support_wheel.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/support_wheel.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="lft_behind_wheel_joint" type="fixed">
+      <origin xyz="-0.1315 -0.1 0.097"/>
+      <parent link="base_link"/>
+      <child link="lft_behind_wheel_link"/>
+    </joint>
+
+    <link name="rgt_front_wheel_link">
+      <inertial>
+        <origin xyz="-0.01012 0.30602 -0.044087"/>
+        <mass value="0.15002"/>
+        <inertia ixx="0.00016534" ixy="1.4827E-07" ixz="-2.9264E-07" iyy="0.00014609" iyz="4.0633E-05" izz="9.3637E-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/support_wheel.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/support_wheel.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="rgt_front_wheel_joint" type="fixed">
+      <origin xyz="0.15482 -0.0895 0.097"/>
+      <parent link="base_link"/>
+      <child link="rgt_front_wheel_link"/>
+    </joint>
+
+    <link name="lft_front_wheel_link">
+      <inertial>
+        <origin xyz="0.0098797 0.30602 -0.044087"/>
+        <mass value="0.15002"/>
+        <inertia ixx="0.00016534" ixy="1.4827E-07" ixz="-2.9264E-07" iyy="0.00014609" iyz="4.0633E-05" izz="9.3637E-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/support_wheel.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find airbot_mmk2_description)/meshes/support_wheel.glb"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="lft_front_wheel_joint" type="fixed">
+      <origin xyz="0.15482 0.0895 0.097"/>
+      <parent link="base_link"/>
+      <child link="lft_front_wheel_link"/>
+    </joint>
+  </xacro:macro>
+</robot>

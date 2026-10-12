@@ -180,7 +180,7 @@
     <link name="chassis_lidar">
       <visual>
         <geometry>
-          <mesh filename="file://$(find sensor_models)/meshes/2d_lidars/slamtec_rplidar.glb"/>
+          <mesh filename="file://$(find sensor_models)/meshes/slamtec/rplidar_s3.glb"/>
         </geometry>
       </visual>
     </link>

@@ -4,10 +4,10 @@ model_information {
   
   ; motion joints in the URDF to consider fixed
   removeJoints {
-    [0]  "rgt_wheel_joint"
-    [1]  "lft_wheel_joint"
-    [2]  "head_yaw_joint"
-    [3]  "head_pitch_joint"
+    [0]  "right_wheel_joint"
+    [1]  "left_wheel_joint"
+    [2]  "head_joint1"
+    [3]  "head_joint2"
     [4]  "left_gripper_joint"
     [5]  "right_gripper_joint"
   }

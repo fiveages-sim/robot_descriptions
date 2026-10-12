@@ -1,9 +1,9 @@
 # Airbot MMK2 ros2_control controllers
 # Arms: Airbot Play (6-DOF) x 2; gripper: adaptive_gripper on left/right_gripper_joint
-# Body: slide_joint (prismatic lift, positive = down, [-0.04, 0.87] m); head yaw / pitch
-# Split: ocs2_arm_controller (arms, task.info) + body (slide) + head
-# Full body: ocs2_wbc_controller (slide + arms + head), info = fixed_base_tcp
-# Pinocchio 4 DFS (measured): [slide | head_yaw | head_pitch | left x6 | right x6]
+# Body: body_joint (prismatic lift, positive = down, [-0.04, 0.87] m); head_joint1/2 yaw / pitch
+# Split: ocs2_arm_controller (arms, task.info) + body + head
+# Full body: ocs2_wbc_controller (body + arms + head), info = fixed_base_tcp
+# Pinocchio 4 DFS (measured): [body | head_joint1 | head_joint2 | left x6 | right x6]
 # Drive wheels are fixed by default; diff_drive_controller needs chassis_joints_movable:=true.
 
 controller_manager:
@@ -40,8 +40,8 @@ diff_drive_controller:
     update_rate: 50  # Hz
 
     # 轮子关节
-    left_wheel_names: ["lft_wheel_joint"]
-    right_wheel_names: ["rgt_wheel_joint"]
+    left_wheel_names: ["left_wheel_joint"]
+    right_wheel_names: ["right_wheel_joint"]
 
     # 轮子间距
     wheel_separation: 0.3265  # 左右轮间距
@@ -65,11 +65,11 @@ ocs2_wbc_controller:
     robot_name: airbot_mmk2
     fsm_default_humanoid_mode: HM_DUAL_RELATIVE_FIXED_BASE
 
-    # Pinocchio 4 DFS: [slide | head_yaw | head_pitch | left×6 | right×6]
+    # Pinocchio 4 DFS: [body | head_joint1 | head_joint2 | left×6 | right×6]
     joints:
-      - slide_joint
-      - head_yaw_joint
-      - head_pitch_joint
+      - body_joint
+      - head_joint1
+      - head_joint2
       - left_joint1
       - left_joint2
       - left_joint3
@@ -102,7 +102,7 @@ ocs2_wbc_controller:
       max_angular_acceleration: 1.0
       max_angular_jerk: 5.0
 
-    # [slide | head×2 | left×6 | right×6]; home_1 = former home_pos, home_2 = former rest_pos
+    # [body | head×2 | left×6 | right×6]; home_1 = former home_pos, home_2 = former rest_pos
     home_1: [0.0,
              0.0, 0.0,
              0.0, 0.0, 0.715, 0.0, 0.0, 1.5708,
@@ -161,7 +161,7 @@ body_joint_controller:
   ros__parameters:
     update_rate: 100  # Hz
     joints:
-      - slide_joint
+      - body_joint
 
     command_interfaces:
       - position
@@ -180,8 +180,8 @@ head_joint_controller:
   ros__parameters:
     update_rate: 100  # Hz
     joints:
-      - head_yaw_joint
-      - head_pitch_joint
+      - head_joint1
+      - head_joint2
 
     command_interfaces:
       - position

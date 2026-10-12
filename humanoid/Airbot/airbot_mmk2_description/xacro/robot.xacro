@@ -4,8 +4,16 @@
   <!-- Drive wheels fixed by default (W2/Bot2/Quanta/Zerith). Planning URDF keeps this false.
        Set true for diff_drive navigation (wheel velocity interfaces + diff_drive_controller). -->
   <xacro:arg name="chassis_joints_movable" default="false"/>
+  <xacro:arg name="isaac" default="false"/>
+  <!-- type: empty = built-in Play gripper; xhand1 = XHand1 on both wrists (0.014 m from link6).
+       OCS2 planning: robot_common_launch injects eef_fixed_joints:=true. -->
+  <xacro:arg name="type" default=""/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
   <xacro:property name="wheel_joint_type"
                   value="${'continuous' if '$(arg chassis_joints_movable)'.lower() in ['true', '1', 'yes', 'on'] else 'fixed'}"/>
+
+  <xacro:include filename="$(find airbot_mmk2_description)/xacro/components/athena2.xacro"/>
+  <xacro:athena2 joints_movable="$(arg chassis_joints_movable)" isaac="$(arg isaac)"/>
 
   <xacro:include filename="$(find airbot_mmk2_description)/xacro/mmk2_base.xacro"/>
 
@@ -17,7 +25,9 @@
   </joint>
 
   <xacro:include filename="$(find airbot_play_description)/xacro/airbot_play.xacro"/>
-  <xacro:airbot_play name="left"/>
+  <xacro:airbot_play name="left" type="$(arg type)"
+                    eef_fixed_joints="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"
+                    direction="1"/>
 
   <!-- right arm -->
   <joint name="right_arm_fixed_joint" type="fixed">
@@ -25,5 +35,7 @@
     <parent link="slide_link" />
     <child link="right_base_link" />
   </joint>
-  <xacro:airbot_play name="right"/>
+  <xacro:airbot_play name="right" type="$(arg type)"
+                    eef_fixed_joints="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"
+                    direction="-1"/>
 </robot>

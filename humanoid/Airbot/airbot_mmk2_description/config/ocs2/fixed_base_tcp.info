@@ -1,13 +1,13 @@
 ; Airbot MMK2 — full-body WBC (ocs2_wbc_controller / full_body.launch.py)
 ; =====================================================================
 ; Fixed base (drive wheels locked via chassis_joints_movable:=false).
-; State / input (15): [slide | head_yaw | head_pitch | left x6 | right x6]
+; State / input (15): [body | head_joint1 | head_joint2 | left x6 | right x6]
 ; Pinocchio 4.x DFS under slide_link visits siblings by name order
 ; (head_* before left_*/right_*), NOT xacro include order — keep OCS2/controller
 ; joint lists aligned with that reduced model after removeJoints.
-; slide_joint: positive = DOWN (axis flipped), range [-0.04, 0.87] m, 0 = highest.
+; body_joint: positive = DOWN (axis flipped), range [-0.04, 0.87] m, 0 = highest.
 ; Frames: base_link / torso_tracking_frame (ROS-aligned dummy on slide_link) /
-;         left|right_gripper_center / head_pitch_link
+;         left|right_gripper_center / head_camera (D435i, headFrame + gaze)
 ; Closest peer topology: Quanta X1 (lift + dual 6-DOF + head in WBC).
 
 model_information
@@ -18,7 +18,7 @@ model_information
     eeFrame                 "left_gripper_center"
     eeFrame1                "right_gripper_center"
     bodyFrame               "torso_tracking_frame"
-    headFrame               "head_pitch_link"
+    headFrame               "head_camera"
 
     ; Airbot Play grippers (+ gripper_joint1 follower) and drive wheels (movable URDF fallback)
     removeJoints
@@ -27,8 +27,8 @@ model_information
         [1]   "left_gripper_joint1"
         [2]   "right_gripper_joint"
         [3]   "right_gripper_joint1"
-        [4]   "lft_wheel_joint"
-        [5]   "rgt_wheel_joint"
+        [4]   "left_wheel_joint"
+        [5]   "right_wheel_joint"
     }
 }
 
@@ -42,9 +42,9 @@ initialState
 {
     arm
     {
-        (0,0)    0.0    ; slide_joint [m]
-        (1,0)    0.0    ; head_yaw_joint
-        (2,0)    0.0    ; head_pitch_joint
+        (0,0)    0.0    ; body_joint [m]
+        (1,0)    0.0    ; head_joint1
+        (2,0)    0.0    ; head_joint2
         (3,0)    0.0    ; left_joint1
         (4,0)    0.0    ; left_joint2
         (5,0)    0.0    ; left_joint3
@@ -68,7 +68,7 @@ initialModeSchedule
 
     ; Fixed chassis, no custom lock (lift-only body). HM_DUAL_RELATIVE_FIXED_BASE degrades
     ; RELATIVE→FREE since bodyRelative is off; body follow via BODY_TRACKING (bodyTrackingEE).
-    ; HEAD_GAZE: head yaw/pitch keep head_camera looking at the hands' midpoint (W2/Zerith preset).
+    ; HEAD_GAZE: head yaw/pitch keep the D435i (head_camera) looking at the hands' midpoint.
     modeSequence
     {
         [0]
@@ -152,10 +152,10 @@ inputCost
     {
         arm
         {
-            scaling 1e-2
-            (0,0)    1.0    ; slide_joint
-            (1,1)    0.1    ; head_yaw_joint
-            (2,2)    0.1    ; head_pitch_joint
+            scaling 1e-3
+            (0,0)    1.0    ; body_joint
+            (1,1)    1.0    ; head_joint1
+            (2,2)    1.0    ; head_joint2
             (3,3)    0.5    ; left_joint1
             (4,4)    0.5    ; left_joint2
             (5,5)    0.5    ; left_joint3
@@ -211,8 +211,8 @@ headCoupling
     activate                        false
 }
 
-; Head gaze (headMode HEAD_GAZE): head_camera looks at the midpoint of both hands.
-; cameraFrame = head_camera (ROS optical: +Z forward, +X right; same convention as W2/Zerith).
+; Head gaze (headMode HEAD_GAZE): look through the head D435i, not head_pitch_link.
+; cameraFrame = head_camera (D435i optical: +Z forward, +X right, +Y down).
 ; Intrinsics are nominal RealSense D435 RGB 1280x720 — only affect deadband / alignment angles.
 headMidpointGaze
 {
@@ -261,27 +261,27 @@ jointPositionLimits
 jointVelocityLimits
 {
     mu                              1e-2
-    delta                           1e-2
+    delta                           1e-3
 
     lowerBound
     {
         arm
         {
-            (0,0)    -0.2   ; slide_joint [m/s]
-            (1,0)    -0.2   ; head_yaw_joint [rad/s]
-            (2,0)    -0.2   ; head_pitch_joint [rad/s]
-            (3,0)    -1.57  ; left_joint1 [rad/s]
-            (4,0)    -1.57  ; left_joint2 [rad/s]
-            (5,0)    -1.57  ; left_joint3 [rad/s]
-            (6,0)    -1.57  ; left_joint4 [rad/s]
-            (7,0)    -1.57  ; left_joint5 [rad/s]
-            (8,0)    -1.57  ; left_joint6 [rad/s]
-            (9,0)    -1.57  ; right_joint1 [rad/s]
-            (10,0)   -1.57  ; right_joint2 [rad/s]
-            (11,0)   -1.57  ; right_joint3 [rad/s]
-            (12,0)   -1.57  ; right_joint4 [rad/s]
-            (13,0)   -1.57  ; right_joint5 [rad/s]
-            (14,0)   -1.57  ; right_joint6 [rad/s]
+            (0,0)    -0.5   ; body_joint [m/s]
+            (1,0)    -0.2   ; head_joint1 [rad/s]
+            (2,0)    -0.2   ; head_joint2 [rad/s]
+            (3,0)    -3.14  ; left_joint1 [rad/s]
+            (4,0)    -3.14  ; left_joint2 [rad/s]
+            (5,0)    -3.14  ; left_joint3 [rad/s]
+            (6,0)    -3.14  ; left_joint4 [rad/s]
+            (7,0)    -3.14  ; left_joint5 [rad/s]
+            (8,0)    -3.14  ; left_joint6 [rad/s]
+            (9,0)    -3.14  ; right_joint1 [rad/s]
+            (10,0)   -3.14  ; right_joint2 [rad/s]
+            (11,0)   -3.14  ; right_joint3 [rad/s]
+            (12,0)   -3.14  ; right_joint4 [rad/s]
+            (13,0)   -3.14  ; right_joint5 [rad/s]
+            (14,0)   -3.14  ; right_joint6 [rad/s]
         }
     }
 
@@ -289,21 +289,21 @@ jointVelocityLimits
     {
         arm
         {
-            (0,0)    0.2    ; slide_joint [m/s]
-            (1,0)    0.2    ; head_yaw_joint [rad/s]
-            (2,0)    0.2    ; head_pitch_joint [rad/s]
-            (3,0)    1.57   ; left_joint1 [rad/s]
-            (4,0)    1.57   ; left_joint2 [rad/s]
-            (5,0)    1.57   ; left_joint3 [rad/s]
-            (6,0)    1.57   ; left_joint4 [rad/s]
-            (7,0)    1.57   ; left_joint5 [rad/s]
-            (8,0)    1.57   ; left_joint6 [rad/s]
-            (9,0)    1.57   ; right_joint1 [rad/s]
-            (10,0)   1.57   ; right_joint2 [rad/s]
-            (11,0)   1.57   ; right_joint3 [rad/s]
-            (12,0)   1.57   ; right_joint4 [rad/s]
-            (13,0)   1.57   ; right_joint5 [rad/s]
-            (14,0)   1.57   ; right_joint6 [rad/s]
+            (0,0)    0.5    ; body_joint [m/s]
+            (1,0)    0.2    ; head_joint1 [rad/s]
+            (2,0)    0.2    ; head_joint2 [rad/s]
+            (3,0)    3.14   ; left_joint1 [rad/s]
+            (4,0)    3.14   ; left_joint2 [rad/s]
+            (5,0)    3.14   ; left_joint3 [rad/s]
+            (6,0)    3.14   ; left_joint4 [rad/s]
+            (7,0)    3.14   ; left_joint5 [rad/s]
+            (8,0)    3.14   ; left_joint6 [rad/s]
+            (9,0)    3.14   ; right_joint1 [rad/s]
+            (10,0)   3.14   ; right_joint2 [rad/s]
+            (11,0)   3.14   ; right_joint3 [rad/s]
+            (12,0)   3.14   ; right_joint4 [rad/s]
+            (13,0)   3.14   ; right_joint5 [rad/s]
+            (14,0)   3.14   ; right_joint6 [rad/s]
         }
     }
 }

@@ -29,7 +29,7 @@
 
     <!-- Drive wheels: only when movable (diff_drive_controller); fixed joints cannot be HI joints -->
     <xacro:if value="${wheel_joint_type == 'continuous'}">
-      <joint name="lft_wheel_joint">
+      <joint name="left_wheel_joint">
         <command_interface name="velocity">
           <param name="min">-1.0</param>
           <param name="max">1.0</param>
@@ -39,7 +39,7 @@
         <state_interface name="effort"/>
       </joint>
 
-      <joint name="rgt_wheel_joint">
+      <joint name="right_wheel_joint">
         <command_interface name="velocity">
           <param name="min">-1.0</param>
           <param name="max">1.0</param>
@@ -50,7 +50,7 @@
       </joint>
     </xacro:if>
 
-    <joint name="slide_joint">
+    <joint name="body_joint">
       <command_interface name="position"/>
       <state_interface name="position">
         <param name="initial_value">0.8</param>
@@ -59,7 +59,7 @@
       <state_interface name="effort"/>
     </joint>
 
-    <joint name="head_yaw_joint">
+    <joint name="head_joint1">
       <command_interface name="position"/>
       <state_interface name="position">
         <param name="initial_value">0.0</param>
@@ -68,7 +68,7 @@
       <state_interface name="effort"/>
     </joint>
 
-    <joint name="head_pitch_joint">
+    <joint name="head_joint2">
       <command_interface name="position"/>
       <state_interface name="position">
         <param name="initial_value">0.0</param>
@@ -77,8 +77,8 @@
       <state_interface name="effort"/>
     </joint>
 
-    <xacro:airbot_play_interfaces name="left"/>
-    <xacro:airbot_play_interfaces name="right"/>
+    <xacro:airbot_play_interfaces name="left" type="$(arg type)"/>
+    <xacro:airbot_play_interfaces name="right" type="$(arg type)"/>
 
   </ros2_control>
 

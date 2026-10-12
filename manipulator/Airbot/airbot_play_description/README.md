@@ -13,7 +13,10 @@ colcon build --packages-up-to airbot_play_description --symlink-install
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=airbot_play
+ros2 launch robot_common_launch manipulator.launch.py robot:=airbot_play type:=xhand1
 ```
+
+Default end effector is the built-in parallel gripper. `type:=xhand1` mounts XHand1 on `link6` (offset 0.014 m).
 
 ![airbot play](../../.images/airbot_play.png)
 

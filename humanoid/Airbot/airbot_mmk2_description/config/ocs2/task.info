@@ -6,11 +6,11 @@ model_information {
   manipulatorModelType     0
 
   removeJoints {
-    [0]  "lft_wheel_joint"
-    [1]  "rgt_wheel_joint"
-    [2]  "slide_joint"
-    [3]  "head_yaw_joint"
-    [4]  "head_pitch_joint"
+    [0]  "left_wheel_joint"
+    [1]  "right_wheel_joint"
+    [2]  "body_joint"
+    [3]  "head_joint1"
+    [4]  "head_joint2"
     [5]  "left_gripper_joint"
     [6]  "left_gripper_joint1"
     [7]  "right_gripper_joint"

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+  Component-wise description for Airbot MMK2, used by
+  robot_common_launch/launch/visualize/component.launch.py
+
+  Supported types (arg "type"):
+    - athena2 / chassis (default): Athena2 chassis, wheels movable
+    - body: lift column + slide + head (needs base_link placeholder)
+-->
+<robot name="mmk2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="athena2"/>
+  <xacro:arg name="isaac" default="false"/>
+  <!-- Component preview: wheels movable (W2 / WCE3). Planning URDF injects false. -->
+  <xacro:arg name="chassis_joints_movable" default="true"/>
+
+  <xacro:if value="${'$(arg type)' == 'athena2' or '$(arg type)' == 'chassis'}">
+    <xacro:include filename="$(find airbot_mmk2_description)/xacro/components/athena2.xacro"/>
+    <xacro:athena2 joints_movable="$(arg chassis_joints_movable)" isaac="$(arg isaac)"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'body'}">
+    <link name="base_link"/>
+    <xacro:include filename="$(find airbot_mmk2_description)/xacro/mmk2_base.xacro"/>
+  </xacro:if>
+</robot>

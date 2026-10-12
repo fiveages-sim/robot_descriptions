@@ -12,13 +12,13 @@
 
     # Head joints for optional marker / WBC head tracking (MMK2 names)
     head_joint_to_rpy_mapping:
-      head_yaw_joint: "head_yaw"
-      head_pitch_joint: "head_pitch"
+      head_joint1: "head_yaw"
+      head_joint2: "head_pitch"
     head_rpy_axis_direction:
       head_yaw: 1.0
       head_pitch: 1.0
       head_roll: 1.0
-    head_link_name: "head_pitch_link"
-    # VR headset calibration reference (W2: head_link2)
-    reference_link: "head_pitch_link"
+    head_link_name: "head_camera"
+    # VR headset calibration reference: D435i optical frame on head_pitch_link
+    reference_link: "head_camera"
     enable_wbc_head_tracking_marker: false

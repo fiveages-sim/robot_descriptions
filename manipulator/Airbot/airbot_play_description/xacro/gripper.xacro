@@ -1,0 +1,97 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:macro name="airbot_play_gripper" params="name parent_link:=''">
+		<xacro:property name="PI" value="3.1415926535897931"/>
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<xacro:property name="attach_parent" value="${parent_link if parent_link else prefix + 'link6'}"/>
+
+		<link name="${prefix}left">
+			<inertial>
+				<origin xyz="-0.049039 -0.0096764 0.00038868"/>
+				<mass value="0.061803"/>
+				<inertia ixx="1.8946E-05" ixy="-1.3168E-06" ixz="-6.5528E-07" iyy="2.7277E-05" iyz="-2.0801E-07"
+								 izz="1.1981E-05"/>
+			</inertial>
+			<visual>
+				<origin  rpy="${PI} 0 0"/>
+				<geometry>
+					<mesh filename="file://$(find airbot_play_description)/meshes/gripper.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find airbot_play_description)/meshes/gripper.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<link name="${prefix}gripper_base">
+			<inertial>
+				<origin xyz="-0.049039 -0.0096764 0.00038868"/>
+				<mass value="0.061803"/>
+				<inertia ixx="1.8946E-05" ixy="-1.3168E-06" ixz="-6.5528E-07" iyy="2.7277E-05" iyz="-2.0801E-07"
+						 izz="1.1981E-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find airbot_play_description)/meshes/gripper_base.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find airbot_play_description)/meshes/gripper_base.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}gripper_base_joint" type="fixed">
+			<origin xyz="0 0 0.014"/>
+			<parent link="${attach_parent}"/>
+			<child link="${prefix}gripper_base"/>
+		</joint>
+
+		<joint name="${prefix}gripper_joint" type="prismatic">
+			<origin rpy="0 ${-PI/2} 0" xyz="0 0 0.13"/>
+			<parent link="${prefix}gripper_base"/>
+			<child link="${prefix}left"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="0" upper="0.04" effort="50" velocity="0.1"/>
+		</joint>
+
+		<link name="${prefix}right">
+			<inertial>
+				<origin xyz="-0.048742 0.0096369 0.00044322"/>
+				<mass value="0.0626"/>
+				<inertia ixx="1.915E-05" ixy="1.343E-06" ixz="-6.8259E-07" iyy="2.7722E-05" iyz="2.0748E-07"
+								 izz="1.2248E-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find airbot_play_description)/meshes/gripper.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find airbot_play_description)/meshes/gripper.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}gripper_joint1" type="prismatic">
+			<origin rpy="0 -1.5708 0" xyz="0 0 0.13"/>
+			<parent link="${prefix}gripper_base"/>
+			<child link="${prefix}right"/>
+			<axis xyz="0 -1 0"/>
+			<limit lower="0" upper="0.04" effort="50" velocity="0.1"/>
+			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+		</joint>
+
+		<link name="${prefix}gripper_center"/>
+
+		<joint name="${prefix}joint_custom_end" type="fixed">
+			<origin xyz="0 0 0.15" rpy="0 -1.5708 0"/>
+			<parent link="${attach_parent}"/>
+			<child link="${prefix}gripper_center"/>
+		</joint>
+	</xacro:macro>
+</robot>

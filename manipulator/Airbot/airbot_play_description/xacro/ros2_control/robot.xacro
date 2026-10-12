@@ -30,7 +30,7 @@
 			</xacro:if>
 		</hardware>
 
-		<xacro:airbot_play_interfaces name=""/>
+		<xacro:airbot_play_interfaces name="" type="$(arg type)"/>
 	</ros2_control>
 
 	<xacro:arg name="gazebo" default="false"/>
