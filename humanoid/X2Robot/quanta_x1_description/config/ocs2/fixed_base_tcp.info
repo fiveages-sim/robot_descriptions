@@ -88,13 +88,13 @@ initialModeSchedule
 
     ; 固定底盘 (manipulatorModelType=0)，单升降不需要自定义锁定；bodyRelative 关闭，
     ; HM_DUAL_RELATIVE_FIXED_BASE 启动时降级为 body=FREE；身体跟随走 BODY_TRACKING。
-    ; HEAD_DISABLE（无 headMidpointGaze）
+    ; HEAD_GAZE: head_camera looks at hands midpoint (W2/Zerith/MMK2).
     modeSequence
     {
         [0]
         {
             bodyMode "HM_DUAL_RELATIVE_FIXED_BASE"
-            headMode "HEAD_DISABLE"
+            headMode "HEAD_GAZE"
         }
     }
 }
@@ -174,8 +174,8 @@ inputCost
         {
             scaling 1e-3
             (0,0)   10.0    ; lift_joint
-            (1,1)   1.0     ; head_yaw
-            (2,2)   1.0     ; head_pitch
+            (1,1)   0.1     ; head_yaw_joint
+            (2,2)   0.1     ; head_pitch_joint
             (3,3)   1.0     ; left_joint1
             (4,4)   1.0
             (5,5)   1.0
@@ -229,6 +229,28 @@ waistLock
 headCoupling
 {
     activate                        false
+}
+
+
+; Head gaze (headMode HEAD_GAZE): head_camera looks at the midpoint of both hands.
+; cameraFrame = head_camera (ROS optical: +Z forward, +X right; on Dabai mount / head_camera_frame_link).
+; Intrinsics nominal RealSense D435 RGB 1280x720 — only affect deadband / alignment angles.
+headMidpointGaze
+{
+    activate                    true
+    cameraFrame                 "head_camera"
+    fx                          923.0
+    fy                          925.0
+    cx                          640.0
+    cy                          360.0
+    width                       1280
+    height                      720
+    horizontalDeadbandDeg       10.0
+    verticalDeadbandDeg         10.0
+    muAlignmentHorizontal       1.0
+    muAlignmentVertical         1.0
+    muFront                     1.0
+    minDepth                    0.3
 }
 
 ; HOME joint reference (参考关节, W2/Taku/Zerith convention): soft pull of non-excluded joints

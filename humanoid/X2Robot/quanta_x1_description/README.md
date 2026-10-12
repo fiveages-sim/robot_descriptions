@@ -42,6 +42,7 @@ Uses `xacro/ros2_control/robot.xacro` with `hardware:=mock_components` (also `gz
 
 Lift + dual Artixon 6A + head in one `ocs2_wbc_controller` (ARX Lift layout; chassis fixed).
 Lift-only body: no custom joint lock; initial body mode `HM_DUAL_RELATIVE_FIXED_BASE` (falls back to FREE). Body follow (`BODY_TRACKING`) stays available.
+Head follow is on by default (`headMode HEAD_GAZE`: `head_camera` ROS-optical on `head_camera_frame_link` / Dabai mount looks at the hands' midpoint, like W2/Zerith/MMK2); `homeJointReference` softly pulls joints toward controller `home_1`.
 OCS2 model: `config/ocs2/fixed_base_tcp.info`.
 
 ```bash

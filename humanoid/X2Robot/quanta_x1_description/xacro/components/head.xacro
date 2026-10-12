@@ -67,5 +67,13 @@
 			<child link="head_camera_frame_link"/>
 		</joint>
 
+		<!-- ROS optical (+Z forward, +X right, +Y down) for OCS2 HEAD_GAZE; CAD mesh stays on head_camera_frame_link. -->
+		<link name="head_camera"/>
+		<joint name="head_camera_optical_joint" type="fixed">
+			<origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}"/>
+			<parent link="head_camera_frame_link"/>
+			<child link="head_camera"/>
+		</joint>
+
 	</xacro:macro>
 </robot>
