@@ -86,13 +86,14 @@ initialModeSchedule
     {
     }
 
-    ; 固定底盘 (manipulatorModelType=0) + CUSTOM_LOCK 能力；升降仍自由（空 lockedJointIndices）
-    ; 与 W2 fixed_base_tcp 同 preset；HEAD_DISABLE（无 headMidpointGaze）
+    ; 固定底盘 (manipulatorModelType=0)，单升降不需要自定义锁定；bodyRelative 关闭，
+    ; HM_DUAL_RELATIVE_FIXED_BASE 启动时降级为 body=FREE；身体跟随走 BODY_TRACKING。
+    ; HEAD_DISABLE（无 headMidpointGaze）
     modeSequence
     {
         [0]
         {
-            bodyMode "HM_DUAL_CUSTOM_LOCK_FIXED_BASE"
+            bodyMode "HM_DUAL_RELATIVE_FIXED_BASE"
             headMode "HEAD_DISABLE"
         }
     }
@@ -230,19 +231,10 @@ headCoupling
     activate                        false
 }
 
-customJointLock
-{
-    activate                        true
-    ; 空列表：具备 CUSTOM_LOCKED 能力但不硬锁关节（单升降保持自由）
-    lockedJointIndices
-    {
-    }
-}
-
 ; HOME joint reference (参考关节, W2/Taku/Zerith convention): soft pull of non-excluded joints
 ; toward the controller HOME (ocs2_wbc_controller home_1). activateDefault=true → on at
 ; startup; runtime toggle via mode_command HOME_JOINT_ON / HOME_JOINT_OFF.
-; customJointLock locks nothing on Quanta → exclude none.
+; No locked joints on Quanta → exclude none.
 homeJointReference
 {
     activate                        true
