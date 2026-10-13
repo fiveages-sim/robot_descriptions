@@ -5,14 +5,14 @@
 ; Pinocchio 4.x DFS under body_yaw_link visits siblings by name order
 ; (head_* before left_*/right_*), NOT xacro include order — keep OCS2/controller
 ; joint lists aligned with that reduced model after removeJoints.
-; Frames: base_link / body_yaw_link / left|right_eef / neck_pitch_link (headFrame) / head_camera (gaze)
+; Frames: base_footprint / body_yaw_link / left|right_eef / neck_pitch_link (headFrame) / head_camera (gaze)
 ; Peers: Quanta X1 (control layout) + W2/Bot2 (torso DOFs + dual 7-DOF).
 
 model_information
 {
     manipulatorModelType    0
 
-    baseFrame               "base_link"
+    baseFrame               "base_footprint"
     eeFrame                 "left_eef"
     eeFrame1                "right_eef"
     bodyFrame               "body_yaw_link"
@@ -303,20 +303,20 @@ jointVelocityLimits
             (2,0)  -1.5     ; body_joint3
             (3,0)  -1.5     ; head_joint1
             (4,0)  -1.5     ; head_joint2
-            (5,0)  -4.0     ; left 1-4
-            (6,0)  -4.0
-            (7,0)  -3.5
-            (8,0)  -3.5
-            (9,0)  -8.0     ; left wrist
-            (10,0) -8.0
-            (11,0) -8.0
-            (12,0) -4.0     ; right 1-4
-            (13,0) -4.0
-            (14,0) -3.5
-            (15,0) -3.5
-            (16,0) -8.0     ; right wrist
-            (17,0) -8.0
-            (18,0) -8.0
+            (5,0)  -3.14    ; left 1-7
+            (6,0)  -3.14
+            (7,0)  -3.14
+            (8,0)  -3.14
+            (9,0)  -3.14
+            (10,0) -3.14
+            (11,0) -3.14
+            (12,0) -3.14    ; right 1-7
+            (13,0) -3.14
+            (14,0) -3.14
+            (15,0) -3.14
+            (16,0) -3.14
+            (17,0) -3.14
+            (18,0) -3.14
         }
     }
 
@@ -329,34 +329,44 @@ jointVelocityLimits
             (2,0)  1.5
             (3,0)  1.5
             (4,0)  1.5
-            (5,0)  4.0
-            (6,0)  4.0
-            (7,0)  3.5
-            (8,0)  3.5
-            (9,0)  8.0
-            (10,0) 8.0
-            (11,0) 8.0
-            (12,0) 4.0
-            (13,0) 4.0
-            (14,0) 3.5
-            (15,0) 3.5
-            (16,0) 8.0
-            (17,0) 8.0
-            (18,0) 8.0
+            (5,0)  3.14
+            (6,0)  3.14
+            (7,0)  3.14
+            (8,0)  3.14
+            (9,0)  3.14
+            (10,0) 3.14
+            (11,0) 3.14
+            (12,0) 3.14
+            (13,0) 3.14
+            (14,0) 3.14
+            (15,0) 3.14
+            (16,0) 3.14
+            (17,0) 3.14
+            (18,0) 3.14
         }
     }
 }
 
+; Chest box + arm cylinders (collider:=simple). Do not set activate true with collider:=convex.
+; Pairs match W2 body_link4 ↔ link{3,4,5,7}: torso vs shoulder-yaw / elbow / wrist-roll / wrist-pitch.
 selfCollision
 {
-    activate                        false
+    activate                        true
     mu                              1e-3
     delta                           1e-2
-    minimumDistance                 0.02
+    minimumDistance                 0.01
     collisionObjectPairs
     {
     }
     collisionLinkPairs
     {
+        [0] "body_yaw_link, left_shoulder_yaw_link",
+        [1] "body_yaw_link, left_elbow_link",
+        [2] "body_yaw_link, left_wrist_roll_link",
+        [3] "body_yaw_link, left_wrist_pitch_link",
+        [4] "body_yaw_link, right_shoulder_yaw_link",
+        [5] "body_yaw_link, right_elbow_link",
+        [6] "body_yaw_link, right_wrist_roll_link",
+        [7] "body_yaw_link, right_wrist_pitch_link",
     }
 }

@@ -3,8 +3,9 @@
 # Head: head_joint1 (yaw) + head_joint2 (pitch)
 # Arms: 7-DOF × 2; grippers: adaptive_gripper on left/right_gripper_joint
 # Split: ocs2_arm_controller + body + head
-# Full body: ocs2_wbc_controller, info = fixed_base_tcp
+# Full body: ocs2_wbc_controller, info = mobile_base_tcp (virtual diff SE(2) + 19)
 # Pinocchio 4 DFS (expected): [body×3 | head×2 | left×7 | right×7]
+# Switch to fixed_base_tcp via robot.local.yaml control.patch.
 
 controller_manager:
   ros__parameters:
@@ -31,14 +32,14 @@ controller_manager:
     right_gripper_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
 
-# full_body.launch.py — body + dual 7-DOF + head
+# full_body.launch.py — virtual diff chassis + body + dual 7-DOF + head
 ocs2_wbc_controller:
   ros__parameters:
     update_rate: 100  # Hz
     mpc_frequency: 50
-    info_file_name: fixed_base_tcp
+    info_file_name: mobile_base_tcp
     robot_name: zerith_h1
-    fsm_default_humanoid_mode: HM_DUAL_CUSTOM_LOCK_FIXED_BASE
+    fsm_default_humanoid_mode: HM_DUAL_RELATIVE_MOBILE_BASE
 
     # Pinocchio 4 DFS under body_yaw_link: head_* before left_*/right_* by name
     joints:
@@ -81,11 +82,11 @@ ocs2_wbc_controller:
     waist_single_joint_pitch_offset: 0.0
     waist_lifting_default_parameter: [0.05, 0.5, 1.0]
     waist_turning_default_parameter: [0.2, 0.5, 1.0]
-    waist_absolute_source_frame: base_link
+    waist_absolute_source_frame: base_footprint
     waist_absolute_target_frame: body_yaw_link
 
     cartesian_defaults:
-      frame_id: base_link
+      frame_id: base_footprint
       ik_type: AUTO
       max_linear_velocity: 0.3
       max_linear_acceleration: 1.0
@@ -179,7 +180,7 @@ body_joint_controller:
     waist_single_joint_pitch_offset: 0.0
     waist_lifting_default_parameter: [0.05, 0.5, 1.0]
     waist_turning_default_parameter: [0.2, 0.5, 1.0]
-    waist_absolute_source_frame: base_link
+    waist_absolute_source_frame: base_footprint
     waist_absolute_target_frame: body_yaw_link
 
 head_joint_controller:

@@ -10,7 +10,27 @@
 	<xacro:include filename="$(find zerith_h1_description)/xacro/components/camera.xacro"/>
 	<xacro:property name="PI" value="3.1415926535897931"/>
 
-	<xacro:macro name="H1Arm" params="name direction:=1 ee_type:='gripper' eef_fixed:=false camera:=d405">
+	<!-- collider:=simple: cylinders from glTF node-world AABB (split-chassis-glb §8).
+	     collider:=convex: same GLB as visual. Y of mirrored meshes follows direction. -->
+	<xacro:macro name="h1_arm_link_collision" params="collider mesh xyz:='0 0 0' rpy:='0 0 0' length radius scale:='1 1 1'">
+		<xacro:if value="${collider == 'convex'}">
+			<collision>
+				<geometry>
+					<mesh filename="${mesh}" scale="${scale}"/>
+				</geometry>
+			</collision>
+		</xacro:if>
+		<xacro:if value="${collider == 'simple'}">
+			<collision>
+				<origin xyz="${xyz}" rpy="${rpy}"/>
+				<geometry>
+					<cylinder length="${length}" radius="${radius}"/>
+				</geometry>
+			</collision>
+		</xacro:if>
+	</xacro:macro>
+
+	<xacro:macro name="H1Arm" params="name direction:=1 ee_type:='gripper' eef_fixed:=false camera:=d405 collider:='simple'">
 		<xacro:property name="prefix" value="${name}_"/>
 		<xacro:property name="hand_name" value="${name}_hand"/>
 
@@ -29,11 +49,14 @@
 					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link1.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link1.glb" scale="1 ${direction} 1"/>
-				</geometry>
-			</collision>
+			<!-- Shoulder pitch sits on the torso; no simple collider. -->
+			<xacro:if value="${collider == 'convex'}">
+				<collision>
+					<geometry>
+						<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link1.glb" scale="1 ${direction} 1"/>
+					</geometry>
+				</collision>
+			</xacro:if>
 		</link>
 
 		<joint name="${prefix}joint1" type="revolute">
@@ -59,11 +82,12 @@
 					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link2.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link2.glb" scale="1 ${direction} 1"/>
-				</geometry>
-			</collision>
+			<!-- link2: cylinder along -Z toward joint3. Radius hugs the tube, not the housing. -->
+			<xacro:h1_arm_link_collision collider="${collider}"
+				mesh="file://$(find zerith_h1_description)/meshes/arm/link2.glb"
+				scale="1 ${direction} 1"
+				xyz="0 ${direction * 0.0068} -0.0435"
+				length="0.1711" radius="0.050"/>
 		</link>
 
 		<joint name="${prefix}joint2" type="revolute">
@@ -91,11 +115,11 @@
 					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link3.glb"/>
 				</geometry>
 			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link3.glb"/>
-				</geometry>
-			</collision>
+			<!-- link3: cylinder toward joint4 (mostly -Z, +X). Radius hugs the tube. -->
+			<xacro:h1_arm_link_collision collider="${collider}"
+				mesh="file://$(find zerith_h1_description)/meshes/arm/link3.glb"
+				xyz="0.0197 0 -0.1008" rpy="0 2.895 0"
+				length="0.2164" radius="0.038"/>
 		</link>
 
 		<joint name="${prefix}joint3" type="revolute">
@@ -121,11 +145,12 @@
 					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link4.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link4.glb" scale="1 ${direction} 1"/>
-				</geometry>
-			</collision>
+			<!-- link4: axis X. Radius hugs the elbow tube so the end cap stays inside the joint. -->
+			<xacro:h1_arm_link_collision collider="${collider}"
+				mesh="file://$(find zerith_h1_description)/meshes/arm/link4.glb"
+				scale="1 ${direction} 1"
+				xyz="0.0301 0 -0.0247" rpy="0 ${PI/2} 0"
+				length="0.1297" radius="0.042"/>
 		</link>
 
 		<joint name="${prefix}joint4" type="revolute">
@@ -151,11 +176,12 @@
 					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link5.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link5.glb" scale="1 ${direction} 1"/>
-				</geometry>
-			</collision>
+			<!-- link5: axis X. Radius hugs the forearm tube. -->
+			<xacro:h1_arm_link_collision collider="${collider}"
+				mesh="file://$(find zerith_h1_description)/meshes/arm/link5.glb"
+				scale="1 ${direction} 1"
+				xyz="0.0968 0 -0.0026" rpy="0 ${PI/2} 0"
+				length="0.1561" radius="0.036"/>
 		</link>
 
 		<joint name="${prefix}joint5" type="revolute">
@@ -181,11 +207,12 @@
 					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link6.glb" scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link6.glb" scale="1 ${direction} 1"/>
-				</geometry>
-			</collision>
+			<!-- link6 AABB: axis Z, L=0.0713 r=0.0308. -->
+			<xacro:h1_arm_link_collision collider="${collider}"
+				mesh="file://$(find zerith_h1_description)/meshes/arm/link6.glb"
+				scale="1 ${direction} 1"
+				xyz="0 ${direction * -0.0003} -0.0003"
+				length="0.0713" radius="0.0308"/>
 		</link>
 
 		<joint name="${prefix}joint6" type="revolute">
@@ -205,11 +232,12 @@
 					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link7.glb"  scale="1 ${direction} 1"/>
 				</geometry>
 			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/link7.glb"  scale="1 ${direction} 1"/>
-				</geometry>
-			</collision>
+			<!-- link7 AABB: axis X, L=0.0725 r=0.0253; y mirrored with the mesh. -->
+			<xacro:h1_arm_link_collision collider="${collider}"
+				mesh="file://$(find zerith_h1_description)/meshes/arm/link7.glb"
+				scale="1 ${direction} 1"
+				xyz="0.0168 ${direction * 0.0093} 0" rpy="0 ${PI/2} 0"
+				length="0.0725" radius="0.0253"/>
 		</link>
 
 		<joint name="${prefix}joint7" type="revolute">

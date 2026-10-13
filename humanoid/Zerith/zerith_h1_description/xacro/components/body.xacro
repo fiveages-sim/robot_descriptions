@@ -8,6 +8,35 @@
 <robot name="zerith_h1_body" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:arg name="isaac" default="false"/>
+	<xacro:arg name="collider" default="simple"/>
+
+	<!-- collider:=simple: box, or a vertical cylinder when radius is set.
+	     collider:=convex: same GLB as visual. Head stays mesh (not in selfCollision). -->
+	<xacro:macro name="h1_body_collision" params="collider mesh xyz:='0 0 0' size:='0 0 0' length:='0' radius:='0'">
+		<xacro:if value="${collider == 'convex'}">
+			<collision>
+				<geometry>
+					<mesh filename="${mesh}"/>
+				</geometry>
+			</collision>
+		</xacro:if>
+		<xacro:if value="${collider == 'simple' and radius == '0'}">
+			<collision>
+				<origin xyz="${xyz}"/>
+				<geometry>
+					<box size="${size}"/>
+				</geometry>
+			</collision>
+		</xacro:if>
+		<xacro:if value="${collider == 'simple' and radius != '0'}">
+			<collision>
+				<origin xyz="${xyz}"/>
+				<geometry>
+					<cylinder length="${length}" radius="${radius}"/>
+				</geometry>
+			</collision>
+		</xacro:if>
+	</xacro:macro>
 
 	<!-- =================================================================================== -->
 	<!-- Torso                                                                               -->
@@ -24,11 +53,9 @@
 				<mesh filename="file://$(find zerith_h1_description)/meshes/body/body_link1.glb"/>
 			</geometry>
 		</visual>
-		<collision>
-			<geometry>
-				<mesh filename="file://$(find zerith_h1_description)/meshes/body/body_link1.glb"/>
-			</geometry>
-		</collision>
+		<xacro:h1_body_collision collider="$(arg collider)"
+			mesh="file://$(find zerith_h1_description)/meshes/body/body_link1.glb"
+			xyz="0.105 0 0.127" size="0.180 0.125 0.135"/>
 	</link>
 
 	<joint name="body_joint1" type="prismatic">
@@ -50,11 +77,10 @@
 				<mesh filename="file://$(find zerith_h1_description)/meshes/body/body_link2.glb"/>
 			</geometry>
 		</visual>
-		<collision>
-			<geometry>
-				<mesh filename="file://$(find zerith_h1_description)/meshes/body/body_link2.glb"/>
-			</geometry>
-		</collision>
+		<!-- Waist: vertical cylinder inside the shell (was a 0.155 m wide box). -->
+		<xacro:h1_body_collision collider="$(arg collider)"
+			mesh="file://$(find zerith_h1_description)/meshes/body/body_link2.glb"
+			xyz="0 0 0.020" length="0.125" radius="0.070"/>
 	</link>
 
 	<joint name="body_joint2" type="revolute">
@@ -77,11 +103,10 @@
 				<mesh filename="file://$(find zerith_h1_description)/meshes/body/body_link3.glb"/>
 			</geometry>
 		</visual>
-		<collision>
-			<geometry>
-				<mesh filename="file://$(find zerith_h1_description)/meshes/body/body_link3.glb"/>
-			</geometry>
-		</collision>
+		<!-- Chest: vertical cylinder. Diameter 0.17 m, inside the 0.21 m shoulder box. -->
+		<xacro:h1_body_collision collider="$(arg collider)"
+			mesh="file://$(find zerith_h1_description)/meshes/body/body_link3.glb"
+			xyz="0 0 0.140" length="0.240" radius="0.085"/>
 	</link>
 
 	<joint name="body_joint3" type="revolute">

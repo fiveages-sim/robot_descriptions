@@ -5,6 +5,8 @@
 <!-- =================================================================================== -->
 <robot name="zerith_h1_chassis" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+	<xacro:arg name="collider" default="simple"/>
+
 	<!-- Passive support caster (Quanta X1 swivel / Realman RS01 caster convention):
 	     base_link -> {prefix}_caster_swivel_joint (yaw, axis Z, vertical through the mount)
 	     -> {prefix}_caster_link (fork; no separate mesh in the vendor CAD)
@@ -55,9 +57,16 @@
 	</xacro:macro>
 
 	<!-- joints_movable:=false → drive wheels + casters fixed (W2/Bot2/Quanta). -->
-	<xacro:macro name="H1Chassis" params="joints_movable:=false">
+	<xacro:macro name="H1Chassis" params="joints_movable:=false collider:='simple'">
 		<xacro:property name="chassis_movable" value="${str(joints_movable).lower() in ['true', '1', 'yes', 'on']}"/>
 		<xacro:property name="wheel_joint_type" value="${'continuous' if chassis_movable else 'fixed'}"/>
+
+		<!-- Root frames: base_footprint identity to base_link (W2 / Taku / Bot2). -->
+		<link name="base_footprint"/>
+		<joint name="base_footprint_joint" type="fixed">
+			<parent link="base_footprint"/>
+			<child link="base_link"/>
+		</joint>
 
 		<link name="base_link">
 			<inertial>
@@ -71,11 +80,29 @@
 					<mesh filename="file://$(find zerith_h1_description)/meshes/base/base_link.glb"/>
 				</geometry>
 			</visual>
-			<collision>
-				<geometry>
-					<mesh filename="file://$(find zerith_h1_description)/meshes/base/base_link.glb"/>
-				</geometry>
-			</collision>
+			<xacro:if value="${collider == 'convex'}">
+				<collision>
+					<geometry>
+						<mesh filename="file://$(find zerith_h1_description)/meshes/base/base_link.glb"/>
+					</geometry>
+				</collision>
+			</xacro:if>
+			<xacro:if value="${collider == 'simple'}">
+				<!-- Deck. Wheels keep their own cylinders. -->
+				<collision>
+					<origin xyz="0.05 0 -0.06"/>
+					<geometry>
+						<box size="0.56 0.40 0.16"/>
+					</geometry>
+				</collision>
+				<!-- Rear mast: shell is about 0.20 x 0.21 from z 0.14 to 1.14. Inset so it sits inside the housing. -->
+				<collision>
+					<origin xyz="-0.076 0 0.64"/>
+					<geometry>
+						<box size="0.150 0.155 0.90"/>
+					</geometry>
+				</collision>
+			</xacro:if>
 		</link>
 
 		<xacro:H1Caster prefix="left_front" x="0.184" y="0.148" mass="0.16" ixx="6.766e-05" iyy="7.514e-05" izz="6.766e-05" movable="${chassis_movable}"/>

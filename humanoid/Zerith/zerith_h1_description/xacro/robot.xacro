@@ -10,6 +10,7 @@
 	<!-- Lock drive wheels by default (W2/Bot2/Quanta/Galaxea). Planning URDF keeps this false. -->
 	<xacro:arg name="chassis_joints_movable" default="false"/>
 	<xacro:arg name="isaac" default="false"/>
+	<xacro:arg name="collider" default="simple"/>
 	<xacro:arg name="type" default=""/>
 	<xacro:arg name="camera" default=""/>
 	<xacro:arg name="eef_fixed_joints" default="false"/>
@@ -20,7 +21,7 @@
 									value="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"/>
 
 	<xacro:include filename="$(find zerith_h1_description)/xacro/components/chassis.xacro"/>
-	<xacro:H1Chassis joints_movable="$(arg chassis_joints_movable)"/>
+	<xacro:H1Chassis joints_movable="$(arg chassis_joints_movable)" collider="$(arg collider)"/>
 
 	<xacro:include filename="$(find zerith_h1_description)/xacro/components/body.xacro"/>
 
@@ -32,7 +33,7 @@
 	</xacro:if>
 
 	<xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
-	<xacro:H1Arm name="left" direction="1" ee_type="${ee_type}" eef_fixed="${eef_fixed}" camera="${camera_type}"/>
-	<xacro:H1Arm name="right" direction="-1" ee_type="${ee_type}" eef_fixed="${eef_fixed}" camera="${camera_type}"/>
+	<xacro:H1Arm name="left" direction="1" ee_type="${ee_type}" eef_fixed="${eef_fixed}" camera="${camera_type}" collider="$(arg collider)"/>
+	<xacro:H1Arm name="right" direction="-1" ee_type="${ee_type}" eef_fixed="${eef_fixed}" camera="${camera_type}" collider="$(arg collider)"/>
 
 </robot>

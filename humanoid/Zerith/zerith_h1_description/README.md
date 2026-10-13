@@ -2,7 +2,7 @@
 
 URDF / xacro and control configs for the **Zerith H1** wheeled dual-arm platform.
 
-- Chassis: differential drive (wheels locked by default)
+- Chassis: differential drive (wheels locked by default); full-body WBC plans virtual SE(2) (`vx` / `omega`) on `base_footprint`
 - Body: prismatic lift (`body_joint1`) + pitch (`body_joint2`) + yaw (`body_joint3`)
 - Head: yaw / pitch (`head_joint1` / `head_joint2`)
 - Arms: 7-DOF × 2
@@ -56,8 +56,9 @@ Uses `xacro/ros2_control/robot.xacro` with `hardware:=mock_components` (also `gz
 
 ### 3.1 Full body (全身 WBC)
 
-Body + dual 7-DOF + head in one `ocs2_wbc_controller` (chassis fixed).
-OCS2 model: `config/ocs2/fixed_base_tcp.info`.
+Virtual differential chassis + body + dual 7-DOF + head in one `ocs2_wbc_controller`.
+OCS2 model: `config/ocs2/mobile_base_tcp.info` (`manipulatorModelType 1`).
+Physical drive wheels / casters stay locked; chassis is planned as `vx` / `omega` and published on `/cmd_vel` when `world → base_footprint` TF exists and the base is unlocked.
 
 ```bash
 source ~/ros2_ws/install/setup.bash
@@ -67,11 +68,22 @@ ros2 launch ocs2_arm_controller full_body.launch.py robot:=zerith_h1 type:=revo1
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=zerith_h1 type:=revo2
 ```
 
-Initial modes: body `HM_DUAL_CUSTOM_LOCK_FIXED_BASE` (fixed-base preset), head `HEAD_GAZE`
-(`head_joint1`/`head_joint2` keep `head_camera` looking at the midpoint of both hands; `headInputStart 3`,
+Initial modes: body `HM_DUAL_RELATIVE_MOBILE_BASE`, head `HEAD_GAZE`
+(`head_joint1`/`head_joint2` keep `head_camera` looking at the midpoint of both hands; `headInputStart 5`,
 `headFrame neck_pitch_link`, `headMidpointGaze.cameraFrame head_camera`).
 HOME joint reference (`homeJointReference`, default on, no excluded joints) softly pulls joints toward `home_1`;
 toggle at runtime with `mode_command` `HOME_JOINT_ON` / `HOME_JOINT_OFF`.
+
+To switch back to **fixed-base** WBC (`config/ocs2/fixed_base_tcp.info`, mode `HM_DUAL_CUSTOM_LOCK_FIXED_BASE`), patch via `robot.local.yaml` / control.patch:
+
+```yaml
+control:
+  patch:
+    ocs2_wbc_controller:
+      ros__parameters:
+        info_file_name: fixed_base_tcp
+        fsm_default_humanoid_mode: HM_DUAL_CUSTOM_LOCK_FIXED_BASE
+```
 
 ### 3.2 Dual-arm OCS2 demo
 
@@ -109,7 +121,8 @@ ros2 launch ocs2_arm_controller split_body.launch.py robot:=zerith_h1
 
 Same convention as FiveAges W2 / Ai2 Bot2 / Quanta X1 / Galaxea:
 
-- Default **`chassis_joints_movable:=false`**: drive wheels are **`fixed`**.
+- Default **`chassis_joints_movable:=false`**: drive wheels and casters are **`fixed`**.
+- Full-body WBC plans a virtual differential SE(2) (`mobile_base_tcp`); it does **not** unlock wheel joints.
 - Set `chassis_joints_movable:=true` only when you need movable wheel DOFs (e.g. component `type:=chassis`).
 - **Not** in `ros2_control` for the mock arm / WBC stack.
 
@@ -117,14 +130,21 @@ Same convention as FiveAges W2 / Ai2 Bot2 / Quanta X1 / Galaxea:
 ros2 launch robot_common_launch component.launch.py robot:=zerith_h1 type:=chassis
 ```
 
+### 3.6 Collision
+
+Default `collider:=simple` (launch already passes `collider`). The chest and waist are vertical cylinders (radii 0.085 m and 0.070 m); the lift carriage stays a box. The chassis deck is a box, and the rear mast is a tighter box inside the housing (`0.15 x 0.155 x 0.90` m). Arm cylinders follow each link toward the next joint; shoulder pitch (`link1`) has no simple collider because it sits on the torso. `collider:=convex` restores the visual GLBs — do not enable OCS2 `selfCollision` with that.
+
+Full-body `selfCollision` (`fixed_base_tcp.info` and `mobile_base_tcp.info`, `activate true`, `minimumDistance 0.01`) pairs `body_yaw_link` with each arm's `shoulder_yaw` / `elbow` / `wrist_roll` / `wrist_pitch`. Split-arm `task.info` stays off. Head, gripper, and chassis meshes are not in those pairs.
+
 ## 4. Layout
 
 | Path | Role |
 |------|------|
-| `xacro/robot.xacro` | Visualization kinematics (`chassis_joints_movable`, `isaac`, `type`, `camera`) |
+| `xacro/robot.xacro` | Visualization kinematics (`chassis_joints_movable`, `isaac`, `type`, `camera`, `collider`) |
 | `xacro/ros2_control/robot.xacro` | Hardware plugins + joint interfaces |
 | `config/ros2_control/ros2_controllers.yaml` | Controller manager |
 | `config/ocs2/task.info` | Dual-arm OCS2 model (demo / split arms) |
-| `config/ocs2/fixed_base_tcp.info` | Full-body WBC (body + arms + head); Pinocchio 4 order body\|head\|L\|R |
-| `config/ocs2/target_manager.yaml` | Marker / VR frames (`base_link`; head `head_link_name` / `reference_link` = `neck_pitch_link`) |
-| `config/rviz/fullbody.rviz` / `splitbody.rviz` | RViz (Fixed Frame `world` / `base_link`), auto-picked by `full_body` / `split_body` launch |
+| `config/ocs2/mobile_base_tcp.info` | Default full-body WBC (virtual diff SE(2) + body + arms + head); Pinocchio 4 order body\|head\|L\|R, `headInputStart 5` |
+| `config/ocs2/fixed_base_tcp.info` | Fixed-base WBC fallback; same joint order, `headInputStart 3` |
+| `config/ocs2/target_manager.yaml` | Marker / VR frames (`base_footprint`; head `head_link_name` / `reference_link` = `neck_pitch_link`) |
+| `config/rviz/fullbody.rviz` / `splitbody.rviz` | RViz (Fixed Frame `world` / `base_footprint`), auto-picked by `full_body` / `split_body` launch |

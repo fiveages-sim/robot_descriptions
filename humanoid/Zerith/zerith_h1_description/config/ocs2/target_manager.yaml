@@ -4,10 +4,12 @@
     angular_scale: 0.5
     enable_vr: true
 
-    # split_body / fixed-base: markers in base_link. full_body + WBC: launch overrides
-    # marker_fixed_frame to world (RViz Fixed Frame=world from config/rviz/fullbody.rviz).
-    marker_fixed_frame: base_link
-    vr_follow_frame: base_link
+    # split_body / fixed-base: markers in base_footprint (identity to base_link).
+    # full_body + mobile (modelType 1): launch + parse_task_info override both
+    # marker_fixed_frame and control_base_frame to world (OCS2 EE targets are world).
+    # Keep vr_follow_frame on footprint so VR stays chassis-relative before convert-to-world.
+    marker_fixed_frame: base_footprint
+    vr_follow_frame: base_footprint
     # Only full_body.launch.py turns this on for Ocs2WbcController
     enable_wbc_head_tracking_marker: false
 
