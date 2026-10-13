@@ -27,8 +27,8 @@ model_information {
   }
 
   baseFrame                       "base_link"
-  eeFrame                         "left_end_effector_link"
-  eeFrame1                        "right_end_effector_link"
+  eeFrame                         "left_eef"
+  eeFrame1                        "right_eef"
 }
 
 model_settings

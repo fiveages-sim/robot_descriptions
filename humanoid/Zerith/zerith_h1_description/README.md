@@ -6,7 +6,8 @@ URDF / xacro and control configs for the **Zerith H1** wheeled dual-arm platform
 - Body: prismatic lift (`body_joint1`) + pitch (`body_joint2`) + yaw (`body_joint3`)
 - Head: yaw / pitch (`head_joint1` / `head_joint2`)
 - Arms: 7-DOF × 2
-- Grippers: built-in parallel jaws; control follows the **ARX** pattern (`${prefix}gripper_joint` + `adaptive_gripper_controller`)
+- End effectors: built-in parallel jaws by default (`type` empty / `gripper`); `type:=none` is bare wrists (Isaac import); `type:=revo1` / `type:=revo2` mounts BrainCo hands (Revo1 at the gripper pose; Revo2 uses the BrainCo flange at 0.066 m)
+- Wrist camera: `camera` / `xacro_camera` is `d405` (stand + RealSense) or `none`. Empty defaults to `d405` with the gripper, `none` otherwise.
 
 Upstream models: [Zerith_Model](https://github.com/inFpZero/Zerith_Model).
 
@@ -24,9 +25,20 @@ colcon build --packages-up-to zerith_h1_description --symlink-install
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1
+ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 type:=none
+ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 type:=revo1
+ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 type:=revo2
+ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 xacro_camera:=none
+ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 type:=none xacro_camera:=d405
 ```
 
 ![zerith h1](../../.images/zerith_h1.png)
+
+导入 Isaac 资产时去掉 `sensor_models` 视觉（关节和空 link 保留）：
+
+```bash
+ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 type:=none xacro_isaac:=true
+```
 
 ### 2.2 Components
 
@@ -51,6 +63,8 @@ OCS2 model: `config/ocs2/fixed_base_tcp.info`.
 source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=zerith_h1
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=zerith_h1 hardware:=isaac
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=zerith_h1 type:=revo1
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=zerith_h1 type:=revo2
 ```
 
 Initial modes: body `HM_DUAL_CUSTOM_LOCK_FIXED_BASE` (fixed-base preset), head `HEAD_GAZE`
@@ -79,12 +93,17 @@ ros2 launch ocs2_arm_controller split_body.launch.py robot:=zerith_h1
 - Arms: `/ocs2_arm_controller/...`
 - Body: `/body_joint_controller/...` (`body_joint1` lift [m], single-joint waist lifting)
 - Head: `/head_joint_controller/...`
-- Grippers: `/left_gripper_controller`, `/right_gripper_controller`
+- End effectors: `/left_gripper_controller`, `/right_gripper_controller` (default gripper); `/left_hand_controller`, `/right_hand_controller` (`type:=revo1` / `revo2`); none for `type:=none`
 
 ### 3.4 End-effector / gripper notes
 
-- Joint names: `left_gripper_joint` / `right_gripper_joint` (mimic `*_jaw_right_finger_joint` follow)
-- TCP frames: `left_end_effector_link` / `right_end_effector_link`
+- Default gripper joints: `left_gripper_joint` / `right_gripper_joint` (mimic `*_jaw_right_finger_joint` follow)
+- Revo1 / Revo2 joints: `left_hand_*` / `right_hand_*` (`basic_joint_controller` via EEF registry)
+- `type:=none`: no gripper/hand meshes or joints; `eef` coincides with `tcp`
+- Wrist camera (`xacro_camera:=d405` / `none`): D405 stand on `tcp` (`left_camera_support` / `right_camera_support`), optical frame `left_jaw_camera_link` / `right_jaw_camera_link`. Default gripper includes D405; `isaac:=true` hides the RealSense mesh and keeps the stand.
+- Flange: `left_tcp` / `right_tcp` (0.046 m from `wrist_pitch_link`); OCS2: `left_eef` / `right_eef`
+- Revo1 mount: on `tcp` (same pose as the gripper base)
+- Revo2 mount: flange on `tcp` at `xyz="0.0024 0 0"` so `hand_base` is 0.066 m from the wrist (flange_joint adds 0.0176 m)
 
 ### 3.5 Chassis joints (drive wheels)
 
@@ -102,7 +121,7 @@ ros2 launch robot_common_launch component.launch.py robot:=zerith_h1 type:=chass
 
 | Path | Role |
 |------|------|
-| `xacro/robot.xacro` | Visualization kinematics |
+| `xacro/robot.xacro` | Visualization kinematics (`chassis_joints_movable`, `isaac`, `type`, `camera`) |
 | `xacro/ros2_control/robot.xacro` | Hardware plugins + joint interfaces |
 | `config/ros2_control/ros2_controllers.yaml` | Controller manager |
 | `config/ocs2/task.info` | Dual-arm OCS2 model (demo / split arms) |

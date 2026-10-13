@@ -32,8 +32,19 @@
     </hardware>
 
     <xacro:zerith_h1_body_interfaces iface_mode="${sim_iface_mode}"/>
-    <xacro:zerith_h1_arm_interfaces name="left" iface_mode="${sim_iface_mode}"/>
-    <xacro:zerith_h1_arm_interfaces name="right" iface_mode="${sim_iface_mode}"/>
+    <xacro:zerith_h1_arm_interfaces name="left" iface_mode="${sim_iface_mode}" ee_type="${ee_type}"/>
+    <xacro:zerith_h1_arm_interfaces name="right" iface_mode="${sim_iface_mode}" ee_type="${ee_type}"/>
+
+    <xacro:if value="${ee_type == 'revo1'}">
+      <xacro:include filename="$(find brainco_description)/xacro/ros2_control/revo1.xacro"/>
+      <xacro:revo1_interfaces name="left_hand"/>
+      <xacro:revo1_interfaces name="right_hand"/>
+    </xacro:if>
+    <xacro:if value="${ee_type == 'revo2'}">
+      <xacro:include filename="$(find brainco_description)/xacro/ros2_control/revo2.xacro"/>
+      <xacro:revo2_interfaces name="left_hand"/>
+      <xacro:revo2_interfaces name="right_hand"/>
+    </xacro:if>
   </ros2_control>
 
   <xacro:if value="$(arg gazebo)">

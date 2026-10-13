@@ -8,6 +8,8 @@
     <license>TODO</license>
 
     <exec_depend>robot_common_launch</exec_depend>
+    <exec_depend>brainco_description</exec_depend>
+    <exec_depend>sensor_models</exec_depend>
 
     <export>
         <build_type>ament_cmake</build_type>

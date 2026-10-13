@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Parallel gripper for Zerith H1                                               | -->
+<!-- |    Mount: parent is left/right_tcp (0.046 from wrist_pitch).                    | -->
+<!-- |    Inertia is the former wrist_pitch / link7 inertial, COM shifted by -0.046.   | -->
+<!-- =================================================================================== -->
+<robot name="zerith_h1_gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="H1Gripper" params="name direction:=1 parent_link">
+		<xacro:property name="prefix" value="${name}_"/>
+
+		<!-- =============================================================================== -->
+		<!-- Gripper Base                                                                    -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}gripper_base">
+			<inertial>
+				<origin xyz="0.03225733 ${direction*0.00143511} 0.00315751"/>
+				<mass value="0.5139"/>
+				<inertia ixx="0.00046134" ixy="${direction*4.762e-05}" ixz="-1.314e-05"
+								 iyy="0.00044669" iyz="${direction*-5.2e-07}" izz="0.00060413"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/gripper.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/gripper.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}gripper_base_joint" type="fixed">
+			<parent link="${parent_link}"/>
+			<child link="${prefix}gripper_base"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Jaw Left Finger                                                                 -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}jaw_left_finger_link">
+			<inertial>
+				<origin xyz="0.02875166 0.04972677 -0.00087113"/>
+				<mass value="0.057096"/>
+				<inertia ixx="1.643e-05" ixy="2.46e-06" ixz="1.89e-06"
+								 iyy="2.627e-05" iyz="4.7e-07" izz="2.05e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/finger.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/finger.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}gripper_joint" type="prismatic">
+			<origin xyz="0.056 0 0"/>
+			<parent link="${prefix}gripper_base"/>
+			<child link="${prefix}jaw_left_finger_link"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-0.04" upper="0" effort="120" velocity="0.25"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- Jaw Right Finger                                                                -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}jaw_right_finger_link">
+			<inertial>
+				<origin xyz="0.02884254 -0.05065805 -0.00142222"/>
+				<mass value="0.057987"/>
+				<inertia ixx="1.518e-05" ixy="-3.71e-06" ixz="1.14e-06"
+								 iyy="2.561e-05" iyz="3.1e-07" izz="1.872e-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/finger.glb" scale="1 -1 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/finger.glb" scale="1 -1 1"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}jaw_right_finger_joint" type="prismatic">
+			<origin xyz="0.056 0 0"/>
+			<parent link="${prefix}gripper_base"/>
+			<child link="${prefix}jaw_right_finger_link"/>
+			<axis xyz="0 1 0"/>
+			<mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+			<limit lower="0" upper="0.04" effort="120" velocity="0.25"/>
+		</joint>
+
+		<!-- =============================================================================== -->
+		<!-- End Effector                                                                    -->
+		<!-- =============================================================================== -->
+		<link name="${prefix}eef">
+			<inertial>
+				<origin xyz="-0.027172 -5.6108E-09 1.2941E-06"/>
+				<mass value="0.0066601"/>
+				<inertia ixx="1.2345E-05" ixy="-7.5727E-14" ixz="2.3275E-11"
+								 iyy="6.5495E-08" iyz="-8.2193E-15" izz="1.232E-05"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/eef.glb"/>
+				</geometry>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="file://$(find zerith_h1_description)/meshes/arm/eef.glb"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${prefix}eef_joint" type="fixed">
+			<origin xyz="0.0975 0 0"/>
+			<parent link="${prefix}gripper_base"/>
+			<child link="${prefix}eef"/>
+		</joint>
+
+	</xacro:macro>
+
+</robot>

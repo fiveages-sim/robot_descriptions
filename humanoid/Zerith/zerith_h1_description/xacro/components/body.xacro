@@ -7,6 +7,8 @@
 <!-- =================================================================================== -->
 <robot name="zerith_h1_body" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+	<xacro:arg name="isaac" default="false"/>
+
 	<!-- =================================================================================== -->
 	<!-- Torso                                                                               -->
 	<!-- =================================================================================== -->
@@ -164,11 +166,13 @@
 	</joint>
 
 	<link name="head_camera">
-		<visual>
-			<geometry>
-				<mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
-			</geometry>
-		</visual>
+		<xacro:unless value="$(arg isaac)">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb"/>
+				</geometry>
+			</visual>
+		</xacro:unless>
 	</link>
 
 	<joint name="head_camera_joint" type="fixed">

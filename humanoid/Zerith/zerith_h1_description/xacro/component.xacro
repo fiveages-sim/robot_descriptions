@@ -12,6 +12,8 @@
 <robot name="zerith_h1_component" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="type" default="base"/>
   <xacro:arg name="chassis_joints_movable" default="false"/>
+  <xacro:arg name="isaac" default="false"/>
+  <xacro:arg name="camera" default="d405"/>
 
   <xacro:if value="${'$(arg type)' != 'base' and '$(arg type)' != 'chassis'}">
     <link name="base_link"/>
@@ -22,8 +24,8 @@
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/body.xacro"/>
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
     <xacro:H1Chassis joints_movable="$(arg chassis_joints_movable)"/>
-    <xacro:H1Arm name="left" direction="1"/>
-    <xacro:H1Arm name="right" direction="-1"/>
+    <xacro:H1Arm name="left" direction="1" camera="$(arg camera)"/>
+    <xacro:H1Arm name="right" direction="-1" camera="$(arg camera)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'chassis'}">
@@ -42,8 +44,8 @@
       <child link="body_yaw_link"/>
     </joint>
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
-    <xacro:H1Arm name="left" direction="1"/>
-    <xacro:H1Arm name="right" direction="-1"/>
+    <xacro:H1Arm name="left" direction="1" camera="$(arg camera)"/>
+    <xacro:H1Arm name="right" direction="-1" camera="$(arg camera)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'left_arm'}">
@@ -53,7 +55,7 @@
       <child link="body_yaw_link"/>
     </joint>
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
-    <xacro:H1Arm name="left" direction="1"/>
+    <xacro:H1Arm name="left" direction="1" camera="$(arg camera)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'right_arm'}">
@@ -63,6 +65,6 @@
       <child link="body_yaw_link"/>
     </joint>
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
-    <xacro:H1Arm name="right" direction="-1"/>
+    <xacro:H1Arm name="right" direction="-1" camera="$(arg camera)"/>
   </xacro:if>
 </robot>

@@ -5,7 +5,7 @@
 ; Pinocchio 4.x DFS under body_yaw_link visits siblings by name order
 ; (head_* before left_*/right_*), NOT xacro include order — keep OCS2/controller
 ; joint lists aligned with that reduced model after removeJoints.
-; Frames: base_link / body_yaw_link / left|right_end_effector_link / neck_pitch_link (headFrame) / head_camera (gaze)
+; Frames: base_link / body_yaw_link / left|right_eef / neck_pitch_link (headFrame) / head_camera (gaze)
 ; Peers: Quanta X1 (control layout) + W2/Bot2 (torso DOFs + dual 7-DOF).
 
 model_information
@@ -13,8 +13,8 @@ model_information
     manipulatorModelType    0
 
     baseFrame               "base_link"
-    eeFrame                 "left_end_effector_link"
-    eeFrame1                "right_end_effector_link"
+    eeFrame                 "left_eef"
+    eeFrame1                "right_eef"
     bodyFrame               "body_yaw_link"
     headFrame               "neck_pitch_link"
 
