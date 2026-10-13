@@ -6,6 +6,7 @@
 <robot name="zerith_h1_chassis" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:arg name="collider" default="simple"/>
+	<xacro:arg name="isaac" default="false"/>
 
 	<!-- Passive support caster (Quanta X1 swivel / Realman RS01 caster convention):
 	     base_link -> {prefix}_caster_swivel_joint (yaw, axis Z, vertical through the mount)
@@ -172,6 +173,22 @@
 		</joint>
 
 		<xacro:H1Caster prefix="right_rear" x="-0.1465" y="-0.151" mass="0.12" ixx="4.893e-05" iyy="4.906e-05" izz="4.938e-05" wheel_z="-0.155" movable="${chassis_movable}"/>
+
+		<!-- Livox Mid360 on the front of the deck. isaac hides the mesh and keeps the frame. -->
+		<link name="lidar_link">
+			<xacro:unless value="$(arg isaac)">
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
+					</geometry>
+				</visual>
+			</xacro:unless>
+		</link>
+		<joint name="lidar_joint" type="fixed">
+			<origin xyz="0.305327 0 0.016247"/>
+			<parent link="base_link"/>
+			<child link="lidar_link"/>
+		</joint>
 
 	</xacro:macro>
 

@@ -109,10 +109,11 @@ ros2 launch ocs2_arm_controller split_body.launch.py robot:=zerith_h1
 
 ### 3.4 End-effector / gripper notes
 
-- Default gripper joints: `left_gripper_joint` / `right_gripper_joint` (mimic `*_jaw_right_finger_joint` follow)
+- Default gripper joints: `left_gripper_joint` / `right_gripper_joint` (mimic `*_jaw_right_finger_joint` follows on the opposite axis). `0` is closed, positive opens (`adaptive_gripper_controller`: `initial_value` 0 sits on the lower limit).
 - Revo1 / Revo2 joints: `left_hand_*` / `right_hand_*` (`basic_joint_controller` via EEF registry)
 - `type:=none`: no gripper/hand meshes or joints; `eef` coincides with `tcp`
 - Wrist camera (`xacro_camera:=d405` / `none`): D405 stand on `tcp` (`left_camera_support` / `right_camera_support`), optical frame `left_jaw_camera_link` / `right_jaw_camera_link`. Default gripper includes D405; `isaac:=true` hides the RealSense mesh and keeps the stand.
+- Chassis lidar: Livox Mid360 `lidar_link` on `base_link` at `xyz="0.305327 0 0.016247"`. `isaac:=true` hides the mesh and keeps the frame.
 - Flange: `left_tcp` / `right_tcp` (0.046 m from `wrist_pitch_link`); OCS2: `left_eef` / `right_eef`
 - Revo1 mount: on `tcp` (same pose as the gripper base)
 - Revo2 mount: flange on `tcp` at `xyz="0.0024 0 0"` so `hand_base` is 0.066 m from the wrist (flange_joint adds 0.0176 m)
