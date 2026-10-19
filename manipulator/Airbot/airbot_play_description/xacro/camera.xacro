@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Wrist camera for Airbot Play                                                 | -->
+<!-- |    camera: empty (default) | none                                               | -->
+<!-- |    camera_base: mesh on link6 (identity); camera: optical child frame           | -->
+<!-- =================================================================================== -->
+<robot name="airbot_play_camera" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="airbot_play_camera" params="name parent_link:='' camera:=''">
+		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+		<xacro:property name="attach_parent" value="${parent_link if parent_link else prefix + 'link6'}"/>
+
+		<xacro:unless value="${camera == 'none'}">
+			<link name="${prefix}camera_base">
+				<visual>
+					<geometry>
+						<mesh filename="file://$(find airbot_play_description)/meshes/camera.glb"/>
+					</geometry>
+				</visual>
+				<collision>
+					<geometry>
+						<mesh filename="file://$(find airbot_play_description)/meshes/camera.glb"/>
+					</geometry>
+				</collision>
+			</link>
+			<joint name="${prefix}camera_base_joint" type="fixed">
+				<parent link="${attach_parent}"/>
+				<child link="${prefix}camera_base"/>
+			</joint>
+
+			<link name="${prefix}camera"/>
+			<joint name="${prefix}camera_joint" type="fixed">
+				<origin xyz="-0.109 0 0.025" rpy="0 -1.046 0"/>
+				<parent link="${prefix}camera_base"/>
+				<child link="${prefix}camera"/>
+			</joint>
+		</xacro:unless>
+	</xacro:macro>
+
+</robot>

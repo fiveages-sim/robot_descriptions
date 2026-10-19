@@ -8,6 +8,7 @@ URDF / xacro and control configs for the Discover Robotics **Airbot MMK2** wheel
 - Arms: Airbot Play (6-DOF) × 2 (from `airbot_play_description`)
 - Grippers: built-in parallel jaws; `*_gripper_joint` + `adaptive_gripper_controller`
 - Optional hands: `type:=xhand1` mounts XHand1 on both `link6` (offset 0.014 m)
+- Wrist cameras (default): `left|right_camera_base` (mesh) + `left|right_camera` (optical); omit with `xacro_camera:=none`
 
 ## 1. Build
 
@@ -24,6 +25,7 @@ colcon build --packages-up-to airbot_mmk2_description --symlink-install
 source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=airbot_mmk2
 ros2 launch robot_common_launch manipulator.launch.py robot:=airbot_mmk2 type:=xhand1
+ros2 launch robot_common_launch manipulator.launch.py robot:=airbot_mmk2 xacro_camera:=none
 ```
 
 ![airbot mmk2](../../.images/airbot_mmk2.png)

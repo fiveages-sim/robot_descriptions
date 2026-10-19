@@ -3,10 +3,13 @@
 	<xacro:arg name="type" default=""/>
 	<xacro:arg name="eef_fixed_joints" default="false"/>
 	<xacro:arg name="direction" default="1"/>
+	<!-- camera: empty (default) keeps wrist camera_base + optical camera; none omits both. -->
+	<xacro:arg name="camera" default=""/>
 
 	<xacro:include filename="$(find airbot_play_description)/xacro/airbot_play.xacro"/>
 	<xacro:airbot_play name="" type="$(arg type)"
 	                  eef_fixed_joints="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"
-	                  direction="$(arg direction)"/>
+	                  direction="$(arg direction)"
+	                  camera="$(arg camera)"/>
 
 </robot>

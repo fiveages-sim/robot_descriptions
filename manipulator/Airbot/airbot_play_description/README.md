@@ -18,6 +18,12 @@ ros2 launch robot_common_launch manipulator.launch.py robot:=airbot_play type:=x
 
 Default end effector is the built-in parallel gripper. `type:=xhand1` mounts XHand1 on `link6` (offset 0.014 m).
 
+Wrist camera (default): `camera_base` (mesh on `link6`, identity) and optical child `camera` (`xyz="-0.109 0 0.025" rpy="0 -1.046 0"`). Omit both with `xacro_camera:=none`.
+
+```bash
+ros2 launch robot_common_launch manipulator.launch.py robot:=airbot_play xacro_camera:=none
+```
+
 ![airbot play](../../.images/airbot_play.png)
 
 ## 3. OCS2 Demo

@@ -9,6 +9,8 @@
        OCS2 planning: robot_common_launch injects eef_fixed_joints:=true. -->
   <xacro:arg name="type" default=""/>
   <xacro:arg name="eef_fixed_joints" default="false"/>
+  <!-- camera: empty (default) keeps wrist camera_base + optical camera on each Play arm; none omits both. -->
+  <xacro:arg name="camera" default=""/>
   <xacro:property name="wheel_joint_type"
                   value="${'continuous' if '$(arg chassis_joints_movable)'.lower() in ['true', '1', 'yes', 'on'] else 'fixed'}"/>
 
@@ -27,7 +29,8 @@
   <xacro:include filename="$(find airbot_play_description)/xacro/airbot_play.xacro"/>
   <xacro:airbot_play name="left" type="$(arg type)"
                     eef_fixed_joints="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"
-                    direction="1"/>
+                    direction="1"
+                    camera="$(arg camera)"/>
 
   <!-- right arm -->
   <joint name="right_arm_fixed_joint" type="fixed">
@@ -37,5 +40,6 @@
   </joint>
   <xacro:airbot_play name="right" type="$(arg type)"
                     eef_fixed_joints="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"
-                    direction="-1"/>
+                    direction="-1"
+                    camera="$(arg camera)"/>
 </robot>

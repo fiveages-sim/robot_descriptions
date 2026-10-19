@@ -1,8 +1,9 @@
 <?xml version="1.0" ?>
 <robot name="airbot_play" xmlns:xacro="http://ros.org/wiki/xacro">
 	<xacro:include filename="$(find airbot_play_description)/xacro/gripper.xacro"/>
+	<xacro:include filename="$(find airbot_play_description)/xacro/camera.xacro"/>
 	<xacro:include filename="$(find xhand1_description)/xacro/xhand1.xacro"/>
-	<xacro:macro name="airbot_play" params="name collider:=convex type:='' eef_fixed_joints:=false direction:=1">
+	<xacro:macro name="airbot_play" params="name collider:=convex type:='' eef_fixed_joints:=false direction:=1 camera:=''">
 		<xacro:property name="PI" value="3.1415926535897931"/>
 		<xacro:property name="prefix" value="${name + '_' if name else ''}"/>
 
@@ -201,12 +202,6 @@
 			<xacro:airbot_play_gripper name="${name}"/>
 		</xacro:unless>
 
-		<link name="${prefix}camera"/>
-
-		<joint name="${prefix}camera_joint" type="fixed">
-			<origin xyz="-0.109 0 0.025" rpy="0 -1.046 0"/>
-			<parent link="${prefix}link6"/>
-			<child link="${prefix}camera"/>
-		</joint>
+		<xacro:airbot_play_camera name="${name}" parent_link="${prefix}link6" camera="${camera}"/>
 	</xacro:macro>
 </robot>
