@@ -37,6 +37,8 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Realman       | [AIDAL](humanoid/Realman/aidal_description)          | Yes     | <img src="humanoid/.images/realman_aidal.png" width="200">                                                                                                                                                                    |
 | Realman       | [RS-01](humanoid/Realman/rs01_description)           | Yes     | <img src="humanoid/.images/realman_rs01.png" width="200">                                                                                                                                                                     |
 | Zerith        | [H1](humanoid/Zerith/zerith_h1_description)          | Yes     | <img src="humanoid/.images/zerith_h1.png" width="200">                                                                                                                                                                        |
+| Unitree       | [G1-D](humanoid/Unitree/unitree_g1d_description)     | No      |                                                                                                                                                                                                                               |
+| Unitree       | [R1-D](humanoid/Unitree/unitree_r1d_description)     | No      |                                                                                                                                                                                                                               |
 | Ai2 Robotics  | [Bot2](humanoid/Ai2Robotics/ai2_bot2_description)    | Yes     | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                         |
 | XSquare Robot | [Quanta X1](humanoid/X2Robot/quanta_x1_description)  | Yes     | <img src="humanoid/.images/x2robot_quanta_x1.png" width="200">                                                                                                                                                                |
 | Spirit AI     | [MOZ 1](humanoid/SpiritAI/moz1_description)          | Yes     | <img src="humanoid/.images/spiritai_moz1.png" width="200">                                                                                                                                                                    |
@@ -92,6 +94,7 @@ This repository uses git submodules to manage shared components and specific rob
 | ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
 | Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) for build and demo commands |
 | Gento Robots | `humanoid/Gento` | [robot-descriptions-gento](https://github.com/fiveages-sim/robot-descriptions-gento) | Gento wheel humanoids (Skye, Luna); Linkhou S2 v2 + Tianji M6-CCS / M6S Lite |
+| Unitree Robots | `humanoid/Unitree` | [robot-descriptions-unitree](https://github.com/fiveages-sim/robot-descriptions-unitree) | Unitree G1 (legged), G1-D, R1-D; shared arm/head/hand macros |
 | Agibot G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | Agibot G2 humanoid description (private submodule) |
 | Panthera HT | `manipulator/HighTorque/panthera_ht_description` | [panthera_ht_description](https://github.com/fiveages-sim/panthera_ht_description) | HighTorque Panthera HT manipulator description |
 
@@ -127,6 +130,9 @@ git submodule update --init manipulator/ARX
 
 # For Galbot robots
 git submodule update --init humanoid/Galbot
+
+# For Unitree robots
+git submodule update --init humanoid/Unitree
 
 # For Agibot G2 (private)
 git submodule update --init humanoid/Agibot/agibot_g2_description
