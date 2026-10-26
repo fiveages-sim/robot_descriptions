@@ -29,6 +29,7 @@ stages that are already done. Cross-links live inside each skill.
 |-------|-------|----------|
 | 1. Extract | [web-robot-asset-extraction](web-robot-asset-extraction/SKILL.md) | Company interactive 3D page; probe URDF/meshes/kinematics; decode base64 GLB; infer limits/inertia; label official vs inferred |
 | 2. Package | [urdf-to-xacro-package](urdf-to-xacro-package/SKILL.md) | Plain URDF + meshes → peer-style xacro package (`component` macros, ros2_control stubs, sensor_models) |
+| Meshes | [obj-to-glb](obj-to-glb/SKILL.md) | Blender OBJ→GLB: Z-up import, separate by loose parts, `export_yup=False`, keep flat `v//vn`. Use when a conversion shows 破面 |
 | 3. Control | [import-humanoid-ocs2](import-humanoid-ocs2/SKILL.md) | Wheeled dual-arm ros2_control / OCS2: Pinocchio order, structured `modeSequence`, `bodyRelative`, `HEAD_GAZE`; Taku/Quanta are worked examples only |
 | Chassis | [split-chassis-glb](split-chassis-glb/SKILL.md) | Split chassis GLB into `chassis` / `steer` / `wheel`, write swerve xacro, and add `collider:=simple` boxes from glTF-node AABBs |
 

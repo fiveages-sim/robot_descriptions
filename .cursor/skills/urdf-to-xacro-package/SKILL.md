@@ -13,6 +13,7 @@ description: >-
 Prior stage: [web-robot-asset-extraction](../web-robot-asset-extraction/SKILL.md).
 Next (wheeled dual-arm control): [import-humanoid-ocs2](../import-humanoid-ocs2/SKILL.md).
 Chassis GLB split / simple colliders: [split-chassis-glb](../split-chassis-glb/SKILL.md).
+Visual OBJ→GLB: [obj-to-glb](../obj-to-glb/SKILL.md). Do not convert meshes inside this packaging step unless asked.
 
 Goal: rewrite a working URDF as a xacro package that looks like its neighbors in
 this repo, without changing any kinematics, limits, inertials or meshes.

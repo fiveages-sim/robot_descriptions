@@ -45,7 +45,9 @@ Measure and export in **ROS**: X forward, Y left, Z up.
 
 Do not trust the glTF node quaternion. INEX CAD local was X=left, Y=up, Z=forward; convert each vertex with `(x, y, z) -> (z, x, y)`, then set the object transform to identity.
 
-Export from Blender Z-up (`export_yup=True`) so RViz/Assimp matches other description GLBs. That write usually leaves a **glTF node rotation** (INEX chassis = +90° about X). RViz applies it; raw POSITION accessor AABB does **not**.
+Older Blender glTF export (`export_yup=True`) left a **node rotation** of +90° about X (INEX chassis). RViz applies that node matrix; raw POSITION accessor AABB does **not**. Blender 5.2 bakes Y-up into the vertices and leaves the node at identity, so the same flag lays a Z-up mesh on its side in RViz. For description meshes that are already ROS Z-up, export with `export_yup=False`. See [obj-to-glb](../obj-to-glb/SKILL.md).
+
+Batch OBJ→GLB (flat `v//vn`, separate loose parts, 破面 if normals are averaged): [obj-to-glb](../obj-to-glb/SKILL.md). Do not shade smooth on the way out.
 
 Keep the existing `base_link` origin (do not shift to ground) if lidars/body are already authored in that frame.
 
