@@ -3,7 +3,8 @@
 <!-- |    Complete Robot Description for Zerith H1                                     | -->
 <!-- |    Chassis (wheels locked by default) + body/head + dual 7-DOF arms             | -->
 <!-- |    type: empty/gripper (default) | none | revo1 | revo2                         | -->
-<!-- |    camera: empty→d405 on gripper, none otherwise | d405 | none                 | -->
+<!-- |    left_type / right_type override one side; empty falls back to type          | -->
+<!-- |    camera: empty→d405 on that side's gripper, none otherwise | d405 | none     | -->
 <!-- =================================================================================== -->
 <robot name="zerith_h1" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
@@ -11,12 +12,24 @@
 	<xacro:arg name="chassis_joints_movable" default="false"/>
 	<xacro:arg name="isaac" default="false"/>
 	<xacro:arg name="collider" default="simple"/>
+	<!-- Symmetric end effector. left_type/right_type override one side; empty falls back to type, then gripper. -->
 	<xacro:arg name="type" default=""/>
+	<xacro:arg name="left_type" default=""/>
+	<xacro:arg name="right_type" default=""/>
 	<xacro:arg name="camera" default=""/>
 	<xacro:arg name="eef_fixed_joints" default="false"/>
-	<xacro:property name="ee_type" value="${'$(arg type)' if '$(arg type)' else 'gripper'}"/>
-	<xacro:property name="camera_type"
-									value="${'$(arg camera)' if '$(arg camera)' else ('d405' if ee_type == 'gripper' else 'none')}"/>
+	<xacro:property name="type_arg" value="$(arg type)"/>
+	<xacro:property name="left_type_arg" value="$(arg left_type)"/>
+	<xacro:property name="right_type_arg" value="$(arg right_type)"/>
+	<xacro:property name="effective_left_type" value="${left_type_arg if left_type_arg != '' else type_arg}"/>
+	<xacro:property name="effective_right_type" value="${right_type_arg if right_type_arg != '' else type_arg}"/>
+	<xacro:property name="left_ee_type" value="${effective_left_type if effective_left_type else 'gripper'}"/>
+	<xacro:property name="right_ee_type" value="${effective_right_type if effective_right_type else 'gripper'}"/>
+	<xacro:property name="camera_arg" value="$(arg camera)"/>
+	<xacro:property name="left_camera_type"
+									value="${camera_arg if camera_arg else ('d405' if left_ee_type == 'gripper' else 'none')}"/>
+	<xacro:property name="right_camera_type"
+									value="${camera_arg if camera_arg else ('d405' if right_ee_type == 'gripper' else 'none')}"/>
 	<xacro:property name="eef_fixed"
 									value="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"/>
 
@@ -25,15 +38,8 @@
 
 	<xacro:include filename="$(find zerith_h1_description)/xacro/components/body.xacro"/>
 
-	<xacro:if value="${ee_type == 'revo1'}">
-		<xacro:include filename="$(find brainco_description)/xacro/revo1.xacro"/>
-	</xacro:if>
-	<xacro:if value="${ee_type == 'revo2'}">
-		<xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
-	</xacro:if>
-
 	<xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
-	<xacro:H1Arm name="left" direction="1" ee_type="${ee_type}" eef_fixed="${eef_fixed}" camera="${camera_type}" collider="$(arg collider)"/>
-	<xacro:H1Arm name="right" direction="-1" ee_type="${ee_type}" eef_fixed="${eef_fixed}" camera="${camera_type}" collider="$(arg collider)"/>
+	<xacro:H1Arm name="left" direction="1" ee_type="${left_ee_type}" eef_fixed="${eef_fixed}" camera="${left_camera_type}" collider="$(arg collider)"/>
+	<xacro:H1Arm name="right" direction="-1" ee_type="${right_ee_type}" eef_fixed="${eef_fixed}" camera="${right_camera_type}" collider="$(arg collider)"/>
 
 </robot>

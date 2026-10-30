@@ -11,6 +11,8 @@
 ; homeJointReference.excludeJointIndices stay arm-segment indices (no base offset).
 ; bodyRelative band kept from fixed_base_tcp (zero-pose body_yaw_link x≈0.15 in base).
 ; Peers: W2 mobile_base_tcp (type 1) + Taku (RELATIVE_MOBILE_BASE + HEAD_GAZE).
+; baseFrame = ground SE(2). URDF base_footprint→base_link z=+0.18 (deck); Isaac
+; chassis_odom must use the same height (Latch footprintZ + TFFootprint2Base).
 
 model_information
 {

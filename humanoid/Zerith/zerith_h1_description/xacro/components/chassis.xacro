@@ -62,9 +62,13 @@
 		<xacro:property name="chassis_movable" value="${str(joints_movable).lower() in ['true', '1', 'yes', 'on']}"/>
 		<xacro:property name="wheel_joint_type" value="${'continuous' if chassis_movable else 'fixed'}"/>
 
-		<!-- Root frames: base_footprint identity to base_link (W2 / Taku / Bot2). -->
+		<!-- SE(2) / OCS2 baseFrame = base_footprint on the ground plane.
+		     Drive axle z=-0.0965, radius 0.0835 → deck (base_link) at +0.18.
+		     Must match Isaac chassis_odom TFFootprint2Base + LatchWorld2Odom footprintZ. -->
+		<xacro:property name="base_height" value="0.18"/>
 		<link name="base_footprint"/>
 		<joint name="base_footprint_joint" type="fixed">
+			<origin xyz="0 0 ${base_height}"/>
 			<parent link="base_footprint"/>
 			<child link="base_link"/>
 		</joint>

@@ -2,12 +2,12 @@
 
 URDF / xacro and control configs for the **Zerith H1** wheeled dual-arm platform.
 
-- Chassis: differential drive (wheels locked by default); full-body WBC plans virtual SE(2) (`vx` / `omega`) on `base_footprint`
+- Chassis: differential drive (wheels locked by default); full-body WBC plans virtual SE(2) (`vx` / `omega`) on `base_footprint` (ground; `base_link` deck at `z=+0.18`)
 - Body: prismatic lift (`body_joint1`) + pitch (`body_joint2`) + yaw (`body_joint3`)
 - Head: yaw / pitch (`head_joint1` / `head_joint2`)
 - Arms: 7-DOF × 2
-- End effectors: built-in parallel jaws by default (`type` empty / `gripper`); `type:=none` is bare wrists (Isaac import); `type:=revo1` / `type:=revo2` mounts BrainCo hands (Revo1 at the gripper pose; Revo2 uses the BrainCo flange at 0.066 m)
-- Wrist camera: `camera` / `xacro_camera` is `d405` (stand + RealSense) or `none`. Empty defaults to `d405` with the gripper, `none` otherwise.
+- End effectors: built-in parallel jaws by default (`type` empty / `gripper`); `type:=none` is bare wrists (Isaac import); `type:=revo1` / `type:=revo2` mounts BrainCo hands (Revo1 at the gripper pose; Revo2 uses the BrainCo flange at 0.066 m). `left_type` / `right_type` override one side and fall back to `type` when empty (`left_type:=revo2 right_type:=gripper`).
+- Wrist camera: `camera` / `xacro_camera` is `d405` (stand + RealSense) or `none`. Empty defaults per side to `d405` on a gripper and `none` otherwise.
 
 Upstream models: [Zerith_Model](https://github.com/inFpZero/Zerith_Model).
 
@@ -28,6 +28,7 @@ ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1
 ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 type:=none
 ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 type:=revo1
 ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 type:=revo2
+ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 left_type:=revo2 right_type:=gripper
 ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 xacro_camera:=none
 ros2 launch robot_common_launch humanoid.launch.py robot:=zerith_h1 type:=none xacro_camera:=d405
 ```
@@ -105,7 +106,7 @@ ros2 launch ocs2_arm_controller split_body.launch.py robot:=zerith_h1
 - Arms: `/ocs2_arm_controller/...`
 - Body: `/body_joint_controller/...` (`body_joint1` lift [m], single-joint waist lifting)
 - Head: `/head_joint_controller/...`
-- End effectors: `/left_gripper_controller`, `/right_gripper_controller` (default gripper); `/left_hand_controller`, `/right_hand_controller` (`type:=revo1` / `revo2`); none for `type:=none`
+- End effectors: `/left_gripper_controller`, `/right_gripper_controller` (default gripper); `/left_hand_controller`, `/right_hand_controller` (`type:=revo1` / `revo2`, or the matching `left_type` / `right_type`); none for `type:=none`
 
 ### 3.4 End-effector / gripper notes
 
@@ -141,7 +142,7 @@ Full-body `selfCollision` (`fixed_base_tcp.info` and `mobile_base_tcp.info`, `ac
 
 | Path | Role |
 |------|------|
-| `xacro/robot.xacro` | Visualization kinematics (`chassis_joints_movable`, `isaac`, `type`, `camera`, `collider`) |
+| `xacro/robot.xacro` | Visualization kinematics (`chassis_joints_movable`, `isaac`, `type`, `left_type`, `right_type`, `camera`, `collider`) |
 | `xacro/ros2_control/robot.xacro` | Hardware plugins + joint interfaces |
 | `config/ros2_control/ros2_controllers.yaml` | Controller manager |
 | `config/ocs2/task.info` | Dual-arm OCS2 model (demo / split arms) |

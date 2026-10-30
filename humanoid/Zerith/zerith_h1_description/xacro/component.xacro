@@ -15,6 +15,11 @@
   <xacro:arg name="isaac" default="false"/>
   <xacro:arg name="camera" default="d405"/>
   <xacro:arg name="collider" default="simple"/>
+  <!-- End effectors are independent of component type. Empty means the built-in gripper. -->
+  <xacro:arg name="left_type" default=""/>
+  <xacro:arg name="right_type" default=""/>
+  <xacro:property name="left_ee_type" value="${'$(arg left_type)' if '$(arg left_type)' else 'gripper'}"/>
+  <xacro:property name="right_ee_type" value="${'$(arg right_type)' if '$(arg right_type)' else 'gripper'}"/>
 
   <xacro:if value="${'$(arg type)' != 'base' and '$(arg type)' != 'chassis'}">
     <link name="base_link"/>
@@ -25,8 +30,8 @@
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/body.xacro"/>
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
     <xacro:H1Chassis joints_movable="$(arg chassis_joints_movable)" collider="$(arg collider)"/>
-    <xacro:H1Arm name="left" direction="1" camera="$(arg camera)" collider="$(arg collider)"/>
-    <xacro:H1Arm name="right" direction="-1" camera="$(arg camera)" collider="$(arg collider)"/>
+    <xacro:H1Arm name="left" direction="1" ee_type="${left_ee_type}" camera="$(arg camera)" collider="$(arg collider)"/>
+    <xacro:H1Arm name="right" direction="-1" ee_type="${right_ee_type}" camera="$(arg camera)" collider="$(arg collider)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'chassis'}">
@@ -45,8 +50,8 @@
       <child link="body_yaw_link"/>
     </joint>
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
-    <xacro:H1Arm name="left" direction="1" camera="$(arg camera)" collider="$(arg collider)"/>
-    <xacro:H1Arm name="right" direction="-1" camera="$(arg camera)" collider="$(arg collider)"/>
+    <xacro:H1Arm name="left" direction="1" ee_type="${left_ee_type}" camera="$(arg camera)" collider="$(arg collider)"/>
+    <xacro:H1Arm name="right" direction="-1" ee_type="${right_ee_type}" camera="$(arg camera)" collider="$(arg collider)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'left_arm'}">
@@ -56,7 +61,7 @@
       <child link="body_yaw_link"/>
     </joint>
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
-    <xacro:H1Arm name="left" direction="1" camera="$(arg camera)" collider="$(arg collider)"/>
+    <xacro:H1Arm name="left" direction="1" ee_type="${left_ee_type}" camera="$(arg camera)" collider="$(arg collider)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'right_arm'}">
@@ -66,6 +71,6 @@
       <child link="body_yaw_link"/>
     </joint>
     <xacro:include filename="$(find zerith_h1_description)/xacro/components/arm.xacro"/>
-    <xacro:H1Arm name="right" direction="-1" camera="$(arg camera)" collider="$(arg collider)"/>
+    <xacro:H1Arm name="right" direction="-1" ee_type="${right_ee_type}" camera="$(arg camera)" collider="$(arg collider)"/>
   </xacro:if>
 </robot>

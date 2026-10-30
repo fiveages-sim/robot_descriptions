@@ -1,0 +1,16 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.3
+    angular_scale: 0.5
+    enable_vr: true
+
+    # Fixed-base arm: task.info baseFrame=base_link. ATM defaults use
+    # vr_follow_frame=base_footprint and reference_link=head_link2 (W2) —
+    # neither exists on Piper.
+    marker_fixed_frame: base_link
+    vr_follow_frame: base_link
+    enable_wbc_head_tracking_marker: false
+
+    # No head link; use base for VR headset calibration reference.
+    head_link_name: "base_link"
+    reference_link: "base_link"

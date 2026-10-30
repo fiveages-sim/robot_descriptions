@@ -34,6 +34,15 @@
 		<xacro:property name="prefix" value="${name}_"/>
 		<xacro:property name="hand_name" value="${name}_hand"/>
 
+		<!-- BrainCoHand is one macro name in both files; include the file for this side
+		     immediately before the call so a mixed revo1/revo2 pair stays correct. -->
+		<xacro:if value="${ee_type == 'revo1'}">
+			<xacro:include filename="$(find brainco_description)/xacro/revo1.xacro"/>
+		</xacro:if>
+		<xacro:if value="${ee_type == 'revo2'}">
+			<xacro:include filename="$(find brainco_description)/xacro/revo2.xacro"/>
+		</xacro:if>
+
 		<!-- =============================================================================== -->
 		<!-- Shoulder Pitch                                                                  -->
 		<!-- =============================================================================== -->
