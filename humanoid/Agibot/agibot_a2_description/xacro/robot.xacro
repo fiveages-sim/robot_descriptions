@@ -8,6 +8,8 @@
 	<xacro:include filename="$(find agibot_a2_description)/xacro/arm.xacro"/>
 	<xacro:include filename="$(find agibot_a2_description)/xacro/hand.xacro"/>
 	<xacro:include filename="$(find agibot_a2_description)/xacro/leg.xacro"/>
+	<xacro:arg name="isaac" default="false"/>
+	<xacro:property name="PI" value="3.1415926535897931"/>
 	
 	<link name="base_link">
 		<inertial>
@@ -17,7 +19,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_a2_description)/meshes/body/visual/body.obj"/>
+				<mesh filename="file://$(find agibot_a2_description)/meshes/body/visual/body.glb"/>
 			</geometry>
 		</visual>
 		<collision>
@@ -53,7 +55,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_a2_description)/meshes/body/visual/head1.obj"/>
+				<mesh filename="file://$(find agibot_a2_description)/meshes/body/visual/head1.glb"/>
 			</geometry>
 		</visual>
 		<collision>
@@ -71,6 +73,22 @@
 		<limit lower="-2.2" upper="2.2" effort="0" velocity="0"/>
 	</joint>
 
+	<link name="head_lidar">
+		<xacro:unless value="$(arg isaac)">
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find sensor_models)/meshes/livox/mid360.glb"/>
+				</geometry>
+			</visual>
+		</xacro:unless>
+	</link>
+	<joint name="head_lidar_joint" type="fixed">
+		<origin xyz="0 0 0.0985" rpy="${PI} 0 0"/>
+		<parent link="head_link01"/>
+		<child link="head_lidar"/>
+	</joint>
+
+
 	<link name="head_link02">
 		<inertial>
 			<origin xyz="0.03256533 0.02834041 0.00009476"/>
@@ -79,7 +97,7 @@
 		</inertial>
 		<visual>
 			<geometry>
-				<mesh filename="file://$(find agibot_a2_description)/meshes/body/visual/head2.obj"/>
+				<mesh filename="file://$(find agibot_a2_description)/meshes/body/visual/head2.glb"/>
 			</geometry>
 		</visual>
 		<collision>
