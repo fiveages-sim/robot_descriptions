@@ -1,0 +1,308 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    RobotEra Xbot-L legs — shared left meshes, right via scale="1 ${direction} 1"| -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="XbotlLeg" params="name direction:=1">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:property name="mesh" value="file://$(find robotera_xbotl_description)/meshes/leg"/>
+    <xacro:property name="side" value="${'l' if direction == 1 else 'r'}"/>
+
+    <link name="${prefix}leg_roll_link">
+      <inertial>
+        <origin xyz="-0.0048592 ${direction*-0.00012591} -0.0028089"/>
+        <mass value="1.7968"/>
+        <inertia ixx="0.00366" ixy="${direction*1.1643E-07}" ixz="3.4763E-05"
+                 iyy="0.0026951" iyz="${direction*-1.0471E-08}" izz="0.0025009"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/leg_roll_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="dark"/>
+      </visual>
+    </link>
+    <joint name="${prefix}leg_roll_joint" type="revolute">
+      <origin xyz="${direction*0.117} -0.032 0" rpy="0 0 -1.5708"/>
+      <parent link="waist_roll_link"/>
+      <child link="${prefix}leg_roll_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="${-0.44 if direction == 1 else -1.57}"
+             upper="${1.57 if direction == 1 else 0.44}"
+             effort="100" velocity="12"/>
+    </joint>
+
+    <link name="${prefix}leg_yaw_link">
+      <inertial>
+        <origin xyz="-0.0013538 ${direction*0.014654} 0.077538"/>
+        <mass value="0.61484"/>
+        <inertia ixx="0.0012242" ixy="${direction*-6.7208E-07}" ixz="-2.2333E-05"
+                 iyy="0.0013918" iyz="${direction*-0.00022312}" izz="0.00048585"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/leg_yaw_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="dark"/>
+      </visual>
+    </link>
+    <joint name="${prefix}leg_yaw_joint" type="revolute">
+      <origin xyz="0 0 0" rpy="3.1416 -1.5708 0"/>
+      <parent link="${prefix}leg_roll_link"/>
+      <child link="${prefix}leg_yaw_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.05" upper="1.05" effort="100" velocity="12"/>
+    </joint>
+
+    <link name="${prefix}leg_pitch_link">
+      <inertial>
+        <origin xyz="-0.0027612 ${direction*-0.078535} -0.0083028"/>
+        <mass value="6.0376"/>
+        <inertia ixx="0.022941" ixy="${direction*0.00028796}" ixz="-1.0894E-05"
+                 iyy="0.009392" iyz="${direction*-0.00018948}" izz="0.030616"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/leg_pitch_link.obj" scale="1 ${direction} 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}/leg_pitch_link.obj" scale="1 ${direction} 1"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}leg_pitch_joint" type="revolute">
+      <origin xyz="0 0 0.1455" rpy="${direction*-1.5708} 0.5236 0"/>
+      <parent link="${prefix}leg_yaw_link"/>
+      <child link="${prefix}leg_pitch_link"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="${-1.57 if direction == 1 else -1.31}"
+             upper="${1.31 if direction == 1 else 1.57}"
+             effort="250" velocity="12"/>
+    </joint>
+
+    <link name="${prefix}knee_link">
+      <inertial>
+        <origin xyz="0.015712 ${direction*-0.10775} 6.6184E-06"/>
+        <mass value="2.2288"/>
+        <inertia ixx="0.0086876" ixy="${direction*-0.00019539}" ixz="7.1643E-07"
+                 iyy="0.0015757" iyz="${direction*2.0711E-06}" izz="0.008833"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/knee_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}/knee_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}knee_joint" type="revolute">
+      <origin xyz="0 ${direction*-0.32} 0" rpy="0 0 ${direction*-1.0472}"/>
+      <parent link="${prefix}leg_pitch_link"/>
+      <child link="${prefix}knee_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="${-1.05 if direction == 1 else -1.1}"
+             upper="${1.1 if direction == 1 else 1.05}"
+             effort="250" velocity="12"/>
+    </joint>
+
+    <link name="${prefix}ankle_pitch_link">
+      <inertial>
+        <origin xyz="0 0 0"/>
+        <mass value="0.043455"/>
+        <inertia ixx="1.2169E-06" ixy="0" ixz="0" iyy="6.4906E-06" iyz="0" izz="6.7102E-06"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/ankle_pitch_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+    </link>
+    <joint name="${prefix}ankle_pitch_joint" type="revolute">
+      <origin xyz="0 ${direction*-0.32} 0" rpy="3.1416 0 ${direction*0.5236}"/>
+      <parent link="${prefix}knee_link"/>
+      <child link="${prefix}ankle_pitch_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="${-0.7 if direction == 1 else -0.87}"
+             upper="${0.87 if direction == 1 else 0.7}"
+             effort="100" velocity="12"/>
+    </joint>
+
+    <link name="${prefix}ankle_roll_link">
+      <inertial>
+        <origin xyz="-1.1259E-06 ${direction*-0.033529} 0.02588"/>
+        <mass value="0.34252"/>
+        <inertia ixx="0.0008483" ixy="${direction*1.4122E-10}" ixz="-1.6584E-08"
+                 iyy="0.00093602" iyz="${direction*1.1635E-05}" izz="0.00012759"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/ankle_roll_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}/ankle_roll_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}ankle_roll_joint" type="revolute">
+      <origin xyz="0 0 0" rpy="0 ${direction*-1.5708} ${1.5708*(1+direction)}"/>
+      <parent link="${prefix}ankle_pitch_link"/>
+      <child link="${prefix}ankle_roll_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-0.44" upper="0.44" effort="100" velocity="12"/>
+    </joint>
+
+    <link name="${prefix}foot_ee_link">
+      <inertial>
+        <origin xyz="0 0 0.0055"/>
+        <mass value="0.000975"/>
+        <inertia ixx="4.0625E-09" ixy="0" ixz="0" iyy="4.0625E-09" iyz="0" izz="4.0625E-09"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/foot_ee_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+    </link>
+    <joint name="${prefix}foot_ee_joint" type="fixed">
+      <origin xyz="0 ${direction*-0.056} 0" rpy="-1.5708 -1.5708 0"/>
+      <parent link="${prefix}ankle_roll_link"/>
+      <child link="${prefix}foot_ee_link"/>
+    </joint>
+
+    <!-- Decorative parallel linkages / motors (fixed). -->
+    <link name="${prefix}ankle_pitch_motor1_link">
+      <inertial>
+        <origin xyz="3.0355E-09 ${direction*-0.01852} 0.011673"/>
+        <mass value="0.031448"/>
+        <inertia ixx="1.2663E-05" ixy="0" ixz="0" iyy="3.8092E-06" iyz="${direction*-4.6528E-07}" izz="1.5928E-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/ankle_pitch_motor1_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+    </link>
+    <joint name="${prefix}ankle_pitch_motor1_joint" type="fixed">
+      <origin xyz="0.015 ${direction*-0.052915} -0.023" rpy="3.1416 0 ${direction*1.7764}"/>
+      <parent link="${prefix}knee_link"/>
+      <child link="${prefix}ankle_pitch_motor1_link"/>
+    </joint>
+
+    <link name="${prefix}ankle_pitch_linkage1_link">
+      <inertial>
+        <origin xyz="0.13224 ${direction*0.0023241} -2.7751E-05"/>
+        <mass value="0.066732"/>
+        <inertia ixx="1.4166E-06" ixy="${direction*5.8871E-06}" ixz="-7.0295E-08"
+                 iyy="0.00047775" iyz="${direction*8.4139E-09}" izz="0.00047846"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/ankle_pitch_linkage1_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+    </link>
+    <joint name="${prefix}ankle_pitch_linkage1_joint" type="fixed">
+      <origin xyz="0 ${direction*-0.045} 0" rpy="0 0 ${direction*-2.9182}"/>
+      <parent link="${prefix}ankle_pitch_motor1_link"/>
+      <child link="${prefix}ankle_pitch_linkage1_link"/>
+    </joint>
+
+    <link name="${prefix}ankle_pitch_motor2_link">
+      <inertial>
+        <origin xyz="-0.01852 ${direction*1.4156E-09} 0.011673"/>
+        <mass value="0.031448"/>
+        <inertia ixx="3.8092E-06" ixy="0" ixz="${direction*-4.6528E-07}"
+                 iyy="1.2663E-05" iyz="0" izz="1.5928E-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/ankle_pitch_motor2_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+    </link>
+    <joint name="${prefix}ankle_pitch_motor2_joint" type="fixed">
+      <origin xyz="0.0175 ${direction*-0.12287} 0.023" rpy="0 0 ${direction*0.20869}"/>
+      <parent link="${prefix}knee_link"/>
+      <child link="${prefix}ankle_pitch_motor2_link"/>
+    </joint>
+
+    <link name="${prefix}ankle_pitch_linkage2_link">
+      <inertial>
+        <origin xyz="0.097472 ${direction*-0.002115} -2.9693E-05"/>
+        <mass value="0.066732"/>
+        <inertia ixx="1.4166E-06" ixy="${direction*-5.8871E-06}" ixz="0"
+                 iyy="0.00047775" iyz="0" izz="0.00047846"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/ankle_pitch_linkage2_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+    </link>
+    <joint name="${prefix}ankle_pitch_linkage2_joint" type="fixed">
+      <origin xyz="${direction*-0.045} 0 0" rpy="0 0 ${direction*-1.8165}"/>
+      <parent link="${prefix}ankle_pitch_motor2_link"/>
+      <child link="${prefix}ankle_pitch_linkage2_link"/>
+    </joint>
+
+    <link name="${prefix}knee_motor_link">
+      <inertial>
+        <origin xyz="0.0052166 0 0.023896"/>
+        <mass value="0.1"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/knee_motor_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+    </link>
+    <joint name="${prefix}knee_motor_joint" type="fixed">
+      <origin xyz="-0.006 ${direction*-0.1401} 0" rpy="0 0 ${direction*0.043633}"/>
+      <parent link="${prefix}leg_pitch_link"/>
+      <child link="${prefix}knee_motor_link"/>
+    </joint>
+
+    <link name="${prefix}knee_linkage_link">
+      <inertial>
+        <origin xyz="0.095126 0 0.017621"/>
+        <mass value="0.05"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/knee_linkage_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+    </link>
+    <joint name="${prefix}knee_linkage_joint" type="fixed">
+      <origin xyz="0.045 0 0" rpy="0 0 ${direction*-1.5811}"/>
+      <parent link="${prefix}knee_motor_link"/>
+      <child link="${prefix}knee_linkage_link"/>
+    </joint>
+
+    <link name="${side}_foot_bottom_link"/>
+    <joint name="${side}foot_bottom_joint" type="fixed">
+      <origin xyz="0 0 0"/>
+      <parent link="${prefix}foot_ee_link"/>
+      <child link="${side}_foot_bottom_link"/>
+    </joint>
+  </xacro:macro>
+</robot>

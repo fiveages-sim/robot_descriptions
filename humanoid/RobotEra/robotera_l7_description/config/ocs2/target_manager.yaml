@@ -1,0 +1,12 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.3
+    angular_scale: 0.5
+    enable_vr: true
+    enable_head_control: false
+
+    # fixed-base WBC markers in base_link; full_body launch may override to world
+    marker_fixed_frame: base_link
+    vr_follow_frame: base_link
+
+    enable_wbc_head_tracking_marker: false

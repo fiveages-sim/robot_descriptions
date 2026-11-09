@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Component visualization for RobotEra L7                                      | -->
+<!-- =================================================================================== -->
+<robot name="RobotEraL7Component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="upper"/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+  <xacro:property name="eef_fixed"
+                  value="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"/>
+
+  <xacro:include filename="$(find robotera_l7_description)/xacro/body.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/arm.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/head.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/hand.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/leg.xacro"/>
+
+  <xacro:if value="${'$(arg type)' == 'upper'}">
+    <xacro:L7Body/>
+    <xacro:L7Arm name="left" direction="1"/>
+    <xacro:L7Arm name="right" direction="-1"/>
+    <xacro:L7Head/>
+    <xacro:L7LeftHand parent_link="left_hand_flange_link" fixed_joints="${eef_fixed}"/>
+    <xacro:L7RightHand parent_link="right_hand_flange_link" fixed_joints="${eef_fixed}"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left'}">
+    <link name="torso_base_link"/>
+    <xacro:L7Arm name="left" direction="1"/>
+    <xacro:L7LeftHand parent_link="left_hand_flange_link" fixed_joints="${eef_fixed}"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right'}">
+    <link name="torso_base_link"/>
+    <xacro:L7Arm name="right" direction="-1"/>
+    <xacro:L7RightHand parent_link="right_hand_flange_link" fixed_joints="${eef_fixed}"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left_leg'}">
+    <link name="base_link"/>
+    <xacro:L7Leg name="left" direction="1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right_leg'}">
+    <link name="base_link"/>
+    <xacro:L7Leg name="right" direction="-1"/>
+  </xacro:if>
+</robot>

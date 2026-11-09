@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Complete Robot Description for RobotEra Xbot-L                               | -->
+<!-- =================================================================================== -->
+<robot name="robotera_xbotl" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="isaac" default="false"/>
+  <!-- OCS2 / planning injects eef_fixed_joints:=true to freeze finger DOFs. -->
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+  <xacro:property name="eef_fixed"
+                  value="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"/>
+
+  <xacro:include filename="$(find robotera_xbotl_description)/xacro/body.xacro"/>
+  <xacro:include filename="$(find robotera_xbotl_description)/xacro/arm.xacro"/>
+  <xacro:include filename="$(find robotera_xbotl_description)/xacro/leg.xacro"/>
+  <xacro:include filename="$(find robotera_xbotl_description)/xacro/hand.xacro"/>
+
+  <xacro:XbotlBody isaac="$(arg isaac)"/>
+  <xacro:XbotlArm name="left" direction="1"/>
+  <xacro:XbotlArm name="right" direction="-1"/>
+  <xacro:XbotlLeg name="left" direction="1"/>
+  <xacro:XbotlLeg name="right" direction="-1"/>
+  <xacro:XbotlLeftHand parent_link="left_wrist_yaw_link" fixed_joints="${eef_fixed}"/>
+  <xacro:XbotlRightHand parent_link="right_wrist_yaw_link" fixed_joints="${eef_fixed}"/>
+</robot>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- iface_mode: mix = pos/vel/effort (mock/gz); position = pos only (Isaac). -->
+  <xacro:macro name="L7JointInterfaces" params="jname iface_mode:=mix">
+    <joint name="${jname}">
+      <command_interface name="position"/>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <command_interface name="velocity"/>
+        <command_interface name="effort"/>
+      </xacro:if>
+      <state_interface name="position"/>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </xacro:if>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="L7WaistInterfaces" params="iface_mode:=mix">
+    <xacro:L7JointInterfaces jname="waist_yaw_joint" iface_mode="${iface_mode}"/>
+    <xacro:L7JointInterfaces jname="waist_roll_joint" iface_mode="${iface_mode}"/>
+    <xacro:L7JointInterfaces jname="waist_pitch_joint" iface_mode="${iface_mode}"/>
+  </xacro:macro>
+
+  <xacro:macro name="L7ArmInterfaces" params="name iface_mode:=mix">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:L7JointInterfaces jname="${prefix}shoulder_pitch_joint" iface_mode="${iface_mode}"/>
+    <xacro:L7JointInterfaces jname="${prefix}shoulder_roll_joint" iface_mode="${iface_mode}"/>
+    <xacro:L7JointInterfaces jname="${prefix}arm_yaw_joint" iface_mode="${iface_mode}"/>
+    <xacro:L7JointInterfaces jname="${prefix}elbow_pitch_joint" iface_mode="${iface_mode}"/>
+    <xacro:L7JointInterfaces jname="${prefix}elbow_yaw_joint" iface_mode="${iface_mode}"/>
+    <xacro:L7JointInterfaces jname="${prefix}wrist_pitch_joint" iface_mode="${iface_mode}"/>
+    <xacro:L7JointInterfaces jname="${prefix}wrist_roll_joint" iface_mode="${iface_mode}"/>
+  </xacro:macro>
+</robot>

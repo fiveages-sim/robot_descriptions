@@ -1,0 +1,253 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    RobotEra Xbot-L body (materials, base, neck, camera, waist)                  | -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <material name="silver">
+    <color rgba="0.8 0.8 0.8 1.0"/>
+  </material>
+  <material name="dark">
+    <color rgba="0.1 0.1 0.1 1"/>
+  </material>
+  <material name="light-grey">
+    <color rgba="0.55 0.55 0.55 1"/>
+  </material>
+
+
+  <xacro:macro name="XbotlBody" params="isaac:=false">
+  <link name="base">
+    <visual>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="floating_base" type="fixed">
+    <parent link="base"/>
+    <child link="base_link"/>
+  </joint>
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0033599 -0.00084664 0.1336"/>
+      <mass value="9.9576"/>
+      <inertia
+          ixx="0.089966"
+          ixy="-1.1578E-05"
+          ixz="-0.00027182"
+          iyy="0.060002"
+          iyz="-2.1263E-05"
+          izz="0.056135"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find robotera_xbotl_description)/meshes/body/base_link.glb"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0. 0.1"/>
+      <geometry>
+        <box size="0.4 0.4 0.4"/>
+      </geometry>
+    </collision>
+  </link>
+  <!--neck -->
+  <link name="neck_base_link">
+    <inertial>
+      <origin xyz="3.5639E-05 4.7576E-05 -0.031296"/>
+      <mass value="0.61964"/>
+      <inertia
+          ixx="0.00027591"
+          ixy="4.4922E-07"
+          ixz="4.4668E-07"
+          iyy="0.00029054"
+          iyz="3.5279E-07"
+          izz="0.00047326"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find robotera_xbotl_description)/meshes/body/neck_base_link.STL"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find robotera_xbotl_description)/meshes/body/neck_base_link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_base_joint" type="fixed">
+    <origin xyz="0 0 0.4"/>
+    <parent link="base_link"/>
+    <child link="neck_base_link"/>
+  </joint>
+  <link name="neck_yaw_link">
+    <inertial>
+      <origin xyz="0.023237 0.004247 0.035877"/>
+      <mass value="0.64979"/>
+      <inertia
+          ixx="0.00033722"
+          ixy="7.322E-07"
+          ixz="1.9679E-05"
+          iyy="0.00056036"
+          iyz="2.7926E-07"
+          izz="0.0003788"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find robotera_xbotl_description)/meshes/body/neck_yaw_link.STL"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find robotera_xbotl_description)/meshes/body/neck_yaw_link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_yaw_joint" type="fixed">
+    <parent link="neck_base_link"/>
+    <child link="neck_yaw_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="50" velocity="7"/>
+  </joint>
+  <link name="neck_pitch_link">
+    <inertial>
+      <origin xyz="-0.0021819 -0.087991 0.00035708"/>
+      <mass value="1.3216"/>
+      <inertia
+          ixx="0.0064217"
+          ixy="-0.0010336"
+          ixz="-1.3429E-07"
+          iyy="0.0051542"
+          iyz="3.6968E-07"
+          izz="0.0050103"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find robotera_xbotl_description)/meshes/body/head.glb"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find robotera_xbotl_description)/meshes/body/head.glb"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_pitch_joint" type="fixed">
+    <origin xyz="0.032 0 0.044" rpy="-1.5708 0 0"/>
+    <parent link="neck_yaw_link"/>
+    <child link="neck_pitch_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.44" upper="0.44" effort="50" velocity="7"/>
+  </joint>
+  <!--realsense -->
+  <link name="realsense_link">
+    <inertial>
+      <origin xyz="0.047424 0.00014285 -0.0082421"/>
+      <mass value="0.076907"/>
+      <inertia
+          ixx="8.6659E-06"
+          ixy="9.2766E-08"
+          ixz="-9.1747E-08"
+          iyy="9.4298E-05"
+          iyz="9.0199E-08"
+          izz="9.4996E-05"/>
+    </inertial>
+    <xacro:unless value="${isaac}">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d455.glb"/>
+        </geometry>
+      </visual>
+    </xacro:unless>
+  </link>
+  <joint name="realsense_joint" type="fixed">
+    <origin xyz="0.066371 -0.12536 0.0475" rpy="-0.34907 1.5708 0"/>
+    <parent link="neck_pitch_link"/>
+    <child link="realsense_link"/>
+  </joint>
+  <!--waist  -->
+  <link
+      name="waist_yaw_link">
+    <inertial>
+      <origin
+          xyz="0.0018236 3.106E-08 0.015461"
+      />
+      <mass
+          value="1.9214"/>
+      <inertia
+          ixx="0.0032668"
+          ixy="-2.5545E-08"
+          ixz="-4.7672E-05"
+          iyy="0.0027745"
+          iyz="3.1696E-09"
+          izz="0.0043665"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find robotera_xbotl_description)/meshes/body/waist_yaw_link.STL"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+  </link>
+  <joint name="waist_yaw_joint" type="revolute">
+    <origin xyz="0 0 -0.0975"/>
+    <parent link="base_link"/>
+    <child link="waist_yaw_link"/>
+    <axis xyz="0 0 -1"/>
+    <limit
+        lower="-1.57"
+        upper="1.57"
+        effort="100"
+        velocity="12"/>
+  </joint>
+  <link
+      name="waist_roll_link">
+    <inertial>
+      <origin
+          xyz="-8.7577E-07 -0.020553 -0.088247"
+      />
+      <mass
+          value="5.1053"/>
+      <inertia
+          ixx="0.0067829"
+          ixy="-2.98E-09"
+          ixz="-2.5393E-07"
+          iyy="0.011425"
+          iyz="-1.2239E-05"
+          izz="0.014655"/>
+    </inertial>
+    <visual>
+
+      <geometry>
+        <mesh
+            filename="file://$(find robotera_xbotl_description)/meshes/body/waist_roll_link.STL"/>
+      </geometry>
+      <material
+          name="dark"/>
+    </visual>
+  </link>
+  <joint
+      name="waist_roll_joint"
+      type="revolute">
+    <origin
+        xyz="0 0 0"
+        rpy="1.5708 0 1.5708"/>
+    <parent
+        link="waist_yaw_link"/>
+    <child
+        link="waist_roll_link"/>
+    <axis
+        xyz="0 0 -1"/>
+    <limit
+        lower="-0.26"
+        upper="0.26"
+        effort="100"
+        velocity="12"/>
+    
+  </joint>
+
+  </xacro:macro>
+</robot>

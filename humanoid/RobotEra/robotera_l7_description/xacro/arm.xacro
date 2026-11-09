@@ -1,0 +1,273 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    RobotEra L7 arms — shared left meshes, right via scale="1 ${direction} 1"    | -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="L7Arm" params="name direction:=1">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:property name="mesh" value="file://$(find robotera_l7_description)/meshes/arm"/>
+
+    <link name="${prefix}arm_flange_link">
+      <inertial>
+        <origin xyz="0 0 0.0025"/>
+        <mass value="1.375E-08"/>
+        <inertia ixx="5.7292E-14" ixy="0" ixz="0" iyy="5.7292E-14" iyz="0" izz="5.7292E-14"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/arm_flange_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="1 0.54902 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="${prefix}arm_flange_joint" type="fixed">
+      <origin xyz="0 ${direction*0.112} 0.243"/>
+      <parent link="torso_base_link"/>
+      <child link="${prefix}arm_flange_link"/>
+    </joint>
+
+    <link name="${prefix}arm_base_link">
+      <inertial>
+        <origin xyz="4.1581E-05 ${direction*0.023631} 3.5535E-05"/>
+        <mass value="0.99112"/>
+        <inertia ixx="0.000802" ixy="${direction*1E-06}" ixz="${direction*-1E-06}"
+                 iyy="0.000861" iyz="${direction*-3E-06}" izz="0.000807"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/arm_base_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.75294 0.75294 0.75294 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="${prefix}arm_base_joint" type="fixed">
+      <origin xyz="0 0 0"/>
+      <parent link="${prefix}arm_flange_link"/>
+      <child link="${prefix}arm_base_link"/>
+    </joint>
+
+    <link name="${prefix}shoulder_pitch_link">
+      <inertial>
+        <origin xyz="0.00013365 ${direction*0.10261} -0.0035426"/>
+        <mass value="0.46431"/>
+        <inertia ixx="0.000868" ixy="${direction*7.2517E-07}" ixz="-7.5289E-07"
+                 iyy="0.000868" iyz="${direction*0.000137}" izz="0.001185"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/shoulder_pitch_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.75294 0.75294 0.75294 1"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}/shoulder_pitch_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}shoulder_pitch_joint" type="revolute">
+      <origin xyz="0 0 0"/>
+      <parent link="${prefix}arm_base_link"/>
+      <child link="${prefix}shoulder_pitch_link"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-2.79" upper="2.79" effort="95" velocity="4.19"/>
+    </joint>
+
+    <link name="${prefix}shoulder_roll_link">
+      <inertial>
+        <origin xyz="-0.0032462 ${direction*4.0571E-06} -0.091652"/>
+        <mass value="2.1944"/>
+        <inertia ixx="0.019872" ixy="${direction*-7.0549E-07}" ixz="0.000639"
+                 iyy="0.019903" iyz="${direction*7E-06}" izz="0.00221"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/shoulder_roll_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.75294 0.75294 0.75294 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 -0.13"/>
+        <geometry>
+          <cylinder radius="0.045" length="0.13"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}shoulder_roll_joint" type="revolute">
+      <origin xyz="0 ${direction*0.133} -0.016"/>
+      <parent link="${prefix}shoulder_pitch_link"/>
+      <child link="${prefix}shoulder_roll_link"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="${-0.56 if direction == 1 else -2.53}"
+             upper="${2.53 if direction == 1 else 0.56}"
+             effort="95" velocity="4.19"/>
+    </joint>
+
+    <link name="${prefix}arm_yaw_link">
+      <inertial>
+        <origin xyz="0.003519 ${direction*0.00031494} -0.26353"/>
+        <mass value="0.46223"/>
+        <inertia ixx="0.00118" ixy="${direction*-1E-06}" ixz="0.000136"
+                 iyy="0.000868" iyz="${direction*-7.2691E-07}" izz="0.000873"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/arm_yaw_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.75294 0.75294 0.75294 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="${prefix}arm_yaw_joint" type="revolute">
+      <origin xyz="0 0 0"/>
+      <parent link="${prefix}shoulder_roll_link"/>
+      <child link="${prefix}arm_yaw_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="${-4.36 if direction == 1 else -1.22}"
+             upper="${1.22 if direction == 1 else 4.36}"
+             effort="95" velocity="4.19"/>
+    </joint>
+
+    <link name="${prefix}elbow_pitch_link">
+      <inertial>
+        <origin xyz="-0.0056997 ${direction*-0.0045023} -0.03171"/>
+        <mass value="1.6034"/>
+        <inertia ixx="0.004377" ixy="${direction*3.6E-05}" ixz="-0.00054"
+                 iyy="0.004463" iyz="${direction*0.000215}" izz="0.001464"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/elbow_pitch_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.75294 0.75294 0.75294 1"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}/elbow_pitch_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}elbow_pitch_joint" type="revolute">
+      <origin xyz="0.016 0 -0.294"/>
+      <parent link="${prefix}arm_yaw_link"/>
+      <child link="${prefix}elbow_pitch_link"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-2.36" upper="0.7" effort="95" velocity="4.19"/>
+    </joint>
+
+    <link name="${prefix}elbow_yaw_link">
+      <inertial>
+        <origin xyz="-0.0006503 ${direction*-0.0023824} 0.067809"/>
+        <mass value="0.91938"/>
+        <inertia ixx="0.001459" ixy="${direction*-1.3E-05}" ixz="-3E-05"
+                 iyy="0.001214" iyz="${direction*8E-06}" izz="0.00085"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/elbow_yaw_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.75294 0.75294 0.75294 1"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}/elbow_yaw_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}elbow_yaw_joint" type="revolute">
+      <origin xyz="-0.016 0 -0.239"/>
+      <parent link="${prefix}elbow_pitch_link"/>
+      <child link="${prefix}elbow_yaw_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.79" upper="2.79" effort="35" velocity="4.19"/>
+    </joint>
+
+    <link name="${prefix}wrist_pitch_link">
+      <inertial>
+        <origin xyz="0.0064749 ${direction*-0.00014717} 0.00023213"/>
+        <mass value="0.59056"/>
+        <inertia ixx="0.00033" ixy="${direction*-2E-06}" ixz="3E-06"
+                 iyy="0.000318" iyz="${direction*-2E-06}" izz="0.000334"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/wrist_pitch_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.75294 0.75294 0.75294 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="${prefix}wrist_pitch_joint" type="revolute">
+      <origin xyz="0 0 0"/>
+      <parent link="${prefix}elbow_yaw_link"/>
+      <child link="${prefix}wrist_pitch_link"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.79" upper="0.79" effort="35" velocity="4.19"/>
+    </joint>
+
+    <link name="${prefix}wrist_roll_link">
+      <inertial>
+        <origin xyz="0.015728 ${direction*8.3393E-10} -0.030005"/>
+        <mass value="0.091311"/>
+        <inertia ixx="6.9E-05" ixy="${direction*9.3969E-12}" ixz="-3.1E-05"
+                 iyy="8.9E-05" iyz="${direction*3.3842E-13}" izz="5.2E-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/wrist_roll_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.75294 0.75294 0.75294 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 -0.062"/>
+        <geometry>
+          <cylinder radius="0.025" length="0.015"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}wrist_roll_joint" type="revolute">
+      <origin xyz="0 0 0"/>
+      <parent link="${prefix}wrist_pitch_link"/>
+      <child link="${prefix}wrist_roll_link"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-1.57" upper="1.57" effort="35" velocity="4.19"/>
+    </joint>
+
+    <link name="${prefix}hand_flange_link">
+      <inertial>
+        <origin xyz="0 0 0.0025"/>
+        <mass value="0.000000001"/>
+        <inertia ixx="0.00000000001" ixy="0" ixz="0" iyy="0.00000000001" iyz="0" izz="0.00000000001"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/hand_flange_link.STL" scale="1 ${direction} 1"/>
+        </geometry>
+        <material name="">
+          <color rgba="1 0.54902 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="${prefix}hand_flange_joint" type="fixed">
+      <origin xyz="0 0 -0.051" rpy="3.1415926 0 0"/>
+      <parent link="${prefix}wrist_roll_link"/>
+      <child link="${prefix}hand_flange_link"/>
+    </joint>
+  </xacro:macro>
+</robot>

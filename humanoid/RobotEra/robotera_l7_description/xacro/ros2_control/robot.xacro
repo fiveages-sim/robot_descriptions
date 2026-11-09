@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot name="robotera_l7" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
+  <xacro:arg name="gazebo" default="false"/>
+  <!-- Control stack targets upper-body + waist; keep default variant:=upper. -->
+  <xacro:arg name="variant" default="upper"/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+
+  <xacro:include filename="$(find robotera_l7_description)/xacro/robot.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/ros2_control/interfaces.xacro"/>
+
+  <xacro:property name="sim_iface_mode"
+    value="${'position' if '$(arg ros2_control_hardware_type)' == 'isaac' else 'mix'}"/>
+
+  <ros2_control name="robotera_l7_system" type="system">
+    <hardware>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'gz'}">
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </xacro:if>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'mock_components'}">
+        <plugin>mock_components/GenericSystem</plugin>
+      </xacro:if>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
+        <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+        <param name="joint_commands_topic">/isaac/joint_commands</param>
+        <param name="joint_states_topic">/isaac/joint_states</param>
+        <param name="sum_wrapped_joint_states">false</param>
+        <param name="initialize_commands_from_state">true</param>
+      </xacro:if>
+      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'real'}">
+        <plugin>mock_components/GenericSystem</plugin>
+      </xacro:if>
+    </hardware>
+
+    <xacro:L7WaistInterfaces iface_mode="${sim_iface_mode}"/>
+    <xacro:L7ArmInterfaces name="left" iface_mode="${sim_iface_mode}"/>
+    <xacro:L7ArmInterfaces name="right" iface_mode="${sim_iface_mode}"/>
+  </ros2_control>
+
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find robotera_l7_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

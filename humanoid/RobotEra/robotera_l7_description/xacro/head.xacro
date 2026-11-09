@@ -1,0 +1,395 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    RobotEra L7 head (neck + sensors)                                     | -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="L7Head">
+  <link
+    name="neck_flange_link">
+    <inertial>
+      <origin
+        xyz="-8.6736E-19 -3.5017E-18 0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="1.375E-08" />
+      <inertia
+        ixx="5.7292E-14"
+        ixy="-2.8571E-30"
+        ixz="5.6547E-30"
+        iyy="5.7292E-14"
+        iyz="-5.801E-31"
+        izz="5.7292E-14" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_flange_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.54902 0 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_flange_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="neck_flange_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0.303"
+      rpy="0 0 0" />
+    <parent
+      link="torso_base_link" />
+    <child
+      link="neck_flange_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <!--   head part    -->
+  <joint
+    name="neck_base_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="neck_flange_link" />
+    <child
+      link="neck_base_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+ <link
+    name="neck_base_link">
+    <inertial>
+      <origin
+        xyz="0.00044058 -3.1316E-05 0.020437"
+        rpy="0 0 0" />
+      <mass
+        value="0.54879" />
+      <inertia
+        ixx="0.000336"
+        ixy="1E-06"
+        ixz="-1E-06"
+        iyy="0.000311"
+        iyz="2.377E-07"
+        izz="0.000379" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_base_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <link
+    name="neck_yaw_link">
+    <inertial>
+      <origin
+        xyz="0.033363 0.00038788 0.085731"
+        rpy="0 0 0" />
+      <mass
+        value="0.57738" />
+      <inertia
+        ixx="0.000363"
+        ixy="1E-06"
+        ixz="-9E-05"
+        iyy="0.000478"
+        iyz="1E-06"
+        izz="0.000427" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_yaw_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="neck_yaw_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="neck_base_link" />
+    <child
+      link="neck_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.05"
+      upper="1.05"
+      effort="35"
+      velocity="4.19" />
+  </joint>
+  <link
+    name="neck_pitch_link">
+    <inertial>
+      <origin
+        xyz="-0.018182 0.00091372 0.11159"
+        rpy="0 0 0" />
+      <mass
+        value="1.4643" />
+      <inertia
+        ixx="0.00728"
+        ixy="0.0"
+        ixz="0.000915"
+        iyy="0.008753"
+        iyz="0.0"
+        izz="0.006659" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_pitch_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="neck_pitch_joint"
+    type="fixed">
+    <origin
+      xyz="0.04 0 0.0905"
+      rpy="0 0 0" />
+    <parent
+      link="neck_yaw_link" />
+    <child
+      link="neck_pitch_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.17"
+      upper="0.48"
+      effort="35"
+      velocity="4.19" />
+  </joint>
+  <link
+    name="lidar_link">
+    <inertial>
+      <origin
+        xyz="3.4694E-18 -6.9344E-18 0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="1.375E-08" />
+      <inertia
+        ixx="5.7292E-14"
+        ixy="9.2152E-31"
+        ixz="2.068E-29"
+        iyy="5.7292E-14"
+        iyz="5.8797E-30"
+        izz="5.7292E-14" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/lidar_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.54902 0 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/lidar_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="lidar_joint"
+    type="fixed">
+    <origin
+      xyz="-0.014255 0 0.10675"
+      rpy="0 0 0" />
+    <parent
+      link="neck_pitch_link" />
+    <child
+      link="lidar_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="mic_link">
+    <inertial>
+      <origin
+        xyz="6.9389E-18 -1.1928E-20 0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="1.375E-08" />
+      <inertia
+        ixx="5.7292E-14"
+        ixy="8.366E-31"
+        ixz="5.1463E-30"
+        iyy="5.7292E-14"
+        iyz="3.6879E-30"
+        izz="5.7292E-14" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/mic_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.54902 0 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/mic_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="mic_joint"
+    type="fixed">
+    <origin
+      xyz="-0.014255 0 0.18884"
+      rpy="0 0 0" />
+    <parent
+      link="neck_pitch_link" />
+    <child
+      link="mic_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="stereo_link">
+    <inertial>
+      <origin
+        xyz="1.3878E-17 -3.5421E-18 0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="1.375E-08" />
+      <inertia
+        ixx="5.7292E-14"
+        ixy="-1.9198E-30"
+        ixz="6.3109E-29"
+        iyy="5.7292E-14"
+        iyz="2.5778E-31"
+        izz="5.7292E-14" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/stereo_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.54902 0 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/stereo_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="stereo_joint"
+    type="fixed">
+    <origin
+      xyz="0.059712 0 0.13282"
+      rpy="0 0.5236 0" />
+    <parent
+      link="neck_pitch_link" />
+    <child
+      link="stereo_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,561 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    RobotEra L7 body (base, waist, torso)                                 | -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="L7Body">
+  <link name="base">
+    <visual>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="floating_base" type="fixed">
+    <parent link="base"/>
+    <child link="pelvis"/>
+  </joint>
+
+<link name="pelvis">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.01" />
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="-0.105 0.115 -0.079" rpy="0 1.57 0"/>
+      <geometry>
+        <cylinder radius="0.06" length="0.05"/>
+      </geometry>
+    </collision>
+
+    <collision>
+      <origin xyz="-0.105 -0.115 -0.079" rpy="0 1.57 0"/>
+      <geometry>
+        <cylinder radius="0.06" length="0.05"/>
+      </geometry>
+    </collision>
+
+    <!-- <collision>
+      <origin
+        xyz="0.05 0. -0.06"
+        rpy="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.14 0.04"/>
+      </geometry>
+    </collision> -->
+
+    <collision>
+      <origin
+        xyz="0.07 0. -0.06"
+        rpy="0 0 0"/>
+      <!-- <geometry>
+        <box size="0.02 0.20 0.04"/>
+      </geometry> -->
+      <geometry>
+        <box size="0.01 0.26 0.04"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.12443 4.6517E-05 -0.0072396"
+        rpy="0 0 0" />
+      <mass
+        value="4.6837" />
+      <inertia
+        ixx="0.0662"
+        ixy="0"
+        ixz="-0.0006"
+        iyy="0.0139"
+        iyz="0"
+        izz="0.071" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/base_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+
+  <joint name="pelvis_to_base_link" type="fixed">
+    <origin xyz="0.04724 0 -0.0707" rpy="0 0 0" />
+    <parent link="pelvis"/>
+    <child link="base_link"/>
+  </joint> 
+<!--   waist part    -->
+  <link
+    name="waist_flange_link">
+    <inertial>
+      <origin
+        xyz="0 -3.4487E-18 0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="1.375E-08" />
+      <inertia
+        ixx="5.7292E-14"
+        ixy="2.6168E-30"
+        ixz="-3.9998E-31"
+        iyy="5.7292E-14"
+        iyz="-1.2292E-30"
+        izz="5.7292E-14" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_flange_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.54902 0 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_flange_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="waist_flange_joint"
+    type="fixed">
+    <origin
+      xyz="-0.04724 0 0.0367"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="waist_flange_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <joint
+    name="waist_base_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="waist_flange_link" />
+    <child
+      link="waist_base_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+<link
+    name="waist_base_link">
+    <inertial>
+      <origin
+        xyz="-0.00090253 -3.8886E-05 -0.022326"
+        rpy="0 0 0" />
+      <mass
+        value="1.0597" />
+      <inertia
+        ixx="0.0011"
+        ixy="7.3313E-07"
+        ixz="6.9671E-07"
+        iyy="0.0011"
+        iyz="1.5872E-06"
+        izz="0.0013" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_base_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <link
+    name="waist_yaw_link">
+    <inertial>
+      <origin
+        xyz="0.0090574 2.5517E-09 -0.018735"
+        rpy="0 0 0" />
+      <mass
+        value="0.20427" />
+      <inertia
+        ixx="0.0001"
+        ixy="9.2093E-11"
+        ixz="5.1666E-07"
+        iyy="0.0001"
+        iyz="-7.1818E-11"
+        izz="0.0001" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_yaw_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="waist_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0.034"
+      rpy="0 0 0" />
+    <parent
+      link="waist_base_link" />
+    <child
+      link="waist_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="110"
+      velocity="4.19" />
+  </joint>
+  <link
+    name="waist_roll_link">
+    <inertial>
+      <origin
+        xyz="-3.1889E-09 -3.1609E-09 -4.8745E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.083945" />
+      <inertia
+        ixx="6.4218E-06"
+        ixy="7.6098E-14"
+        ixz="-1.8377E-12"
+        iyy="6.968E-06"
+        iyz="7.7458E-13"
+        izz="1.1249E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_roll_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_roll_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="waist_roll_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="waist_yaw_link" />
+    <child
+      link="waist_roll_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-0.26"
+      upper="0.26"
+      effort="110"
+      velocity="4.19" />
+  </joint>
+
+ <link name="torso_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.01" />
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0.0 0. 0.215"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.2 0.26 0.34"/>
+      </geometry>
+    </collision> -->
+  </link>
+
+  <joint
+    name="waist_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="waist_roll_link" />
+    <child
+      link="torso_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.09"
+      upper="1.22"
+      effort="110"
+      velocity="4.19" />
+  </joint>
+
+  <link
+    name="waist_pitch_link">
+    <inertial>
+      <origin
+        xyz="-0.0006119 7.6707E-09 0.049479"
+        rpy="0 0 0" />
+      <mass
+        value="2.42" />
+      <inertia
+        ixx="0.0094"
+        ixy="-2.2462E-06"
+        ixz="0.0001"
+        iyy="0.0023"
+        iyz="-1.2998E-06"
+        izz="0.0094" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/waist_pitch_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+
+  <joint
+    name="torso_fixed_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0.0"
+      rpy="0 0 0" />
+    <parent
+      link="torso_link" />
+    <child
+      link="waist_pitch_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <link
+    name="torso_flange_link">
+    <inertial>
+      <origin
+        xyz="1.687E-05 -3.5059E-18 0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="1.375E-08" />
+      <inertia
+        ixx="5.7292E-14"
+        ixy="-3.9075E-30"
+        ixz="5.6717E-30"
+        iyy="5.7292E-14"
+        iyz="7.282E-30"
+        izz="5.7292E-14" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/torso_flange_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.54902 0 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/torso_flange_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="torso_flange_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0.095"
+      rpy="0 0 0" />
+    <parent
+      link="waist_pitch_link" />
+    <child
+      link="torso_flange_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+<!--   torso part    --> 
+
+  <joint
+    name="torso_base_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="torso_flange_link" />
+    <child
+      link="torso_base_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="torso_base_link">
+    <inertial>
+      <origin
+        xyz="-0.0081721 -0.00032449 0.13822"
+        rpy="0 0 0" />
+      <mass
+        value="10.42" />
+      <inertia
+        ixx="0.1209"
+        ixy="-0.0001"
+        ixz="0.0102"
+        iyy="0.1048"
+        iyz="0.0004"
+        izz="0.0665" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/torso_base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/torso_base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  </xacro:macro>
+</robot>

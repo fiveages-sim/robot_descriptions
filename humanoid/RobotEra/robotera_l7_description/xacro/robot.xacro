@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Complete Robot Description for RobotEra L7                                   | -->
+<!-- =================================================================================== -->
+<robot name="robotera_l7" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- variant: upper (default) = waist + torso + arms + head; "" / full = whole body with legs. -->
+  <xacro:arg name="variant" default="upper"/>
+  <!-- OCS2 / planning injects eef_fixed_joints:=true to freeze finger DOFs. -->
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+  <xacro:property name="eef_fixed"
+                  value="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"/>
+  <xacro:property name="include_legs"
+                  value="${'$(arg variant)' not in ['upper']}"/>
+
+  <xacro:include filename="$(find robotera_l7_description)/xacro/body.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/leg.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/arm.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/head.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/hand.xacro"/>
+
+  <xacro:L7Body/>
+  <xacro:if value="${include_legs}">
+    <xacro:L7Leg name="left" direction="1"/>
+    <xacro:L7Leg name="right" direction="-1"/>
+  </xacro:if>
+  <xacro:L7Arm name="left" direction="1"/>
+  <xacro:L7Arm name="right" direction="-1"/>
+  <xacro:L7Head/>
+  <xacro:L7LeftHand parent_link="left_hand_flange_link" fixed_joints="${eef_fixed}"/>
+  <xacro:L7RightHand parent_link="right_hand_flange_link" fixed_joints="${eef_fixed}"/>
+</robot>

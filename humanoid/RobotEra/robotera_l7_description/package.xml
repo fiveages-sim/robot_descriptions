@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robotera_l7_description</name>
+  <version>1.0.0</version>
+  <description>
+    <p>URDF Description package for RobotEra L7</p>
+    <p>This package contains configuration data, 3D models and launch files
+      for RobotEra L7 humanoid robot
+    </p>
+  </description>
+  <maintainer email="biao876990970@hotmail.com">Huang Zhenbiao</maintainer>
+  <license>MIT</license>
+
+  <exec_depend>robot_common_launch</exec_depend>
+  <exec_depend>xhand1_description</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

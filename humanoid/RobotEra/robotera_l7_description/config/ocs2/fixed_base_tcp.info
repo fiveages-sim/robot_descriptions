@@ -1,0 +1,290 @@
+; RobotEra L7 — upper-body + waist WBC (ocs2_wbc_controller / full_body.launch.py)
+; =============================================================================
+; Fixed base. State / input (17): [waist_yaw | waist_roll | waist_pitch | left×7 | right×7]
+; Use xacro variant:=upper (no legs). Fingers frozen via eef_fixed_joints:=true.
+; Frames: base_link / torso_base_link / left|right_hand_hand_ee_link
+
+model_information
+{
+    manipulatorModelType    0
+
+    baseFrame               "base_link"
+    eeFrame                 "left_hand_hand_ee_link"
+    eeFrame1                "right_hand_hand_ee_link"
+    bodyFrame               "torso_base_link"
+
+    removeJoints
+    {
+    }
+}
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      true
+}
+
+initialState
+{
+    arm
+    {
+        (0,0)   0.0     ; waist_yaw_joint
+        (1,0)   0.0     ; waist_roll_joint
+        (2,0)   0.0     ; waist_pitch_joint
+        (3,0)   0.0     ; left_shoulder_pitch_joint
+        (4,0)   0.3     ; left_shoulder_roll_joint
+        (5,0)   0.0     ; left_arm_yaw_joint
+        (6,0)  -0.5     ; left_elbow_pitch_joint
+        (7,0)   0.0     ; left_elbow_yaw_joint
+        (8,0)   0.0     ; left_wrist_pitch_joint
+        (9,0)   0.0     ; left_wrist_roll_joint
+        (10,0)  0.0     ; right_shoulder_pitch_joint
+        (11,0) -0.3     ; right_shoulder_roll_joint
+        (12,0)  0.0     ; right_arm_yaw_joint
+        (13,0) -0.5     ; right_elbow_pitch_joint
+        (14,0)  0.0     ; right_elbow_yaw_joint
+        (15,0)  0.0     ; right_wrist_pitch_joint
+        (16,0)  0.0     ; right_wrist_roll_joint
+    }
+}
+
+initialModeSchedule
+{
+    eventTimes
+    {
+    }
+
+    modeSequence
+    {
+        [0]
+        {
+            bodyMode "HM_DUAL_RELATIVE_FIXED_BASE"
+            headMode "HEAD_DISABLE"
+        }
+    }
+}
+
+ddp
+{
+    algorithm                       SLQ
+    nThreads                        5
+    threadPriority                  50
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+    preComputeRiccatiTerms          true
+    useFeedbackPolicy               false
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+mpc
+{
+    timeHorizon                     1.0
+    solutionTimeWindow              0.2
+    coldStart                       false
+    debugPrint                      false
+    mpcDesiredFrequency             100
+    mrtDesiredFrequency             500
+}
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+bodyTrackingEE
+{
+    activate true
+    muPosition 10.0
+    muOrientation 5.0
+}
+
+headTrackingEE
+{
+    activate false
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+; Input dim = 17 (no virtual SE(2) base)
+inputCost
+{
+    R
+    {
+        arm
+        {
+            scaling 1e-3
+            (0,0)   2.0     ; waist_yaw
+            (1,1)   3.0     ; waist_roll
+            (2,2)   3.0     ; waist_pitch
+            (3,3)   0.5     ; left_shoulder_pitch
+            (4,4)   0.5     ; left_shoulder_roll
+            (5,5)   0.5     ; left_arm_yaw
+            (6,6)   0.5     ; left_elbow_pitch
+            (7,7)   0.1     ; left_elbow_yaw
+            (8,8)   0.1     ; left_wrist_pitch
+            (9,9)   0.1     ; left_wrist_roll
+            (10,10) 0.5     ; right_shoulder_pitch
+            (11,11) 0.5     ; right_shoulder_roll
+            (12,12) 0.5     ; right_arm_yaw
+            (13,13) 0.5     ; right_elbow_pitch
+            (14,14) 0.1     ; right_elbow_yaw
+            (15,15) 0.1     ; right_wrist_pitch
+            (16,16) 0.1     ; right_wrist_roll
+        }
+    }
+}
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      20.0
+    muOrientation                   10.0
+}
+
+bodyRelative
+{
+    activate                        true
+    bodyLinkName                    "torso_base_link"
+    muPosition                      5.0
+    muOrientation                   5.0
+}
+
+bimanualCoupling
+{
+    activate                        true
+    muPosition                      10.0
+    muOrientation                   1.25
+}
+
+waistLock
+{
+    activate                        true
+    numJoints                       3
+}
+
+headCoupling
+{
+    activate                        false
+}
+
+homeJointReference
+{
+    activate                        true
+    activateDefault                 true
+    mu                              1e-3
+    excludeJointIndices
+    {
+    }
+}
+
+armLock
+{
+    activate                        true
+    leftNumJoints                   7
+    rightNumJoints                  7
+}
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-3
+
+    lowerBound
+    {
+        arm
+        {
+            (0,0)      -4.19    ; waist_yaw
+            (1,0)      -4.19    ; waist_roll
+            (2,0)      -4.19    ; waist_pitch
+            (3,0)      -4.19    ; left_shoulder_pitch
+            (4,0)      -4.19    ; left_shoulder_roll
+            (5,0)      -4.19    ; left_arm_yaw
+            (6,0)      -4.19    ; left_elbow_pitch
+            (7,0)      -4.19    ; left_elbow_yaw
+            (8,0)      -4.19    ; left_wrist_pitch
+            (9,0)      -4.19    ; left_wrist_roll
+            (10,0)     -4.19    ; right_shoulder_pitch
+            (11,0)     -4.19    ; right_shoulder_roll
+            (12,0)     -4.19    ; right_arm_yaw
+            (13,0)     -4.19    ; right_elbow_pitch
+            (14,0)     -4.19    ; right_elbow_yaw
+            (15,0)     -4.19    ; right_wrist_pitch
+            (16,0)     -4.19    ; right_wrist_roll
+        }
+    }
+
+    upperBound
+    {
+        arm
+        {
+            (0,0)      4.19
+            (1,0)      4.19
+            (2,0)      4.19
+            (3,0)      4.19
+            (4,0)      4.19
+            (5,0)      4.19
+            (6,0)      4.19
+            (7,0)      4.19
+            (8,0)      4.19
+            (9,0)      4.19
+            (10,0)     4.19
+            (11,0)     4.19
+            (12,0)     4.19
+            (13,0)     4.19
+            (14,0)     4.19
+            (15,0)     4.19
+            (16,0)     4.19
+        }
+    }
+}
+
+selfCollision
+{
+    activate                        false
+    mu                              1e-3
+    delta                           1e-2
+    minimumDistance                 0.01
+    collisionObjectPairs
+    {
+    }
+    collisionLinkPairs
+    {
+    }
+}
