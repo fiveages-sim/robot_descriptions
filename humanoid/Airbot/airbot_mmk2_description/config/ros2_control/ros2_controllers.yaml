@@ -102,7 +102,7 @@ ocs2_wbc_controller:
       max_angular_acceleration: 1.0
       max_angular_jerk: 5.0
 
-    # [body | head×2 | left×6 | right×6]; home_1 = former home_pos, home_2 = former rest_pos
+    # [body | head×2 | left×6 | right×6]; home_1, home_2
     home_1: [0.0,
              0.0, 0.0,
              0.0, 0.0, 0.715, 0.0, 0.0, 1.5708,

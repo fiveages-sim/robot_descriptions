@@ -36,8 +36,8 @@ ocs2_arm_controller:
     robot_type: "left"
 
     # Control parameters
-    home_pos: [0.0, 0.0, 0.0, 1.281, 0.0, 0.0, -0.722]
-    rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_1: [0.0, 0.0, 0.0, 1.281, 0.0, 0.0, -0.722]
+    home_2: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 hand_controller:
   ros__parameters:

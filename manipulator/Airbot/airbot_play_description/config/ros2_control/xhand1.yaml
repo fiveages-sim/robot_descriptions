@@ -83,4 +83,4 @@ ocs2_arm_controller:
 
     robot_name: airbot_play
 
-    home_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

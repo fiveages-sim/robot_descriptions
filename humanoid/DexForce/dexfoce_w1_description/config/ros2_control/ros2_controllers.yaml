@@ -1,6 +1,6 @@
 # DexForce W1 ros2_control — ANTHROPOMORPHIC / revo1 (default) overlay on common.yaml
 # Arm / body / WBC home poses and durations only; everything else lives in common.yaml.
-# home_1 = working pose (former home_pos), home_2 = folded rest pose (former rest_pos).
+# home_1 = working pose, home_2 = folded rest pose.
 # WBC layout (Pinocchio 4 DFS): [body x4 | head x2 | left x7 | right x7]
 
 ocs2_arm_controller:

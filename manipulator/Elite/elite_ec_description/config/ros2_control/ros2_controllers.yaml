@@ -59,4 +59,4 @@ ocs2_arm_controller:
     future_time_offset: 1.0
 
     # Control parameters
-    home_pos: [0.0, 0.0, 1.5708, 0.0, 1.5708, 0.0]
+    home_1: [0.0, 0.0, 1.5708, 0.0, 1.5708, 0.0]
