@@ -8,6 +8,7 @@ Panels:
         - /RobotModel2/Description Topic1
         - /Pose1
         - /Pose2
+        - /TargetErrorDisplay1
       Splitter Ratio: 0.5
     Tree Height: 102
   - Class: rviz_common/Selection
@@ -1200,6 +1201,15 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /right_current_target
+      Value: true
+    - Class: arms_rviz_control_plugin/TargetErrorDisplay
+      Enabled: true
+      ErrorOrientationGreenDeg: 1
+      ErrorOrientationRedDeg: 5
+      ErrorPositionGreenMm: 5
+      ErrorPositionRedMm: 20
+      Name: TargetErrorDisplay
+      Scale: 0.7
       Value: true
   Enabled: true
   Global Options:
