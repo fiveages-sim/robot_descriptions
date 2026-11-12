@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find xhand1_description)/xacro/ros2_control/side_systems.xacro"/>
+
+  <!-- iface_mode: mix = pos/vel/effort (mock/gz); position = pos only (Isaac). -->
+  <xacro:macro name="XbotlJointInterfaces" params="jname iface_mode:=mix">
+    <joint name="${jname}">
+      <command_interface name="position"/>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <command_interface name="velocity"/>
+        <command_interface name="effort"/>
+      </xacro:if>
+      <state_interface name="position"/>
+      <xacro:if value="${iface_mode == 'mix'}">
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </xacro:if>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="XbotlWaistInterfaces" params="iface_mode:=mix">
+    <xacro:XbotlJointInterfaces jname="waist_roll_joint" iface_mode="${iface_mode}"/>
+    <xacro:XbotlJointInterfaces jname="waist_yaw_joint" iface_mode="${iface_mode}"/>
+  </xacro:macro>
+
+  <xacro:macro name="XbotlHeadInterfaces" params="iface_mode:=mix">
+    <xacro:XbotlJointInterfaces jname="neck_yaw_joint" iface_mode="${iface_mode}"/>
+    <xacro:XbotlJointInterfaces jname="neck_pitch_joint" iface_mode="${iface_mode}"/>
+  </xacro:macro>
+
+  <xacro:macro name="XbotlArmInterfaces" params="name iface_mode:=mix">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:XbotlJointInterfaces jname="${prefix}shoulder_pitch_joint" iface_mode="${iface_mode}"/>
+    <xacro:XbotlJointInterfaces jname="${prefix}shoulder_roll_joint" iface_mode="${iface_mode}"/>
+    <xacro:XbotlJointInterfaces jname="${prefix}arm_yaw_joint" iface_mode="${iface_mode}"/>
+    <xacro:XbotlJointInterfaces jname="${prefix}elbow_pitch_joint" iface_mode="${iface_mode}"/>
+    <xacro:XbotlJointInterfaces jname="${prefix}elbow_yaw_joint" iface_mode="${iface_mode}"/>
+    <xacro:XbotlJointInterfaces jname="${prefix}wrist_roll_joint" iface_mode="${iface_mode}"/>
+    <xacro:XbotlJointInterfaces jname="${prefix}wrist_yaw_joint" iface_mode="${iface_mode}"/>
+  </xacro:macro>
+
+  <!-- W2-style: dispatch hand joint interfaces by resolved hand_type. -->
+  <xacro:macro name="XbotlSideHandInterfaces" params="side hand_type">
+    <xacro:if value="${hand_type == 'xhand1'}">
+      <xacro:xhand1_interfaces name="${side}_hand"/>
+    </xacro:if>
+  </xacro:macro>
+
+  <!--
+    mode=sim  → finger joints live in the main mock/gz/isaac system (like W2 dual_arm_ee_block).
+    mode=real → xhand1 uses a separate USB RS485 system; do not declare fingers here.
+  -->
+  <xacro:macro name="XbotlHandInterfacesBlock" params="mode">
+    <xacro:if value="${mode == 'sim'}">
+      <xacro:if value="${left_hand_type != ''}">
+        <xacro:XbotlSideHandInterfaces side="left" hand_type="${left_hand_type}"/>
+      </xacro:if>
+      <xacro:if value="${right_hand_type != ''}">
+        <xacro:XbotlSideHandInterfaces side="right" hand_type="${right_hand_type}"/>
+      </xacro:if>
+    </xacro:if>
+  </xacro:macro>
+</robot>

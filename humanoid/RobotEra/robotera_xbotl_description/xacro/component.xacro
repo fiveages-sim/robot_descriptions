@@ -3,77 +3,86 @@
 <!-- |    Component visualization for RobotEra Xbot-L                                  | -->
 <!-- =================================================================================== -->
 <robot name="RobotEraXbotLComponent" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:arg name="type" default="left"/>
+  <xacro:arg name="type" default="upper"/>
   <xacro:arg name="isaac" default="false"/>
+  <xacro:arg name="collider" default="simple"/>
+  <!-- eef: none = no hands (Isaac import / EE payload); xhand1 = include XHand1. -->
+  <xacro:arg name="eef" default="xhand1"/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+  <xacro:property name="eef_fixed"
+                  value="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"/>
+  <xacro:property name="include_hands"
+                  value="${'$(arg eef)' in ('xhand1', 'xhand')}"/>
 
   <xacro:include filename="$(find robotera_xbotl_description)/xacro/body.xacro"/>
   <xacro:include filename="$(find robotera_xbotl_description)/xacro/arm.xacro"/>
   <xacro:include filename="$(find robotera_xbotl_description)/xacro/leg.xacro"/>
   <xacro:include filename="$(find robotera_xbotl_description)/xacro/hand.xacro"/>
 
-  <xacro:if value="${'$(arg type)' == 'base'}">
-    <xacro:XbotlBody isaac="$(arg isaac)"/>
+  <xacro:if value="${'$(arg type)' == 'upper' or '$(arg type)' == 'base'}">
+    <xacro:XbotlBody isaac="$(arg isaac)" collider="$(arg collider)"/>
+    <xacro:if value="${'$(arg type)' == 'upper'}">
+      <xacro:XbotlArm name="left" direction="1" collider="$(arg collider)"/>
+      <xacro:XbotlArm name="right" direction="-1" collider="$(arg collider)"/>
+      <xacro:if value="${include_hands}">
+        <xacro:XbotlLeftHand parent_link="left_wrist_yaw_link" fixed_joints="${eef_fixed}"/>
+        <xacro:XbotlRightHand parent_link="right_wrist_yaw_link" fixed_joints="${eef_fixed}"/>
+      </xacro:if>
+    </xacro:if>
+  </xacro:if>
+
+  <!-- Both legs on a stub waist_roll_link (Isaac Lower component / Assembler mount). -->
+  <xacro:if value="${'$(arg type)' == 'lower'}">
+    <link name="waist_roll_link">
+      <inertial>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
+      </inertial>
+    </link>
+    <xacro:XbotlLeg name="left" direction="1"/>
+    <xacro:XbotlLeg name="right" direction="-1"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'left'}">
-    <link name="base_link"/>
-    <xacro:XbotlArm name="left" direction="1"/>
+    <link name="torso_base_link"/>
+    <xacro:XbotlArm name="left" direction="1" collider="$(arg collider)"/>
+    <xacro:XbotlLeftHand parent_link="left_wrist_yaw_link" fixed_joints="${eef_fixed}"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'right'}">
-    <link name="base_link"/>
-    <xacro:XbotlArm name="right" direction="-1"/>
+    <link name="torso_base_link"/>
+    <xacro:XbotlArm name="right" direction="-1" collider="$(arg collider)"/>
+    <xacro:XbotlRightHand parent_link="right_wrist_yaw_link" fixed_joints="${eef_fixed}"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'left_hand'}">
-    <link name="base_link"/>
+    <link name="torso_base_link"/>
     <link name="left_wrist_yaw_link"/>
     <joint name="left_wrist_yaw_fixed" type="fixed">
-      <parent link="base_link"/>
+      <parent link="torso_base_link"/>
       <child link="left_wrist_yaw_link"/>
     </joint>
     <xacro:XbotlLeftHand parent_link="left_wrist_yaw_link" fixed_joints="false"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'right_hand'}">
-    <link name="base_link"/>
+    <link name="torso_base_link"/>
     <link name="right_wrist_yaw_link"/>
     <joint name="right_wrist_yaw_fixed" type="fixed">
-      <parent link="base_link"/>
+      <parent link="torso_base_link"/>
       <child link="right_wrist_yaw_link"/>
     </joint>
     <xacro:XbotlRightHand parent_link="right_wrist_yaw_link" fixed_joints="false"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'left_leg'}">
-    <link name="base_link"/>
-    <link name="waist_yaw_link"/>
-    <joint name="waist_yaw_fixed" type="fixed">
-      <parent link="base_link"/>
-      <child link="waist_yaw_link"/>
-    </joint>
     <link name="waist_roll_link"/>
-    <joint name="waist_roll_fixed" type="fixed">
-      <origin xyz="0 0 0" rpy="1.5708 0 1.5708"/>
-      <parent link="waist_yaw_link"/>
-      <child link="waist_roll_link"/>
-    </joint>
     <xacro:XbotlLeg name="left" direction="1"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'right_leg'}">
-    <link name="base_link"/>
-    <link name="waist_yaw_link"/>
-    <joint name="waist_yaw_fixed" type="fixed">
-      <parent link="base_link"/>
-      <child link="waist_yaw_link"/>
-    </joint>
     <link name="waist_roll_link"/>
-    <joint name="waist_roll_fixed" type="fixed">
-      <origin xyz="0 0 0" rpy="1.5708 0 1.5708"/>
-      <parent link="waist_yaw_link"/>
-      <child link="waist_roll_link"/>
-    </joint>
     <xacro:XbotlLeg name="right" direction="-1"/>
   </xacro:if>
 </robot>

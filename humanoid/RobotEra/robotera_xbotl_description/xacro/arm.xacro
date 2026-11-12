@@ -1,9 +1,32 @@
 <?xml version="1.0"?>
 <!-- =================================================================================== -->
 <!-- |    RobotEra Xbot-L arms — shared left meshes, right via scale="1 ${direction} 1"| -->
+<!-- |    collider:=simple: cylinders from glTF node-world AABB (split-chassis-glb §8). | -->
+<!-- |    collider:=convex: same GLB as visual.                                        | -->
 <!-- =================================================================================== -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="XbotlArm" params="name direction:=1">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:macro name="xbotl_arm_link_collision"
+               params="collider mesh xyz:='0 0 0' rpy:='0 0 0' length radius scale:='1 1 1'">
+    <xacro:if value="${collider == 'convex'}">
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}" scale="${scale}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+    <xacro:if value="${collider == 'simple'}">
+      <collision>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="XbotlArm" params="name direction:=1 collider:='simple'">
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
     <xacro:property name="mesh" value="file://$(find robotera_xbotl_description)/meshes/arm"/>
 
@@ -16,19 +39,21 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/arm_base_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/arm_base_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="dark"/>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/arm_base_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <!-- Shoulder mount on torso; no simple collider. -->
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/arm_base_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}arm_base_joint" type="fixed">
       <origin xyz="0 0 0.2885" rpy="${direction*-1.5708} -1.5708 0"/>
-      <parent link="base_link"/>
+      <parent link="torso_base_link"/>
       <child link="${prefix}arm_base_link"/>
     </joint>
 
@@ -41,15 +66,17 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/shoulder_pitch_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/shoulder_pitch_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="dark"/>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/shoulder_pitch_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <!-- Shoulder pitch sits on the torso; no simple collider. -->
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/shoulder_pitch_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}shoulder_pitch_joint" type="revolute">
       <origin xyz="0 0 0.2635"/>
@@ -70,15 +97,14 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/shoulder_roll_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/shoulder_roll_link.glb"/>
         </geometry>
-        <material name="silver"/>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/shoulder_roll_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <!-- Upper arm tube along -Y toward arm_yaw (joint at y=-0.1905). -->
+      <xacro:xbotl_arm_link_collision collider="${collider}"
+        mesh="${mesh}/shoulder_roll_link.glb"
+        xyz="0 -0.035 0" rpy="${PI/2} 0 0"
+        length="0.15" radius="0.041"/>
     </link>
     <joint name="${prefix}shoulder_roll_joint" type="revolute">
       <origin xyz="0 0 0" rpy="-1.5708 -1.5708 0"/>
@@ -99,15 +125,14 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/arm_yaw_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/arm_yaw_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="silver"/>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/arm_yaw_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <xacro:xbotl_arm_link_collision collider="${collider}"
+        mesh="${mesh}/arm_yaw_link.glb"
+        scale="1 ${direction} 1"
+        xyz="0 0 -0.0225"
+        length="0.10" radius="0.035"/>
     </link>
     <joint name="${prefix}arm_yaw_joint" type="revolute">
       <origin xyz="0 -0.1905 0" rpy="1.5708 ${direction*-1.5708} 0"/>
@@ -126,15 +151,14 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/elbow_pitch_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/elbow_pitch_link.glb"/>
         </geometry>
-        <material name="silver"/>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/elbow_pitch_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <!-- Forearm tube along +Y toward elbow_yaw (joint at y=0.16). -->
+      <xacro:xbotl_arm_link_collision collider="${collider}"
+        mesh="${mesh}/elbow_pitch_link.glb"
+        xyz="0 0.035 0" rpy="${PI/2} 0 0"
+        length="0.13" radius="0.037"/>
     </link>
     <joint name="${prefix}elbow_pitch_joint" type="revolute">
       <origin xyz="0 0 0" rpy="1.5708 0 0"/>
@@ -155,15 +179,13 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/elbow_yaw_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/elbow_yaw_link.glb"/>
         </geometry>
-        <material name="silver"/>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/elbow_yaw_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <xacro:xbotl_arm_link_collision collider="${collider}"
+        mesh="${mesh}/elbow_yaw_link.glb"
+        xyz="0 0 -0.0125"
+        length="0.08" radius="0.034"/>
     </link>
     <joint name="${prefix}elbow_yaw_joint" type="revolute">
       <origin xyz="0 0.16 0" rpy="-1.5708 0 0"/>
@@ -182,15 +204,13 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/wrist_roll_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/wrist_roll_link.glb"/>
         </geometry>
-        <material name="silver"/>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/wrist_roll_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <xacro:xbotl_arm_link_collision collider="${collider}"
+        mesh="${mesh}/wrist_roll_link.glb"
+        xyz="0 -0.033 0" rpy="${PI/2} 0 0"
+        length="0.13" radius="0.037"/>
     </link>
     <joint name="${prefix}wrist_roll_joint" type="revolute">
       <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
@@ -209,10 +229,14 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/wrist_yaw_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/wrist_yaw_link.glb"/>
         </geometry>
-        <material name="silver"/>
       </visual>
+      <!-- Flange disk at z≈0.115 toward arm_flange (z=0.1135). -->
+      <xacro:xbotl_arm_link_collision collider="${collider}"
+        mesh="${mesh}/wrist_yaw_link.glb"
+        xyz="0 0 0.115"
+        length="0.027" radius="0.034"/>
     </link>
     <joint name="${prefix}wrist_yaw_joint" type="revolute">
       <origin xyz="0 0 0" rpy="1.5708 0 0"/>

@@ -17,9 +17,8 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/leg_roll_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/leg_roll_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="dark"/>
       </visual>
     </link>
     <joint name="${prefix}leg_roll_joint" type="revolute">
@@ -41,9 +40,8 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/leg_yaw_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/leg_yaw_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="dark"/>
       </visual>
     </link>
     <joint name="${prefix}leg_yaw_joint" type="revolute">
@@ -63,12 +61,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/leg_pitch_link.obj" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/leg_pitch_link.glb" scale="1 ${direction} 1"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="${mesh}/leg_pitch_link.obj" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/leg_pitch_link.glb" scale="1 ${direction} 1"/>
         </geometry>
       </collision>
     </link>
@@ -91,13 +89,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/knee_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/knee_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="silver"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="${mesh}/knee_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/knee_link.glb" scale="1 ${direction} 1"/>
         </geometry>
       </collision>
     </link>
@@ -119,9 +116,8 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/ankle_pitch_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/ankle_pitch_link.glb"/>
         </geometry>
-        <material name="silver"/>
       </visual>
     </link>
     <joint name="${prefix}ankle_pitch_joint" type="revolute">
@@ -143,13 +139,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/ankle_roll_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/ankle_roll_link.glb"/>
         </geometry>
-        <material name="silver"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="${mesh}/ankle_roll_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/ankle_roll_link.glb"/>
         </geometry>
       </collision>
     </link>
@@ -167,12 +162,6 @@
         <mass value="0.000975"/>
         <inertia ixx="4.0625E-09" ixy="0" ixz="0" iyy="4.0625E-09" iyz="0" izz="4.0625E-09"/>
       </inertial>
-      <visual>
-        <geometry>
-          <mesh filename="${mesh}/foot_ee_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-        <material name="silver"/>
-      </visual>
     </link>
     <joint name="${prefix}foot_ee_joint" type="fixed">
       <origin xyz="0 ${direction*-0.056} 0" rpy="-1.5708 -1.5708 0"/>
@@ -189,9 +178,8 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/ankle_pitch_motor1_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/ankle_pitch_motor1_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="silver"/>
       </visual>
     </link>
     <joint name="${prefix}ankle_pitch_motor1_joint" type="fixed">
@@ -209,9 +197,8 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/ankle_pitch_linkage1_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/ankle_pitch_linkage1_link.glb"/>
         </geometry>
-        <material name="silver"/>
       </visual>
     </link>
     <joint name="${prefix}ankle_pitch_linkage1_joint" type="fixed">
@@ -229,9 +216,8 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/ankle_pitch_motor2_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/ankle_pitch_motor2_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="silver"/>
       </visual>
     </link>
     <joint name="${prefix}ankle_pitch_motor2_joint" type="fixed">
@@ -249,13 +235,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/ankle_pitch_linkage2_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/ankle_pitch_linkage2_link.glb"/>
         </geometry>
-        <material name="silver"/>
       </visual>
     </link>
     <joint name="${prefix}ankle_pitch_linkage2_joint" type="fixed">
-      <origin xyz="${direction*-0.045} 0 0" rpy="0 0 ${direction*-1.8165}"/>
+      <origin xyz="-0.045 0 0" rpy="0 0 ${direction*-1.8165}"/>
       <parent link="${prefix}ankle_pitch_motor2_link"/>
       <child link="${prefix}ankle_pitch_linkage2_link"/>
     </joint>
@@ -268,9 +253,8 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/knee_motor_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/knee_motor_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="silver"/>
       </visual>
     </link>
     <joint name="${prefix}knee_motor_joint" type="fixed">
@@ -287,9 +271,8 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/knee_linkage_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/knee_linkage_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="silver"/>
       </visual>
     </link>
     <joint name="${prefix}knee_linkage_joint" type="fixed">
