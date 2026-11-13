@@ -11,3 +11,7 @@
     vr_follow_frame: base_link
 
     enable_wbc_head_tracking_marker: false
+
+    # Last neck DOF carries the head mesh (W2 head_link2 role).
+    head_link_name: "neck_pitch_link"
+    reference_link: "neck_pitch_link"

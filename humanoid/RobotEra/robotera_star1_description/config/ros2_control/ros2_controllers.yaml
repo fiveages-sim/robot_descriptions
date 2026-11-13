@@ -1,0 +1,87 @@
+# RobotEra STAR1 — upper body + waist + head (ocs2_wbc_controller / full_body.launch.py)
+# Default EEF: type:=xhand1 (XHand1 on both wrists).
+# Pinocchio DFS: [waist×3 | left×7 | right×7 | neck×2] = 19 DOF.
+# Default mode: 自由 (HM_DUAL_BODY_FREE) + 注视 (HEAD_GAZE)
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
+
+    # Hand params come from xhand1_description templates/xhand1.side.yaml (control_compose).
+    left_hand_controller:
+      type: basic_joint_controller/BasicJointController
+
+    right_hand_controller:
+      type: basic_joint_controller/BasicJointController
+
+ocs2_wbc_controller:
+  ros__parameters:
+    update_rate: 100
+    mpc_frequency: 50
+    info_file_name: fixed_base_tcp
+    robot_name: robotera_star1
+    fsm_default_humanoid_mode: HM_DUAL_BODY_FREE
+
+    # Must match Pinocchio nq (waist×3 | left×7 | right×7 | neck×2)
+    joints:
+      - waist_yaw_joint
+      - waist_roll_joint
+      - waist_pitch_joint
+      - left_shoulder_pitch_joint
+      - left_shoulder_roll_joint
+      - left_arm_yaw_joint
+      - left_elbow_pitch_joint
+      - left_elbow_yaw_joint
+      - left_wrist_pitch_joint
+      - left_wrist_roll_joint
+      - right_shoulder_pitch_joint
+      - right_shoulder_roll_joint
+      - right_arm_yaw_joint
+      - right_elbow_pitch_joint
+      - right_elbow_yaw_joint
+      - right_wrist_pitch_joint
+      - right_wrist_roll_joint
+      - neck_yaw_joint
+      - neck_pitch_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    home_duration: 5.0
+    home_interpolation_type: linear
+    hold_position_threshold: 0.1
+
+    waist_lifting_enabled: false
+    waist_lifting_type: multi_joint
+    waist_lifting_default_parameter: [0.0, 0.5, 1.0]
+    waist_turning_default_parameter: [0.0, 0.5, 1.0]
+
+    cartesian_defaults:
+      frame_id: base_link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+
+    # [waist×3 | left×7 | right×7 | neck×2]
+    home_1: [
+      0.0, 0.0, 0.0,
+      0.0, 0.3, 0.0, -1.5, 0.0, 0.0, 0.0,
+      0.0, -0.3, 0.0, -1.5, 0.0, 0.0, 0.0,
+      0.0, 0.0]
+    home_2: [
+      0.3, 0.0, 0.0,
+      0.0, 0.5, 0.0, -1.0, 0.0, 0.0, 0.0,
+      0.0, -0.5, 0.0, -1.0, 0.0, 0.0, 0.0,
+      0.0, 0.2]

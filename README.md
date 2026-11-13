@@ -1,5 +1,7 @@
 # Robot Descriptions
 
+[English](README.md) | [中文](README_zh-CN.md)
+
 This repository contains the URDF files for humanoid and manipulator robots, all organized as ROS2 packages. Most of them have been repainted in Blender for better visualization. ☺️
 
 ## Quick Start
@@ -77,7 +79,8 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Booster  | [T1](humanoid/Booster/t1_description/)               | Yes     | <img src="humanoid/.images/booster_t1.png" width="120" style="object-fit: cover; object-position: center;">                                                                                                             |
 | EngineAI | [SA01](humanoid/EngineAI/sa01_description/)          | Yes     | <img src="humanoid/.images/engineai_sa01.png" width="130" style="object-fit: cover; object-position: center;">                                                                                                          |
 | EngineAI | [PM01](humanoid/EngineAI/pm01_description/)          | Yes     | <img src="humanoid/.images/engineai_pm01.png" width="200" style="object-fit: cover; object-position: center;">                                                                                                          |
-| RobotEra | [Xbot-L](humanoid/RobotEra/robotera_xbotl_description) | Yes   | <img src="humanoid/RobotEra/.images/robotera_xbotl.png" width="140">                                                                                                                                                    |
+| RobotEra | [Xbot-L](humanoid/RobotEra/robotera_xbotl_description) | Yes   | <img src="humanoid/RobotEra/.images/robotera_xbotl.png" width="200">                                                                                                                                                    |
+| RobotEra | [STAR1](humanoid/RobotEra/robotera_star1_description)  | Yes   | <img src="humanoid/RobotEra/.images/robotera_star1.png" width="200">                                                                                                                                                    |
 | RobotEra | [L7](humanoid/RobotEra/robotera_l7_description)        | No    |                                                                                                                                                                                                                         |
 
 ## Submodules

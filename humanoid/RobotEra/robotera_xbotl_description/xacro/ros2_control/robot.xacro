@@ -25,28 +25,20 @@
   <!-- robot.xacro resolves left_hand_type / right_hand_type from type|left_type|right_type. -->
   <xacro:include filename="$(find robotera_xbotl_description)/xacro/robot.xacro"/>
   <xacro:include filename="$(find robotera_xbotl_description)/xacro/ros2_control/interfaces.xacro"/>
+  <xacro:include filename="$(find robot_common_launch)/xacro/ros2_control/simulation_hardware.xacro"/>
 
+  <!-- Topic bridge (isaac) is position-only. isaac_sim / gz / mock export position+velocity+effort. -->
   <xacro:property name="sim_iface_mode"
     value="${'position' if '$(arg ros2_control_hardware_type)' == 'isaac' else 'mix'}"/>
 
   <ros2_control name="robotera_xbotl_system" type="system">
     <hardware>
-      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'gz'}">
-        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-      </xacro:if>
-      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'mock_components'}">
-        <plugin>mock_components/GenericSystem</plugin>
-      </xacro:if>
-      <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
-        <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
-        <param name="joint_commands_topic">/isaac/joint_commands</param>
-        <param name="joint_states_topic">/isaac/joint_states</param>
-        <param name="sum_wrapped_joint_states">false</param>
-        <param name="initialize_commands_from_state">true</param>
-      </xacro:if>
       <xacro:if value="${is_real_hardware}">
         <plugin>mock_components/GenericSystem</plugin>
       </xacro:if>
+      <xacro:unless value="${is_real_hardware}">
+        <xacro:simulation_hardware_plugin hardware_type="$(arg ros2_control_hardware_type)"/>
+      </xacro:unless>
     </hardware>
 
     <xacro:XbotlWaistInterfaces iface_mode="${sim_iface_mode}"/>

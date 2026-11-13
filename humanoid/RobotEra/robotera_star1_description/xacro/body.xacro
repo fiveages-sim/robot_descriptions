@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    RobotEra STAR1 body (pelvis root, waist up to torso, neck)                   | -->
+<!-- |    Root = base_link (pelvis). Waist chain inverted from CAD chest→pelvis.       | -->
+<!-- |    collider:=simple: boxes from glTF node-world AABB (inset for selfCollision). | -->
+<!-- |    collider:=convex: same GLB as visual. Head/neck stay mesh-only for simple.   | -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="star1_body_collision"
+               params="collider mesh xyz:='0 0 0' size:='0 0 0'">
+    <xacro:if value="${collider == 'convex'}">
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+    <xacro:if value="${collider == 'simple'}">
+      <collision>
+        <origin xyz="${xyz}"/>
+        <geometry>
+          <box size="${size}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="Star1Body" params="isaac:=false collider:='simple'">
+    <xacro:property name="mesh" value="file://$(find robotera_star1_description)/meshes/body"/>
+
+    <link name="base">
+      <visual>
+        <geometry>
+          <box size="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="floating_base" type="fixed">
+      <parent link="base"/>
+      <child link="base_link"/>
+    </joint>
+
+    <!-- Pelvis root (CAD waist_yaw_link). Legs attach here; waist goes up to torso. -->
+    <link name="base_link">
+      <inertial>
+        <origin xyz="-0.064098 -0.00018359 -0.074077"/>
+        <mass value="5.778"/>
+        <inertia ixx="0.068" ixy="4.0449E-06" ixz="0.0017" iyy="0.0188" iyz="-0.0002" izz="0.0756"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/waist_yaw_link.glb"/>
+        </geometry>
+      </visual>
+      <xacro:star1_body_collision collider="${collider}"
+        mesh="${mesh}/waist_yaw_link.glb"
+        xyz="-0.03 0 -0.08" size="0.18 0.30 0.10"/>
+    </link>
+
+    <!-- Waist inverted: pelvis → yaw → roll → pitch → waist_base → torso (chest).
+         Origins inverted; axes negated so q=0 matches CAD zero pose. -->
+    <link name="waist_roll_link">
+      <inertial>
+        <origin xyz="0.0028204 0 -0.017965"/>
+        <mass value="0.15785"/>
+        <inertia ixx="0.0001" ixy="0" ixz="1.1992E-06" iyy="0.0001" iyz="0" izz="0.0001"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/waist_roll_link.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="waist_yaw_joint" type="revolute">
+      <parent link="base_link"/>
+      <child link="waist_roll_link"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="-1.57" upper="1.57" effort="110.0" velocity="4.19"/>
+      <dynamics friction="1.222"/>
+    </joint>
+
+    <link name="waist_pitch_link">
+      <inertial>
+        <origin xyz="0 0 -5.9673E-05"/>
+        <mass value="0.068747"/>
+        <inertia ixx="5.3442E-06" ixy="0" ixz="0" iyy="5.5342E-06" iyz="0" izz="8.9493E-06"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/waist_pitch_link.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="waist_roll_joint" type="revolute">
+      <parent link="waist_roll_link"/>
+      <child link="waist_pitch_link"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-0.26" upper="0.26" effort="220.0" velocity="4.19"/>
+      <dynamics friction="1.222"/>
+    </joint>
+
+    <link name="waist_base_link">
+      <inertial>
+        <origin xyz="-0.00086082 5.1861E-08 -0.050183"/>
+        <mass value="1.8301"/>
+        <inertia ixx="0.007" ixy="-1.1548E-06" ixz="-2.5479E-05" iyy="0.0018" iyz="1.7553E-10" izz="0.0074"/>
+      </inertial>
+    </link>
+    <joint name="waist_pitch_joint" type="revolute">
+      <origin xyz="0 0 0.1015"/>
+      <parent link="waist_pitch_link"/>
+      <child link="waist_base_link"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-1.05" upper="0.09" effort="220.0" velocity="4.19"/>
+      <dynamics friction="1.222"/>
+    </joint>
+
+    <!-- Chest / torso (CAD base_link). Arms and neck attach here. -->
+    <link name="torso_base_link">
+      <inertial>
+        <origin xyz="0.0084431 0.0017506 -0.15762"/>
+        <mass value="12"/>
+        <inertia ixx="0.1567" ixy="0.0007" ixz="-0.0013" iyy="0.136" iyz="0.0014" izz="0.0814"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/base_link.glb"/>
+        </geometry>
+      </visual>
+      <!-- Chest core inset from shoulder pods (AABB ~0.26×0.35×0.46). -->
+      <xacro:star1_body_collision collider="${collider}"
+        mesh="${mesh}/base_link.glb"
+        xyz="0.01 0 0.12" size="0.22 0.26 0.36"/>
+    </link>
+    <joint name="torso_base_joint" type="fixed">
+      <parent link="waist_base_link"/>
+      <child link="torso_base_link"/>
+    </joint>
+
+    <!-- Empty neck base; joint name sorts after left_/right_ → Pinocchio nq ends with neck×2. -->
+    <link name="neck_base_link"/>
+    <joint name="torso_neck_base_joint" type="fixed">
+      <origin xyz="0 0 0.2365"/>
+      <parent link="torso_base_link"/>
+      <child link="neck_base_link"/>
+    </joint>
+
+    <link name="neck_yaw_link">
+      <inertial>
+        <origin xyz="0.022925 0.0064532 0.1431"/>
+        <mass value="0.64"/>
+        <inertia ixx="0.0007" ixy="7.2177E-07" ixz="6.2158E-05" iyy="0.00076082" iyz="-1.0259E-07" izz="0.00066743"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/neck_yaw_link.glb"/>
+        </geometry>
+      </visual>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/neck_yaw_link.glb"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    </link>
+    <joint name="neck_yaw_joint" type="revolute">
+      <parent link="neck_base_link"/>
+      <child link="neck_yaw_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.57" upper="1.57" effort="35.0" velocity="4.19"/>
+      <dynamics friction="1.111"/>
+    </joint>
+
+    <link name="neck_pitch_link">
+      <inertial>
+        <origin xyz="-0.011299 0.00058037 0.091458"/>
+        <mass value="1.15"/>
+        <inertia ixx="0.0068" ixy="5.8684E-07" ixz="-0.001" iyy="0.008" iyz="-1.8384E-06" izz="0.0067"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/neck_pitch_link.glb"/>
+        </geometry>
+      </visual>
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/neck_pitch_link.glb"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    </link>
+    <joint name="neck_pitch_joint" type="revolute">
+      <origin xyz="0.032 0 0.1535"/>
+      <parent link="neck_yaw_link"/>
+      <child link="neck_pitch_link"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.17" upper="0.54" effort="35.0" velocity="4.19"/>
+      <dynamics friction="1.111"/>
+    </joint>
+
+    <link name="mic_link">
+      <inertial>
+        <origin xyz="0 0 0.0025"/>
+        <mass value="1.375E-08"/>
+        <inertia ixx="5.7292E-14" ixy="0" ixz="0" iyy="5.7292E-14" iyz="0" izz="5.7292E-14"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/mic_link.glb"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="mic_joint" type="fixed">
+      <origin xyz="-0.032 0 0.18725"/>
+      <parent link="neck_pitch_link"/>
+      <child link="mic_link"/>
+    </joint>
+
+    <!-- RealSense D455 (sensor_models); mount pose from upstream STAR1 head_rs.
+         isaac:=true keeps empty realsense_link for FaSim Sensor payload. -->
+    <link name="realsense_link">
+      <inertial>
+        <origin xyz="0.047424 0.00014285 -0.0082421"/>
+        <mass value="0.076907"/>
+        <inertia ixx="8.6659E-06" ixy="9.2769E-08" ixz="-9.1747E-08"
+                 iyy="9.4298E-05" iyz="9.0197E-08" izz="9.4996E-05"/>
+      </inertial>
+      <xacro:unless value="${isaac}">
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/realsense/d455.glb"/>
+          </geometry>
+        </visual>
+      </xacro:unless>
+    </link>
+    <joint name="realsense_joint" type="fixed">
+      <origin xyz="0.070728 0.0475 0.127174" rpy="-2.094395 0 -1.570796"/>
+      <parent link="neck_pitch_link"/>
+      <child link="realsense_link"/>
+    </joint>
+    <!-- CAD realsense_link is already ROS optical (+Z forward, +X right, +Y down). -->
+    <link name="realsense_optical_frame"/>
+    <joint name="realsense_optical_joint" type="fixed">
+      <parent link="realsense_link"/>
+      <child link="realsense_optical_frame"/>
+    </joint>
+  </xacro:macro>
+</robot>

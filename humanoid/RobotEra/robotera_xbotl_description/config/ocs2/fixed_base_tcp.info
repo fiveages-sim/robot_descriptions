@@ -342,7 +342,8 @@ selfCollision
 ; cameraFrame = realsense_optical_frame (ROS optical: +Z forward, +X right, +Y down).
 ; Intrinsics: typical factory Color 1280x720 (D455 RGB FOV ~90°×65°); only shift look-ray
 ; via principal-point offset (a,b). Prefer onboard rs-enumerate-devices -c when available.
-; Deadband / mu keep S2-style soft gaze (vertical alignment weight 0).
+; Vertical weight follows W2 (1.0) so neck_pitch can look down at the hand midpoint;
+; S2 keeps 0.0 (yaw-only soft gaze) — do not copy that here.
 headMidpointGaze
 {
     activate                    true
@@ -356,7 +357,7 @@ headMidpointGaze
     horizontalDeadbandDeg       10.0
     verticalDeadbandDeg         10.0
     muAlignmentHorizontal       1.0
-    muAlignmentVertical         0.0
+    muAlignmentVertical         1.0
     muFront                     1.0
     minDepth                    0.3
 }

@@ -49,7 +49,8 @@ ros2 launch robot_common_launch component.launch.py robot:=robotera_xbotl type:=
 
 ## 3. Control (mock)
 
-Uses `xacro/ros2_control/robot.xacro` (default `variant:=upper`) with `hardware:=mock_components` (also `isaac` / `gz`).
+Uses `xacro/ros2_control/robot.xacro` (default `variant:=upper`) with `hardware:=mock_components` (also `isaac` / `isaac_sim` / `gz`).
+FaSim Isaac `ROS=fiveages` 走进程内 `IsaacSimSystem`（`hardware:=isaac_sim` + ArtRoot `isaac_prim_path`）。
 
 ### 3.1 Upper-body WBC
 Waist×2 + dual 7-DoF arms + neck×2 in one `ocs2_wbc_controller`. Default mode: `HM_DUAL_BODY_FREE` + `HEAD_GAZE`. Fingers are frozen in the planning URDF via `eef_fixed_joints:=true`.
@@ -62,6 +63,8 @@ OCS2 model: `config/ocs2/fixed_base_tcp.info`.
 source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=robotera_xbotl
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=robotera_xbotl hardware:=isaac
+# Isaac 进程内 CM（与 FaSim ROS=fiveages / emit_control 一致）:
+ros2 launch ocs2_arm_controller full_body.launch.py robot:=robotera_xbotl hardware:=isaac_sim isaac_prim_path:=/World/XbotL/XbotL_Upper/base_link
 ```
 
 ## 4. Package layout

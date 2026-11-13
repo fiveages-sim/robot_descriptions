@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    Component visualization for RobotEra STAR1                                   | -->
+<!-- =================================================================================== -->
+<robot name="RobotEraStar1Component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="type" default="upper"/>
+  <xacro:arg name="isaac" default="false"/>
+  <xacro:arg name="collider" default="simple"/>
+  <!-- eef: none = no hands (Isaac import / EE payload); xhand1 = include XHand1. -->
+  <xacro:arg name="eef" default="xhand1"/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+  <xacro:property name="eef_fixed"
+                  value="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"/>
+  <xacro:property name="include_hands"
+                  value="${'$(arg eef)' in ('xhand1', 'xhand')}"/>
+
+  <xacro:include filename="$(find robotera_star1_description)/xacro/body.xacro"/>
+  <xacro:include filename="$(find robotera_star1_description)/xacro/arm.xacro"/>
+  <xacro:include filename="$(find robotera_star1_description)/xacro/hand.xacro"/>
+  <xacro:include filename="$(find robotera_star1_description)/xacro/leg.xacro"/>
+
+  <xacro:if value="${'$(arg type)' == 'upper' or '$(arg type)' == 'base'}">
+    <xacro:Star1Body isaac="$(arg isaac)" collider="$(arg collider)"/>
+    <xacro:if value="${'$(arg type)' == 'upper'}">
+      <xacro:Star1Arm name="left" direction="1" collider="$(arg collider)"/>
+      <xacro:Star1Arm name="right" direction="-1" collider="$(arg collider)"/>
+      <xacro:if value="${include_hands}">
+        <xacro:Star1LeftHand parent_link="left_wrist_roll_link" fixed_joints="${eef_fixed}"/>
+        <xacro:Star1RightHand parent_link="right_wrist_roll_link" fixed_joints="${eef_fixed}"/>
+      </xacro:if>
+    </xacro:if>
+  </xacro:if>
+
+  <!-- Both legs on a stub base_link (Isaac Lower / Assembler mount on pelvis). -->
+  <xacro:if value="${'$(arg type)' == 'lower'}">
+    <link name="base_link">
+      <inertial>
+        <origin xyz="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
+      </inertial>
+    </link>
+    <xacro:Star1Leg name="left" direction="1"/>
+    <xacro:Star1Leg name="right" direction="-1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left'}">
+    <link name="torso_base_link"/>
+    <xacro:Star1Arm name="left" direction="1" collider="$(arg collider)"/>
+    <xacro:Star1LeftHand parent_link="left_wrist_roll_link" fixed_joints="${eef_fixed}"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right'}">
+    <link name="torso_base_link"/>
+    <xacro:Star1Arm name="right" direction="-1" collider="$(arg collider)"/>
+    <xacro:Star1RightHand parent_link="right_wrist_roll_link" fixed_joints="${eef_fixed}"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'left_leg'}">
+    <link name="base_link"/>
+    <xacro:Star1Leg name="left" direction="1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg type)' == 'right_leg'}">
+    <link name="base_link"/>
+    <xacro:Star1Leg name="right" direction="-1"/>
+  </xacro:if>
+</robot>

@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    RobotEra STAR1 arms — shared left meshes, right via scale="1 ${direction} 1" | -->
+<!-- |    collider:=simple: cylinders from glTF node-world AABB (split-chassis-glb §8). | -->
+<!-- |    collider:=convex: same GLB as visual.                                        | -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="star1_arm_link_collision"
+               params="collider mesh xyz:='0 0 0' rpy:='0 0 0' length radius scale:='1 1 1'">
+    <xacro:if value="${collider == 'convex'}">
+      <collision>
+        <geometry>
+          <mesh filename="${mesh}" scale="${scale}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+    <xacro:if value="${collider == 'simple'}">
+      <collision>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+      </collision>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="Star1Arm" params="name direction:=1 collider:='simple'">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:property name="mesh" value="file://$(find robotera_star1_description)/meshes/arm"/>
+
+    <link name="${prefix}arm_base_link">
+      <inertial>
+        <origin xyz="0.00016424 ${direction*0.033422} -0.0016166"/>
+        <mass value="0.9172"/>
+        <inertia ixx="0.0009" ixy="${direction*-6.5718E-07}" ixz="4.9197E-07"
+                 iyy="0.0009" iyz="${direction*-3.689E-06}" izz="0.0009"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}arm_base_joint" type="fixed">
+      <origin xyz="0 ${direction*0.112} 0.2365"/>
+      <parent link="torso_base_link"/>
+      <child link="${prefix}arm_base_link"/>
+    </joint>
+
+    <link name="${prefix}shoulder_pitch_link">
+      <inertial>
+        <origin xyz="-0.010548 ${direction*0.12346} -0.021666"/>
+        <mass value="1.1618"/>
+        <inertia ixx="0.002" ixy="${direction*-0.0001}" ixz="2.6138E-07"
+                 iyy="0.0015" iyz="${direction*-0.0002}" izz="0.0019146"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/shoulder_pitch_link.glb" scale="1 ${direction} 1"/>
+        </geometry>
+      </visual>
+      <!-- Shoulder pitch sits on the chest; no simple collider. -->
+      <xacro:if value="${collider == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/shoulder_pitch_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    </link>
+    <joint name="${prefix}shoulder_pitch_joint" type="revolute">
+      <parent link="${prefix}arm_base_link"/>
+      <child link="${prefix}shoulder_pitch_link"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-2.79" upper="2.79" effort="110.0" velocity="4.19"/>
+      <dynamics friction="1.222"/>
+    </joint>
+
+    <link name="${prefix}shoulder_roll_link">
+      <inertial>
+        <origin xyz="-0.0010652 ${direction*-0.00016594} -0.091811"/>
+        <mass value="1.1852"/>
+        <inertia ixx="0.0029" ixy="${direction*-2.4124E-06}" ixz="-7.7624E-06"
+                 iyy="0.0029" iyz="${direction*1.0466E-05}" izz="0.0016"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/shoulder_roll_link.glb" scale="1 ${direction} 1"/>
+        </geometry>
+      </visual>
+      <!-- Upper arm tube along -Z. -->
+      <xacro:star1_arm_link_collision collider="${collider}"
+        mesh="${mesh}/shoulder_roll_link.glb"
+        scale="1 ${direction} 1"
+        xyz="0 0 -0.04"
+        length="0.16" radius="0.045"/>
+    </link>
+    <joint name="${prefix}shoulder_roll_joint" type="revolute">
+      <origin xyz="0 ${direction*0.133} -0.025"/>
+      <parent link="${prefix}shoulder_pitch_link"/>
+      <child link="${prefix}shoulder_roll_link"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="${-0.24 if direction == 1 else -1.83}"
+             upper="${1.83 if direction == 1 else 0.24}"
+             effort="110.0" velocity="4.19"/>
+      <dynamics friction="1.222"/>
+    </joint>
+
+    <link name="${prefix}arm_yaw_link">
+      <inertial>
+        <origin xyz="0.0033229 ${direction*-0.0016876} -0.18801"/>
+        <mass value="0.354"/>
+        <inertia ixx="0.0011" ixy="${direction*3.633E-07}" ixz="0.00013546"
+                 iyy="0.001" iyz="${direction*1.2618E-06}" izz="0.0007"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/arm_yaw_link.glb" scale="1 ${direction} 1"/>
+        </geometry>
+      </visual>
+      <xacro:star1_arm_link_collision collider="${collider}"
+        mesh="${mesh}/arm_yaw_link.glb"
+        scale="1 ${direction} 1"
+        xyz="0 0 -0.20"
+        length="0.14" radius="0.040"/>
+    </link>
+    <joint name="${prefix}arm_yaw_joint" type="revolute">
+      <parent link="${prefix}shoulder_roll_link"/>
+      <child link="${prefix}arm_yaw_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.79" upper="2.79" effort="110.0" velocity="4.19"/>
+      <dynamics friction="1.222"/>
+    </joint>
+
+    <link name="${prefix}elbow_pitch_link">
+      <inertial>
+        <origin xyz="-0.0079717 ${direction*-0.0068363} -0.045353"/>
+        <mass value="1.567"/>
+        <inertia ixx="0.0048" ixy="${direction*-0.0001}" ixz="0.0006"
+                 iyy="0.0048" iyz="${direction*0.0004}" izz="0.0016"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/elbow_pitch_link.glb" scale="1 ${direction} 1"/>
+        </geometry>
+      </visual>
+      <xacro:star1_arm_link_collision collider="${collider}"
+        mesh="${mesh}/elbow_pitch_link.glb"
+        scale="1 ${direction} 1"
+        xyz="0 0 -0.035"
+        length="0.14" radius="0.042"/>
+    </link>
+    <joint name="${prefix}elbow_pitch_joint" type="revolute">
+      <origin xyz="0.016 0 -0.232"/>
+      <parent link="${prefix}arm_yaw_link"/>
+      <child link="${prefix}elbow_pitch_link"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-2.36" upper="0.79" effort="110.0" velocity="4.19"/>
+      <dynamics friction="1.222"/>
+    </joint>
+
+    <link name="${prefix}elbow_yaw_link">
+      <inertial>
+        <origin xyz="3.0416E-06 ${direction*-0.001965} 0.030234"/>
+        <mass value="0.1556"/>
+        <inertia ixx="0.00019055" ixy="${direction*5.6249E-08}" ixz="-2.3188E-08"
+                 iyy="0.0001" iyz="${direction*-2.1005E-06}" izz="0.0002"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/elbow_yaw_link.glb" scale="1 ${direction} 1"/>
+        </geometry>
+      </visual>
+      <xacro:star1_arm_link_collision collider="${collider}"
+        mesh="${mesh}/elbow_yaw_link.glb"
+        scale="1 ${direction} 1"
+        xyz="0 0 0.01"
+        length="0.08" radius="0.036"/>
+    </link>
+    <joint name="${prefix}elbow_yaw_joint" type="revolute">
+      <origin xyz="-0.016 0 -0.166"/>
+      <parent link="${prefix}elbow_pitch_link"/>
+      <child link="${prefix}elbow_yaw_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.62" upper="2.62" effort="35.0" velocity="4.19"/>
+      <dynamics friction="1.111"/>
+    </joint>
+
+    <link name="${prefix}wrist_pitch_link">
+      <inertial>
+        <origin xyz="-0.00027663 ${direction*-0.0069214} -0.0061943"/>
+        <mass value="0.625"/>
+        <inertia ixx="0.0006" ixy="${direction*1.3182E-08}" ixz="-8.9769E-07"
+                 iyy="0.0006" iyz="${direction*7.1645E-06}" izz="0.0004"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/wrist_pitch_link.glb" scale="1 ${direction} 1"/>
+        </geometry>
+      </visual>
+      <xacro:star1_arm_link_collision collider="${collider}"
+        mesh="${mesh}/wrist_pitch_link.glb"
+        scale="1 ${direction} 1"
+        xyz="0 0 -0.03"
+        length="0.11" radius="0.034"/>
+    </link>
+    <joint name="${prefix}wrist_pitch_joint" type="revolute">
+      <parent link="${prefix}elbow_yaw_link"/>
+      <child link="${prefix}wrist_pitch_link"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-1.57" upper="1.57" effort="35.0" velocity="4.19"/>
+      <dynamics friction="1.111"/>
+    </joint>
+
+    <link name="${prefix}wrist_roll_link">
+      <inertial>
+        <origin xyz="-0.0075938 ${direction*0.00010133} -0.00064617"/>
+        <mass value="0.58"/>
+        <inertia ixx="0.0003" ixy="${direction*-1.0565E-06}" ixz="5.2302E-07"
+                 iyy="0.00027887" iyz="${direction*8.2448E-07}" izz="0.0003"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="${mesh}/wrist_roll_link.glb" scale="1 ${direction} 1"/>
+        </geometry>
+      </visual>
+      <xacro:star1_arm_link_collision collider="${collider}"
+        mesh="${mesh}/wrist_roll_link.glb"
+        scale="1 ${direction} 1"
+        xyz="0 0 -0.008"
+        length="0.06" radius="0.030"/>
+    </link>
+    <joint name="${prefix}wrist_roll_joint" type="revolute">
+      <origin xyz="0 0 -0.065"/>
+      <parent link="${prefix}wrist_pitch_link"/>
+      <child link="${prefix}wrist_roll_link"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-1.75" upper="1.75" effort="35.0" velocity="4.19"/>
+      <dynamics friction="1.111"/>
+    </joint>
+  </xacro:macro>
+</robot>

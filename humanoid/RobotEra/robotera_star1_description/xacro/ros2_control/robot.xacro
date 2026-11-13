@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<robot name="robotera_star1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
+  <xacro:arg name="gazebo" default="false"/>
+  <!-- Control stack targets upper-body + waist; keep default variant:=upper. -->
+  <xacro:arg name="variant" default="upper"/>
+  <xacro:arg name="type" default="xhand1"/>
+  <xacro:arg name="left_type" default=""/>
+  <xacro:arg name="right_type" default=""/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+  <!-- Real XHand1 USB-RS485 (same keys as Xbot-L / W2). -->
+  <xacro:arg name="left_ee_drive_type" default=""/>
+  <xacro:arg name="right_ee_drive_type" default=""/>
+  <xacro:arg name="usb_left_port" default="/dev/ttyUSB0"/>
+  <xacro:arg name="usb_right_port" default="/dev/ttyUSB2"/>
+  <xacro:arg name="left_ee_rw_rate" default=""/>
+  <xacro:arg name="right_ee_rw_rate" default=""/>
+
+  <xacro:property name="is_real_hardware"
+                  value="${'$(arg ros2_control_hardware_type)' == 'real'}"/>
+  <xacro:property name="left_drive_type" value="$(arg left_ee_drive_type)"/>
+  <xacro:property name="right_drive_type" value="$(arg right_ee_drive_type)"/>
+
+  <!-- robot.xacro resolves left_hand_type / right_hand_type from type|left_type|right_type. -->
+  <xacro:include filename="$(find robotera_star1_description)/xacro/robot.xacro"/>
+  <xacro:include filename="$(find robotera_star1_description)/xacro/ros2_control/interfaces.xacro"/>
+  <xacro:include filename="$(find robot_common_launch)/xacro/ros2_control/simulation_hardware.xacro"/>
+
+  <xacro:property name="sim_iface_mode"
+    value="${'position' if '$(arg ros2_control_hardware_type)' == 'isaac' else 'mix'}"/>
+
+  <ros2_control name="robotera_star1_system" type="system">
+    <hardware>
+      <xacro:if value="${is_real_hardware}">
+        <plugin>mock_components/GenericSystem</plugin>
+      </xacro:if>
+      <xacro:unless value="${is_real_hardware}">
+        <xacro:simulation_hardware_plugin hardware_type="$(arg ros2_control_hardware_type)"/>
+      </xacro:unless>
+    </hardware>
+
+    <xacro:Star1WaistInterfaces iface_mode="${sim_iface_mode}"/>
+    <xacro:Star1HeadInterfaces iface_mode="${sim_iface_mode}"/>
+    <xacro:Star1ArmInterfaces name="left" iface_mode="${sim_iface_mode}"/>
+    <xacro:Star1ArmInterfaces name="right" iface_mode="${sim_iface_mode}"/>
+    <xacro:Star1HandInterfacesBlock mode="${'real' if is_real_hardware else 'sim'}"/>
+  </ros2_control>
+
+  <xacro:if value="${is_real_hardware}">
+    <xacro:if value="${left_drive_type in ('usb', 'usb_rs485') and left_hand_type == 'xhand1'}">
+      <xacro:xhand1_rs485_side_system
+        side="left"
+        serial_port="$(arg usb_left_port)"
+        rw_rate="$(arg left_ee_rw_rate)"/>
+    </xacro:if>
+    <xacro:if value="${right_drive_type in ('usb', 'usb_rs485') and right_hand_type == 'xhand1'}">
+      <xacro:xhand1_rs485_side_system
+        side="right"
+        serial_port="$(arg usb_right_port)"
+        rw_rate="$(arg right_ee_rw_rate)"/>
+    </xacro:if>
+  </xacro:if>
+
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find robotera_star1_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

@@ -1,0 +1,17 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.3
+    angular_scale: 0.5
+    enable_vr: true
+    # Head follows OCS2 HEAD_GAZE; do not drive head via ATM joint marker by default.
+    enable_head_control: false
+
+    # fixed-base WBC markers in base_link; full_body launch may override to world
+    marker_fixed_frame: base_link
+    vr_follow_frame: base_link
+
+    enable_wbc_head_tracking_marker: false
+
+    # Last neck DOF carries the head mesh.
+    head_link_name: "neck_pitch_link"
+    reference_link: "neck_pitch_link"

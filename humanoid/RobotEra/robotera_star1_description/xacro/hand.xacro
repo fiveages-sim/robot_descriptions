@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!-- =================================================================================== -->
+<!-- |    RobotEra STAR1 hands — reuse common xhand1_description                       | -->
+<!-- =================================================================================== -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find xhand1_description)/xacro/xhand1.xacro"/>
+
+  <!-- wrist_roll distal (-Z); upstream offset z=-0.040. Flip 180° about X then ±90° about distal. -->
+  <xacro:macro name="Star1LeftHand" params="parent_link:=left_wrist_roll_link fixed_joints:=false">
+    <xacro:XHand1 name="left_hand" direction="1" use_flange="false" fixed_joints="${fixed_joints}"/>
+    <joint name="left_hand_base_joint" type="fixed">
+      <origin xyz="0 0 -0.040" rpy="3.1415926 0 -1.5708"/>
+      <parent link="${parent_link}"/>
+      <child link="left_hand_hand_base"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="Star1RightHand" params="parent_link:=right_wrist_roll_link fixed_joints:=false">
+    <xacro:XHand1 name="right_hand" direction="-1" use_flange="false" fixed_joints="${fixed_joints}"/>
+    <joint name="right_hand_base_joint" type="fixed">
+      <origin xyz="0 0 -0.040" rpy="3.1415926 0 1.5708"/>
+      <parent link="${parent_link}"/>
+      <child link="right_hand_hand_base"/>
+    </joint>
+  </xacro:macro>
+</robot>

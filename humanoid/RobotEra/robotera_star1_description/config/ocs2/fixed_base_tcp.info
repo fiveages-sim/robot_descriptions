@@ -1,0 +1,360 @@
+; RobotEra STAR1 — upper-body + waist + head WBC (ocs2_wbc_controller / full_body.launch.py)
+; =============================================================================
+; Fixed base. State / input (19): [waist_yaw | waist_roll | waist_pitch | left×7 | right×7 | neck_yaw | neck_pitch]
+; Weights aligned to robotera_xbotl fixed_base_tcp.info (same scheme; +waist_pitch).
+; Default UI: 自由 (HM_DUAL_BODY_FREE, base auto-locks) + 注视 (HEAD_GAZE)
+; Pinocchio DFS: waist×3 | left×7 | right×7 | neck×2  → headInputStart 17
+
+model_information
+{
+    manipulatorModelType    0
+
+    baseFrame               "base_link"
+    eeFrame                 "left_hand_hand_ee_link"
+    eeFrame1                "right_hand_hand_ee_link"
+    bodyFrame               "torso_base_link"
+    headFrame               "neck_pitch_link"
+
+    removeJoints
+    {
+    }
+}
+
+model_settings
+{
+    usePreComputation       true
+    recompileLibraries      false
+}
+
+initialState
+{
+    arm
+    {
+        (0,0)   0.0     ; waist_yaw_joint
+        (1,0)   0.0     ; waist_roll_joint
+        (2,0)   0.0     ; waist_pitch_joint
+        (3,0)   0.0     ; left_shoulder_pitch_joint
+        (4,0)   0.3     ; left_shoulder_roll_joint
+        (5,0)   0.0     ; left_arm_yaw_joint
+        (6,0)  -0.5     ; left_elbow_pitch_joint
+        (7,0)   0.0     ; left_elbow_yaw_joint
+        (8,0)   0.0     ; left_wrist_pitch_joint
+        (9,0)   0.0     ; left_wrist_roll_joint
+        (10,0)  0.0     ; right_shoulder_pitch_joint
+        (11,0) -0.3     ; right_shoulder_roll_joint
+        (12,0)  0.0     ; right_arm_yaw_joint
+        (13,0) -0.5     ; right_elbow_pitch_joint
+        (14,0)  0.0     ; right_elbow_yaw_joint
+        (15,0)  0.0     ; right_wrist_pitch_joint
+        (16,0)  0.0     ; right_wrist_roll_joint
+        (17,0)  0.0     ; neck_yaw_joint
+        (18,0)  0.0     ; neck_pitch_joint
+    }
+}
+
+initialModeSchedule
+{
+    eventTimes
+    {
+    }
+
+    modeSequence
+    {
+        [0]
+        {
+            bodyMode "HM_DUAL_BODY_FREE"
+            headMode "HEAD_GAZE"
+        }
+    }
+}
+
+ddp
+{
+    algorithm                       SLQ
+
+    nThreads                        3
+    threadPriority                  50
+
+    maxNumIterations                1
+    minRelCost                      0.1
+    constraintTolerance             1e-3
+
+    displayInfo                     false
+    displayShortSummary             false
+    checkNumericalStability         false
+    debugPrintRollout               false
+    debugCaching                    false
+
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    maxNumStepsPerSecond            100000
+    timeStep                        1e-3
+    backwardPassIntegratorType      ODE45
+
+    constraintPenaltyInitialValue   20.0
+    constraintPenaltyIncreaseRate   2.0
+
+    preComputeRiccatiTerms          true
+
+    useFeedbackPolicy               false
+
+    strategy                        LINE_SEARCH
+    lineSearch
+    {
+        minStepLength                   1e-2
+        maxStepLength                   1.0
+        hessianCorrectionStrategy       DIAGONAL_SHIFT
+        hessianCorrectionMultiple       1e-3
+    }
+}
+
+mpc
+{
+    timeHorizon                     0.4     ; [s]
+    solutionTimeWindow              0.2     ; [s]
+    coldStart                       false
+
+    debugPrint                      false
+
+    mpcDesiredFrequency             100     ; [Hz]
+    mrtDesiredFrequency             400     ; [Hz]
+}
+
+rollout
+{
+    AbsTolODE                       1e-5
+    RelTolODE                       1e-3
+    timeStep                        1e-2
+    integratorType                  ODE45
+    maxNumStepsPerSecond            100000
+    checkNumericalStability         false
+}
+
+bodyTrackingEE
+{
+    activate true
+    muPosition 10.0
+    muOrientation 5.0
+}
+
+; 头部 6D 跟踪末端（HEAD_TRACKING）：跟踪 model_information.headFrame
+headTrackingEE
+{
+    activate true
+    muPosition 5.0
+    muOrientation 5.0
+}
+
+inputCost
+{
+    R
+    {
+        arm
+        {
+            ; R 为正对角矩阵；实际权重 = scaling * 对角值。
+            ; 对齐 xbotl：腰 roll=2 / yaw=3，近端臂 0.5，远端/头 0.1；pitch 按 yaw 取 3。
+            scaling 1e-3
+
+            (0,0)      3.0     ; waist_yaw
+            (1,1)      2.0     ; waist_roll
+            (2,2)      3.0     ; waist_pitch
+            (3,3)      0.5     ; left_shoulder_pitch
+            (4,4)      0.5     ; left_shoulder_roll
+            (5,5)      0.5     ; left_arm_yaw
+            (6,6)      0.5     ; left_elbow_pitch
+            (7,7)      0.1     ; left_elbow_yaw
+            (8,8)      0.1     ; left_wrist_pitch
+            (9,9)      0.1     ; left_wrist_roll
+            (10,10)    0.5     ; right_shoulder_pitch
+            (11,11)    0.5     ; right_shoulder_roll
+            (12,12)    0.5     ; right_arm_yaw
+            (13,13)    0.5     ; right_elbow_pitch
+            (14,14)    0.1     ; right_elbow_yaw
+            (15,15)    0.1     ; right_wrist_pitch
+            (16,16)    0.1     ; right_wrist_roll
+            (17,17)    0.1     ; neck_yaw
+            (18,18)    0.1     ; neck_pitch
+        }
+    }
+}
+
+endEffector
+{
+    muPosition                      10.0
+    muOrientation                   5.0
+}
+
+finalEndEffector
+{
+    muPosition                      20.0
+    muOrientation                   10.0
+}
+
+bodyRelative
+{
+    activate                        true
+    bodyLinkName                    "torso_base_link"
+    xLowerBound                     -0.15
+    xUpperBound                      0.15
+    muPosition                      5.0
+    muOrientation                   5.0
+}
+
+bimanualCoupling
+{
+    activate                        true
+    muPosition                      10.0
+    muOrientation                   1.25
+}
+
+; Layout: [waist(3) | left(7) | right(7) | neck(2)] → head starts at 17
+headInputStart                          17
+
+waistLock
+{
+    activate                        true
+    numJoints                       3
+}
+
+customJointLock
+{
+    activate                        true
+    lockedJointIndices
+    {
+    }
+}
+
+; HOME 关节参考：打开后把未排除关节软拉向 controller HOME。
+homeJointReference
+{
+    activate                        true
+    activateDefault                 true
+    mu                              1e-3
+    excludeJointIndices
+    {
+    }
+}
+
+headCoupling
+{
+    activate                        true
+    waistJointIndex                 0
+    headJointIndex                  17
+    alpha                           1.0
+    lockedWaistJoints
+    {
+        [0] 2
+    }
+}
+
+armLock
+{
+    activate                        true
+    leftNumJoints                   7
+    rightNumJoints                  7
+}
+
+jointPositionLimits
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-3
+}
+
+jointVelocityLimits
+{
+    mu                              1e-2
+    delta                           1e-3
+
+    lowerBound
+    {
+        arm
+        {
+            (0,0)      -0.5    ; waist_yaw
+            (1,0)      -0.5    ; waist_roll
+            (2,0)      -0.5    ; waist_pitch
+            (3,0)      -2.07   ; left_shoulder_pitch
+            (4,0)      -2.07   ; left_shoulder_roll
+            (5,0)      -2.07   ; left_arm_yaw
+            (6,0)      -2.07   ; left_elbow_pitch
+            (7,0)      -2.57   ; left_elbow_yaw
+            (8,0)      -2.57   ; left_wrist_pitch
+            (9,0)      -2.57   ; left_wrist_roll
+            (10,0)     -2.07   ; right_shoulder_pitch
+            (11,0)     -2.07   ; right_shoulder_roll
+            (12,0)     -2.07   ; right_arm_yaw
+            (13,0)     -2.07   ; right_elbow_pitch
+            (14,0)     -2.57   ; right_elbow_yaw
+            (15,0)     -2.57   ; right_wrist_pitch
+            (16,0)     -2.57   ; right_wrist_roll
+            (17,0)     -1.0    ; neck_yaw
+            (18,0)     -1.0    ; neck_pitch
+        }
+    }
+
+    upperBound
+    {
+        arm
+        {
+            (0,0)      0.5     ; waist_yaw
+            (1,0)      0.5     ; waist_roll
+            (2,0)      0.5     ; waist_pitch
+            (3,0)      2.07    ; left_shoulder_pitch
+            (4,0)      2.07    ; left_shoulder_roll
+            (5,0)      2.07    ; left_arm_yaw
+            (6,0)      2.07    ; left_elbow_pitch
+            (7,0)      2.57    ; left_elbow_yaw
+            (8,0)      2.57    ; left_wrist_pitch
+            (9,0)      2.57    ; left_wrist_roll
+            (10,0)     2.07    ; right_shoulder_pitch
+            (11,0)     2.07    ; right_shoulder_roll
+            (12,0)     2.07    ; right_arm_yaw
+            (13,0)     2.07    ; right_elbow_pitch
+            (14,0)     2.57    ; right_elbow_yaw
+            (15,0)     2.57    ; right_wrist_pitch
+            (16,0)     2.57    ; right_wrist_roll
+            (17,0)     1.0     ; neck_yaw
+            (18,0)     1.0     ; neck_pitch
+        }
+    }
+}
+
+; Torso ↔ distal arm only. Require collider:=simple (box/cylinder).
+selfCollision
+{
+    activate                        true
+    mu                              1e-3
+    delta                           1e-4
+    minimumDistance                 0.01
+    activationDistance              0.03
+    collisionObjectPairs
+    {
+    }
+    collisionLinkPairs
+    {
+        [0] "torso_base_link, left_elbow_pitch_link",
+        [1] "torso_base_link, right_elbow_pitch_link",
+        [2] "torso_base_link, left_wrist_roll_link",
+        [3] "torso_base_link, right_wrist_roll_link",
+    }
+}
+
+; HEAD_GAZE: D455 optical looks at midpoint of both hands (2-DoF neck).
+; cameraFrame = realsense_optical_frame (ROS optical: +Z forward, +X right, +Y down).
+headMidpointGaze
+{
+    activate                    true
+    cameraFrame                 "realsense_optical_frame"
+    fx                          642.293
+    fy                          641.558
+    cx                          652.595
+    cy                          360.330
+    width                       1280
+    height                      720
+    horizontalDeadbandDeg       10.0
+    verticalDeadbandDeg         10.0
+    muAlignmentHorizontal       1.0
+    muAlignmentVertical         1.0
+    muFront                     1.0
+    minDepth                    0.3
+}
