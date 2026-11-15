@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="UR5e">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
+  <xacro:arg name="gazebo" default="false"/>
+
+  <xacro:include filename="$(find ur5e_description)/xacro/robot.xacro"/>
+  <xacro:include filename="$(find robot_common_launch)/xacro/ros2_control/simulation_hardware.xacro"/>
+  <xacro:include filename="$(find ur5e_description)/xacro/ros2_control/interfaces.xacro"/>
+
+  <ros2_control name="ur5eSystem" type="system">
+    <hardware>
+      <xacro:simulation_hardware_plugin hardware_type="$(arg ros2_control_hardware_type)"/>
+    </hardware>
+
+    <xacro:ur5e_interfaces name=""/>
+
+    <xacro:unless value="${'$(arg ros2_control_hardware_type)' == 'real'}">
+      <xacro:if value="${selected_gripper_type == 'robotiq85'}">
+        <xacro:include filename="$(find robotiq_gripper_description)/xacro/ros2_control/2F85.xacro"/>
+        <xacro:robotiq_2f85_interfaces name=""/>
+      </xacro:if>
+    </xacro:unless>
+  </ros2_control>
+
+  <xacro:if value="$(arg gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find ur5e_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

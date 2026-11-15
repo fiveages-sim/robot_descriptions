@@ -1,0 +1,73 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+
+arm_controller:
+  ros__parameters:
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+
+gripper_controller:
+  ros__parameters:
+    joint: gripper_joint
+    force_feedback_ratio: 0.1
+    force_threshold: 0.5
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 100  # Hz
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    robot_name: ur5e
+
+    future_time_offset: 1.0
+    movel_duration: 0.5
+    movel_sample_interval: 0.04
+    movel_max_linear_velocity: 0.3
+    movel_max_linear_acceleration: 1.0
+    movel_max_linear_jerk: 2.0
+    movel_max_angular_velocity: 1.0
+    movel_max_angular_acceleration: 2.0
+    movel_max_angular_jerk: 4.0
+    movel_auto_extend_duration: true
+    movej_interpolation_type: doubles
+    home_interpolation_type: doubles
+
+    # Official RoboAPI Home in a task frame coinciding with base_link (rad).
+    # tool0 at [-0.13, -0.46, 0.49] m, quat xyzw [0, 1, 0, 0] (Z down, X along -base X);
+    # gripper vertical, fingers down. IK uses official ur_description UR5e kinematics.
+    # Recalibrate if the cell's task origin is not the arm base.
+    home_1: [1.0128, -1.6481, 1.6395, -1.5622, -1.5708, -0.5580]
+    # Classic UR5e ready pose (former home_1): upper arm up, elbow folded.
+    home_2: [0.0, -1.5708, 0.0, -1.5708, 0.0, 0.0]

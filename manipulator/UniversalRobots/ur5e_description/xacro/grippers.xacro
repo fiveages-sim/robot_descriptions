@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<robot name="UR5e" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!--
+    夹爪类型由 ur5e_description/xacro/robot.xacro 解析得到：
+    - selected_gripper_type: empty / robotiq85
+
+    Official ur_description 里 flange 是 ROS-Industrial 的 EEF 装配面，
+    tool0 才是法兰处的全零工具系（Z 朝外，X+ 左、Y+ 上）。
+    FaSim 的 Robotiq 2F-85 以 Z 为伸出方向，必须挂在 tool0 上；
+    若直接以单位姿贴到 flange，夹爪会相对腕部偏 90°。
+    OCS2 planning URDF: eef_fixed_joints:=true 时用 kinematic_only（冻结手指 DOF，
+    保留 gripper_base 简化碰撞包络 + eef）。
+  -->
+
+  <xacro:property name="eef_fixed" value="$(arg eef_fixed_joints)"/>
+  <xacro:property name="kinematic_only" value="${str(eef_fixed).lower() == 'true'}"/>
+
+  <xacro:if value="${selected_gripper_type == 'empty' and kinematic_only}">
+    <link name="eef"/>
+    <joint name="eef_joint" type="fixed">
+      <parent link="tool0"/>
+      <child link="eef"/>
+    </joint>
+  </xacro:if>
+
+  <xacro:if value="${selected_gripper_type == 'robotiq85'}">
+    <xacro:include filename="$(find robotiq_gripper_description)/xacro/2F85.xacro"/>
+    <xacro:Robotiq85 name="" kinematic_only="${kinematic_only}"/>
+    <joint name="gripper_fix" type="fixed">
+      <parent link="tool0"/>
+      <child link="gripper_base"/>
+    </joint>
+  </xacro:if>
+</robot>

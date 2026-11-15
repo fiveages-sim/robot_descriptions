@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>ur5e_description</name>
+    <version>1.0.0</version>
+    <description>
+        FaSim wrapper around the official Universal Robots ur_description for UR5e,
+        with ros2_control and OCS2 arm configuration aligned to other manipulators.
+    </description>
+    <maintainer email="TODO@email.com">TODO</maintainer>
+    <license>BSD</license>
+
+    <exec_depend>robot_common_launch</exec_depend>
+    <exec_depend>ur_description</exec_depend>
+    <exec_depend>robotiq_gripper_description</exec_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>

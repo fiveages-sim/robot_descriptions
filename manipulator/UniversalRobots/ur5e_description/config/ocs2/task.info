@@ -1,0 +1,335 @@
+; robot model meta-information
+model_information {
+  manipulatorModelType     0      // 0: Default-arm, 1: Wheel-based manipulator, 2: Floating-arm manipulator, 3: Fully actuated floating-arm manipulator
+
+  ; motion joints in the URDF to consider fixed
+  ; Dynamic planning URDF sets eef_fixed_joints in xacro (gripper replaced by eef on tool0).
+  removeJoints {
+  }
+
+  ; base frame of the robot (from URDF)
+  baseFrame                       "base_link"
+  ; end-effector frame of the robot (from URDF); coincides with official tool0
+  eeFrame                         "eef"
+}
+
+model_settings
+{
+  usePreComputation               true
+  recompileLibraries              true
+}
+
+; DDP settings
+ddp
+{
+  algorithm                       SLQ
+
+  nThreads                        3
+  threadPriority                  50
+
+  maxNumIterations                1
+  minRelCost                      0.1
+  constraintTolerance             1e-3
+
+  displayInfo                     false
+  displayShortSummary             false
+  checkNumericalStability         false
+  debugPrintRollout               false
+  debugCaching                    false
+
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  maxNumStepsPerSecond            100000
+  timeStep                        1e-3
+  backwardPassIntegratorType      ODE45
+
+  constraintPenaltyInitialValue   20.0
+  constraintPenaltyIncreaseRate   2.0
+
+  preComputeRiccatiTerms          true
+
+  useFeedbackPolicy               false
+
+  strategy                        LINE_SEARCH
+  lineSearch
+  {
+    minStepLength                 1e-2
+    maxStepLength                 1.0
+    hessianCorrectionStrategy     DIAGONAL_SHIFT
+    hessianCorrectionMultiple     1e-3
+  }
+}
+
+; Rollout settings
+rollout
+{
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  timeStep                        1e-2
+  integratorType                  ODE45
+  maxNumStepsPerSecond            100000
+  checkNumericalStability         false
+}
+
+; MPC settings
+mpc
+{
+  timeHorizon                     2.0   ; [s]
+  solutionTimeWindow              0.4   ; [s]
+  coldStart                       false
+
+  debugPrint                      false
+
+  mpcDesiredFrequency             100   ; [Hz]
+  mrtDesiredFrequency             500   ; [Hz]
+}
+
+; initial state
+initialState
+{
+  ; initial state for the different types of arm base DOFs
+  base
+  {
+    defaultManipulator
+    {
+    }
+
+    floatingArmManipulator
+    {
+      (0,0)  0.0  ; position x
+      (1,0)  0.0  ; position y
+      (2,0)  0.5  ; position z
+      (3,0)  0.0  ; euler angle z
+      (4,0)  0.0  ; euler angle y
+      (5,0)  0.0  ; euler angle x
+    }
+
+    fullyActuatedFloatingArmManipulator
+    {
+      (0,0)  0.0  ; position x
+      (1,0)  0.0  ; position y
+      (2,0)  0.0  ; position z
+      (3,0)  0.0  ; euler angle z
+      (4,0)  0.0  ; euler angle y
+      (5,0)  0.0  ; euler angle x
+    }
+
+    wheelBasedMobileManipulator
+    {
+      (0,0)  0.0  ; position x
+      (1,0)  0.0  ; position y
+      (2,0)  0.0  ; heading
+    }
+  }
+
+  ; initial state for the arm DOFs (matches ocs2_arm_controller home_1 / RoboAPI)
+  arm
+  {
+    (0,0)  1.0128   ; shoulder_pan_joint
+    (1,0)  -1.6481  ; shoulder_lift_joint
+    (2,0)  1.6395   ; elbow_joint
+    (3,0)  -1.5622  ; wrist_1_joint
+    (4,0)  -1.5708  ; wrist_2_joint
+    (5,0)  -0.5580  ; wrist_3_joint
+  }
+}
+
+inputCost
+{
+  ; control weight matrix
+  R
+  {
+    ; input costs for the different types of arm base DOFs
+    base
+    {
+      defaultManipulator
+      {
+      }
+
+      floatingArmManipulator
+      {
+      }
+
+      fullyActuatedFloatingArmManipulator
+      {
+        scaling 1e-2
+        (0,0)  5.0  ; position x
+        (1,1)  5.0  ; position y
+        (2,2)  5.0  ; position z
+        (3,3)  5.0  ; euler angle z
+        (4,4)  5.0  ; euler angle y
+        (5,5)  5.0  ; euler angle x
+      }
+
+      wheelBasedMobileManipulator
+      {
+        scaling 1e-2
+        (0,0)  5.0  ; forward velocity
+        (1,1)  5.0  ; turning velocity
+      }
+    }
+
+    ; input costs for the arm DOFs
+    arm
+    {
+      scaling 1e-3
+
+      (0,0)  1.0  ; shoulder_pan_joint velocity
+      (1,1)  10.0 ; shoulder_lift_joint velocity
+      (2,2)  10.0 ; elbow_joint velocity
+      (3,3)  1.0  ; wrist_1_joint velocity
+      (4,4)  1.0  ; wrist_2_joint velocity
+      (5,5)  1.0  ; wrist_3_joint velocity
+    }
+  }
+}
+
+endEffector
+{
+  ; end effector quadratic penalty scaling
+  muPosition      25.0
+  muOrientation    5.0
+}
+
+finalEndEffector
+{
+  muPosition      25.0
+  muOrientation    5.0
+}
+
+selfCollision
+{
+  ; activate self-collision constraint
+  activate  true
+
+  ; Self Collision raw object pairs
+  collisionObjectPairs
+  {
+
+  }
+
+  ; Self Collision pairs (official ur_description link names + gripper_base envelope)
+  ; Requires planning URDF with collider:=simple (primitive collisions).
+  collisionLinkPairs
+  {
+      [0] "base_link_inertia, forearm_link",
+      [1] "base_link_inertia, wrist_1_link",
+      [2] "base_link_inertia, wrist_3_link",
+      [3] "upper_arm_link, wrist_3_link",
+      [4] "base_link_inertia, gripper_base",
+      [5] "upper_arm_link, gripper_base",
+      [6] "shoulder_link, gripper_base",
+  }
+
+  ; minimum distance allowed between the pairs
+  minimumDistance  0.01
+
+  ; relaxed log barrier mu
+  mu      1e-3
+
+  ; relaxed log barrier delta
+  delta   1e-2
+}
+
+; Only applied for arm joints: limits parsed from URDF
+jointPositionLimits
+{
+  ; activate constraint
+  activate  true
+
+  ; relaxed log barrier mu
+  mu      1e-3
+
+  ; relaxed log barrier delta
+  delta   1e-3
+}
+
+jointVelocityLimits
+{
+  ; relaxed log barrier mu
+  mu      0.01
+
+  ; relaxed log barrier delta
+  delta   1e-3
+
+  lowerBound
+  {
+    base
+    {
+      defaultManipulator
+      {
+      }
+
+      floatingArmManipulator
+      {
+      }
+
+      fullyActuatedFloatingArmManipulator
+      {
+        (0,0)  -0.1  ; linear velocity x
+        (1,0)  -0.1  ; linear velocity y
+        (2,0)  -0.1  ; linear velocity z
+        (3,0)  -0.3  ; euler angle velocity z
+        (4,0)  -0.3  ; euler angle velocity y
+        (5,0)  -0.3  ; euler angle velocity x
+      }
+
+      wheelBasedMobileManipulator
+      {
+        (0,0)  -0.1 ; forward velocity
+        (1,0)  -0.3 ; turning velocity
+      }
+    }
+
+    ; UR5e default velocity limits are pi rad/s in official joint_limits.yaml
+    arm
+    {
+      (0,0)  -3.1416  ; shoulder_pan_joint [rad/s]
+      (1,0)  -3.1416  ; shoulder_lift_joint [rad/s]
+      (2,0)  -3.1416  ; elbow_joint [rad/s]
+      (3,0)  -3.1416  ; wrist_1_joint [rad/s]
+      (4,0)  -3.1416  ; wrist_2_joint [rad/s]
+      (5,0)  -3.1416  ; wrist_3_joint [rad/s]
+    }
+  }
+
+  upperBound
+  {
+    base
+    {
+      defaultManipulator
+      {
+      }
+
+      floatingArmManipulator
+      {
+      }
+
+      fullyActuatedFloatingArmManipulator
+      {
+        (0,0)  0.1  ; linear velocity x
+        (1,0)  0.1  ; linear velocity y
+        (2,0)  0.1  ; linear velocity z
+        (3,0)  0.3  ; euler angle velocity z
+        (4,0)  0.3  ; euler angle velocity y
+        (5,0)  0.3  ; euler angle velocity x
+      }
+
+      wheelBasedMobileManipulator
+      {
+        (0,0)  0.1 ; forward velocity
+        (1,0)  0.3 ; turning velocity
+      }
+    }
+
+    arm
+    {
+      (0,0)  3.1416  ; shoulder_pan_joint [rad/s]
+      (1,0)  3.1416  ; shoulder_lift_joint [rad/s]
+      (2,0)  3.1416  ; elbow_joint [rad/s]
+      (3,0)  3.1416  ; wrist_1_joint [rad/s]
+      (4,0)  3.1416  ; wrist_2_joint [rad/s]
+      (5,0)  3.1416  ; wrist_3_joint [rad/s]
+    }
+  }
+}

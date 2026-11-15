@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<robot name="UR5e" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="collider" default="convex"/>
+  <xacro:arg name="type" default="empty"/>
+  <xacro:arg name="scene" default=""/>
+  <!-- false: ros2_control / 可视化；OCS2 planning 由 robot_common_launch 注入 eef_fixed_joints:=true -->
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+
+  <xacro:property name="type_arg" value="$(arg type)"/>
+  <xacro:property name="selected_gripper_type" value="empty"/>
+  <xacro:property name="collider_type" value="$(arg collider)"/>
+
+  <xacro:if value="${type_arg == 'robotiq85'}">
+    <xacro:property name="selected_gripper_type" value="robotiq85"/>
+  </xacro:if>
+  <xacro:if value="${type_arg == 'empty' or type_arg == ''}">
+    <xacro:property name="selected_gripper_type" value="empty"/>
+  </xacro:if>
+
+  <!-- Official ur_robot attaches base_link to this parent via a fixed joint. -->
+  <link name="world"/>
+
+  <xacro:include filename="$(find ur5e_description)/xacro/arm.xacro"/>
+  <xacro:ur5e_arm parent="world" collider="$(arg collider)">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:ur5e_arm>
+
+  <xacro:include filename="$(find ur5e_description)/xacro/grippers.xacro"/>
+</robot>
