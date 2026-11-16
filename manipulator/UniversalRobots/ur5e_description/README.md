@@ -96,6 +96,6 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=ur5e type:=robotiq85 hardware:=isaac_sim isaac_prim_path:=/World/UR5e/root_joint
 ```
 
-`ocs2_arm_controller` 的 `home_1`（以及 `interfaces.xacro` 里对应的 `initial_value`）按官方 RoboAPI Home 设计：夹爪竖直、手指朝下，离台面约 30–50 cm。仿真默认把任务系原点放在 `base_link`（Z 朝上），因此用官网标定后的笛卡尔位姿 `[-0.13, -0.46, 0.49]` m、四元数 xyzw `[0, 1, 0, 0]`（tool0 的 Z 朝下、X 沿 −X）反解得到 `[1.0128, -1.6481, 1.6395, -1.5622, -1.5708, -0.5580]` rad。运动学取官方 `ur_description` UR5e；控制点是法兰中心 / `tool0`（PolyScope TCP 平移为 0）。若实际台架的任务系原点不在底座，需要重新标定，不要沿用这组关节角。
+`ocs2_arm_controller` 的 `home_1`（以及 `interfaces.xacro` 里对应的 `initial_value`）按官方 RoboAPI Home 设计：夹爪竖直、手指朝下，离台面约 30–50 cm。仿真默认把任务系原点放在 `base_link`（Z 朝上），因此用官网标定后的笛卡尔位姿 `[-0.13, -0.46, 0.49]` m、四元数 xyzw `[0, 1, 0, 0]`（tool0 的 Z 朝下、X 沿 −X）反解，再把 `shoulder_pan_joint` 减 90°，得到 `[-0.5580, -1.6481, 1.6395, -1.5622, -1.5708, -0.5580]` rad。运动学取官方 `ur_description` UR5e；控制点是法兰中心 / `tool0`（PolyScope TCP 平移为 0）。若实际台架的任务系原点不在底座，需要重新标定，不要沿用这组关节角。
 
 `home_2` 是原先的 UR5e ready 姿 `[0, -π/2, 0, -π/2, 0, 0]`（大臂立起、肘部折叠）。Isaac Sim 里 UR5e 的 USD 默认关节仍是全 0，和 ROS Home 是两回事。

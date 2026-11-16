@@ -129,7 +129,7 @@ initialState
   ; initial state for the arm DOFs (matches ocs2_arm_controller home_1 / RoboAPI)
   arm
   {
-    (0,0)  1.0128   ; shoulder_pan_joint
+    (0,0)  -0.5580  ; shoulder_pan_joint (home IK 1.0128 minus 90 deg)
     (1,0)  -1.6481  ; shoulder_lift_joint
     (2,0)  1.6395   ; elbow_joint
     (3,0)  -1.5622  ; wrist_1_joint
