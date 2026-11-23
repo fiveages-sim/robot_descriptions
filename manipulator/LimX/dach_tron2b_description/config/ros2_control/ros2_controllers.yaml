@@ -1,0 +1,71 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+    dach_tron2b_head_controller:
+      type: forward_command_controller/ForwardCommandController
+    left_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+    right_gripper_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+ocs2_arm_controller:
+  ros__parameters:
+    robot_name: dach_tron2b
+    info_file_name: dual
+    mpc_frequency: 25
+    command_interfaces:
+    - position
+    state_interfaces:
+    - position
+    joints:
+    - proximal_pitch_L_Joint
+    - proximal_roll_L_Joint
+    - proximal_yaw_L_Joint
+    - elbow_L_Joint
+    - wrist_yaw_L_Joint
+    - wrist_pitch_L_Joint
+    - wrist_roll_L_Joint
+    - proximal_pitch_R_Joint
+    - proximal_roll_R_Joint
+    - proximal_yaw_R_Joint
+    - elbow_R_Joint
+    - wrist_yaw_R_Joint
+    - wrist_pitch_R_Joint
+    - wrist_roll_R_Joint
+    # Elbows back, grippers pointing forward at waist height.
+    home_1:
+    - 0.691099
+    - 0.271104
+    - 0.153669
+    - -1.404135
+    - 0.411881
+    - -0.725398
+    - -0.198326
+    - 0.691098
+    - -0.271104
+    - -0.153670
+    - -1.404135
+    - -0.411882
+    - -0.725398
+    - 0.198328
+    # Independent gripper controllers use these HOME targets in radians.
+    home_grippers:
+      grasper_L_drive_Joint: 0.77302
+      grasper_R_drive_Joint: 0.77302
+dach_tron2b_head_controller:
+  ros__parameters:
+    joints:
+    - head_yaw_Joint
+    - head_pitch_Joint
+    interface_name: position
+left_gripper_controller:
+  ros__parameters:
+    joint: grasper_L_drive_Joint
+    use_effort_interface: false
+right_gripper_controller:
+  ros__parameters:
+    joint: grasper_R_drive_Joint
+    use_effort_interface: false

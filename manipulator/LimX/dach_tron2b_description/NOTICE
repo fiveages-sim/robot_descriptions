@@ -1,0 +1,15 @@
+TRON2 robot description
+Copyright (c) 2024-2026 LimX Dynamics Inc.
+
+This product includes URDF/xacro sources, MuJoCo XML models, STL meshes,
+and USD assets authored by LimX Dynamics for the TRON2A humanoid platform.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may
+not use these files except in compliance with the License. You may obtain
+a copy of the License in the LICENSE file at the root of this repository,
+or at:
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Third-party components, upstream references, and per-asset provenance are
+listed in THIRD_PARTY_NOTICES.md.
