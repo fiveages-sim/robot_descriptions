@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot name="dach_tron2b" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="isaac" default="false"/>
+  <xacro:property name="visual_ext" value="${'stl' if '$(arg isaac)' == 'true' else 'glb'}"/>
+  <xacro:include filename="components/body.xacro"/>
+  <xacro:include filename="components/head.xacro"/>
+  <xacro:include filename="components/arm.xacro"/>
+  <xacro:include filename="components/gripper.xacro"/>
+
+  <mujoco>
+    <compiler meshdir="../meshes"/>
+  </mujoco>
+
+  <link name="base_link"/>
+  <joint name="dach_base_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_Link"/>
+  </joint>
+  <xacro:DachTron2BBody visual_ext="${visual_ext}"/>
+  <xacro:DachTron2BHead parent="base_Link" visual_ext="${visual_ext}"/>
+  <xacro:DachTron2BArm side="L" parent="base_Link" visual_ext="${visual_ext}"/>
+  <xacro:DachTron2BGripper side="L" parent="wrist_roll_L_Link" visual_ext="${visual_ext}"/>
+  <xacro:DachTron2BArm side="R" parent="base_Link" visual_ext="${visual_ext}"/>
+  <xacro:DachTron2BGripper side="R" parent="wrist_roll_R_Link" visual_ext="${visual_ext}"/>
+</robot>

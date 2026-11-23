@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<robot name="dach_tron2b" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
+  <xacro:include filename="$(find dach_tron2b_description)/xacro/robot.xacro"/>
+  <xacro:include filename="$(find robot_common_launch)/xacro/ros2_control/simulation_hardware.xacro"/>
+
+  <xacro:macro name="position_joint" params="name initial:=0.0">
+    <joint name="${name}">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">${initial}</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="DachTron2BArmInterfaces" params="side">
+    <xacro:position_joint name="proximal_pitch_${side}_Joint"/>
+    <xacro:position_joint name="proximal_roll_${side}_Joint"/>
+    <xacro:position_joint name="proximal_yaw_${side}_Joint"/>
+    <xacro:position_joint name="elbow_${side}_Joint"/>
+    <xacro:position_joint name="wrist_yaw_${side}_Joint"/>
+    <xacro:position_joint name="wrist_pitch_${side}_Joint"/>
+    <xacro:position_joint name="wrist_roll_${side}_Joint"/>
+  </xacro:macro>
+
+  <xacro:macro name="DachTron2BGripperInterfaces" params="side">
+    <xacro:position_joint name="grasper_${side}_drive_Joint" initial="-0.09522"/>
+    <!-- TopicBasedSystem expects one position per name in the command message.
+         The Isaac articulation supplies mimic states through its own linkage. -->
+    <xacro:unless value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
+      <joint name="grasper_${side}_tip_left_Joint">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="grasper_${side}_bar_left_Joint">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="grasper_${side}_crank_right_Joint">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="grasper_${side}_tip_right_Joint">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="grasper_${side}_bar_right_Joint">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="grasper_${side}_nut_Joint">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="grasper_${side}_jaw_left_Joint">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="grasper_${side}_jaw_right_Joint">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </xacro:unless>
+  </xacro:macro>
+
+  <ros2_control name="DachTron2B" type="system">
+    <hardware>
+      <xacro:simulation_hardware_plugin hardware_type="$(arg ros2_control_hardware_type)"/>
+    </hardware>
+    <xacro:DachTron2BArmInterfaces side="L"/>
+    <xacro:DachTron2BArmInterfaces side="R"/>
+    <xacro:position_joint name="head_yaw_Joint"/>
+    <xacro:position_joint name="head_pitch_Joint"/>
+    <xacro:DachTron2BGripperInterfaces side="L"/>
+    <xacro:DachTron2BGripperInterfaces side="R"/>
+  </ros2_control>
+</robot>

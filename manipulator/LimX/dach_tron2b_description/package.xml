@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>dach_tron2b_description</name>
+  <version>0.1.0</version>
+  <description>ROS 2 geometry description for the LimX Dynamics DACH_TRON2B.</description>
+  <maintainer email="maintainers@example.com">Project maintainers</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>robot_common_launch</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>forward_command_controller</exec_depend>
+  <exec_depend>ocs2_arm_controller</exec_depend>
+  <exec_depend>adaptive_gripper_controller</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>
