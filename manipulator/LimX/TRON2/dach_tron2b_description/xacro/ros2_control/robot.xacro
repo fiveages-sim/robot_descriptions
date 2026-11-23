@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="dach_tron2b" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="ros2_control_hardware_type" default="mock_components"/>
+  <xacro:include filename="$(find dach_tron2b_description)/xacro/robot.xacro"/>
+  <xacro:include filename="$(find robot_common_launch)/xacro/ros2_control/simulation_hardware.xacro"/>
+
+  <xacro:include filename="interfaces.xacro"/>
+
+  <ros2_control name="DachTron2B" type="system">
+    <hardware>
+      <xacro:simulation_hardware_plugin hardware_type="$(arg ros2_control_hardware_type)"/>
+    </hardware>
+    <xacro:DachTron2BArmInterfaces side="L"/>
+    <xacro:DachTron2BArmInterfaces side="R"/>
+    <xacro:position_joint name="head_yaw_Joint"/>
+    <xacro:position_joint name="head_pitch_Joint"/>
+    <xacro:DachTron2BGripperInterfaces side="L"/>
+    <xacro:DachTron2BGripperInterfaces side="R"/>
+  </ros2_control>
+</robot>
