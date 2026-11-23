@@ -17,17 +17,23 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/hip_roll_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/hip_roll_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/hip_roll_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/hip_roll_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${'$(arg collider)' == 'simple'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/hip_roll_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}hip_roll_joint" type="revolute">
       <origin xyz="-0.04724 ${direction*0.115} -0.0083"/>
@@ -48,18 +54,24 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/hip_yaw_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/hip_yaw_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
-      <collision>
-        <origin xyz="0.0 0. -0.144" rpy="1.57 0 0"/>
-        <geometry>
-          <cylinder radius="0.09" length="0.16"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/hip_yaw_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${'$(arg collider)' == 'simple'}">
+        <collision>
+          <origin xyz="0.0 0. -0.144" rpy="1.57 0 0"/>
+          <geometry>
+            <cylinder radius="0.09" length="0.16"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}hip_yaw_joint" type="revolute">
       <origin xyz="0 0 0"/>
@@ -80,18 +92,24 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/hip_pitch_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/hip_pitch_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
-      <collision>
-        <origin xyz="0.02 0. -0.20"/>
-        <geometry>
-          <box size="0.1 0.06 0.15"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/hip_pitch_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${'$(arg collider)' == 'simple'}">
+        <collision>
+          <origin xyz="0.02 0. -0.20"/>
+          <geometry>
+            <box size="0.1 0.06 0.15"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}hip_pitch_joint" type="revolute">
       <origin xyz="0 0 -0.144" rpy="0 -0.5236 0"/>
@@ -110,17 +128,23 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/knee_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/knee_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/knee_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/knee_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${'$(arg collider)' == 'simple'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/knee_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}knee_joint" type="revolute">
       <origin xyz="0 ${direction*-0.01} -0.36" rpy="0 1.0472 0"/>
@@ -139,12 +163,16 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/ankle_pitch_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/ankle_pitch_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/ankle_pitch_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}ankle_pitch_joint" type="revolute">
       <origin xyz="0 0 -0.36" rpy="0 -0.5236 0"/>
@@ -163,17 +191,23 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/ankle_roll_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/ankle_roll_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
-      <collision>
-        <geometry>
-          <mesh filename="${mesh}/ankle_roll_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/ankle_roll_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+      <xacro:if value="${'$(arg collider)' == 'simple'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/ankle_roll_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}ankle_roll_joint" type="revolute">
       <origin xyz="0 0 0"/>

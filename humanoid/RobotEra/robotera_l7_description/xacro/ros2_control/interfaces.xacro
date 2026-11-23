@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find xhand1_description)/xacro/ros2_control/side_systems.xacro"/>
+
   <!-- iface_mode: mix = pos/vel/effort (mock/gz); position = pos only (Isaac). -->
   <xacro:macro name="L7JointInterfaces" params="jname iface_mode:=mix">
     <joint name="${jname}">
@@ -31,5 +33,26 @@
     <xacro:L7JointInterfaces jname="${prefix}elbow_yaw_joint" iface_mode="${iface_mode}"/>
     <xacro:L7JointInterfaces jname="${prefix}wrist_pitch_joint" iface_mode="${iface_mode}"/>
     <xacro:L7JointInterfaces jname="${prefix}wrist_roll_joint" iface_mode="${iface_mode}"/>
+  </xacro:macro>
+
+  <xacro:macro name="L7SideHandInterfaces" params="side hand_type">
+    <xacro:if value="${hand_type == 'xhand1'}">
+      <xacro:xhand1_interfaces name="${side}_hand"/>
+    </xacro:if>
+  </xacro:macro>
+
+  <!--
+    mode=sim  → finger joints in the main mock/gz/isaac system.
+    mode=real → xhand1 uses a separate USB RS485 system; do not declare fingers here.
+  -->
+  <xacro:macro name="L7HandInterfacesBlock" params="mode">
+    <xacro:if value="${mode == 'sim'}">
+      <xacro:if value="${left_hand_type != ''}">
+        <xacro:L7SideHandInterfaces side="left" hand_type="${left_hand_type}"/>
+      </xacro:if>
+      <xacro:if value="${right_hand_type != ''}">
+        <xacro:L7SideHandInterfaces side="right" hand_type="${right_hand_type}"/>
+      </xacro:if>
+    </xacro:if>
   </xacro:macro>
 </robot>

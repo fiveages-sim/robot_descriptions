@@ -26,21 +26,27 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/neck_flange_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_flange_link.glb" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="1 0.54902 0 1" />
-      </material>
     </visual>
+    <xacro:if value="${'$(arg collider)' == 'convex'}">
+      <collision>
+        <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+        <geometry>
+          <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_flange_link.glb" />
+        </geometry>
+      </collision>
+    </xacro:if>
     <!-- <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/neck_flange_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_flange_link.glb" />
       </geometry>
     </collision> -->
   </link>
@@ -98,21 +104,27 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/neck_base_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_base_link.glb" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.75294 0.75294 0.75294 1" />
-      </material>
     </visual>
+    <xacro:if value="${'$(arg collider)' == 'convex'}">
+      <collision>
+        <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+        <geometry>
+          <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_base_link.glb" />
+        </geometry>
+      </collision>
+    </xacro:if>
     <!-- <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/neck_base_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_base_link.glb" />
       </geometry>
     </collision> -->
   </link>
@@ -138,21 +150,27 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/neck_yaw_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_yaw_link.glb" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.75294 0.75294 0.75294 1" />
-      </material>
     </visual>
+    <xacro:if value="${'$(arg collider)' == 'convex'}">
+      <collision>
+        <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+        <geometry>
+          <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_yaw_link.glb" />
+        </geometry>
+      </collision>
+    </xacro:if>
     <!-- <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/neck_yaw_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_yaw_link.glb" />
       </geometry>
     </collision> -->
   </link>
@@ -196,23 +214,26 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/neck_pitch_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_pitch_link.glb" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.75294 0.75294 0.75294 1" />
-      </material>
     </visual>
-    <collision>
-      <origin
+    <xacro:if value="${'$(arg collider)' == 'convex'}">
+      <collision>
+        <origin
         xyz="0 0 0"
         rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/neck_pitch_link.STL" />
-      </geometry>
+        <geometry>
+          <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/neck_pitch_link.glb" />
+        </geometry>
+      </collision>
+    </xacro:if>
+  <xacro:if value="${'$(arg collider)' == 'simple'}">
+    <collision>
+      <origin xyz="-0.02 0 0.09500003" rpy="0 0 0"/>
+      <geometry><box size="0.17 0.16 0.2"/></geometry>
     </collision>
+  </xacro:if>
   </link>
   <joint
     name="neck_pitch_joint"
@@ -254,21 +275,27 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/lidar_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/lidar_link.glb" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="1 0.54902 0 1" />
-      </material>
     </visual>
+    <xacro:if value="${'$(arg collider)' == 'convex'}">
+      <collision>
+        <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+        <geometry>
+          <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/lidar_link.glb" />
+        </geometry>
+      </collision>
+    </xacro:if>
     <!-- <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/lidar_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/lidar_link.glb" />
       </geometry>
     </collision> -->
   </link>
@@ -307,21 +334,27 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/mic_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/mic_link.glb" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="1 0.54902 0 1" />
-      </material>
     </visual>
+    <xacro:if value="${'$(arg collider)' == 'convex'}">
+      <collision>
+        <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+        <geometry>
+          <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/mic_link.glb" />
+        </geometry>
+      </collision>
+    </xacro:if>
     <!-- <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/mic_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/mic_link.glb" />
       </geometry>
     </collision> -->
   </link>
@@ -360,21 +393,27 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/stereo_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/stereo_link.glb" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="1 0.54902 0 1" />
-      </material>
     </visual>
+    <xacro:if value="${'$(arg collider)' == 'convex'}">
+      <collision>
+        <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+        <geometry>
+          <mesh
+          filename="file://$(find robotera_l7_description)/meshes/body/stereo_link.glb" />
+        </geometry>
+      </collision>
+    </xacro:if>
     <!-- <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/stereo_link.STL" />
+          filename="file://$(find robotera_l7_description)/meshes/body/stereo_link.glb" />
       </geometry>
     </collision> -->
   </link>

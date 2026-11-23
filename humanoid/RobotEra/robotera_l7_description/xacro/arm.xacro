@@ -15,12 +15,16 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/arm_flange_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/arm_flange_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="1 0.54902 0 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/arm_flange_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}arm_flange_joint" type="fixed">
       <origin xyz="0 ${direction*0.112} 0.243"/>
@@ -37,12 +41,16 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/arm_base_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/arm_base_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/arm_base_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}arm_base_joint" type="fixed">
       <origin xyz="0 0 0"/>
@@ -59,17 +67,22 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/shoulder_pitch_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/shoulder_pitch_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/shoulder_pitch_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    <xacro:if value="${'$(arg collider)' == 'simple'}">
       <collision>
-        <geometry>
-          <mesh filename="${mesh}/shoulder_pitch_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <origin xyz="0 ${direction*0.11} -0.007" rpy="0 0 0"/>
+      <geometry><box size="0.09 0.12 0.09"/></geometry>
+    </collision>
+    </xacro:if>
     </link>
     <joint name="${prefix}shoulder_pitch_joint" type="revolute">
       <origin xyz="0 0 0"/>
@@ -88,18 +101,24 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/shoulder_roll_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/shoulder_roll_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/shoulder_roll_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    <xacro:if value="${'$(arg collider)' == 'simple'}">
       <collision>
         <origin xyz="0.0 0.0 -0.13"/>
         <geometry>
           <cylinder radius="0.045" length="0.13"/>
         </geometry>
       </collision>
+    </xacro:if>
     </link>
     <joint name="${prefix}shoulder_roll_joint" type="revolute">
       <origin xyz="0 ${direction*0.133} -0.016"/>
@@ -120,12 +139,16 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/arm_yaw_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/arm_yaw_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/arm_yaw_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}arm_yaw_joint" type="revolute">
       <origin xyz="0 0 0"/>
@@ -146,17 +169,22 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/elbow_pitch_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/elbow_pitch_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/elbow_pitch_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    <xacro:if value="${'$(arg collider)' == 'simple'}">
       <collision>
-        <geometry>
-          <mesh filename="${mesh}/elbow_pitch_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
+      <origin xyz="-0.005 0 -0.032" rpy="0 0 0"/>
+      <geometry><box size="0.09 0.07 0.13"/></geometry>
       </collision>
+    </xacro:if>
     </link>
     <joint name="${prefix}elbow_pitch_joint" type="revolute">
       <origin xyz="0.016 0 -0.294"/>
@@ -175,17 +203,22 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/elbow_yaw_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/elbow_yaw_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/elbow_yaw_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    <xacro:if value="${'$(arg collider)' == 'simple'}">
       <collision>
-        <geometry>
-          <mesh filename="${mesh}/elbow_yaw_link.STL" scale="1 ${direction} 1"/>
-        </geometry>
-      </collision>
+      <origin xyz="0 0 0.04800001" rpy="0 0 0"/>
+      <geometry><box size="0.07 0.07 0.14"/></geometry>
+    </collision>
+    </xacro:if>
     </link>
     <joint name="${prefix}elbow_yaw_joint" type="revolute">
       <origin xyz="-0.016 0 -0.239"/>
@@ -204,12 +237,16 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/wrist_pitch_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/wrist_pitch_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/wrist_pitch_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}wrist_pitch_joint" type="revolute">
       <origin xyz="0 0 0"/>
@@ -228,18 +265,24 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/wrist_roll_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/wrist_roll_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="0.75294 0.75294 0.75294 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/wrist_roll_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
+    <xacro:if value="${'$(arg collider)' == 'simple'}">
       <collision>
-        <origin xyz="0.0 0.0 -0.062"/>
+        <origin xyz="0 0 -0.04989" rpy="0 0 0"/>
         <geometry>
           <cylinder radius="0.025" length="0.015"/>
         </geometry>
       </collision>
+    </xacro:if>
     </link>
     <joint name="${prefix}wrist_roll_joint" type="revolute">
       <origin xyz="0 0 0"/>
@@ -257,12 +300,16 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="${mesh}/hand_flange_link.STL" scale="1 ${direction} 1"/>
+          <mesh filename="${mesh}/hand_flange_link.glb" scale="1 ${direction} 1"/>
         </geometry>
-        <material name="">
-          <color rgba="1 0.54902 0 1"/>
-        </material>
       </visual>
+      <xacro:if value="${'$(arg collider)' == 'convex'}">
+        <collision>
+          <geometry>
+            <mesh filename="${mesh}/hand_flange_link.glb" scale="1 ${direction} 1"/>
+          </geometry>
+        </collision>
+      </xacro:if>
     </link>
     <joint name="${prefix}hand_flange_joint" type="fixed">
       <origin xyz="0 0 -0.051" rpy="3.1415926 0 0"/>

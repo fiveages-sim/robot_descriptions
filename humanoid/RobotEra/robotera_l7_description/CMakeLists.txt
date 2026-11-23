@@ -4,7 +4,7 @@ project(robotera_l7_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY meshes xacro config
+  DIRECTORY xacro config meshes
   DESTINATION share/${PROJECT_NAME}/
 )
 

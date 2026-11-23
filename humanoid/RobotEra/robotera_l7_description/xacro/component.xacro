@@ -4,6 +4,7 @@
 <!-- =================================================================================== -->
 <robot name="RobotEraL7Component" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="type" default="upper"/>
+  <xacro:arg name="collider" default="simple"/>
   <xacro:arg name="eef_fixed_joints" default="false"/>
   <xacro:property name="eef_fixed"
                   value="${'$(arg eef_fixed_joints)'.lower() in ['1', 'true', 'yes', 'on']}"/>
