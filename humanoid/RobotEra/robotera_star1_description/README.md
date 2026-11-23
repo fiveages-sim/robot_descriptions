@@ -31,6 +31,8 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch visualize.launch.py robot:=robotera_star1 variant:=full
 ```
 
+![STAR1](../.images/robotera_star1.png)
+
 ### 2.3 Component
 ```bash
 source ~/ros2_ws/install/setup.bash
