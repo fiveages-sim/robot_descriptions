@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Isaac consumes one position command per joint; retain hand feedback interfaces. -->
+  <xacro:macro name="L7IsaacHandJoint" params="name">
+    <joint name="${name}">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="L7IsaacHandInterfaces" params="side">
+    <xacro:L7IsaacHandJoint name="${side}_hand_thumb_joint1"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_thumb_joint2"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_thumb_joint3"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_index_joint1"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_index_joint2"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_index_joint3"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_middle_joint1"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_middle_joint2"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_ring_joint1"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_ring_joint2"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_pinky_joint1"/>
+    <xacro:L7IsaacHandJoint name="${side}_hand_pinky_joint2"/>
+  </xacro:macro>
+</robot>

@@ -24,6 +24,7 @@
   <!-- robot.xacro resolves left_hand_type / right_hand_type from type|left_type|right_type. -->
   <xacro:include filename="$(find robotera_l7_description)/xacro/robot.xacro"/>
   <xacro:include filename="$(find robotera_l7_description)/xacro/ros2_control/interfaces.xacro"/>
+  <xacro:include filename="$(find robotera_l7_description)/xacro/ros2_control/isaac_hand_interfaces.xacro"/>
   <xacro:include filename="$(find robot_common_launch)/xacro/ros2_control/simulation_hardware.xacro"/>
 
   <xacro:property name="sim_iface_mode"
@@ -39,10 +40,21 @@
       </xacro:unless>
     </hardware>
 
+    <xacro:L7HeadInterfaces iface_mode="${sim_iface_mode}"/>
     <xacro:L7WaistInterfaces iface_mode="${sim_iface_mode}"/>
     <xacro:L7ArmInterfaces name="left" iface_mode="${sim_iface_mode}"/>
     <xacro:L7ArmInterfaces name="right" iface_mode="${sim_iface_mode}"/>
-    <xacro:L7HandInterfacesBlock mode="${'real' if is_real_hardware else 'sim'}"/>
+    <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
+      <xacro:if value="${left_hand_type == 'xhand1'}">
+        <xacro:L7IsaacHandInterfaces side="left"/>
+      </xacro:if>
+      <xacro:if value="${right_hand_type == 'xhand1'}">
+        <xacro:L7IsaacHandInterfaces side="right"/>
+      </xacro:if>
+    </xacro:if>
+    <xacro:unless value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
+      <xacro:L7HandInterfacesBlock mode="${'real' if is_real_hardware else 'sim'}"/>
+    </xacro:unless>
   </ros2_control>
 
   <xacro:if value="${is_real_hardware}">

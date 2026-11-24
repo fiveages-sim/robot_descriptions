@@ -1,0 +1,4 @@
+joint_state_broadcaster:
+  ros__parameters:
+    interfaces:
+      - position

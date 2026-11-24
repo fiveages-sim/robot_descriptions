@@ -18,6 +18,11 @@
     </joint>
   </xacro:macro>
 
+  <xacro:macro name="L7HeadInterfaces" params="iface_mode:=mix">
+    <xacro:L7JointInterfaces jname="neck_yaw_joint" iface_mode="${iface_mode}"/>
+    <xacro:L7JointInterfaces jname="neck_pitch_joint" iface_mode="${iface_mode}"/>
+  </xacro:macro>
+
   <xacro:macro name="L7WaistInterfaces" params="iface_mode:=mix">
     <xacro:L7JointInterfaces jname="waist_yaw_joint" iface_mode="${iface_mode}"/>
     <xacro:L7JointInterfaces jname="waist_roll_joint" iface_mode="${iface_mode}"/>

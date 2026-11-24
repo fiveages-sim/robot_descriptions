@@ -7,25 +7,7 @@
     <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
     <xacro:property name="mesh" value="file://$(find robotera_l7_description)/meshes/arm"/>
 
-    <link name="${prefix}arm_flange_link">
-      <inertial>
-        <origin xyz="0 0 0.0025"/>
-        <mass value="1.375E-08"/>
-        <inertia ixx="5.7292E-14" ixy="0" ixz="0" iyy="5.7292E-14" iyz="0" izz="5.7292E-14"/>
-      </inertial>
-      <visual>
-        <geometry>
-          <mesh filename="${mesh}/arm_flange_link.glb" scale="1 ${direction} 1"/>
-        </geometry>
-      </visual>
-      <xacro:if value="${'$(arg collider)' == 'convex'}">
-        <collision>
-          <geometry>
-            <mesh filename="${mesh}/arm_flange_link.glb" scale="1 ${direction} 1"/>
-          </geometry>
-        </collision>
-      </xacro:if>
-    </link>
+    <link name="${prefix}arm_flange_link"/>
     <joint name="${prefix}arm_flange_joint" type="fixed">
       <origin xyz="0 ${direction*0.112} 0.243"/>
       <parent link="torso_base_link"/>
@@ -292,25 +274,7 @@
       <limit lower="-1.57" upper="1.57" effort="35" velocity="4.19"/>
     </joint>
 
-    <link name="${prefix}hand_flange_link">
-      <inertial>
-        <origin xyz="0 0 0.0025"/>
-        <mass value="0.000000001"/>
-        <inertia ixx="0.00000000001" ixy="0" ixz="0" iyy="0.00000000001" iyz="0" izz="0.00000000001"/>
-      </inertial>
-      <visual>
-        <geometry>
-          <mesh filename="${mesh}/hand_flange_link.glb" scale="1 ${direction} 1"/>
-        </geometry>
-      </visual>
-      <xacro:if value="${'$(arg collider)' == 'convex'}">
-        <collision>
-          <geometry>
-            <mesh filename="${mesh}/hand_flange_link.glb" scale="1 ${direction} 1"/>
-          </geometry>
-        </collision>
-      </xacro:if>
-    </link>
+    <link name="${prefix}hand_flange_link"/>
     <joint name="${prefix}hand_flange_joint" type="fixed">
       <origin xyz="0 0 -0.051" rpy="3.1415926 0 0"/>
       <parent link="${prefix}wrist_roll_link"/>

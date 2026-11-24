@@ -45,19 +45,9 @@
     </collision>
   </xacro:if>
 
-    <!-- <collision>
-      <origin
-        xyz="0.05 0. -0.06"
-        rpy="0 0 0"/>
-      <geometry>
-        <box size="0.02 0.14 0.04"/>
-      </geometry>
-    </collision> -->
   <xacro:if value="${'$(arg collider)' == 'simple'}">
     <collision>
-      <origin
-        xyz="0.060909 0.0 -0.066061"
-        rpy="0 0 0"/>
+      <origin xyz="0.060909 0.0 -0.066061" rpy="0 0 0"/>
       <geometry>
         <box size="0.01 0.27 0.06"/>
       </geometry>
@@ -65,14 +55,10 @@
   </xacro:if>
   </link>
 
-  <link
-    name="base_link">
+  <link name="base_link">
     <inertial>
-      <origin
-        xyz="-0.12443 4.6517E-05 -0.0072396"
-        rpy="0 0 0" />
-      <mass
-        value="4.6837" />
+      <origin xyz="-0.12443 4.6517E-05 -0.0072396" rpy="0 0 0" />
+      <mass value="4.6837" />
       <inertia
         ixx="0.0662"
         ixy="0"
@@ -82,34 +68,20 @@
         izz="0.071" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/base_link.glb" />
+        <mesh filename="file://$(find robotera_l7_description)/meshes/body/base_link.glb" />
       </geometry>
     </visual>
     <xacro:if value="${'$(arg collider)' == 'convex'}">
       <collision>
-        <origin
-        xyz="0 0 0"
+        <origin xyz="0 0 0"
         rpy="0 0 0" />
         <geometry>
-          <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/base_link.glb" />
+          <mesh filename="file://$(find robotera_l7_description)/meshes/body/base_link.glb" />
         </geometry>
       </collision>
     </xacro:if>
-    <!-- <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/base_link.glb" />
-      </geometry>
-    </collision> -->
   </link>
 
   <joint name="pelvis_to_base_link" type="fixed">
@@ -118,92 +90,27 @@
     <child link="base_link"/>
   </joint> 
 <!--   waist part    -->
-  <link
-    name="waist_flange_link">
-    <inertial>
-      <origin
-        xyz="0 -3.4487E-18 0.0025"
-        rpy="0 0 0" />
-      <mass
-        value="1.375E-08" />
-      <inertia
-        ixx="5.7292E-14"
-        ixy="2.6168E-30"
-        ixz="-3.9998E-31"
-        iyy="5.7292E-14"
-        iyz="-1.2292E-30"
-        izz="5.7292E-14" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_flange_link.glb" />
-      </geometry>
-    </visual>
-    <xacro:if value="${'$(arg collider)' == 'convex'}">
-      <collision>
-        <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-        <geometry>
-          <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_flange_link.glb" />
-        </geometry>
-      </collision>
-    </xacro:if>
-    <!-- <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_flange_link.glb" />
-      </geometry>
-    </collision> -->
-  </link>
-  <joint
-    name="waist_flange_joint"
-    type="fixed">
-    <origin
-      xyz="-0.04724 0 0.0367"
-      rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="waist_flange_link" />
-    <axis
-      xyz="0 0 0" />
+  <link name="waist_flange_link"/>
+  <joint name="waist_flange_joint" type="fixed">
+    <origin xyz="-0.04724 0 0.0367" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="waist_flange_link" />
+    <axis xyz="0 0 0" />
   </joint>
 
-  <joint
-    name="waist_base_joint"
-    type="fixed">
-    <origin
-      xyz="0 0 0"
+  <joint name="waist_base_joint" type="fixed">
+    <origin xyz="0 0 0"
       rpy="0 0 0" />
-    <parent
-      link="waist_flange_link" />
-    <child
-      link="waist_base_link" />
-    <axis
-      xyz="0 0 1" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="0"
+    <parent link="waist_flange_link" />
+    <child link="waist_base_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0" effort="0"
       velocity="0" />
   </joint>
-<link
-    name="waist_base_link">
+<link name="waist_base_link">
     <inertial>
-      <origin
-        xyz="-0.00090253 -3.8886E-05 -0.022326"
-        rpy="0 0 0" />
-      <mass
-        value="1.0597" />
+      <origin xyz="-0.00090253 -3.8886E-05 -0.022326" rpy="0 0 0" />
+      <mass value="1.0597" />
       <inertia
         ixx="0.0011"
         ixy="7.3313E-07"
@@ -213,43 +120,25 @@
         izz="0.0013" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_base_link.glb" />
+        <mesh filename="file://$(find robotera_l7_description)/meshes/body/waist_base_link.glb" />
       </geometry>
     </visual>
     <xacro:if value="${'$(arg collider)' == 'convex'}">
       <collision>
-        <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_base_link.glb" />
+          <mesh filename="file://$(find robotera_l7_description)/meshes/body/waist_base_link.glb" />
         </geometry>
       </collision>
     </xacro:if>
-    <!-- <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_base_link.glb" />
-      </geometry>
-    </collision> -->
   </link>
-  <link
-    name="waist_yaw_link">
+
+  <link name="waist_yaw_link">
     <inertial>
-      <origin
-        xyz="0.0090574 2.5517E-09 -0.018735"
-        rpy="0 0 0" />
-      <mass
-        value="0.20427" />
+      <origin xyz="0.0090574 2.5517E-09 -0.018735" rpy="0 0 0" />
+      <mass value="0.20427" />
       <inertia
         ixx="0.0001"
         ixy="9.2093E-11"
@@ -259,12 +148,9 @@
         izz="0.0001" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_yaw_link.glb" />
+        <mesh filename="file://$(find robotera_l7_description)/meshes/body/waist_yaw_link.glb" />
       </geometry>
     </visual>
     <xacro:if value="${'$(arg collider)' == 'convex'}">
@@ -273,47 +159,29 @@
         xyz="0 0 0"
         rpy="0 0 0" />
         <geometry>
-          <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_yaw_link.glb" />
+          <mesh filename="file://$(find robotera_l7_description)/meshes/body/waist_yaw_link.glb" />
         </geometry>
       </collision>
     </xacro:if>
-    <!-- <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_yaw_link.glb" />
-      </geometry>
-    </collision> -->
   </link>
-  <joint
-    name="waist_yaw_joint"
-    type="revolute">
-    <origin
-      xyz="0 0 0.034"
-      rpy="0 0 0" />
-    <parent
-      link="waist_base_link" />
-    <child
-      link="waist_yaw_link" />
-    <axis
-      xyz="0 0 1" />
+
+  <joint name="waist_yaw_joint" type="revolute">
+    <origin xyz="0 0 0.034" rpy="0 0 0" />
+    <parent link="waist_base_link" />
+    <child link="waist_yaw_link" />
+    <axis xyz="0 0 1" />
     <limit
       lower="-1.57"
       upper="1.57"
       effort="110"
       velocity="4.19" />
   </joint>
-  <link
-    name="waist_roll_link">
+  <link name="waist_roll_link">
     <inertial>
       <origin
         xyz="-3.1889E-09 -3.1609E-09 -4.8745E-05"
         rpy="0 0 0" />
-      <mass
-        value="0.083945" />
+      <mass value="0.083945" />
       <inertia
         ixx="6.4218E-06"
         ixy="7.6098E-14"
@@ -333,41 +201,20 @@
     </visual>
     <xacro:if value="${'$(arg collider)' == 'convex'}">
       <collision>
-        <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh
           filename="file://$(find robotera_l7_description)/meshes/body/waist_roll_link.glb" />
         </geometry>
       </collision>
     </xacro:if>
-    <!-- <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_roll_link.glb" />
-      </geometry>
-    </collision> -->
   </link>
-  <joint
-    name="waist_roll_joint"
-    type="revolute">
-    <origin
-      xyz="0 0 0"
-      rpy="0 0 0" />
-    <parent
-      link="waist_yaw_link" />
-    <child
-      link="waist_roll_link" />
-    <axis
-      xyz="1 0 0" />
-    <limit
-      lower="-0.26"
-      upper="0.26"
-      effort="110"
+  <joint name="waist_roll_joint" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="waist_yaw_link" />
+    <child link="waist_roll_link" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.26" upper="0.26" effort="110"
       velocity="4.19" />
   </joint>
 
@@ -383,43 +230,20 @@
         <box size="0.01 0.01 0.01"/>
       </geometry>
     </visual>
-    <!-- <collision>
-      <origin
-        xyz="0.0 0. 0.215"
-        rpy="0 0 0" />
-      <geometry>
-        <box size="0.2 0.26 0.34"/>
-      </geometry>
-    </collision> -->
   </link>
 
-  <joint
-    name="waist_pitch_joint"
-    type="revolute">
-    <origin
-      xyz="0 0 0"
-      rpy="0 0 0" />
-    <parent
-      link="waist_roll_link" />
-    <child
-      link="torso_link" />
-    <axis
-      xyz="0 1 0" />
-    <limit
-      lower="-0.09"
-      upper="1.22"
-      effort="110"
-      velocity="4.19" />
+  <joint name="waist_pitch_joint" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="waist_roll_link" />
+    <child link="torso_link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.09" upper="1.22" effort="110" velocity="4.19" />
   </joint>
 
-  <link
-    name="waist_pitch_link">
+  <link name="waist_pitch_link">
     <inertial>
-      <origin
-        xyz="-0.0006119 7.6707E-09 0.049479"
-        rpy="0 0 0" />
-      <mass
-        value="2.42" />
+      <origin xyz="-0.0006119 7.6707E-09 0.049479" rpy="0 0 0" />
+      <mass value="2.42" />
       <inertia
         ixx="0.0094"
         ixy="-2.2462E-06"
@@ -429,22 +253,16 @@
         izz="0.0094" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_pitch_link.glb" />
+        <mesh filename="file://$(find robotera_l7_description)/meshes/body/waist_pitch_link.glb" />
       </geometry>
     </visual>
     <xacro:if value="${'$(arg collider)' == 'convex'}">
       <collision>
-        <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/waist_pitch_link.glb" />
+          <mesh filename="file://$(find robotera_l7_description)/meshes/body/waist_pitch_link.glb" />
         </geometry>
       </collision>
     </xacro:if>
@@ -459,108 +277,34 @@
     </collision> -->
   </link>
 
-  <joint
-    name="torso_fixed_joint"
-    type="fixed">
-    <origin
-      xyz="0 0 0.0"
-      rpy="0 0 0" />
-    <parent
-      link="torso_link" />
-    <child
-      link="waist_pitch_link" />
-    <axis
-      xyz="0 0 0" />
+  <joint name="torso_fixed_joint" type="fixed">
+    <origin xyz="0 0 0.0" rpy="0 0 0" />
+    <parent link="torso_link" />
+    <child link="waist_pitch_link" />
+    <axis xyz="0 0 0" />
   </joint>
 
-  <link
-    name="torso_flange_link">
-    <inertial>
-      <origin
-        xyz="1.687E-05 -3.5059E-18 0.0025"
-        rpy="0 0 0" />
-      <mass
-        value="1.375E-08" />
-      <inertia
-        ixx="5.7292E-14"
-        ixy="-3.9075E-30"
-        ixz="5.6717E-30"
-        iyy="5.7292E-14"
-        iyz="7.282E-30"
-        izz="5.7292E-14" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/torso_flange_link.glb" />
-      </geometry>
-    </visual>
-    <xacro:if value="${'$(arg collider)' == 'convex'}">
-      <collision>
-        <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-        <geometry>
-          <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/torso_flange_link.glb" />
-        </geometry>
-      </collision>
-    </xacro:if>
-    <!-- <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/torso_flange_link.glb" />
-      </geometry>
-    </collision> -->
-  </link>
-  <joint
-    name="torso_flange_joint"
-    type="fixed">
-    <origin
-      xyz="0 0 0.095"
-      rpy="0 0 0" />
-    <parent
-      link="waist_pitch_link" />
-    <child
-      link="torso_flange_link" />
-    <axis
-      xyz="0 0 0" />
+  <link name="torso_flange_link"/>
+  <joint name="torso_flange_joint" type="fixed">
+    <origin xyz="0 0 0.095" rpy="0 0 0" />
+    <parent link="waist_pitch_link" />
+    <child link="torso_flange_link" />
+    <axis xyz="0 0 0" />
   </joint>
 
 <!--   torso part    --> 
 
-  <joint
-    name="torso_base_joint"
-    type="fixed">
-    <origin
-      xyz="0 0 0"
-      rpy="0 0 0" />
-    <parent
-      link="torso_flange_link" />
-    <child
-      link="torso_base_link" />
-    <axis
-      xyz="0 0 1" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="0"
-      velocity="0" />
+  <joint name="torso_base_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="torso_flange_link" />
+    <child link="torso_base_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
   </joint>
-  <link
-    name="torso_base_link">
+  <link name="torso_base_link">
     <inertial>
-      <origin
-        xyz="-0.0081721 -0.00032449 0.13822"
-        rpy="0 0 0" />
-      <mass
-        value="10.42" />
+      <origin xyz="-0.0081721 -0.00032449 0.13822" rpy="0 0 0" />
+      <mass value="10.42" />
       <inertia
         ixx="0.1209"
         ixy="-0.0001"
@@ -570,22 +314,16 @@
         izz="0.0665" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/torso_base_link.glb" />
+        <mesh filename="file://$(find robotera_l7_description)/meshes/body/torso_base_link.glb" />
       </geometry>
     </visual>
     <xacro:if value="${'$(arg collider)' == 'convex'}">
       <collision>
-        <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh
-          filename="file://$(find robotera_l7_description)/meshes/body/torso_base_link.glb" />
+          <mesh filename="file://$(find robotera_l7_description)/meshes/body/torso_base_link.glb" />
         </geometry>
       </collision>
     </xacro:if>

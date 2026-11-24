@@ -13,8 +13,11 @@ model_information
     eeFrame1                "right_hand_hand_ee_link"
     bodyFrame               "torso_base_link"
 
+    ; Head is commanded by a separate ros2_control controller.
     removeJoints
     {
+        [0] "neck_yaw_joint"
+        [1] "neck_pitch_joint"
     }
 }
 

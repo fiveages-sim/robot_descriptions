@@ -10,6 +10,16 @@ controller_manager:
     ocs2_wbc_controller:
       type: ocs2_wbc_controller/Ocs2WbcController
 
+    head_joint_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+head_joint_controller:
+  ros__parameters:
+    joints: [neck_yaw_joint, neck_pitch_joint]
+    command_interfaces: [position]
+    state_interfaces: [position]
+    allow_partial_joints_goal: false
+
 ocs2_wbc_controller:
   ros__parameters:
     update_rate: 100
@@ -66,9 +76,9 @@ ocs2_wbc_controller:
     # [waist×3 | left×7 | right×7]
     home_1: [
       0.0, 0.0, 0.0,
-      0.0, 0.3, 0.0, -0.5, 0.0, 0.0, 0.0,
-      0.0, -0.3, 0.0, -0.5, 0.0, 0.0, 0.0]
+      0.0, 0.0, 0.0, -1.5, 0.0, 0.0, 0.0,
+      0.0, -0.0, 0.0, -1.5, 0.0, 0.0, 0.0]
     home_2: [
-      0.0, 0.0, 0.3,
+      0.0, 0.0, 0.0,
       0.0, 0.5, 0.0, -1.0, 0.0, 0.0, 0.0,
       0.0, -0.5, 0.0, -1.0, 0.0, 0.0, 0.0]
