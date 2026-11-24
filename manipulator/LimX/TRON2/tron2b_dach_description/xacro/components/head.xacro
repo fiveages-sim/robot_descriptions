@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="Tron2BDachHead" params="parent">
+    <link name="head_base_Link">
+      <inertial>
+        <origin xyz="-0.0094 0.0 0.0033" />
+        <mass value="0.13" />
+        <inertia ixx="0.00015008" ixy="1e-08" ixz="1.61e-06" iyy="9.86e-05" iyz="0.0" izz="0.00024625" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/head/head_base.glb" />
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/head/head_base.glb" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="head_base_Joint" type="fixed">
+      <origin xyz="0.04656 9e-05 0.26115" />
+      <parent link="${parent}" />
+      <child link="head_base_Link" />
+    </joint>
+    <link name="head_yaw_Link">
+      <inertial>
+        <origin xyz="0.02452 0.00153 0.06142" />
+        <mass value="0.84" />
+        <inertia ixx="0.00150459" ixy="-3.09e-05" ixz="-0.00071408" iyy="0.00204199" iyz="-4.724e-05" izz="0.00101816" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/head/head_yaw.glb" />
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/head/head_yaw.glb" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="head_yaw_Joint" type="revolute">
+      <origin xyz="0.0 0.0 0.008" />
+      <parent link="head_base_Link" />
+      <child link="head_yaw_Link" />
+      <axis xyz="0.0 0.0 1.0" />
+      <limit lower="-1.5707963267948966" upper="1.5707963267948966" effort="15.0" velocity="14.4513" />
+    </joint>
+    <link name="head_pitch_Link">
+      <inertial>
+        <origin xyz="-0.00469 -0.02957 0.02678" />
+        <mass value="0.46" />
+        <inertia ixx="0.00122942" ixy="3.7e-07" ixz="0.00010434" iyy="0.00139833" iyz="7.47e-06" izz="0.0019056" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/head/head_pitch.glb" />
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/head/head_pitch.glb" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="head_pitch_Joint" type="revolute">
+      <origin xyz="0.051 0.03 0.097" />
+      <parent link="head_yaw_Link" />
+      <child link="head_pitch_Link" />
+      <axis xyz="0.0 1.0 0.0" />
+      <limit lower="-0.7853981633974483" upper="1.0471975511965976" effort="15.0" velocity="14.4513" />
+    </joint>
+    <link name="d455_Link">
+      <inertial>
+        <origin xyz="-8e-05 -0.04732 -0.01308" />
+        <mass value="0.15" />
+        <inertia ixx="0.00015238478" ixy="-4.493e-08" ixz="-8.749e-08" iyy="1.481043e-05" iyz="-3.4889e-07" izz="0.00015547099" />
+      </inertial>
+    </link>
+    <joint name="d455_Joint" type="fixed">
+      <origin xyz="0.05745 0.0175 0.0444" rpy="0.0 1.5707963267948966 0.0" />
+      <parent link="head_pitch_Link" />
+      <child link="d455_Link" />
+    </joint>
+    <link name="d455_optical_frame">
+      <inertial>
+        <mass value="0.001" />
+        <inertia ixx="1e-08" ixy="0.0" ixz="0.0" iyy="1e-08" iyz="0.0" izz="1e-08" />
+      </inertial>
+      <visual>
+        <origin xyz="0 -0.010 0" />
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d455.glb" />
+        </geometry>
+      </visual>
+    </link>
+    <joint name="d455_optical_Joint" type="fixed">
+      <!-- Match the optical center and axes of the shared FaSim D455. -->
+      <origin xyz="0.0100002399 -0.0000385772 -0.0042059117" rpy="0 0 ${-pi/2}" />
+      <parent link="d455_Link" />
+      <child link="d455_optical_frame" />
+    </joint>
+  </xacro:macro>
+</robot>

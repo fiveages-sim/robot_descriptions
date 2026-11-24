@@ -9,6 +9,7 @@ Panels:
         - /Pose1
         - /Pose2
         - /TargetErrorDisplay1
+        - /TeleopModeDisplay1
       Splitter Ratio: 0.5
     Tree Height: 102
   - Class: rviz_common/Selection
@@ -1210,6 +1211,11 @@ Visualization Manager:
       ErrorPositionRedMm: 20
       Name: TargetErrorDisplay
       Scale: 0.7
+      Value: true
+    - Class: arms_rviz_control_plugin/TeleopModeDisplay
+      Enabled: true
+      Name: TeleopModeDisplay
+      Scale: 1
       Value: true
   Enabled: true
   Global Options:
