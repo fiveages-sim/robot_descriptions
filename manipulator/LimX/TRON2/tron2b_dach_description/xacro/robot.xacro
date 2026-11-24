@@ -1,23 +1,34 @@
 <?xml version="1.0"?>
 <robot name="tron2b_dach" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- isaac:=true hides sensor_models camera meshes (Isaac asset import; launch: xacro_isaac:=true). -->
+  <xacro:arg name="isaac" default="false"/>
+  <!-- OCS2 planning URDF: robot_common_launch injects eef_fixed_joints:=true to freeze grippers. -->
+  <xacro:arg name="eef_fixed_joints" default="false"/>
+
   <xacro:include filename="components/body.xacro"/>
   <xacro:include filename="components/head.xacro"/>
   <xacro:include filename="components/arm.xacro"/>
   <xacro:include filename="components/gripper.xacro"/>
-
-  <mujoco>
-    <compiler meshdir="../meshes"/>
-  </mujoco>
 
   <link name="base_link"/>
   <joint name="dach_base_mount" type="fixed">
     <parent link="base_link"/>
     <child link="base_Link"/>
   </joint>
-  <xacro:Tron2BDachBody/>
-  <xacro:Tron2BDachHead parent="base_Link"/>
-  <xacro:Tron2BDachArm side="L" parent="base_Link"/>
-  <xacro:Tron2BDachGripper side="L" parent="wrist_roll_L_Link"/>
-  <xacro:Tron2BDachArm side="R" parent="base_Link"/>
-  <xacro:Tron2BDachGripper side="R" parent="wrist_roll_R_Link"/>
+  <xacro:Tron2BDachBody isaac="$(arg isaac)"/>
+
+  <!-- Identity mount so Pinocchio orders left|right|head (not head-first under left_/right_). -->
+  <link name="arm_base"/>
+  <joint name="arm_base_joint" type="fixed">
+    <parent link="base_Link"/>
+    <child link="arm_base"/>
+  </joint>
+
+  <xacro:Tron2BDachArm name="left" parent="arm_base" direction="1"/>
+  <xacro:Tron2BDachGripper name="left" parent="left_wrist_roll_Link" direction="1"
+                           fixed_joints="$(arg eef_fixed_joints)"/>
+  <xacro:Tron2BDachArm name="right" parent="arm_base" direction="-1"/>
+  <xacro:Tron2BDachGripper name="right" parent="right_wrist_roll_Link" direction="-1"
+                           fixed_joints="$(arg eef_fixed_joints)"/>
+  <xacro:Tron2BDachHead parent="base_Link" isaac="$(arg isaac)"/>
 </robot>

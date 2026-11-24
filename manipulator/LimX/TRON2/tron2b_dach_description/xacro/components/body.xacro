@@ -2,7 +2,8 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:include filename="base.xacro" />
 
-  <xacro:macro name="Tron2BDachBody">
+  <!-- isaac:=true hides sensor_models camera meshes (Isaac asset import). -->
+  <xacro:macro name="Tron2BDachBody" params="isaac:=false">
     <link name="base_Link">
       <inertial>
         <origin xyz="0.00241 -0.00022 0.11116" />
@@ -12,12 +13,6 @@
       <visual>
         <geometry>
           <mesh filename="file://$(find tron2b_dach_description)/meshes/body/base.glb" />
-        </geometry>
-      </visual>
-      <visual>
-        <origin xyz="0.098716379399 0.000116607174 -0.007652967437" rpy="-2.706431317112 0.000000017298 -1.570796364005" />
-        <geometry>
-          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb" />
         </geometry>
       </visual>
       <collision>
@@ -38,27 +33,28 @@
       <child link="base_imu" />
     </joint>
     <xacro:Tron2BDachBase />
-    <link name="d435_Link">
+    <!-- ROS optical (+Z forward, +X right, +Y down). Joint = former d435_Link
+         (xyz 0.0968 0.01759 -0.00409, rpy 0 2.7227136331 0) × optical (rpy -π/2 0 -π/2).
+         Visual origin restores the old base_Link mesh pose into this optical frame
+         (d435.glb was never optical-aligned on this robot). -->
+    <link name="body_camera">
       <inertial>
         <mass value="0.001" />
         <inertia ixx="1e-07" ixy="0.0" ixz="0.0" iyy="1e-07" iyz="0.0" izz="1e-07" />
       </inertial>
+      <xacro:unless value="${isaac}">
+        <visual>
+          <origin xyz="0.01747339 -0.00403439 -0.00030151" rpy="1.58707864278 0 0" />
+          <geometry>
+            <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb" />
+          </geometry>
+        </visual>
+      </xacro:unless>
     </link>
-    <joint name="d435_Joint" type="fixed">
-      <origin xyz="0.0968 0.01759 -0.00409" rpy="0.0 2.7227136331 0.0" />
+    <joint name="body_camera_joint" type="fixed">
+      <origin xyz="0.0968 0.01759 -0.00409" rpy="1.98967534728 0 -1.57079632679" />
       <parent link="base_Link" />
-      <child link="d435_Link" />
-    </joint>
-    <link name="d435_optical_frame">
-      <inertial>
-        <mass value="0.001" />
-        <inertia ixx="1e-07" ixy="0.0" ixz="0.0" iyy="1e-07" iyz="0.0" izz="1e-07" />
-      </inertial>
-    </link>
-    <joint name="d435_optical_Joint" type="fixed">
-      <origin rpy="-1.5707963267948966 0.0 -1.5707963267948966" />
-      <parent link="d435_Link" />
-      <child link="d435_optical_frame" />
+      <child link="body_camera" />
     </joint>
   </xacro:macro>
 </robot>

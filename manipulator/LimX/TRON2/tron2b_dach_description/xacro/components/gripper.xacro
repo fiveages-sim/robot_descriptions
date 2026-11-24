@@ -1,11 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="Tron2BDachGripper" params="side parent">
-    <link name="grasper_base_${side}_Link">
+  <!-- Shared left/right gripper: name + direction:=±1 → prefix="${name}_".
+       fixed_joints:=true (OCS2 planning via eef_fixed_joints) freezes finger DOFs. -->
+  <xacro:macro name="Tron2BDachGripper" params="name parent direction:=1 fixed_joints:=false">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}" />
+    <xacro:property name="is_fixed" value="${str(fixed_joints).lower() in ('true', '1')}" />
+    <xacro:property name="rev_type" value="${'fixed' if is_fixed else 'revolute'}" />
+    <xacro:property name="pri_type" value="${'fixed' if is_fixed else 'prismatic'}" />
+
+    <link name="${prefix}grasper_base_Link">
       <inertial>
-        <origin xyz="${'-3.3414980e-04 5.3895572e-05 -5.9247964e-02' if side == 'L' else '-3.3414980e-04 -5.3895554e-05 -5.9247964e-02'}" />
+        <origin xyz="-3.3414980e-04 ${5.3895572e-05 * direction} -5.9247964e-02" />
         <mass value="0.49169168" />
-        <inertia ixx="7.7058390e-04" ixy="${'-7.3989581e-07' if side == 'L' else '7.4138413e-07'}" ixz="9.9598059e-07" iyy="6.8423130e-04" iyz="${'-1.8328860e-06' if side == 'L' else '1.8328861e-06'}" izz="3.2638770e-04" />
+        <inertia ixx="7.7058390e-04" ixy="${-7.3989581e-07 * direction}" ixz="9.9598059e-07"
+                 iyy="6.8423130e-04" iyz="${-1.8328860e-06 * direction}" izz="3.2638770e-04" />
       </inertial>
       <visual>
         <geometry>
@@ -19,12 +27,13 @@
         </geometry>
       </collision>
     </link>
-    <joint name="grasper_base_${side}_Joint" type="fixed">
+    <joint name="${prefix}grasper_base_Joint" type="fixed">
       <origin xyz="-0.0317 0 -0.0812" />
       <parent link="${parent}" />
-      <child link="grasper_base_${side}_Link" />
+      <child link="${prefix}grasper_base_Link" />
     </joint>
-    <link name="grasper_${side}_crank_left_Link">
+
+    <link name="${prefix}grasper_crank_left_Link">
       <inertial>
         <origin xyz="4.7600073e-06 -0.0055481701 -0.019012995" />
         <mass value="0.0028716751" />
@@ -36,14 +45,17 @@
         </geometry>
       </visual>
     </link>
-    <joint name="grasper_${side}_drive_Joint" type="revolute">
+    <joint name="${prefix}gripper_joint" type="${rev_type}">
       <origin xyz="0 0.0275 -0.0689" />
-      <parent link="grasper_base_${side}_Link" />
-      <child link="grasper_${side}_crank_left_Link" />
-      <axis xyz="1 0 0" />
-      <limit lower="-0.09522" upper="0.77302" effort="2" velocity="10" />
+      <parent link="${prefix}grasper_base_Link" />
+      <child link="${prefix}grasper_crank_left_Link" />
+      <xacro:unless value="${is_fixed}">
+        <axis xyz="1 0 0" />
+        <limit lower="-0.09522" upper="0.77302" effort="2" velocity="10" />
+      </xacro:unless>
     </joint>
-    <link name="grasper_${side}_jaw_left_Link">
+
+    <link name="${prefix}grasper_jaw_left_Link">
       <inertial>
         <origin xyz="1.392162e-07 -0.0012691085 -0.023147552" />
         <mass value="0.011059233" />
@@ -60,15 +72,18 @@
         </geometry>
       </collision>
     </link>
-    <joint name="grasper_${side}_tip_left_Joint" type="revolute">
+    <joint name="${prefix}grasper_tip_left_Joint" type="${rev_type}">
       <origin xyz="0 -0.01401 -0.048" />
-      <parent link="grasper_${side}_crank_left_Link" />
-      <child link="grasper_${side}_jaw_left_Link" />
-      <axis xyz="1 0 0" />
-      <limit lower="-0.77302" upper="0.09522" effort="2" velocity="10" />
-      <mimic joint="grasper_${side}_drive_Joint" multiplier="-1" offset="0" />
+      <parent link="${prefix}grasper_crank_left_Link" />
+      <child link="${prefix}grasper_jaw_left_Link" />
+      <xacro:unless value="${is_fixed}">
+        <axis xyz="1 0 0" />
+        <limit lower="-0.77302" upper="0.09522" effort="2" velocity="10" />
+        <mimic joint="${prefix}gripper_joint" multiplier="-1" offset="0" />
+      </xacro:unless>
     </joint>
-    <link name="grasper_${side}_bar_left_Link">
+
+    <link name="${prefix}grasper_bar_left_Link">
       <inertial>
         <origin xyz="-2.9205723e-07 -0.0062299561 -0.013666476" />
         <mass value="0.0036449843" />
@@ -80,15 +95,18 @@
         </geometry>
       </visual>
     </link>
-    <joint name="grasper_${side}_bar_left_Joint" type="revolute">
+    <joint name="${prefix}grasper_bar_left_Joint" type="${rev_type}">
       <origin xyz="0 0.04136 -0.0609" />
-      <parent link="grasper_base_${side}_Link" />
-      <child link="grasper_${side}_bar_left_Link" />
-      <axis xyz="1 0 0" />
-      <limit lower="-0.09522" upper="0.77302" effort="2" velocity="10" />
-      <mimic joint="grasper_${side}_drive_Joint" multiplier="1" offset="0" />
+      <parent link="${prefix}grasper_base_Link" />
+      <child link="${prefix}grasper_bar_left_Link" />
+      <xacro:unless value="${is_fixed}">
+        <axis xyz="1 0 0" />
+        <limit lower="-0.09522" upper="0.77302" effort="2" velocity="10" />
+        <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0" />
+      </xacro:unless>
     </joint>
-    <link name="grasper_${side}_crank_right_Link">
+
+    <link name="${prefix}grasper_crank_right_Link">
       <inertial>
         <origin xyz="-4.8119616e-06 0.0055481697 -0.019012993" />
         <mass value="0.0028716752" />
@@ -101,15 +119,18 @@
         </geometry>
       </visual>
     </link>
-    <joint name="grasper_${side}_crank_right_Joint" type="revolute">
+    <joint name="${prefix}grasper_crank_right_Joint" type="${rev_type}">
       <origin xyz="0 -0.0275 -0.0689" />
-      <parent link="grasper_base_${side}_Link" />
-      <child link="grasper_${side}_crank_right_Link" />
-      <axis xyz="-1 0 0" />
-      <limit lower="-0.09522" upper="0.77302" effort="2" velocity="10" />
-      <mimic joint="grasper_${side}_drive_Joint" multiplier="1" offset="0" />
+      <parent link="${prefix}grasper_base_Link" />
+      <child link="${prefix}grasper_crank_right_Link" />
+      <xacro:unless value="${is_fixed}">
+        <axis xyz="-1 0 0" />
+        <limit lower="-0.09522" upper="0.77302" effort="2" velocity="10" />
+        <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0" />
+      </xacro:unless>
     </joint>
-    <link name="grasper_${side}_jaw_right_Link">
+
+    <link name="${prefix}grasper_jaw_right_Link">
       <inertial>
         <origin xyz="-2.2359754e-07 0.0012691084 -0.023147552" />
         <mass value="0.011059233" />
@@ -128,15 +149,18 @@
         </geometry>
       </collision>
     </link>
-    <joint name="grasper_${side}_tip_right_Joint" type="revolute">
+    <joint name="${prefix}grasper_tip_right_Joint" type="${rev_type}">
       <origin xyz="0 0.01401 -0.048" />
-      <parent link="grasper_${side}_crank_right_Link" />
-      <child link="grasper_${side}_jaw_right_Link" />
-      <axis xyz="-1 0 0" />
-      <limit lower="-0.77302" upper="0.09522" effort="2" velocity="10" />
-      <mimic joint="grasper_${side}_drive_Joint" multiplier="-1" offset="0" />
+      <parent link="${prefix}grasper_crank_right_Link" />
+      <child link="${prefix}grasper_jaw_right_Link" />
+      <xacro:unless value="${is_fixed}">
+        <axis xyz="-1 0 0" />
+        <limit lower="-0.77302" upper="0.09522" effort="2" velocity="10" />
+        <mimic joint="${prefix}gripper_joint" multiplier="-1" offset="0" />
+      </xacro:unless>
     </joint>
-    <link name="grasper_${side}_bar_right_Link">
+
+    <link name="${prefix}grasper_bar_right_Link">
       <inertial>
         <origin xyz="2.4766637e-07 0.0062299561 -0.013666476" />
         <mass value="0.0036449843" />
@@ -149,15 +173,18 @@
         </geometry>
       </visual>
     </link>
-    <joint name="grasper_${side}_bar_right_Joint" type="revolute">
+    <joint name="${prefix}grasper_bar_right_Joint" type="${rev_type}">
       <origin xyz="0 -0.04136 -0.0609" />
-      <parent link="grasper_base_${side}_Link" />
-      <child link="grasper_${side}_bar_right_Link" />
-      <axis xyz="-1 0 0" />
-      <limit lower="-0.09522" upper="0.77302" effort="2" velocity="10" />
-      <mimic joint="grasper_${side}_drive_Joint" multiplier="1" offset="0" />
+      <parent link="${prefix}grasper_base_Link" />
+      <child link="${prefix}grasper_bar_right_Link" />
+      <xacro:unless value="${is_fixed}">
+        <axis xyz="-1 0 0" />
+        <limit lower="-0.09522" upper="0.77302" effort="2" velocity="10" />
+        <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0" />
+      </xacro:unless>
     </joint>
-    <link name="grasper_${side}_nut_Link">
+
+    <link name="${prefix}grasper_nut_Link">
       <inertial>
         <origin xyz="-2.7416387e-08 -4.6963269e-12 -0.089912512" />
         <mass value="0.0029565354" />
@@ -167,49 +194,58 @@
         <geometry>
           <mesh filename="file://$(find tron2b_dach_description)/meshes/gripper/nut.glb" />
         </geometry>
-        <xacro:if value="${side == 'R'}">
+        <xacro:if value="${direction == -1}">
           <origin rpy="0 0 3.141592653589793" />
         </xacro:if>
       </visual>
     </link>
-    <joint name="grasper_${side}_nut_Joint" type="prismatic">
-      <parent link="grasper_base_${side}_Link" />
-      <child link="grasper_${side}_nut_Link" />
-      <axis xyz="0 0 1" />
-      <limit lower="-0.0019044" upper="0.0154604" effort="10" velocity="0.5" />
-      <mimic joint="grasper_${side}_drive_Joint" multiplier="0.02" offset="0" />
+    <joint name="${prefix}grasper_nut_Joint" type="${pri_type}">
+      <parent link="${prefix}grasper_base_Link" />
+      <child link="${prefix}grasper_nut_Link" />
+      <xacro:unless value="${is_fixed}">
+        <axis xyz="0 0 1" />
+        <limit lower="-0.0019044" upper="0.0154604" effort="10" velocity="0.5" />
+        <mimic joint="${prefix}gripper_joint" multiplier="0.02" offset="0" />
+      </xacro:unless>
     </joint>
-    <link name="grasper_${side}_jaw_left_ref_Link">
+
+    <link name="${prefix}grasper_jaw_left_ref_Link">
       <inertial>
         <mass value="0.0001" />
         <inertia ixx="1e-08" ixy="0" ixz="0" iyy="1e-08" iyz="0" izz="1e-08" />
       </inertial>
     </link>
-    <joint name="grasper_${side}_jaw_left_Joint" type="prismatic">
-      <parent link="grasper_base_${side}_Link" />
-      <child link="grasper_${side}_jaw_left_ref_Link" />
-      <axis xyz="0 1 0" />
-      <limit lower="-0.0045" upper="0.0375" effort="20" velocity="0.5" />
-      <mimic joint="grasper_${side}_drive_Joint" multiplier="0.048992" offset="0" />
+    <joint name="${prefix}grasper_jaw_left_Joint" type="${pri_type}">
+      <parent link="${prefix}grasper_base_Link" />
+      <child link="${prefix}grasper_jaw_left_ref_Link" />
+      <xacro:unless value="${is_fixed}">
+        <axis xyz="0 1 0" />
+        <limit lower="-0.0045" upper="0.0375" effort="20" velocity="0.5" />
+        <mimic joint="${prefix}gripper_joint" multiplier="0.048992" offset="0" />
+      </xacro:unless>
     </joint>
-    <link name="grasper_${side}_jaw_right_ref_Link">
+
+    <link name="${prefix}grasper_jaw_right_ref_Link">
       <inertial>
         <mass value="0.0001" />
         <inertia ixx="1e-08" ixy="0" ixz="0" iyy="1e-08" iyz="0" izz="1e-08" />
       </inertial>
     </link>
-    <joint name="grasper_${side}_jaw_right_Joint" type="prismatic">
-      <parent link="grasper_base_${side}_Link" />
-      <child link="grasper_${side}_jaw_right_ref_Link" />
-      <axis xyz="0 -1 0" />
-      <limit lower="-0.0045" upper="0.0375" effort="20" velocity="0.5" />
-      <mimic joint="grasper_${side}_drive_Joint" multiplier="0.048992" offset="0" />
+    <joint name="${prefix}grasper_jaw_right_Joint" type="${pri_type}">
+      <parent link="${prefix}grasper_base_Link" />
+      <child link="${prefix}grasper_jaw_right_ref_Link" />
+      <xacro:unless value="${is_fixed}">
+        <axis xyz="0 -1 0" />
+        <limit lower="-0.0045" upper="0.0375" effort="20" velocity="0.5" />
+        <mimic joint="${prefix}gripper_joint" multiplier="0.048992" offset="0" />
+      </xacro:unless>
     </joint>
+
     <!-- The gripper base coincides with LimX's flange frame. -->
-    <link name="${side}_ee_link"/>
-    <joint name="${side}_ee_Joint" type="fixed">
-      <parent link="grasper_base_${side}_Link"/>
-      <child link="${side}_ee_link"/>
+    <link name="${prefix}ee_link"/>
+    <joint name="${prefix}ee_Joint" type="fixed">
+      <parent link="${prefix}grasper_base_Link"/>
+      <child link="${prefix}ee_link"/>
       <origin xyz="-0.0021 0.0 -0.1313"/>
     </joint>
   </xacro:macro>

@@ -10,50 +10,52 @@
     </joint>
   </xacro:macro>
 
-  <xacro:macro name="Tron2BDachArmInterfaces" params="side">
-    <xacro:position_joint name="proximal_pitch_${side}_Joint"/>
-    <xacro:position_joint name="proximal_roll_${side}_Joint"/>
-    <xacro:position_joint name="proximal_yaw_${side}_Joint"/>
-    <xacro:position_joint name="elbow_${side}_Joint"/>
-    <xacro:position_joint name="wrist_yaw_${side}_Joint"/>
-    <xacro:position_joint name="wrist_pitch_${side}_Joint"/>
-    <xacro:position_joint name="wrist_roll_${side}_Joint"/>
+  <xacro:macro name="Tron2BDachArmInterfaces" params="name">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:position_joint name="${prefix}proximal_pitch_Joint"/>
+    <xacro:position_joint name="${prefix}proximal_roll_Joint"/>
+    <xacro:position_joint name="${prefix}proximal_yaw_Joint"/>
+    <xacro:position_joint name="${prefix}elbow_Joint"/>
+    <xacro:position_joint name="${prefix}wrist_yaw_Joint"/>
+    <xacro:position_joint name="${prefix}wrist_pitch_Joint"/>
+    <xacro:position_joint name="${prefix}wrist_roll_Joint"/>
   </xacro:macro>
 
-  <xacro:macro name="Tron2BDachGripperInterfaces" params="side">
-    <xacro:position_joint name="grasper_${side}_drive_Joint" initial="-0.09522"/>
+  <xacro:macro name="Tron2BDachGripperInterfaces" params="name">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:position_joint name="${prefix}gripper_joint" initial="-0.09522"/>
     <!-- TopicBasedSystem expects one position per name in the command message.
          The Isaac articulation supplies mimic states through its own linkage. -->
     <xacro:unless value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
-      <joint name="grasper_${side}_tip_left_Joint">
+      <joint name="${prefix}grasper_tip_left_Joint">
         <state_interface name="position"/>
         <state_interface name="velocity"/>
       </joint>
-      <joint name="grasper_${side}_bar_left_Joint">
+      <joint name="${prefix}grasper_bar_left_Joint">
         <state_interface name="position"/>
         <state_interface name="velocity"/>
       </joint>
-      <joint name="grasper_${side}_crank_right_Joint">
+      <joint name="${prefix}grasper_crank_right_Joint">
         <state_interface name="position"/>
         <state_interface name="velocity"/>
       </joint>
-      <joint name="grasper_${side}_tip_right_Joint">
+      <joint name="${prefix}grasper_tip_right_Joint">
         <state_interface name="position"/>
         <state_interface name="velocity"/>
       </joint>
-      <joint name="grasper_${side}_bar_right_Joint">
+      <joint name="${prefix}grasper_bar_right_Joint">
         <state_interface name="position"/>
         <state_interface name="velocity"/>
       </joint>
-      <joint name="grasper_${side}_nut_Joint">
+      <joint name="${prefix}grasper_nut_Joint">
         <state_interface name="position"/>
         <state_interface name="velocity"/>
       </joint>
-      <joint name="grasper_${side}_jaw_left_Joint">
+      <joint name="${prefix}grasper_jaw_left_Joint">
         <state_interface name="position"/>
         <state_interface name="velocity"/>
       </joint>
-      <joint name="grasper_${side}_jaw_right_Joint">
+      <joint name="${prefix}grasper_jaw_right_Joint">
         <state_interface name="position"/>
         <state_interface name="velocity"/>
       </joint>

@@ -1,67 +1,197 @@
+# TRON2B_DACH ros2_control
+# Fixed base, dual 7-DoF arms + 2-DoF head + adaptive grippers.
+# split_body / demo: ocs2_arm_controller (arms) + head_joint_controller
+# full_body: ocs2_wbc_controller (arms + head), info = fixed_base_tcp, HEAD_GAZE
+# Planning URDF: eef_fixed_joints freezes grippers; order [left×7 | right×7 | head×2]
+
 controller_manager:
   ros__parameters:
-    update_rate: 100
+    update_rate: 500
+
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
     ocs2_arm_controller:
       type: ocs2_arm_controller/Ocs2ArmController
-    tron2b_dach_head_controller:
-      type: forward_command_controller/ForwardCommandController
+
+    ocs2_wbc_controller:
+      type: ocs2_wbc_controller/Ocs2WbcController
+
+    head_joint_controller:
+      type: basic_joint_controller/BasicJointController
+
     left_gripper_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
+
     right_gripper_controller:
       type: adaptive_gripper_controller/AdaptiveGripperController
+
+# split_body / demo — dual-arm MPC
 ocs2_arm_controller:
   ros__parameters:
     robot_name: tron2b_dach
     info_file_name: task
-    mpc_frequency: 25
+    mpc_frequency: 100
     command_interfaces:
-    - position
+      - position
     state_interfaces:
-    - position
+      - position
     joints:
-    - proximal_pitch_L_Joint
-    - proximal_roll_L_Joint
-    - proximal_yaw_L_Joint
-    - elbow_L_Joint
-    - wrist_yaw_L_Joint
-    - wrist_pitch_L_Joint
-    - wrist_roll_L_Joint
-    - proximal_pitch_R_Joint
-    - proximal_roll_R_Joint
-    - proximal_yaw_R_Joint
-    - elbow_R_Joint
-    - wrist_yaw_R_Joint
-    - wrist_pitch_R_Joint
-    - wrist_roll_R_Joint
-    # Elbows back, grippers pointing forward at waist height.
+      - left_proximal_pitch_Joint
+      - left_proximal_roll_Joint
+      - left_proximal_yaw_Joint
+      - left_elbow_Joint
+      - left_wrist_yaw_Joint
+      - left_wrist_pitch_Joint
+      - left_wrist_roll_Joint
+      - right_proximal_pitch_Joint
+      - right_proximal_roll_Joint
+      - right_proximal_yaw_Joint
+      - right_elbow_Joint
+      - right_wrist_yaw_Joint
+      - right_wrist_pitch_Joint
+      - right_wrist_roll_Joint
+    cartesian_defaults:
+      frame_id: base_Link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+    # Elbows back, grippers forward. proximal_roll kept within ±π/12 so both
+    # arms' asymmetric URDF limits accept the same magnitude.
     home_1:
-    - 0.691099
-    - 0.271104
-    - 0.153669
-    - -1.404135
-    - 0.411881
-    - -0.725398
-    - -0.198326
-    - 0.691098
-    - -0.271104
-    - -0.153670
-    - -1.404135
-    - -0.411882
-    - -0.725398
-    - 0.198328
-tron2b_dach_head_controller:
+      - 0.691099
+      - 0.25
+      - 0.153669
+      - -1.404135
+      - 0.411881
+      - -0.725398
+      - -0.198326
+      - 0.691098
+      - -0.25
+      - -0.153670
+      - -1.404135
+      - -0.411882
+      - -0.725398
+      - 0.198328
+    home_2:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+
+# full_body — WBC: arms + head (no waist/lift)
+ocs2_wbc_controller:
   ros__parameters:
+    update_rate: 100
+    mpc_frequency: 50
+    info_file_name: fixed_base_tcp
+    robot_name: tron2b_dach
+    fsm_default_humanoid_mode: HM_DUAL_BODY_FREE
     joints:
-    - head_yaw_Joint
-    - head_pitch_Joint
-    interface_name: position
+      - left_proximal_pitch_Joint
+      - left_proximal_roll_Joint
+      - left_proximal_yaw_Joint
+      - left_elbow_Joint
+      - left_wrist_yaw_Joint
+      - left_wrist_pitch_Joint
+      - left_wrist_roll_Joint
+      - right_proximal_pitch_Joint
+      - right_proximal_roll_Joint
+      - right_proximal_yaw_Joint
+      - right_elbow_Joint
+      - right_wrist_yaw_Joint
+      - right_wrist_pitch_Joint
+      - right_wrist_roll_Joint
+      - head_yaw_Joint
+      - head_pitch_Joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+    home_duration: 5.0
+    cartesian_defaults:
+      frame_id: base_Link
+      ik_type: AUTO
+      max_linear_velocity: 0.3
+      max_linear_acceleration: 1.0
+      max_linear_jerk: 5.0
+      max_angular_velocity: 0.5
+      max_angular_acceleration: 1.0
+      max_angular_jerk: 5.0
+    # [left×7 | right×7 | head×2]; proximal_roll ±0.25 < π/12 asymmetric limit
+    home_1:
+      - 0.691099
+      - 0.25
+      - 0.153669
+      - -1.404135
+      - 0.411881
+      - -0.725398
+      - -0.198326
+      - 0.691098
+      - -0.25
+      - -0.153670
+      - -1.404135
+      - -0.411882
+      - -0.725398
+      - 0.198328
+      - 0.0
+      - 0.0
+    home_2:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.2
+
+# split_body: head via basic_joint_controller (not in arm MPC)
+head_joint_controller:
+  ros__parameters:
+    update_rate: 100
+    joints:
+      - head_yaw_Joint
+      - head_pitch_Joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    home_1: [0.0, 0.0]
+    home_2: [0.0, 0.2]
+    home_duration: 2.0
+    movej_duration: 2.0
+    hold_position_threshold: 0.1
+
 left_gripper_controller:
   ros__parameters:
-    joint: grasper_L_drive_Joint
+    joint: left_gripper_joint
     use_effort_interface: false
+
 right_gripper_controller:
   ros__parameters:
-    joint: grasper_R_drive_Joint
+    joint: right_gripper_joint
     use_effort_interface: false

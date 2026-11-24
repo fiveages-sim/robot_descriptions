@@ -1,28 +1,33 @@
 <?xml version="1.0"?>
 <robot name="tron2b_dach_component" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Component: body|head|arm|gripper. isaac:=true hides sensor_models camera meshes. -->
   <xacro:arg name="type" default="body"/>
-  <xacro:arg name="side" default="L"/>
+  <xacro:arg name="name" default="left"/>
+  <xacro:arg name="direction" default="1"/>
+  <xacro:arg name="isaac" default="true"/>
+  <xacro:arg name="eef_fixed_joints" default="false"/>
 
   <xacro:if value="${'$(arg type)' == 'body'}">
     <xacro:include filename="components/body.xacro"/>
-    <xacro:Tron2BDachBody/>
+    <xacro:Tron2BDachBody isaac="$(arg isaac)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'head'}">
     <xacro:include filename="components/head.xacro"/>
     <link name="base_Link"/>
-    <xacro:Tron2BDachHead parent="base_Link"/>
+    <xacro:Tron2BDachHead parent="base_Link" isaac="$(arg isaac)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'arm'}">
     <xacro:include filename="components/arm.xacro"/>
-    <link name="base_Link"/>
-    <xacro:Tron2BDachArm side="$(arg side)" parent="base_Link"/>
+    <link name="arm_base"/>
+    <xacro:Tron2BDachArm name="$(arg name)" parent="arm_base" direction="$(arg direction)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'gripper'}">
     <xacro:include filename="components/gripper.xacro"/>
-    <link name="wrist_roll_$(arg side)_Link"/>
-    <xacro:Tron2BDachGripper side="$(arg side)" parent="wrist_roll_$(arg side)_Link"/>
+    <link name="$(arg name)_wrist_roll_Link"/>
+    <xacro:Tron2BDachGripper name="$(arg name)" parent="$(arg name)_wrist_roll_Link"
+                             direction="$(arg direction)" fixed_joints="$(arg eef_fixed_joints)"/>
   </xacro:if>
 </robot>

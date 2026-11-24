@@ -1,0 +1,21 @@
+/**:
+  ros__parameters:
+    linear_scale: 0.3
+    angular_scale: 0.5
+    enable_vr: true
+    enable_head_control: false
+
+    # split_body: markers in base_Link. full_body WBC launch overrides marker_fixed_frame to world.
+    marker_fixed_frame: base_Link
+    vr_follow_frame: base_Link
+
+    head_joint_to_rpy_mapping:
+      head_yaw_Joint: "head_yaw"
+      head_pitch_Joint: "head_pitch"
+    head_rpy_axis_direction:
+      head_yaw: 1.0
+      head_pitch: 1.0
+      head_roll: 1.0
+    head_link_name: "head_pitch_Link"
+    reference_link: "head_pitch_Link"
+    enable_wbc_head_tracking_marker: false

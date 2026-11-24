@@ -1,12 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="Tron2BDachArm" params="side parent">
-    <xacro:property name="direction" value="${1 if side == 'L' else -1}" />
-    <link name="proximal_pitch_${side}_Link">
+  <!-- Shared left/right arm (Taku/G1 style): name + direction:=±1 → prefix="${name}_". -->
+  <xacro:macro name="Tron2BDachArm" params="name parent direction:=1">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}" />
+
+    <link name="${prefix}proximal_pitch_Link">
       <inertial>
-        <origin xyz="${'0.0033 0.06714 -0.00603' if side == 'L' else '0.0033 -0.06714 -0.00603'}" />
+        <origin xyz="0.0033 ${0.06714 * direction} -0.00603" />
         <mass value="2.05" />
-        <inertia ixx="0.00389778" ixy="${'-0.00013725' if side == 'L' else '0.00013725'}" ixz="4.62e-05" iyy="0.00320014" iyz="${'5.272e-05' if side == 'L' else '-5.272e-05'}" izz="0.00357523" />
+        <inertia ixx="0.00389778" ixy="${-0.00013725 * direction}" ixz="4.62e-05"
+                 iyy="0.00320014" iyz="${5.272e-05 * direction}" izz="0.00357523" />
       </inertial>
       <visual>
         <geometry>
@@ -20,18 +23,20 @@
         </geometry>
       </collision>
     </link>
-    <joint name="proximal_pitch_${side}_Joint" type="revolute">
-      <origin xyz="${'-0.00044 0.09497 0.05446' if side == 'L' else '-0.00044 -0.09497 0.05446'}" />
+    <joint name="${prefix}proximal_pitch_Joint" type="revolute">
+      <origin xyz="-0.00044 ${0.09497 * direction} 0.05446" />
       <parent link="${parent}" />
-      <child link="proximal_pitch_${side}_Link" />
-      <axis xyz="${'0.0 0.9961947268929313 -0.0871554135479712' if side == 'L' else '0.0 0.9961947268929313 0.0871554135479712'}" />
+      <child link="${prefix}proximal_pitch_Link" />
+      <axis xyz="0.0 0.9961947268929313 ${-0.0871554135479712 * direction}" />
       <limit lower="-3.141592653589793" upper="2.600540585471551" effort="200.0" velocity="17.0693" />
     </joint>
-    <link name="proximal_roll_${side}_Link">
+
+    <link name="${prefix}proximal_roll_Link">
       <inertial>
-        <origin xyz="${'0.03623 0.00056 -0.08095' if side == 'L' else '0.03623 -0.00056 -0.08095'}" />
+        <origin xyz="0.03623 ${0.00056 * direction} -0.08095" />
         <mass value="1.75" />
-        <inertia ixx="0.00438693" ixy="${'-1.167e-05' if side == 'L' else '1.167e-05'}" ixz="-5.518e-05" iyy="0.00508428" iyz="${'-3.078e-05' if side == 'L' else '3.078e-05'}" izz="0.00295723" />
+        <inertia ixx="0.00438693" ixy="${-1.167e-05 * direction}" ixz="-5.518e-05"
+                 iyy="0.00508428" iyz="${-3.078e-05 * direction}" izz="0.00295723" />
       </inertial>
       <visual>
         <geometry>
@@ -45,18 +50,22 @@
         </geometry>
       </collision>
     </link>
-    <joint name="proximal_roll_${side}_Joint" type="revolute">
-      <origin xyz="${'-0.0352 0.07261 -0.00635' if side == 'L' else '-0.0352 -0.07261 -0.00635'}" />
-      <parent link="proximal_pitch_${side}_Link" />
-      <child link="proximal_roll_${side}_Link" />
+    <joint name="${prefix}proximal_roll_Joint" type="revolute">
+      <origin xyz="-0.0352 ${0.07261 * direction} -0.00635" />
+      <parent link="${prefix}proximal_pitch_Link" />
+      <child link="${prefix}proximal_roll_Link" />
       <axis xyz="1.0 0.0 0.0" />
-      <limit lower="${'-0.2617993877991494' if side == 'L' else '-3.193952531149623'}" upper="${'3.193952531149623' if side == 'L' else '0.2617993877991494'}" effort="200.0" velocity="17.0693" />
+      <limit lower="${-0.2617993877991494 if direction == 1 else -3.193952531149623}"
+             upper="${3.193952531149623 if direction == 1 else 0.2617993877991494}"
+             effort="200.0" velocity="17.0693" />
     </joint>
-    <link name="proximal_yaw_${side}_Link">
+
+    <link name="${prefix}proximal_yaw_Link">
       <inertial>
-        <origin xyz="${'-0.00376 0.00165 -0.09017' if side == 'L' else '-0.00376 -0.00165 -0.09017'}" />
+        <origin xyz="-0.00376 ${0.00165 * direction} -0.09017" />
         <mass value="1.21" />
-        <inertia ixx="0.01030809" ixy="${'6.59e-06' if side == 'L' else '-6.59e-06'}" ixz="-2.892e-05" iyy="0.00994508" iyz="${'0.000235' if side == 'L' else '-0.000235'}" izz="0.00236156" />
+        <inertia ixx="0.01030809" ixy="${6.59e-06 * direction}" ixz="-2.892e-05"
+                 iyy="0.00994508" iyz="${0.000235 * direction}" izz="0.00236156" />
       </inertial>
       <visual>
         <geometry>
@@ -69,7 +78,6 @@
           <cylinder radius="0.0578355" length="0.1022271" />
         </geometry>
       </collision>
-      <!-- Upper-arm shell between the shoulder cylinder and the elbow axis. -->
       <collision>
         <origin xyz="0 0 -0.1155" />
         <geometry>
@@ -83,18 +91,22 @@
         </geometry>
       </collision>
     </link>
-    <joint name="proximal_yaw_${side}_Joint" type="revolute">
+    <joint name="${prefix}proximal_yaw_Joint" type="revolute">
       <origin xyz="0.0352 0.0 -0.1348" />
-      <parent link="proximal_roll_${side}_Link" />
-      <child link="proximal_yaw_${side}_Link" />
+      <parent link="${prefix}proximal_roll_Link" />
+      <child link="${prefix}proximal_yaw_Link" />
       <axis xyz="0.0 0.0 1.0" />
-      <limit lower="${'-3.6651914291880923' if side == 'L' else '-1.4835298641951802'}" upper="${'1.4835298641951802' if side == 'L' else '3.6651914291880923'}" effort="70.0" velocity="16.3363" />
+      <limit lower="${-3.6651914291880923 if direction == 1 else -1.4835298641951802}"
+             upper="${1.4835298641951802 if direction == 1 else 3.6651914291880923}"
+             effort="70.0" velocity="16.3363" />
     </joint>
-    <link name="elbow_${side}_Link">
+
+    <link name="${prefix}elbow_Link">
       <inertial>
-        <origin xyz="${'-0.00057 -0.03166 -0.00438' if side == 'L' else '-0.00057 0.03166 -0.00438'}" />
+        <origin xyz="-0.00057 ${-0.03166 * direction} -0.00438" />
         <mass value="1.05" />
-        <inertia ixx="0.00104316" ixy="${'1.61e-06' if side == 'L' else '-1.61e-06'}" ixz="-2.728e-05" iyy="0.00133093" iyz="${'3.19e-06' if side == 'L' else '-3.19e-06'}" izz="0.0009075" />
+        <inertia ixx="0.00104316" ixy="${1.61e-06 * direction}" ixz="-2.728e-05"
+                 iyy="0.00133093" iyz="${3.19e-06 * direction}" izz="0.0009075" />
       </inertial>
       <visual>
         <geometry>
@@ -108,46 +120,52 @@
         </geometry>
       </collision>
     </link>
-    <joint name="elbow_${side}_Joint" type="revolute">
-      <origin xyz="${'0.004 0.0348 -0.2152' if side == 'L' else '0.004 -0.0348 -0.2152'}" />
-      <parent link="proximal_yaw_${side}_Link" />
-      <child link="elbow_${side}_Link" />
+    <joint name="${prefix}elbow_Joint" type="revolute">
+      <origin xyz="0.004 ${0.0348 * direction} -0.2152" />
+      <parent link="${prefix}proximal_yaw_Link" />
+      <child link="${prefix}elbow_Link" />
       <axis xyz="0.0 1.0 0.0" />
       <limit lower="-2.6179938779914944" upper="0" effort="70.0" velocity="16.3363" />
     </joint>
-    <link name="wrist_yaw_${side}_Link">
+
+    <link name="${prefix}wrist_yaw_Link">
       <inertial>
-        <origin xyz="${'-0.00013 0.00206 -0.06635' if side == 'L' else '-0.00013 -0.00206 -0.06635'}" />
+        <origin xyz="-0.00013 ${0.00206 * direction} -0.06635" />
         <mass value="1.15" />
-        <inertia ixx="0.00312783" ixy="${'-1.87e-06' if side == 'L' else '1.87e-06'}" ixz="-5.07e-06" iyy="0.00297221" iyz="${'6.903e-05' if side == 'L' else '-6.903e-05'}" izz="0.00104146" />
+        <inertia ixx="0.00312783" ixy="${-1.87e-06 * direction}" ixz="-5.07e-06"
+                 iyy="0.00297221" iyz="${6.903e-05 * direction}" izz="0.00104146" />
       </inertial>
       <visual>
         <geometry>
           <mesh filename="file://$(find tron2b_dach_description)/meshes/arm/wrist_yaw.glb" />
         </geometry>
-        <xacro:if value="${side == 'R'}">
+        <xacro:if value="${direction == -1}">
           <origin rpy="0 0 3.141592653589793" />
         </xacro:if>
       </visual>
       <collision>
-        <origin xyz="${0.0000042 * direction} ${0.0000000 * direction} -0.0914912" />
+        <origin xyz="${0.0000042 * direction} 0.0 -0.0914912" />
         <geometry>
           <cylinder radius="0.0492449" length="0.2057825" />
         </geometry>
       </collision>
     </link>
-    <joint name="wrist_yaw_${side}_Joint" type="revolute">
-      <origin xyz="${'-0.00367 -0.03481 -0.0685' if side == 'L' else '-0.00367 0.03481 -0.0685'}" />
-      <parent link="elbow_${side}_Link" />
-      <child link="wrist_yaw_${side}_Link" />
+    <joint name="${prefix}wrist_yaw_Joint" type="revolute">
+      <origin xyz="-0.00367 ${-0.03481 * direction} -0.0685" />
+      <parent link="${prefix}elbow_Link" />
+      <child link="${prefix}wrist_yaw_Link" />
       <axis xyz="0.0 0.0 1.0" />
-      <limit lower="${'-1.7453292519943295' if side == 'L' else '-1.3962634015954636'}" upper="${'1.3962634015954636' if side == 'L' else '1.7453292519943295'}" effort="15.0" velocity="14.4513" />
+      <limit lower="${-1.7453292519943295 if direction == 1 else -1.3962634015954636}"
+             upper="${1.3962634015954636 if direction == 1 else 1.7453292519943295}"
+             effort="15.0" velocity="14.4513" />
     </joint>
-    <link name="wrist_pitch_${side}_Link">
+
+    <link name="${prefix}wrist_pitch_Link">
       <inertial>
-        <origin xyz="${'0.00426 -0.0363 0.00013' if side == 'L' else '0.00426 0.0363 0.00013'}" />
+        <origin xyz="0.00426 ${-0.0363 * direction} 0.00013" />
         <mass value="0.44" />
-        <inertia ixx="0.00022755" ixy="${'2.85e-06' if side == 'L' else '-2.85e-06'}" ixz="-2.38e-06" iyy="0.00025709" iyz="${'-3e-08' if side == 'L' else '3e-08'}" izz="0.00025502" />
+        <inertia ixx="0.00022755" ixy="${2.85e-06 * direction}" ixz="-2.38e-06"
+                 iyy="0.00025709" iyz="${-3e-08 * direction}" izz="0.00025502" />
       </inertial>
       <visual>
         <geometry>
@@ -161,18 +179,20 @@
         </geometry>
       </collision>
     </link>
-    <joint name="wrist_pitch_${side}_Joint" type="revolute">
-      <origin xyz="${'0.0 0.0367 -0.1743' if side == 'L' else '0.0 -0.0367 -0.1743'}" />
-      <parent link="wrist_yaw_${side}_Link" />
-      <child link="wrist_pitch_${side}_Link" />
+    <joint name="${prefix}wrist_pitch_Joint" type="revolute">
+      <origin xyz="0.0 ${0.0367 * direction} -0.1743" />
+      <parent link="${prefix}wrist_yaw_Link" />
+      <child link="${prefix}wrist_pitch_Link" />
       <axis xyz="0.0 1.0 0.0" />
       <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="15.0" velocity="14.4513" />
     </joint>
-    <link name="wrist_roll_${side}_Link">
+
+    <link name="${prefix}wrist_roll_Link">
       <inertial>
-        <origin xyz="${'-0.02867 -0.00014 -0.04311' if side == 'L' else '-0.02867 0.00014 -0.04311'}" />
+        <origin xyz="-0.02867 ${-0.00014 * direction} -0.04311" />
         <mass value="0.24" />
-        <inertia ixx="0.00025857" ixy="${'5e-07' if side == 'L' else '-5e-07'}" ixz="-8.01e-06" iyy="0.00036517" iyz="${'-4.6e-07' if side == 'L' else '4.6e-07'}" izz="0.00026664" />
+        <inertia ixx="0.00025857" ixy="${5e-07 * direction}" ixz="-8.01e-06"
+                 iyy="0.00036517" iyz="${-4.6e-07 * direction}" izz="0.00026664" />
       </inertial>
       <visual>
         <geometry>
@@ -192,10 +212,10 @@
         </geometry>
       </collision>
     </link>
-    <joint name="wrist_roll_${side}_Joint" type="revolute">
-      <origin xyz="${'0.0317 -0.0367 0.0' if side == 'L' else '0.0317 0.0367 0.0'}" />
-      <parent link="wrist_pitch_${side}_Link" />
-      <child link="wrist_roll_${side}_Link" />
+    <joint name="${prefix}wrist_roll_Joint" type="revolute">
+      <origin xyz="0.0317 ${-0.0367 * direction} 0.0" />
+      <parent link="${prefix}wrist_pitch_Link" />
+      <child link="${prefix}wrist_roll_Link" />
       <axis xyz="1.0 0.0 0.0" />
       <limit lower="-1.5707963267948966" upper="1.5707963267948966" effort="15.0" velocity="14.4513" />
     </joint>
