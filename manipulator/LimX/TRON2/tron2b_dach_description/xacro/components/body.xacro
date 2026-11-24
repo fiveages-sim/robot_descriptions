@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="base.xacro" />
+
+  <xacro:macro name="Tron2BDachBody">
+    <link name="base_Link">
+      <inertial>
+        <origin xyz="0.00241 -0.00022 0.11116" />
+        <mass value="13.4" />
+        <inertia ixx="0.11544842" ixy="-6.32e-06" ixz="0.00636327" iyy="0.13779136" iyz="-2.76e-05" izz="0.10571445" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/body/base.glb" />
+        </geometry>
+      </visual>
+      <visual>
+        <origin xyz="0.098716379399 0.000116607174 -0.007652967437" rpy="-2.706431317112 0.000000017298 -1.570796364005" />
+        <geometry>
+          <mesh filename="file://$(find sensor_models)/meshes/realsense/d435.glb" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0089611 0.0000767 0.1218166" />
+        <geometry>
+          <box size="0.3061613 0.2184998 0.2800915" />
+        </geometry>
+      </collision>
+    </link>
+    <link name="base_imu">
+      <inertial>
+        <mass value="0.001" />
+        <inertia ixx="1e-08" ixy="0.0" ixz="0.0" iyy="1e-08" iyz="0.0" izz="1e-08" />
+      </inertial>
+    </link>
+    <joint name="base_imu_Joint" type="fixed">
+      <parent link="base_Link" />
+      <child link="base_imu" />
+    </joint>
+    <xacro:Tron2BDachBase />
+    <link name="d435_Link">
+      <inertial>
+        <mass value="0.001" />
+        <inertia ixx="1e-07" ixy="0.0" ixz="0.0" iyy="1e-07" iyz="0.0" izz="1e-07" />
+      </inertial>
+    </link>
+    <joint name="d435_Joint" type="fixed">
+      <origin xyz="0.0968 0.01759 -0.00409" rpy="0.0 2.7227136331 0.0" />
+      <parent link="base_Link" />
+      <child link="d435_Link" />
+    </joint>
+    <link name="d435_optical_frame">
+      <inertial>
+        <mass value="0.001" />
+        <inertia ixx="1e-07" ixy="0.0" ixz="0.0" iyy="1e-07" iyz="0.0" izz="1e-07" />
+      </inertial>
+    </link>
+    <joint name="d435_optical_Joint" type="fixed">
+      <origin rpy="-1.5707963267948966 0.0 -1.5707963267948966" />
+      <parent link="d435_Link" />
+      <child link="d435_optical_frame" />
+    </joint>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="Tron2BDachBaseCorner" params="caster_x foot_x y yaw">
+    <visual>
+      <origin xyz="${caster_x} ${y} -0.095" rpy="0 0 ${yaw}" />
+      <geometry>
+        <mesh filename="file://$(find tron2b_dach_description)/meshes/base/caster.glb" />
+      </geometry>
+    </visual>
+    <visual>
+      <origin xyz="${foot_x} ${y} 0" rpy="0 0 ${yaw}" />
+      <geometry>
+        <mesh filename="file://$(find tron2b_dach_description)/meshes/base/leveling_foot.glb" />
+      </geometry>
+    </visual>
+  </xacro:macro>
+
+  <xacro:macro name="Tron2BDachBase">
+    <link name="base_2_Link">
+      <inertial>
+        <origin xyz="0.0 0.0 -0.45862" />
+        <mass value="10.0" />
+        <inertia ixx="0.80635" ixy="0.0" ixz="0.0" iyy="0.811937" iyz="0.0" izz="0.017624" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/body/base_2.glb" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 -0.45862" />
+        <geometry>
+          <box size="0.121 0.085 0.98" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="base_2_Joint" type="fixed">
+      <origin xyz="0.00056 -9e-05 -0.07285" />
+      <parent link="base_Link" />
+      <child link="base_2_Link" />
+    </joint>
+    <link name="base_3_Link">
+      <inertial>
+        <origin xyz="0.0 0.0 -0.05442" />
+        <mass value="20.0" />
+        <inertia ixx="0.9485" ixy="0.0" ixz="0.0" iyy="0.9485" iyz="0.0" izz="1.6803" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/base/base_frame.glb" />
+        </geometry>
+      </visual>
+      <xacro:Tron2BDachBaseCorner caster_x="0.195916" foot_x="0.31" y="0.31" yaw="0" />
+      <xacro:Tron2BDachBaseCorner caster_x="0.195916" foot_x="0.31" y="-0.31" yaw="0" />
+      <xacro:Tron2BDachBaseCorner caster_x="-0.195917" foot_x="-0.31" y="0.31" yaw="${pi}" />
+      <xacro:Tron2BDachBaseCorner caster_x="-0.195917" foot_x="-0.31" y="-0.31" yaw="${pi}" />
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find tron2b_dach_description)/meshes/body/base_3.glb" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="base_3_Joint" type="fixed">
+      <origin xyz="0.0 0.0 -0.9295" />
+      <parent link="base_2_Link" />
+      <child link="base_3_Link" />
+    </joint>
+  </xacro:macro>
+</robot>

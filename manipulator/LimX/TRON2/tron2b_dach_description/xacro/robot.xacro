@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="tron2b_dach" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="components/body.xacro"/>
+  <xacro:include filename="components/head.xacro"/>
+  <xacro:include filename="components/arm.xacro"/>
+  <xacro:include filename="components/gripper.xacro"/>
+
+  <mujoco>
+    <compiler meshdir="../meshes"/>
+  </mujoco>
+
+  <link name="base_link"/>
+  <joint name="dach_base_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_Link"/>
+  </joint>
+  <xacro:Tron2BDachBody/>
+  <xacro:Tron2BDachHead parent="base_Link"/>
+  <xacro:Tron2BDachArm side="L" parent="base_Link"/>
+  <xacro:Tron2BDachGripper side="L" parent="wrist_roll_L_Link"/>
+  <xacro:Tron2BDachArm side="R" parent="base_Link"/>
+  <xacro:Tron2BDachGripper side="R" parent="wrist_roll_R_Link"/>
+</robot>
