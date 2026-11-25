@@ -53,7 +53,7 @@ ros2 launch ocs2_arm_controller demo.launch.py robot:=tron2b_dach
 ros2 launch ocs2_arm_controller full_body.launch.py robot:=tron2b_dach
 ```
 
-双臂经 identity `arm_base` 挂到 `base_Link`，头仍挂 `base_Link`，Pinocchio 规划顺序：`[left×7 | right×7 | head×2]`，`headInputStart=14`。规划 URDF 由 launch 注入 `eef_fixed_joints:=true` 冻结夹爪关节。
+双臂经 identity `arm_base` 挂到 `base_link`，头仍挂 `base_link`，Pinocchio 规划顺序：`[left×7 | right×7 | head×2]`，`headInputStart=14`。规划 URDF 由 launch 注入 `eef_fixed_joints:=true` 冻结夹爪关节。
 
 ### Isaac Sim
 

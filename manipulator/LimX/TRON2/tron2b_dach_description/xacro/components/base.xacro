@@ -36,7 +36,7 @@
     </link>
     <joint name="base_2_Joint" type="fixed">
       <origin xyz="0.00056 -9e-05 -0.07285" />
-      <parent link="base_Link" />
+      <parent link="base_link" />
       <child link="base_2_Link" />
     </joint>
     <link name="base_3_Link">

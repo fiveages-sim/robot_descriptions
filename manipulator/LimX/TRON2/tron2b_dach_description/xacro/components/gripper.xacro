@@ -113,7 +113,7 @@
         <inertia ixx="8.4974076e-07" ixy="-8.1479958e-11" ixz="2.8278323e-10" iyy="1.0893103e-06" iyz="2.2248286e-07" izz="3.9176964e-07" />
       </inertial>
       <visual>
-        <origin rpy="0 0 3.141592653589793" />
+        <origin rpy="0 0 ${pi}" />
         <geometry>
           <mesh filename="file://$(find tron2b_dach_description)/meshes/gripper/crank.glb" />
         </geometry>
@@ -137,13 +137,13 @@
         <inertia ixx="3.8418985e-06" ixy="3.9560488e-12" ixz="3.3441013e-11" iyy="4.2033877e-06" iyz="5.2696424e-07" izz="1.006352e-06" />
       </inertial>
       <visual>
-        <origin rpy="0 0 3.141592653589793" />
+        <origin rpy="0 0 ${pi}" />
         <geometry>
           <mesh filename="file://$(find tron2b_dach_description)/meshes/gripper/jaw.glb" />
         </geometry>
       </visual>
       <collision>
-        <origin rpy="0 0 3.141592653589793" />
+        <origin rpy="0 0 ${pi}" />
         <geometry>
           <mesh filename="file://$(find tron2b_dach_description)/meshes/gripper/jaw.glb" />
         </geometry>
@@ -167,7 +167,7 @@
         <inertia ixx="1.4160279e-06" ixy="-3.9635664e-12" ixz="-2.3989416e-11" iyy="1.6580051e-06" iyz="1.8301211e-07" izz="4.4120396e-07" />
       </inertial>
       <visual>
-        <origin rpy="0 0 3.141592653589793" />
+        <origin rpy="0 0 ${pi}" />
         <geometry>
           <mesh filename="file://$(find tron2b_dach_description)/meshes/gripper/bar.glb" />
         </geometry>
@@ -195,7 +195,7 @@
           <mesh filename="file://$(find tron2b_dach_description)/meshes/gripper/nut.glb" />
         </geometry>
         <xacro:if value="${direction == -1}">
-          <origin rpy="0 0 3.141592653589793" />
+          <origin rpy="0 0 ${pi}" />
         </xacro:if>
       </visual>
     </link>
@@ -247,7 +247,7 @@
       <parent link="${prefix}grasper_base_Link"/>
       <child link="${prefix}ee_link"/>
       <!-- Match the W2 TCP convention: +Z points from the tool toward the fingertips. -->
-      <origin xyz="-0.0021 0.0 -0.1313" rpy="3.141592653589793 0 0"/>
+      <origin xyz="-0.0021 0.0 -0.1313" rpy="${pi} 0 0"/>
     </joint>
   </xacro:macro>
 </robot>

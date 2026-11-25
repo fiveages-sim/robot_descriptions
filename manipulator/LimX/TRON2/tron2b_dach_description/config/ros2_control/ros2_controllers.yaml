@@ -52,7 +52,7 @@ ocs2_arm_controller:
       - right_wrist_pitch_Joint
       - right_wrist_roll_Joint
     cartesian_defaults:
-      frame_id: base_Link
+      frame_id: base_link
       ik_type: AUTO
       max_linear_velocity: 0.3
       max_linear_acceleration: 1.0
@@ -60,7 +60,7 @@ ocs2_arm_controller:
       max_angular_velocity: 0.5
       max_angular_acceleration: 1.0
       max_angular_jerk: 5.0
-    # Elbows back, grippers level and facing +X in base_Link. proximal_roll kept within ±π/12 so both
+    # Elbows back, grippers level and facing +X in base_link. proximal_roll kept within ±π/12 so both
     # arms' asymmetric URDF limits accept the same magnitude.
     home_1:
       - 0.634099
@@ -124,7 +124,7 @@ ocs2_wbc_controller:
       - position
     home_duration: 5.0
     cartesian_defaults:
-      frame_id: base_Link
+      frame_id: base_link
       ik_type: AUTO
       max_linear_velocity: 0.3
       max_linear_acceleration: 1.0

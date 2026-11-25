@@ -46,7 +46,7 @@
       <parent link="head_base_Link" />
       <child link="head_yaw_Link" />
       <axis xyz="0.0 0.0 1.0" />
-      <limit lower="-1.5707963267948966" upper="1.5707963267948966" effort="15.0" velocity="14.4513" />
+      <limit lower="${-pi/2}" upper="${pi/2}" effort="15.0" velocity="14.4513" />
     </joint>
     <link name="head_pitch_Link">
       <inertial>
@@ -70,7 +70,7 @@
       <parent link="head_yaw_Link" />
       <child link="head_pitch_Link" />
       <axis xyz="0.0 1.0 0.0" />
-      <limit lower="-0.7853981633974483" upper="1.0471975511965976" effort="15.0" velocity="14.4513" />
+      <limit lower="${-pi/4}" upper="${pi/3}" effort="15.0" velocity="14.4513" />
     </joint>
 
     <!-- ROS optical (+Z forward, +X right, +Y down). Composed from vendor

@@ -14,8 +14,8 @@
 
   <xacro:if value="${'$(arg type)' == 'head'}">
     <xacro:include filename="components/head.xacro"/>
-    <link name="base_Link"/>
-    <xacro:Tron2BDachHead parent="base_Link" isaac="$(arg isaac)"/>
+    <link name="base_link"/>
+    <xacro:Tron2BDachHead parent="base_link" isaac="$(arg isaac)"/>
   </xacro:if>
 
   <xacro:if value="${'$(arg type)' == 'arm'}">

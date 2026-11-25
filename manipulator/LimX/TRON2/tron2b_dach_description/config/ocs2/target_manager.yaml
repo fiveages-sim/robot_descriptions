@@ -5,9 +5,9 @@
     enable_vr: true
     enable_head_control: false
 
-    # split_body: markers in base_Link. full_body WBC launch overrides marker_fixed_frame to world.
-    marker_fixed_frame: base_Link
-    vr_follow_frame: base_Link
+    # split_body: markers in base_link. full_body WBC launch overrides marker_fixed_frame to world.
+    marker_fixed_frame: base_link
+    vr_follow_frame: base_link
 
     head_joint_to_rpy_mapping:
       head_yaw_Joint: "head_yaw"

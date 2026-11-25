@@ -17,7 +17,7 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0.0006538 ${0.0608031 * direction} -0.0061907" rpy="1.57079632679 0 0" />
+        <origin xyz="0.0006538 ${0.0608031 * direction} -0.0061907" rpy="${pi/2} 0 0" />
         <geometry>
           <cylinder radius="0.0678046" length="0.1355752" />
         </geometry>
@@ -28,7 +28,7 @@
       <parent link="${parent}" />
       <child link="${prefix}proximal_pitch_Link" />
       <axis xyz="0.0 0.9961947268929313 ${-0.0871554135479712 * direction}" />
-      <limit lower="-3.141592653589793" upper="2.600540585471551" effort="200.0" velocity="17.0693" />
+      <limit lower="${-pi}" upper="${149*pi/180}" effort="200.0" velocity="17.0693" />
     </joint>
 
     <link name="${prefix}proximal_roll_Link">
@@ -55,8 +55,8 @@
       <parent link="${prefix}proximal_pitch_Link" />
       <child link="${prefix}proximal_roll_Link" />
       <axis xyz="1.0 0.0 0.0" />
-      <limit lower="${-0.2617993877991494 if direction == 1 else -3.193952531149623}"
-             upper="${3.193952531149623 if direction == 1 else 0.2617993877991494}"
+      <limit lower="${-pi/12 if direction == 1 else -61*pi/60}"
+             upper="${61*pi/60 if direction == 1 else pi/12}"
              effort="200.0" velocity="17.0693" />
     </joint>
 
@@ -73,7 +73,7 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0.0000062 ${0.0000144 * direction} -0.0051494" rpy="1.57079632679 0 0" />
+        <origin xyz="0.0000062 ${0.0000144 * direction} -0.0051494" rpy="${pi/2} 0 0" />
         <geometry>
           <cylinder radius="0.0578355" length="0.1022271" />
         </geometry>
@@ -85,7 +85,7 @@
         </geometry>
       </collision>
       <collision>
-        <origin xyz="0.004 0 -0.2152" rpy="1.57079632679 0 0" />
+        <origin xyz="0.004 0 -0.2152" rpy="${pi/2} 0 0" />
         <geometry>
           <cylinder radius="0.05" length="0.106" />
         </geometry>
@@ -96,8 +96,8 @@
       <parent link="${prefix}proximal_roll_Link" />
       <child link="${prefix}proximal_yaw_Link" />
       <axis xyz="0.0 0.0 1.0" />
-      <limit lower="${-3.6651914291880923 if direction == 1 else -1.4835298641951802}"
-             upper="${1.4835298641951802 if direction == 1 else 3.6651914291880923}"
+      <limit lower="${-7*pi/6 if direction == 1 else -17*pi/36}"
+             upper="${17*pi/36 if direction == 1 else 7*pi/6}"
              effort="70.0" velocity="16.3363" />
     </joint>
 
@@ -125,7 +125,7 @@
       <parent link="${prefix}proximal_yaw_Link" />
       <child link="${prefix}elbow_Link" />
       <axis xyz="0.0 1.0 0.0" />
-      <limit lower="-2.6179938779914944" upper="0" effort="70.0" velocity="16.3363" />
+      <limit lower="${-5*pi/6}" upper="0" effort="70.0" velocity="16.3363" />
     </joint>
 
     <link name="${prefix}wrist_yaw_Link">
@@ -140,7 +140,7 @@
           <mesh filename="file://$(find tron2b_dach_description)/meshes/arm/wrist_yaw.glb" />
         </geometry>
         <xacro:if value="${direction == -1}">
-          <origin rpy="0 0 3.141592653589793" />
+          <origin rpy="0 0 ${pi}" />
         </xacro:if>
       </visual>
       <collision>
@@ -155,8 +155,8 @@
       <parent link="${prefix}elbow_Link" />
       <child link="${prefix}wrist_yaw_Link" />
       <axis xyz="0.0 0.0 1.0" />
-      <limit lower="${-1.7453292519943295 if direction == 1 else -1.3962634015954636}"
-             upper="${1.3962634015954636 if direction == 1 else 1.7453292519943295}"
+      <limit lower="${-5*pi/9 if direction == 1 else -4*pi/9}"
+             upper="${4*pi/9 if direction == 1 else 5*pi/9}"
              effort="15.0" velocity="14.4513" />
     </joint>
 
@@ -173,7 +173,7 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0.0023000 ${-0.0346000 * direction} -0.0000000" rpy="1.57079632679 0 0" />
+        <origin xyz="0.0023000 ${-0.0346000 * direction} -0.0000000" rpy="${pi/2} 0 0" />
         <geometry>
           <cylinder radius="0.0439288" length="0.0770000" />
         </geometry>
@@ -184,7 +184,7 @@
       <parent link="${prefix}wrist_yaw_Link" />
       <child link="${prefix}wrist_pitch_Link" />
       <axis xyz="0.0 1.0 0.0" />
-      <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="15.0" velocity="14.4513" />
+      <limit lower="${-pi/4}" upper="${pi/4}" effort="15.0" velocity="14.4513" />
     </joint>
 
     <link name="${prefix}wrist_roll_Link">
@@ -200,7 +200,7 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="-0.0317026 0.0000000 -0.0646000" rpy="0 1.57079632679 0" />
+        <origin xyz="-0.0317026 0.0000000 -0.0646000" rpy="0 ${pi/2} 0" />
         <geometry>
           <cylinder radius="0.0346824" length="0.0802985" />
         </geometry>
@@ -217,7 +217,7 @@
       <parent link="${prefix}wrist_pitch_Link" />
       <child link="${prefix}wrist_roll_Link" />
       <axis xyz="1.0 0.0 0.0" />
-      <limit lower="-1.5707963267948966" upper="1.5707963267948966" effort="15.0" velocity="14.4513" />
+      <limit lower="${-pi/2}" upper="${pi/2}" effort="15.0" velocity="14.4513" />
     </joint>
   </xacro:macro>
 </robot>

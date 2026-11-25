@@ -4,7 +4,7 @@
 
   <!-- isaac:=true hides sensor_models camera meshes (Isaac asset import). -->
   <xacro:macro name="Tron2BDachBody" params="isaac:=false">
-    <link name="base_Link">
+    <link name="base_link">
       <inertial>
         <origin xyz="0.00241 -0.00022 0.11116" />
         <mass value="13.4" />
@@ -29,13 +29,13 @@
       </inertial>
     </link>
     <joint name="base_imu_Joint" type="fixed">
-      <parent link="base_Link" />
+      <parent link="base_link" />
       <child link="base_imu" />
     </joint>
     <xacro:Tron2BDachBase />
     <!-- ROS optical (+Z forward, +X right, +Y down). Joint = former d435_Link
          (xyz 0.0968 0.01759 -0.00409, rpy 0 2.7227136331 0) × optical (rpy -π/2 0 -π/2).
-         Visual origin restores the old base_Link mesh pose into this optical frame
+         Visual origin restores the old base_link mesh pose into this optical frame
          (d435.glb was never optical-aligned on this robot). -->
     <link name="body_camera">
       <inertial>
@@ -52,8 +52,8 @@
       </xacro:unless>
     </link>
     <joint name="body_camera_joint" type="fixed">
-      <origin xyz="0.0968 0.01759 -0.00409" rpy="1.98967534728 0 -1.57079632679" />
-      <parent link="base_Link" />
+      <origin xyz="0.0968 0.01759 -0.00409" rpy="${19*pi/30} 0 ${-pi/2}" />
+      <parent link="base_link" />
       <child link="body_camera" />
     </joint>
   </xacro:macro>

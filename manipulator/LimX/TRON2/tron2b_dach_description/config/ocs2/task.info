@@ -5,7 +5,7 @@
 model_information
 {
     manipulatorModelType    0
-    baseFrame               "base_Link"
+    baseFrame               "base_link"
     eeFrame                 "left_ee_link"
     eeFrame1                "right_ee_link"
     removeJoints
@@ -214,8 +214,8 @@ selfCollision
     }
     collisionLinkPairs
     {
-        [0] "base_Link, left_elbow_Link",
-        [1] "base_Link, right_elbow_Link",
+        [0] "base_link, left_elbow_Link",
+        [1] "base_link, right_elbow_Link",
         [2] "base_2_Link, left_wrist_yaw_Link",
         [3] "base_2_Link, right_wrist_yaw_Link",
         [4] "left_wrist_yaw_Link, right_wrist_yaw_Link",
@@ -224,8 +224,8 @@ selfCollision
         [7] "base_2_Link, right_grasper_base_Link",
         [8] "base_2_Link, left_wrist_roll_Link",
         [9] "base_2_Link, right_wrist_roll_Link",
-        [10] "base_Link, left_wrist_yaw_Link",
-        [11] "base_Link, right_wrist_yaw_Link",
+        [10] "base_link, left_wrist_yaw_Link",
+        [11] "base_link, right_wrist_yaw_Link",
         [12] "base_2_Link, left_elbow_Link",
         [13] "base_2_Link, right_elbow_Link",
     }
