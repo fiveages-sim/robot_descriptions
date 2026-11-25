@@ -369,45 +369,19 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /trajectory_markers
       Value: true
-    - Alpha: 1
-      Axes Length: 0.10000000149011612
-      Axes Radius: 0.019999999552965164
-      Class: rviz_default_plugins/Pose
-      Color: 255; 25; 0
+    - Class: rviz_default_plugins/Axes
       Enabled: true
-      Head Length: 0.30000001192092896
-      Head Radius: 0.10000000149011612
-      Name: Pose
-      Shaft Length: 1
-      Shaft Radius: 0.05000000074505806
-      Shape: Axes
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        Filter size: 10
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /left_current_target
+      Length: 0.1
+      Name: Left EE Frame
+      Radius: 0.02
+      Reference Frame: left_ee_link
       Value: true
-    - Alpha: 1
-      Axes Length: 0.10000000149011612
-      Axes Radius: 0.019999999552965164
-      Class: rviz_default_plugins/Pose
-      Color: 255; 25; 0
+    - Class: rviz_default_plugins/Axes
       Enabled: true
-      Head Length: 0.30000001192092896
-      Head Radius: 0.10000000149011612
-      Name: Pose
-      Shaft Length: 1
-      Shaft Radius: 0.05000000074505806
-      Shape: Axes
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        Filter size: 10
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /right_current_target
+      Length: 0.1
+      Name: Right EE Frame
+      Radius: 0.02
+      Reference Frame: right_ee_link
       Value: true
     - Class: arms_rviz_control_plugin/TargetErrorDisplay
       Enabled: true

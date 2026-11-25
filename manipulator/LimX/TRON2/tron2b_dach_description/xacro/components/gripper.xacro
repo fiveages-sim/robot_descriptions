@@ -246,7 +246,8 @@
     <joint name="${prefix}ee_Joint" type="fixed">
       <parent link="${prefix}grasper_base_Link"/>
       <child link="${prefix}ee_link"/>
-      <origin xyz="-0.0021 0.0 -0.1313"/>
+      <!-- Match the W2 TCP convention: +Z points from the tool toward the fingertips. -->
+      <origin xyz="-0.0021 0.0 -0.1313" rpy="3.141592653589793 0 0"/>
     </joint>
   </xacro:macro>
 </robot>

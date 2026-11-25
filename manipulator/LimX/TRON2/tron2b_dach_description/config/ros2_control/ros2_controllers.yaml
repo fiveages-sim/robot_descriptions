@@ -60,23 +60,23 @@ ocs2_arm_controller:
       max_angular_velocity: 0.5
       max_angular_acceleration: 1.0
       max_angular_jerk: 5.0
-    # Elbows back, grippers forward. proximal_roll kept within ±π/12 so both
+    # Elbows back, grippers level and facing +X in base_Link. proximal_roll kept within ±π/12 so both
     # arms' asymmetric URDF limits accept the same magnitude.
     home_1:
-      - 0.691099
+      - 0.634099
       - 0.25
       - 0.153669
       - -1.404135
-      - 0.411881
-      - -0.725398
-      - -0.198326
-      - 0.691098
+      - 0.378271
+      - -0.744913
+      - -0.189918
+      - 0.634098
       - -0.25
       - -0.153670
       - -1.404135
-      - -0.411882
-      - -0.725398
-      - 0.198328
+      - -0.378272
+      - -0.744912
+      - 0.189919
     home_2:
       - 0.0
       - 0.0
@@ -132,22 +132,22 @@ ocs2_wbc_controller:
       max_angular_velocity: 0.5
       max_angular_acceleration: 1.0
       max_angular_jerk: 5.0
-    # [left×7 | right×7 | head×2]; proximal_roll ±0.25 < π/12 asymmetric limit
+    # Same level gripper pose as split_body, followed by head yaw and pitch.
     home_1:
-      - 0.691099
+      - 0.634099
       - 0.25
       - 0.153669
       - -1.404135
-      - 0.411881
-      - -0.725398
-      - -0.198326
-      - 0.691098
+      - 0.378271
+      - -0.744913
+      - -0.189918
+      - 0.634098
       - -0.25
       - -0.153670
       - -1.404135
-      - -0.411882
-      - -0.725398
-      - 0.198328
+      - -0.378272
+      - -0.744912
+      - 0.189919
       - 0.0
       - 0.0
     home_2:
