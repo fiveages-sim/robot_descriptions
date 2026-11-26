@@ -39,8 +39,6 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | 睿尔曼 Realman| [AIDAL](humanoid/Realman/aidal_description)          | 是   | <img src="humanoid/.images/realman_aidal.png" width="200">                                                                                                                                                                    |
 | 睿尔曼 Realman| [RS-01](humanoid/Realman/rs01_description)           | 是   | <img src="humanoid/.images/realman_rs01.png" width="200">                                                                                                                                                                     |
 | 零次方 Zerith | [H1](humanoid/Zerith/zerith_h1_description)          | 是   | <img src="humanoid/.images/zerith_h1.png" width="200">                                                                                                                                                                        |
-| Unitree       | [G1-D](humanoid/Unitree/unitree_g1d_description)     | 否   |                                                                                                                                                                                                                               |
-| Unitree       | [R1-D](humanoid/Unitree/unitree_r1d_description)     | 否   |                                                                                                                                                                                                                               |
 | 智平方 Ai2    | [Bot2](humanoid/Ai2Robotics/ai2_bot2_description)    | 是   | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                         |
 | 智平方 XSquare| [Quanta X1](humanoid/X2Robot/quanta_x1_description)  | 是   | <img src="humanoid/.images/x2robot_quanta_x1.png" width="200">                                                                                                                                                                |
 | 千寻 Spirit AI| [MOZ 1](humanoid/SpiritAI/moz1_description)          | 是   | <img src="humanoid/.images/spiritai_moz1.png" width="200">                                                                                                                                                                    |
@@ -74,7 +72,6 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 
 | 品牌              | 型号                                                   | 重绘 | 图片                                                                                                                                                                                                                  |
 |-------------------|--------------------------------------------------------|------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Unitree           | [G1](humanoid/Unitree/unitree_g1_description)          | 是   | <img src="humanoid/.images/unitree_g1.png" width="160">                                                                                                                                                                 |
 | 智元 Agibot       | [A2](humanoid/Agibot/agibot_a2_description)            | 是   | <img src="humanoid/Agibot/.images/agibot_a2.png" width="220">                                                                                                                                                                 |
 | Booster           | [T1](humanoid/Booster/t1_description/)                 | 是   | <img src="humanoid/.images/booster_t1.png" width="120" style="object-fit: cover; object-position: center;">                                                                                                             |
 | EngineAI          | [SA01](humanoid/EngineAI/sa01_description/)            | 是   | <img src="humanoid/.images/engineai_sa01.png" width="130" style="object-fit: cover; object-position: center;">                                                                                                          |
@@ -91,16 +88,24 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 |------|------|------|------|
 | 公共组件 | `common` | [robot-descriptions-common](https://github.com/fiveages-sim/robot-descriptions-common) | 共享夹爪、灵巧手、相机模型与 launch 工具 |
 | 四足机器人 | `quadruped` | [robot-descriptions-quadruped](https://github.com/fiveages-sim/robot-descriptions-quadruped) | 四足描述（Unitree、Deep Robotics、MagicLab、ZsiBot 等） |
-| 越疆 Dobot CR5 | `manipulator/Dobot` | [robot-descriptions-dobot](https://github.com/fiveages-sim/robot-descriptions-dobot) | 6 自由度协作臂与真机集成 |
-| 天机 Tianji | `manipulator/Tianji` | [robot-descriptions-tianji](https://github.com/fiveages-sim/robot-descriptions-tianji) | M6-CCS、M6-SRS、M20S-CCS、Marvin Pro 等 |
+| 越疆 Dobot | `manipulator/Dobot` | [robot-descriptions-dobot](https://github.com/fiveages-sim/robot-descriptions-dobot) | CR5 单臂、CR5 Dual，含真机集成 |
+| 天机 Tianji | `manipulator/Tianji` | [robot-descriptions-tianji](https://github.com/fiveages-sim/robot-descriptions-tianji) | M6-CCS、M6-SRS、M6S Lite CCS、M20S-CCS、Marvin Pro |
 | 珞石 Rokae | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | AR5-SRS、AR5-CCS；轮式人形 INEX 在 `humanoid/Rokae` |
 | 法奥 Fairino ART7 | `manipulator/Fairino` | [robot-descriptions-fairino](https://github.com/fiveages-sim/robot-descriptions-fairino) | ART7 双臂 |
-| 方舟无限 ARX | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | LIFT、X7S 人形与 X5/R5 机械臂 |
+| 方舟无限 ARX | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | X5/R5 臂、AC One 躯干、LIFT / LIFT2S / X7S |
+| 高擎 HighTorque | `manipulator/HighTorque` | [robot-descriptions-ht](https://github.com/fiveages-sim/robot-descriptions-ht) | Panthera HT、OpenArm HT 机械臂 |
 | 银河通用 Galbot | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Zero、One、Charlie、Foxtrot、Golf、S1；见 [README](humanoid/Galbot/README.md) |
-| 天机 Gento | `humanoid/Gento` | [robot-descriptions-gento](https://github.com/fiveages-sim/robot-descriptions-gento) | Skye、Luna；灵猴 S2 v2 + 天机 M6-CCS / M6S Lite |
-| Unitree | `humanoid/Unitree` | [robot-descriptions-unitree](https://github.com/fiveages-sim/robot-descriptions-unitree) | G1（足式）、G1-D、R1-D；共享臂/头/手宏 |
+| Gento | `humanoid/Gento` | [robot-descriptions-gento](https://github.com/fiveages-sim/robot-descriptions-gento) | Skye / Luna 轮式人形；灵猴 S2 v2 + 天机 M6-CCS / M6S Lite |
+| Unitree | `humanoid/Unitree` | [robot-descriptions-unitree](https://github.com/fiveages-sim/robot-descriptions-unitree) | G1（足式）、G1-D、R1-D、H2D；共享臂/头/手宏与 Dex 手 |
+| 优必选 Ubtech | `humanoid/Ubtech` | [robot-descriptions-ubtech](https://github.com/fiveages-sim/robot-descriptions-ubtech) | Cruzr S2 轮式人形 |
 | 智元 G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | G2 描述（私有子模块） |
-| 高擎 Panthera HT | `manipulator/HighTorque/panthera_ht_description` | [panthera_ht_description](https://github.com/fiveages-sim/panthera_ht_description) | Panthera HT 机械臂 |
+| FiveAges W1 | `humanoid/FiveAges/Gen1/fiveages_w1_description` | [fa-w1-description](https://github.com/fiveages-sim/fa-w1-description) | FiveAges Gen1 W1 |
+| FiveAges W2 Common | `humanoid/FiveAges/Gen2/fiveages_w2_common_description` | [fa-w2-components](https://github.com/fiveages-sim/fa-w2-components) | Gen2 共享组件（底盘等） |
+| FiveAges W2 | `humanoid/FiveAges/Gen2/fiveages_w2_description` | [fa-w2-description](https://github.com/fiveages-sim/fa-w2-description) | FiveAges Gen2 W2 |
+| FiveAges W2R | `humanoid/FiveAges/Gen2/fiveages_w2r_description` | [fa-w2r-description](https://github.com/fiveages-sim/fa-w2r-description) | FiveAges Gen2 W2R |
+| FiveAges S2 | `humanoid/FiveAges/Gen2/fiveages_s2_description` | [fa-s2-description](https://github.com/fiveages-sim/fa-s2-description) | FiveAges Gen2 S2 |
+| FiveAges S2R | `humanoid/FiveAges/Gen2/fiveages_s2r_description` | [fa-s2r-description](https://github.com/fiveages-sim/fa-s2r-description) | FiveAges Gen2 S2R |
+| FiveAges WCE3 | `humanoid/FiveAges/Gen3/fiveages_wce3_description` | [fa-wce3-description](https://github.com/fiveages-sim/fa-wce3-description) | FiveAges Gen3 WCE3 |
 
 ### 使用子模块
 
@@ -111,17 +116,33 @@ git submodule update --init --recursive
 
 **初始化指定子模块：**
 ```bash
+# 公共组件 / 四足
 git submodule update --init common
 git submodule update --init quadruped
+
+# 机械臂
 git submodule update --init manipulator/Dobot
 git submodule update --init manipulator/Tianji
 git submodule update --init manipulator/Rokae
 git submodule update --init manipulator/Fairino
 git submodule update --init manipulator/ARX
+git submodule update --init manipulator/HighTorque
+
+# 人形
 git submodule update --init humanoid/Galbot
+git submodule update --init humanoid/Gento
 git submodule update --init humanoid/Unitree
+git submodule update --init humanoid/Ubtech
 git submodule update --init humanoid/Agibot/agibot_g2_description
-git submodule update --init manipulator/HighTorque/panthera_ht_description
+
+# FiveAges（各 Gen 包为独立子模块）
+git submodule update --init humanoid/FiveAges/Gen1/fiveages_w1_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_w2_common_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_w2_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_w2r_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_s2_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_s2r_description
+git submodule update --init humanoid/FiveAges/Gen3/fiveages_wce3_description
 ```
 
 **更新子模块到最新：**

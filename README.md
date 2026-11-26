@@ -39,8 +39,6 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Realman       | [AIDAL](humanoid/Realman/aidal_description)          | Yes     | <img src="humanoid/.images/realman_aidal.png" width="200">                                                                                                                                                                    |
 | Realman       | [RS-01](humanoid/Realman/rs01_description)           | Yes     | <img src="humanoid/.images/realman_rs01.png" width="200">                                                                                                                                                                     |
 | Zerith        | [H1](humanoid/Zerith/zerith_h1_description)          | Yes     | <img src="humanoid/.images/zerith_h1.png" width="200">                                                                                                                                                                        |
-| Unitree       | [G1-D](humanoid/Unitree/unitree_g1d_description)     | No      |                                                                                                                                                                                                                               |
-| Unitree       | [R1-D](humanoid/Unitree/unitree_r1d_description)     | No      |                                                                                                                                                                                                                               |
 | Ai2 Robotics  | [Bot2](humanoid/Ai2Robotics/ai2_bot2_description)    | Yes     | <img src="humanoid/.images/ai2_bot2.png" width="200">                                                                                                                                                                         |
 | XSquare Robot | [Quanta X1](humanoid/X2Robot/quanta_x1_description)  | Yes     | <img src="humanoid/.images/x2robot_quanta_x1.png" width="200">                                                                                                                                                                |
 | Spirit AI     | [MOZ 1](humanoid/SpiritAI/moz1_description)          | Yes     | <img src="humanoid/.images/spiritai_moz1.png" width="200">                                                                                                                                                                    |
@@ -74,7 +72,6 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 
 | Brand    | Model                                                | Repaint | Images                                                                                                                                                                                                                  |
 |----------|------------------------------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Unitree  | [G1](humanoid/Unitree/unitree_g1_description)        | Yes     | <img src="humanoid/.images/unitree_g1.png" width="160">                                                                                                                                                                 |
 | Agibot   | [A2](humanoid/Agibot/agibot_a2_description)          | Yes     | <img src="humanoid/Agibot/.images/agibot_a2.png" width="220">                                                                                                                                                                 |
 | Booster  | [T1](humanoid/Booster/t1_description/)               | Yes     | <img src="humanoid/.images/booster_t1.png" width="120" style="object-fit: cover; object-position: center;">                                                                                                             |
 | EngineAI | [SA01](humanoid/EngineAI/sa01_description/)          | Yes     | <img src="humanoid/.images/engineai_sa01.png" width="130" style="object-fit: cover; object-position: center;">                                                                                                          |
@@ -91,16 +88,24 @@ This repository uses git submodules to manage shared components and specific rob
 |------|------|------------|-------------|
 | Common Components | `common` | [robot-descriptions-common](https://github.com/fiveages-sim/robot-descriptions-common) | Shared grippers, dexterous hands, camera models, and launch utilities |
 | Quadruped Robots | `quadruped` | [robot-descriptions-quadruped](https://github.com/fiveages-sim/robot-descriptions-quadruped) | Quadruped robot descriptions including Unitree, Deep Robotics, MagicLab, and ZsiBot |
-| Dobot CR5 | `manipulator/Dobot` | [robot-descriptions-dobot](https://github.com/fiveages-sim/robot-descriptions-dobot) | 6-DOF collaborative robot arm with real hardware integration |
-| Tianji Robots | `manipulator/Tianji` | [robot-descriptions-tianji](https://github.com/fiveages-sim/robot-descriptions-tianji) | Tianji robot descriptions including M6-CCS, M6-SRS, M20S-CCS, and Marvin Pro |
+| Dobot | `manipulator/Dobot` | [robot-descriptions-dobot](https://github.com/fiveages-sim/robot-descriptions-dobot) | CR5 single-arm and CR5 Dual with real hardware integration |
+| Tianji Robots | `manipulator/Tianji` | [robot-descriptions-tianji](https://github.com/fiveages-sim/robot-descriptions-tianji) | M6-CCS, M6-SRS, M6S Lite CCS, M20S-CCS, and Marvin Pro |
 | Rokae Robots | `manipulator/Rokae` | [robot-descriptions-rokae](https://github.com/fiveages-sim/robot-descriptions-rokae) | Rokae arm descriptions (AR5-SRS, AR5-CCS). Wheel humanoid INEX lives in `humanoid/Rokae` |
 | Fairino ART7 | `manipulator/Fairino` | [robot-descriptions-fairino](https://github.com/fiveages-sim/robot-descriptions-fairino) | ART7 dual-arm manipulator |
-| ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | ARX robot descriptions including LIFT, X7S humanoids and X5/R5 manipulators |
-| Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) for build and demo commands |
-| Gento Robots | `humanoid/Gento` | [robot-descriptions-gento](https://github.com/fiveages-sim/robot-descriptions-gento) | Gento wheel humanoids (Skye, Luna); Linkhou S2 v2 + Tianji M6-CCS / M6S Lite |
-| Unitree Robots | `humanoid/Unitree` | [robot-descriptions-unitree](https://github.com/fiveages-sim/robot-descriptions-unitree) | Unitree G1 (legged), G1-D, R1-D; shared arm/head/hand macros |
+| ARX Robots | `manipulator/ARX` | [robot-descriptions-arx](https://github.com/fiveages-sim/robot-descriptions-arx) | X5/R5 arms, AC One torso, LIFT / LIFT2S / X7S |
+| HighTorque | `manipulator/HighTorque` | [robot-descriptions-ht](https://github.com/fiveages-sim/robot-descriptions-ht) | Panthera HT and OpenArm HT manipulators |
+| Galbot Robots | `humanoid/Galbot` | [robot-descriptions-galbot](https://github.com/fiveages-sim/robot-descriptions-galbot) | Galbot wheel humanoids (Zero, One, Charlie, Foxtrot, Golf, S1); see [README](humanoid/Galbot/README.md) |
+| Gento Robots | `humanoid/Gento` | [robot-descriptions-gento](https://github.com/fiveages-sim/robot-descriptions-gento) | Skye / Luna wheel humanoids; Linkhou S2 v2 + Tianji M6-CCS / M6S Lite |
+| Unitree Robots | `humanoid/Unitree` | [robot-descriptions-unitree](https://github.com/fiveages-sim/robot-descriptions-unitree) | G1 (legged), G1-D, R1-D, H2D; shared arm/head/hand macros and Dex hands |
+| Ubtech | `humanoid/Ubtech` | [robot-descriptions-ubtech](https://github.com/fiveages-sim/robot-descriptions-ubtech) | Cruzr S2 wheel humanoid |
 | Agibot G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | Agibot G2 humanoid description (private submodule) |
-| Panthera HT | `manipulator/HighTorque/panthera_ht_description` | [panthera_ht_description](https://github.com/fiveages-sim/panthera_ht_description) | HighTorque Panthera HT manipulator description |
+| FiveAges W1 | `humanoid/FiveAges/Gen1/fiveages_w1_description` | [fa-w1-description](https://github.com/fiveages-sim/fa-w1-description) | FiveAges Gen1 W1 |
+| FiveAges W2 Common | `humanoid/FiveAges/Gen2/fiveages_w2_common_description` | [fa-w2-components](https://github.com/fiveages-sim/fa-w2-components) | Shared Gen2 components (chassis, etc.) |
+| FiveAges W2 | `humanoid/FiveAges/Gen2/fiveages_w2_description` | [fa-w2-description](https://github.com/fiveages-sim/fa-w2-description) | FiveAges Gen2 W2 |
+| FiveAges W2R | `humanoid/FiveAges/Gen2/fiveages_w2r_description` | [fa-w2r-description](https://github.com/fiveages-sim/fa-w2r-description) | FiveAges Gen2 W2R |
+| FiveAges S2 | `humanoid/FiveAges/Gen2/fiveages_s2_description` | [fa-s2-description](https://github.com/fiveages-sim/fa-s2-description) | FiveAges Gen2 S2 |
+| FiveAges S2R | `humanoid/FiveAges/Gen2/fiveages_s2r_description` | [fa-s2r-description](https://github.com/fiveages-sim/fa-s2r-description) | FiveAges Gen2 S2R |
+| FiveAges WCE3 | `humanoid/FiveAges/Gen3/fiveages_wce3_description` | [fa-wce3-description](https://github.com/fiveages-sim/fa-wce3-description) | FiveAges Gen3 WCE3 |
 
 ### Using Submodules
 
@@ -111,38 +116,33 @@ git submodule update --init --recursive
 
 **Initialize a specific submodule:**
 ```bash
-# For common components
+# Shared / quadruped
 git submodule update --init common
-
-# For quadruped robots
 git submodule update --init quadruped
 
-# For Dobot robot
+# Manipulators
 git submodule update --init manipulator/Dobot
-
-# For Tianji robots
 git submodule update --init manipulator/Tianji
-
-# For Rokae robots
 git submodule update --init manipulator/Rokae
-
-# For Fairino robot
 git submodule update --init manipulator/Fairino
-
-# For ARX robots
 git submodule update --init manipulator/ARX
+git submodule update --init manipulator/HighTorque
 
-# For Galbot robots
+# Humanoids
 git submodule update --init humanoid/Galbot
-
-# For Unitree robots
+git submodule update --init humanoid/Gento
 git submodule update --init humanoid/Unitree
-
-# For Agibot G2 (private)
+git submodule update --init humanoid/Ubtech
 git submodule update --init humanoid/Agibot/agibot_g2_description
 
-# For Panthera HT
-git submodule update --init manipulator/HighTorque/panthera_ht_description
+# FiveAges (each Gen package is its own submodule)
+git submodule update --init humanoid/FiveAges/Gen1/fiveages_w1_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_w2_common_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_w2_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_w2r_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_s2_description
+git submodule update --init humanoid/FiveAges/Gen2/fiveages_s2r_description
+git submodule update --init humanoid/FiveAges/Gen3/fiveages_wce3_description
 ```
 
 **Update submodules to latest version:**
