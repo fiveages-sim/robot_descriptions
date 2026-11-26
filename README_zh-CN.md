@@ -98,7 +98,7 @@ git clone --recursive https://github.com/fiveages-sim/robot_descriptions
 | Gento | `humanoid/Gento` | [robot-descriptions-gento](https://github.com/fiveages-sim/robot-descriptions-gento) | Skye / Luna 轮式人形；灵猴 S2 v2 + 天机 M6-CCS / M6S Lite |
 | Unitree | `humanoid/Unitree` | [robot-descriptions-unitree](https://github.com/fiveages-sim/robot-descriptions-unitree) | G1（足式）、G1-D、R1-D、H2D；共享臂/头/手宏与 Dex 手 |
 | 优必选 Ubtech | `humanoid/Ubtech` | [robot-descriptions-ubtech](https://github.com/fiveages-sim/robot-descriptions-ubtech) | Cruzr S2 轮式人形 |
-| 智元 G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | G2 描述（私有子模块） |
+| 智元 G2 | `humanoid/Agibot/agibot_g2_description` | [agibot-g2-description](https://github.com/fiveages-sim/agibot-g2-description) | G2 描述 |
 | FiveAges W1 | `humanoid/FiveAges/Gen1/fiveages_w1_description` | [fa-w1-description](https://github.com/fiveages-sim/fa-w1-description) | FiveAges Gen1 W1 |
 | FiveAges W2 Common | `humanoid/FiveAges/Gen2/fiveages_w2_common_description` | [fa-w2-components](https://github.com/fiveages-sim/fa-w2-components) | Gen2 共享组件（底盘等） |
 | FiveAges W2 | `humanoid/FiveAges/Gen2/fiveages_w2_description` | [fa-w2-description](https://github.com/fiveages-sim/fa-w2-description) | FiveAges Gen2 W2 |
